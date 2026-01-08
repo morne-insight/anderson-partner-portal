@@ -1,16 +1,14 @@
 using AndersonAPI.Api.Configuration;
-using AndersonAPI.Api.FastEndpoints;
+using AndersonAPI.Api.Filters;
 using AndersonAPI.Api.Logging;
 using AndersonAPI.Api.Services;
 using AndersonAPI.Application;
 using AndersonAPI.Application.Account;
 using AndersonAPI.Infrastructure;
-using FastEndpoints;
 using Intent.RoslynWeaver.Attributes;
 using Scalar.AspNetCore;
 using Serilog;
 using Serilog.Events;
-using Mode = Intent.RoslynWeaver.Attributes.Mode;
 
 [assembly: DefaultIntentManaged(Mode.Fully)]
 [assembly: IntentTemplate("Intent.AspNetCore.Program", Version = "1.0")]
@@ -31,24 +29,24 @@ namespace AndersonAPI.Api
             {
                 var builder = WebApplication.CreateBuilder(args);
 
-                // Add services to the container.
+                builder.Host.UseSerilog((context, services, configuration) => configuration
+                    .ReadFrom.Configuration(context.Configuration)
+                    .ReadFrom.Services(services)
+                    .Destructure.With(new BoundedLoggingDestructuringPolicy()));
+
+                builder.Services.AddControllers(
+                    opt =>
+                    {
+                        opt.Filters.Add<ExceptionFilter>();
+                    });
                 builder.Services.AddApplication(builder.Configuration);
                 builder.Services.ConfigureApplicationSecurity(builder.Configuration);
                 builder.Services.ConfigureHealthChecks(builder.Configuration);
                 builder.Services.ConfigureIdentity();
                 builder.Services.ConfigureProblemDetails();
                 builder.Services.ConfigureApiVersioning();
+
                 builder.Services.AddInfrastructure(builder.Configuration);
-
-                builder.Host.UseSerilog((context, services, configuration) => configuration
-                    .ReadFrom.Configuration(context.Configuration)
-                    .ReadFrom.Services(services)
-                    .Destructure.With(new BoundedLoggingDestructuringPolicy()));
-
-                builder.Services.AddFastEndpoints(opt =>
-                {
-                    opt.Assemblies = [typeof(Program).Assembly];
-                });
                 builder.Services.ConfigureOpenApi();
 
                 builder.Services.AddTransient<IAccountEmailSender, AccountEmailSender>();
@@ -66,10 +64,7 @@ namespace AndersonAPI.Api
                 app.MapScalarApiReference();
                 app.MapOpenApi();
                 app.MapDefaultHealthChecks();
-                app.MapFastEndpoints(c => c.Endpoints.Configurator = ep =>
-                {
-                    ep.PostProcessors(0, new ExceptionProcessor());
-                });
+                app.MapControllers();
 
                 logger.Write(LogEventLevel.Information, "Starting web host");
 

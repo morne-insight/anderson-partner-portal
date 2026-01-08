@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net10.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <NoWarn>$(NoWarn);1591</NoWarn>
@@ -23,4 +23,5 @@
       <IncludeAssets>runtime; build; native; contentFiles; analyzers; buildTransitive</IncludeAssets>
     </PackageReference>
   </ItemGroup>
-  </Project>
+
+</Project>

@@ -10,5 +10,12 @@ namespace AndersonAPI.Domain.Entities
         public string? RefreshToken { get; private set; }
 
         public DateTime? RefreshTokenExpired { get; private set; }
+
+        [IntentIgnore]
+        public void UpdateRefreshToken(string? refreshToken, DateTime? refreshTokenExpired)
+        {
+            RefreshToken = refreshToken;
+            RefreshTokenExpired = refreshTokenExpired;
+        }
     }
 }

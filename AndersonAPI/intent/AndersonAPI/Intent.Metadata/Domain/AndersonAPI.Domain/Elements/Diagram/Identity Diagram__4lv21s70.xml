@@ -3,7 +3,6 @@
   <name>Identity Diagram</name>
   <display>Identity Diagram</display>
   <isAbstract>false</isAbstract>
-  <sort-children>by-type-then-by-name</sort-children>
   <genericTypes />
   <isMapped>false</isMapped>
   <parentFolderId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</parentFolderId>

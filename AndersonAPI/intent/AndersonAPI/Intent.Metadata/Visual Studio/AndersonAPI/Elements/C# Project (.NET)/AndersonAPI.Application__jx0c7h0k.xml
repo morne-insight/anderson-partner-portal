@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<class id="f6e2ce4d-8952-4eb8-94dc-60db84badcb3" type="C# Project (.NET)" typeId="8e9e6693-2888-4f48-a0d6-0f163baab740">
-  <name>AndersonAPI.Application.UnitTests</name>
-  <display>AndersonAPI.Application.UnitTests</display>
+<class id="aca794f4-8c31-4b27-85f5-8e8d03a0b859" type="C# Project (.NET)" typeId="8e9e6693-2888-4f48-a0d6-0f163baab740">
+  <name>AndersonAPI.Application</name>
+  <display>AndersonAPI.Application</display>
+  <externalReference>09ef8fd4-6e2c-4344-8918-b9b43bd24d5f</externalReference>
   <isAbstract>false</isAbstract>
   <sort-children>by-type-then-by-name</sort-children>
   <genericTypes />
   <isMapped>false</isMapped>
-  <parentFolderId>14baadae-d2c7-4ba6-a76a-c06fb7648ff4</parentFolderId>
+  <parentFolderId>bf4fc935-2552-4fe0-8bb4-9e25b642eda9</parentFolderId>
   <packageId>a9dd8788-c6f6-4104-a09d-4e22f1c7e211</packageId>
   <packageName>AndersonAPI</packageName>
   <stereotypes>
     <stereotype stereotypeDefinitionId="a490a23f-5397-40a1-a3cb-6da7e0b467c0" name=".NET Settings">
-      <addedByDefault>false</addedByDefault>
+      <addedByDefault>true</addedByDefault>
       <definitionPackageName>Intent.VisualStudio.Projects</definitionPackageName>
       <definitionPackageId>a0636ab7-d3a1-430b-9609-11a18aa3cc7f</definitionPackageId>
       <properties>
@@ -46,20 +47,20 @@
         <property name="cb56677d-e132-4397-b2ec-3f47e950a111" display="Language Version" value="default" isActive="true" />
         <property name="5c953a82-78c4-4986-b204-df9fcbea5242" display="Relative Location" isActive="true" />
         <property name="415a5406-0517-4c0e-ab60-bc809a23c308" display="Nullable Enabled" value="false" isActive="false" />
-        <property name="68a31b13-148b-45da-a6ea-5a6883f86438" display="Nullable" isActive="true" />
+        <property name="68a31b13-148b-45da-a6ea-5a6883f86438" display="Nullable" value="enable" isActive="true" />
       </properties>
     </stereotype>
   </stereotypes>
   <metadata />
   <childElements>
-    <childElement id="880593fd-a811-4a85-ba8d-7fccfa32a7b5" type="Template Output" typeId="d421c322-7a51-4094-89fa-e5d8a0a97b27">
-      <name>Intent.UnitTesting.CommandHandlerTest</name>
-      <display>Intent.UnitTesting.CommandHandlerTest</display>
-      <externalReference>Intent.UnitTesting</externalReference>
+    <childElement id="923a01cf-eead-4c64-9b15-a3beb4615c96" type="Template Output" typeId="d421c322-7a51-4094-89fa-e5d8a0a97b27">
+      <name>Intent.Application.DependencyInjection.DependencyInjection</name>
+      <display>Intent.Application.DependencyInjection.DependencyInjection</display>
+      <externalReference>Intent.Application.DependencyInjection</externalReference>
       <isAbstract>false</isAbstract>
       <genericTypes />
       <isMapped>false</isMapped>
-      <parentFolderId>f6e2ce4d-8952-4eb8-94dc-60db84badcb3</parentFolderId>
+      <parentFolderId>aca794f4-8c31-4b27-85f5-8e8d03a0b859</parentFolderId>
       <packageId>a9dd8788-c6f6-4104-a09d-4e22f1c7e211</packageId>
       <packageName>AndersonAPI</packageName>
       <stereotypes>
@@ -78,14 +79,14 @@
       </metadata>
       <childElements />
     </childElement>
-    <childElement id="f9d88c83-a39c-4318-90c5-02d721adde80" type="Template Output" typeId="d421c322-7a51-4094-89fa-e5d8a0a97b27">
-      <name>Intent.UnitTesting.DomainEventHandlerTest</name>
-      <display>Intent.UnitTesting.DomainEventHandlerTest</display>
-      <externalReference>Intent.UnitTesting</externalReference>
+    <childElement id="59836256-ab42-4ac5-af12-606c0f7083c3" type="Template Output" typeId="d421c322-7a51-4094-89fa-e5d8a0a97b27">
+      <name>Intent.Application.Dtos.AutoMapper.MappingExtensions</name>
+      <display>Intent.Application.Dtos.AutoMapper.MappingExtensions</display>
+      <externalReference>Intent.Application.Dtos.AutoMapper</externalReference>
       <isAbstract>false</isAbstract>
       <genericTypes />
       <isMapped>false</isMapped>
-      <parentFolderId>f6e2ce4d-8952-4eb8-94dc-60db84badcb3</parentFolderId>
+      <parentFolderId>aca794f4-8c31-4b27-85f5-8e8d03a0b859</parentFolderId>
       <packageId>a9dd8788-c6f6-4104-a09d-4e22f1c7e211</packageId>
       <packageName>AndersonAPI</packageName>
       <stereotypes>
@@ -104,14 +105,14 @@
       </metadata>
       <childElements />
     </childElement>
-    <childElement id="b63176ec-4f6b-4618-be26-76e8da134dfe" type="Template Output" typeId="d421c322-7a51-4094-89fa-e5d8a0a97b27">
-      <name>Intent.UnitTesting.DomainServiceTest</name>
-      <display>Intent.UnitTesting.DomainServiceTest</display>
-      <externalReference>Intent.UnitTesting</externalReference>
+    <childElement id="fd01abc5-d184-45d6-89e9-dc199c194683" type="Template Output" typeId="d421c322-7a51-4094-89fa-e5d8a0a97b27">
+      <name>Intent.Application.Dtos.ContractEnumModel</name>
+      <display>Intent.Application.Dtos.ContractEnumModel</display>
+      <externalReference>Intent.Application.Dtos</externalReference>
       <isAbstract>false</isAbstract>
       <genericTypes />
       <isMapped>false</isMapped>
-      <parentFolderId>f6e2ce4d-8952-4eb8-94dc-60db84badcb3</parentFolderId>
+      <parentFolderId>aca794f4-8c31-4b27-85f5-8e8d03a0b859</parentFolderId>
       <packageId>a9dd8788-c6f6-4104-a09d-4e22f1c7e211</packageId>
       <packageName>AndersonAPI</packageName>
       <stereotypes>
@@ -130,14 +131,14 @@
       </metadata>
       <childElements />
     </childElement>
-    <childElement id="01ac0501-e74b-4f2b-a795-da3034900329" type="Template Output" typeId="d421c322-7a51-4094-89fa-e5d8a0a97b27">
-      <name>Intent.UnitTesting.IntegrationEventHandlerTest</name>
-      <display>Intent.UnitTesting.IntegrationEventHandlerTest</display>
-      <externalReference>Intent.UnitTesting</externalReference>
+    <childElement id="3c1ade43-3234-4898-affa-30b7146ee802" type="Template Output" typeId="d421c322-7a51-4094-89fa-e5d8a0a97b27">
+      <name>Intent.Application.Dtos.DtoModel</name>
+      <display>Intent.Application.Dtos.DtoModel</display>
+      <externalReference>Intent.Application.Dtos</externalReference>
       <isAbstract>false</isAbstract>
       <genericTypes />
       <isMapped>false</isMapped>
-      <parentFolderId>f6e2ce4d-8952-4eb8-94dc-60db84badcb3</parentFolderId>
+      <parentFolderId>aca794f4-8c31-4b27-85f5-8e8d03a0b859</parentFolderId>
       <packageId>a9dd8788-c6f6-4104-a09d-4e22f1c7e211</packageId>
       <packageName>AndersonAPI</packageName>
       <stereotypes>
@@ -156,14 +157,14 @@
       </metadata>
       <childElements />
     </childElement>
-    <childElement id="e29957cf-7284-4950-92c0-64a3dd8aa891" type="Template Output" typeId="d421c322-7a51-4094-89fa-e5d8a0a97b27">
-      <name>Intent.UnitTesting.QueryHandlerTest</name>
-      <display>Intent.UnitTesting.QueryHandlerTest</display>
-      <externalReference>Intent.UnitTesting</externalReference>
+    <childElement id="e3933c4b-a291-4aff-8e5a-581d69241145" type="Template Output" typeId="d421c322-7a51-4094-89fa-e5d8a0a97b27">
+      <name>Intent.Application.FluentValidation.Dtos.DTOValidator</name>
+      <display>Intent.Application.FluentValidation.Dtos.DTOValidator</display>
+      <externalReference>Intent.Application.FluentValidation.Dtos</externalReference>
       <isAbstract>false</isAbstract>
       <genericTypes />
       <isMapped>false</isMapped>
-      <parentFolderId>f6e2ce4d-8952-4eb8-94dc-60db84badcb3</parentFolderId>
+      <parentFolderId>aca794f4-8c31-4b27-85f5-8e8d03a0b859</parentFolderId>
       <packageId>a9dd8788-c6f6-4104-a09d-4e22f1c7e211</packageId>
       <packageName>AndersonAPI</packageName>
       <stereotypes>
@@ -182,14 +183,14 @@
       </metadata>
       <childElements />
     </childElement>
-    <childElement id="e75102e1-80a5-4038-be0c-ba9108e23006" type="Template Output" typeId="d421c322-7a51-4094-89fa-e5d8a0a97b27">
-      <name>Intent.UnitTesting.ServiceOperationTest</name>
-      <display>Intent.UnitTesting.ServiceOperationTest</display>
-      <externalReference>Intent.UnitTesting</externalReference>
+    <childElement id="ef0614d1-c3b4-45f6-aebb-e5e05d9953c0" type="Template Output" typeId="d421c322-7a51-4094-89fa-e5d8a0a97b27">
+      <name>Intent.Application.MediatR.CommandHandler</name>
+      <display>Intent.Application.MediatR.CommandHandler</display>
+      <externalReference>Intent.Application.MediatR</externalReference>
       <isAbstract>false</isAbstract>
       <genericTypes />
       <isMapped>false</isMapped>
-      <parentFolderId>f6e2ce4d-8952-4eb8-94dc-60db84badcb3</parentFolderId>
+      <parentFolderId>aca794f4-8c31-4b27-85f5-8e8d03a0b859</parentFolderId>
       <packageId>a9dd8788-c6f6-4104-a09d-4e22f1c7e211</packageId>
       <packageName>AndersonAPI</packageName>
       <stereotypes>
@@ -208,13 +209,144 @@
       </metadata>
       <childElements />
     </childElement>
-    <childElement id="648f17d9-bc40-4b96-b216-e81572d21b0b" type="Role" typeId="025e933b-b602-4b6d-95ab-0ec36ae940da">
-      <name>UnitTests</name>
-      <display>UnitTests</display>
+    <childElement id="8741a274-df12-4e53-9c24-9ee3ce7089e7" type="Template Output" typeId="d421c322-7a51-4094-89fa-e5d8a0a97b27">
+      <name>Intent.Application.MediatR.CommandModels</name>
+      <display>Intent.Application.MediatR.CommandModels</display>
+      <externalReference>Intent.Application.MediatR</externalReference>
       <isAbstract>false</isAbstract>
       <genericTypes />
       <isMapped>false</isMapped>
-      <parentFolderId>f6e2ce4d-8952-4eb8-94dc-60db84badcb3</parentFolderId>
+      <parentFolderId>aca794f4-8c31-4b27-85f5-8e8d03a0b859</parentFolderId>
+      <packageId>a9dd8788-c6f6-4104-a09d-4e22f1c7e211</packageId>
+      <packageName>AndersonAPI</packageName>
+      <stereotypes>
+        <stereotype stereotypeDefinitionId="967ae6f6-cc06-4b67-a391-44ed1aac1959" name="Template Output Settings">
+          <addedByDefault>true</addedByDefault>
+          <definitionPackageName>Intent.VisualStudio.Projects</definitionPackageName>
+          <definitionPackageId>a0636ab7-d3a1-430b-9609-11a18aa3cc7f</definitionPackageId>
+          <properties>
+            <property name="2ae1addc-b4dc-4cc8-94e1-56ef8a5420aa" display="Is Enabled" value="true" isActive="true" />
+            <property name="2d8e6d2c-785c-4708-9104-bd3e9781a86a" display="Registration Filter" isActive="true" />
+          </properties>
+        </stereotype>
+      </stereotypes>
+      <metadata>
+        <entry key="status" value="assigned" />
+      </metadata>
+      <childElements />
+    </childElement>
+    <childElement id="db6da0ca-bd83-442d-b548-e7dc1effb1c3" type="Template Output" typeId="d421c322-7a51-4094-89fa-e5d8a0a97b27">
+      <name>Intent.Application.MediatR.FluentValidation.CommandValidator</name>
+      <display>Intent.Application.MediatR.FluentValidation.CommandValidator</display>
+      <externalReference>Intent.Application.MediatR.FluentValidation</externalReference>
+      <isAbstract>false</isAbstract>
+      <genericTypes />
+      <isMapped>false</isMapped>
+      <parentFolderId>aca794f4-8c31-4b27-85f5-8e8d03a0b859</parentFolderId>
+      <packageId>a9dd8788-c6f6-4104-a09d-4e22f1c7e211</packageId>
+      <packageName>AndersonAPI</packageName>
+      <stereotypes>
+        <stereotype stereotypeDefinitionId="967ae6f6-cc06-4b67-a391-44ed1aac1959" name="Template Output Settings">
+          <addedByDefault>true</addedByDefault>
+          <definitionPackageName>Intent.VisualStudio.Projects</definitionPackageName>
+          <definitionPackageId>a0636ab7-d3a1-430b-9609-11a18aa3cc7f</definitionPackageId>
+          <properties>
+            <property name="2ae1addc-b4dc-4cc8-94e1-56ef8a5420aa" display="Is Enabled" value="true" isActive="true" />
+            <property name="2d8e6d2c-785c-4708-9104-bd3e9781a86a" display="Registration Filter" isActive="true" />
+          </properties>
+        </stereotype>
+      </stereotypes>
+      <metadata>
+        <entry key="status" value="assigned" />
+      </metadata>
+      <childElements />
+    </childElement>
+    <childElement id="6058684a-146a-4bfe-86d7-f6e8145d5eb0" type="Template Output" typeId="d421c322-7a51-4094-89fa-e5d8a0a97b27">
+      <name>Intent.Application.MediatR.FluentValidation.QueryValidator</name>
+      <display>Intent.Application.MediatR.FluentValidation.QueryValidator</display>
+      <externalReference>Intent.Application.MediatR.FluentValidation</externalReference>
+      <isAbstract>false</isAbstract>
+      <genericTypes />
+      <isMapped>false</isMapped>
+      <parentFolderId>aca794f4-8c31-4b27-85f5-8e8d03a0b859</parentFolderId>
+      <packageId>a9dd8788-c6f6-4104-a09d-4e22f1c7e211</packageId>
+      <packageName>AndersonAPI</packageName>
+      <stereotypes>
+        <stereotype stereotypeDefinitionId="967ae6f6-cc06-4b67-a391-44ed1aac1959" name="Template Output Settings">
+          <addedByDefault>true</addedByDefault>
+          <definitionPackageName>Intent.VisualStudio.Projects</definitionPackageName>
+          <definitionPackageId>a0636ab7-d3a1-430b-9609-11a18aa3cc7f</definitionPackageId>
+          <properties>
+            <property name="2ae1addc-b4dc-4cc8-94e1-56ef8a5420aa" display="Is Enabled" value="true" isActive="true" />
+            <property name="2d8e6d2c-785c-4708-9104-bd3e9781a86a" display="Registration Filter" isActive="true" />
+          </properties>
+        </stereotype>
+      </stereotypes>
+      <metadata>
+        <entry key="status" value="assigned" />
+      </metadata>
+      <childElements />
+    </childElement>
+    <childElement id="f3001bd9-7e8f-40c9-9743-0d55d6dcef78" type="Template Output" typeId="d421c322-7a51-4094-89fa-e5d8a0a97b27">
+      <name>Intent.Application.MediatR.QueryHandler</name>
+      <display>Intent.Application.MediatR.QueryHandler</display>
+      <externalReference>Intent.Application.MediatR</externalReference>
+      <isAbstract>false</isAbstract>
+      <genericTypes />
+      <isMapped>false</isMapped>
+      <parentFolderId>aca794f4-8c31-4b27-85f5-8e8d03a0b859</parentFolderId>
+      <packageId>a9dd8788-c6f6-4104-a09d-4e22f1c7e211</packageId>
+      <packageName>AndersonAPI</packageName>
+      <stereotypes>
+        <stereotype stereotypeDefinitionId="967ae6f6-cc06-4b67-a391-44ed1aac1959" name="Template Output Settings">
+          <addedByDefault>true</addedByDefault>
+          <definitionPackageName>Intent.VisualStudio.Projects</definitionPackageName>
+          <definitionPackageId>a0636ab7-d3a1-430b-9609-11a18aa3cc7f</definitionPackageId>
+          <properties>
+            <property name="2ae1addc-b4dc-4cc8-94e1-56ef8a5420aa" display="Is Enabled" value="true" isActive="true" />
+            <property name="2d8e6d2c-785c-4708-9104-bd3e9781a86a" display="Registration Filter" isActive="true" />
+          </properties>
+        </stereotype>
+      </stereotypes>
+      <metadata>
+        <entry key="status" value="assigned" />
+      </metadata>
+      <childElements />
+    </childElement>
+    <childElement id="b36659eb-a885-43cd-93e5-9ab4b4f42ef6" type="Template Output" typeId="d421c322-7a51-4094-89fa-e5d8a0a97b27">
+      <name>Intent.Application.MediatR.QueryModels</name>
+      <display>Intent.Application.MediatR.QueryModels</display>
+      <externalReference>Intent.Application.MediatR</externalReference>
+      <isAbstract>false</isAbstract>
+      <genericTypes />
+      <isMapped>false</isMapped>
+      <parentFolderId>aca794f4-8c31-4b27-85f5-8e8d03a0b859</parentFolderId>
+      <packageId>a9dd8788-c6f6-4104-a09d-4e22f1c7e211</packageId>
+      <packageName>AndersonAPI</packageName>
+      <stereotypes>
+        <stereotype stereotypeDefinitionId="967ae6f6-cc06-4b67-a391-44ed1aac1959" name="Template Output Settings">
+          <addedByDefault>true</addedByDefault>
+          <definitionPackageName>Intent.VisualStudio.Projects</definitionPackageName>
+          <definitionPackageId>a0636ab7-d3a1-430b-9609-11a18aa3cc7f</definitionPackageId>
+          <properties>
+            <property name="2ae1addc-b4dc-4cc8-94e1-56ef8a5420aa" display="Is Enabled" value="true" isActive="true" />
+            <property name="2d8e6d2c-785c-4708-9104-bd3e9781a86a" display="Registration Filter" isActive="true" />
+          </properties>
+        </stereotype>
+      </stereotypes>
+      <metadata>
+        <entry key="status" value="assigned" />
+      </metadata>
+      <childElements />
+    </childElement>
+    <childElement id="e8b2a157-9b45-4d39-8bc1-0a26fa6f81c8" type="Role" typeId="025e933b-b602-4b6d-95ab-0ec36ae940da">
+      <name>Application</name>
+      <display>Application</display>
+      <externalReference>1be18753-0bf3-4e0b-b5d7-800fc5b49272</externalReference>
+      <isAbstract>false</isAbstract>
+      <genericTypes />
+      <isMapped>false</isMapped>
+      <parentFolderId>aca794f4-8c31-4b27-85f5-8e8d03a0b859</parentFolderId>
       <packageId>a9dd8788-c6f6-4104-a09d-4e22f1c7e211</packageId>
       <packageName>AndersonAPI</packageName>
       <stereotypes>

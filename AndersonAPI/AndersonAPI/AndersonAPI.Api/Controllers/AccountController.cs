@@ -90,6 +90,7 @@ namespace AndersonAPI.Api.Controllers
 
         [HttpPost]
         [AllowAnonymous]
+        [IntentManaged(Mode.Merge, Body = Mode.Ignore)]
         public async Task<ActionResult<TokenResultDto>> Login(LoginDto input)
         {
             if (string.IsNullOrWhiteSpace(input.Email))
@@ -129,8 +130,8 @@ namespace AndersonAPI.Api.Controllers
             var (token, expiry) = _tokenService.GenerateAccessToken(username: user.Email!, claims: claims.ToArray());
             var (refreshToken, refreshTokenExpiry) = _tokenService.GenerateRefreshToken(user.Email!);
 
-            user.RefreshToken = refreshToken;
-            user.RefreshTokenExpired = refreshTokenExpiry;
+            user.UpdateRefreshToken(refreshToken, refreshTokenExpiry);
+
             await _userManager.UpdateAsync(user);
 
             _logger.LogInformation("User logged in.");
@@ -145,6 +146,7 @@ namespace AndersonAPI.Api.Controllers
 
         [HttpPost]
         [AllowAnonymous]
+        [IntentManaged(Mode.Merge, Body = Mode.Ignore)]
         public async Task<ActionResult<TokenResultDto>> Refresh(RefreshTokenDto dto)
         {
             var username = _tokenService.GetUsernameFromRefreshToken(dto.RefreshToken);
@@ -164,8 +166,8 @@ namespace AndersonAPI.Api.Controllers
             var (token, expiry) = _tokenService.GenerateAccessToken(user.Email!, claims);
             var (refreshToken, refreshTokenExpiry) = _tokenService.GenerateRefreshToken(user.Email!);
 
-            user.RefreshToken = refreshToken;
-            user.RefreshTokenExpired = refreshTokenExpiry;
+            user.UpdateRefreshToken(refreshToken, refreshTokenExpiry);
+
             await _userManager.UpdateAsync(user);
 
             return Ok(new TokenResultDto
@@ -346,12 +348,14 @@ namespace AndersonAPI.Api.Controllers
 
         [HttpPost]
         [Authorize]
+        [IntentManaged(Mode.Merge, Body = Mode.Ignore)]
         public async Task<IActionResult> Logout()
         {
             var username = User.Identity!.Name!;
             var user = (await _userManager.FindByNameAsync(username))!;
-            user.RefreshToken = null;
-            user.RefreshTokenExpired = null;
+
+            user.UpdateRefreshToken(null, null);
+
             await _userManager.UpdateAsync(user);
 
             _logger.LogInformation($"User [{username}] logged out the system.");

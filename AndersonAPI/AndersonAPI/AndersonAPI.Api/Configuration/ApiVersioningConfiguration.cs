@@ -1,10 +1,9 @@
 using Asp.Versioning;
 using Asp.Versioning.ApiExplorer;
-using FastEndpoints.AspVersioning;
 using Intent.RoslynWeaver.Attributes;
 
 [assembly: DefaultIntentManaged(Mode.Fully)]
-[assembly: IntentTemplate("Intent.FastEndpoints.ApiVersioningConfiguration", Version = "1.0")]
+[assembly: IntentTemplate("Intent.AspNetCore.Versioning.ApiVersioningConfiguration", Version = "1.0")]
 
 namespace AndersonAPI.Api.Configuration
 {
@@ -12,14 +11,13 @@ namespace AndersonAPI.Api.Configuration
     {
         public static IServiceCollection ConfigureApiVersioning(this IServiceCollection services)
         {
-            services.AddVersioning(options =>
+            services.AddApiVersioning(options =>
             {
                 options.AssumeDefaultVersionWhenUnspecified = true;
                 options.ReportApiVersions = true;
                 options.ApiVersionReader = ApiVersionReader.Combine(new UrlSegmentApiVersionReader());
-            });
-
-            services.AddApiVersioning()
+            })
+            .AddMvc()
             .AddApiExplorer(options =>
             {
                 options.GroupNameFormat = "'v'VVV";

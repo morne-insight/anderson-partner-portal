@@ -1,4 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <deviationsLog>
-  <files />
+  <files>
+    <file>
+      <correlationId>Intent.AspNetCore.Identity.AccountController.AccountController#0d6d45f7-7869-4975-9dad-9730556c530f</correlationId>
+      <path>AndersonAPI.Api/Controllers/AccountController.cs</path>
+      <count>3</count>
+      <updatedByAccountName>mvanzyl@insightconsulting.co.za</updatedByAccountName>
+      <updatedByDisplayName>Morne</updatedByDisplayName>
+      <updatedAt>2026-01-08T20:16:14.287369Z</updatedAt>
+      <deviationsHash>86CFA97C29E38C3C658D0005784A4F9D16E0E365EA8E6A5CC055EF6350B53080</deviationsHash>
+      <fileHash>68CC408E9D10440E450D45B9ACF372B4FA56628EF5A6158487D150CCF36253CF</fileHash>
+    </file>
+    <file>
+      <correlationId>Intent.Entities.DomainEntity#0cc17a59-dc32-4408-b0fc-d0814cb75815</correlationId>
+      <path>AndersonAPI.Domain/Entities/ApplicationIdentityUser.cs</path>
+      <count>1</count>
+      <updatedByAccountName>mvanzyl@insightconsulting.co.za</updatedByAccountName>
+      <updatedByDisplayName>Morne</updatedByDisplayName>
+      <updatedAt>2026-01-08T20:16:14.287497Z</updatedAt>
+      <deviationsHash>89026E25C526465BC3F6665359F8B9027CC74D8E7CB6FFF4430D38BAF0834A07</deviationsHash>
+      <fileHash>3C376EF4A7BE246D7C05F78CFF87F92D3B87AEFB812D18F964892087FAFF8CA8</fileHash>
+    </file>
+  </files>
 </deviationsLog>

@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<class id="ebb71719-4f06-4a4b-888b-519d01d1dbcd" type="Folder" typeId="3407a825-1331-4f3f-89a4-901903ed97ce">
-  <name>Validation</name>
-  <display>Validation</display>
+<class id="6f9a03d1-7dfa-4548-a7a5-c34b25ee475f" type="Folder" typeId="3407a825-1331-4f3f-89a4-901903ed97ce">
+  <name>HttpClients</name>
+  <display>HttpClients</display>
+  <externalReference>a8789b61-65c2-46f5-a32c-4ff2d92f763d</externalReference>
   <isAbstract>false</isAbstract>
   <sort-children>by-type-then-by-name</sort-children>
   <genericTypes />
   <isMapped>false</isMapped>
-  <parentFolderId>cb580d34-2a00-43fe-975f-03df4642499f</parentFolderId>
+  <parentFolderId>c99c9d8c-327b-46e9-ad7e-65d7964db79d</parentFolderId>
   <packageId>a9dd8788-c6f6-4104-a09d-4e22f1c7e211</packageId>
   <packageName>AndersonAPI</packageName>
   <stereotypes>
@@ -21,14 +22,14 @@
   </stereotypes>
   <metadata />
   <childElements>
-    <childElement id="07500e5e-5967-48a6-94a8-c8321953c811" type="Template Output" typeId="d421c322-7a51-4094-89fa-e5d8a0a97b27">
-      <name>Intent.Application.FluentValidation.Dtos.ValidationService</name>
-      <display>Intent.Application.FluentValidation.Dtos.ValidationService</display>
-      <externalReference>Intent.Application.FluentValidation.Dtos</externalReference>
+    <childElement id="5b4cc2ac-47a7-4e90-9728-842ca47a81ad" type="Template Output" typeId="d421c322-7a51-4094-89fa-e5d8a0a97b27">
+      <name>Intent.AspNetCore.IntegrationTesting.HttpClient</name>
+      <display>Intent.AspNetCore.IntegrationTesting.HttpClient</display>
+      <externalReference>Intent.AspNetCore.IntegrationTesting</externalReference>
       <isAbstract>false</isAbstract>
       <genericTypes />
       <isMapped>false</isMapped>
-      <parentFolderId>ebb71719-4f06-4a4b-888b-519d01d1dbcd</parentFolderId>
+      <parentFolderId>6f9a03d1-7dfa-4548-a7a5-c34b25ee475f</parentFolderId>
       <packageId>a9dd8788-c6f6-4104-a09d-4e22f1c7e211</packageId>
       <packageName>AndersonAPI</packageName>
       <stereotypes>
@@ -47,14 +48,14 @@
       </metadata>
       <childElements />
     </childElement>
-    <childElement id="fa45ed2b-b0d1-45f6-9d16-9ba75b6dd50a" type="Template Output" typeId="d421c322-7a51-4094-89fa-e5d8a0a97b27">
-      <name>Intent.Application.FluentValidation.Dtos.ValidationServiceInterface</name>
-      <display>Intent.Application.FluentValidation.Dtos.ValidationServiceInterface</display>
-      <externalReference>Intent.Application.FluentValidation.Dtos</externalReference>
+    <childElement id="22d99ca2-59a5-4f55-b52a-79f1c8df40b4" type="Template Output" typeId="d421c322-7a51-4094-89fa-e5d8a0a97b27">
+      <name>Intent.AspNetCore.IntegrationTesting.HttpClientRequestException</name>
+      <display>Intent.AspNetCore.IntegrationTesting.HttpClientRequestException</display>
+      <externalReference>Intent.AspNetCore.IntegrationTesting</externalReference>
       <isAbstract>false</isAbstract>
       <genericTypes />
       <isMapped>false</isMapped>
-      <parentFolderId>ebb71719-4f06-4a4b-888b-519d01d1dbcd</parentFolderId>
+      <parentFolderId>6f9a03d1-7dfa-4548-a7a5-c34b25ee475f</parentFolderId>
       <packageId>a9dd8788-c6f6-4104-a09d-4e22f1c7e211</packageId>
       <packageName>AndersonAPI</packageName>
       <stereotypes>
@@ -73,14 +74,14 @@
       </metadata>
       <childElements />
     </childElement>
-    <childElement id="b2f15a90-15de-4389-bc0a-9b2d2fab41c1" type="Template Output" typeId="d421c322-7a51-4094-89fa-e5d8a0a97b27">
-      <name>Intent.Application.FluentValidation.Dtos.ValidatorProvider</name>
-      <display>Intent.Application.FluentValidation.Dtos.ValidatorProvider</display>
-      <externalReference>Intent.Application.FluentValidation.Dtos</externalReference>
+    <childElement id="a7a3010f-0482-41f4-bbdc-30d51b557150" type="Template Output" typeId="d421c322-7a51-4094-89fa-e5d8a0a97b27">
+      <name>Intent.AspNetCore.IntegrationTesting.JsonResponse</name>
+      <display>Intent.AspNetCore.IntegrationTesting.JsonResponse</display>
+      <externalReference>Intent.AspNetCore.IntegrationTesting</externalReference>
       <isAbstract>false</isAbstract>
       <genericTypes />
       <isMapped>false</isMapped>
-      <parentFolderId>ebb71719-4f06-4a4b-888b-519d01d1dbcd</parentFolderId>
+      <parentFolderId>6f9a03d1-7dfa-4548-a7a5-c34b25ee475f</parentFolderId>
       <packageId>a9dd8788-c6f6-4104-a09d-4e22f1c7e211</packageId>
       <packageName>AndersonAPI</packageName>
       <stereotypes>
@@ -99,14 +100,14 @@
       </metadata>
       <childElements />
     </childElement>
-    <childElement id="f0e7fb99-a185-4663-bd15-ea3290953f92" type="Template Output" typeId="d421c322-7a51-4094-89fa-e5d8a0a97b27">
-      <name>Intent.Application.FluentValidation.Dtos.ValidatorProviderInterface</name>
-      <display>Intent.Application.FluentValidation.Dtos.ValidatorProviderInterface</display>
-      <externalReference>Intent.Application.FluentValidation.Dtos</externalReference>
+    <childElement id="5da21dfc-77dd-488b-9e1c-71580b18b66f" type="Template Output" typeId="d421c322-7a51-4094-89fa-e5d8a0a97b27">
+      <name>Intent.AspNetCore.IntegrationTesting.ProblemDetailsWithErrors</name>
+      <display>Intent.AspNetCore.IntegrationTesting.ProblemDetailsWithErrors</display>
+      <externalReference>Intent.AspNetCore.IntegrationTesting</externalReference>
       <isAbstract>false</isAbstract>
       <genericTypes />
       <isMapped>false</isMapped>
-      <parentFolderId>ebb71719-4f06-4a4b-888b-519d01d1dbcd</parentFolderId>
+      <parentFolderId>6f9a03d1-7dfa-4548-a7a5-c34b25ee475f</parentFolderId>
       <packageId>a9dd8788-c6f6-4104-a09d-4e22f1c7e211</packageId>
       <packageName>AndersonAPI</packageName>
       <stereotypes>
@@ -123,6 +124,55 @@
       <metadata>
         <entry key="status" value="assigned" />
       </metadata>
+      <childElements />
+    </childElement>
+    <childElement id="da89588f-b946-41aa-b81c-92a0de5e3f24" type="Template Output" typeId="d421c322-7a51-4094-89fa-e5d8a0a97b27">
+      <name>Intent.AspNetCore.IntegrationTesting.ProxyServiceContract</name>
+      <display>Intent.AspNetCore.IntegrationTesting.ProxyServiceContract</display>
+      <externalReference>Intent.AspNetCore.IntegrationTesting</externalReference>
+      <isAbstract>false</isAbstract>
+      <genericTypes />
+      <isMapped>false</isMapped>
+      <parentFolderId>6f9a03d1-7dfa-4548-a7a5-c34b25ee475f</parentFolderId>
+      <packageId>a9dd8788-c6f6-4104-a09d-4e22f1c7e211</packageId>
+      <packageName>AndersonAPI</packageName>
+      <stereotypes>
+        <stereotype stereotypeDefinitionId="967ae6f6-cc06-4b67-a391-44ed1aac1959" name="Template Output Settings">
+          <addedByDefault>true</addedByDefault>
+          <definitionPackageName>Intent.VisualStudio.Projects</definitionPackageName>
+          <definitionPackageId>a0636ab7-d3a1-430b-9609-11a18aa3cc7f</definitionPackageId>
+          <properties>
+            <property name="2ae1addc-b4dc-4cc8-94e1-56ef8a5420aa" display="Is Enabled" value="true" isActive="true" />
+            <property name="2d8e6d2c-785c-4708-9104-bd3e9781a86a" display="Registration Filter" isActive="true" />
+          </properties>
+        </stereotype>
+      </stereotypes>
+      <metadata>
+        <entry key="status" value="assigned" />
+      </metadata>
+      <childElements />
+    </childElement>
+    <childElement id="6a20963f-14ee-4ee6-a1d0-accf37a5cf9b" type="Role" typeId="025e933b-b602-4b6d-95ab-0ec36ae940da">
+      <name>IntegrationTests.HttpClients</name>
+      <display>IntegrationTests.HttpClients</display>
+      <externalReference>d4443416-18f0-408a-810b-726906b4e418</externalReference>
+      <isAbstract>false</isAbstract>
+      <genericTypes />
+      <isMapped>false</isMapped>
+      <parentFolderId>6f9a03d1-7dfa-4548-a7a5-c34b25ee475f</parentFolderId>
+      <packageId>a9dd8788-c6f6-4104-a09d-4e22f1c7e211</packageId>
+      <packageName>AndersonAPI</packageName>
+      <stereotypes>
+        <stereotype stereotypeDefinitionId="a23c7901-31a5-4cbf-b8bf-1be128977e6d" name="Role Settings">
+          <addedByDefault>true</addedByDefault>
+          <definitionPackageName>Intent.VisualStudio.Projects</definitionPackageName>
+          <definitionPackageId>a0636ab7-d3a1-430b-9609-11a18aa3cc7f</definitionPackageId>
+          <properties>
+            <property name="8d79a350-96f1-4d50-bb0a-f65a5c53ec62" display="Create Sub-Folders" value="true" isActive="true" />
+          </properties>
+        </stereotype>
+      </stereotypes>
+      <metadata />
       <childElements />
     </childElement>
   </childElements>
