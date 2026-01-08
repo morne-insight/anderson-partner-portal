@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<association id="e3a56985-531b-42c3-8d26-fb462d998361">
+  <sourceEnd id="96db1d97-7a35-470b-be56-c71f1f784dc3" type="Generalization Source End" typeId="8190bf43-222c-4b53-8a44-14626efe3574">
+    <display>: ApplicationIdentityUser</display>
+    <order>0</order>
+    <typeReference id="56897027-443c-4677-98cd-855d7f23d0a0">
+      <typeId>0cc17a59-dc32-4408-b0fc-d0814cb75815</typeId>
+      <isNavigable>false</isNavigable>
+      <isNullable>false</isNullable>
+      <isCollection>false</isCollection>
+      <isRequired>true</isRequired>
+      <typePackageName>AndersonAPI.Domain</typePackageName>
+      <typePackageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</typePackageId>
+      <stereotypes />
+      <genericTypeParameters />
+    </typeReference>
+    <stereotypes />
+    <metadata />
+    <childElements />
+  </sourceEnd>
+  <targetEnd id="e3a56985-531b-42c3-8d26-fb462d998361" type="Generalization Target End" typeId="4686cc1d-b4d8-4b99-b45b-f77bd5496946">
+    <name>base</name>
+    <display>extends IdentityUser&lt;string&gt;</display>
+    <order>0</order>
+    <typeReference id="ce3fad77-7b31-421e-b03b-ab6a81b32de6">
+      <typeId>f6505b15-dced-4beb-9a58-e7b5447a7c73</typeId>
+      <isNavigable>false</isNavigable>
+      <isNullable>false</isNullable>
+      <isCollection>false</isCollection>
+      <isRequired>true</isRequired>
+      <typePackageName>Intent.AspNetCore.Identity.Domain</typePackageName>
+      <typePackageId>d1f3cf7b-cd9a-431f-af26-a86aec1ace6f</typePackageId>
+      <stereotypes />
+      <genericTypeParameters>
+        <genericTypeParameter id="664e7da4-db07-4575-89aa-ec94ddbed3c2">
+          <typeId>d384db9c-a279-45e1-801e-e4e8099625f2</typeId>
+          <isNavigable>true</isNavigable>
+          <isNullable>false</isNullable>
+          <isCollection>false</isCollection>
+          <isRequired>true</isRequired>
+          <genericTypeId>d618eff4-adab-4f6d-a758-6ecad2eb8429</genericTypeId>
+          <typePackageName>Intent.Common.Types</typePackageName>
+          <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
+          <stereotypes />
+          <genericTypeParameters />
+        </genericTypeParameter>
+      </genericTypeParameters>
+    </typeReference>
+    <stereotypes />
+    <metadata />
+    <childElements />
+  </targetEnd>
+  <associationType>Generalization</associationType>
+  <associationTypeId>5de35973-3ac7-4e65-b48c-385605aec561</associationTypeId>
+  <stereotypes />
+</association>

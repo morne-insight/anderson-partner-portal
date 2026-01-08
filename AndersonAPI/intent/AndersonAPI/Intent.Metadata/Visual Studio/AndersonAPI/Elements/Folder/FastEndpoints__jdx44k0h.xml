@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<class id="10e787ed-e424-402b-8bf5-4074fa5d964c" type="Folder" typeId="3407a825-1331-4f3f-89a4-901903ed97ce">
+  <name>FastEndpoints</name>
+  <display>FastEndpoints</display>
+  <isAbstract>false</isAbstract>
+  <genericTypes />
+  <isMapped>false</isMapped>
+  <parentFolderId>48a5c1c3-ec91-4e38-8a85-1d5ddf19b862</parentFolderId>
+  <stereotypes />
+  <metadata />
+  <childElements>
+    <childElement id="23142424-8a85-445d-bf16-fc67a5b6f6a2" type="Template Output" typeId="d421c322-7a51-4094-89fa-e5d8a0a97b27">
+      <name>Intent.FastEndpoints.EndpointTemplate</name>
+      <display>Intent.FastEndpoints.EndpointTemplate</display>
+      <externalReference>Intent.FastEndpoints</externalReference>
+      <isAbstract>false</isAbstract>
+      <genericTypes />
+      <isMapped>false</isMapped>
+      <parentFolderId>10e787ed-e424-402b-8bf5-4074fa5d964c</parentFolderId>
+      <stereotypes />
+      <metadata>
+        <entry key="status" value="assigned" />
+      </metadata>
+      <childElements />
+    </childElement>
+    <childElement id="9a8184a8-6ba4-4898-bfe9-804c17b9d298" type="Template Output" typeId="d421c322-7a51-4094-89fa-e5d8a0a97b27">
+      <name>Intent.FastEndpoints.ExceptionProcessorTemplate</name>
+      <display>Intent.FastEndpoints.ExceptionProcessorTemplate</display>
+      <externalReference>Intent.FastEndpoints</externalReference>
+      <isAbstract>false</isAbstract>
+      <genericTypes />
+      <isMapped>false</isMapped>
+      <parentFolderId>10e787ed-e424-402b-8bf5-4074fa5d964c</parentFolderId>
+      <stereotypes />
+      <metadata>
+        <entry key="status" value="assigned" />
+      </metadata>
+      <childElements />
+    </childElement>
+  </childElements>
+</class>
