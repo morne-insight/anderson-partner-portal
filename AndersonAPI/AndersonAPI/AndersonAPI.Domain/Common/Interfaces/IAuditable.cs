@@ -7,7 +7,7 @@ namespace AndersonAPI.Domain.Common.Interfaces
 {
     public interface IAuditable
     {
-        void SetCreated(string createdBy, DateTimeOffset createdDate);
-        void SetUpdated(string updatedBy, DateTimeOffset updatedDate);
+        void SetCreated(Guid createdBy, DateTimeOffset createdDate);
+        void SetUpdated(Guid updatedBy, DateTimeOffset updatedDate);
     }
 }

@@ -64,9 +64,9 @@ namespace AndersonAPI.Api.Services
 
         private static string? GetUserName(ClaimsPrincipal? claimsPrincipal) => claimsPrincipal?.FindFirst(JwtClaimTypes.Name)?.Value;
 
-        private static string? GetUserId(ClaimsPrincipal? claimsPrincipal) => claimsPrincipal?.FindFirst(JwtClaimTypes.Subject)?.Value;
+        private static Guid? GetUserId(ClaimsPrincipal? claimsPrincipal) => Guid.TryParse(claimsPrincipal?.FindFirst(JwtClaimTypes.Subject)?.Value, out var parsed) ? parsed : default;
     }
 
-    public record CurrentUser(string? Id, string? Name, ClaimsPrincipal Principal) : ICurrentUser;
+    public record CurrentUser(Guid? Id, string? Name, ClaimsPrincipal Principal) : ICurrentUser;
 
 }

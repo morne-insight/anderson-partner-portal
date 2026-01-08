@@ -53,6 +53,12 @@ namespace AndersonAPI.Infrastructure.Persistence
             modelBuilder.ApplyConfiguration(new ApplicationIdentityUserConfiguration());
         }
 
+        protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
+        {
+            base.ConfigureConventions(configurationBuilder);
+            configurationBuilder.Properties(typeof(Enum)).HaveConversion<string>();
+        }
+
         [IntentManaged(Mode.Ignore)]
         private void ConfigureModel(ModelBuilder modelBuilder)
         {

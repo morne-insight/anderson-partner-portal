@@ -7,8 +7,8 @@ namespace AndersonAPI.Domain.Entities
 {
     public class ApplicationIdentityUser : IdentityUser<string>
     {
-        public string? RefreshToken { get; set; }
+        public string? RefreshToken { get; private set; }
 
-        public DateTime? RefreshTokenExpired { get; set; }
+        public DateTime? RefreshTokenExpired { get; private set; }
     }
 }

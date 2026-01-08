@@ -8,7 +8,7 @@ namespace AndersonAPI.Application.Common.Interfaces
 {
     public interface ICurrentUser
     {
-        string? Id { get; }
+        Guid? Id { get; }
         string? Name { get; }
         ClaimsPrincipal Principal { get; }
     }
