@@ -1,0 +1,22 @@
+{
+  "initialized": true,
+  "mode": "file-router",
+  "projectName": "anderson-client",
+  "typescript": true,
+  "tailwind": true,
+  "git": true,
+  "addOnOptions": {},
+  "packageManager": "pnpm",
+  "version": 1,
+  "framework": "react-cra",
+  "chosenAddOns": [
+    "form",
+    "mcp",
+    "shadcn",
+    "table",
+    "start",
+    "storybook",
+    "tanstack-query",
+    "nitro"
+  ]
+}
