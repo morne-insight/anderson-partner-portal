@@ -7,9 +7,9 @@
       <count>3</count>
       <updatedByAccountName>mvanzyl@insightconsulting.co.za</updatedByAccountName>
       <updatedByDisplayName>Morne</updatedByDisplayName>
-      <updatedAt>2026-01-08T20:16:14.287369Z</updatedAt>
-      <deviationsHash>86CFA97C29E38C3C658D0005784A4F9D16E0E365EA8E6A5CC055EF6350B53080</deviationsHash>
-      <fileHash>68CC408E9D10440E450D45B9ACF372B4FA56628EF5A6158487D150CCF36253CF</fileHash>
+      <updatedAt>2026-01-08T20:23:59.7013665Z</updatedAt>
+      <deviationsHash>0442C219BE83B9ABE4C229025A9EE5E68EFA955BBE17C4EC511BB285C5ECCEB6</deviationsHash>
+      <fileHash>BB5CF1B4903BB96E1E03F256F55C26EF2B9B6A5FF9B3030324A17339E4F2BA00</fileHash>
     </file>
     <file>
       <correlationId>Intent.Entities.DomainEntity#0cc17a59-dc32-4408-b0fc-d0814cb75815</correlationId>
@@ -20,6 +20,16 @@
       <updatedAt>2026-01-08T20:16:14.287497Z</updatedAt>
       <deviationsHash>89026E25C526465BC3F6665359F8B9027CC74D8E7CB6FFF4430D38BAF0834A07</deviationsHash>
       <fileHash>3C376EF4A7BE246D7C05F78CFF87F92D3B87AEFB812D18F964892087FAFF8CA8</fileHash>
+    </file>
+    <file>
+      <correlationId>Intent.Infrastructure.DependencyInjection.DependencyInjection#3dff9542-119a-42bf-9de8-29a368cdcce1</correlationId>
+      <path>AndersonAPI.Infrastructure/DependencyInjection.cs</path>
+      <count>1</count>
+      <updatedByAccountName>mvanzyl@insightconsulting.co.za</updatedByAccountName>
+      <updatedByDisplayName>Morne</updatedByDisplayName>
+      <updatedAt>2026-01-09T14:10:29.3288725Z</updatedAt>
+      <deviationsHash>FE1B6922776643EAEE3B5C4F1B9B0323F0D9BF3718A7D2EB4D8C27154D935EE6</deviationsHash>
+      <fileHash>EEE5FACC94FBB504E46F9998CA87B766B82D7D172E43CC65A3B5AE3EB54BE489</fileHash>
     </file>
   </files>
 </deviationsLog>

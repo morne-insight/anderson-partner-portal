@@ -28,6 +28,7 @@ namespace AndersonAPI.Infrastructure.Persistence
         }
 
         public DbSet<ApplicationIdentityUser> ApplicationIdentityUsers { get; set; }
+        public DbSet<CompanyProfile> CompanyProfiles { get; set; }
 
         public override async Task<int> SaveChangesAsync(
             bool acceptAllChangesOnSuccess,
@@ -51,6 +52,7 @@ namespace AndersonAPI.Infrastructure.Persistence
 
             ConfigureModel(modelBuilder);
             modelBuilder.ApplyConfiguration(new ApplicationIdentityUserConfiguration());
+            modelBuilder.ApplyConfiguration(new CompanyProfileConfiguration());
         }
 
         protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)

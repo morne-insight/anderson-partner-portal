@@ -4,10 +4,11 @@
   <display>Default Diagram</display>
   <externalReference>169f3801-8244-4b9e-ac2f-3eaede785048</externalReference>
   <isAbstract>false</isAbstract>
-  <order>1</order>
   <genericTypes />
   <isMapped>false</isMapped>
   <parentFolderId>c8555d38-5afc-4ea2-9a61-c7a505212753</parentFolderId>
+  <packageId>c8555d38-5afc-4ea2-9a61-c7a505212753</packageId>
+  <packageName>AndersonAPI.Services</packageName>
   <diagram>
     <targetPackageId>c8555d38-5afc-4ea2-9a61-c7a505212753</targetPackageId>
   </diagram>

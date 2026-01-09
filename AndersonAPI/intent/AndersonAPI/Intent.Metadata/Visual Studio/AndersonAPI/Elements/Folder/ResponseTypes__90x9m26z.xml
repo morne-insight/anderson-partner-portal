@@ -3,7 +3,6 @@
   <name>ResponseTypes</name>
   <display>ResponseTypes</display>
   <isAbstract>false</isAbstract>
-  <sort-children>by-type-then-by-name</sort-children>
   <genericTypes />
   <isMapped>false</isMapped>
   <parentFolderId>10e787ed-e424-402b-8bf5-4074fa5d964c</parentFolderId>
