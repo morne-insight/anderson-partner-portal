@@ -6,6 +6,9 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <NoWarn>$(NoWarn);1591</NoWarn>
     <Nullable>enable</Nullable>
+    <EnableOpenApiClientGeneration>true</EnableOpenApiClientGeneration>
+    <OpenApiDocumentsDirectory>$(MSBuildProjectDirectory)\..\..\..\anderson-client</OpenApiDocumentsDirectory>
+    <OpenApiGenerateDocuments>true</OpenApiGenerateDocuments>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,6 +25,10 @@
     <PackageReference Include="FastEndpoints.AspVersioning" Version="7.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.11" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.10" />
+    <PackageReference Include="Microsoft.Extensions.ApiDescription.Server" Version="9.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Scalar.AspNetCore" Version="2.9.0" />
     <PackageReference Include="Serilog.AspNetCore" Version="10.0.0" />
     <PackageReference Include="SonarAnalyzer.CSharp" Version="10.16.1.129956">
@@ -29,5 +36,10 @@
       <IncludeAssets>runtime; build; native; contentFiles; analyzers; buildTransitive</IncludeAssets>
     </PackageReference>
   </ItemGroup>
+
+  <Target Name="GenerateOpenApiClient" AfterTargets="Build">
+    <Message Importance="high" Text="Generating OpenAPI client code..." />
+    <Exec Command="pnpm run openapi-ts" WorkingDirectory="..\..\..\anderson-client" />
+  </Target>
 
 </Project>

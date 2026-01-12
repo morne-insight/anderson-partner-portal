@@ -1,10 +1,11 @@
 import { defineConfig } from "@hey-api/openapi-ts";
 
 export default defineConfig({
-  input: {
-    path: "https://localhost:44395/openapi/v1.json",
-    watch: true,
-  },
+  //   input: {
+  //     path: "https://localhost:44395/openapi/v1.json",
+  //     watch: true,
+  //   },
+  input: "AndersonAPI.Api.json",
   output: {
     format: "biome",
     lint: "biome",
