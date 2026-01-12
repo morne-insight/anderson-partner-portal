@@ -12,6 +12,26 @@
       <fileHash>BB5CF1B4903BB96E1E03F256F55C26EF2B9B6A5FF9B3030324A17339E4F2BA00</fileHash>
     </file>
     <file>
+      <correlationId>Intent.AspNetCore.Program#ad457389-55ed-4603-9832-83f59fee22c9</correlationId>
+      <path>AndersonAPI.Api/Program.cs</path>
+      <count>1</count>
+      <updatedByAccountName>mvanzyl@insightconsulting.co.za</updatedByAccountName>
+      <updatedByDisplayName>Morne</updatedByDisplayName>
+      <updatedAt>2026-01-12T11:51:01.6875522Z</updatedAt>
+      <deviationsHash>0244571007F30608A80A366537EAEF4D158E4B558B88728B05259E2C42AFFC99</deviationsHash>
+      <fileHash>EF977BE98B0A1A4056D4EA5CF910512610E19303C1C8220960E3415B4D812A5D</fileHash>
+    </file>
+    <file>
+      <correlationId>Intent.Application.MediatR.QueryHandler#f1e9a056-25e2-4b73-aa87-ac0c0ee9ccfa</correlationId>
+      <path>AndersonAPI.Application/CompanyProfiles/GetCompanyCount/GetCompanyCountQueryHandler.cs</path>
+      <count>1</count>
+      <updatedByAccountName>mvanzyl@insightconsulting.co.za</updatedByAccountName>
+      <updatedByDisplayName>Morne</updatedByDisplayName>
+      <updatedAt>2026-01-12T11:51:01.6877277Z</updatedAt>
+      <deviationsHash>89852B9E8FAAF6D37BCF14F7588A06F24AD2C180CF4E936074518A7EBC60BFE2</deviationsHash>
+      <fileHash>1513D05E397594A5980414E32981536D6E4DF1D6A2A68E41ABE2A110ABAF8D42</fileHash>
+    </file>
+    <file>
       <correlationId>Intent.Entities.DomainEntity#0cc17a59-dc32-4408-b0fc-d0814cb75815</correlationId>
       <path>AndersonAPI.Domain/Entities/ApplicationIdentityUser.cs</path>
       <count>1</count>

@@ -17,6 +17,7 @@ namespace AndersonAPI.Api
 {
     public class Program
     {
+        [IntentManaged(Mode.Merge, Body = Mode.Merge)]
         public static void Main(string[] args)
         {
             using var logger = new LoggerConfiguration()
@@ -52,6 +53,20 @@ namespace AndersonAPI.Api
                 builder.Services.AddTransient<IAccountEmailSender, AccountEmailSender>();
                 builder.Services.AddTransient<ITokenService, TokenService>();
 
+                builder.Services.AddCors(options =>
+                {
+                    options.AddDefaultPolicy(policy =>
+                    {
+                        var origins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>();
+                        if (origins != null && origins.Length > 0)
+                        {
+                            policy.WithOrigins(origins)
+                                .AllowAnyHeader()
+                                .AllowAnyMethod();
+                        }
+                    });
+                });
+
                 var app = builder.Build();
 
                 // Configure the HTTP request pipeline.
@@ -65,6 +80,7 @@ namespace AndersonAPI.Api
                 app.MapOpenApi();
                 app.MapDefaultHealthChecks();
                 app.MapControllers();
+                app.UseCors();
 
                 logger.Write(LogEventLevel.Information, "Starting web host");
 

@@ -1,6 +1,6 @@
+using AndersonAPI.Domain.Repositories;
 using Intent.RoslynWeaver.Attributes;
 using MediatR;
-using AndersonAPI.Domain.Repositories;
 
 [assembly: DefaultIntentManaged(Mode.Fully)]
 [assembly: IntentTemplate("Intent.Application.MediatR.QueryHandler", Version = "1.0")]
