@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { client } from "../api/client.gen";
 import { getApiCompanyProfiles } from "../api/sdk.gen";
-import type { AndersonApiApplicationCompanyProfilesCompanyProfileDto } from "../api/types.gen";
+import type { CompanyProfileDto } from "../api/types.gen";
 
 export const Route = createFileRoute("/dashboard")({
   ssr: false,
@@ -22,7 +22,7 @@ client.interceptors.response.use((response) => {
 
 function RouteComponent() {
   const [profiles, setProfiles] = useState<
-    AndersonApiApplicationCompanyProfilesCompanyProfileDto[]
+    CompanyProfileDto[]
   >([]);
 
   const onFetchProfiles = async () => {

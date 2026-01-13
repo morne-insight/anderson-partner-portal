@@ -1,5 +1,6 @@
 import { createRouter } from "@tanstack/react-router";
 import { setupRouterSsrQueryIntegration } from "@tanstack/react-router-ssr-query";
+// biome-ignore lint/performance/noNamespaceImport: from official documentation>
 import * as TanstackQuery from "./integrations/tanstack-query/root-provider";
 
 // Import the generated route tree
@@ -16,6 +17,7 @@ export const getRouter = () => {
     },
 
     defaultPreload: "intent",
+    scrollRestoration: true,
   });
 
   setupRouterSsrQueryIntegration({

@@ -49,7 +49,12 @@ namespace AndersonAPI.Api.Configuration
                 return $"{SchemaIdSelector(elementType)}Array";
             }
 
-            var typeName = modelType.FullName?.Replace("+", "_") ?? modelType.Name.Replace("+", "_");
+            /* This changes the output of DTO's from AndersonApiApplicationCompanyProfilesCompanyProfileDto to CompanyProfileDto.
+             * Note that this could cause name clashes
+             */
+
+            // var typeName = modelType.FullName?.Replace("+", "_") ?? modelType.Name.Replace("+", "_");             
+            var typeName = modelType.Name.Replace("+", "_");
 
             if (!modelType.IsConstructedGenericType)
             {

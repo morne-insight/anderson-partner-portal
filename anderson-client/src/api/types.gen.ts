@@ -5,96 +5,23 @@ export type ClientOptions = {
 };
 
 /**
- * AndersonAPI.Api.Controllers.ConfirmEmailDto
+ * AndersonAPI.Api.Controllers.ResponseTypes.JsonResponse_Of_Guid
  */
-export type AndersonApiApiControllersConfirmEmailDto = {
-    userId?: string | null;
-    code?: string | null;
-};
-
-/**
- * AndersonAPI.Api.Controllers.ForgotPasswordDto
- */
-export type AndersonApiApiControllersForgotPasswordDto = {
-    email?: string | null;
-};
-
-/**
- * AndersonAPI.Api.Controllers.InfoResponseDto
- */
-export type AndersonApiApiControllersInfoResponseDto = {
-    email?: string | null;
-};
-
-/**
- * AndersonAPI.Api.Controllers.LoginDto
- */
-export type AndersonApiApiControllersLoginDto = {
-    email?: string | null;
-    password?: string | null;
-};
-
-/**
- * AndersonAPI.Api.Controllers.RefreshTokenDto
- */
-export type AndersonApiApiControllersRefreshTokenDto = {
-    refreshToken?: string | null;
-};
-
-/**
- * AndersonAPI.Api.Controllers.RegisterDto
- */
-export type AndersonApiApiControllersRegisterDto = {
-    email?: string | null;
-    password?: string | null;
-};
-
-/**
- * AndersonAPI.Api.Controllers.ResetPasswordDto
- */
-export type AndersonApiApiControllersResetPasswordDto = {
-    email?: string | null;
-    resetCode?: string | null;
-    newPassword?: string | null;
-};
-
-/**
- * AndersonAPI.Api.Controllers.ResponseTypes.JsonResponse_Of_System.Guid
- */
-export type AndersonApiApiControllersResponseTypesJsonResponseOfSystemGuid = {
+export type AndersonApiApiControllersResponseTypesJsonResponseOfGuid = {
     value: string;
 };
 
 /**
- * AndersonAPI.Api.Controllers.TokenResultDto
+ * CompanyNameDto
  */
-export type AndersonApiApiControllersTokenResultDto = {
-    tokenType?: string | null;
-    authenticationToken?: string | null;
-    expiresIn?: number;
-    refreshToken?: string | null;
-};
-
-/**
- * AndersonAPI.Api.Controllers.UpdateInfoDto
- */
-export type AndersonApiApiControllersUpdateInfoDto = {
-    newEmail?: string | null;
-    newPassword?: string | null;
-    oldPassword?: string | null;
-};
-
-/**
- * AndersonAPI.Application.CompanyProfiles.CompanyNameDto
- */
-export type AndersonApiApplicationCompanyProfilesCompanyNameDto = {
+export type CompanyNameDto = {
     name?: string;
 };
 
 /**
- * AndersonAPI.Application.CompanyProfiles.CompanyProfileDto
+ * CompanyProfileDto
  */
-export type AndersonApiApplicationCompanyProfilesCompanyProfileDto = {
+export type CompanyProfileDto = {
     name?: string;
     shortDescription?: string;
     description?: string;
@@ -106,9 +33,17 @@ export type AndersonApiApplicationCompanyProfilesCompanyProfileDto = {
 };
 
 /**
- * AndersonAPI.Application.CompanyProfiles.CreateCompanyProfile.CreateCompanyProfileCommand
+ * ConfirmEmailDto
  */
-export type AndersonApiApplicationCompanyProfilesCreateCompanyProfileCreateCompanyProfileCommand = {
+export type ConfirmEmailDto = {
+    userId?: string | null;
+    code?: string | null;
+};
+
+/**
+ * CreateCompanyProfileCommand
+ */
+export type CreateCompanyProfileCommand = {
     name: string;
     shortDescription: string;
     description: string;
@@ -117,9 +52,85 @@ export type AndersonApiApplicationCompanyProfilesCreateCompanyProfileCreateCompa
 };
 
 /**
- * AndersonAPI.Application.CompanyProfiles.UpdateProfileCompanyProfile.UpdateProfileCompanyProfileCommand
+ * ForgotPasswordDto
  */
-export type AndersonApiApplicationCompanyProfilesUpdateProfileCompanyProfileUpdateProfileCompanyProfileCommand = {
+export type ForgotPasswordDto = {
+    email?: string | null;
+};
+
+/**
+ * InfoResponseDto
+ */
+export type InfoResponseDto = {
+    email?: string | null;
+};
+
+/**
+ * LoginDto
+ */
+export type LoginDto = {
+    email?: string | null;
+    password?: string | null;
+};
+
+/**
+ * ProblemDetails
+ */
+export type ProblemDetails = {
+    type?: string | null;
+    title?: string | null;
+    status?: number | null;
+    detail?: string | null;
+    instance?: string | null;
+};
+
+/**
+ * RefreshTokenDto
+ */
+export type RefreshTokenDto = {
+    refreshToken?: string | null;
+};
+
+/**
+ * RegisterDto
+ */
+export type RegisterDto = {
+    email?: string | null;
+    password?: string | null;
+};
+
+/**
+ * ResetPasswordDto
+ */
+export type ResetPasswordDto = {
+    email?: string | null;
+    resetCode?: string | null;
+    newPassword?: string | null;
+};
+
+/**
+ * TokenResultDto
+ */
+export type TokenResultDto = {
+    tokenType?: string | null;
+    authenticationToken?: string | null;
+    expiresIn?: number;
+    refreshToken?: string | null;
+};
+
+/**
+ * UpdateInfoDto
+ */
+export type UpdateInfoDto = {
+    newEmail?: string | null;
+    newPassword?: string | null;
+    oldPassword?: string | null;
+};
+
+/**
+ * UpdateProfileCompanyProfileCommand
+ */
+export type UpdateProfileCompanyProfileCommand = {
     id: string;
     name: string;
     shortDescription: string;
@@ -128,19 +139,8 @@ export type AndersonApiApplicationCompanyProfilesUpdateProfileCompanyProfileUpda
     employeeCount: number;
 };
 
-/**
- * Microsoft.AspNetCore.Mvc.ProblemDetails
- */
-export type MicrosoftAspNetCoreMvcProblemDetails = {
-    type?: string | null;
-    title?: string | null;
-    status?: number | null;
-    detail?: string | null;
-    instance?: string | null;
-};
-
 export type PostApiAccountRegisterData = {
-    body: AndersonApiApiControllersRegisterDto;
+    body: RegisterDto;
     path?: never;
     query?: never;
     url: '/api/Account/Register';
@@ -154,7 +154,7 @@ export type PostApiAccountRegisterResponses = {
 };
 
 export type PostApiAccountLoginData = {
-    body: AndersonApiApiControllersLoginDto;
+    body: LoginDto;
     path?: never;
     query?: never;
     url: '/api/Account/Login';
@@ -164,13 +164,13 @@ export type PostApiAccountLoginResponses = {
     /**
      * OK
      */
-    200: AndersonApiApiControllersTokenResultDto;
+    200: TokenResultDto;
 };
 
 export type PostApiAccountLoginResponse = PostApiAccountLoginResponses[keyof PostApiAccountLoginResponses];
 
 export type PostApiAccountRefreshData = {
-    body: AndersonApiApiControllersRefreshTokenDto;
+    body: RefreshTokenDto;
     path?: never;
     query?: never;
     url: '/api/Account/Refresh';
@@ -180,13 +180,13 @@ export type PostApiAccountRefreshResponses = {
     /**
      * OK
      */
-    200: AndersonApiApiControllersTokenResultDto;
+    200: TokenResultDto;
 };
 
 export type PostApiAccountRefreshResponse = PostApiAccountRefreshResponses[keyof PostApiAccountRefreshResponses];
 
 export type PostApiAccountConfirmEmailData = {
-    body: AndersonApiApiControllersConfirmEmailDto;
+    body: ConfirmEmailDto;
     path?: never;
     query?: never;
     url: '/api/Account/ConfirmEmail';
@@ -200,7 +200,7 @@ export type PostApiAccountConfirmEmailResponses = {
 };
 
 export type PostApiAccountForgotPasswordData = {
-    body: AndersonApiApiControllersForgotPasswordDto;
+    body: ForgotPasswordDto;
     path?: never;
     query?: never;
     url: '/api/Account/forgotPassword';
@@ -214,7 +214,7 @@ export type PostApiAccountForgotPasswordResponses = {
 };
 
 export type PostApiAccountResetPasswordData = {
-    body: AndersonApiApiControllersResetPasswordDto;
+    body: ResetPasswordDto;
     path?: never;
     query?: never;
     url: '/api/Account/resetPassword';
@@ -238,13 +238,13 @@ export type GetApiAccountManageInfoResponses = {
     /**
      * OK
      */
-    200: AndersonApiApiControllersInfoResponseDto;
+    200: InfoResponseDto;
 };
 
 export type GetApiAccountManageInfoResponse = GetApiAccountManageInfoResponses[keyof GetApiAccountManageInfoResponses];
 
 export type PostApiAccountManageInfoData = {
-    body: AndersonApiApiControllersUpdateInfoDto;
+    body: UpdateInfoDto;
     path?: never;
     query?: never;
     url: '/api/Account/manage/info';
@@ -254,7 +254,7 @@ export type PostApiAccountManageInfoResponses = {
     /**
      * OK
      */
-    200: AndersonApiApiControllersInfoResponseDto;
+    200: InfoResponseDto;
 };
 
 export type PostApiAccountManageInfoResponse = PostApiAccountManageInfoResponses[keyof PostApiAccountManageInfoResponses];
@@ -284,7 +284,7 @@ export type GetApiCompanyProfilesErrors = {
     /**
      * Internal Server Error
      */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
+    500: ProblemDetails;
 };
 
 export type GetApiCompanyProfilesError = GetApiCompanyProfilesErrors[keyof GetApiCompanyProfilesErrors];
@@ -293,13 +293,13 @@ export type GetApiCompanyProfilesResponses = {
     /**
      * OK
      */
-    200: Array<AndersonApiApplicationCompanyProfilesCompanyProfileDto>;
+    200: Array<CompanyProfileDto>;
 };
 
 export type GetApiCompanyProfilesResponse = GetApiCompanyProfilesResponses[keyof GetApiCompanyProfilesResponses];
 
 export type PostApiCompanyProfilesData = {
-    body: AndersonApiApplicationCompanyProfilesCreateCompanyProfileCreateCompanyProfileCommand;
+    body: CreateCompanyProfileCommand;
     path?: never;
     query?: never;
     url: '/api/company-profiles';
@@ -309,11 +309,11 @@ export type PostApiCompanyProfilesErrors = {
     /**
      * Bad Request
      */
-    400: MicrosoftAspNetCoreMvcProblemDetails;
+    400: ProblemDetails;
     /**
      * Internal Server Error
      */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
+    500: ProblemDetails;
 };
 
 export type PostApiCompanyProfilesError = PostApiCompanyProfilesErrors[keyof PostApiCompanyProfilesErrors];
@@ -322,7 +322,7 @@ export type PostApiCompanyProfilesResponses = {
     /**
      * Created
      */
-    201: AndersonApiApiControllersResponseTypesJsonResponseOfSystemGuid;
+    201: AndersonApiApiControllersResponseTypesJsonResponseOfGuid;
 };
 
 export type PostApiCompanyProfilesResponse = PostApiCompanyProfilesResponses[keyof PostApiCompanyProfilesResponses];
@@ -340,15 +340,15 @@ export type DeleteApiCompanyProfilesByIdErrors = {
     /**
      * Bad Request
      */
-    400: MicrosoftAspNetCoreMvcProblemDetails;
+    400: ProblemDetails;
     /**
      * Not Found
      */
-    404: MicrosoftAspNetCoreMvcProblemDetails;
+    404: ProblemDetails;
     /**
      * Internal Server Error
      */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
+    500: ProblemDetails;
 };
 
 export type DeleteApiCompanyProfilesByIdError = DeleteApiCompanyProfilesByIdErrors[keyof DeleteApiCompanyProfilesByIdErrors];
@@ -373,15 +373,15 @@ export type GetApiCompanyProfilesByIdErrors = {
     /**
      * Bad Request
      */
-    400: MicrosoftAspNetCoreMvcProblemDetails;
+    400: ProblemDetails;
     /**
      * Not Found
      */
-    404: MicrosoftAspNetCoreMvcProblemDetails;
+    404: ProblemDetails;
     /**
      * Internal Server Error
      */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
+    500: ProblemDetails;
 };
 
 export type GetApiCompanyProfilesByIdError = GetApiCompanyProfilesByIdErrors[keyof GetApiCompanyProfilesByIdErrors];
@@ -390,13 +390,13 @@ export type GetApiCompanyProfilesByIdResponses = {
     /**
      * OK
      */
-    200: AndersonApiApplicationCompanyProfilesCompanyProfileDto;
+    200: CompanyProfileDto;
 };
 
 export type GetApiCompanyProfilesByIdResponse = GetApiCompanyProfilesByIdResponses[keyof GetApiCompanyProfilesByIdResponses];
 
 export type PutApiCompanyProfilesByIdProfileData = {
-    body: AndersonApiApplicationCompanyProfilesUpdateProfileCompanyProfileUpdateProfileCompanyProfileCommand;
+    body: UpdateProfileCompanyProfileCommand;
     path: {
         id: string;
     };
@@ -408,15 +408,15 @@ export type PutApiCompanyProfilesByIdProfileErrors = {
     /**
      * Bad Request
      */
-    400: MicrosoftAspNetCoreMvcProblemDetails;
+    400: ProblemDetails;
     /**
      * Not Found
      */
-    404: MicrosoftAspNetCoreMvcProblemDetails;
+    404: ProblemDetails;
     /**
      * Internal Server Error
      */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
+    500: ProblemDetails;
 };
 
 export type PutApiCompanyProfilesByIdProfileError = PutApiCompanyProfilesByIdProfileErrors[keyof PutApiCompanyProfilesByIdProfileErrors];
@@ -441,7 +441,7 @@ export type GetApiCompanyProfilesGetCompanyNamesErrors = {
     /**
      * Internal Server Error
      */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
+    500: ProblemDetails;
 };
 
 export type GetApiCompanyProfilesGetCompanyNamesError = GetApiCompanyProfilesGetCompanyNamesErrors[keyof GetApiCompanyProfilesGetCompanyNamesErrors];
@@ -450,7 +450,7 @@ export type GetApiCompanyProfilesGetCompanyNamesResponses = {
     /**
      * OK
      */
-    200: Array<AndersonApiApplicationCompanyProfilesCompanyNameDto>;
+    200: Array<CompanyNameDto>;
 };
 
 export type GetApiCompanyProfilesGetCompanyNamesResponse = GetApiCompanyProfilesGetCompanyNamesResponses[keyof GetApiCompanyProfilesGetCompanyNamesResponses];
