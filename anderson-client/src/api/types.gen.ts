@@ -12,6 +12,11 @@ export type AndersonApiApiControllersResponseTypesJsonResponseOfGuid = {
 };
 
 /**
+ * ByteArray
+ */
+export type ByteArray = string | null;
+
+/**
  * CompanyNameDto
  */
 export type CompanyNameDto = {
@@ -27,7 +32,7 @@ export type CompanyProfileDto = {
     description?: string;
     websiteUrl?: string;
     employeeCount?: number;
-    embedding?: string;
+    embedding?: ByteArray;
     id?: string;
     order?: number;
 };

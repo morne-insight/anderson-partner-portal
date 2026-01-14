@@ -53,6 +53,7 @@ namespace AndersonAPI.Infrastructure.Persistence
             ConfigureModel(modelBuilder);
             modelBuilder.ApplyConfiguration(new ApplicationIdentityUserConfiguration());
             modelBuilder.ApplyConfiguration(new CompanyProfileConfiguration());
+
         }
 
         protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
@@ -64,6 +65,8 @@ namespace AndersonAPI.Infrastructure.Persistence
         [IntentManaged(Mode.Ignore)]
         private void ConfigureModel(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<IdentityUser<string>>().ToTable("IdentityUsers");
+
             // Seed data
             // https://rehansaeed.com/migrating-to-entity-framework-core-seed-data/
             /* E.g.

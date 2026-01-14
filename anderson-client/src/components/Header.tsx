@@ -5,21 +5,26 @@ import {
   ChevronRight,
   ClipboardType,
   Home,
+  LogIn,
+  LogOut,
   Menu,
   Network,
   SquareFunction,
   StickyNote,
   Table,
+  User,
   Webhook,
   X,
 } from "lucide-react";
 import { useState } from "react";
+import { useAuth } from "../contexts/auth-context";
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [groupedExpanded, setGroupedExpanded] = useState<
     Record<string, boolean>
   >({});
+  const { user, isLoading, logout } = useAuth();
 
   return (
     <>
@@ -40,6 +45,36 @@ export default function Header() {
             />
           </Link>
         </h1>
+        
+        <div className="ml-auto flex items-center gap-4">
+          {isLoading ? (
+            <div className="text-sm text-gray-300">Loading...</div>
+          ) : user ? (
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2 text-sm">
+                <User size={16} />
+                <span>{user.email}</span>
+              </div>
+              <button
+                onClick={logout}
+                className="flex items-center gap-2 rounded-lg bg-red-600 px-3 py-2 text-sm font-medium text-white transition-colors hover:bg-red-700"
+              >
+                <LogOut size={16} />
+                Sign Out
+              </button>
+            </div>
+          ) : (
+            <div className="flex items-center gap-2">
+              <Link
+                to="/login"
+                className="flex items-center gap-2 rounded-lg bg-blue-600 px-3 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700"
+              >
+                <LogIn size={16} />
+                Sign In
+              </Link>
+            </div>
+          )}
+        </div>
       </header>
 
       <aside

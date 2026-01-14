@@ -13,7 +13,6 @@ namespace AndersonAPI.Application.CompanyProfiles
             ShortDescription = null!;
             Description = null!;
             WebsiteUrl = null!;
-            Embedding = null!;
         }
 
         public string Name { get; set; }
@@ -21,7 +20,7 @@ namespace AndersonAPI.Application.CompanyProfiles
         public string Description { get; set; }
         public string WebsiteUrl { get; set; }
         public int EmployeeCount { get; set; }
-        public string Embedding { get; set; }
+        public byte[]? Embedding { get; set; }
         public Guid Id { get; set; }
         public int Order { get; set; }
 
@@ -31,7 +30,7 @@ namespace AndersonAPI.Application.CompanyProfiles
             string description,
             string websiteUrl,
             int employeeCount,
-            string embedding,
+            byte[]? embedding,
             Guid id,
             int order)
         {

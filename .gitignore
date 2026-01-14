@@ -1,2 +1,7 @@
-anderson-client/.env.development
-anderson-client/.env.production
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/AndersonAPI/AndersonAPI/AndersonAPI.Api/appsettings.json
+/anderson-client/.env.development
+/anderson-client/.env.production

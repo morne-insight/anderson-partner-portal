@@ -20,6 +20,7 @@ export {
 } from "./sdk.gen";
 export type {
   AndersonApiApiControllersResponseTypesJsonResponseOfGuid,
+  ByteArray,
   ClientOptions,
   CompanyNameDto,
   CompanyProfileDto,
