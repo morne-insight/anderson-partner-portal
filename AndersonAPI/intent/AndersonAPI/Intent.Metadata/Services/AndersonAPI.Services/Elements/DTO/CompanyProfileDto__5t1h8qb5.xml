@@ -308,13 +308,13 @@
     </childElement>
     <childElement id="f455d35e-3e05-45a6-94e6-e9f71f49740d" type="DTO-Field" typeId="7baed1fd-469b-4980-8fd9-4cefb8331eb2">
       <name>Embedding</name>
-      <display>Embedding: string</display>
+      <display>Embedding: binary?</display>
       <isAbstract>false</isAbstract>
       <genericTypes />
       <typeReference id="eae89bc2-84ba-4dce-ae9d-b4c9aec47f49">
-        <typeId>d384db9c-a279-45e1-801e-e4e8099625f2</typeId>
+        <typeId>013af2c5-3c32-4752-8f59-db5691050aef</typeId>
         <isNavigable>true</isNavigable>
-        <isNullable>false</isNullable>
+        <isNullable>true</isNullable>
         <isCollection>false</isCollection>
         <isRequired>true</isRequired>
         <typePackageName>Intent.Common.Types</typePackageName>
@@ -325,7 +325,7 @@
       <isMapped>true</isMapped>
       <mappedClass>
         <mappingSettingsId>1f747d14-681c-4a20-8c68-34223f41b825</mappingSettingsId>
-        <autoSyncTypeReference>true</autoSyncTypeReference>
+        <autoSyncTypeReference>false</autoSyncTypeReference>
         <mappedPath>
           <target id="40c147d1-114f-437d-8bf9-38adc03f650c" name="Embedding" type="element" specialization="Attribute" specializationId="0090fb93-483e-41af-a11d-5ad2dc796adf" />
         </mappedPath>

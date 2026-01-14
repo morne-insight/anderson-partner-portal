@@ -34,8 +34,7 @@ namespace AndersonAPI.Infrastructure.Persistence.Configurations
             builder.Property(x => x.EmployeeCount)
                 .IsRequired();
 
-            builder.Property(x => x.Embedding)
-                .IsRequired();
+            builder.Property(x => x.Embedding);
 
             builder.Ignore(e => e.DomainEvents);
         }

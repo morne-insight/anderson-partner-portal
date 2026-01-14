@@ -23,7 +23,6 @@ namespace AndersonAPI.Domain.Entities
             ShortDescription = null!;
             Description = null!;
             WebsiteUrl = null!;
-            Embedding = null!;
         }
 
         public string Name { get; private set; }
@@ -36,7 +35,7 @@ namespace AndersonAPI.Domain.Entities
 
         public int EmployeeCount { get; private set; }
 
-        public string Embedding { get; private set; }
+        public byte[]? Embedding { get; private set; }
 
         public void UpdateProfile(string name, string shortDescription, string description, string websiteUrl, int employeeCount)
         {

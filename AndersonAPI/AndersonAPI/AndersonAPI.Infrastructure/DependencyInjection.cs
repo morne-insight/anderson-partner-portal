@@ -23,7 +23,7 @@ namespace AndersonAPI.Infrastructure
             services.AddDbContext<ApplicationDbContext>((sp, options) =>
             {
 
-                options.UseSqlite(
+                options.UseSqlServer(
                     configuration.GetConnectionString("DefaultConnection"),
                     b =>
                     {
