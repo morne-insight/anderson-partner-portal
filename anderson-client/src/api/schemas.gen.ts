@@ -14,6 +14,13 @@ export const AndersonAPI_Api_Controllers_ResponseTypes_JsonResponse_Of_GuidSchem
     }
 } as const;
 
+export const ByteArraySchema = {
+    title: 'ByteArray',
+    type: 'string',
+    format: 'byte',
+    nullable: true
+} as const;
+
 export const CompanyNameDtoSchema = {
     title: 'CompanyNameDto',
     type: 'object',
@@ -45,7 +52,7 @@ export const CompanyProfileDtoSchema = {
             format: 'int32'
         },
         embedding: {
-            type: 'string'
+            $ref: '#/components/schemas/ByteArray'
         },
         id: {
             type: 'string',

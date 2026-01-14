@@ -9,7 +9,10 @@ import {
 } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import Header from "../components/Header";
+import { AuthProvider } from "../contexts/auth-context";
 import appCss from "../styles.css?url";
+import NotFound from "@/components/NotFound";
+import "@/config/ts-client"; // Import global API configuration
 
 interface MyRouterContext {
   queryClient: QueryClient;
@@ -38,6 +41,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
   }),
 
   shellComponent: RootDocument,
+  notFoundComponent: NotFound,
 });
 
 function RootDocument({ children }: { children: React.ReactNode }) {
@@ -47,8 +51,10 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body>
-        <Header />
-        {children}
+        <AuthProvider>
+          <Header />
+          {children}
+        </AuthProvider>
         <TanStackDevtools
           config={{
             position: "bottom-right",

@@ -792,6 +792,12 @@
           }
         }
       },
+      "ByteArray": {
+        "title": "ByteArray",
+        "type": "string",
+        "format": "byte",
+        "nullable": true
+      },
       "CompanyNameDto": {
         "title": "CompanyNameDto",
         "type": "object",
@@ -822,7 +828,7 @@
             "format": "int32"
           },
           "embedding": {
-            "type": "string"
+            "$ref": "#/components/schemas/ByteArray"
           },
           "id": {
             "type": "string",
