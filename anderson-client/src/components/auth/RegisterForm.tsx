@@ -1,66 +1,68 @@
-import { useForm } from '@tanstack/react-form'
-import { z } from 'zod'
-import { useState } from 'react'
-import { Link } from '@tanstack/react-router'
-import { registerFn } from '../../server/auth'
-import { Button } from '../ui/button'
-import { Input } from '../ui/input'
-import { Label } from '../ui/label'
-import { useServerFn } from '@tanstack/react-start'
+import { useForm } from "@tanstack/react-form";
+import { Link } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
+import { useState } from "react";
+import { z } from "zod";
+import { registerFn } from "../../server/auth";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
+import { Label } from "../ui/label";
 
-const registerSchema = z.object({
-  email: z.string().email('Invalid email address'),
-  password: z.string().min(6, 'Password must be at least 6 characters'),
-  confirmPassword: z.string()
-}).refine((data) => data.password === data.confirmPassword, {
-  message: "Passwords don't match",
-  path: ["confirmPassword"]
-})
+const registerSchema = z
+  .object({
+    email: z.string().email("Invalid email address"),
+    password: z.string().min(6, "Password must be at least 6 characters"),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords don't match",
+    path: ["confirmPassword"],
+  });
 
 export function RegisterForm() {
-  const [error, setError] = useState<string | null>(null)
-  const [success, setSuccess] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
-  const register = useServerFn(registerFn)
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const register = useServerFn(registerFn);
 
   const form = useForm({
     defaultValues: {
-      email: 'mvanzyl@insight.com',
-      password: 'Password$123',
-      confirmPassword: 'Password$123'
+      email: "mvanzyl@insight.com",
+      password: "Password$123",
+      confirmPassword: "Password$123",
     },
     onSubmit: async ({ value }) => {
-      setError(null)
-      setIsLoading(true)
-      
+      setError(null);
+      setIsLoading(true);
+
       try {
         // Validate with Zod before submitting
-        const validatedData = registerSchema.parse(value)
-        
+        const validatedData = registerSchema.parse(value);
+
         // Call server function
-        const result = await register({ 
-          data: { 
-            email: validatedData.email, 
-            password: validatedData.password 
-          } 
-        })
-        
+        const result = await register({
+          data: {
+            email: validatedData.email,
+            password: validatedData.password,
+          },
+        });
+
         if (result?.error) {
-          setError(result.error)
+          setError(result.error);
         } else {
-          setSuccess(true)
+          setSuccess(true);
         }
       } catch (validationError) {
         if (validationError instanceof z.ZodError) {
-          setError(validationError.issues[0]?.message || 'Validation error')
+          setError(validationError.issues[0]?.message || "Validation error");
         } else {
-          setError('An unexpected error occurred. Please try again.')
+          setError("An unexpected error occurred. Please try again.");
         }
       } finally {
-        setIsLoading(false)
+        setIsLoading(false);
       }
-    }
-  })
+    },
+  });
 
   if (success) {
     return (
@@ -68,41 +70,39 @@ export function RegisterForm() {
         <div className="rounded-md bg-green-50 p-4 text-green-700">
           Registration successful! You can now sign in with your credentials.
         </div>
-        <Link to="/login" className="text-blue-600 hover:underline">
+        <Link className="text-blue-600 hover:underline" to="/login">
           Go to Sign In
         </Link>
       </div>
-    )
+    );
   }
 
   return (
     <div className="mx-auto max-w-md space-y-6">
       <div className="space-y-2 text-center">
-        <h1 className="text-3xl font-bold">Sign Up</h1>
+        <h1 className="font-bold text-3xl">Sign Up</h1>
         <p className="text-gray-500">Create a new account to get started</p>
       </div>
-      
+
       {error && (
-        <div className="rounded-md bg-red-50 p-4 text-red-700">
-          {error}
-        </div>
+        <div className="rounded-md bg-red-50 p-4 text-red-700">{error}</div>
       )}
 
       <form
-        onSubmit={(e) => {
-          e.preventDefault()
-          e.stopPropagation()
-          form.handleSubmit()
-        }}
         className="space-y-4"
+        onSubmit={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          form.handleSubmit();
+        }}
       >
-        <form.Field 
+        <form.Field
           name="email"
           validators={{
             onChange: ({ value }) => {
-              const result = z.string().email().safeParse(value)
-              return result.success ? undefined : 'Invalid email address'
-            }
+              const result = z.string().email().safeParse(value);
+              return result.success ? undefined : "Invalid email address";
+            },
           }}
         >
           {(field) => (
@@ -110,28 +110,31 @@ export function RegisterForm() {
               <Label htmlFor="email">Email</Label>
               <Input
                 id="email"
-                type="email"
-                value={field.state.value}
                 onBlur={field.handleBlur}
                 onChange={(e) => field.handleChange(e.target.value)}
                 placeholder="Enter your email"
+                type="email"
+                value={field.state.value}
               />
-              {field.state.meta.errors && field.state.meta.errors.length > 0 && (
-                <p className="text-sm text-red-600">
-                  {field.state.meta.errors[0]}
-                </p>
-              )}
+              {field.state.meta.errors &&
+                field.state.meta.errors.length > 0 && (
+                  <p className="text-red-600 text-sm">
+                    {field.state.meta.errors[0]}
+                  </p>
+                )}
             </div>
           )}
         </form.Field>
 
-        <form.Field 
+        <form.Field
           name="password"
           validators={{
             onChange: ({ value }) => {
-              const result = z.string().min(6).safeParse(value)
-              return result.success ? undefined : 'Password must be at least 6 characters'
-            }
+              const result = z.string().min(6).safeParse(value);
+              return result.success
+                ? undefined
+                : "Password must be at least 6 characters";
+            },
           }}
         >
           {(field) => (
@@ -139,28 +142,29 @@ export function RegisterForm() {
               <Label htmlFor="password">Password</Label>
               <Input
                 id="password"
-                type="password"
-                value={field.state.value}
                 onBlur={field.handleBlur}
                 onChange={(e) => field.handleChange(e.target.value)}
                 placeholder="Enter your password"
+                type="password"
+                value={field.state.value}
               />
-              {field.state.meta.errors && field.state.meta.errors.length > 0 && (
-                <p className="text-sm text-red-600">
-                  {field.state.meta.errors[0]}
-                </p>
-              )}
+              {field.state.meta.errors &&
+                field.state.meta.errors.length > 0 && (
+                  <p className="text-red-600 text-sm">
+                    {field.state.meta.errors[0]}
+                  </p>
+                )}
             </div>
           )}
         </form.Field>
 
-        <form.Field 
+        <form.Field
           name="confirmPassword"
           validators={{
             onChange: ({ value }) => {
-              const password = form.getFieldValue('password')
-              return value === password ? undefined : "Passwords don't match"
-            }
+              const password = form.getFieldValue("password");
+              return value === password ? undefined : "Passwords don't match";
+            },
           }}
         >
           {(field) => (
@@ -168,32 +172,33 @@ export function RegisterForm() {
               <Label htmlFor="confirmPassword">Confirm Password</Label>
               <Input
                 id="confirmPassword"
-                type="password"
-                value={field.state.value}
                 onBlur={field.handleBlur}
                 onChange={(e) => field.handleChange(e.target.value)}
                 placeholder="Confirm your password"
+                type="password"
+                value={field.state.value}
               />
-              {field.state.meta.errors && field.state.meta.errors.length > 0 && (
-                <p className="text-sm text-red-600">
-                  {field.state.meta.errors[0]}
-                </p>
-              )}
+              {field.state.meta.errors &&
+                field.state.meta.errors.length > 0 && (
+                  <p className="text-red-600 text-sm">
+                    {field.state.meta.errors[0]}
+                  </p>
+                )}
             </div>
           )}
         </form.Field>
 
-        <Button type="submit" disabled={isLoading} className="w-full">
-          {isLoading ? 'Creating Account...' : 'Sign Up'}
+        <Button className="w-full" disabled={isLoading} type="submit">
+          {isLoading ? "Creating Account..." : "Sign Up"}
         </Button>
       </form>
 
       <p className="text-center text-sm">
-        Already have an account?{' '}
-        <Link to="/login" className="text-blue-600 hover:underline">
+        Already have an account?{" "}
+        <Link className="text-blue-600 hover:underline" to="/login">
           Sign in
         </Link>
       </p>
     </div>
-  )
+  );
 }

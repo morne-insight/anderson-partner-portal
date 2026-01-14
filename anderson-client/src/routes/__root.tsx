@@ -8,10 +8,10 @@ import {
   Scripts,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
+import NotFound from "@/components/NotFound";
 import Header from "../components/Header";
 import { AuthProvider } from "../contexts/auth-context";
 import appCss from "../styles.css?url";
-import NotFound from "@/components/NotFound";
 import "@/config/ts-client"; // Import global API configuration
 
 interface MyRouterContext {

@@ -1,22 +1,22 @@
 // src/utils/session.ts
-import { useSession } from '@tanstack/react-start/server'
+import { useSession } from "@tanstack/react-start/server";
 
 export type SessionData = {
-  userId?: string
-  email?: string
-  roles?: string[]
-  accessToken?: string // store JWT here (server-only cookie session)
-  accessTokenExpiresAt?: number
-}
+  userId?: string;
+  email?: string;
+  roles?: string[];
+  accessToken?: string; // store JWT here (server-only cookie session)
+  accessTokenExpiresAt?: number;
+};
 
 export function useAppSession() {
   return useSession<SessionData>({
-    name: 'app-session',
+    name: "app-session",
     password: process.env.SESSION_SECRET!, // >= 32 chars
     cookie: {
       httpOnly: true,
-      sameSite: 'lax',
-      secure: process.env.NODE_ENV === 'production',
+      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
     },
-  })
+  });
 }
