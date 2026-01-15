@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <class id="3259289c-5d51-46cb-8c99-78751b456c44" type="Class" typeId="04e12b51-ed12-42a3-9667-a6aa81bb6d10">
   <name>CompanyProfile</name>
-  <display>CompanyProfile : EntityBase</display>
+  <display>CompanyProfile : BaseEntity</display>
   <isAbstract>false</isAbstract>
   <sort-children>by-type-then-manually</sort-children>
   <genericTypes />
@@ -9,7 +9,14 @@
   <parentFolderId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</parentFolderId>
   <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
   <packageName>AndersonAPI.Domain</packageName>
-  <stereotypes />
+  <stereotypes>
+    <stereotype stereotypeDefinitionId="796ec2fb-cdb9-4f8e-b096-a4f72c7a7f93" name="Basic Auditing">
+      <addedByDefault>false</addedByDefault>
+      <definitionPackageName>Intent.Entities.BasicAuditing</definitionPackageName>
+      <definitionPackageId>bed6bd70-2214-4a74-a437-dfb3b68dd198</definitionPackageId>
+      <properties />
+    </stereotype>
+  </stereotypes>
   <metadata />
   <childElements>
     <childElement id="9081fc0f-3896-4400-9f42-56eedd0943a0" type="Attribute" typeId="0090fb93-483e-41af-a11d-5ad2dc796adf">
@@ -83,8 +90,8 @@
       <childElements />
     </childElement>
     <childElement id="7e9cabc0-58c1-49aa-be3a-c64f0933f802" type="Attribute" typeId="0090fb93-483e-41af-a11d-5ad2dc796adf">
-      <name>Description</name>
-      <display>Description: string</display>
+      <name>FullDescription</name>
+      <display>FullDescription: string</display>
       <isAbstract>false</isAbstract>
       <genericTypes />
       <typeReference id="fbe47dc8-15c3-49b8-bee6-ffb0964d288a">
@@ -200,6 +207,110 @@
       <metadata />
       <childElements />
     </childElement>
+    <childElement id="686f7218-3f4d-4865-ba82-af315d7d3a28" type="Attribute" typeId="0090fb93-483e-41af-a11d-5ad2dc796adf">
+      <name>CreatedBy</name>
+      <display>CreatedBy: guid</display>
+      <isAbstract>false</isAbstract>
+      <genericTypes />
+      <typeReference id="2f179a4a-6b80-4bbb-9ce5-6a65b8bd114c">
+        <typeId>6b649125-18ea-48fd-a6ba-0bfff0d8f488</typeId>
+        <isNavigable>true</isNavigable>
+        <isNullable>false</isNullable>
+        <isCollection>false</isCollection>
+        <isRequired>true</isRequired>
+        <typePackageName>Intent.Common.Types</typePackageName>
+        <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
+        <stereotypes />
+        <genericTypeParameters />
+      </typeReference>
+      <isMapped>false</isMapped>
+      <parentFolderId>3259289c-5d51-46cb-8c99-78751b456c44</parentFolderId>
+      <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+      <packageName>AndersonAPI.Domain</packageName>
+      <stereotypes />
+      <metadata>
+        <entry key="set-by-infrastructure" value="true" />
+      </metadata>
+      <childElements />
+    </childElement>
+    <childElement id="ff72a3be-38fa-4a97-a156-60dd4a18dbd6" type="Attribute" typeId="0090fb93-483e-41af-a11d-5ad2dc796adf">
+      <name>CreatedDate</name>
+      <display>CreatedDate: datetimeoffset</display>
+      <isAbstract>false</isAbstract>
+      <genericTypes />
+      <typeReference id="cb203273-6e93-4b86-b236-557fcba1b628">
+        <typeId>f1ba4df3-a5bc-427e-a591-4f6029f89bd7</typeId>
+        <isNavigable>true</isNavigable>
+        <isNullable>false</isNullable>
+        <isCollection>false</isCollection>
+        <isRequired>true</isRequired>
+        <typePackageName>Intent.Common.Types</typePackageName>
+        <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
+        <stereotypes />
+        <genericTypeParameters />
+      </typeReference>
+      <isMapped>false</isMapped>
+      <parentFolderId>3259289c-5d51-46cb-8c99-78751b456c44</parentFolderId>
+      <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+      <packageName>AndersonAPI.Domain</packageName>
+      <stereotypes />
+      <metadata>
+        <entry key="set-by-infrastructure" value="true" />
+      </metadata>
+      <childElements />
+    </childElement>
+    <childElement id="3ad2bfc6-a2e6-4c6a-8899-6900b8576bf0" type="Attribute" typeId="0090fb93-483e-41af-a11d-5ad2dc796adf">
+      <name>UpdatedBy</name>
+      <display>UpdatedBy: guid?</display>
+      <isAbstract>false</isAbstract>
+      <genericTypes />
+      <typeReference id="53ffe02a-1139-4ab5-bc01-d468a45ea0b5">
+        <typeId>6b649125-18ea-48fd-a6ba-0bfff0d8f488</typeId>
+        <isNavigable>true</isNavigable>
+        <isNullable>true</isNullable>
+        <isCollection>false</isCollection>
+        <isRequired>true</isRequired>
+        <typePackageName>Intent.Common.Types</typePackageName>
+        <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
+        <stereotypes />
+        <genericTypeParameters />
+      </typeReference>
+      <isMapped>false</isMapped>
+      <parentFolderId>3259289c-5d51-46cb-8c99-78751b456c44</parentFolderId>
+      <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+      <packageName>AndersonAPI.Domain</packageName>
+      <stereotypes />
+      <metadata>
+        <entry key="set-by-infrastructure" value="true" />
+      </metadata>
+      <childElements />
+    </childElement>
+    <childElement id="5072ff96-4934-4890-9f82-afdc18770af2" type="Attribute" typeId="0090fb93-483e-41af-a11d-5ad2dc796adf">
+      <name>UpdatedDate</name>
+      <display>UpdatedDate: datetimeoffset?</display>
+      <isAbstract>false</isAbstract>
+      <genericTypes />
+      <typeReference id="b0a86521-9691-4f35-9086-86cebc466ab3">
+        <typeId>f1ba4df3-a5bc-427e-a591-4f6029f89bd7</typeId>
+        <isNavigable>true</isNavigable>
+        <isNullable>true</isNullable>
+        <isCollection>false</isCollection>
+        <isRequired>true</isRequired>
+        <typePackageName>Intent.Common.Types</typePackageName>
+        <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
+        <stereotypes />
+        <genericTypeParameters />
+      </typeReference>
+      <isMapped>false</isMapped>
+      <parentFolderId>3259289c-5d51-46cb-8c99-78751b456c44</parentFolderId>
+      <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+      <packageName>AndersonAPI.Domain</packageName>
+      <stereotypes />
+      <metadata>
+        <entry key="set-by-infrastructure" value="true" />
+      </metadata>
+      <childElements />
+    </childElement>
     <childElement id="d2667ce0-ba29-468a-8bb9-6fe53bb6b67b" type="Class Constructor" typeId="dec2bd12-4699-4f45-8ec9-3b62dc692d2b">
       <name>Constructor</name>
       <display>CompanyProfile(name: string, shortDescription: string, description: string, websiteUrl: string, employeeCount: int)</display>
@@ -305,7 +416,7 @@
             <mappingSettingsId>d6d0abfd-893c-4bec-92cb-419934ba5ba8</mappingSettingsId>
             <autoSyncTypeReference>true</autoSyncTypeReference>
             <mappedPath>
-              <target id="7e9cabc0-58c1-49aa-be3a-c64f0933f802" name="Description" type="element" specialization="Attribute" specializationId="0090fb93-483e-41af-a11d-5ad2dc796adf" />
+              <target id="7e9cabc0-58c1-49aa-be3a-c64f0933f802" name="FullDescription" type="element" specialization="Attribute" specializationId="0090fb93-483e-41af-a11d-5ad2dc796adf" />
             </mappedPath>
           </mappedClass>
           <parentFolderId>d2667ce0-ba29-468a-8bb9-6fe53bb6b67b</parentFolderId>
@@ -492,7 +603,7 @@
             <mappingSettingsId>7590bd83-04bc-40fe-8b5c-118277c049d4</mappingSettingsId>
             <autoSyncTypeReference>true</autoSyncTypeReference>
             <mappedPath>
-              <target id="7e9cabc0-58c1-49aa-be3a-c64f0933f802" name="Description" type="element" specialization="Attribute" specializationId="0090fb93-483e-41af-a11d-5ad2dc796adf" />
+              <target id="7e9cabc0-58c1-49aa-be3a-c64f0933f802" name="FullDescription" type="element" specialization="Attribute" specializationId="0090fb93-483e-41af-a11d-5ad2dc796adf" />
             </mappedPath>
           </mappedClass>
           <parentFolderId>d6578f9c-1ede-4848-8166-d14a98ca0f46</parentFolderId>

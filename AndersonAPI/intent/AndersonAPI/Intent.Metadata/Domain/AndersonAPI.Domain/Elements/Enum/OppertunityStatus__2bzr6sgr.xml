@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<class id="db971122-b648-49cd-824c-203597398138" type="Enum" typeId="85fba0e9-9161-4c85-a603-a229ef312beb">
+  <name>OppertunityStatus</name>
+  <display>OppertunityStatus</display>
+  <isAbstract>false</isAbstract>
+  <sort-children>by-type-then-manually</sort-children>
+  <genericTypes />
+  <isMapped>false</isMapped>
+  <parentFolderId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</parentFolderId>
+  <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+  <packageName>AndersonAPI.Domain</packageName>
+  <stereotypes />
+  <metadata />
+  <childElements>
+    <childElement id="94eb773f-83d7-4685-a821-008a35795d72" type="Enum-Literal" typeId="4215f417-25d2-4509-9309-5076a1452eaa">
+      <name>Open</name>
+      <display>Open = 1</display>
+      <isAbstract>false</isAbstract>
+      <value>1</value>
+      <genericTypes />
+      <isMapped>false</isMapped>
+      <parentFolderId>db971122-b648-49cd-824c-203597398138</parentFolderId>
+      <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+      <packageName>AndersonAPI.Domain</packageName>
+      <stereotypes />
+      <metadata />
+      <childElements />
+    </childElement>
+    <childElement id="ce44f292-ead3-49ca-bf12-f921ed6e5976" type="Enum-Literal" typeId="4215f417-25d2-4509-9309-5076a1452eaa">
+      <name>Closed</name>
+      <display>Closed = 2</display>
+      <isAbstract>false</isAbstract>
+      <value>2</value>
+      <genericTypes />
+      <isMapped>false</isMapped>
+      <parentFolderId>db971122-b648-49cd-824c-203597398138</parentFolderId>
+      <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+      <packageName>AndersonAPI.Domain</packageName>
+      <stereotypes />
+      <metadata />
+      <childElements />
+    </childElement>
+  </childElements>
+</class>

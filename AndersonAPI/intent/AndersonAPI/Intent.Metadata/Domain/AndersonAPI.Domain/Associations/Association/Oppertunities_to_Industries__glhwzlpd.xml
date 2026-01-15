@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<association id="db7a35d3-a6a8-4284-a704-55d895fcfe18">
+  <sourceEnd id="104e1ce3-5aa7-4d8d-a476-da733dab1fcb" type="Association Source End" typeId="8d9d2e5b-bd55-4f36-9ae4-2b9e84fd4e58">
+    <name>Oppertunities</name>
+    <display>Oppertunities: Oppertunity[*]</display>
+    <order>0</order>
+    <typeReference id="7930f8d1-d191-4536-971e-e8453f45fc0c">
+      <typeId>3e927715-656c-4eef-b1ca-01b028627764</typeId>
+      <isNavigable>false</isNavigable>
+      <isNullable>false</isNullable>
+      <isCollection>true</isCollection>
+      <isRequired>true</isRequired>
+      <typePackageName>AndersonAPI.Domain</typePackageName>
+      <typePackageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</typePackageId>
+      <stereotypes />
+      <genericTypeParameters />
+    </typeReference>
+    <stereotypes />
+    <metadata />
+    <childElements />
+  </sourceEnd>
+  <targetEnd id="db7a35d3-a6a8-4284-a704-55d895fcfe18" type="Association Target End" typeId="0a66489f-30aa-417b-a75d-b945863366fd">
+    <name>Industries</name>
+    <display>Industries: Industry[*]</display>
+    <order>18</order>
+    <typeReference id="37c776bd-f2af-4554-8224-af0347a1fc42">
+      <typeId>6c47b169-df9b-47ae-a098-8463d7d86ad2</typeId>
+      <isNavigable>true</isNavigable>
+      <isNullable>false</isNullable>
+      <isCollection>true</isCollection>
+      <isRequired>true</isRequired>
+      <typePackageName>AndersonAPI.Domain</typePackageName>
+      <typePackageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</typePackageId>
+      <stereotypes />
+      <genericTypeParameters />
+    </typeReference>
+    <stereotypes />
+    <metadata />
+    <childElements />
+  </targetEnd>
+  <associationType>Association</associationType>
+  <associationTypeId>eaf9ed4e-0b61-4ac1-ba88-09f912c12087</associationTypeId>
+  <stereotypes />
+</association>

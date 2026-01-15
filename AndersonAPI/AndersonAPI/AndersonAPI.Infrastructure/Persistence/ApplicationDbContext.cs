@@ -28,7 +28,15 @@ namespace AndersonAPI.Infrastructure.Persistence
         }
 
         public DbSet<ApplicationIdentityUser> ApplicationIdentityUsers { get; set; }
+        public DbSet<Capability> Capabilities { get; set; }
         public DbSet<CompanyProfile> CompanyProfiles { get; set; }
+        public DbSet<Country> Countries { get; set; }
+        public DbSet<Industry> Industries { get; set; }
+        public DbSet<Oppertunity> Oppertunities { get; set; }
+        public DbSet<OppertunityType> OppertunityTypes { get; set; }
+        public DbSet<Region> Regions { get; set; }
+        public DbSet<Review> Reviews { get; set; }
+        public DbSet<ServiceType> ServiceTypes { get; set; }
 
         public override async Task<int> SaveChangesAsync(
             bool acceptAllChangesOnSuccess,
@@ -52,7 +60,15 @@ namespace AndersonAPI.Infrastructure.Persistence
 
             ConfigureModel(modelBuilder);
             modelBuilder.ApplyConfiguration(new ApplicationIdentityUserConfiguration());
+            modelBuilder.ApplyConfiguration(new CapabilityConfiguration());
             modelBuilder.ApplyConfiguration(new CompanyProfileConfiguration());
+            modelBuilder.ApplyConfiguration(new CountryConfiguration());
+            modelBuilder.ApplyConfiguration(new IndustryConfiguration());
+            modelBuilder.ApplyConfiguration(new OppertunityConfiguration());
+            modelBuilder.ApplyConfiguration(new OppertunityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new RegionConfiguration());
+            modelBuilder.ApplyConfiguration(new ReviewConfiguration());
+            modelBuilder.ApplyConfiguration(new ServiceTypeConfiguration());
 
         }
 

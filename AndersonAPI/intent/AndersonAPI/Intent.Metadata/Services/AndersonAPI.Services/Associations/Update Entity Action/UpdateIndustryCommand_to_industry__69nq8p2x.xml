@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<association id="76d9535b-c90d-426e-98e6-db43b44bc256">
+  <sourceEnd id="c258c70d-7963-4d3e-8bdd-2fd3d1168f59" type="Update Entity Action Source End" typeId="6bc95978-6def-4d0c-a4f5-25bdeda8a9f6">
+    <display>updated by : Industries.UpdateIndustryCommand</display>
+    <order>0</order>
+    <typeReference id="f695bf24-f0ab-4367-8f60-b43f98a35c6f">
+      <typeId>c3e421e4-813e-4dad-b76e-da5d325ef87b</typeId>
+      <isNavigable>false</isNavigable>
+      <isNullable>false</isNullable>
+      <isCollection>false</isCollection>
+      <isRequired>true</isRequired>
+      <typePackageName>AndersonAPI.Services</typePackageName>
+      <typePackageId>c8555d38-5afc-4ea2-9a61-c7a505212753</typePackageId>
+      <stereotypes />
+      <genericTypeParameters />
+    </typeReference>
+    <stereotypes />
+    <metadata />
+    <childElements />
+  </sourceEnd>
+  <targetEnd id="76d9535b-c90d-426e-98e6-db43b44bc256" type="Update Entity Action Target End" typeId="516069f6-09cc-4de8-8e31-3c71ca823452">
+    <name>industry</name>
+    <display>[update] industry: Update</display>
+    <order>3</order>
+    <traits>
+      <trait id="d00a2ab0-9a23-4192-b8bb-166798fc7dba" name="[Processing Action]" />
+    </traits>
+    <typeReference id="60fcb998-e954-4321-a321-734824dd90a2">
+      <typeId>cc42487f-84a3-4e24-9b7c-ceffc6b844b5</typeId>
+      <isNavigable>true</isNavigable>
+      <isNullable>false</isNullable>
+      <isCollection>false</isCollection>
+      <isRequired>true</isRequired>
+      <typePackageName>AndersonAPI.Domain</typePackageName>
+      <typePackageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</typePackageId>
+      <stereotypes />
+      <genericTypeParameters />
+    </typeReference>
+    <stereotypes />
+    <mappings>
+      <mapping type="Query Entity Mapping" typeId="25f25af9-c38b-4053-9474-b0fabe9d7ea7">
+        <source applicationId="e87261ce-2b9f-4042-8562-a503e4cf2759" designerId="81104ae6-2bc5-4bae-b05a-f987b0372d81" elementId="c3e421e4-813e-4dad-b76e-da5d325ef87b" location="[AndersonAPI].[Services].[UpdateIndustryCommand]" />
+        <target applicationId="e87261ce-2b9f-4042-8562-a503e4cf2759" designerId="6ab29b31-27af-4f56-a67c-986d82097d63" elementId="6c47b169-df9b-47ae-a098-8463d7d86ad2" location="[AndersonAPI].[Services].[Industry]" />
+        <mappedEnds>
+          <mappedEnd>
+            <expression>{Id}</expression>
+            <path>
+              <target id="6c47b169-df9b-47ae-a098-8463d7d86ad2" name="Industry" type="element" specialization="Class" specializationId="04e12b51-ed12-42a3-9667-a6aa81bb6d10" />
+              <target id="9720508f-0266-4d5b-a633-167cda1bb98d" name="base" type="association" specialization="Generalization Target End" specializationId="4686cc1d-b4d8-4b99-b45b-f77bd5496946" />
+              <target id="fc537b78-379d-4cc3-8f24-67772e8dc50d" name="base" type="association" specialization="Generalization Target End" specializationId="4686cc1d-b4d8-4b99-b45b-f77bd5496946" />
+              <target id="9ed19ba4-548e-4be5-b0ed-eea43cc82348" name="Id" type="element" specialization="Attribute" specializationId="0090fb93-483e-41af-a11d-5ad2dc796adf" />
+            </path>
+            <sources>
+              <source identifier="Id" mappingType="Filter Mapping" mappingTypeId="01d09a7f-0e7c-4670-b7bc-395d7e893ef2">
+                <path>
+                  <target id="c3e421e4-813e-4dad-b76e-da5d325ef87b" name="UpdateIndustryCommand" type="element" specialization="Command" specializationId="ccf14eb6-3a55-4d81-b5b9-d27311c70cb9" />
+                  <target id="169f0c1c-61fe-4345-b2ef-b491c3816c61" name="Id" type="element" specialization="DTO-Field" specializationId="7baed1fd-469b-4980-8fd9-4cefb8331eb2" />
+                </path>
+              </source>
+            </sources>
+          </mappedEnd>
+        </mappedEnds>
+      </mapping>
+      <mapping type="Update Entity Mapping" typeId="01721b1a-a85d-4320-a5cd-8bd39247196a">
+        <source applicationId="e87261ce-2b9f-4042-8562-a503e4cf2759" designerId="81104ae6-2bc5-4bae-b05a-f987b0372d81" elementId="c3e421e4-813e-4dad-b76e-da5d325ef87b" location="[AndersonAPI].[Services].[UpdateIndustryCommand]" />
+        <target applicationId="e87261ce-2b9f-4042-8562-a503e4cf2759" designerId="6ab29b31-27af-4f56-a67c-986d82097d63" elementId="6c47b169-df9b-47ae-a098-8463d7d86ad2" location="[AndersonAPI].[Services].[Industry]" />
+        <mappedEnds>
+          <mappedEnd>
+            <expression>{UpdateIndustryCommand}</expression>
+            <path>
+              <target id="6c47b169-df9b-47ae-a098-8463d7d86ad2" name="Industry" type="element" specialization="Class" specializationId="04e12b51-ed12-42a3-9667-a6aa81bb6d10" />
+              <target id="cc42487f-84a3-4e24-9b7c-ceffc6b844b5" name="Update" type="element" specialization="Operation" specializationId="e042bb67-a1df-480c-9935-b26210f78591" />
+            </path>
+            <sources>
+              <source identifier="UpdateIndustryCommand" mappingType="Invocation Mapping" mappingTypeId="d30bdba1-9c47-4917-b81d-29230fed5d6a">
+                <path>
+                  <target id="c3e421e4-813e-4dad-b76e-da5d325ef87b" name="UpdateIndustryCommand" type="element" specialization="Command" specializationId="ccf14eb6-3a55-4d81-b5b9-d27311c70cb9" />
+                </path>
+              </source>
+            </sources>
+          </mappedEnd>
+          <mappedEnd>
+            <expression>{Name}</expression>
+            <path>
+              <target id="6c47b169-df9b-47ae-a098-8463d7d86ad2" name="Industry" type="element" specialization="Class" specializationId="04e12b51-ed12-42a3-9667-a6aa81bb6d10" />
+              <target id="cc42487f-84a3-4e24-9b7c-ceffc6b844b5" name="Update" type="element" specialization="Operation" specializationId="e042bb67-a1df-480c-9935-b26210f78591" />
+              <target id="3364e663-0737-4d27-8230-ab11d9d12571" name="name" type="element" specialization="Parameter" specializationId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b" />
+            </path>
+            <sources>
+              <source identifier="Name" mappingType="Data Mapping" mappingTypeId="ca88649b-f20b-44db-a9c0-017c26155ba8">
+                <path>
+                  <target id="c3e421e4-813e-4dad-b76e-da5d325ef87b" name="UpdateIndustryCommand" type="element" specialization="Command" specializationId="ccf14eb6-3a55-4d81-b5b9-d27311c70cb9" />
+                  <target id="a190f579-4ddb-4239-aa72-3d5ea8950ff3" name="Name" type="element" specialization="DTO-Field" specializationId="7baed1fd-469b-4980-8fd9-4cefb8331eb2" />
+                </path>
+              </source>
+            </sources>
+          </mappedEnd>
+          <mappedEnd>
+            <expression>{Description}</expression>
+            <path>
+              <target id="6c47b169-df9b-47ae-a098-8463d7d86ad2" name="Industry" type="element" specialization="Class" specializationId="04e12b51-ed12-42a3-9667-a6aa81bb6d10" />
+              <target id="cc42487f-84a3-4e24-9b7c-ceffc6b844b5" name="Update" type="element" specialization="Operation" specializationId="e042bb67-a1df-480c-9935-b26210f78591" />
+              <target id="7a8de790-a7d6-44e0-8820-ee427cba420c" name="description" type="element" specialization="Parameter" specializationId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b" />
+            </path>
+            <sources>
+              <source identifier="Description" mappingType="Data Mapping" mappingTypeId="ca88649b-f20b-44db-a9c0-017c26155ba8">
+                <path>
+                  <target id="c3e421e4-813e-4dad-b76e-da5d325ef87b" name="UpdateIndustryCommand" type="element" specialization="Command" specializationId="ccf14eb6-3a55-4d81-b5b9-d27311c70cb9" />
+                  <target id="c2c2edd0-56a1-4956-baf6-1edd6db9008b" name="Description" type="element" specialization="DTO-Field" specializationId="7baed1fd-469b-4980-8fd9-4cefb8331eb2" />
+                </path>
+              </source>
+            </sources>
+          </mappedEnd>
+        </mappedEnds>
+      </mapping>
+    </mappings>
+    <metadata />
+    <childElements />
+  </targetEnd>
+  <associationType>Update Entity Action</associationType>
+  <associationTypeId>9ea0382a-4617-412a-a8c8-af987bbce226</associationTypeId>
+  <stereotypes />
+</association>

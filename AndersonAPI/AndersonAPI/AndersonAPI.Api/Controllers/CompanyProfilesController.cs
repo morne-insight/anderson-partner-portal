@@ -3,10 +3,11 @@ using AndersonAPI.Api.Controllers.ResponseTypes;
 using AndersonAPI.Application.CompanyProfiles;
 using AndersonAPI.Application.CompanyProfiles.CreateCompanyProfile;
 using AndersonAPI.Application.CompanyProfiles.DeleteCompanyProfile;
+using AndersonAPI.Application.CompanyProfiles.GetCompanyCount;
 using AndersonAPI.Application.CompanyProfiles.GetCompanyNames;
 using AndersonAPI.Application.CompanyProfiles.GetCompanyProfileById;
 using AndersonAPI.Application.CompanyProfiles.GetCompanyProfiles;
-using AndersonAPI.Application.CompanyProfiles.UpdateProfileCompanyProfile;
+using AndersonAPI.Application.CompanyProfiles.UpdateCompanyProfile;
 using Intent.RoslynWeaver.Attributes;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -73,9 +74,9 @@ namespace AndersonAPI.Api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult> UpdateProfileCompanyProfile(
+        public async Task<ActionResult> UpdateCompanyProfile(
             [FromRoute] Guid id,
-            [FromBody] UpdateProfileCompanyProfileCommand command,
+            [FromBody] UpdateCompanyProfileCommand command,
             CancellationToken cancellationToken = default)
         {
             if (command.Id == Guid.Empty)
@@ -90,6 +91,19 @@ namespace AndersonAPI.Api.Controllers
 
             await _mediator.Send(command, cancellationToken);
             return NoContent();
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <response code="200">Returns the specified int.</response>
+        [HttpGet("api/company-profiles/company-count")]
+        [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(JsonResponse<int>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<JsonResponse<int>>> GetCompanyCount(CancellationToken cancellationToken = default)
+        {
+            var result = await _mediator.Send(new GetCompanyCountQuery(), cancellationToken);
+            return Ok(new JsonResponse<int>(result));
         }
 
         /// <summary>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<association id="f45f9f98-14e1-4f28-bb91-64bc43c3b243">
+  <sourceEnd id="0232fa91-468a-41a9-9238-e3be9969150f" type="Association Source End" typeId="8d9d2e5b-bd55-4f36-9ae4-2b9e84fd4e58">
+    <name>Reviews</name>
+    <display>Reviews: Review[*]</display>
+    <order>0</order>
+    <typeReference id="e9fd23f7-c277-4df9-b7d0-db2643aeb30c">
+      <typeId>a66e248c-b5ab-49ee-a926-9930d073a5bf</typeId>
+      <isNavigable>false</isNavigable>
+      <isNullable>false</isNullable>
+      <isCollection>true</isCollection>
+      <isRequired>true</isRequired>
+      <typePackageName>AndersonAPI.Domain</typePackageName>
+      <typePackageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</typePackageId>
+      <stereotypes />
+      <genericTypeParameters />
+    </typeReference>
+    <stereotypes />
+    <metadata />
+    <childElements />
+  </sourceEnd>
+  <targetEnd id="f45f9f98-14e1-4f28-bb91-64bc43c3b243" type="Association Target End" typeId="0a66489f-30aa-417b-a75d-b945863366fd">
+    <name>ApplicationIdentityUser</name>
+    <display>ApplicationIdentityUser: ApplicationIdentityUser</display>
+    <order>13</order>
+    <typeReference id="030178a1-b167-45f1-94fb-5dd07fd7258c">
+      <typeId>0cc17a59-dc32-4408-b0fc-d0814cb75815</typeId>
+      <isNavigable>true</isNavigable>
+      <isNullable>false</isNullable>
+      <isCollection>false</isCollection>
+      <isRequired>true</isRequired>
+      <typePackageName>AndersonAPI.Domain</typePackageName>
+      <typePackageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</typePackageId>
+      <stereotypes />
+      <genericTypeParameters />
+    </typeReference>
+    <stereotypes />
+    <metadata />
+    <childElements />
+  </targetEnd>
+  <associationType>Association</associationType>
+  <associationTypeId>eaf9ed4e-0b61-4ac1-ba88-09f912c12087</associationTypeId>
+  <stereotypes />
+</association>

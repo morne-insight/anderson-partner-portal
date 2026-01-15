@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<association id="b277de1e-3a83-4881-a56a-c6e3a4a76f6b">
+  <sourceEnd id="248eed5d-d798-40e3-93fd-5c6a9ade2d6f" type="Association Source End" typeId="8d9d2e5b-bd55-4f36-9ae4-2b9e84fd4e58">
+    <name>Locations</name>
+    <display>Locations: Location[*]</display>
+    <order>0</order>
+    <typeReference id="d233d64c-c7c5-4f3f-9ed6-ce306f67c043">
+      <typeId>93773201-e34f-4a1f-b82e-f3cedba6dbd1</typeId>
+      <isNavigable>false</isNavigable>
+      <isNullable>false</isNullable>
+      <isCollection>true</isCollection>
+      <isRequired>true</isRequired>
+      <typePackageName>AndersonAPI.Domain</typePackageName>
+      <typePackageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</typePackageId>
+      <stereotypes />
+      <genericTypeParameters />
+    </typeReference>
+    <stereotypes />
+    <metadata />
+    <childElements />
+  </sourceEnd>
+  <targetEnd id="b277de1e-3a83-4881-a56a-c6e3a4a76f6b" type="Association Target End" typeId="0a66489f-30aa-417b-a75d-b945863366fd">
+    <name>Region</name>
+    <display>Region: Region</display>
+    <order>8</order>
+    <typeReference id="adb32dd5-6dde-42db-92bd-effd2b07675c">
+      <typeId>8c1f3c67-c4a9-4f0f-b5df-142e5cb66942</typeId>
+      <isNavigable>true</isNavigable>
+      <isNullable>false</isNullable>
+      <isCollection>false</isCollection>
+      <isRequired>true</isRequired>
+      <typePackageName>AndersonAPI.Domain</typePackageName>
+      <typePackageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</typePackageId>
+      <stereotypes />
+      <genericTypeParameters />
+    </typeReference>
+    <stereotypes />
+    <metadata />
+    <childElements />
+  </targetEnd>
+  <associationType>Association</associationType>
+  <associationTypeId>eaf9ed4e-0b61-4ac1-ba88-09f912c12087</associationTypeId>
+  <stereotypes />
+</association>

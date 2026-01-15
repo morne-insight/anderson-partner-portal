@@ -14,6 +14,20 @@ export const AndersonAPI_Api_Controllers_ResponseTypes_JsonResponse_Of_GuidSchem
     }
 } as const;
 
+export const AndersonAPI_Api_Controllers_ResponseTypes_JsonResponse_Of_Int32Schema = {
+    title: 'AndersonAPI.Api.Controllers.ResponseTypes.JsonResponse_Of_Int32',
+    required: [
+        'value'
+    ],
+    type: 'object',
+    properties: {
+        value: {
+            type: 'integer',
+            format: 'int32'
+        }
+    }
+} as const;
+
 export const ByteArraySchema = {
     title: 'ByteArray',
     type: 'string',
@@ -26,6 +40,12 @@ export const CompanyNameDtoSchema = {
     type: 'object',
     properties: {
         name: {
+            type: 'string'
+        },
+        shortDescription: {
+            type: 'string'
+        },
+        websiteUrl: {
             type: 'string'
         }
     }
@@ -110,6 +130,23 @@ export const CreateCompanyProfileCommandSchema = {
     }
 } as const;
 
+export const CreateIndustryCommandSchema = {
+    title: 'CreateIndustryCommand',
+    required: [
+        'name',
+        'description'
+    ],
+    type: 'object',
+    properties: {
+        name: {
+            type: 'string'
+        },
+        description: {
+            type: 'string'
+        }
+    }
+} as const;
+
 export const ForgotPasswordDtoSchema = {
     title: 'ForgotPasswordDto',
     type: 'object',
@@ -117,6 +154,27 @@ export const ForgotPasswordDtoSchema = {
         email: {
             type: 'string',
             nullable: true
+        }
+    }
+} as const;
+
+export const IndustryDtoSchema = {
+    title: 'IndustryDto',
+    type: 'object',
+    properties: {
+        name: {
+            type: 'string'
+        },
+        description: {
+            type: 'string'
+        },
+        id: {
+            type: 'string',
+            format: 'uuid'
+        },
+        order: {
+            type: 'integer',
+            format: 'int32'
         }
     }
 } as const;
@@ -243,27 +301,8 @@ export const TokenResultDtoSchema = {
     }
 } as const;
 
-export const UpdateInfoDtoSchema = {
-    title: 'UpdateInfoDto',
-    type: 'object',
-    properties: {
-        newEmail: {
-            type: 'string',
-            nullable: true
-        },
-        newPassword: {
-            type: 'string',
-            nullable: true
-        },
-        oldPassword: {
-            type: 'string',
-            nullable: true
-        }
-    }
-} as const;
-
-export const UpdateProfileCompanyProfileCommandSchema = {
-    title: 'UpdateProfileCompanyProfileCommand',
+export const UpdateCompanyProfileCommandSchema = {
+    title: 'UpdateCompanyProfileCommand',
     required: [
         'id',
         'name',
@@ -293,6 +332,47 @@ export const UpdateProfileCompanyProfileCommandSchema = {
         employeeCount: {
             type: 'integer',
             format: 'int32'
+        }
+    }
+} as const;
+
+export const UpdateIndustryCommandSchema = {
+    title: 'UpdateIndustryCommand',
+    required: [
+        'id',
+        'name',
+        'description'
+    ],
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string',
+            format: 'uuid'
+        },
+        name: {
+            type: 'string'
+        },
+        description: {
+            type: 'string'
+        }
+    }
+} as const;
+
+export const UpdateInfoDtoSchema = {
+    title: 'UpdateInfoDto',
+    type: 'object',
+    properties: {
+        newEmail: {
+            type: 'string',
+            nullable: true
+        },
+        newPassword: {
+            type: 'string',
+            nullable: true
+        },
+        oldPassword: {
+            type: 'string',
+            nullable: true
         }
     }
 } as const;

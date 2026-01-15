@@ -20,7 +20,7 @@
   </sourceEnd>
   <targetEnd id="48b69b93-5644-4bc0-99f5-61bef4488d49" type="Generalization Target End" typeId="4686cc1d-b4d8-4b99-b45b-f77bd5496946">
     <name>base</name>
-    <display>extends EntityBase</display>
+    <display>extends BaseEntity</display>
     <order>0</order>
     <typeReference id="b8a6e3a9-b217-44db-92c8-578c32e52478">
       <typeId>2727a645-85ae-4292-bf9c-cba3f82f444c</typeId>

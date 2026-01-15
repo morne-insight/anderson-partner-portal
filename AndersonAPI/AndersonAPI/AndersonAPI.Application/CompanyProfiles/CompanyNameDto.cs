@@ -10,15 +10,21 @@ namespace AndersonAPI.Application.CompanyProfiles
         public CompanyNameDto()
         {
             Name = null!;
+            ShortDescription = null!;
+            WebsiteUrl = null!;
         }
 
         public string Name { get; set; }
+        public string ShortDescription { get; set; }
+        public string WebsiteUrl { get; set; }
 
-        public static CompanyNameDto Create(string name)
+        public static CompanyNameDto Create(string name, string shortDescription, string websiteUrl)
         {
             return new CompanyNameDto
             {
-                Name = name
+                Name = name,
+                ShortDescription = shortDescription,
+                WebsiteUrl = websiteUrl
             };
         }
     }

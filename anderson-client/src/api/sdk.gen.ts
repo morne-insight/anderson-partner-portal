@@ -2,7 +2,7 @@
 
 import type { Client, Options as Options2, TDataShape } from './client';
 import { client } from './client.gen';
-import type { DeleteApiCompanyProfilesByIdData, DeleteApiCompanyProfilesByIdErrors, DeleteApiCompanyProfilesByIdResponses, GetApiAccountManageInfoData, GetApiAccountManageInfoResponses, GetApiCompanyProfilesByIdData, GetApiCompanyProfilesByIdErrors, GetApiCompanyProfilesByIdResponses, GetApiCompanyProfilesData, GetApiCompanyProfilesErrors, GetApiCompanyProfilesGetCompanyNamesData, GetApiCompanyProfilesGetCompanyNamesErrors, GetApiCompanyProfilesGetCompanyNamesResponses, GetApiCompanyProfilesResponses, PostApiAccountConfirmEmailData, PostApiAccountConfirmEmailResponses, PostApiAccountForgotPasswordData, PostApiAccountForgotPasswordResponses, PostApiAccountLoginData, PostApiAccountLoginResponses, PostApiAccountLogoutData, PostApiAccountLogoutResponses, PostApiAccountManageInfoData, PostApiAccountManageInfoResponses, PostApiAccountRefreshData, PostApiAccountRefreshResponses, PostApiAccountRegisterData, PostApiAccountRegisterResponses, PostApiAccountResetPasswordData, PostApiAccountResetPasswordResponses, PostApiCompanyProfilesData, PostApiCompanyProfilesErrors, PostApiCompanyProfilesResponses, PutApiCompanyProfilesByIdProfileData, PutApiCompanyProfilesByIdProfileErrors, PutApiCompanyProfilesByIdProfileResponses } from './types.gen';
+import type { DeleteApiCompanyProfilesByIdData, DeleteApiCompanyProfilesByIdErrors, DeleteApiCompanyProfilesByIdResponses, DeleteApiIndustriesByIdData, DeleteApiIndustriesByIdErrors, DeleteApiIndustriesByIdResponses, GetApiAccountManageInfoData, GetApiAccountManageInfoResponses, GetApiCompanyProfilesByIdData, GetApiCompanyProfilesByIdErrors, GetApiCompanyProfilesByIdResponses, GetApiCompanyProfilesCompanyCountData, GetApiCompanyProfilesCompanyCountErrors, GetApiCompanyProfilesCompanyCountResponses, GetApiCompanyProfilesData, GetApiCompanyProfilesErrors, GetApiCompanyProfilesGetCompanyNamesData, GetApiCompanyProfilesGetCompanyNamesErrors, GetApiCompanyProfilesGetCompanyNamesResponses, GetApiCompanyProfilesResponses, GetApiIndustriesByIdData, GetApiIndustriesByIdErrors, GetApiIndustriesByIdResponses, GetApiIndustriesData, GetApiIndustriesErrors, GetApiIndustriesResponses, PostApiAccountConfirmEmailData, PostApiAccountConfirmEmailResponses, PostApiAccountForgotPasswordData, PostApiAccountForgotPasswordResponses, PostApiAccountLoginData, PostApiAccountLoginResponses, PostApiAccountLogoutData, PostApiAccountLogoutResponses, PostApiAccountManageInfoData, PostApiAccountManageInfoResponses, PostApiAccountRefreshData, PostApiAccountRefreshResponses, PostApiAccountRegisterData, PostApiAccountRegisterResponses, PostApiAccountResetPasswordData, PostApiAccountResetPasswordResponses, PostApiCompanyProfilesData, PostApiCompanyProfilesErrors, PostApiCompanyProfilesResponses, PostApiIndustriesData, PostApiIndustriesErrors, PostApiIndustriesResponses, PutApiCompanyProfilesByIdProfileData, PutApiCompanyProfilesByIdProfileErrors, PutApiCompanyProfilesByIdProfileResponses, PutApiIndustriesByIdData, PutApiIndustriesByIdErrors, PutApiIndustriesByIdResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -109,4 +109,30 @@ export const putApiCompanyProfilesByIdProfile = <ThrowOnError extends boolean = 
     }
 });
 
+export const getApiCompanyProfilesCompanyCount = <ThrowOnError extends boolean = false>(options?: Options<GetApiCompanyProfilesCompanyCountData, ThrowOnError>) => (options?.client ?? client).get<GetApiCompanyProfilesCompanyCountResponses, GetApiCompanyProfilesCompanyCountErrors, ThrowOnError>({ url: '/api/company-profiles/company-count', ...options });
+
 export const getApiCompanyProfilesGetCompanyNames = <ThrowOnError extends boolean = false>(options?: Options<GetApiCompanyProfilesGetCompanyNamesData, ThrowOnError>) => (options?.client ?? client).get<GetApiCompanyProfilesGetCompanyNamesResponses, GetApiCompanyProfilesGetCompanyNamesErrors, ThrowOnError>({ url: '/api/company-profiles/get-company-names', ...options });
+
+export const getApiIndustries = <ThrowOnError extends boolean = false>(options?: Options<GetApiIndustriesData, ThrowOnError>) => (options?.client ?? client).get<GetApiIndustriesResponses, GetApiIndustriesErrors, ThrowOnError>({ url: '/api/industries', ...options });
+
+export const postApiIndustries = <ThrowOnError extends boolean = false>(options: Options<PostApiIndustriesData, ThrowOnError>) => (options.client ?? client).post<PostApiIndustriesResponses, PostApiIndustriesErrors, ThrowOnError>({
+    url: '/api/industries',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+export const deleteApiIndustriesById = <ThrowOnError extends boolean = false>(options: Options<DeleteApiIndustriesByIdData, ThrowOnError>) => (options.client ?? client).delete<DeleteApiIndustriesByIdResponses, DeleteApiIndustriesByIdErrors, ThrowOnError>({ url: '/api/industries/{id}', ...options });
+
+export const getApiIndustriesById = <ThrowOnError extends boolean = false>(options: Options<GetApiIndustriesByIdData, ThrowOnError>) => (options.client ?? client).get<GetApiIndustriesByIdResponses, GetApiIndustriesByIdErrors, ThrowOnError>({ url: '/api/industries/{id}', ...options });
+
+export const putApiIndustriesById = <ThrowOnError extends boolean = false>(options: Options<PutApiIndustriesByIdData, ThrowOnError>) => (options.client ?? client).put<PutApiIndustriesByIdResponses, PutApiIndustriesByIdErrors, ThrowOnError>({
+    url: '/api/industries/{id}',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});

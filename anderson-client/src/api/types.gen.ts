@@ -12,6 +12,13 @@ export type AndersonApiApiControllersResponseTypesJsonResponseOfGuid = {
 };
 
 /**
+ * AndersonAPI.Api.Controllers.ResponseTypes.JsonResponse_Of_Int32
+ */
+export type AndersonApiApiControllersResponseTypesJsonResponseOfInt32 = {
+    value: number;
+};
+
+/**
  * ByteArray
  */
 export type ByteArray = string | null;
@@ -21,6 +28,8 @@ export type ByteArray = string | null;
  */
 export type CompanyNameDto = {
     name?: string;
+    shortDescription?: string;
+    websiteUrl?: string;
 };
 
 /**
@@ -57,10 +66,28 @@ export type CreateCompanyProfileCommand = {
 };
 
 /**
+ * CreateIndustryCommand
+ */
+export type CreateIndustryCommand = {
+    name: string;
+    description: string;
+};
+
+/**
  * ForgotPasswordDto
  */
 export type ForgotPasswordDto = {
     email?: string | null;
+};
+
+/**
+ * IndustryDto
+ */
+export type IndustryDto = {
+    name?: string;
+    description?: string;
+    id?: string;
+    order?: number;
 };
 
 /**
@@ -124,24 +151,33 @@ export type TokenResultDto = {
 };
 
 /**
- * UpdateInfoDto
+ * UpdateCompanyProfileCommand
  */
-export type UpdateInfoDto = {
-    newEmail?: string | null;
-    newPassword?: string | null;
-    oldPassword?: string | null;
-};
-
-/**
- * UpdateProfileCompanyProfileCommand
- */
-export type UpdateProfileCompanyProfileCommand = {
+export type UpdateCompanyProfileCommand = {
     id: string;
     name: string;
     shortDescription: string;
     description: string;
     websiteUrl: string;
     employeeCount: number;
+};
+
+/**
+ * UpdateIndustryCommand
+ */
+export type UpdateIndustryCommand = {
+    id: string;
+    name: string;
+    description: string;
+};
+
+/**
+ * UpdateInfoDto
+ */
+export type UpdateInfoDto = {
+    newEmail?: string | null;
+    newPassword?: string | null;
+    oldPassword?: string | null;
 };
 
 export type PostApiAccountRegisterData = {
@@ -401,7 +437,7 @@ export type GetApiCompanyProfilesByIdResponses = {
 export type GetApiCompanyProfilesByIdResponse = GetApiCompanyProfilesByIdResponses[keyof GetApiCompanyProfilesByIdResponses];
 
 export type PutApiCompanyProfilesByIdProfileData = {
-    body: UpdateProfileCompanyProfileCommand;
+    body: UpdateCompanyProfileCommand;
     path: {
         id: string;
     };
@@ -435,6 +471,31 @@ export type PutApiCompanyProfilesByIdProfileResponses = {
 
 export type PutApiCompanyProfilesByIdProfileResponse = PutApiCompanyProfilesByIdProfileResponses[keyof PutApiCompanyProfilesByIdProfileResponses];
 
+export type GetApiCompanyProfilesCompanyCountData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/company-profiles/company-count';
+};
+
+export type GetApiCompanyProfilesCompanyCountErrors = {
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type GetApiCompanyProfilesCompanyCountError = GetApiCompanyProfilesCompanyCountErrors[keyof GetApiCompanyProfilesCompanyCountErrors];
+
+export type GetApiCompanyProfilesCompanyCountResponses = {
+    /**
+     * OK
+     */
+    200: AndersonApiApiControllersResponseTypesJsonResponseOfInt32;
+};
+
+export type GetApiCompanyProfilesCompanyCountResponse = GetApiCompanyProfilesCompanyCountResponses[keyof GetApiCompanyProfilesCompanyCountResponses];
+
 export type GetApiCompanyProfilesGetCompanyNamesData = {
     body?: never;
     path?: never;
@@ -459,3 +520,160 @@ export type GetApiCompanyProfilesGetCompanyNamesResponses = {
 };
 
 export type GetApiCompanyProfilesGetCompanyNamesResponse = GetApiCompanyProfilesGetCompanyNamesResponses[keyof GetApiCompanyProfilesGetCompanyNamesResponses];
+
+export type GetApiIndustriesData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/industries';
+};
+
+export type GetApiIndustriesErrors = {
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type GetApiIndustriesError = GetApiIndustriesErrors[keyof GetApiIndustriesErrors];
+
+export type GetApiIndustriesResponses = {
+    /**
+     * OK
+     */
+    200: Array<IndustryDto>;
+};
+
+export type GetApiIndustriesResponse = GetApiIndustriesResponses[keyof GetApiIndustriesResponses];
+
+export type PostApiIndustriesData = {
+    body: CreateIndustryCommand;
+    path?: never;
+    query?: never;
+    url: '/api/industries';
+};
+
+export type PostApiIndustriesErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type PostApiIndustriesError = PostApiIndustriesErrors[keyof PostApiIndustriesErrors];
+
+export type PostApiIndustriesResponses = {
+    /**
+     * Created
+     */
+    201: AndersonApiApiControllersResponseTypesJsonResponseOfGuid;
+};
+
+export type PostApiIndustriesResponse = PostApiIndustriesResponses[keyof PostApiIndustriesResponses];
+
+export type DeleteApiIndustriesByIdData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/industries/{id}';
+};
+
+export type DeleteApiIndustriesByIdErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type DeleteApiIndustriesByIdError = DeleteApiIndustriesByIdErrors[keyof DeleteApiIndustriesByIdErrors];
+
+export type DeleteApiIndustriesByIdResponses = {
+    /**
+     * OK
+     */
+    200: unknown;
+};
+
+export type GetApiIndustriesByIdData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/industries/{id}';
+};
+
+export type GetApiIndustriesByIdErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type GetApiIndustriesByIdError = GetApiIndustriesByIdErrors[keyof GetApiIndustriesByIdErrors];
+
+export type GetApiIndustriesByIdResponses = {
+    /**
+     * OK
+     */
+    200: IndustryDto;
+};
+
+export type GetApiIndustriesByIdResponse = GetApiIndustriesByIdResponses[keyof GetApiIndustriesByIdResponses];
+
+export type PutApiIndustriesByIdData = {
+    body: UpdateIndustryCommand;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/industries/{id}';
+};
+
+export type PutApiIndustriesByIdErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type PutApiIndustriesByIdError = PutApiIndustriesByIdErrors[keyof PutApiIndustriesByIdErrors];
+
+export type PutApiIndustriesByIdResponses = {
+    /**
+     * No Content
+     */
+    204: void;
+};
+
+export type PutApiIndustriesByIdResponse = PutApiIndustriesByIdResponses[keyof PutApiIndustriesByIdResponses];
