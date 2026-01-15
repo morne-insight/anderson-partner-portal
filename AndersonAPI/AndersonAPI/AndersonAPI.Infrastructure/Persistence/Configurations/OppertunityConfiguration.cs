@@ -38,9 +38,6 @@ namespace AndersonAPI.Infrastructure.Persistence.Configurations
             builder.Property(x => x.CountryId)
                 .IsRequired();
 
-            builder.Property(x => x.CompanyProfileId)
-                .IsRequired();
-
             builder.Property(x => x.CreatedBy)
                 .IsRequired();
 
@@ -50,6 +47,9 @@ namespace AndersonAPI.Infrastructure.Persistence.Configurations
             builder.Property(x => x.UpdatedBy);
 
             builder.Property(x => x.UpdatedDate);
+
+            builder.Property(x => x.CompanyProfileId)
+                .IsRequired();
 
             builder.HasOne(x => x.OppertunityType)
                 .WithMany()
@@ -76,6 +76,11 @@ namespace AndersonAPI.Infrastructure.Persistence.Configurations
             builder.HasMany(x => x.InterestedPartners)
                 .WithMany("Oppertunities")
                 .UsingEntity(x => x.ToTable("OppertunityCompanyProfiles"));
+
+            builder.HasOne(x => x.CompanyProfile)
+                .WithMany(x => x.Oppertunities)
+                .HasForeignKey(x => x.CompanyProfileId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder.ToTable(tb => tb.HasCheckConstraint("oppertunity_status_check", $"\"Status\" IN ({string.Join(",", Enum.GetValues<OppertunityStatus>().Select(e => $"'{e}'"))})"));
 

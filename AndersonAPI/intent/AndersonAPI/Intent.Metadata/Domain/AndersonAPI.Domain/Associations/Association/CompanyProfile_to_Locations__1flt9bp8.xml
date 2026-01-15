@@ -22,7 +22,7 @@
   <targetEnd id="96f5d114-906e-479b-b2cc-c70d42272f64" type="Association Target End" typeId="0a66489f-30aa-417b-a75d-b945863366fd">
     <name>Locations</name>
     <display>Locations: Location[*]</display>
-    <order>13</order>
+    <order>23</order>
     <typeReference id="5d8ab85e-bf49-4949-b75b-32904c3c2d9a">
       <typeId>93773201-e34f-4a1f-b82e-f3cedba6dbd1</typeId>
       <isNavigable>true</isNavigable>

@@ -42,6 +42,7 @@ namespace AndersonAPI.Infrastructure
             services.AddTransient<ICompanyProfileRepository, CompanyProfileRepository>();
             services.AddTransient<ICountryRepository, CountryRepository>();
             services.AddTransient<IIndustryRepository, IndustryRepository>();
+            services.AddTransient<IOppertunityRepository, OppertunityRepository>();
             services.AddTransient<IOppertunityTypeRepository, OppertunityTypeRepository>();
             services.AddTransient<IRegionRepository, RegionRepository>();
             services.AddTransient<IReviewRepository, ReviewRepository>();

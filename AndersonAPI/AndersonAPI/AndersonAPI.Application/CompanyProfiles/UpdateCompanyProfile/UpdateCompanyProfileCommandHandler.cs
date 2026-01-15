@@ -28,7 +28,7 @@ namespace AndersonAPI.Application.CompanyProfiles.UpdateCompanyProfile
                 throw new NotFoundException($"Could not find CompanyProfile '{request.Id}'");
             }
 
-            companyProfile.UpdateProfile(
+            companyProfile.Update(
                 request.Name,
                 request.ShortDescription,
                 request.Description,

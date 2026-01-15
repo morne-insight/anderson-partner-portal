@@ -11,13 +11,13 @@ namespace AndersonAPI.Application.CompanyProfiles
         {
             Name = null!;
             ShortDescription = null!;
-            Description = null!;
+            FullDescription = null!;
             WebsiteUrl = null!;
         }
 
         public string Name { get; set; }
         public string ShortDescription { get; set; }
-        public string Description { get; set; }
+        public string FullDescription { get; set; }
         public string WebsiteUrl { get; set; }
         public int EmployeeCount { get; set; }
         public byte[]? Embedding { get; set; }
@@ -27,7 +27,7 @@ namespace AndersonAPI.Application.CompanyProfiles
         public static CompanyProfileDto Create(
             string name,
             string shortDescription,
-            string description,
+            string fullDescription,
             string websiteUrl,
             int employeeCount,
             byte[]? embedding,
@@ -38,7 +38,7 @@ namespace AndersonAPI.Application.CompanyProfiles
             {
                 Name = name,
                 ShortDescription = shortDescription,
-                Description = description,
+                FullDescription = fullDescription,
                 WebsiteUrl = websiteUrl,
                 EmployeeCount = employeeCount,
                 Embedding = embedding,

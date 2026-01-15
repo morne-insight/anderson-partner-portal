@@ -38,7 +38,7 @@ namespace AndersonAPI.Domain.Entities
 
         public virtual Country Country { get; private set; }
 
-        public void Operation(string name, bool isHeadOffice, Guid regionId, Guid countryId, Guid companyProfileId)
+        public void Update(string name, bool isHeadOffice, Guid regionId, Guid countryId, Guid companyProfileId)
         {
             Name = name;
             IsHeadOffice = isHeadOffice;

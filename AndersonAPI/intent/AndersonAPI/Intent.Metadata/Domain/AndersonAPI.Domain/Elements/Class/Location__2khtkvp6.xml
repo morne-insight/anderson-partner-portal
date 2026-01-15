@@ -362,8 +362,8 @@
       </childElements>
     </childElement>
     <childElement id="64945c7f-9cc7-4716-b1c3-a2b7786aa9c9" type="Operation" typeId="e042bb67-a1df-480c-9935-b26210f78591">
-      <name>Operation</name>
-      <display>Operation(name: string, isHeadOffice: bool, regionId: guid, countryId: guid, companyProfileId: guid): void</display>
+      <name>Update</name>
+      <display>Update(name: string, isHeadOffice: bool, regionId: guid, countryId: guid, companyProfileId: guid): void</display>
       <isAbstract>false</isAbstract>
       <sort-children>by-type-then-manually</sort-children>
       <genericTypes />

@@ -22,7 +22,7 @@
   <targetEnd id="ccaef3c8-10de-4ef8-880a-335769dea5a5" type="Association Target End" typeId="0a66489f-30aa-417b-a75d-b945863366fd">
     <name>Capabilities</name>
     <display>Capabilities: Capability[*]</display>
-    <order>15</order>
+    <order>25</order>
     <typeReference id="c5711083-9c90-4cb0-9429-9b4743063ee5">
       <typeId>bc2527a3-bd77-4c15-9f2e-7c23786d30a2</typeId>
       <isNavigable>true</isNavigable>

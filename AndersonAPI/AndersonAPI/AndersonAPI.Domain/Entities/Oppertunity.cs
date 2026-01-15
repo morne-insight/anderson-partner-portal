@@ -29,6 +29,27 @@ namespace AndersonAPI.Domain.Entities
             CompanyProfileId = companyProfileId;
         }
 
+        public Oppertunity(string title,
+            string shortDescription,
+            string fullDescription,
+            DateOnly? deadline,
+            Guid oppertunityTypeId,
+            Guid countryId,
+            IEnumerable<ServiceType> serviceTypes,
+            IEnumerable<Capability> capabilities,
+            IEnumerable<Industry> industries)
+        {
+            Title = title;
+            ShortDescription = shortDescription;
+            FullDescription = fullDescription;
+            Deadline = deadline;
+            OppertunityTypeId = oppertunityTypeId;
+            CountryId = countryId;
+            _serviceTypes = new List<ServiceType>(serviceTypes);
+            _capabilities = new List<Capability>(capabilities);
+            _industries = new List<Industry>(industries);
+        }
+
         /// <summary>
         /// Required by Entity Framework.
         /// </summary>
@@ -39,6 +60,7 @@ namespace AndersonAPI.Domain.Entities
             FullDescription = null!;
             OppertunityType = null!;
             Country = null!;
+            CompanyProfile = null!;
         }
 
         public string Title { get; private set; }
@@ -93,7 +115,9 @@ namespace AndersonAPI.Domain.Entities
             private set => _interestedPartners = new List<CompanyProfile>(value);
         }
 
-        public void Operation(
+        public virtual CompanyProfile CompanyProfile { get; private set; }
+
+        public void Update(
             string title,
             string shortDescription,
             string fullDescription,
@@ -107,6 +131,55 @@ namespace AndersonAPI.Domain.Entities
             Deadline = deadline;
             OppertunityTypeId = oppertunityTypeId;
             CountryId = countryId;
+        }
+
+        public void Update(
+            string title,
+            string shortDescription,
+            string fullDescription,
+            DateOnly? deadline,
+            Guid oppertunityTypeId,
+            Guid countryId,
+            IEnumerable<ServiceType> serviceTypes,
+            IEnumerable<Capability> capabilities,
+            IEnumerable<Industry> industries)
+        {
+            Title = title;
+            ShortDescription = shortDescription;
+            FullDescription = fullDescription;
+            Deadline = deadline;
+            OppertunityTypeId = oppertunityTypeId;
+            CountryId = countryId;
+            _serviceTypes.Clear();
+            _serviceTypes.AddRange(serviceTypes);
+            _capabilities.Clear();
+            _capabilities.AddRange(capabilities);
+            _industries.Clear();
+            _industries.AddRange(industries);
+        }
+
+        public Task UpdateInterestedPartners(IEnumerable<Guid> companyProfileIds)
+        {
+            // TODO: Implement UpdateInterestedPartners (Oppertunity) functionality
+            throw new NotImplementedException("Replace with your implementation...");
+        }
+
+        public Task UpdateIndustries(IEnumerable<Guid> industryIds)
+        {
+            // TODO: Implement UpdateIndustries (Oppertunity) functionality
+            throw new NotImplementedException("Replace with your implementation...");
+        }
+
+        public void UpdateCapabilities(IEnumerable<Guid> capabilityIds)
+        {
+            // TODO: Implement UpdateCapabilities (Oppertunity) functionality
+            throw new NotImplementedException("Replace with your implementation...");
+        }
+
+        public void UpdateServiceTypes(IEnumerable<Guid> serviceTypeIds)
+        {
+            // TODO: Implement UpdateServiceTypes (Oppertunity) functionality
+            throw new NotImplementedException("Replace with your implementation...");
         }
 
         void IAuditable.SetCreated(Guid createdBy, DateTimeOffset createdDate) => (CreatedBy, CreatedDate) = (createdBy, createdDate);

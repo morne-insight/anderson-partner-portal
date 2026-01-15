@@ -3,7 +3,7 @@
   <sourceEnd id="b5a95611-4952-4a31-bcc1-5711abec3848" type="Association Source End" typeId="8d9d2e5b-bd55-4f36-9ae4-2b9e84fd4e58">
     <name>Reviews</name>
     <display>Reviews: Review[*]</display>
-    <order>20</order>
+    <order>29</order>
     <typeReference id="69c93f96-ac61-4761-9e79-aaa2d6cbba23">
       <typeId>a66e248c-b5ab-49ee-a926-9930d073a5bf</typeId>
       <isNavigable>true</isNavigable>

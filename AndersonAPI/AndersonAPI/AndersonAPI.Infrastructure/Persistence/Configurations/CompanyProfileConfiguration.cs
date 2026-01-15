@@ -66,12 +66,6 @@ namespace AndersonAPI.Infrastructure.Persistence.Configurations
                 .WithMany("CompanyProfiles")
                 .UsingEntity(x => x.ToTable("CompanyProfileApplicationIdentityUsers"));
 
-            builder.HasMany(x => x.Oppertunities)
-                .WithOne()
-                .HasForeignKey(x => x.CompanyProfileId)
-                .IsRequired()
-                .OnDelete(DeleteBehavior.Cascade);
-
             builder.Ignore(e => e.DomainEvents);
         }
 

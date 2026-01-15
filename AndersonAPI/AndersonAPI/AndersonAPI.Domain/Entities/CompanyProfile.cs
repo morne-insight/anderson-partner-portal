@@ -96,19 +96,84 @@ namespace AndersonAPI.Domain.Entities
             private set => _oppertunities = new List<Oppertunity>(value);
         }
 
-        public virtual IReadOnlyCollection<Review> Reviews
-        {
-            get => _reviews.AsReadOnly();
-            private set => _reviews = new List<Review>(value);
-        }
-
-        public void UpdateProfile(string name, string shortDescription, string description, string websiteUrl, int employeeCount)
+        public void Update(string name, string shortDescription, string description, string websiteUrl, int employeeCount)
         {
             Name = name;
             ShortDescription = shortDescription;
             FullDescription = description;
             WebsiteUrl = websiteUrl;
             EmployeeCount = employeeCount;
+        }
+
+        public virtual IReadOnlyCollection<Review> Reviews
+        {
+            get => _reviews.AsReadOnly();
+            private set => _reviews = new List<Review>(value);
+        }
+
+        public Task<Guid> AddLocation(string name, Guid regionId, Guid countryId, bool isHeadOffice)
+        {
+            // TODO: Implement AddLocation (CompanyProfile) functionality
+            throw new NotImplementedException("Replace with your implementation...");
+        }
+
+        public Task UpdateLocation(Guid locationId, string name, Guid regionId, Guid countryId, bool isHeadOffice)
+        {
+            // TODO: Implement UpdateLocation (CompanyProfile) functionality
+            throw new NotImplementedException("Replace with your implementation...");
+        }
+
+        public Task RemoveLocation(Guid locationId)
+        {
+            // TODO: Implement RemoveLocation (CompanyProfile) functionality
+            throw new NotImplementedException("Replace with your implementation...");
+        }
+
+        public Task SetHeadOffice(Guid locationId)
+        {
+            // TODO: Implement SetHeadOffice (CompanyProfile) functionality
+            throw new NotImplementedException("Replace with your implementation...");
+        }
+
+        public Task<Guid> AddContact(string firstName, string lastName, string? emailAddress, string? companyPosition)
+        {
+            // TODO: Implement AddContact (CompanyProfile) functionality
+            throw new NotImplementedException("Replace with your implementation...");
+        }
+
+        public Task UpdateContact(
+            Guid contactId,
+            string firstName,
+            string lastName,
+            string? emailAddress,
+            string? companyPosition)
+        {
+            // TODO: Implement UpdateContact (CompanyProfile) functionality
+            throw new NotImplementedException("Replace with your implementation...");
+        }
+
+        public Task RemoveContact(Guid contactId)
+        {
+            // TODO: Implement RemoveContact (CompanyProfile) functionality
+            throw new NotImplementedException("Replace with your implementation...");
+        }
+
+        public Task UpdateIndustries(IEnumerable<Guid> industryIds)
+        {
+            // TODO: Implement UpdateIndustries (CompanyProfile) functionality
+            throw new NotImplementedException("Replace with your implementation...");
+        }
+
+        public void UpdateCapabilities(IEnumerable<Guid> capabilityIds)
+        {
+            // TODO: Implement UpdateCapabilities (CompanyProfile) functionality
+            throw new NotImplementedException("Replace with your implementation...");
+        }
+
+        public void UpdateServiceTypes(IEnumerable<Guid> serviceTypeIds)
+        {
+            // TODO: Implement UpdateServiceTypes (CompanyProfile) functionality
+            throw new NotImplementedException("Replace with your implementation...");
         }
 
         void IAuditable.SetCreated(Guid createdBy, DateTimeOffset createdDate) => (CreatedBy, CreatedDate) = (createdBy, createdDate);

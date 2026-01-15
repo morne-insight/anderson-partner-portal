@@ -136,8 +136,8 @@
       <childElements />
     </childElement>
     <childElement id="8079f398-e388-47c2-a0ed-6d7cdde91e59" type="DTO-Field" typeId="7baed1fd-469b-4980-8fd9-4cefb8331eb2">
-      <name>Description</name>
-      <display>Description: string</display>
+      <name>FullDescription</name>
+      <display>FullDescription: string</display>
       <isAbstract>false</isAbstract>
       <genericTypes />
       <typeReference id="7c2fdf9a-c3d5-460e-abea-09c9307c8983">
@@ -156,7 +156,7 @@
         <mappingSettingsId>1f747d14-681c-4a20-8c68-34223f41b825</mappingSettingsId>
         <autoSyncTypeReference>true</autoSyncTypeReference>
         <mappedPath>
-          <target id="7e9cabc0-58c1-49aa-be3a-c64f0933f802" name="Description" type="element" specialization="Attribute" specializationId="0090fb93-483e-41af-a11d-5ad2dc796adf" />
+          <target id="7e9cabc0-58c1-49aa-be3a-c64f0933f802" name="FullDescription" type="element" specialization="Attribute" specializationId="0090fb93-483e-41af-a11d-5ad2dc796adf" />
         </mappedPath>
       </mappedClass>
       <parentFolderId>2f700954-5bfd-4d55-badf-c75b5bdf8f46</parentFolderId>

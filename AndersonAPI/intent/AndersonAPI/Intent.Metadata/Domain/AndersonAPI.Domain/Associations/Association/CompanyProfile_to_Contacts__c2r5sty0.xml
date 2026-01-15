@@ -22,7 +22,7 @@
   <targetEnd id="997571a0-e96c-4948-a9d8-1983aecc8a39" type="Association Target End" typeId="0a66489f-30aa-417b-a75d-b945863366fd">
     <name>Contacts</name>
     <display>Contacts: Contact[*]</display>
-    <order>17</order>
+    <order>27</order>
     <typeReference id="058ba231-5612-46d5-b34e-7757f080c1c0">
       <typeId>5803daec-b6c5-4b7d-ac3f-f6bfc65b6702</typeId>
       <isNavigable>true</isNavigable>
