@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<association id="b91027a6-e838-43ec-a555-bc0a63aebd73">
+  <sourceEnd id="9b1b1609-d5a1-4b00-b873-4d103e0b5e0b" type="Create Entity Action Source End" typeId="a3e7c59e-b0a1-47e1-ba29-66f2c7047b0a">
+    <display>created by : Industries.CreateIndustryCommand</display>
+    <order>0</order>
+    <typeReference id="31782fa9-3283-4119-ac18-770d1042d666">
+      <typeId>d12d8d67-2ac6-442a-b461-90e104758c39</typeId>
+      <isNavigable>false</isNavigable>
+      <isNullable>false</isNullable>
+      <isCollection>false</isCollection>
+      <isRequired>true</isRequired>
+      <typePackageName>AndersonAPI.Services</typePackageName>
+      <typePackageId>c8555d38-5afc-4ea2-9a61-c7a505212753</typePackageId>
+      <stereotypes />
+      <genericTypeParameters />
+    </typeReference>
+    <stereotypes />
+    <metadata />
+    <childElements />
+  </sourceEnd>
+  <targetEnd id="b91027a6-e838-43ec-a555-bc0a63aebd73" type="Create Entity Action Target End" typeId="328f54e5-7bad-4b5f-90ca-03ce3105d016">
+    <name>industry</name>
+    <display>[create] industry: Constructor</display>
+    <order>2</order>
+    <traits>
+      <trait id="d00a2ab0-9a23-4192-b8bb-166798fc7dba" name="[Processing Action]" />
+    </traits>
+    <typeReference id="88c98cc1-dc86-4c8d-b507-96798f4587af">
+      <typeId>6fa97e79-d69b-406b-aefd-16c6989e259d</typeId>
+      <isNavigable>true</isNavigable>
+      <isNullable>false</isNullable>
+      <isCollection>false</isCollection>
+      <isRequired>true</isRequired>
+      <typePackageName>AndersonAPI.Domain</typePackageName>
+      <typePackageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</typePackageId>
+      <stereotypes />
+      <genericTypeParameters />
+    </typeReference>
+    <stereotypes />
+    <mappings>
+      <mapping type="Create Entity Mapping" typeId="5f172141-fdba-426b-980e-163e782ff53e">
+        <source applicationId="e87261ce-2b9f-4042-8562-a503e4cf2759" designerId="81104ae6-2bc5-4bae-b05a-f987b0372d81" elementId="d12d8d67-2ac6-442a-b461-90e104758c39" location="[AndersonAPI].[Services].[CreateIndustryCommand]" />
+        <target applicationId="e87261ce-2b9f-4042-8562-a503e4cf2759" designerId="6ab29b31-27af-4f56-a67c-986d82097d63" elementId="6c47b169-df9b-47ae-a098-8463d7d86ad2" location="[AndersonAPI].[Services].[Industry]" />
+        <mappedEnds>
+          <mappedEnd>
+            <expression>{CreateIndustryCommand}</expression>
+            <path>
+              <target id="6c47b169-df9b-47ae-a098-8463d7d86ad2" name="Industry" type="element" specialization="Class" specializationId="04e12b51-ed12-42a3-9667-a6aa81bb6d10" />
+              <target id="6fa97e79-d69b-406b-aefd-16c6989e259d" name="Constructor" type="element" specialization="Class Constructor" specializationId="dec2bd12-4699-4f45-8ec9-3b62dc692d2b" />
+            </path>
+            <sources>
+              <source identifier="CreateIndustryCommand" mappingType="Invocation Mapping" mappingTypeId="47dc4a51-30a3-4ee8-8c7d-25a35bb965b9">
+                <path>
+                  <target id="d12d8d67-2ac6-442a-b461-90e104758c39" name="CreateIndustryCommand" type="element" specialization="Command" specializationId="ccf14eb6-3a55-4d81-b5b9-d27311c70cb9" />
+                </path>
+              </source>
+            </sources>
+          </mappedEnd>
+          <mappedEnd>
+            <expression>{Name}</expression>
+            <path>
+              <target id="6c47b169-df9b-47ae-a098-8463d7d86ad2" name="Industry" type="element" specialization="Class" specializationId="04e12b51-ed12-42a3-9667-a6aa81bb6d10" />
+              <target id="6fa97e79-d69b-406b-aefd-16c6989e259d" name="Constructor" type="element" specialization="Class Constructor" specializationId="dec2bd12-4699-4f45-8ec9-3b62dc692d2b" />
+              <target id="5f3846a7-357c-4129-9fc4-a16b7e6f942e" name="name" type="element" specialization="Parameter" specializationId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b" />
+            </path>
+            <sources>
+              <source identifier="Name" mappingType="Data Mapping" mappingTypeId="50dccfb2-bd24-4135-adf6-ed31f28f8fe0">
+                <path>
+                  <target id="d12d8d67-2ac6-442a-b461-90e104758c39" name="CreateIndustryCommand" type="element" specialization="Command" specializationId="ccf14eb6-3a55-4d81-b5b9-d27311c70cb9" />
+                  <target id="498514fe-9f1e-4df8-93e5-067c2fb87922" name="Name" type="element" specialization="DTO-Field" specializationId="7baed1fd-469b-4980-8fd9-4cefb8331eb2" />
+                </path>
+              </source>
+            </sources>
+          </mappedEnd>
+          <mappedEnd>
+            <expression>{Description}</expression>
+            <path>
+              <target id="6c47b169-df9b-47ae-a098-8463d7d86ad2" name="Industry" type="element" specialization="Class" specializationId="04e12b51-ed12-42a3-9667-a6aa81bb6d10" />
+              <target id="6fa97e79-d69b-406b-aefd-16c6989e259d" name="Constructor" type="element" specialization="Class Constructor" specializationId="dec2bd12-4699-4f45-8ec9-3b62dc692d2b" />
+              <target id="101746ae-1958-4796-a41c-b18da611d7c2" name="description" type="element" specialization="Parameter" specializationId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b" />
+            </path>
+            <sources>
+              <source identifier="Description" mappingType="Data Mapping" mappingTypeId="50dccfb2-bd24-4135-adf6-ed31f28f8fe0">
+                <path>
+                  <target id="d12d8d67-2ac6-442a-b461-90e104758c39" name="CreateIndustryCommand" type="element" specialization="Command" specializationId="ccf14eb6-3a55-4d81-b5b9-d27311c70cb9" />
+                  <target id="9dfff2d4-ba0a-4cf1-ac8f-32f78d4c1895" name="Description" type="element" specialization="DTO-Field" specializationId="7baed1fd-469b-4980-8fd9-4cefb8331eb2" />
+                </path>
+              </source>
+            </sources>
+          </mappedEnd>
+        </mappedEnds>
+      </mapping>
+    </mappings>
+    <metadata />
+    <childElements />
+  </targetEnd>
+  <associationType>Create Entity Action</associationType>
+  <associationTypeId>7a3f0474-3cf8-4249-baac-8c07c49465e0</associationTypeId>
+  <stereotypes />
+</association>

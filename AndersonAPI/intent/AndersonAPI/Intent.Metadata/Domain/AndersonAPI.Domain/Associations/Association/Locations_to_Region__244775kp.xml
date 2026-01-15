@@ -22,7 +22,7 @@
   <targetEnd id="b277de1e-3a83-4881-a56a-c6e3a4a76f6b" type="Association Target End" typeId="0a66489f-30aa-417b-a75d-b945863366fd">
     <name>Region</name>
     <display>Region: Region</display>
-    <order>8</order>
+    <order>9</order>
     <typeReference id="adb32dd5-6dde-42db-92bd-effd2b07675c">
       <typeId>8c1f3c67-c4a9-4f0f-b5df-142e5cb66942</typeId>
       <isNavigable>true</isNavigable>

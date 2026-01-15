@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<association id="bfba59a3-0afa-4606-96c1-73f511c19833">
+  <sourceEnd id="6534c9df-bc74-4d3f-9a1d-3408e9094428" type="Update Entity Action Source End" typeId="6bc95978-6def-4d0c-a4f5-25bdeda8a9f6">
+    <display>updated by : Companies.UpdateContactCompanyCommand</display>
+    <order>0</order>
+    <typeReference id="1a8843e0-c81b-410c-84a7-8252faaad51b">
+      <typeId>4224c9d4-d916-4ad3-938e-0fda07beb464</typeId>
+      <isNavigable>false</isNavigable>
+      <isNullable>false</isNullable>
+      <isCollection>false</isCollection>
+      <isRequired>true</isRequired>
+      <typePackageName>AndersonAPI.Services</typePackageName>
+      <typePackageId>c8555d38-5afc-4ea2-9a61-c7a505212753</typePackageId>
+      <stereotypes />
+      <genericTypeParameters />
+    </typeReference>
+    <stereotypes />
+    <metadata />
+    <childElements />
+  </sourceEnd>
+  <targetEnd id="bfba59a3-0afa-4606-96c1-73f511c19833" type="Update Entity Action Target End" typeId="516069f6-09cc-4de8-8e31-3c71ca823452">
+    <name>company</name>
+    <display>[update] company: UpdateContact</display>
+    <order>6</order>
+    <traits>
+      <trait id="d00a2ab0-9a23-4192-b8bb-166798fc7dba" name="[Processing Action]" />
+    </traits>
+    <typeReference id="d272b297-9649-4746-af10-692f63c05b0d">
+      <typeId>d759c7c0-57b9-482f-958d-9b2bb3fce545</typeId>
+      <isNavigable>true</isNavigable>
+      <isNullable>false</isNullable>
+      <isCollection>false</isCollection>
+      <isRequired>true</isRequired>
+      <typePackageName>AndersonAPI.Domain</typePackageName>
+      <typePackageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</typePackageId>
+      <stereotypes />
+      <genericTypeParameters />
+    </typeReference>
+    <stereotypes />
+    <mappings>
+      <mapping type="Query Entity Mapping" typeId="25f25af9-c38b-4053-9474-b0fabe9d7ea7">
+        <source applicationId="e87261ce-2b9f-4042-8562-a503e4cf2759" designerId="81104ae6-2bc5-4bae-b05a-f987b0372d81" elementId="4224c9d4-d916-4ad3-938e-0fda07beb464" location="[AndersonAPI].[Services].[UpdateContactCompanyCommand]" />
+        <target applicationId="e87261ce-2b9f-4042-8562-a503e4cf2759" designerId="6ab29b31-27af-4f56-a67c-986d82097d63" elementId="3259289c-5d51-46cb-8c99-78751b456c44" location="[AndersonAPI].[Services].[Company]" />
+        <mappedEnds>
+          <mappedEnd>
+            <expression>{Id}</expression>
+            <path>
+              <target id="3259289c-5d51-46cb-8c99-78751b456c44" name="Company" type="element" specialization="Class" specializationId="04e12b51-ed12-42a3-9667-a6aa81bb6d10" />
+              <target id="48b69b93-5644-4bc0-99f5-61bef4488d49" name="base" type="association" specialization="Generalization Target End" specializationId="4686cc1d-b4d8-4b99-b45b-f77bd5496946" />
+              <target id="9ed19ba4-548e-4be5-b0ed-eea43cc82348" name="Id" type="element" specialization="Attribute" specializationId="0090fb93-483e-41af-a11d-5ad2dc796adf" />
+            </path>
+            <sources>
+              <source identifier="Id" mappingType="Filter Mapping" mappingTypeId="01d09a7f-0e7c-4670-b7bc-395d7e893ef2">
+                <path>
+                  <target id="4224c9d4-d916-4ad3-938e-0fda07beb464" name="UpdateContactCompanyCommand" type="element" specialization="Command" specializationId="ccf14eb6-3a55-4d81-b5b9-d27311c70cb9" />
+                  <target id="5fb4d009-17d6-4184-b98f-3b6313e08b30" name="Id" type="element" specialization="DTO-Field" specializationId="7baed1fd-469b-4980-8fd9-4cefb8331eb2" />
+                </path>
+              </source>
+            </sources>
+          </mappedEnd>
+        </mappedEnds>
+      </mapping>
+      <mapping type="Update Entity Mapping" typeId="01721b1a-a85d-4320-a5cd-8bd39247196a">
+        <source applicationId="e87261ce-2b9f-4042-8562-a503e4cf2759" designerId="81104ae6-2bc5-4bae-b05a-f987b0372d81" elementId="4224c9d4-d916-4ad3-938e-0fda07beb464" location="[AndersonAPI].[Services].[UpdateContactCompanyCommand]" />
+        <target applicationId="e87261ce-2b9f-4042-8562-a503e4cf2759" designerId="6ab29b31-27af-4f56-a67c-986d82097d63" elementId="3259289c-5d51-46cb-8c99-78751b456c44" location="[AndersonAPI].[Services].[Company]" />
+        <mappedEnds>
+          <mappedEnd>
+            <expression>{UpdateContactCompanyCommand}</expression>
+            <path>
+              <target id="3259289c-5d51-46cb-8c99-78751b456c44" name="Company" type="element" specialization="Class" specializationId="04e12b51-ed12-42a3-9667-a6aa81bb6d10" />
+              <target id="d759c7c0-57b9-482f-958d-9b2bb3fce545" name="UpdateContact" type="element" specialization="Operation" specializationId="e042bb67-a1df-480c-9935-b26210f78591" />
+            </path>
+            <sources>
+              <source identifier="UpdateContactCompanyCommand" mappingType="Invocation Mapping" mappingTypeId="d30bdba1-9c47-4917-b81d-29230fed5d6a">
+                <path>
+                  <target id="4224c9d4-d916-4ad3-938e-0fda07beb464" name="UpdateContactCompanyCommand" type="element" specialization="Command" specializationId="ccf14eb6-3a55-4d81-b5b9-d27311c70cb9" />
+                </path>
+              </source>
+            </sources>
+          </mappedEnd>
+          <mappedEnd>
+            <expression>{ContactId}</expression>
+            <path>
+              <target id="3259289c-5d51-46cb-8c99-78751b456c44" name="Company" type="element" specialization="Class" specializationId="04e12b51-ed12-42a3-9667-a6aa81bb6d10" />
+              <target id="d759c7c0-57b9-482f-958d-9b2bb3fce545" name="UpdateContact" type="element" specialization="Operation" specializationId="e042bb67-a1df-480c-9935-b26210f78591" />
+              <target id="d4f361d6-6f29-48cf-89ff-df8bbb0fc36d" name="contactId" type="element" specialization="Parameter" specializationId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b" />
+            </path>
+            <sources>
+              <source identifier="ContactId" mappingType="Data Mapping" mappingTypeId="ca88649b-f20b-44db-a9c0-017c26155ba8">
+                <path>
+                  <target id="4224c9d4-d916-4ad3-938e-0fda07beb464" name="UpdateContactCompanyCommand" type="element" specialization="Command" specializationId="ccf14eb6-3a55-4d81-b5b9-d27311c70cb9" />
+                  <target id="063dca67-5ec6-4c01-9fa5-fd6e9b88163f" name="ContactId" type="element" specialization="DTO-Field" specializationId="7baed1fd-469b-4980-8fd9-4cefb8331eb2" />
+                </path>
+              </source>
+            </sources>
+          </mappedEnd>
+          <mappedEnd>
+            <expression>{FirstName}</expression>
+            <path>
+              <target id="3259289c-5d51-46cb-8c99-78751b456c44" name="Company" type="element" specialization="Class" specializationId="04e12b51-ed12-42a3-9667-a6aa81bb6d10" />
+              <target id="d759c7c0-57b9-482f-958d-9b2bb3fce545" name="UpdateContact" type="element" specialization="Operation" specializationId="e042bb67-a1df-480c-9935-b26210f78591" />
+              <target id="7490bf91-b77b-4712-83f2-2a15d6152556" name="firstName" type="element" specialization="Parameter" specializationId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b" />
+            </path>
+            <sources>
+              <source identifier="FirstName" mappingType="Data Mapping" mappingTypeId="ca88649b-f20b-44db-a9c0-017c26155ba8">
+                <path>
+                  <target id="4224c9d4-d916-4ad3-938e-0fda07beb464" name="UpdateContactCompanyCommand" type="element" specialization="Command" specializationId="ccf14eb6-3a55-4d81-b5b9-d27311c70cb9" />
+                  <target id="167a7bbd-9f13-4a74-ba96-4146ea2f41b5" name="FirstName" type="element" specialization="DTO-Field" specializationId="7baed1fd-469b-4980-8fd9-4cefb8331eb2" />
+                </path>
+              </source>
+            </sources>
+          </mappedEnd>
+          <mappedEnd>
+            <expression>{LastName}</expression>
+            <path>
+              <target id="3259289c-5d51-46cb-8c99-78751b456c44" name="Company" type="element" specialization="Class" specializationId="04e12b51-ed12-42a3-9667-a6aa81bb6d10" />
+              <target id="d759c7c0-57b9-482f-958d-9b2bb3fce545" name="UpdateContact" type="element" specialization="Operation" specializationId="e042bb67-a1df-480c-9935-b26210f78591" />
+              <target id="d302dd52-3240-4a44-9e3a-f8a0097a5220" name="lastName" type="element" specialization="Parameter" specializationId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b" />
+            </path>
+            <sources>
+              <source identifier="LastName" mappingType="Data Mapping" mappingTypeId="ca88649b-f20b-44db-a9c0-017c26155ba8">
+                <path>
+                  <target id="4224c9d4-d916-4ad3-938e-0fda07beb464" name="UpdateContactCompanyCommand" type="element" specialization="Command" specializationId="ccf14eb6-3a55-4d81-b5b9-d27311c70cb9" />
+                  <target id="340a577a-51a0-4063-9079-d6ff33fb2e56" name="LastName" type="element" specialization="DTO-Field" specializationId="7baed1fd-469b-4980-8fd9-4cefb8331eb2" />
+                </path>
+              </source>
+            </sources>
+          </mappedEnd>
+          <mappedEnd>
+            <expression>{EmailAddress}</expression>
+            <path>
+              <target id="3259289c-5d51-46cb-8c99-78751b456c44" name="Company" type="element" specialization="Class" specializationId="04e12b51-ed12-42a3-9667-a6aa81bb6d10" />
+              <target id="d759c7c0-57b9-482f-958d-9b2bb3fce545" name="UpdateContact" type="element" specialization="Operation" specializationId="e042bb67-a1df-480c-9935-b26210f78591" />
+              <target id="ca740cb1-f6da-412e-a196-0ba68b8c3c80" name="emailAddress" type="element" specialization="Parameter" specializationId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b" />
+            </path>
+            <sources>
+              <source identifier="EmailAddress" mappingType="Data Mapping" mappingTypeId="ca88649b-f20b-44db-a9c0-017c26155ba8">
+                <path>
+                  <target id="4224c9d4-d916-4ad3-938e-0fda07beb464" name="UpdateContactCompanyCommand" type="element" specialization="Command" specializationId="ccf14eb6-3a55-4d81-b5b9-d27311c70cb9" />
+                  <target id="ce1f2477-f9dc-4a54-bbea-8297c3af3a4d" name="EmailAddress" type="element" specialization="DTO-Field" specializationId="7baed1fd-469b-4980-8fd9-4cefb8331eb2" />
+                </path>
+              </source>
+            </sources>
+          </mappedEnd>
+          <mappedEnd>
+            <expression>{CompanyPosition}</expression>
+            <path>
+              <target id="3259289c-5d51-46cb-8c99-78751b456c44" name="Company" type="element" specialization="Class" specializationId="04e12b51-ed12-42a3-9667-a6aa81bb6d10" />
+              <target id="d759c7c0-57b9-482f-958d-9b2bb3fce545" name="UpdateContact" type="element" specialization="Operation" specializationId="e042bb67-a1df-480c-9935-b26210f78591" />
+              <target id="98e1c954-97e4-4bfd-bcfd-663ad8e0dd6e" name="companyPosition" type="element" specialization="Parameter" specializationId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b" />
+            </path>
+            <sources>
+              <source identifier="CompanyPosition" mappingType="Data Mapping" mappingTypeId="ca88649b-f20b-44db-a9c0-017c26155ba8">
+                <path>
+                  <target id="4224c9d4-d916-4ad3-938e-0fda07beb464" name="UpdateContactCompanyCommand" type="element" specialization="Command" specializationId="ccf14eb6-3a55-4d81-b5b9-d27311c70cb9" />
+                  <target id="f01ee726-6ef9-457a-b1b7-fbae5174ada7" name="CompanyPosition" type="element" specialization="DTO-Field" specializationId="7baed1fd-469b-4980-8fd9-4cefb8331eb2" />
+                </path>
+              </source>
+            </sources>
+          </mappedEnd>
+        </mappedEnds>
+      </mapping>
+    </mappings>
+    <metadata />
+    <childElements />
+  </targetEnd>
+  <associationType>Update Entity Action</associationType>
+  <associationTypeId>9ea0382a-4617-412a-a8c8-af987bbce226</associationTypeId>
+  <stereotypes />
+</association>

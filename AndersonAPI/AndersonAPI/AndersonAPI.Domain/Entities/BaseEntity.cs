@@ -11,6 +11,8 @@ namespace AndersonAPI.Domain.Entities
 
         public int Order { get; protected set; } = 0;
 
+        public EntityState State { get; protected set; }
+
         public List<DomainEvent> DomainEvents { get; set; } = [];
     }
 }

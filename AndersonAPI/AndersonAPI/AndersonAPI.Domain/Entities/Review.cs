@@ -7,14 +7,14 @@ namespace AndersonAPI.Domain.Entities
 {
     public class Review : BaseEntity, IAuditable
     {
-        private List<CompanyProfile> _companyProfiles = [];
+        private List<Company> _companies = [];
 
-        public Review(string comment, int rating, string applicationIdentityUserId, Guid reviewerCompanyProfileId)
+        public Review(string comment, int rating, string applicationIdentityUserId, Guid reviewerCompanyId)
         {
             Comment = comment;
             Rating = rating;
             ApplicationIdentityUserId = applicationIdentityUserId;
-            ReviewerCompanyProfileId = reviewerCompanyProfileId;
+            ReviewerCompanyId = reviewerCompanyId;
         }
         /// <summary>
         /// Required by Entity Framework.
@@ -23,7 +23,7 @@ namespace AndersonAPI.Domain.Entities
         {
             Comment = null!;
             ApplicationIdentityUserId = null!;
-            ReviewerCompanyProfile = null!;
+            ReviewerCompany = null!;
             ApplicationIdentityUser = null!;
         }
 
@@ -41,15 +41,15 @@ namespace AndersonAPI.Domain.Entities
 
         public string ApplicationIdentityUserId { get; private set; }
 
-        public Guid ReviewerCompanyProfileId { get; private set; }
+        public Guid ReviewerCompanyId { get; private set; }
 
-        public virtual IReadOnlyCollection<CompanyProfile> CompanyProfiles
+        public virtual IReadOnlyCollection<Company> Companies
         {
-            get => _companyProfiles.AsReadOnly();
-            private set => _companyProfiles = new List<CompanyProfile>(value);
+            get => _companies.AsReadOnly();
+            private set => _companies = new List<Company>(value);
         }
 
-        public virtual CompanyProfile ReviewerCompanyProfile { get; private set; }
+        public virtual Company ReviewerCompany { get; private set; }
 
         public virtual ApplicationIdentityUser ApplicationIdentityUser { get; private set; }
 

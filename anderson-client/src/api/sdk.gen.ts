@@ -2,7 +2,7 @@
 
 import type { Client, Options as Options2, TDataShape } from './client';
 import { client } from './client.gen';
-import type { DeleteApiCompanyProfilesByIdData, DeleteApiCompanyProfilesByIdErrors, DeleteApiCompanyProfilesByIdResponses, DeleteApiIndustriesByIdData, DeleteApiIndustriesByIdErrors, DeleteApiIndustriesByIdResponses, GetApiAccountManageInfoData, GetApiAccountManageInfoResponses, GetApiCompanyProfilesByIdData, GetApiCompanyProfilesByIdErrors, GetApiCompanyProfilesByIdResponses, GetApiCompanyProfilesCompanyCountData, GetApiCompanyProfilesCompanyCountErrors, GetApiCompanyProfilesCompanyCountResponses, GetApiCompanyProfilesData, GetApiCompanyProfilesErrors, GetApiCompanyProfilesGetCompanyNamesData, GetApiCompanyProfilesGetCompanyNamesErrors, GetApiCompanyProfilesGetCompanyNamesResponses, GetApiCompanyProfilesResponses, GetApiIndustriesByIdData, GetApiIndustriesByIdErrors, GetApiIndustriesByIdResponses, GetApiIndustriesData, GetApiIndustriesErrors, GetApiIndustriesResponses, PostApiAccountConfirmEmailData, PostApiAccountConfirmEmailResponses, PostApiAccountForgotPasswordData, PostApiAccountForgotPasswordResponses, PostApiAccountLoginData, PostApiAccountLoginResponses, PostApiAccountLogoutData, PostApiAccountLogoutResponses, PostApiAccountManageInfoData, PostApiAccountManageInfoResponses, PostApiAccountRefreshData, PostApiAccountRefreshResponses, PostApiAccountRegisterData, PostApiAccountRegisterResponses, PostApiAccountResetPasswordData, PostApiAccountResetPasswordResponses, PostApiCompanyProfilesData, PostApiCompanyProfilesErrors, PostApiCompanyProfilesResponses, PostApiIndustriesData, PostApiIndustriesErrors, PostApiIndustriesResponses, PutApiCompanyProfilesByIdProfileData, PutApiCompanyProfilesByIdProfileErrors, PutApiCompanyProfilesByIdProfileResponses, PutApiIndustriesByIdData, PutApiIndustriesByIdErrors, PutApiIndustriesByIdResponses } from './types.gen';
+import type { DeleteApiCapabilitiesByIdData, DeleteApiCapabilitiesByIdErrors, DeleteApiCapabilitiesByIdResponses, DeleteApiCompaniesByIdContactData, DeleteApiCompaniesByIdContactErrors, DeleteApiCompaniesByIdContactResponses, DeleteApiCompaniesByIdData, DeleteApiCompaniesByIdErrors, DeleteApiCompaniesByIdLocationData, DeleteApiCompaniesByIdLocationErrors, DeleteApiCompaniesByIdLocationResponses, DeleteApiCompaniesByIdResponses, DeleteApiCountriesByIdData, DeleteApiCountriesByIdErrors, DeleteApiCountriesByIdResponses, DeleteApiIndustriesByIdData, DeleteApiIndustriesByIdErrors, DeleteApiIndustriesByIdResponses, DeleteApiOppertunityTypesByIdData, DeleteApiOppertunityTypesByIdErrors, DeleteApiOppertunityTypesByIdResponses, DeleteApiRegionsByIdData, DeleteApiRegionsByIdErrors, DeleteApiRegionsByIdResponses, DeleteApiServiceTypesByIdData, DeleteApiServiceTypesByIdErrors, DeleteApiServiceTypesByIdResponses, GetApiAccountManageInfoData, GetApiAccountManageInfoResponses, GetApiCapabilitiesByIdData, GetApiCapabilitiesByIdErrors, GetApiCapabilitiesByIdResponses, GetApiCapabilitiesData, GetApiCapabilitiesErrors, GetApiCapabilitiesResponses, GetApiCompaniesByIdData, GetApiCompaniesByIdErrors, GetApiCompaniesByIdResponses, GetApiCompaniesData, GetApiCompaniesErrors, GetApiCompaniesResponses, GetApiCountriesByIdData, GetApiCountriesByIdErrors, GetApiCountriesByIdResponses, GetApiCountriesData, GetApiCountriesErrors, GetApiCountriesResponses, GetApiIndustriesByIdData, GetApiIndustriesByIdErrors, GetApiIndustriesByIdResponses, GetApiIndustriesData, GetApiIndustriesErrors, GetApiIndustriesResponses, GetApiOppertunityTypesByIdData, GetApiOppertunityTypesByIdErrors, GetApiOppertunityTypesByIdResponses, GetApiOppertunityTypesData, GetApiOppertunityTypesErrors, GetApiOppertunityTypesResponses, GetApiRegionsByIdData, GetApiRegionsByIdErrors, GetApiRegionsByIdResponses, GetApiRegionsData, GetApiRegionsErrors, GetApiRegionsResponses, GetApiServiceTypesByIdData, GetApiServiceTypesByIdErrors, GetApiServiceTypesByIdResponses, GetApiServiceTypesData, GetApiServiceTypesErrors, GetApiServiceTypesResponses, PostApiAccountConfirmEmailData, PostApiAccountConfirmEmailResponses, PostApiAccountForgotPasswordData, PostApiAccountForgotPasswordResponses, PostApiAccountLoginData, PostApiAccountLoginResponses, PostApiAccountLogoutData, PostApiAccountLogoutResponses, PostApiAccountManageInfoData, PostApiAccountManageInfoResponses, PostApiAccountRefreshData, PostApiAccountRefreshResponses, PostApiAccountRegisterData, PostApiAccountRegisterResponses, PostApiAccountResetPasswordData, PostApiAccountResetPasswordResponses, PostApiCapabilitiesData, PostApiCapabilitiesErrors, PostApiCapabilitiesResponses, PostApiCompaniesByIdContactData, PostApiCompaniesByIdContactErrors, PostApiCompaniesByIdContactResponses, PostApiCompaniesByIdLocationData, PostApiCompaniesByIdLocationErrors, PostApiCompaniesByIdLocationResponses, PostApiCompaniesData, PostApiCompaniesErrors, PostApiCompaniesResponses, PostApiCountriesData, PostApiCountriesErrors, PostApiCountriesResponses, PostApiIndustriesData, PostApiIndustriesErrors, PostApiIndustriesResponses, PostApiOppertunityTypesData, PostApiOppertunityTypesErrors, PostApiOppertunityTypesResponses, PostApiRegionsData, PostApiRegionsErrors, PostApiRegionsResponses, PostApiServiceTypesData, PostApiServiceTypesErrors, PostApiServiceTypesResponses, PutApiCapabilitiesByIdData, PutApiCapabilitiesByIdErrors, PutApiCapabilitiesByIdResponses, PutApiCompaniesByIdCapabilitiesData, PutApiCompaniesByIdCapabilitiesErrors, PutApiCompaniesByIdCapabilitiesResponses, PutApiCompaniesByIdContactData, PutApiCompaniesByIdContactErrors, PutApiCompaniesByIdContactResponses, PutApiCompaniesByIdData, PutApiCompaniesByIdErrors, PutApiCompaniesByIdHeadOfficeData, PutApiCompaniesByIdHeadOfficeErrors, PutApiCompaniesByIdHeadOfficeResponses, PutApiCompaniesByIdIndustriesData, PutApiCompaniesByIdIndustriesErrors, PutApiCompaniesByIdIndustriesResponses, PutApiCompaniesByIdLocationData, PutApiCompaniesByIdLocationErrors, PutApiCompaniesByIdLocationResponses, PutApiCompaniesByIdResponses, PutApiCompaniesByIdServiceTypesData, PutApiCompaniesByIdServiceTypesErrors, PutApiCompaniesByIdServiceTypesResponses, PutApiCountriesByIdData, PutApiCountriesByIdErrors, PutApiCountriesByIdResponses, PutApiIndustriesByIdData, PutApiIndustriesByIdErrors, PutApiIndustriesByIdResponses, PutApiOppertunityTypesByIdData, PutApiOppertunityTypesByIdErrors, PutApiOppertunityTypesByIdResponses, PutApiRegionsByIdData, PutApiRegionsByIdErrors, PutApiRegionsByIdResponses, PutApiServiceTypesByIdData, PutApiServiceTypesByIdErrors, PutApiServiceTypesByIdResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -85,10 +85,10 @@ export const postApiAccountManageInfo = <ThrowOnError extends boolean = false>(o
 
 export const postApiAccountLogout = <ThrowOnError extends boolean = false>(options?: Options<PostApiAccountLogoutData, ThrowOnError>) => (options?.client ?? client).post<PostApiAccountLogoutResponses, unknown, ThrowOnError>({ url: '/api/Account/Logout', ...options });
 
-export const getApiCompanyProfiles = <ThrowOnError extends boolean = false>(options?: Options<GetApiCompanyProfilesData, ThrowOnError>) => (options?.client ?? client).get<GetApiCompanyProfilesResponses, GetApiCompanyProfilesErrors, ThrowOnError>({ url: '/api/company-profiles', ...options });
+export const getApiCapabilities = <ThrowOnError extends boolean = false>(options?: Options<GetApiCapabilitiesData, ThrowOnError>) => (options?.client ?? client).get<GetApiCapabilitiesResponses, GetApiCapabilitiesErrors, ThrowOnError>({ url: '/api/capabilities', ...options });
 
-export const postApiCompanyProfiles = <ThrowOnError extends boolean = false>(options: Options<PostApiCompanyProfilesData, ThrowOnError>) => (options.client ?? client).post<PostApiCompanyProfilesResponses, PostApiCompanyProfilesErrors, ThrowOnError>({
-    url: '/api/company-profiles',
+export const postApiCapabilities = <ThrowOnError extends boolean = false>(options: Options<PostApiCapabilitiesData, ThrowOnError>) => (options.client ?? client).post<PostApiCapabilitiesResponses, PostApiCapabilitiesErrors, ThrowOnError>({
+    url: '/api/capabilities',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -96,12 +96,12 @@ export const postApiCompanyProfiles = <ThrowOnError extends boolean = false>(opt
     }
 });
 
-export const deleteApiCompanyProfilesById = <ThrowOnError extends boolean = false>(options: Options<DeleteApiCompanyProfilesByIdData, ThrowOnError>) => (options.client ?? client).delete<DeleteApiCompanyProfilesByIdResponses, DeleteApiCompanyProfilesByIdErrors, ThrowOnError>({ url: '/api/company-profiles/{id}', ...options });
+export const deleteApiCapabilitiesById = <ThrowOnError extends boolean = false>(options: Options<DeleteApiCapabilitiesByIdData, ThrowOnError>) => (options.client ?? client).delete<DeleteApiCapabilitiesByIdResponses, DeleteApiCapabilitiesByIdErrors, ThrowOnError>({ url: '/api/capabilities/{id}', ...options });
 
-export const getApiCompanyProfilesById = <ThrowOnError extends boolean = false>(options: Options<GetApiCompanyProfilesByIdData, ThrowOnError>) => (options.client ?? client).get<GetApiCompanyProfilesByIdResponses, GetApiCompanyProfilesByIdErrors, ThrowOnError>({ url: '/api/company-profiles/{id}', ...options });
+export const getApiCapabilitiesById = <ThrowOnError extends boolean = false>(options: Options<GetApiCapabilitiesByIdData, ThrowOnError>) => (options.client ?? client).get<GetApiCapabilitiesByIdResponses, GetApiCapabilitiesByIdErrors, ThrowOnError>({ url: '/api/capabilities/{id}', ...options });
 
-export const putApiCompanyProfilesByIdProfile = <ThrowOnError extends boolean = false>(options: Options<PutApiCompanyProfilesByIdProfileData, ThrowOnError>) => (options.client ?? client).put<PutApiCompanyProfilesByIdProfileResponses, PutApiCompanyProfilesByIdProfileErrors, ThrowOnError>({
-    url: '/api/company-profiles/{id}/profile',
+export const putApiCapabilitiesById = <ThrowOnError extends boolean = false>(options: Options<PutApiCapabilitiesByIdData, ThrowOnError>) => (options.client ?? client).put<PutApiCapabilitiesByIdResponses, PutApiCapabilitiesByIdErrors, ThrowOnError>({
+    url: '/api/capabilities/{id}',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -109,9 +109,129 @@ export const putApiCompanyProfilesByIdProfile = <ThrowOnError extends boolean = 
     }
 });
 
-export const getApiCompanyProfilesCompanyCount = <ThrowOnError extends boolean = false>(options?: Options<GetApiCompanyProfilesCompanyCountData, ThrowOnError>) => (options?.client ?? client).get<GetApiCompanyProfilesCompanyCountResponses, GetApiCompanyProfilesCompanyCountErrors, ThrowOnError>({ url: '/api/company-profiles/company-count', ...options });
+export const deleteApiCompaniesByIdContact = <ThrowOnError extends boolean = false>(options: Options<DeleteApiCompaniesByIdContactData, ThrowOnError>) => (options.client ?? client).delete<DeleteApiCompaniesByIdContactResponses, DeleteApiCompaniesByIdContactErrors, ThrowOnError>({ url: '/api/companies/{id}/contact', ...options });
 
-export const getApiCompanyProfilesGetCompanyNames = <ThrowOnError extends boolean = false>(options?: Options<GetApiCompanyProfilesGetCompanyNamesData, ThrowOnError>) => (options?.client ?? client).get<GetApiCompanyProfilesGetCompanyNamesResponses, GetApiCompanyProfilesGetCompanyNamesErrors, ThrowOnError>({ url: '/api/company-profiles/get-company-names', ...options });
+export const postApiCompaniesByIdContact = <ThrowOnError extends boolean = false>(options: Options<PostApiCompaniesByIdContactData, ThrowOnError>) => (options.client ?? client).post<PostApiCompaniesByIdContactResponses, PostApiCompaniesByIdContactErrors, ThrowOnError>({
+    url: '/api/companies/{id}/contact',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+export const putApiCompaniesByIdContact = <ThrowOnError extends boolean = false>(options: Options<PutApiCompaniesByIdContactData, ThrowOnError>) => (options.client ?? client).put<PutApiCompaniesByIdContactResponses, PutApiCompaniesByIdContactErrors, ThrowOnError>({
+    url: '/api/companies/{id}/contact',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+export const deleteApiCompaniesByIdLocation = <ThrowOnError extends boolean = false>(options: Options<DeleteApiCompaniesByIdLocationData, ThrowOnError>) => (options.client ?? client).delete<DeleteApiCompaniesByIdLocationResponses, DeleteApiCompaniesByIdLocationErrors, ThrowOnError>({ url: '/api/companies/{id}/location', ...options });
+
+export const postApiCompaniesByIdLocation = <ThrowOnError extends boolean = false>(options: Options<PostApiCompaniesByIdLocationData, ThrowOnError>) => (options.client ?? client).post<PostApiCompaniesByIdLocationResponses, PostApiCompaniesByIdLocationErrors, ThrowOnError>({
+    url: '/api/companies/{id}/location',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+export const putApiCompaniesByIdLocation = <ThrowOnError extends boolean = false>(options: Options<PutApiCompaniesByIdLocationData, ThrowOnError>) => (options.client ?? client).put<PutApiCompaniesByIdLocationResponses, PutApiCompaniesByIdLocationErrors, ThrowOnError>({
+    url: '/api/companies/{id}/location',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+export const getApiCompanies = <ThrowOnError extends boolean = false>(options?: Options<GetApiCompaniesData, ThrowOnError>) => (options?.client ?? client).get<GetApiCompaniesResponses, GetApiCompaniesErrors, ThrowOnError>({ url: '/api/companies', ...options });
+
+export const postApiCompanies = <ThrowOnError extends boolean = false>(options: Options<PostApiCompaniesData, ThrowOnError>) => (options.client ?? client).post<PostApiCompaniesResponses, PostApiCompaniesErrors, ThrowOnError>({
+    url: '/api/companies',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+export const deleteApiCompaniesById = <ThrowOnError extends boolean = false>(options: Options<DeleteApiCompaniesByIdData, ThrowOnError>) => (options.client ?? client).delete<DeleteApiCompaniesByIdResponses, DeleteApiCompaniesByIdErrors, ThrowOnError>({ url: '/api/companies/{id}', ...options });
+
+export const getApiCompaniesById = <ThrowOnError extends boolean = false>(options: Options<GetApiCompaniesByIdData, ThrowOnError>) => (options.client ?? client).get<GetApiCompaniesByIdResponses, GetApiCompaniesByIdErrors, ThrowOnError>({ url: '/api/companies/{id}', ...options });
+
+export const putApiCompaniesById = <ThrowOnError extends boolean = false>(options: Options<PutApiCompaniesByIdData, ThrowOnError>) => (options.client ?? client).put<PutApiCompaniesByIdResponses, PutApiCompaniesByIdErrors, ThrowOnError>({
+    url: '/api/companies/{id}',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+export const putApiCompaniesByIdCapabilities = <ThrowOnError extends boolean = false>(options: Options<PutApiCompaniesByIdCapabilitiesData, ThrowOnError>) => (options.client ?? client).put<PutApiCompaniesByIdCapabilitiesResponses, PutApiCompaniesByIdCapabilitiesErrors, ThrowOnError>({
+    url: '/api/companies/{id}/capabilities',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+export const putApiCompaniesByIdHeadOffice = <ThrowOnError extends boolean = false>(options: Options<PutApiCompaniesByIdHeadOfficeData, ThrowOnError>) => (options.client ?? client).put<PutApiCompaniesByIdHeadOfficeResponses, PutApiCompaniesByIdHeadOfficeErrors, ThrowOnError>({
+    url: '/api/companies/{id}/head-office',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+export const putApiCompaniesByIdIndustries = <ThrowOnError extends boolean = false>(options: Options<PutApiCompaniesByIdIndustriesData, ThrowOnError>) => (options.client ?? client).put<PutApiCompaniesByIdIndustriesResponses, PutApiCompaniesByIdIndustriesErrors, ThrowOnError>({
+    url: '/api/companies/{id}/industries',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+export const putApiCompaniesByIdServiceTypes = <ThrowOnError extends boolean = false>(options: Options<PutApiCompaniesByIdServiceTypesData, ThrowOnError>) => (options.client ?? client).put<PutApiCompaniesByIdServiceTypesResponses, PutApiCompaniesByIdServiceTypesErrors, ThrowOnError>({
+    url: '/api/companies/{id}/service-types',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+export const getApiCountries = <ThrowOnError extends boolean = false>(options?: Options<GetApiCountriesData, ThrowOnError>) => (options?.client ?? client).get<GetApiCountriesResponses, GetApiCountriesErrors, ThrowOnError>({ url: '/api/countries', ...options });
+
+export const postApiCountries = <ThrowOnError extends boolean = false>(options: Options<PostApiCountriesData, ThrowOnError>) => (options.client ?? client).post<PostApiCountriesResponses, PostApiCountriesErrors, ThrowOnError>({
+    url: '/api/countries',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+export const deleteApiCountriesById = <ThrowOnError extends boolean = false>(options: Options<DeleteApiCountriesByIdData, ThrowOnError>) => (options.client ?? client).delete<DeleteApiCountriesByIdResponses, DeleteApiCountriesByIdErrors, ThrowOnError>({ url: '/api/countries/{id}', ...options });
+
+export const getApiCountriesById = <ThrowOnError extends boolean = false>(options: Options<GetApiCountriesByIdData, ThrowOnError>) => (options.client ?? client).get<GetApiCountriesByIdResponses, GetApiCountriesByIdErrors, ThrowOnError>({ url: '/api/countries/{id}', ...options });
+
+export const putApiCountriesById = <ThrowOnError extends boolean = false>(options: Options<PutApiCountriesByIdData, ThrowOnError>) => (options.client ?? client).put<PutApiCountriesByIdResponses, PutApiCountriesByIdErrors, ThrowOnError>({
+    url: '/api/countries/{id}',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
 
 export const getApiIndustries = <ThrowOnError extends boolean = false>(options?: Options<GetApiIndustriesData, ThrowOnError>) => (options?.client ?? client).get<GetApiIndustriesResponses, GetApiIndustriesErrors, ThrowOnError>({ url: '/api/industries', ...options });
 
@@ -130,6 +250,78 @@ export const getApiIndustriesById = <ThrowOnError extends boolean = false>(optio
 
 export const putApiIndustriesById = <ThrowOnError extends boolean = false>(options: Options<PutApiIndustriesByIdData, ThrowOnError>) => (options.client ?? client).put<PutApiIndustriesByIdResponses, PutApiIndustriesByIdErrors, ThrowOnError>({
     url: '/api/industries/{id}',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+export const getApiOppertunityTypes = <ThrowOnError extends boolean = false>(options?: Options<GetApiOppertunityTypesData, ThrowOnError>) => (options?.client ?? client).get<GetApiOppertunityTypesResponses, GetApiOppertunityTypesErrors, ThrowOnError>({ url: '/api/oppertunity-types', ...options });
+
+export const postApiOppertunityTypes = <ThrowOnError extends boolean = false>(options: Options<PostApiOppertunityTypesData, ThrowOnError>) => (options.client ?? client).post<PostApiOppertunityTypesResponses, PostApiOppertunityTypesErrors, ThrowOnError>({
+    url: '/api/oppertunity-types',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+export const deleteApiOppertunityTypesById = <ThrowOnError extends boolean = false>(options: Options<DeleteApiOppertunityTypesByIdData, ThrowOnError>) => (options.client ?? client).delete<DeleteApiOppertunityTypesByIdResponses, DeleteApiOppertunityTypesByIdErrors, ThrowOnError>({ url: '/api/oppertunity-types/{id}', ...options });
+
+export const getApiOppertunityTypesById = <ThrowOnError extends boolean = false>(options: Options<GetApiOppertunityTypesByIdData, ThrowOnError>) => (options.client ?? client).get<GetApiOppertunityTypesByIdResponses, GetApiOppertunityTypesByIdErrors, ThrowOnError>({ url: '/api/oppertunity-types/{id}', ...options });
+
+export const putApiOppertunityTypesById = <ThrowOnError extends boolean = false>(options: Options<PutApiOppertunityTypesByIdData, ThrowOnError>) => (options.client ?? client).put<PutApiOppertunityTypesByIdResponses, PutApiOppertunityTypesByIdErrors, ThrowOnError>({
+    url: '/api/oppertunity-types/{id}',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+export const getApiRegions = <ThrowOnError extends boolean = false>(options?: Options<GetApiRegionsData, ThrowOnError>) => (options?.client ?? client).get<GetApiRegionsResponses, GetApiRegionsErrors, ThrowOnError>({ url: '/api/regions', ...options });
+
+export const postApiRegions = <ThrowOnError extends boolean = false>(options: Options<PostApiRegionsData, ThrowOnError>) => (options.client ?? client).post<PostApiRegionsResponses, PostApiRegionsErrors, ThrowOnError>({
+    url: '/api/regions',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+export const deleteApiRegionsById = <ThrowOnError extends boolean = false>(options: Options<DeleteApiRegionsByIdData, ThrowOnError>) => (options.client ?? client).delete<DeleteApiRegionsByIdResponses, DeleteApiRegionsByIdErrors, ThrowOnError>({ url: '/api/regions/{id}', ...options });
+
+export const getApiRegionsById = <ThrowOnError extends boolean = false>(options: Options<GetApiRegionsByIdData, ThrowOnError>) => (options.client ?? client).get<GetApiRegionsByIdResponses, GetApiRegionsByIdErrors, ThrowOnError>({ url: '/api/regions/{id}', ...options });
+
+export const putApiRegionsById = <ThrowOnError extends boolean = false>(options: Options<PutApiRegionsByIdData, ThrowOnError>) => (options.client ?? client).put<PutApiRegionsByIdResponses, PutApiRegionsByIdErrors, ThrowOnError>({
+    url: '/api/regions/{id}',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+export const getApiServiceTypes = <ThrowOnError extends boolean = false>(options?: Options<GetApiServiceTypesData, ThrowOnError>) => (options?.client ?? client).get<GetApiServiceTypesResponses, GetApiServiceTypesErrors, ThrowOnError>({ url: '/api/service-types', ...options });
+
+export const postApiServiceTypes = <ThrowOnError extends boolean = false>(options: Options<PostApiServiceTypesData, ThrowOnError>) => (options.client ?? client).post<PostApiServiceTypesResponses, PostApiServiceTypesErrors, ThrowOnError>({
+    url: '/api/service-types',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+export const deleteApiServiceTypesById = <ThrowOnError extends boolean = false>(options: Options<DeleteApiServiceTypesByIdData, ThrowOnError>) => (options.client ?? client).delete<DeleteApiServiceTypesByIdResponses, DeleteApiServiceTypesByIdErrors, ThrowOnError>({ url: '/api/service-types/{id}', ...options });
+
+export const getApiServiceTypesById = <ThrowOnError extends boolean = false>(options: Options<GetApiServiceTypesByIdData, ThrowOnError>) => (options.client ?? client).get<GetApiServiceTypesByIdResponses, GetApiServiceTypesByIdErrors, ThrowOnError>({ url: '/api/service-types/{id}', ...options });
+
+export const putApiServiceTypesById = <ThrowOnError extends boolean = false>(options: Options<PutApiServiceTypesByIdData, ThrowOnError>) => (options.client ?? client).put<PutApiServiceTypesByIdResponses, PutApiServiceTypesByIdErrors, ThrowOnError>({
+    url: '/api/service-types/{id}',
     ...options,
     headers: {
         'Content-Type': 'application/json',

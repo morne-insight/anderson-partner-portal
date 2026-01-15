@@ -6,13 +6,13 @@ namespace AndersonAPI.Domain.Entities
 {
     public class Location : BaseEntity
     {
-        public Location(string name, Guid regionId, Guid countryId, bool isHeadOffice, Guid companyProfileId)
+        public Location(string name, Guid regionId, Guid countryId, bool isHeadOffice, Guid companyId)
         {
             Name = name;
             RegionId = regionId;
             CountryId = countryId;
             IsHeadOffice = isHeadOffice;
-            CompanyProfileId = companyProfileId;
+            CompanyId = companyId;
         }
         /// <summary>
         /// Required by Entity Framework.
@@ -30,21 +30,25 @@ namespace AndersonAPI.Domain.Entities
 
         public Guid CountryId { get; private set; }
 
-        public bool IsHeadOffice { get; private set; }
+        public Guid CompanyId { get; private set; }
 
-        public Guid CompanyProfileId { get; private set; }
+        public bool IsHeadOffice { get; private set; }
 
         public virtual Region Region { get; private set; }
 
         public virtual Country Country { get; private set; }
 
-        public void Update(string name, bool isHeadOffice, Guid regionId, Guid countryId, Guid companyProfileId)
+        public void Update(string name, Guid regionId, Guid countryId, bool isHeadOffice)
         {
             Name = name;
-            IsHeadOffice = isHeadOffice;
             RegionId = regionId;
             CountryId = countryId;
-            CompanyProfileId = companyProfileId;
+            IsHeadOffice = isHeadOffice;
+        }
+
+        public void SetHeadOffice(bool isHeadOffice)
+        {
+            IsHeadOffice = isHeadOffice;
         }
     }
 }

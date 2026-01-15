@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<class id="0b91d0c5-4aa0-4fd0-854a-7a10a9808b4d" type="Enum" typeId="85fba0e9-9161-4c85-a603-a229ef312beb">
+  <name>EntityState</name>
+  <display>EntityState</display>
+  <isAbstract>false</isAbstract>
+  <sort-children>by-type-then-manually</sort-children>
+  <genericTypes />
+  <isMapped>false</isMapped>
+  <parentFolderId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</parentFolderId>
+  <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+  <packageName>AndersonAPI.Domain</packageName>
+  <stereotypes />
+  <metadata />
+  <childElements>
+    <childElement id="c5a161f0-e151-4eb4-8465-48da116a4173" type="Enum-Literal" typeId="4215f417-25d2-4509-9309-5076a1452eaa">
+      <name>Enabled</name>
+      <display>Enabled = 1</display>
+      <isAbstract>false</isAbstract>
+      <value>1</value>
+      <genericTypes />
+      <isMapped>false</isMapped>
+      <parentFolderId>0b91d0c5-4aa0-4fd0-854a-7a10a9808b4d</parentFolderId>
+      <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+      <packageName>AndersonAPI.Domain</packageName>
+      <stereotypes />
+      <metadata />
+      <childElements />
+    </childElement>
+    <childElement id="f40ab713-cc9e-424d-bbf4-c66e3d63c2d2" type="Enum-Literal" typeId="4215f417-25d2-4509-9309-5076a1452eaa">
+      <name>Disabled</name>
+      <display>Disabled = 2</display>
+      <isAbstract>false</isAbstract>
+      <value>2</value>
+      <genericTypes />
+      <isMapped>false</isMapped>
+      <parentFolderId>0b91d0c5-4aa0-4fd0-854a-7a10a9808b4d</parentFolderId>
+      <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+      <packageName>AndersonAPI.Domain</packageName>
+      <stereotypes />
+      <metadata />
+      <childElements />
+    </childElement>
+    <childElement id="1fdd7c19-e6f1-41f2-ad38-7ec3d7bb6553" type="Enum-Literal" typeId="4215f417-25d2-4509-9309-5076a1452eaa">
+      <name>Deleted</name>
+      <display>Deleted = 3</display>
+      <isAbstract>false</isAbstract>
+      <value>3</value>
+      <genericTypes />
+      <isMapped>false</isMapped>
+      <parentFolderId>0b91d0c5-4aa0-4fd0-854a-7a10a9808b4d</parentFolderId>
+      <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+      <packageName>AndersonAPI.Domain</packageName>
+      <stereotypes />
+      <metadata />
+      <childElements />
+    </childElement>
+  </childElements>
+</class>

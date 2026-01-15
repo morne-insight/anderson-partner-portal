@@ -2,7 +2,7 @@
 <association id="ee35b477-4355-4b91-9740-fffa217261ab">
   <sourceEnd id="9290b267-35b2-4d52-abb7-10bb485e03e0" type="Association Source End" typeId="8d9d2e5b-bd55-4f36-9ae4-2b9e84fd4e58">
     <name>CompanyProfiles</name>
-    <display>CompanyProfiles: CompanyProfile[*]</display>
+    <display>CompanyProfiles: Company[*]</display>
     <order>0</order>
     <typeReference id="3227dfad-e3e4-46a9-86d7-7a200d2958a3">
       <typeId>3259289c-5d51-46cb-8c99-78751b456c44</typeId>
@@ -22,7 +22,7 @@
   <targetEnd id="ee35b477-4355-4b91-9740-fffa217261ab" type="Association Target End" typeId="0a66489f-30aa-417b-a75d-b945863366fd">
     <name>ApplicationIdentityUsers</name>
     <display>ApplicationIdentityUsers: ApplicationIdentityUser[*]</display>
-    <order>28</order>
+    <order>29</order>
     <typeReference id="15c13f31-553d-42ce-acef-4530177d14df">
       <typeId>0cc17a59-dc32-4408-b0fc-d0814cb75815</typeId>
       <isNavigable>true</isNavigable>

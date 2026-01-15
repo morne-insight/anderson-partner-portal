@@ -17,6 +17,9 @@ namespace AndersonAPI.Infrastructure.Persistence.Configurations
             builder.Property(x => x.Order)
                 .IsRequired();
 
+            builder.Property(x => x.State)
+                .IsRequired();
+
             builder.Property(x => x.Name)
                 .IsRequired();
 

@@ -22,7 +22,7 @@
   <targetEnd id="f8be8eb6-f440-4d1f-9726-84db4302f50b" type="Association Target End" typeId="0a66489f-30aa-417b-a75d-b945863366fd">
     <name>OppertunityType</name>
     <display>OppertunityType: OppertunityType</display>
-    <order>21</order>
+    <order>22</order>
     <typeReference id="0b960c18-2cc3-4a2e-8d02-cbd82fa19171">
       <typeId>b4a76b80-3542-4df4-92dc-ec1d3d185ab4</typeId>
       <isNavigable>true</isNavigable>

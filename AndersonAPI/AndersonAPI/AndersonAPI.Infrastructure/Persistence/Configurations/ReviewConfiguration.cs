@@ -17,6 +17,9 @@ namespace AndersonAPI.Infrastructure.Persistence.Configurations
             builder.Property(x => x.Order)
                 .IsRequired();
 
+            builder.Property(x => x.State)
+                .IsRequired();
+
             builder.Property(x => x.Comment)
                 .IsRequired();
 
@@ -36,16 +39,16 @@ namespace AndersonAPI.Infrastructure.Persistence.Configurations
             builder.Property(x => x.ApplicationIdentityUserId)
                 .IsRequired();
 
-            builder.Property(x => x.ReviewerCompanyProfileId)
+            builder.Property(x => x.ReviewerCompanyId)
                 .IsRequired();
 
-            builder.HasMany(x => x.CompanyProfiles)
+            builder.HasMany(x => x.Companies)
                 .WithMany(x => x.Reviews)
-                .UsingEntity(x => x.ToTable("ReviewCompanyProfiles"));
+                .UsingEntity(x => x.ToTable("ReviewCompanies"));
 
-            builder.HasOne(x => x.ReviewerCompanyProfile)
+            builder.HasOne(x => x.ReviewerCompany)
                 .WithMany()
-                .HasForeignKey(x => x.ReviewerCompanyProfileId)
+                .HasForeignKey(x => x.ReviewerCompanyId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasOne(x => x.ApplicationIdentityUser)

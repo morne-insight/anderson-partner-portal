@@ -72,5 +72,29 @@
       <metadata />
       <childElements />
     </childElement>
+    <childElement id="e7d98a52-57c9-410e-8128-8aca3ac31fbc" type="Attribute" typeId="0090fb93-483e-41af-a11d-5ad2dc796adf">
+      <name>State</name>
+      <display>State: EntityState</display>
+      <isAbstract>false</isAbstract>
+      <genericTypes />
+      <typeReference id="6c5a6a02-2022-4319-adc3-48e808e08cfc">
+        <typeId>0b91d0c5-4aa0-4fd0-854a-7a10a9808b4d</typeId>
+        <isNavigable>true</isNavigable>
+        <isNullable>false</isNullable>
+        <isCollection>false</isCollection>
+        <isRequired>true</isRequired>
+        <typePackageName>AndersonAPI.Domain</typePackageName>
+        <typePackageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</typePackageId>
+        <stereotypes />
+        <genericTypeParameters />
+      </typeReference>
+      <isMapped>false</isMapped>
+      <parentFolderId>2727a645-85ae-4292-bf9c-cba3f82f444c</parentFolderId>
+      <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+      <packageName>AndersonAPI.Domain</packageName>
+      <stereotypes />
+      <metadata />
+      <childElements />
+    </childElement>
   </childElements>
 </class>

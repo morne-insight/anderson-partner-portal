@@ -351,8 +351,8 @@
       <childElements />
     </childElement>
     <childElement id="39aa55b3-0436-4eef-84cf-13c1bff51496" type="Attribute" typeId="0090fb93-483e-41af-a11d-5ad2dc796adf">
-      <name>CompanyProfileId</name>
-      <display>CompanyProfileId: guid</display>
+      <name>CompanyId</name>
+      <display>CompanyId: guid</display>
       <isAbstract>false</isAbstract>
       <genericTypes />
       <typeReference id="5281379b-7d23-4d6b-a3e6-599415d1010c">
@@ -389,7 +389,7 @@
     </childElement>
     <childElement id="e9cbb717-2629-49b4-9d0f-c2f3dd3a4ccf" type="Class Constructor" typeId="dec2bd12-4699-4f45-8ec9-3b62dc692d2b">
       <name>Constructor</name>
-      <display>Oppertunity(title: string, shortDescription: string, fullDescription: string, deadline: date?, oppertunityTypeId: guid, countryId: guid, companyProfileId: guid)</display>
+      <display>Oppertunity(title: string, shortDescription: string, fullDescription: string, deadline: date?, oppertunityTypeId: guid, countryId: guid, companyId: guid)</display>
       <isAbstract>false</isAbstract>
       <sort-children>by-type-then-manually</sort-children>
       <genericTypes />
@@ -596,8 +596,8 @@
           <childElements />
         </childElement>
         <childElement id="7d734ca4-af31-4281-a160-2b9ff9bc9213" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
-          <name>companyProfileId</name>
-          <display>in : companyProfileId: guid</display>
+          <name>companyId</name>
+          <display>in : companyId: guid</display>
           <isAbstract>false</isAbstract>
           <genericTypes />
           <typeReference id="a6546c08-8410-4b09-8f04-034b646899fd">
@@ -616,7 +616,7 @@
             <mappingSettingsId>d6d0abfd-893c-4bec-92cb-419934ba5ba8</mappingSettingsId>
             <autoSyncTypeReference>true</autoSyncTypeReference>
             <mappedPath>
-              <target id="39aa55b3-0436-4eef-84cf-13c1bff51496" name="CompanyProfileId" type="element" specialization="Attribute" specializationId="0090fb93-483e-41af-a11d-5ad2dc796adf" />
+              <target id="39aa55b3-0436-4eef-84cf-13c1bff51496" name="CompanyId" type="element" specialization="Attribute" specializationId="0090fb93-483e-41af-a11d-5ad2dc796adf" />
             </mappedPath>
           </mappedClass>
           <parentFolderId>e9cbb717-2629-49b4-9d0f-c2f3dd3a4ccf</parentFolderId>
@@ -630,7 +630,7 @@
     </childElement>
     <childElement id="c3b0f000-7443-4592-8d65-26577c1b80f6" type="Class Constructor" typeId="dec2bd12-4699-4f45-8ec9-3b62dc692d2b">
       <name>Constructor</name>
-      <display>Oppertunity(title: string, shortDescription: string, fullDescription: string, deadline: date?, oppertunityTypeId: guid, countryId: guid, serviceTypes: ServiceType[*], capabilities: Capability[*], industries: Industry[*])</display>
+      <display>Oppertunity(title: string, shortDescription: string, fullDescription: string, deadline: date?, oppertunityTypeId: guid, countryId: guid, companyId: guid, serviceTypes: guid[*], capabilities: guid[*], industries: guid[*])</display>
       <isAbstract>false</isAbstract>
       <sort-children>by-type-then-manually</sort-children>
       <genericTypes />
@@ -836,19 +836,19 @@
           <metadata />
           <childElements />
         </childElement>
-        <childElement id="1f678829-5e16-4d0f-9752-774dbb1dcbc6" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
-          <name>serviceTypes</name>
-          <display>in : serviceTypes: ServiceType[*]</display>
+        <childElement id="0afb5119-72b8-4ed3-b4e6-7b07dc7f70bc" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
+          <name>companyId</name>
+          <display>in : companyId: guid</display>
           <isAbstract>false</isAbstract>
           <genericTypes />
-          <typeReference id="6a2fb012-d521-47f0-824f-fcbdb8ead19d">
-            <typeId>2858bc40-1a77-47e2-b6ea-8e09391a38d8</typeId>
+          <typeReference id="f37deabd-ff95-486f-97c9-3a910ea56480">
+            <typeId>6b649125-18ea-48fd-a6ba-0bfff0d8f488</typeId>
             <isNavigable>true</isNavigable>
             <isNullable>false</isNullable>
-            <isCollection>true</isCollection>
+            <isCollection>false</isCollection>
             <isRequired>true</isRequired>
-            <typePackageName>AndersonAPI.Domain</typePackageName>
-            <typePackageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</typePackageId>
+            <typePackageName>Intent.Common.Types</typePackageName>
+            <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
             <stereotypes />
             <genericTypeParameters />
           </typeReference>
@@ -857,9 +857,33 @@
             <mappingSettingsId>d6d0abfd-893c-4bec-92cb-419934ba5ba8</mappingSettingsId>
             <autoSyncTypeReference>true</autoSyncTypeReference>
             <mappedPath>
-              <target id="42e3e071-e4da-42e4-986c-e3a54fe71448" name="ServiceTypes" type="association" specialization="Association Target End" specializationId="0a66489f-30aa-417b-a75d-b945863366fd" />
+              <target id="39aa55b3-0436-4eef-84cf-13c1bff51496" name="CompanyId" type="element" specialization="Attribute" specializationId="0090fb93-483e-41af-a11d-5ad2dc796adf" />
             </mappedPath>
           </mappedClass>
+          <parentFolderId>c3b0f000-7443-4592-8d65-26577c1b80f6</parentFolderId>
+          <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+          <packageName>AndersonAPI.Domain</packageName>
+          <stereotypes />
+          <metadata />
+          <childElements />
+        </childElement>
+        <childElement id="1f678829-5e16-4d0f-9752-774dbb1dcbc6" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
+          <name>serviceTypes</name>
+          <display>in : serviceTypes: guid[*]</display>
+          <isAbstract>false</isAbstract>
+          <genericTypes />
+          <typeReference id="6a2fb012-d521-47f0-824f-fcbdb8ead19d">
+            <typeId>6b649125-18ea-48fd-a6ba-0bfff0d8f488</typeId>
+            <isNavigable>true</isNavigable>
+            <isNullable>false</isNullable>
+            <isCollection>true</isCollection>
+            <isRequired>true</isRequired>
+            <typePackageName>Intent.Common.Types</typePackageName>
+            <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
+            <stereotypes />
+            <genericTypeParameters />
+          </typeReference>
+          <isMapped>false</isMapped>
           <parentFolderId>c3b0f000-7443-4592-8d65-26577c1b80f6</parentFolderId>
           <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
           <packageName>AndersonAPI.Domain</packageName>
@@ -869,28 +893,21 @@
         </childElement>
         <childElement id="c3ff98fe-aa52-445a-9574-9cbe65ba1048" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
           <name>capabilities</name>
-          <display>in : capabilities: Capability[*]</display>
+          <display>in : capabilities: guid[*]</display>
           <isAbstract>false</isAbstract>
           <genericTypes />
           <typeReference id="23ca3dba-c2d5-4540-8b17-db10b6e12a65">
-            <typeId>bc2527a3-bd77-4c15-9f2e-7c23786d30a2</typeId>
+            <typeId>6b649125-18ea-48fd-a6ba-0bfff0d8f488</typeId>
             <isNavigable>true</isNavigable>
             <isNullable>false</isNullable>
             <isCollection>true</isCollection>
             <isRequired>true</isRequired>
-            <typePackageName>AndersonAPI.Domain</typePackageName>
-            <typePackageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</typePackageId>
+            <typePackageName>Intent.Common.Types</typePackageName>
+            <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
             <stereotypes />
             <genericTypeParameters />
           </typeReference>
-          <isMapped>true</isMapped>
-          <mappedClass>
-            <mappingSettingsId>d6d0abfd-893c-4bec-92cb-419934ba5ba8</mappingSettingsId>
-            <autoSyncTypeReference>true</autoSyncTypeReference>
-            <mappedPath>
-              <target id="2a2ad37c-42c0-46bd-a523-6864be9db925" name="Capabilities" type="association" specialization="Association Target End" specializationId="0a66489f-30aa-417b-a75d-b945863366fd" />
-            </mappedPath>
-          </mappedClass>
+          <isMapped>false</isMapped>
           <parentFolderId>c3b0f000-7443-4592-8d65-26577c1b80f6</parentFolderId>
           <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
           <packageName>AndersonAPI.Domain</packageName>
@@ -900,28 +917,21 @@
         </childElement>
         <childElement id="b278ccfb-3313-4986-b3ea-c8c23cd6161d" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
           <name>industries</name>
-          <display>in : industries: Industry[*]</display>
+          <display>in : industries: guid[*]</display>
           <isAbstract>false</isAbstract>
           <genericTypes />
           <typeReference id="0518a523-44bc-48df-b47d-dfdcdfaa9329">
-            <typeId>6c47b169-df9b-47ae-a098-8463d7d86ad2</typeId>
+            <typeId>6b649125-18ea-48fd-a6ba-0bfff0d8f488</typeId>
             <isNavigable>true</isNavigable>
             <isNullable>false</isNullable>
             <isCollection>true</isCollection>
             <isRequired>true</isRequired>
-            <typePackageName>AndersonAPI.Domain</typePackageName>
-            <typePackageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</typePackageId>
+            <typePackageName>Intent.Common.Types</typePackageName>
+            <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
             <stereotypes />
             <genericTypeParameters />
           </typeReference>
-          <isMapped>true</isMapped>
-          <mappedClass>
-            <mappingSettingsId>d6d0abfd-893c-4bec-92cb-419934ba5ba8</mappingSettingsId>
-            <autoSyncTypeReference>true</autoSyncTypeReference>
-            <mappedPath>
-              <target id="db7a35d3-a6a8-4284-a704-55d895fcfe18" name="Industries" type="association" specialization="Association Target End" specializationId="0a66489f-30aa-417b-a75d-b945863366fd" />
-            </mappedPath>
-          </mappedClass>
+          <isMapped>false</isMapped>
           <parentFolderId>c3b0f000-7443-4592-8d65-26577c1b80f6</parentFolderId>
           <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
           <packageName>AndersonAPI.Domain</packageName>
@@ -1150,8 +1160,8 @@
       </childElements>
     </childElement>
     <childElement id="c44a86a0-feb6-421a-9850-547c9a0d114b" type="Operation" typeId="e042bb67-a1df-480c-9935-b26210f78591">
-      <name>Update</name>
-      <display>Update(title: string, shortDescription: string, fullDescription: string, deadline: date?, oppertunityTypeId: guid, countryId: guid, serviceTypes: ServiceType[*], capabilities: Capability[*], industries: Industry[*]): void</display>
+      <name>UpdateFull</name>
+      <display>UpdateFull(title: string, shortDescription: string, fullDescription: string, deadline: date?, oppertunityTypeId: guid, countryId: guid, serviceTypes: guid[*], capabilities: guid[*], industries: guid[*]): void</display>
       <isAbstract>false</isAbstract>
       <sort-children>by-type-then-manually</sort-children>
       <genericTypes />
@@ -1367,28 +1377,21 @@
         </childElement>
         <childElement id="a8cbc7f4-2fc4-4d4c-920f-ae2d8b72e382" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
           <name>serviceTypes</name>
-          <display>in : serviceTypes: ServiceType[*]</display>
+          <display>in : serviceTypes: guid[*]</display>
           <isAbstract>false</isAbstract>
           <genericTypes />
           <typeReference id="0c3e21f9-87d4-480b-a52d-527a81cbeec4">
-            <typeId>2858bc40-1a77-47e2-b6ea-8e09391a38d8</typeId>
+            <typeId>6b649125-18ea-48fd-a6ba-0bfff0d8f488</typeId>
             <isNavigable>true</isNavigable>
             <isNullable>false</isNullable>
             <isCollection>true</isCollection>
             <isRequired>true</isRequired>
-            <typePackageName>AndersonAPI.Domain</typePackageName>
-            <typePackageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</typePackageId>
+            <typePackageName>Intent.Common.Types</typePackageName>
+            <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
             <stereotypes />
             <genericTypeParameters />
           </typeReference>
-          <isMapped>true</isMapped>
-          <mappedClass>
-            <mappingSettingsId>7590bd83-04bc-40fe-8b5c-118277c049d4</mappingSettingsId>
-            <autoSyncTypeReference>true</autoSyncTypeReference>
-            <mappedPath>
-              <target id="42e3e071-e4da-42e4-986c-e3a54fe71448" name="ServiceTypes" type="association" specialization="Association Target End" specializationId="0a66489f-30aa-417b-a75d-b945863366fd" />
-            </mappedPath>
-          </mappedClass>
+          <isMapped>false</isMapped>
           <parentFolderId>c44a86a0-feb6-421a-9850-547c9a0d114b</parentFolderId>
           <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
           <packageName>AndersonAPI.Domain</packageName>
@@ -1398,28 +1401,21 @@
         </childElement>
         <childElement id="f525a59b-ff73-4a25-991b-fc2130593e27" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
           <name>capabilities</name>
-          <display>in : capabilities: Capability[*]</display>
+          <display>in : capabilities: guid[*]</display>
           <isAbstract>false</isAbstract>
           <genericTypes />
           <typeReference id="bf4847e2-a28e-45b1-b03e-6a66e737d791">
-            <typeId>bc2527a3-bd77-4c15-9f2e-7c23786d30a2</typeId>
+            <typeId>6b649125-18ea-48fd-a6ba-0bfff0d8f488</typeId>
             <isNavigable>true</isNavigable>
             <isNullable>false</isNullable>
             <isCollection>true</isCollection>
             <isRequired>true</isRequired>
-            <typePackageName>AndersonAPI.Domain</typePackageName>
-            <typePackageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</typePackageId>
+            <typePackageName>Intent.Common.Types</typePackageName>
+            <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
             <stereotypes />
             <genericTypeParameters />
           </typeReference>
-          <isMapped>true</isMapped>
-          <mappedClass>
-            <mappingSettingsId>7590bd83-04bc-40fe-8b5c-118277c049d4</mappingSettingsId>
-            <autoSyncTypeReference>true</autoSyncTypeReference>
-            <mappedPath>
-              <target id="2a2ad37c-42c0-46bd-a523-6864be9db925" name="Capabilities" type="association" specialization="Association Target End" specializationId="0a66489f-30aa-417b-a75d-b945863366fd" />
-            </mappedPath>
-          </mappedClass>
+          <isMapped>false</isMapped>
           <parentFolderId>c44a86a0-feb6-421a-9850-547c9a0d114b</parentFolderId>
           <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
           <packageName>AndersonAPI.Domain</packageName>
@@ -1429,28 +1425,21 @@
         </childElement>
         <childElement id="efbbded5-0814-4ed0-a22f-52de69df2309" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
           <name>industries</name>
-          <display>in : industries: Industry[*]</display>
+          <display>in : industries: guid[*]</display>
           <isAbstract>false</isAbstract>
           <genericTypes />
           <typeReference id="721eda1b-cf25-4048-a19e-5584513affc6">
-            <typeId>6c47b169-df9b-47ae-a098-8463d7d86ad2</typeId>
+            <typeId>6b649125-18ea-48fd-a6ba-0bfff0d8f488</typeId>
             <isNavigable>true</isNavigable>
             <isNullable>false</isNullable>
             <isCollection>true</isCollection>
             <isRequired>true</isRequired>
-            <typePackageName>AndersonAPI.Domain</typePackageName>
-            <typePackageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</typePackageId>
+            <typePackageName>Intent.Common.Types</typePackageName>
+            <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
             <stereotypes />
             <genericTypeParameters />
           </typeReference>
-          <isMapped>true</isMapped>
-          <mappedClass>
-            <mappingSettingsId>7590bd83-04bc-40fe-8b5c-118277c049d4</mappingSettingsId>
-            <autoSyncTypeReference>true</autoSyncTypeReference>
-            <mappedPath>
-              <target id="db7a35d3-a6a8-4284-a704-55d895fcfe18" name="Industries" type="association" specialization="Association Target End" specializationId="0a66489f-30aa-417b-a75d-b945863366fd" />
-            </mappedPath>
-          </mappedClass>
+          <isMapped>false</isMapped>
           <parentFolderId>c44a86a0-feb6-421a-9850-547c9a0d114b</parentFolderId>
           <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
           <packageName>AndersonAPI.Domain</packageName>
@@ -1461,19 +1450,16 @@
       </childElements>
     </childElement>
     <childElement id="df28a3b6-5082-4da5-91b1-bed37b0719c2" type="Operation" typeId="e042bb67-a1df-480c-9935-b26210f78591">
-      <name>UpdateInterestedPartners</name>
-      <display>UpdateInterestedPartners(CompanyProfileIds: guid[*]): Task</display>
+      <name>SetInterestedPartners</name>
+      <display>SetInterestedPartners(Companies: Company[*]): void</display>
       <isAbstract>false</isAbstract>
       <sort-children>by-type-then-manually</sort-children>
       <genericTypes />
       <typeReference id="01e1ee8a-6016-42a5-993f-a4e46ee91c47">
-        <typeId>6cdaffae-7609-47ab-b8db-9d7282d2df6f</typeId>
         <isNavigable>true</isNavigable>
         <isNullable>false</isNullable>
         <isCollection>false</isCollection>
         <isRequired>true</isRequired>
-        <typePackageName>Intent.Common.CSharp</typePackageName>
-        <typePackageId>730e1275-0c32-44f7-991a-9619d07ca68d</typePackageId>
         <stereotypes />
         <genericTypeParameters />
       </typeReference>
@@ -1485,18 +1471,18 @@
       <metadata />
       <childElements>
         <childElement id="2f3e3c58-1f9e-4c14-ba19-ca8afd1a1421" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
-          <name>CompanyProfileIds</name>
-          <display>in : CompanyProfileIds: guid[*]</display>
+          <name>Companies</name>
+          <display>in : Companies: Company[*]</display>
           <isAbstract>false</isAbstract>
           <genericTypes />
           <typeReference id="d68bf479-37bc-4d3a-beca-f72bc912b7ba">
-            <typeId>6b649125-18ea-48fd-a6ba-0bfff0d8f488</typeId>
+            <typeId>3259289c-5d51-46cb-8c99-78751b456c44</typeId>
             <isNavigable>true</isNavigable>
             <isNullable>false</isNullable>
             <isCollection>true</isCollection>
             <isRequired>true</isRequired>
-            <typePackageName>Intent.Common.Types</typePackageName>
-            <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
+            <typePackageName>AndersonAPI.Domain</typePackageName>
+            <typePackageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</typePackageId>
             <stereotypes />
             <genericTypeParameters />
           </typeReference>
@@ -1511,19 +1497,16 @@
       </childElements>
     </childElement>
     <childElement id="e63fa22e-c7de-4c17-9dc7-f4fd6fa6c8cc" type="Operation" typeId="e042bb67-a1df-480c-9935-b26210f78591">
-      <name>UpdateIndustries</name>
-      <display>UpdateIndustries(industryIds: guid[*]): Task</display>
+      <name>SetIndustries</name>
+      <display>SetIndustries(industries: Industry[*]): void</display>
       <isAbstract>false</isAbstract>
       <sort-children>by-type-then-manually</sort-children>
       <genericTypes />
       <typeReference id="09934661-e757-4283-9e88-b65eb19fa541">
-        <typeId>6cdaffae-7609-47ab-b8db-9d7282d2df6f</typeId>
         <isNavigable>true</isNavigable>
         <isNullable>false</isNullable>
         <isCollection>false</isCollection>
         <isRequired>true</isRequired>
-        <typePackageName>Intent.Common.CSharp</typePackageName>
-        <typePackageId>730e1275-0c32-44f7-991a-9619d07ca68d</typePackageId>
         <stereotypes />
         <genericTypeParameters />
       </typeReference>
@@ -1535,18 +1518,18 @@
       <metadata />
       <childElements>
         <childElement id="498254f3-2162-402e-b4c5-834a4c49bdd4" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
-          <name>industryIds</name>
-          <display>in : industryIds: guid[*]</display>
+          <name>industries</name>
+          <display>in : industries: Industry[*]</display>
           <isAbstract>false</isAbstract>
           <genericTypes />
           <typeReference id="8f9dd70a-092c-4378-8e62-36e4bacb2072">
-            <typeId>6b649125-18ea-48fd-a6ba-0bfff0d8f488</typeId>
+            <typeId>6c47b169-df9b-47ae-a098-8463d7d86ad2</typeId>
             <isNavigable>true</isNavigable>
             <isNullable>false</isNullable>
             <isCollection>true</isCollection>
             <isRequired>true</isRequired>
-            <typePackageName>Intent.Common.Types</typePackageName>
-            <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
+            <typePackageName>AndersonAPI.Domain</typePackageName>
+            <typePackageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</typePackageId>
             <stereotypes />
             <genericTypeParameters />
           </typeReference>
@@ -1561,8 +1544,8 @@
       </childElements>
     </childElement>
     <childElement id="971a46d3-9790-4e85-b612-bcf88fa991fd" type="Operation" typeId="e042bb67-a1df-480c-9935-b26210f78591">
-      <name>UpdateCapabilities</name>
-      <display>UpdateCapabilities(capabilityIds: guid[*]): void</display>
+      <name>SetCapabilities</name>
+      <display>SetCapabilities(capabilities: Capability[*]): void</display>
       <isAbstract>false</isAbstract>
       <sort-children>by-type-then-manually</sort-children>
       <genericTypes />
@@ -1582,18 +1565,18 @@
       <metadata />
       <childElements>
         <childElement id="1dbfa4ba-367c-4075-97b1-ea1f17d0f51c" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
-          <name>capabilityIds</name>
-          <display>in : capabilityIds: guid[*]</display>
+          <name>capabilities</name>
+          <display>in : capabilities: Capability[*]</display>
           <isAbstract>false</isAbstract>
           <genericTypes />
           <typeReference id="04da552d-d2d8-4804-8afc-ac174db1f245">
-            <typeId>6b649125-18ea-48fd-a6ba-0bfff0d8f488</typeId>
+            <typeId>bc2527a3-bd77-4c15-9f2e-7c23786d30a2</typeId>
             <isNavigable>true</isNavigable>
             <isNullable>false</isNullable>
             <isCollection>true</isCollection>
             <isRequired>true</isRequired>
-            <typePackageName>Intent.Common.Types</typePackageName>
-            <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
+            <typePackageName>AndersonAPI.Domain</typePackageName>
+            <typePackageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</typePackageId>
             <stereotypes />
             <genericTypeParameters />
           </typeReference>
@@ -1608,8 +1591,8 @@
       </childElements>
     </childElement>
     <childElement id="50079345-9db0-4536-9170-2820b69b0b8f" type="Operation" typeId="e042bb67-a1df-480c-9935-b26210f78591">
-      <name>UpdateServiceTypes</name>
-      <display>UpdateServiceTypes(serviceTypeIds: guid[*]): void</display>
+      <name>SetServiceTypes</name>
+      <display>SetServiceTypes(serviceTypes: ServiceType[*]): void</display>
       <isAbstract>false</isAbstract>
       <sort-children>by-type-then-manually</sort-children>
       <genericTypes />
@@ -1629,23 +1612,86 @@
       <metadata />
       <childElements>
         <childElement id="d9a4b789-2454-44f3-9260-5038ddd86cc0" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
-          <name>serviceTypeIds</name>
-          <display>in : serviceTypeIds: guid[*]</display>
+          <name>serviceTypes</name>
+          <display>in : serviceTypes: ServiceType[*]</display>
           <isAbstract>false</isAbstract>
           <genericTypes />
           <typeReference id="1c4c32db-e31f-466c-9088-fa8fe4a6ef07">
-            <typeId>6b649125-18ea-48fd-a6ba-0bfff0d8f488</typeId>
+            <typeId>2858bc40-1a77-47e2-b6ea-8e09391a38d8</typeId>
             <isNavigable>true</isNavigable>
             <isNullable>false</isNullable>
             <isCollection>true</isCollection>
             <isRequired>true</isRequired>
-            <typePackageName>Intent.Common.Types</typePackageName>
-            <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
+            <typePackageName>AndersonAPI.Domain</typePackageName>
+            <typePackageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</typePackageId>
             <stereotypes />
             <genericTypeParameters />
           </typeReference>
           <isMapped>false</isMapped>
           <parentFolderId>50079345-9db0-4536-9170-2820b69b0b8f</parentFolderId>
+          <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+          <packageName>AndersonAPI.Domain</packageName>
+          <stereotypes />
+          <metadata />
+          <childElements />
+        </childElement>
+      </childElements>
+    </childElement>
+    <childElement id="0bbb7dc1-3f1e-4921-85b6-fdacc301681a" type="Operation" typeId="e042bb67-a1df-480c-9935-b26210f78591">
+      <name>SetStatus</name>
+      <display>SetStatus(status: OppertunityStatus): void</display>
+      <isAbstract>false</isAbstract>
+      <sort-children>by-type-then-manually</sort-children>
+      <genericTypes />
+      <typeReference id="720af0af-0b5e-48c7-8343-d77d7e0bef4f">
+        <isNavigable>true</isNavigable>
+        <isNullable>false</isNullable>
+        <isCollection>false</isCollection>
+        <isRequired>true</isRequired>
+        <stereotypes />
+        <genericTypeParameters />
+      </typeReference>
+      <isMapped>true</isMapped>
+      <mappedClass isRoot="true">
+        <applicationId>e87261ce-2b9f-4042-8562-a503e4cf2759</applicationId>
+        <metadataId>6ab29b31-27af-4f56-a67c-986d82097d63</metadataId>
+        <mappingSettingsId>7590bd83-04bc-40fe-8b5c-118277c049d4</mappingSettingsId>
+        <autoSyncTypeReference>true</autoSyncTypeReference>
+        <mappedPath>
+          <target id="3e927715-656c-4eef-b1ca-01b028627764" name="Oppertunity" type="element" specialization="Class" specializationId="04e12b51-ed12-42a3-9667-a6aa81bb6d10" />
+        </mappedPath>
+      </mappedClass>
+      <parentFolderId>3e927715-656c-4eef-b1ca-01b028627764</parentFolderId>
+      <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+      <packageName>AndersonAPI.Domain</packageName>
+      <stereotypes />
+      <metadata />
+      <childElements>
+        <childElement id="e3f41ca0-5682-4467-a271-3bf6aa8db7a1" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
+          <name>status</name>
+          <display>in : status: OppertunityStatus</display>
+          <isAbstract>false</isAbstract>
+          <genericTypes />
+          <typeReference id="2b49ce0a-d599-4b91-93ca-f46f0e3cc05a">
+            <typeId>db971122-b648-49cd-824c-203597398138</typeId>
+            <isNavigable>true</isNavigable>
+            <isNullable>false</isNullable>
+            <isCollection>false</isCollection>
+            <isRequired>true</isRequired>
+            <typePackageName>AndersonAPI.Domain</typePackageName>
+            <typePackageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</typePackageId>
+            <stereotypes />
+            <genericTypeParameters />
+          </typeReference>
+          <isMapped>true</isMapped>
+          <mappedClass>
+            <mappingSettingsId>7590bd83-04bc-40fe-8b5c-118277c049d4</mappingSettingsId>
+            <autoSyncTypeReference>true</autoSyncTypeReference>
+            <mappedPath>
+              <target id="0d11063a-4874-4f5d-abca-c0f1ea1b4cef" name="Status" type="element" specialization="Attribute" specializationId="0090fb93-483e-41af-a11d-5ad2dc796adf" />
+            </mappedPath>
+          </mappedClass>
+          <parentFolderId>0bbb7dc1-3f1e-4921-85b6-fdacc301681a</parentFolderId>
           <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
           <packageName>AndersonAPI.Domain</packageName>
           <stereotypes />

@@ -10,7 +10,7 @@ namespace AndersonAPI.Domain.Entities
         private List<ServiceType> _serviceTypes = [];
         private List<Capability> _capabilities = [];
         private List<Industry> _industries = [];
-        private List<CompanyProfile> _interestedPartners = [];
+        private List<Company> _interestedPartners = [];
 
         public Oppertunity(string title,
             string shortDescription,
@@ -18,7 +18,7 @@ namespace AndersonAPI.Domain.Entities
             DateOnly? deadline,
             Guid oppertunityTypeId,
             Guid countryId,
-            Guid companyProfileId)
+            Guid companyId)
         {
             Title = title;
             ShortDescription = shortDescription;
@@ -26,7 +26,7 @@ namespace AndersonAPI.Domain.Entities
             Deadline = deadline;
             OppertunityTypeId = oppertunityTypeId;
             CountryId = countryId;
-            CompanyProfileId = companyProfileId;
+            CompanyId = companyId;
         }
 
         public Oppertunity(string title,
@@ -35,9 +35,10 @@ namespace AndersonAPI.Domain.Entities
             DateOnly? deadline,
             Guid oppertunityTypeId,
             Guid countryId,
-            IEnumerable<ServiceType> serviceTypes,
-            IEnumerable<Capability> capabilities,
-            IEnumerable<Industry> industries)
+            Guid companyId,
+            IEnumerable<Guid> serviceTypes,
+            IEnumerable<Guid> capabilities,
+            IEnumerable<Guid> industries)
         {
             Title = title;
             ShortDescription = shortDescription;
@@ -45,9 +46,7 @@ namespace AndersonAPI.Domain.Entities
             Deadline = deadline;
             OppertunityTypeId = oppertunityTypeId;
             CountryId = countryId;
-            _serviceTypes = new List<ServiceType>(serviceTypes);
-            _capabilities = new List<Capability>(capabilities);
-            _industries = new List<Industry>(industries);
+            CompanyId = companyId;
         }
 
         /// <summary>
@@ -60,7 +59,7 @@ namespace AndersonAPI.Domain.Entities
             FullDescription = null!;
             OppertunityType = null!;
             Country = null!;
-            CompanyProfile = null!;
+            Company = null!;
         }
 
         public string Title { get; private set; }
@@ -73,8 +72,6 @@ namespace AndersonAPI.Domain.Entities
 
         public Guid OppertunityTypeId { get; private set; }
 
-        public Guid CompanyProfileId { get; private set; }
-
         public Guid CreatedBy { get; private set; }
 
         public DateTimeOffset CreatedDate { get; private set; }
@@ -82,6 +79,8 @@ namespace AndersonAPI.Domain.Entities
         public Guid? UpdatedBy { get; private set; }
 
         public DateTimeOffset? UpdatedDate { get; private set; }
+
+        public Guid CompanyId { get; private set; }
 
         public Guid CountryId { get; private set; }
 
@@ -109,13 +108,13 @@ namespace AndersonAPI.Domain.Entities
 
         public virtual Country Country { get; private set; }
 
-        public virtual IReadOnlyCollection<CompanyProfile> InterestedPartners
+        public virtual IReadOnlyCollection<Company> InterestedPartners
         {
             get => _interestedPartners.AsReadOnly();
-            private set => _interestedPartners = new List<CompanyProfile>(value);
+            private set => _interestedPartners = new List<Company>(value);
         }
 
-        public virtual CompanyProfile CompanyProfile { get; private set; }
+        public virtual Company Company { get; private set; }
 
         public void Update(
             string title,
@@ -133,16 +132,16 @@ namespace AndersonAPI.Domain.Entities
             CountryId = countryId;
         }
 
-        public void Update(
+        public void UpdateFull(
             string title,
             string shortDescription,
             string fullDescription,
             DateOnly? deadline,
             Guid oppertunityTypeId,
             Guid countryId,
-            IEnumerable<ServiceType> serviceTypes,
-            IEnumerable<Capability> capabilities,
-            IEnumerable<Industry> industries)
+            IEnumerable<Guid> serviceTypes,
+            IEnumerable<Guid> capabilities,
+            IEnumerable<Guid> industries)
         {
             Title = title;
             ShortDescription = shortDescription;
@@ -150,36 +149,78 @@ namespace AndersonAPI.Domain.Entities
             Deadline = deadline;
             OppertunityTypeId = oppertunityTypeId;
             CountryId = countryId;
-            _serviceTypes.Clear();
-            _serviceTypes.AddRange(serviceTypes);
-            _capabilities.Clear();
-            _capabilities.AddRange(capabilities);
-            _industries.Clear();
-            _industries.AddRange(industries);
         }
 
-        public Task UpdateInterestedPartners(IEnumerable<Guid> companyProfileIds)
+        public void SetInterestedPartners(IEnumerable<Company> companies)
         {
-            // TODO: Implement UpdateInterestedPartners (Oppertunity) functionality
-            throw new NotImplementedException("Replace with your implementation...");
+            if (companies == null) throw new ArgumentNullException(nameof(companies));
+
+            var targetList = companies.DistinctBy(cp => cp.Id).ToList();
+            var targetIds = targetList.Select(cp => cp.Id).ToHashSet();
+
+            // Remove any partners that are no longer in the new collection
+            _interestedPartners.RemoveAll(p => !targetIds.Contains(p.Id));
+
+            // Add any new partners that are not already in the collection
+            var currentIds = _interestedPartners.Select(p => p.Id).ToHashSet();
+            var newPartners = targetList.Where(partner => !currentIds.Contains(partner.Id));
+
+            _interestedPartners.AddRange(newPartners);
         }
 
-        public Task UpdateIndustries(IEnumerable<Guid> industryIds)
+        public void SetIndustries(IEnumerable<Industry> industries)
         {
-            // TODO: Implement UpdateIndustries (Oppertunity) functionality
-            throw new NotImplementedException("Replace with your implementation...");
+            if (industries == null) throw new ArgumentNullException(nameof(industries));
+
+            var targetList = industries.DistinctBy(i => i.Id).ToList();
+            var targetIds = targetList.Select(i => i.Id).ToHashSet();
+
+            // Remove any industries that are no longer in the new collection
+            _industries.RemoveAll(p => !targetIds.Contains(p.Id));
+
+            // Add any new industries that are not already in the collection
+            var currentIds = _industries.Select(p => p.Id).ToHashSet();
+            var newIndustries = targetList.Where(industy => !currentIds.Contains(industy.Id));
+
+            _industries.AddRange(newIndustries);
         }
 
-        public void UpdateCapabilities(IEnumerable<Guid> capabilityIds)
+        public void SetCapabilities(IEnumerable<Capability> capabilities)
         {
-            // TODO: Implement UpdateCapabilities (Oppertunity) functionality
-            throw new NotImplementedException("Replace with your implementation...");
+            if (capabilities == null) throw new ArgumentNullException(nameof(capabilities));
+
+            var targetList = capabilities.DistinctBy(i => i.Id).ToList();
+            var targetIds = targetList.Select(i => i.Id).ToHashSet();
+
+            // Remove any capabilities that are no longer in the new collection
+            _capabilities.RemoveAll(p => !targetIds.Contains(p.Id));
+
+            // Add any new capabilities that are not already in the collection
+            var currentIds = _capabilities.Select(p => p.Id).ToHashSet();
+            var newCapabilities = targetList.Where(capability => !currentIds.Contains(capability.Id));
+            _capabilities.AddRange(newCapabilities);
         }
 
-        public void UpdateServiceTypes(IEnumerable<Guid> serviceTypeIds)
+        public void SetServiceTypes(IEnumerable<ServiceType> serviceTypes)
         {
-            // TODO: Implement UpdateServiceTypes (Oppertunity) functionality
-            throw new NotImplementedException("Replace with your implementation...");
+            if (serviceTypes == null) throw new ArgumentNullException(nameof(serviceTypes));
+
+            var targetList = serviceTypes.DistinctBy(i => i.Id).ToList();
+            var targetIds = targetList.Select(i => i.Id).ToHashSet();
+
+            // Remove any ServiceTypes that are no longer in the new collection
+            _serviceTypes.RemoveAll(p => !targetIds.Contains(p.Id));
+
+            // Add any new ServiceTypes that are not already in the collection
+            var currentIds = _serviceTypes.Select(p => p.Id).ToHashSet();
+            var newServiceTypes = targetList.Where(serviceType => !currentIds.Contains(serviceType.Id));
+
+            _serviceTypes.AddRange(newServiceTypes);
+        }
+
+        public void SetStatus(OppertunityStatus status)
+        {
+            Status = status;
         }
 
         void IAuditable.SetCreated(Guid createdBy, DateTimeOffset createdDate) => (CreatedBy, CreatedDate) = (createdBy, createdDate);

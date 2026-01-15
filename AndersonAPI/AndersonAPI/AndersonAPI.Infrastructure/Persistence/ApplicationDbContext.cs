@@ -29,7 +29,7 @@ namespace AndersonAPI.Infrastructure.Persistence
 
         public DbSet<ApplicationIdentityUser> ApplicationIdentityUsers { get; set; }
         public DbSet<Capability> Capabilities { get; set; }
-        public DbSet<CompanyProfile> CompanyProfiles { get; set; }
+        public DbSet<Company> Companies { get; set; }
         public DbSet<Country> Countries { get; set; }
         public DbSet<Industry> Industries { get; set; }
         public DbSet<Oppertunity> Oppertunities { get; set; }
@@ -61,7 +61,7 @@ namespace AndersonAPI.Infrastructure.Persistence
             ConfigureModel(modelBuilder);
             modelBuilder.ApplyConfiguration(new ApplicationIdentityUserConfiguration());
             modelBuilder.ApplyConfiguration(new CapabilityConfiguration());
-            modelBuilder.ApplyConfiguration(new CompanyProfileConfiguration());
+            modelBuilder.ApplyConfiguration(new CompanyConfiguration());
             modelBuilder.ApplyConfiguration(new CountryConfiguration());
             modelBuilder.ApplyConfiguration(new IndustryConfiguration());
             modelBuilder.ApplyConfiguration(new OppertunityConfiguration());

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<association id="af972ccd-1e62-433a-afb0-d26a00b15791">
+  <sourceEnd id="b5a95611-4952-4a31-bcc1-5711abec3848" type="Association Source End" typeId="8d9d2e5b-bd55-4f36-9ae4-2b9e84fd4e58">
+    <name>Reviews</name>
+    <display>Reviews: Review[*]</display>
+    <order>30</order>
+    <typeReference id="69c93f96-ac61-4761-9e79-aaa2d6cbba23">
+      <typeId>a66e248c-b5ab-49ee-a926-9930d073a5bf</typeId>
+      <isNavigable>true</isNavigable>
+      <isNullable>false</isNullable>
+      <isCollection>true</isCollection>
+      <isRequired>true</isRequired>
+      <typePackageName>AndersonAPI.Domain</typePackageName>
+      <typePackageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</typePackageId>
+      <stereotypes />
+      <genericTypeParameters />
+    </typeReference>
+    <stereotypes />
+    <metadata />
+    <childElements />
+  </sourceEnd>
+  <targetEnd id="af972ccd-1e62-433a-afb0-d26a00b15791" type="Association Target End" typeId="0a66489f-30aa-417b-a75d-b945863366fd">
+    <name>Companies</name>
+    <display>Companies: Company[*]</display>
+    <order>11</order>
+    <typeReference id="4d3542a0-b09b-458a-9a20-59970f0a4de2">
+      <typeId>3259289c-5d51-46cb-8c99-78751b456c44</typeId>
+      <isNavigable>true</isNavigable>
+      <isNullable>false</isNullable>
+      <isCollection>true</isCollection>
+      <isRequired>true</isRequired>
+      <typePackageName>AndersonAPI.Domain</typePackageName>
+      <typePackageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</typePackageId>
+      <stereotypes />
+      <genericTypeParameters />
+    </typeReference>
+    <stereotypes />
+    <metadata />
+    <childElements />
+  </targetEnd>
+  <associationType>Association</associationType>
+  <associationTypeId>eaf9ed4e-0b61-4ac1-ba88-09f912c12087</associationTypeId>
+  <stereotypes />
+</association>

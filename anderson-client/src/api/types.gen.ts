@@ -5,17 +5,32 @@ export type ClientOptions = {
 };
 
 /**
+ * AddContactCompanyCommand
+ */
+export type AddContactCompanyCommand = {
+    id: string;
+    firstName: string;
+    lastName: string;
+    emailAddress: string | null;
+    companyPosition: string | null;
+};
+
+/**
+ * AddLocationCompanyCommand
+ */
+export type AddLocationCompanyCommand = {
+    id: string;
+    name: string;
+    regionId: string;
+    countryId: string;
+    isHeadOffice: boolean;
+};
+
+/**
  * AndersonAPI.Api.Controllers.ResponseTypes.JsonResponse_Of_Guid
  */
 export type AndersonApiApiControllersResponseTypesJsonResponseOfGuid = {
     value: string;
-};
-
-/**
- * AndersonAPI.Api.Controllers.ResponseTypes.JsonResponse_Of_Int32
- */
-export type AndersonApiApiControllersResponseTypesJsonResponseOfInt32 = {
-    value: number;
 };
 
 /**
@@ -24,26 +39,28 @@ export type AndersonApiApiControllersResponseTypesJsonResponseOfInt32 = {
 export type ByteArray = string | null;
 
 /**
- * CompanyNameDto
+ * CapabilityDto
  */
-export type CompanyNameDto = {
+export type CapabilityDto = {
     name?: string;
-    shortDescription?: string;
-    websiteUrl?: string;
+    description?: string;
+    id?: string;
+    order?: number;
 };
 
 /**
- * CompanyProfileDto
+ * CompanyDto
  */
-export type CompanyProfileDto = {
+export type CompanyDto = {
     name?: string;
     shortDescription?: string;
-    description?: string;
+    fullDescription?: string;
     websiteUrl?: string;
     employeeCount?: number;
     embedding?: ByteArray;
     id?: string;
     order?: number;
+    state?: EntityState;
 };
 
 /**
@@ -55,14 +72,46 @@ export type ConfirmEmailDto = {
 };
 
 /**
- * CreateCompanyProfileCommand
+ * CountryDto
  */
-export type CreateCompanyProfileCommand = {
+export type CountryDto = {
+    regionId?: string | null;
+    name?: string;
+    description?: string;
+    id?: string;
+    order?: number;
+    state?: EntityState;
+};
+
+/**
+ * CreateCapabilityCommand
+ */
+export type CreateCapabilityCommand = {
+    name: string;
+    description: string;
+};
+
+/**
+ * CreateCompanyCommand
+ */
+export type CreateCompanyCommand = {
     name: string;
     shortDescription: string;
-    description: string;
+    fullDescription: string;
     websiteUrl: string;
     employeeCount: number;
+    serviceTypes: Array<string>;
+    capabilities: Array<string>;
+    industries: Array<string>;
+};
+
+/**
+ * CreateCountryCommand
+ */
+export type CreateCountryCommand = {
+    regionId: string | null;
+    name: string;
+    description: string;
 };
 
 /**
@@ -72,6 +121,32 @@ export type CreateIndustryCommand = {
     name: string;
     description: string;
 };
+
+/**
+ * CreateOppertunityTypeCommand
+ */
+export type CreateOppertunityTypeCommand = {
+    name: string;
+    description: string;
+};
+
+/**
+ * CreateRegionCommand
+ */
+export type CreateRegionCommand = {
+    name: string;
+    description: string;
+};
+
+/**
+ * CreateServiceTypeCommand
+ */
+export type CreateServiceTypeCommand = {
+    name: string;
+    description: string;
+};
+
+export type EntityState = number;
 
 /**
  * ForgotPasswordDto
@@ -106,6 +181,17 @@ export type LoginDto = {
 };
 
 /**
+ * OppertunityTypeDto
+ */
+export type OppertunityTypeDto = {
+    name?: string;
+    description?: string;
+    id?: string;
+    order?: number;
+    state?: EntityState;
+};
+
+/**
  * ProblemDetails
  */
 export type ProblemDetails = {
@@ -121,6 +207,17 @@ export type ProblemDetails = {
  */
 export type RefreshTokenDto = {
     refreshToken?: string | null;
+};
+
+/**
+ * RegionDto
+ */
+export type RegionDto = {
+    name?: string;
+    description?: string;
+    id?: string;
+    order?: number;
+    state?: EntityState;
 };
 
 /**
@@ -141,6 +238,49 @@ export type ResetPasswordDto = {
 };
 
 /**
+ * ServiceTypeDto
+ */
+export type ServiceTypeDto = {
+    name?: string;
+    description?: string;
+    id?: string;
+    order?: number;
+    state?: EntityState;
+};
+
+/**
+ * SetCapabilitiesCompanyCommand
+ */
+export type SetCapabilitiesCompanyCommand = {
+    id: string;
+    capabilityIds: Array<string>;
+};
+
+/**
+ * SetHeadOfficeCompanyCommand
+ */
+export type SetHeadOfficeCompanyCommand = {
+    id: string;
+    locationId: string;
+};
+
+/**
+ * SetIndustriesCompanyCommand
+ */
+export type SetIndustriesCompanyCommand = {
+    id: string;
+    industryIds: Array<string>;
+};
+
+/**
+ * SetServiceTypesCompanyCommand
+ */
+export type SetServiceTypesCompanyCommand = {
+    id: string;
+    serviceTypeIds: Array<string>;
+};
+
+/**
  * TokenResultDto
  */
 export type TokenResultDto = {
@@ -151,15 +291,46 @@ export type TokenResultDto = {
 };
 
 /**
- * UpdateCompanyProfileCommand
+ * UpdateCapabilityCommand
  */
-export type UpdateCompanyProfileCommand = {
+export type UpdateCapabilityCommand = {
+    id: string;
+    name: string;
+    description: string;
+};
+
+/**
+ * UpdateCompanyCommand
+ */
+export type UpdateCompanyCommand = {
     id: string;
     name: string;
     shortDescription: string;
     description: string;
     websiteUrl: string;
     employeeCount: number;
+};
+
+/**
+ * UpdateContactCompanyCommand
+ */
+export type UpdateContactCompanyCommand = {
+    id: string;
+    contactId: string;
+    firstName: string;
+    lastName: string;
+    emailAddress: string | null;
+    companyPosition: string | null;
+};
+
+/**
+ * UpdateCountryCommand
+ */
+export type UpdateCountryCommand = {
+    id: string;
+    regionId: string | null;
+    name: string;
+    description: string;
 };
 
 /**
@@ -178,6 +349,45 @@ export type UpdateInfoDto = {
     newEmail?: string | null;
     newPassword?: string | null;
     oldPassword?: string | null;
+};
+
+/**
+ * UpdateLocationCompanyCommand
+ */
+export type UpdateLocationCompanyCommand = {
+    id: string;
+    locationId: string;
+    name: string;
+    regionId: string;
+    countryId: string;
+    isHeadOffice: boolean;
+};
+
+/**
+ * UpdateOppertunityTypeCommand
+ */
+export type UpdateOppertunityTypeCommand = {
+    id: string;
+    name: string;
+    description: string;
+};
+
+/**
+ * UpdateRegionCommand
+ */
+export type UpdateRegionCommand = {
+    id: string;
+    name: string;
+    description: string;
+};
+
+/**
+ * UpdateServiceTypeCommand
+ */
+export type UpdateServiceTypeCommand = {
+    id: string;
+    name: string;
+    description: string;
 };
 
 export type PostApiAccountRegisterData = {
@@ -314,39 +524,39 @@ export type PostApiAccountLogoutResponses = {
     200: unknown;
 };
 
-export type GetApiCompanyProfilesData = {
+export type GetApiCapabilitiesData = {
     body?: never;
     path?: never;
     query?: never;
-    url: '/api/company-profiles';
+    url: '/api/capabilities';
 };
 
-export type GetApiCompanyProfilesErrors = {
+export type GetApiCapabilitiesErrors = {
     /**
      * Internal Server Error
      */
     500: ProblemDetails;
 };
 
-export type GetApiCompanyProfilesError = GetApiCompanyProfilesErrors[keyof GetApiCompanyProfilesErrors];
+export type GetApiCapabilitiesError = GetApiCapabilitiesErrors[keyof GetApiCapabilitiesErrors];
 
-export type GetApiCompanyProfilesResponses = {
+export type GetApiCapabilitiesResponses = {
     /**
      * OK
      */
-    200: Array<CompanyProfileDto>;
+    200: Array<CapabilityDto>;
 };
 
-export type GetApiCompanyProfilesResponse = GetApiCompanyProfilesResponses[keyof GetApiCompanyProfilesResponses];
+export type GetApiCapabilitiesResponse = GetApiCapabilitiesResponses[keyof GetApiCapabilitiesResponses];
 
-export type PostApiCompanyProfilesData = {
-    body: CreateCompanyProfileCommand;
+export type PostApiCapabilitiesData = {
+    body: CreateCapabilityCommand;
     path?: never;
     query?: never;
-    url: '/api/company-profiles';
+    url: '/api/capabilities';
 };
 
-export type PostApiCompanyProfilesErrors = {
+export type PostApiCapabilitiesErrors = {
     /**
      * Bad Request
      */
@@ -357,27 +567,27 @@ export type PostApiCompanyProfilesErrors = {
     500: ProblemDetails;
 };
 
-export type PostApiCompanyProfilesError = PostApiCompanyProfilesErrors[keyof PostApiCompanyProfilesErrors];
+export type PostApiCapabilitiesError = PostApiCapabilitiesErrors[keyof PostApiCapabilitiesErrors];
 
-export type PostApiCompanyProfilesResponses = {
+export type PostApiCapabilitiesResponses = {
     /**
      * Created
      */
     201: AndersonApiApiControllersResponseTypesJsonResponseOfGuid;
 };
 
-export type PostApiCompanyProfilesResponse = PostApiCompanyProfilesResponses[keyof PostApiCompanyProfilesResponses];
+export type PostApiCapabilitiesResponse = PostApiCapabilitiesResponses[keyof PostApiCapabilitiesResponses];
 
-export type DeleteApiCompanyProfilesByIdData = {
+export type DeleteApiCapabilitiesByIdData = {
     body?: never;
     path: {
         id: string;
     };
     query?: never;
-    url: '/api/company-profiles/{id}';
+    url: '/api/capabilities/{id}';
 };
 
-export type DeleteApiCompanyProfilesByIdErrors = {
+export type DeleteApiCapabilitiesByIdErrors = {
     /**
      * Bad Request
      */
@@ -392,25 +602,25 @@ export type DeleteApiCompanyProfilesByIdErrors = {
     500: ProblemDetails;
 };
 
-export type DeleteApiCompanyProfilesByIdError = DeleteApiCompanyProfilesByIdErrors[keyof DeleteApiCompanyProfilesByIdErrors];
+export type DeleteApiCapabilitiesByIdError = DeleteApiCapabilitiesByIdErrors[keyof DeleteApiCapabilitiesByIdErrors];
 
-export type DeleteApiCompanyProfilesByIdResponses = {
+export type DeleteApiCapabilitiesByIdResponses = {
     /**
      * OK
      */
     200: unknown;
 };
 
-export type GetApiCompanyProfilesByIdData = {
+export type GetApiCapabilitiesByIdData = {
     body?: never;
     path: {
         id: string;
     };
     query?: never;
-    url: '/api/company-profiles/{id}';
+    url: '/api/capabilities/{id}';
 };
 
-export type GetApiCompanyProfilesByIdErrors = {
+export type GetApiCapabilitiesByIdErrors = {
     /**
      * Bad Request
      */
@@ -425,27 +635,27 @@ export type GetApiCompanyProfilesByIdErrors = {
     500: ProblemDetails;
 };
 
-export type GetApiCompanyProfilesByIdError = GetApiCompanyProfilesByIdErrors[keyof GetApiCompanyProfilesByIdErrors];
+export type GetApiCapabilitiesByIdError = GetApiCapabilitiesByIdErrors[keyof GetApiCapabilitiesByIdErrors];
 
-export type GetApiCompanyProfilesByIdResponses = {
+export type GetApiCapabilitiesByIdResponses = {
     /**
      * OK
      */
-    200: CompanyProfileDto;
+    200: CapabilityDto;
 };
 
-export type GetApiCompanyProfilesByIdResponse = GetApiCompanyProfilesByIdResponses[keyof GetApiCompanyProfilesByIdResponses];
+export type GetApiCapabilitiesByIdResponse = GetApiCapabilitiesByIdResponses[keyof GetApiCapabilitiesByIdResponses];
 
-export type PutApiCompanyProfilesByIdProfileData = {
-    body: UpdateCompanyProfileCommand;
+export type PutApiCapabilitiesByIdData = {
+    body: UpdateCapabilityCommand;
     path: {
         id: string;
     };
     query?: never;
-    url: '/api/company-profiles/{id}/profile';
+    url: '/api/capabilities/{id}';
 };
 
-export type PutApiCompanyProfilesByIdProfileErrors = {
+export type PutApiCapabilitiesByIdErrors = {
     /**
      * Bad Request
      */
@@ -460,66 +670,676 @@ export type PutApiCompanyProfilesByIdProfileErrors = {
     500: ProblemDetails;
 };
 
-export type PutApiCompanyProfilesByIdProfileError = PutApiCompanyProfilesByIdProfileErrors[keyof PutApiCompanyProfilesByIdProfileErrors];
+export type PutApiCapabilitiesByIdError = PutApiCapabilitiesByIdErrors[keyof PutApiCapabilitiesByIdErrors];
 
-export type PutApiCompanyProfilesByIdProfileResponses = {
+export type PutApiCapabilitiesByIdResponses = {
     /**
      * No Content
      */
     204: void;
 };
 
-export type PutApiCompanyProfilesByIdProfileResponse = PutApiCompanyProfilesByIdProfileResponses[keyof PutApiCompanyProfilesByIdProfileResponses];
+export type PutApiCapabilitiesByIdResponse = PutApiCapabilitiesByIdResponses[keyof PutApiCapabilitiesByIdResponses];
 
-export type GetApiCompanyProfilesCompanyCountData = {
+export type DeleteApiCompaniesByIdContactData = {
     body?: never;
-    path?: never;
-    query?: never;
-    url: '/api/company-profiles/company-count';
+    path: {
+        id: string;
+    };
+    query: {
+        contactId: string;
+    };
+    url: '/api/companies/{id}/contact';
 };
 
-export type GetApiCompanyProfilesCompanyCountErrors = {
+export type DeleteApiCompaniesByIdContactErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
     /**
      * Internal Server Error
      */
     500: ProblemDetails;
 };
 
-export type GetApiCompanyProfilesCompanyCountError = GetApiCompanyProfilesCompanyCountErrors[keyof GetApiCompanyProfilesCompanyCountErrors];
+export type DeleteApiCompaniesByIdContactError = DeleteApiCompaniesByIdContactErrors[keyof DeleteApiCompaniesByIdContactErrors];
 
-export type GetApiCompanyProfilesCompanyCountResponses = {
+export type DeleteApiCompaniesByIdContactResponses = {
     /**
      * OK
      */
-    200: AndersonApiApiControllersResponseTypesJsonResponseOfInt32;
+    200: unknown;
 };
 
-export type GetApiCompanyProfilesCompanyCountResponse = GetApiCompanyProfilesCompanyCountResponses[keyof GetApiCompanyProfilesCompanyCountResponses];
-
-export type GetApiCompanyProfilesGetCompanyNamesData = {
-    body?: never;
-    path?: never;
+export type PostApiCompaniesByIdContactData = {
+    body: AddContactCompanyCommand;
+    path: {
+        id: string;
+    };
     query?: never;
-    url: '/api/company-profiles/get-company-names';
+    url: '/api/companies/{id}/contact';
 };
 
-export type GetApiCompanyProfilesGetCompanyNamesErrors = {
+export type PostApiCompaniesByIdContactErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
     /**
      * Internal Server Error
      */
     500: ProblemDetails;
 };
 
-export type GetApiCompanyProfilesGetCompanyNamesError = GetApiCompanyProfilesGetCompanyNamesErrors[keyof GetApiCompanyProfilesGetCompanyNamesErrors];
+export type PostApiCompaniesByIdContactError = PostApiCompaniesByIdContactErrors[keyof PostApiCompaniesByIdContactErrors];
 
-export type GetApiCompanyProfilesGetCompanyNamesResponses = {
+export type PostApiCompaniesByIdContactResponses = {
+    /**
+     * Created
+     */
+    201: unknown;
+};
+
+export type PutApiCompaniesByIdContactData = {
+    body: UpdateContactCompanyCommand;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/companies/{id}/contact';
+};
+
+export type PutApiCompaniesByIdContactErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type PutApiCompaniesByIdContactError = PutApiCompaniesByIdContactErrors[keyof PutApiCompaniesByIdContactErrors];
+
+export type PutApiCompaniesByIdContactResponses = {
+    /**
+     * No Content
+     */
+    204: void;
+};
+
+export type PutApiCompaniesByIdContactResponse = PutApiCompaniesByIdContactResponses[keyof PutApiCompaniesByIdContactResponses];
+
+export type DeleteApiCompaniesByIdLocationData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query: {
+        locationId: string;
+    };
+    url: '/api/companies/{id}/location';
+};
+
+export type DeleteApiCompaniesByIdLocationErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type DeleteApiCompaniesByIdLocationError = DeleteApiCompaniesByIdLocationErrors[keyof DeleteApiCompaniesByIdLocationErrors];
+
+export type DeleteApiCompaniesByIdLocationResponses = {
     /**
      * OK
      */
-    200: Array<CompanyNameDto>;
+    200: unknown;
 };
 
-export type GetApiCompanyProfilesGetCompanyNamesResponse = GetApiCompanyProfilesGetCompanyNamesResponses[keyof GetApiCompanyProfilesGetCompanyNamesResponses];
+export type PostApiCompaniesByIdLocationData = {
+    body: AddLocationCompanyCommand;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/companies/{id}/location';
+};
+
+export type PostApiCompaniesByIdLocationErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type PostApiCompaniesByIdLocationError = PostApiCompaniesByIdLocationErrors[keyof PostApiCompaniesByIdLocationErrors];
+
+export type PostApiCompaniesByIdLocationResponses = {
+    /**
+     * Created
+     */
+    201: unknown;
+};
+
+export type PutApiCompaniesByIdLocationData = {
+    body: UpdateLocationCompanyCommand;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/companies/{id}/location';
+};
+
+export type PutApiCompaniesByIdLocationErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type PutApiCompaniesByIdLocationError = PutApiCompaniesByIdLocationErrors[keyof PutApiCompaniesByIdLocationErrors];
+
+export type PutApiCompaniesByIdLocationResponses = {
+    /**
+     * No Content
+     */
+    204: void;
+};
+
+export type PutApiCompaniesByIdLocationResponse = PutApiCompaniesByIdLocationResponses[keyof PutApiCompaniesByIdLocationResponses];
+
+export type GetApiCompaniesData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/companies';
+};
+
+export type GetApiCompaniesErrors = {
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type GetApiCompaniesError = GetApiCompaniesErrors[keyof GetApiCompaniesErrors];
+
+export type GetApiCompaniesResponses = {
+    /**
+     * OK
+     */
+    200: Array<CompanyDto>;
+};
+
+export type GetApiCompaniesResponse = GetApiCompaniesResponses[keyof GetApiCompaniesResponses];
+
+export type PostApiCompaniesData = {
+    body: CreateCompanyCommand;
+    path?: never;
+    query?: never;
+    url: '/api/companies';
+};
+
+export type PostApiCompaniesErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type PostApiCompaniesError = PostApiCompaniesErrors[keyof PostApiCompaniesErrors];
+
+export type PostApiCompaniesResponses = {
+    /**
+     * Created
+     */
+    201: AndersonApiApiControllersResponseTypesJsonResponseOfGuid;
+};
+
+export type PostApiCompaniesResponse = PostApiCompaniesResponses[keyof PostApiCompaniesResponses];
+
+export type DeleteApiCompaniesByIdData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/companies/{id}';
+};
+
+export type DeleteApiCompaniesByIdErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type DeleteApiCompaniesByIdError = DeleteApiCompaniesByIdErrors[keyof DeleteApiCompaniesByIdErrors];
+
+export type DeleteApiCompaniesByIdResponses = {
+    /**
+     * OK
+     */
+    200: unknown;
+};
+
+export type GetApiCompaniesByIdData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/companies/{id}';
+};
+
+export type GetApiCompaniesByIdErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type GetApiCompaniesByIdError = GetApiCompaniesByIdErrors[keyof GetApiCompaniesByIdErrors];
+
+export type GetApiCompaniesByIdResponses = {
+    /**
+     * OK
+     */
+    200: CompanyDto;
+};
+
+export type GetApiCompaniesByIdResponse = GetApiCompaniesByIdResponses[keyof GetApiCompaniesByIdResponses];
+
+export type PutApiCompaniesByIdData = {
+    body: UpdateCompanyCommand;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/companies/{id}';
+};
+
+export type PutApiCompaniesByIdErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type PutApiCompaniesByIdError = PutApiCompaniesByIdErrors[keyof PutApiCompaniesByIdErrors];
+
+export type PutApiCompaniesByIdResponses = {
+    /**
+     * No Content
+     */
+    204: void;
+};
+
+export type PutApiCompaniesByIdResponse = PutApiCompaniesByIdResponses[keyof PutApiCompaniesByIdResponses];
+
+export type PutApiCompaniesByIdCapabilitiesData = {
+    body: SetCapabilitiesCompanyCommand;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/companies/{id}/capabilities';
+};
+
+export type PutApiCompaniesByIdCapabilitiesErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type PutApiCompaniesByIdCapabilitiesError = PutApiCompaniesByIdCapabilitiesErrors[keyof PutApiCompaniesByIdCapabilitiesErrors];
+
+export type PutApiCompaniesByIdCapabilitiesResponses = {
+    /**
+     * No Content
+     */
+    204: void;
+};
+
+export type PutApiCompaniesByIdCapabilitiesResponse = PutApiCompaniesByIdCapabilitiesResponses[keyof PutApiCompaniesByIdCapabilitiesResponses];
+
+export type PutApiCompaniesByIdHeadOfficeData = {
+    body: SetHeadOfficeCompanyCommand;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/companies/{id}/head-office';
+};
+
+export type PutApiCompaniesByIdHeadOfficeErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type PutApiCompaniesByIdHeadOfficeError = PutApiCompaniesByIdHeadOfficeErrors[keyof PutApiCompaniesByIdHeadOfficeErrors];
+
+export type PutApiCompaniesByIdHeadOfficeResponses = {
+    /**
+     * No Content
+     */
+    204: void;
+};
+
+export type PutApiCompaniesByIdHeadOfficeResponse = PutApiCompaniesByIdHeadOfficeResponses[keyof PutApiCompaniesByIdHeadOfficeResponses];
+
+export type PutApiCompaniesByIdIndustriesData = {
+    body: SetIndustriesCompanyCommand;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/companies/{id}/industries';
+};
+
+export type PutApiCompaniesByIdIndustriesErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type PutApiCompaniesByIdIndustriesError = PutApiCompaniesByIdIndustriesErrors[keyof PutApiCompaniesByIdIndustriesErrors];
+
+export type PutApiCompaniesByIdIndustriesResponses = {
+    /**
+     * No Content
+     */
+    204: void;
+};
+
+export type PutApiCompaniesByIdIndustriesResponse = PutApiCompaniesByIdIndustriesResponses[keyof PutApiCompaniesByIdIndustriesResponses];
+
+export type PutApiCompaniesByIdServiceTypesData = {
+    body: SetServiceTypesCompanyCommand;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/companies/{id}/service-types';
+};
+
+export type PutApiCompaniesByIdServiceTypesErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type PutApiCompaniesByIdServiceTypesError = PutApiCompaniesByIdServiceTypesErrors[keyof PutApiCompaniesByIdServiceTypesErrors];
+
+export type PutApiCompaniesByIdServiceTypesResponses = {
+    /**
+     * No Content
+     */
+    204: void;
+};
+
+export type PutApiCompaniesByIdServiceTypesResponse = PutApiCompaniesByIdServiceTypesResponses[keyof PutApiCompaniesByIdServiceTypesResponses];
+
+export type GetApiCountriesData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/countries';
+};
+
+export type GetApiCountriesErrors = {
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type GetApiCountriesError = GetApiCountriesErrors[keyof GetApiCountriesErrors];
+
+export type GetApiCountriesResponses = {
+    /**
+     * OK
+     */
+    200: Array<CountryDto>;
+};
+
+export type GetApiCountriesResponse = GetApiCountriesResponses[keyof GetApiCountriesResponses];
+
+export type PostApiCountriesData = {
+    body: CreateCountryCommand;
+    path?: never;
+    query?: never;
+    url: '/api/countries';
+};
+
+export type PostApiCountriesErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type PostApiCountriesError = PostApiCountriesErrors[keyof PostApiCountriesErrors];
+
+export type PostApiCountriesResponses = {
+    /**
+     * Created
+     */
+    201: AndersonApiApiControllersResponseTypesJsonResponseOfGuid;
+};
+
+export type PostApiCountriesResponse = PostApiCountriesResponses[keyof PostApiCountriesResponses];
+
+export type DeleteApiCountriesByIdData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/countries/{id}';
+};
+
+export type DeleteApiCountriesByIdErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type DeleteApiCountriesByIdError = DeleteApiCountriesByIdErrors[keyof DeleteApiCountriesByIdErrors];
+
+export type DeleteApiCountriesByIdResponses = {
+    /**
+     * OK
+     */
+    200: unknown;
+};
+
+export type GetApiCountriesByIdData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/countries/{id}';
+};
+
+export type GetApiCountriesByIdErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type GetApiCountriesByIdError = GetApiCountriesByIdErrors[keyof GetApiCountriesByIdErrors];
+
+export type GetApiCountriesByIdResponses = {
+    /**
+     * OK
+     */
+    200: CountryDto;
+};
+
+export type GetApiCountriesByIdResponse = GetApiCountriesByIdResponses[keyof GetApiCountriesByIdResponses];
+
+export type PutApiCountriesByIdData = {
+    body: UpdateCountryCommand;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/countries/{id}';
+};
+
+export type PutApiCountriesByIdErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type PutApiCountriesByIdError = PutApiCountriesByIdErrors[keyof PutApiCountriesByIdErrors];
+
+export type PutApiCountriesByIdResponses = {
+    /**
+     * No Content
+     */
+    204: void;
+};
+
+export type PutApiCountriesByIdResponse = PutApiCountriesByIdResponses[keyof PutApiCountriesByIdResponses];
 
 export type GetApiIndustriesData = {
     body?: never;
@@ -677,3 +1497,474 @@ export type PutApiIndustriesByIdResponses = {
 };
 
 export type PutApiIndustriesByIdResponse = PutApiIndustriesByIdResponses[keyof PutApiIndustriesByIdResponses];
+
+export type GetApiOppertunityTypesData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/oppertunity-types';
+};
+
+export type GetApiOppertunityTypesErrors = {
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type GetApiOppertunityTypesError = GetApiOppertunityTypesErrors[keyof GetApiOppertunityTypesErrors];
+
+export type GetApiOppertunityTypesResponses = {
+    /**
+     * OK
+     */
+    200: Array<OppertunityTypeDto>;
+};
+
+export type GetApiOppertunityTypesResponse = GetApiOppertunityTypesResponses[keyof GetApiOppertunityTypesResponses];
+
+export type PostApiOppertunityTypesData = {
+    body: CreateOppertunityTypeCommand;
+    path?: never;
+    query?: never;
+    url: '/api/oppertunity-types';
+};
+
+export type PostApiOppertunityTypesErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type PostApiOppertunityTypesError = PostApiOppertunityTypesErrors[keyof PostApiOppertunityTypesErrors];
+
+export type PostApiOppertunityTypesResponses = {
+    /**
+     * Created
+     */
+    201: AndersonApiApiControllersResponseTypesJsonResponseOfGuid;
+};
+
+export type PostApiOppertunityTypesResponse = PostApiOppertunityTypesResponses[keyof PostApiOppertunityTypesResponses];
+
+export type DeleteApiOppertunityTypesByIdData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/oppertunity-types/{id}';
+};
+
+export type DeleteApiOppertunityTypesByIdErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type DeleteApiOppertunityTypesByIdError = DeleteApiOppertunityTypesByIdErrors[keyof DeleteApiOppertunityTypesByIdErrors];
+
+export type DeleteApiOppertunityTypesByIdResponses = {
+    /**
+     * OK
+     */
+    200: unknown;
+};
+
+export type GetApiOppertunityTypesByIdData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/oppertunity-types/{id}';
+};
+
+export type GetApiOppertunityTypesByIdErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type GetApiOppertunityTypesByIdError = GetApiOppertunityTypesByIdErrors[keyof GetApiOppertunityTypesByIdErrors];
+
+export type GetApiOppertunityTypesByIdResponses = {
+    /**
+     * OK
+     */
+    200: OppertunityTypeDto;
+};
+
+export type GetApiOppertunityTypesByIdResponse = GetApiOppertunityTypesByIdResponses[keyof GetApiOppertunityTypesByIdResponses];
+
+export type PutApiOppertunityTypesByIdData = {
+    body: UpdateOppertunityTypeCommand;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/oppertunity-types/{id}';
+};
+
+export type PutApiOppertunityTypesByIdErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type PutApiOppertunityTypesByIdError = PutApiOppertunityTypesByIdErrors[keyof PutApiOppertunityTypesByIdErrors];
+
+export type PutApiOppertunityTypesByIdResponses = {
+    /**
+     * No Content
+     */
+    204: void;
+};
+
+export type PutApiOppertunityTypesByIdResponse = PutApiOppertunityTypesByIdResponses[keyof PutApiOppertunityTypesByIdResponses];
+
+export type GetApiRegionsData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/regions';
+};
+
+export type GetApiRegionsErrors = {
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type GetApiRegionsError = GetApiRegionsErrors[keyof GetApiRegionsErrors];
+
+export type GetApiRegionsResponses = {
+    /**
+     * OK
+     */
+    200: Array<RegionDto>;
+};
+
+export type GetApiRegionsResponse = GetApiRegionsResponses[keyof GetApiRegionsResponses];
+
+export type PostApiRegionsData = {
+    body: CreateRegionCommand;
+    path?: never;
+    query?: never;
+    url: '/api/regions';
+};
+
+export type PostApiRegionsErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type PostApiRegionsError = PostApiRegionsErrors[keyof PostApiRegionsErrors];
+
+export type PostApiRegionsResponses = {
+    /**
+     * Created
+     */
+    201: AndersonApiApiControllersResponseTypesJsonResponseOfGuid;
+};
+
+export type PostApiRegionsResponse = PostApiRegionsResponses[keyof PostApiRegionsResponses];
+
+export type DeleteApiRegionsByIdData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/regions/{id}';
+};
+
+export type DeleteApiRegionsByIdErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type DeleteApiRegionsByIdError = DeleteApiRegionsByIdErrors[keyof DeleteApiRegionsByIdErrors];
+
+export type DeleteApiRegionsByIdResponses = {
+    /**
+     * OK
+     */
+    200: unknown;
+};
+
+export type GetApiRegionsByIdData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/regions/{id}';
+};
+
+export type GetApiRegionsByIdErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type GetApiRegionsByIdError = GetApiRegionsByIdErrors[keyof GetApiRegionsByIdErrors];
+
+export type GetApiRegionsByIdResponses = {
+    /**
+     * OK
+     */
+    200: RegionDto;
+};
+
+export type GetApiRegionsByIdResponse = GetApiRegionsByIdResponses[keyof GetApiRegionsByIdResponses];
+
+export type PutApiRegionsByIdData = {
+    body: UpdateRegionCommand;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/regions/{id}';
+};
+
+export type PutApiRegionsByIdErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type PutApiRegionsByIdError = PutApiRegionsByIdErrors[keyof PutApiRegionsByIdErrors];
+
+export type PutApiRegionsByIdResponses = {
+    /**
+     * No Content
+     */
+    204: void;
+};
+
+export type PutApiRegionsByIdResponse = PutApiRegionsByIdResponses[keyof PutApiRegionsByIdResponses];
+
+export type GetApiServiceTypesData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/service-types';
+};
+
+export type GetApiServiceTypesErrors = {
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type GetApiServiceTypesError = GetApiServiceTypesErrors[keyof GetApiServiceTypesErrors];
+
+export type GetApiServiceTypesResponses = {
+    /**
+     * OK
+     */
+    200: Array<ServiceTypeDto>;
+};
+
+export type GetApiServiceTypesResponse = GetApiServiceTypesResponses[keyof GetApiServiceTypesResponses];
+
+export type PostApiServiceTypesData = {
+    body: CreateServiceTypeCommand;
+    path?: never;
+    query?: never;
+    url: '/api/service-types';
+};
+
+export type PostApiServiceTypesErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type PostApiServiceTypesError = PostApiServiceTypesErrors[keyof PostApiServiceTypesErrors];
+
+export type PostApiServiceTypesResponses = {
+    /**
+     * Created
+     */
+    201: AndersonApiApiControllersResponseTypesJsonResponseOfGuid;
+};
+
+export type PostApiServiceTypesResponse = PostApiServiceTypesResponses[keyof PostApiServiceTypesResponses];
+
+export type DeleteApiServiceTypesByIdData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/service-types/{id}';
+};
+
+export type DeleteApiServiceTypesByIdErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type DeleteApiServiceTypesByIdError = DeleteApiServiceTypesByIdErrors[keyof DeleteApiServiceTypesByIdErrors];
+
+export type DeleteApiServiceTypesByIdResponses = {
+    /**
+     * OK
+     */
+    200: unknown;
+};
+
+export type GetApiServiceTypesByIdData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/service-types/{id}';
+};
+
+export type GetApiServiceTypesByIdErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type GetApiServiceTypesByIdError = GetApiServiceTypesByIdErrors[keyof GetApiServiceTypesByIdErrors];
+
+export type GetApiServiceTypesByIdResponses = {
+    /**
+     * OK
+     */
+    200: ServiceTypeDto;
+};
+
+export type GetApiServiceTypesByIdResponse = GetApiServiceTypesByIdResponses[keyof GetApiServiceTypesByIdResponses];
+
+export type PutApiServiceTypesByIdData = {
+    body: UpdateServiceTypeCommand;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/service-types/{id}';
+};
+
+export type PutApiServiceTypesByIdErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type PutApiServiceTypesByIdError = PutApiServiceTypesByIdErrors[keyof PutApiServiceTypesByIdErrors];
+
+export type PutApiServiceTypesByIdResponses = {
+    /**
+     * No Content
+     */
+    204: void;
+};
+
+export type PutApiServiceTypesByIdResponse = PutApiServiceTypesByIdResponses[keyof PutApiServiceTypesByIdResponses];

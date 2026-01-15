@@ -2,7 +2,7 @@
 <association id="391877ff-2ec0-45c9-9ae0-5f0e6e2ff8c1">
   <sourceEnd id="494f6c18-e294-4f63-98f8-8eedf1d9644c" type="Association Source End" typeId="8d9d2e5b-bd55-4f36-9ae4-2b9e84fd4e58">
     <name>CompanyProfiles</name>
-    <display>CompanyProfiles: CompanyProfile[*]</display>
+    <display>CompanyProfiles: Company[*]</display>
     <order>0</order>
     <typeReference id="22ca08a8-e1ed-436b-a4cd-3042e898fb0d">
       <typeId>3259289c-5d51-46cb-8c99-78751b456c44</typeId>
@@ -22,7 +22,7 @@
   <targetEnd id="391877ff-2ec0-45c9-9ae0-5f0e6e2ff8c1" type="Association Target End" typeId="0a66489f-30aa-417b-a75d-b945863366fd">
     <name>Industries</name>
     <display>Industries: Industry[*]</display>
-    <order>24</order>
+    <order>25</order>
     <typeReference id="08891a3c-c8dd-458f-adcd-9b6df68f4512">
       <typeId>6c47b169-df9b-47ae-a098-8463d7d86ad2</typeId>
       <isNavigable>true</isNavigable>

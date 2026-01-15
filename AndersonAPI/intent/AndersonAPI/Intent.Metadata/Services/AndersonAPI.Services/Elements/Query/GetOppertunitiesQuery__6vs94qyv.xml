@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<class id="8dea5063-53c9-4321-9384-6d4e6ea4aff4" type="Query" typeId="e71b0662-e29d-4db2-868b-8a12464b25d0">
+  <name>GetOppertunitiesQuery</name>
+  <display>GetOppertunitiesQuery: OppertunityDto[*]</display>
+  <isAbstract>false</isAbstract>
+  <genericTypes />
+  <typeReference id="05121ddf-9ea8-496b-9caf-06da9c3cb860">
+    <typeId>44fe9d3f-03ba-42ed-a19e-62c441a4b949</typeId>
+    <isNavigable>true</isNavigable>
+    <isNullable>false</isNullable>
+    <isCollection>true</isCollection>
+    <isRequired>true</isRequired>
+    <typePackageName>AndersonAPI.Services</typePackageName>
+    <typePackageId>c8555d38-5afc-4ea2-9a61-c7a505212753</typePackageId>
+    <stereotypes />
+    <genericTypeParameters />
+  </typeReference>
+  <isMapped>false</isMapped>
+  <parentFolderId>bb81fd14-55f2-4eb3-abdb-ca0ee73e421d</parentFolderId>
+  <packageId>c8555d38-5afc-4ea2-9a61-c7a505212753</packageId>
+  <packageName>AndersonAPI.Services</packageName>
+  <traits>
+    <trait id="9e587d4d-f317-4ab8-9bbb-9394234d2a88" name="[Allow Comment]" />
+    <trait id="0a932465-ea1f-42e7-b1eb-9f90aa8961fd" name="[Invokable]" />
+    <trait id="2b6729eb-e2ae-4b5f-86fe-4f611d1f912e" name="[Processing Handler]" />
+  </traits>
+  <stereotypes />
+  <metadata />
+  <childElements />
+</class>

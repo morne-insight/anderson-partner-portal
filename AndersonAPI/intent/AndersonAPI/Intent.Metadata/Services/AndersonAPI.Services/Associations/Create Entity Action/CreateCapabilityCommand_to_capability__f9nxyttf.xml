@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<association id="53639dc0-428e-44ac-b3a4-67890fbc72c6">
+  <sourceEnd id="f3f4c3dd-01f2-442e-9bc0-03f5b9e9c355" type="Create Entity Action Source End" typeId="a3e7c59e-b0a1-47e1-ba29-66f2c7047b0a">
+    <display>created by : Capabilities.CreateCapabilityCommand</display>
+    <order>0</order>
+    <typeReference id="1bc559f2-b558-4e26-bb12-ddd7983b89f8">
+      <typeId>d6fb22e1-f60d-4907-9058-336a30dbf0ee</typeId>
+      <isNavigable>false</isNavigable>
+      <isNullable>false</isNullable>
+      <isCollection>false</isCollection>
+      <isRequired>true</isRequired>
+      <typePackageName>AndersonAPI.Services</typePackageName>
+      <typePackageId>c8555d38-5afc-4ea2-9a61-c7a505212753</typePackageId>
+      <stereotypes />
+      <genericTypeParameters />
+    </typeReference>
+    <stereotypes />
+    <metadata />
+    <childElements />
+  </sourceEnd>
+  <targetEnd id="53639dc0-428e-44ac-b3a4-67890fbc72c6" type="Create Entity Action Target End" typeId="328f54e5-7bad-4b5f-90ca-03ce3105d016">
+    <name>capability</name>
+    <display>[create] capability: Constructor</display>
+    <order>2</order>
+    <traits>
+      <trait id="d00a2ab0-9a23-4192-b8bb-166798fc7dba" name="[Processing Action]" />
+    </traits>
+    <typeReference id="021bea2b-f93e-4984-8d59-22ea349ff535">
+      <typeId>6ee5fe39-13d3-46ad-ba5a-c8a607a7d5b4</typeId>
+      <isNavigable>true</isNavigable>
+      <isNullable>false</isNullable>
+      <isCollection>false</isCollection>
+      <isRequired>true</isRequired>
+      <typePackageName>AndersonAPI.Domain</typePackageName>
+      <typePackageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</typePackageId>
+      <stereotypes />
+      <genericTypeParameters />
+    </typeReference>
+    <stereotypes />
+    <mappings>
+      <mapping type="Create Entity Mapping" typeId="5f172141-fdba-426b-980e-163e782ff53e">
+        <source applicationId="e87261ce-2b9f-4042-8562-a503e4cf2759" designerId="81104ae6-2bc5-4bae-b05a-f987b0372d81" elementId="d6fb22e1-f60d-4907-9058-336a30dbf0ee" location="[AndersonAPI].[Services].[CreateCapabilityCommand]" />
+        <target applicationId="e87261ce-2b9f-4042-8562-a503e4cf2759" designerId="6ab29b31-27af-4f56-a67c-986d82097d63" elementId="bc2527a3-bd77-4c15-9f2e-7c23786d30a2" location="[AndersonAPI].[Services].[Capability]" />
+        <mappedEnds>
+          <mappedEnd>
+            <expression>{CreateCapabilityCommand}</expression>
+            <path>
+              <target id="bc2527a3-bd77-4c15-9f2e-7c23786d30a2" name="Capability" type="element" specialization="Class" specializationId="04e12b51-ed12-42a3-9667-a6aa81bb6d10" />
+              <target id="6ee5fe39-13d3-46ad-ba5a-c8a607a7d5b4" name="Constructor" type="element" specialization="Class Constructor" specializationId="dec2bd12-4699-4f45-8ec9-3b62dc692d2b" />
+            </path>
+            <sources>
+              <source identifier="CreateCapabilityCommand" mappingType="Invocation Mapping" mappingTypeId="47dc4a51-30a3-4ee8-8c7d-25a35bb965b9">
+                <path>
+                  <target id="d6fb22e1-f60d-4907-9058-336a30dbf0ee" name="CreateCapabilityCommand" type="element" specialization="Command" specializationId="ccf14eb6-3a55-4d81-b5b9-d27311c70cb9" />
+                </path>
+              </source>
+            </sources>
+          </mappedEnd>
+          <mappedEnd>
+            <expression>{Name}</expression>
+            <path>
+              <target id="bc2527a3-bd77-4c15-9f2e-7c23786d30a2" name="Capability" type="element" specialization="Class" specializationId="04e12b51-ed12-42a3-9667-a6aa81bb6d10" />
+              <target id="6ee5fe39-13d3-46ad-ba5a-c8a607a7d5b4" name="Constructor" type="element" specialization="Class Constructor" specializationId="dec2bd12-4699-4f45-8ec9-3b62dc692d2b" />
+              <target id="16180d92-c6b0-458d-ac51-d0bf52fff94b" name="name" type="element" specialization="Parameter" specializationId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b" />
+            </path>
+            <sources>
+              <source identifier="Name" mappingType="Data Mapping" mappingTypeId="50dccfb2-bd24-4135-adf6-ed31f28f8fe0">
+                <path>
+                  <target id="d6fb22e1-f60d-4907-9058-336a30dbf0ee" name="CreateCapabilityCommand" type="element" specialization="Command" specializationId="ccf14eb6-3a55-4d81-b5b9-d27311c70cb9" />
+                  <target id="2a95fd26-4696-49d2-97e4-83705b2471bd" name="Name" type="element" specialization="DTO-Field" specializationId="7baed1fd-469b-4980-8fd9-4cefb8331eb2" />
+                </path>
+              </source>
+            </sources>
+          </mappedEnd>
+          <mappedEnd>
+            <expression>{Description}</expression>
+            <path>
+              <target id="bc2527a3-bd77-4c15-9f2e-7c23786d30a2" name="Capability" type="element" specialization="Class" specializationId="04e12b51-ed12-42a3-9667-a6aa81bb6d10" />
+              <target id="6ee5fe39-13d3-46ad-ba5a-c8a607a7d5b4" name="Constructor" type="element" specialization="Class Constructor" specializationId="dec2bd12-4699-4f45-8ec9-3b62dc692d2b" />
+              <target id="9831aeb8-eb04-4bcc-84ff-9bea51500c7e" name="description" type="element" specialization="Parameter" specializationId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b" />
+            </path>
+            <sources>
+              <source identifier="Description" mappingType="Data Mapping" mappingTypeId="50dccfb2-bd24-4135-adf6-ed31f28f8fe0">
+                <path>
+                  <target id="d6fb22e1-f60d-4907-9058-336a30dbf0ee" name="CreateCapabilityCommand" type="element" specialization="Command" specializationId="ccf14eb6-3a55-4d81-b5b9-d27311c70cb9" />
+                  <target id="0870ee35-3953-4219-98e5-26ca12d9104e" name="Description" type="element" specialization="DTO-Field" specializationId="7baed1fd-469b-4980-8fd9-4cefb8331eb2" />
+                </path>
+              </source>
+            </sources>
+          </mappedEnd>
+        </mappedEnds>
+      </mapping>
+    </mappings>
+    <metadata />
+    <childElements />
+  </targetEnd>
+  <associationType>Create Entity Action</associationType>
+  <associationTypeId>7a3f0474-3cf8-4249-baac-8c07c49465e0</associationTypeId>
+  <stereotypes />
+</association>

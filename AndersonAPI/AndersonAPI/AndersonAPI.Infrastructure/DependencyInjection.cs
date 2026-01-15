@@ -39,7 +39,7 @@ namespace AndersonAPI.Infrastructure
             services.AddScoped<IUnitOfWork>(provider => provider.GetRequiredService<ApplicationDbContext>());
             services.AddTransient<IApplicationIdentityUserRepository, ApplicationIdentityUserRepository>();
             services.AddTransient<ICapabilityRepository, CapabilityRepository>();
-            services.AddTransient<ICompanyProfileRepository, CompanyProfileRepository>();
+            services.AddTransient<ICompanyRepository, CompanyRepository>();
             services.AddTransient<ICountryRepository, CountryRepository>();
             services.AddTransient<IIndustryRepository, IndustryRepository>();
             services.AddTransient<IOppertunityRepository, OppertunityRepository>();

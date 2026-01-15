@@ -7,12 +7,13 @@ namespace AndersonAPI.Domain.Entities
 {
     public class Contact : BaseEntity, IAuditable
     {
-        public Contact(string firstName, string lastName, string? emailAddress, string? companyPosition)
+        public Contact(string firstName, string lastName, string? emailAddress, string? companyPosition, Guid companyId)
         {
             FirstName = firstName;
             LastName = lastName;
             EmailAddress = emailAddress;
             CompanyPosition = companyPosition;
+            CompanyId = companyId;
         }
 
         /// <summary>
@@ -32,7 +33,7 @@ namespace AndersonAPI.Domain.Entities
 
         public string? CompanyPosition { get; private set; }
 
-        public Guid CompanyProfileId { get; private set; }
+        public Guid CompanyId { get; private set; }
 
         public Guid CreatedBy { get; private set; }
 
