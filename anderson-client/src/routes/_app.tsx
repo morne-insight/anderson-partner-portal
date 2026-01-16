@@ -1,5 +1,6 @@
 import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 import { getCurrentUserFn } from "../server/auth";
+import { MainLayout } from "../components/Layout/MainLayout";
 
 export const Route = createFileRoute("/_app")({
   beforeLoad: async () => {
@@ -10,5 +11,9 @@ export const Route = createFileRoute("/_app")({
     }
     return { user };
   },
-  component: () => <Outlet />,
+  component: () => (
+    <MainLayout>
+      <Outlet />
+    </MainLayout>
+  ),
 });

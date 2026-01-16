@@ -2,7 +2,7 @@
 
 import type { GetApiOppertunitiesByIdResponse, GetApiOppertunitiesResponse } from './types.gen';
 
-const andersonApiApplicationOppertunitiesOppertunityDtoSchemaResponseTransformer = (data: any) => {
+const oppertunityDtoSchemaResponseTransformer = (data: any) => {
     if (data.deadline) {
         data.deadline = new Date(data.deadline);
     }
@@ -10,11 +10,11 @@ const andersonApiApplicationOppertunitiesOppertunityDtoSchemaResponseTransformer
 };
 
 export const getApiOppertunitiesResponseTransformer = async (data: any): Promise<GetApiOppertunitiesResponse> => {
-    data = data.map((item: any) => andersonApiApplicationOppertunitiesOppertunityDtoSchemaResponseTransformer(item));
+    data = data.map((item: any) => oppertunityDtoSchemaResponseTransformer(item));
     return data;
 };
 
 export const getApiOppertunitiesByIdResponseTransformer = async (data: any): Promise<GetApiOppertunitiesByIdResponse> => {
-    data = andersonApiApplicationOppertunitiesOppertunityDtoSchemaResponseTransformer(data);
+    data = oppertunityDtoSchemaResponseTransformer(data);
     return data;
 };
