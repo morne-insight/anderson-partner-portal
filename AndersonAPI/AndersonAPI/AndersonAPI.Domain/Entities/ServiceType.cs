@@ -6,10 +6,11 @@ namespace AndersonAPI.Domain.Entities
 {
     public class ServiceType : BaseEntityList
     {
-        public ServiceType(string name, string description = "")
+        public ServiceType(string name, string description = "", EntityState state = EntityState.Enabled)
         {
             Name = name;
             Description = description;
+            State = state;
         }
 
         /// <summary>

@@ -5,6 +5,7 @@ using AndersonAPI.Application.Capabilities.CreateCapability;
 using AndersonAPI.Application.Capabilities.DeleteCapability;
 using AndersonAPI.Application.Capabilities.GetCapabilities;
 using AndersonAPI.Application.Capabilities.GetCapabilityById;
+using AndersonAPI.Application.Capabilities.SetStateCapability;
 using AndersonAPI.Application.Capabilities.UpdateCapability;
 using Intent.RoslynWeaver.Attributes;
 using MediatR;
@@ -60,6 +61,35 @@ namespace AndersonAPI.Api.Controllers
         {
             await _mediator.Send(new DeleteCapabilityCommand(id: id), cancellationToken);
             return Ok();
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <response code="204">Successfully updated.</response>
+        /// <response code="400">One or more validation errors have occurred.</response>
+        /// <response code="404">One or more entities could not be found with the provided parameters.</response>
+        [HttpPut("api/capabilities/{id}/set-state")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> SetStateCapability(
+            [FromRoute] Guid id,
+            [FromBody] SetStateCapabilityCommand command,
+            CancellationToken cancellationToken = default)
+        {
+            if (command.Id == Guid.Empty)
+            {
+                command.Id = id;
+            }
+
+            if (id != command.Id)
+            {
+                return BadRequest();
+            }
+
+            await _mediator.Send(command, cancellationToken);
+            return NoContent();
         }
 
         /// <summary>

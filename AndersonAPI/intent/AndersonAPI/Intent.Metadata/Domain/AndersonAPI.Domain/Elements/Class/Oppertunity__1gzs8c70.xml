@@ -389,7 +389,7 @@
     </childElement>
     <childElement id="e9cbb717-2629-49b4-9d0f-c2f3dd3a4ccf" type="Class Constructor" typeId="dec2bd12-4699-4f45-8ec9-3b62dc692d2b">
       <name>Constructor</name>
-      <display>Oppertunity(title: string, shortDescription: string, fullDescription: string, deadline: date?, oppertunityTypeId: guid, countryId: guid, companyId: guid)</display>
+      <display>Oppertunity(title: string, shortDescription: string, fullDescription: string, deadline: date?, oppertunityTypeId: guid, countryId: guid, companyId: guid, state: EntityState = EntityState.Enabled)</display>
       <isAbstract>false</isAbstract>
       <sort-children>by-type-then-manually</sort-children>
       <genericTypes />
@@ -626,11 +626,44 @@
           <metadata />
           <childElements />
         </childElement>
+        <childElement id="1587e104-73d0-44cb-94fb-9a2aa9588830" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
+          <name>state</name>
+          <display>in : state: EntityState = EntityState.Enabled</display>
+          <isAbstract>false</isAbstract>
+          <value>EntityState.Enabled</value>
+          <genericTypes />
+          <typeReference id="caae5331-f085-4e10-9696-2c1475e5e8eb">
+            <typeId>0b91d0c5-4aa0-4fd0-854a-7a10a9808b4d</typeId>
+            <isNavigable>true</isNavigable>
+            <isNullable>false</isNullable>
+            <isCollection>false</isCollection>
+            <isRequired>true</isRequired>
+            <typePackageName>AndersonAPI.Domain</typePackageName>
+            <typePackageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</typePackageId>
+            <stereotypes />
+            <genericTypeParameters />
+          </typeReference>
+          <isMapped>true</isMapped>
+          <mappedClass>
+            <mappingSettingsId>d6d0abfd-893c-4bec-92cb-419934ba5ba8</mappingSettingsId>
+            <autoSyncTypeReference>true</autoSyncTypeReference>
+            <mappedPath>
+              <target id="0350fc0f-79a1-4c60-b8c4-ea974b6e7850" name="base" type="association" specialization="Generalization Target End" specializationId="4686cc1d-b4d8-4b99-b45b-f77bd5496946" />
+              <target id="e7d98a52-57c9-410e-8128-8aca3ac31fbc" name="State" type="element" specialization="Attribute" specializationId="0090fb93-483e-41af-a11d-5ad2dc796adf" />
+            </mappedPath>
+          </mappedClass>
+          <parentFolderId>e9cbb717-2629-49b4-9d0f-c2f3dd3a4ccf</parentFolderId>
+          <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+          <packageName>AndersonAPI.Domain</packageName>
+          <stereotypes />
+          <metadata />
+          <childElements />
+        </childElement>
       </childElements>
     </childElement>
     <childElement id="c3b0f000-7443-4592-8d65-26577c1b80f6" type="Class Constructor" typeId="dec2bd12-4699-4f45-8ec9-3b62dc692d2b">
       <name>Constructor</name>
-      <display>Oppertunity(title: string, shortDescription: string, fullDescription: string, deadline: date?, oppertunityTypeId: guid, countryId: guid, companyId: guid, serviceTypes: guid[*], capabilities: guid[*], industries: guid[*])</display>
+      <display>Oppertunity(title: string, shortDescription: string, fullDescription: string, deadline: date?, oppertunityTypeId: guid, countryId: guid, companyId: guid, serviceTypes: guid[*], capabilities: guid[*], industries: guid[*], state: EntityState = EntityState.Enabled)</display>
       <isAbstract>false</isAbstract>
       <sort-children>by-type-then-manually</sort-children>
       <genericTypes />
@@ -932,6 +965,39 @@
             <genericTypeParameters />
           </typeReference>
           <isMapped>false</isMapped>
+          <parentFolderId>c3b0f000-7443-4592-8d65-26577c1b80f6</parentFolderId>
+          <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+          <packageName>AndersonAPI.Domain</packageName>
+          <stereotypes />
+          <metadata />
+          <childElements />
+        </childElement>
+        <childElement id="2aec7093-1bc4-483f-b48c-3dfe1277a89e" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
+          <name>state</name>
+          <display>in : state: EntityState = EntityState.Enabled</display>
+          <isAbstract>false</isAbstract>
+          <value>EntityState.Enabled</value>
+          <genericTypes />
+          <typeReference id="e326c066-bbf4-46e6-b24e-df9eddac2495">
+            <typeId>0b91d0c5-4aa0-4fd0-854a-7a10a9808b4d</typeId>
+            <isNavigable>true</isNavigable>
+            <isNullable>false</isNullable>
+            <isCollection>false</isCollection>
+            <isRequired>true</isRequired>
+            <typePackageName>AndersonAPI.Domain</typePackageName>
+            <typePackageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</typePackageId>
+            <stereotypes />
+            <genericTypeParameters />
+          </typeReference>
+          <isMapped>true</isMapped>
+          <mappedClass>
+            <mappingSettingsId>d6d0abfd-893c-4bec-92cb-419934ba5ba8</mappingSettingsId>
+            <autoSyncTypeReference>true</autoSyncTypeReference>
+            <mappedPath>
+              <target id="0350fc0f-79a1-4c60-b8c4-ea974b6e7850" name="base" type="association" specialization="Generalization Target End" specializationId="4686cc1d-b4d8-4b99-b45b-f77bd5496946" />
+              <target id="e7d98a52-57c9-410e-8128-8aca3ac31fbc" name="State" type="element" specialization="Attribute" specializationId="0090fb93-483e-41af-a11d-5ad2dc796adf" />
+            </mappedPath>
+          </mappedClass>
           <parentFolderId>c3b0f000-7443-4592-8d65-26577c1b80f6</parentFolderId>
           <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
           <packageName>AndersonAPI.Domain</packageName>

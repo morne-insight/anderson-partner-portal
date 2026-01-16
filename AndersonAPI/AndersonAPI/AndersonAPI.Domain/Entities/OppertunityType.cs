@@ -6,10 +6,11 @@ namespace AndersonAPI.Domain.Entities
 {
     public class OppertunityType : BaseEntityList
     {
-        public OppertunityType(string name, string description = "")
+        public OppertunityType(string name, string description = "", EntityState state = EntityState.Enabled)
         {
             Name = name;
             Description = description;
+            State = state;
         }
 
         /// <summary>

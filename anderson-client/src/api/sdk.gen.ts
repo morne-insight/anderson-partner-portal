@@ -2,7 +2,8 @@
 
 import type { Client, Options as Options2, TDataShape } from './client';
 import { client } from './client.gen';
-import type { DeleteApiCapabilitiesByIdData, DeleteApiCapabilitiesByIdErrors, DeleteApiCapabilitiesByIdResponses, DeleteApiCompaniesByIdContactData, DeleteApiCompaniesByIdContactErrors, DeleteApiCompaniesByIdContactResponses, DeleteApiCompaniesByIdData, DeleteApiCompaniesByIdErrors, DeleteApiCompaniesByIdLocationData, DeleteApiCompaniesByIdLocationErrors, DeleteApiCompaniesByIdLocationResponses, DeleteApiCompaniesByIdResponses, DeleteApiCountriesByIdData, DeleteApiCountriesByIdErrors, DeleteApiCountriesByIdResponses, DeleteApiIndustriesByIdData, DeleteApiIndustriesByIdErrors, DeleteApiIndustriesByIdResponses, DeleteApiOppertunityTypesByIdData, DeleteApiOppertunityTypesByIdErrors, DeleteApiOppertunityTypesByIdResponses, DeleteApiRegionsByIdData, DeleteApiRegionsByIdErrors, DeleteApiRegionsByIdResponses, DeleteApiServiceTypesByIdData, DeleteApiServiceTypesByIdErrors, DeleteApiServiceTypesByIdResponses, GetApiAccountManageInfoData, GetApiAccountManageInfoResponses, GetApiCapabilitiesByIdData, GetApiCapabilitiesByIdErrors, GetApiCapabilitiesByIdResponses, GetApiCapabilitiesData, GetApiCapabilitiesErrors, GetApiCapabilitiesResponses, GetApiCompaniesByIdData, GetApiCompaniesByIdErrors, GetApiCompaniesByIdResponses, GetApiCompaniesData, GetApiCompaniesErrors, GetApiCompaniesResponses, GetApiCountriesByIdData, GetApiCountriesByIdErrors, GetApiCountriesByIdResponses, GetApiCountriesData, GetApiCountriesErrors, GetApiCountriesResponses, GetApiIndustriesByIdData, GetApiIndustriesByIdErrors, GetApiIndustriesByIdResponses, GetApiIndustriesData, GetApiIndustriesErrors, GetApiIndustriesResponses, GetApiOppertunityTypesByIdData, GetApiOppertunityTypesByIdErrors, GetApiOppertunityTypesByIdResponses, GetApiOppertunityTypesData, GetApiOppertunityTypesErrors, GetApiOppertunityTypesResponses, GetApiRegionsByIdData, GetApiRegionsByIdErrors, GetApiRegionsByIdResponses, GetApiRegionsData, GetApiRegionsErrors, GetApiRegionsResponses, GetApiServiceTypesByIdData, GetApiServiceTypesByIdErrors, GetApiServiceTypesByIdResponses, GetApiServiceTypesData, GetApiServiceTypesErrors, GetApiServiceTypesResponses, PostApiAccountConfirmEmailData, PostApiAccountConfirmEmailResponses, PostApiAccountForgotPasswordData, PostApiAccountForgotPasswordResponses, PostApiAccountLoginData, PostApiAccountLoginResponses, PostApiAccountLogoutData, PostApiAccountLogoutResponses, PostApiAccountManageInfoData, PostApiAccountManageInfoResponses, PostApiAccountRefreshData, PostApiAccountRefreshResponses, PostApiAccountRegisterData, PostApiAccountRegisterResponses, PostApiAccountResetPasswordData, PostApiAccountResetPasswordResponses, PostApiCapabilitiesData, PostApiCapabilitiesErrors, PostApiCapabilitiesResponses, PostApiCompaniesByIdContactData, PostApiCompaniesByIdContactErrors, PostApiCompaniesByIdContactResponses, PostApiCompaniesByIdLocationData, PostApiCompaniesByIdLocationErrors, PostApiCompaniesByIdLocationResponses, PostApiCompaniesData, PostApiCompaniesErrors, PostApiCompaniesResponses, PostApiCountriesData, PostApiCountriesErrors, PostApiCountriesResponses, PostApiIndustriesData, PostApiIndustriesErrors, PostApiIndustriesResponses, PostApiOppertunityTypesData, PostApiOppertunityTypesErrors, PostApiOppertunityTypesResponses, PostApiRegionsData, PostApiRegionsErrors, PostApiRegionsResponses, PostApiServiceTypesData, PostApiServiceTypesErrors, PostApiServiceTypesResponses, PutApiCapabilitiesByIdData, PutApiCapabilitiesByIdErrors, PutApiCapabilitiesByIdResponses, PutApiCompaniesByIdCapabilitiesData, PutApiCompaniesByIdCapabilitiesErrors, PutApiCompaniesByIdCapabilitiesResponses, PutApiCompaniesByIdContactData, PutApiCompaniesByIdContactErrors, PutApiCompaniesByIdContactResponses, PutApiCompaniesByIdData, PutApiCompaniesByIdErrors, PutApiCompaniesByIdHeadOfficeData, PutApiCompaniesByIdHeadOfficeErrors, PutApiCompaniesByIdHeadOfficeResponses, PutApiCompaniesByIdIndustriesData, PutApiCompaniesByIdIndustriesErrors, PutApiCompaniesByIdIndustriesResponses, PutApiCompaniesByIdLocationData, PutApiCompaniesByIdLocationErrors, PutApiCompaniesByIdLocationResponses, PutApiCompaniesByIdResponses, PutApiCompaniesByIdServiceTypesData, PutApiCompaniesByIdServiceTypesErrors, PutApiCompaniesByIdServiceTypesResponses, PutApiCountriesByIdData, PutApiCountriesByIdErrors, PutApiCountriesByIdResponses, PutApiIndustriesByIdData, PutApiIndustriesByIdErrors, PutApiIndustriesByIdResponses, PutApiOppertunityTypesByIdData, PutApiOppertunityTypesByIdErrors, PutApiOppertunityTypesByIdResponses, PutApiRegionsByIdData, PutApiRegionsByIdErrors, PutApiRegionsByIdResponses, PutApiServiceTypesByIdData, PutApiServiceTypesByIdErrors, PutApiServiceTypesByIdResponses } from './types.gen';
+import { getApiOppertunitiesByIdResponseTransformer, getApiOppertunitiesResponseTransformer } from './transformers.gen';
+import type { DeleteApiCapabilitiesByIdData, DeleteApiCapabilitiesByIdErrors, DeleteApiCapabilitiesByIdResponses, DeleteApiCompaniesByIdContactData, DeleteApiCompaniesByIdContactErrors, DeleteApiCompaniesByIdContactResponses, DeleteApiCompaniesByIdData, DeleteApiCompaniesByIdErrors, DeleteApiCompaniesByIdLocationData, DeleteApiCompaniesByIdLocationErrors, DeleteApiCompaniesByIdLocationResponses, DeleteApiCompaniesByIdResponses, DeleteApiCountriesByIdData, DeleteApiCountriesByIdErrors, DeleteApiCountriesByIdResponses, DeleteApiIndustriesByIdData, DeleteApiIndustriesByIdErrors, DeleteApiIndustriesByIdResponses, DeleteApiOppertunitiesByIdData, DeleteApiOppertunitiesByIdErrors, DeleteApiOppertunitiesByIdResponses, DeleteApiOppertunityTypesByIdData, DeleteApiOppertunityTypesByIdErrors, DeleteApiOppertunityTypesByIdResponses, DeleteApiRegionsByIdData, DeleteApiRegionsByIdErrors, DeleteApiRegionsByIdResponses, DeleteApiServiceTypesByIdData, DeleteApiServiceTypesByIdErrors, DeleteApiServiceTypesByIdResponses, GetApiAccountManageInfoData, GetApiAccountManageInfoResponses, GetApiCapabilitiesByIdData, GetApiCapabilitiesByIdErrors, GetApiCapabilitiesByIdResponses, GetApiCapabilitiesData, GetApiCapabilitiesErrors, GetApiCapabilitiesResponses, GetApiCompaniesByIdData, GetApiCompaniesByIdErrors, GetApiCompaniesByIdResponses, GetApiCompaniesData, GetApiCompaniesErrors, GetApiCompaniesResponses, GetApiCountriesByIdData, GetApiCountriesByIdErrors, GetApiCountriesByIdResponses, GetApiCountriesData, GetApiCountriesErrors, GetApiCountriesResponses, GetApiIndustriesByIdData, GetApiIndustriesByIdErrors, GetApiIndustriesByIdResponses, GetApiIndustriesData, GetApiIndustriesErrors, GetApiIndustriesResponses, GetApiOppertunitiesByIdData, GetApiOppertunitiesByIdErrors, GetApiOppertunitiesByIdResponses, GetApiOppertunitiesData, GetApiOppertunitiesErrors, GetApiOppertunitiesResponses, GetApiOppertunityTypesByIdData, GetApiOppertunityTypesByIdErrors, GetApiOppertunityTypesByIdResponses, GetApiOppertunityTypesData, GetApiOppertunityTypesErrors, GetApiOppertunityTypesResponses, GetApiRegionsByIdData, GetApiRegionsByIdErrors, GetApiRegionsByIdResponses, GetApiRegionsData, GetApiRegionsErrors, GetApiRegionsResponses, GetApiServiceTypesByIdData, GetApiServiceTypesByIdErrors, GetApiServiceTypesByIdResponses, GetApiServiceTypesData, GetApiServiceTypesErrors, GetApiServiceTypesResponses, PostApiAccountConfirmEmailData, PostApiAccountConfirmEmailResponses, PostApiAccountForgotPasswordData, PostApiAccountForgotPasswordResponses, PostApiAccountLoginData, PostApiAccountLoginResponses, PostApiAccountLogoutData, PostApiAccountLogoutResponses, PostApiAccountManageInfoData, PostApiAccountManageInfoResponses, PostApiAccountRefreshData, PostApiAccountRefreshResponses, PostApiAccountRegisterData, PostApiAccountRegisterResponses, PostApiAccountResetPasswordData, PostApiAccountResetPasswordResponses, PostApiCapabilitiesData, PostApiCapabilitiesErrors, PostApiCapabilitiesResponses, PostApiCompaniesByIdContactData, PostApiCompaniesByIdContactErrors, PostApiCompaniesByIdContactResponses, PostApiCompaniesByIdLocationData, PostApiCompaniesByIdLocationErrors, PostApiCompaniesByIdLocationResponses, PostApiCompaniesData, PostApiCompaniesErrors, PostApiCompaniesResponses, PostApiCountriesData, PostApiCountriesErrors, PostApiCountriesResponses, PostApiIndustriesData, PostApiIndustriesErrors, PostApiIndustriesResponses, PostApiOppertunitiesData, PostApiOppertunitiesErrors, PostApiOppertunitiesResponses, PostApiOppertunityTypesData, PostApiOppertunityTypesErrors, PostApiOppertunityTypesResponses, PostApiRegionsData, PostApiRegionsErrors, PostApiRegionsResponses, PostApiServiceTypesData, PostApiServiceTypesErrors, PostApiServiceTypesResponses, PutApiCapabilitiesByIdData, PutApiCapabilitiesByIdErrors, PutApiCapabilitiesByIdResponses, PutApiCapabilitiesByIdSetStateData, PutApiCapabilitiesByIdSetStateErrors, PutApiCapabilitiesByIdSetStateResponses, PutApiCompaniesByIdCapabilitiesData, PutApiCompaniesByIdCapabilitiesErrors, PutApiCompaniesByIdCapabilitiesResponses, PutApiCompaniesByIdContactData, PutApiCompaniesByIdContactErrors, PutApiCompaniesByIdContactResponses, PutApiCompaniesByIdData, PutApiCompaniesByIdErrors, PutApiCompaniesByIdHeadOfficeData, PutApiCompaniesByIdHeadOfficeErrors, PutApiCompaniesByIdHeadOfficeResponses, PutApiCompaniesByIdIndustriesData, PutApiCompaniesByIdIndustriesErrors, PutApiCompaniesByIdIndustriesResponses, PutApiCompaniesByIdLocationData, PutApiCompaniesByIdLocationErrors, PutApiCompaniesByIdLocationResponses, PutApiCompaniesByIdResponses, PutApiCompaniesByIdServiceTypesData, PutApiCompaniesByIdServiceTypesErrors, PutApiCompaniesByIdServiceTypesResponses, PutApiCompaniesByIdSetStateData, PutApiCompaniesByIdSetStateErrors, PutApiCompaniesByIdSetStateResponses, PutApiCountriesByIdData, PutApiCountriesByIdErrors, PutApiCountriesByIdResponses, PutApiCountriesByIdSetStateData, PutApiCountriesByIdSetStateErrors, PutApiCountriesByIdSetStateResponses, PutApiIndustriesByIdData, PutApiIndustriesByIdErrors, PutApiIndustriesByIdResponses, PutApiIndustriesByIdSetStateData, PutApiIndustriesByIdSetStateErrors, PutApiIndustriesByIdSetStateResponses, PutApiOppertunitiesByIdCapabilitiesData, PutApiOppertunitiesByIdCapabilitiesErrors, PutApiOppertunitiesByIdCapabilitiesResponses, PutApiOppertunitiesByIdData, PutApiOppertunitiesByIdErrors, PutApiOppertunitiesByIdFullData, PutApiOppertunitiesByIdFullErrors, PutApiOppertunitiesByIdFullResponses, PutApiOppertunitiesByIdIndustriesData, PutApiOppertunitiesByIdIndustriesErrors, PutApiOppertunitiesByIdIndustriesResponses, PutApiOppertunitiesByIdInterestedPartnersData, PutApiOppertunitiesByIdInterestedPartnersErrors, PutApiOppertunitiesByIdInterestedPartnersResponses, PutApiOppertunitiesByIdResponses, PutApiOppertunitiesByIdServiceTypesData, PutApiOppertunitiesByIdServiceTypesErrors, PutApiOppertunitiesByIdServiceTypesResponses, PutApiOppertunitiesByIdSetStateData, PutApiOppertunitiesByIdSetStateErrors, PutApiOppertunitiesByIdSetStateResponses, PutApiOppertunitiesByIdStatusData, PutApiOppertunitiesByIdStatusErrors, PutApiOppertunitiesByIdStatusResponses, PutApiOppertunityTypesByIdData, PutApiOppertunityTypesByIdErrors, PutApiOppertunityTypesByIdResponses, PutApiOppertunityTypesByIdSetStateData, PutApiOppertunityTypesByIdSetStateErrors, PutApiOppertunityTypesByIdSetStateResponses, PutApiRegionsByIdData, PutApiRegionsByIdErrors, PutApiRegionsByIdResponses, PutApiRegionsByIdSetStateData, PutApiRegionsByIdSetStateErrors, PutApiRegionsByIdSetStateResponses, PutApiServiceTypesByIdData, PutApiServiceTypesByIdErrors, PutApiServiceTypesByIdResponses, PutApiServiceTypesByIdSetStateData, PutApiServiceTypesByIdSetStateErrors, PutApiServiceTypesByIdSetStateResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -102,6 +103,15 @@ export const getApiCapabilitiesById = <ThrowOnError extends boolean = false>(opt
 
 export const putApiCapabilitiesById = <ThrowOnError extends boolean = false>(options: Options<PutApiCapabilitiesByIdData, ThrowOnError>) => (options.client ?? client).put<PutApiCapabilitiesByIdResponses, PutApiCapabilitiesByIdErrors, ThrowOnError>({
     url: '/api/capabilities/{id}',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+export const putApiCapabilitiesByIdSetState = <ThrowOnError extends boolean = false>(options: Options<PutApiCapabilitiesByIdSetStateData, ThrowOnError>) => (options.client ?? client).put<PutApiCapabilitiesByIdSetStateResponses, PutApiCapabilitiesByIdSetStateErrors, ThrowOnError>({
+    url: '/api/capabilities/{id}/set-state',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -209,6 +219,15 @@ export const putApiCompaniesByIdServiceTypes = <ThrowOnError extends boolean = f
     }
 });
 
+export const putApiCompaniesByIdSetState = <ThrowOnError extends boolean = false>(options: Options<PutApiCompaniesByIdSetStateData, ThrowOnError>) => (options.client ?? client).put<PutApiCompaniesByIdSetStateResponses, PutApiCompaniesByIdSetStateErrors, ThrowOnError>({
+    url: '/api/companies/{id}/set-state',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
 export const getApiCountries = <ThrowOnError extends boolean = false>(options?: Options<GetApiCountriesData, ThrowOnError>) => (options?.client ?? client).get<GetApiCountriesResponses, GetApiCountriesErrors, ThrowOnError>({ url: '/api/countries', ...options });
 
 export const postApiCountries = <ThrowOnError extends boolean = false>(options: Options<PostApiCountriesData, ThrowOnError>) => (options.client ?? client).post<PostApiCountriesResponses, PostApiCountriesErrors, ThrowOnError>({
@@ -226,6 +245,15 @@ export const getApiCountriesById = <ThrowOnError extends boolean = false>(option
 
 export const putApiCountriesById = <ThrowOnError extends boolean = false>(options: Options<PutApiCountriesByIdData, ThrowOnError>) => (options.client ?? client).put<PutApiCountriesByIdResponses, PutApiCountriesByIdErrors, ThrowOnError>({
     url: '/api/countries/{id}',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+export const putApiCountriesByIdSetState = <ThrowOnError extends boolean = false>(options: Options<PutApiCountriesByIdSetStateData, ThrowOnError>) => (options.client ?? client).put<PutApiCountriesByIdSetStateResponses, PutApiCountriesByIdSetStateErrors, ThrowOnError>({
+    url: '/api/countries/{id}/set-state',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -257,6 +285,110 @@ export const putApiIndustriesById = <ThrowOnError extends boolean = false>(optio
     }
 });
 
+export const putApiIndustriesByIdSetState = <ThrowOnError extends boolean = false>(options: Options<PutApiIndustriesByIdSetStateData, ThrowOnError>) => (options.client ?? client).put<PutApiIndustriesByIdSetStateResponses, PutApiIndustriesByIdSetStateErrors, ThrowOnError>({
+    url: '/api/industries/{id}/set-state',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+export const getApiOppertunities = <ThrowOnError extends boolean = false>(options?: Options<GetApiOppertunitiesData, ThrowOnError>) => (options?.client ?? client).get<GetApiOppertunitiesResponses, GetApiOppertunitiesErrors, ThrowOnError>({
+    responseTransformer: getApiOppertunitiesResponseTransformer,
+    url: '/api/oppertunities',
+    ...options
+});
+
+export const postApiOppertunities = <ThrowOnError extends boolean = false>(options: Options<PostApiOppertunitiesData, ThrowOnError>) => (options.client ?? client).post<PostApiOppertunitiesResponses, PostApiOppertunitiesErrors, ThrowOnError>({
+    url: '/api/oppertunities',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+export const deleteApiOppertunitiesById = <ThrowOnError extends boolean = false>(options: Options<DeleteApiOppertunitiesByIdData, ThrowOnError>) => (options.client ?? client).delete<DeleteApiOppertunitiesByIdResponses, DeleteApiOppertunitiesByIdErrors, ThrowOnError>({ url: '/api/oppertunities/{id}', ...options });
+
+export const getApiOppertunitiesById = <ThrowOnError extends boolean = false>(options: Options<GetApiOppertunitiesByIdData, ThrowOnError>) => (options.client ?? client).get<GetApiOppertunitiesByIdResponses, GetApiOppertunitiesByIdErrors, ThrowOnError>({
+    responseTransformer: getApiOppertunitiesByIdResponseTransformer,
+    url: '/api/oppertunities/{id}',
+    ...options
+});
+
+export const putApiOppertunitiesById = <ThrowOnError extends boolean = false>(options: Options<PutApiOppertunitiesByIdData, ThrowOnError>) => (options.client ?? client).put<PutApiOppertunitiesByIdResponses, PutApiOppertunitiesByIdErrors, ThrowOnError>({
+    url: '/api/oppertunities/{id}',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+export const putApiOppertunitiesByIdCapabilities = <ThrowOnError extends boolean = false>(options: Options<PutApiOppertunitiesByIdCapabilitiesData, ThrowOnError>) => (options.client ?? client).put<PutApiOppertunitiesByIdCapabilitiesResponses, PutApiOppertunitiesByIdCapabilitiesErrors, ThrowOnError>({
+    url: '/api/oppertunities/{id}/capabilities',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+export const putApiOppertunitiesByIdIndustries = <ThrowOnError extends boolean = false>(options: Options<PutApiOppertunitiesByIdIndustriesData, ThrowOnError>) => (options.client ?? client).put<PutApiOppertunitiesByIdIndustriesResponses, PutApiOppertunitiesByIdIndustriesErrors, ThrowOnError>({
+    url: '/api/oppertunities/{id}/industries',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+export const putApiOppertunitiesByIdInterestedPartners = <ThrowOnError extends boolean = false>(options: Options<PutApiOppertunitiesByIdInterestedPartnersData, ThrowOnError>) => (options.client ?? client).put<PutApiOppertunitiesByIdInterestedPartnersResponses, PutApiOppertunitiesByIdInterestedPartnersErrors, ThrowOnError>({
+    url: '/api/oppertunities/{id}/interested-partners',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+export const putApiOppertunitiesByIdServiceTypes = <ThrowOnError extends boolean = false>(options: Options<PutApiOppertunitiesByIdServiceTypesData, ThrowOnError>) => (options.client ?? client).put<PutApiOppertunitiesByIdServiceTypesResponses, PutApiOppertunitiesByIdServiceTypesErrors, ThrowOnError>({
+    url: '/api/oppertunities/{id}/service-types',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+export const putApiOppertunitiesByIdSetState = <ThrowOnError extends boolean = false>(options: Options<PutApiOppertunitiesByIdSetStateData, ThrowOnError>) => (options.client ?? client).put<PutApiOppertunitiesByIdSetStateResponses, PutApiOppertunitiesByIdSetStateErrors, ThrowOnError>({
+    url: '/api/oppertunities/{id}/set-state',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+export const putApiOppertunitiesByIdStatus = <ThrowOnError extends boolean = false>(options: Options<PutApiOppertunitiesByIdStatusData, ThrowOnError>) => (options.client ?? client).put<PutApiOppertunitiesByIdStatusResponses, PutApiOppertunitiesByIdStatusErrors, ThrowOnError>({
+    url: '/api/oppertunities/{id}/status',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+export const putApiOppertunitiesByIdFull = <ThrowOnError extends boolean = false>(options: Options<PutApiOppertunitiesByIdFullData, ThrowOnError>) => (options.client ?? client).put<PutApiOppertunitiesByIdFullResponses, PutApiOppertunitiesByIdFullErrors, ThrowOnError>({
+    url: '/api/oppertunities/{id}/full',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
 export const getApiOppertunityTypes = <ThrowOnError extends boolean = false>(options?: Options<GetApiOppertunityTypesData, ThrowOnError>) => (options?.client ?? client).get<GetApiOppertunityTypesResponses, GetApiOppertunityTypesErrors, ThrowOnError>({ url: '/api/oppertunity-types', ...options });
 
 export const postApiOppertunityTypes = <ThrowOnError extends boolean = false>(options: Options<PostApiOppertunityTypesData, ThrowOnError>) => (options.client ?? client).post<PostApiOppertunityTypesResponses, PostApiOppertunityTypesErrors, ThrowOnError>({
@@ -274,6 +406,15 @@ export const getApiOppertunityTypesById = <ThrowOnError extends boolean = false>
 
 export const putApiOppertunityTypesById = <ThrowOnError extends boolean = false>(options: Options<PutApiOppertunityTypesByIdData, ThrowOnError>) => (options.client ?? client).put<PutApiOppertunityTypesByIdResponses, PutApiOppertunityTypesByIdErrors, ThrowOnError>({
     url: '/api/oppertunity-types/{id}',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+export const putApiOppertunityTypesByIdSetState = <ThrowOnError extends boolean = false>(options: Options<PutApiOppertunityTypesByIdSetStateData, ThrowOnError>) => (options.client ?? client).put<PutApiOppertunityTypesByIdSetStateResponses, PutApiOppertunityTypesByIdSetStateErrors, ThrowOnError>({
+    url: '/api/oppertunity-types/{id}/set-state',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -305,6 +446,15 @@ export const putApiRegionsById = <ThrowOnError extends boolean = false>(options:
     }
 });
 
+export const putApiRegionsByIdSetState = <ThrowOnError extends boolean = false>(options: Options<PutApiRegionsByIdSetStateData, ThrowOnError>) => (options.client ?? client).put<PutApiRegionsByIdSetStateResponses, PutApiRegionsByIdSetStateErrors, ThrowOnError>({
+    url: '/api/regions/{id}/set-state',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
 export const getApiServiceTypes = <ThrowOnError extends boolean = false>(options?: Options<GetApiServiceTypesData, ThrowOnError>) => (options?.client ?? client).get<GetApiServiceTypesResponses, GetApiServiceTypesErrors, ThrowOnError>({ url: '/api/service-types', ...options });
 
 export const postApiServiceTypes = <ThrowOnError extends boolean = false>(options: Options<PostApiServiceTypesData, ThrowOnError>) => (options.client ?? client).post<PostApiServiceTypesResponses, PostApiServiceTypesErrors, ThrowOnError>({
@@ -322,6 +472,15 @@ export const getApiServiceTypesById = <ThrowOnError extends boolean = false>(opt
 
 export const putApiServiceTypesById = <ThrowOnError extends boolean = false>(options: Options<PutApiServiceTypesByIdData, ThrowOnError>) => (options.client ?? client).put<PutApiServiceTypesByIdResponses, PutApiServiceTypesByIdErrors, ThrowOnError>({
     url: '/api/service-types/{id}',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+export const putApiServiceTypesByIdSetState = <ThrowOnError extends boolean = false>(options: Options<PutApiServiceTypesByIdSetStateData, ThrowOnError>) => (options.client ?? client).put<PutApiServiceTypesByIdSetStateResponses, PutApiServiceTypesByIdSetStateErrors, ThrowOnError>({
+    url: '/api/service-types/{id}/set-state',
     ...options,
     headers: {
         'Content-Type': 'application/json',

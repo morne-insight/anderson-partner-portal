@@ -52,26 +52,27 @@ namespace AndersonAPI.Infrastructure.Persistence.Configurations
             builder.OwnsMany(x => x.Locations, ConfigureLocations);
 
             builder.HasMany(x => x.Industries)
-                .WithMany("CompanyProfiles")
+                .WithMany("Company")
                 .UsingEntity(x => x.ToTable("CompanyIndustries"));
 
             builder.HasMany(x => x.Capabilities)
-                .WithMany("CompanyProfiles")
+                .WithMany("Company")
                 .UsingEntity(x => x.ToTable("CompanyCapabilities"));
 
             builder.HasMany(x => x.ServiceTypes)
-                .WithMany("CompanyProfiles")
+                .WithMany("Company")
                 .UsingEntity(x => x.ToTable("CompanyServiceTypes"));
 
             builder.OwnsMany(x => x.Contacts, ConfigureContacts);
 
             builder.HasMany(x => x.ApplicationIdentityUsers)
-                .WithMany("CompanyProfiles")
+                .WithMany("Company")
                 .UsingEntity(x => x.ToTable("CompanyApplicationIdentityUsers"));
 
             builder.Ignore(e => e.DomainEvents);
         }
 
+        [IntentManaged(Mode.Merge)]
         public static void ConfigureLocations(OwnedNavigationBuilder<Company, Location> builder)
         {
             builder.WithOwner()
@@ -110,8 +111,11 @@ namespace AndersonAPI.Infrastructure.Persistence.Configurations
                 .WithMany()
                 .HasForeignKey(x => x.CountryId)
                 .OnDelete(DeleteBehavior.Restrict);
-        }
 
+            builder.Ignore(e => e.DomainEvents);
+        }
+        
+        [IntentManaged(Mode.Merge)]
         public static void ConfigureContacts(OwnedNavigationBuilder<Company, Contact> builder)
         {
             builder.WithOwner()
@@ -147,6 +151,8 @@ namespace AndersonAPI.Infrastructure.Persistence.Configurations
             builder.Property(x => x.UpdatedBy);
 
             builder.Property(x => x.UpdatedDate);
+
+            builder.Ignore(e => e.DomainEvents);
         }
     }
 }

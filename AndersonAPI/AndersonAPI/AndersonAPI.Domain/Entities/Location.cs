@@ -38,12 +38,18 @@ namespace AndersonAPI.Domain.Entities
 
         public virtual Country Country { get; private set; }
 
-        public void Update(string name, Guid regionId, Guid countryId, bool isHeadOffice)
+        public void Update(
+            string name,
+            Guid regionId,
+            Guid countryId,
+            bool isHeadOffice,
+            EntityState state = EntityState.Enabled)
         {
             Name = name;
             RegionId = regionId;
             CountryId = countryId;
             IsHeadOffice = isHeadOffice;
+            State = state;
         }
 
         public void SetHeadOffice(bool isHeadOffice)

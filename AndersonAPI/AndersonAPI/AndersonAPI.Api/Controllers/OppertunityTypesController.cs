@@ -5,6 +5,7 @@ using AndersonAPI.Application.OppertunityTypes.CreateOppertunityType;
 using AndersonAPI.Application.OppertunityTypes.DeleteOppertunityType;
 using AndersonAPI.Application.OppertunityTypes.GetOppertunityTypeById;
 using AndersonAPI.Application.OppertunityTypes.GetOppertunityTypes;
+using AndersonAPI.Application.OppertunityTypes.SetStateOppertunityType;
 using AndersonAPI.Application.OppertunityTypes.UpdateOppertunityType;
 using Intent.RoslynWeaver.Attributes;
 using MediatR;
@@ -60,6 +61,35 @@ namespace AndersonAPI.Api.Controllers
         {
             await _mediator.Send(new DeleteOppertunityTypeCommand(id: id), cancellationToken);
             return Ok();
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <response code="204">Successfully updated.</response>
+        /// <response code="400">One or more validation errors have occurred.</response>
+        /// <response code="404">One or more entities could not be found with the provided parameters.</response>
+        [HttpPut("api/oppertunity-types/{id}/set-state")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> SetStateOppertunityType(
+            [FromRoute] Guid id,
+            [FromBody] SetStateOppertunityTypeCommand command,
+            CancellationToken cancellationToken = default)
+        {
+            if (command.Id == Guid.Empty)
+            {
+                command.Id = id;
+            }
+
+            if (id != command.Id)
+            {
+                return BadRequest();
+            }
+
+            await _mediator.Send(command, cancellationToken);
+            return NoContent();
         }
 
         /// <summary>

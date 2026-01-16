@@ -77,7 +77,7 @@ namespace AndersonAPI.Infrastructure.Persistence.Configurations
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasMany(x => x.InterestedPartners)
-                .WithMany("Oppertunities")
+                .WithMany(x => x.SavedOppertunities)
                 .UsingEntity(x => x.ToTable("OppertunityCompanies"));
 
             builder.HasOne(x => x.Company)

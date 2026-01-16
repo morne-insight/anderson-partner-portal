@@ -363,7 +363,7 @@
     </childElement>
     <childElement id="64945c7f-9cc7-4716-b1c3-a2b7786aa9c9" type="Operation" typeId="e042bb67-a1df-480c-9935-b26210f78591">
       <name>Update</name>
-      <display>Update(name: string, regionId: guid, countryId: guid, isHeadOffice: bool): void</display>
+      <display>Update(name: string, regionId: guid, countryId: guid, isHeadOffice: bool, state: EntityState = EntityState.Enabled): void</display>
       <isAbstract>false</isAbstract>
       <sort-children>by-type-then-manually</sort-children>
       <genericTypes />
@@ -506,6 +506,39 @@
             <autoSyncTypeReference>true</autoSyncTypeReference>
             <mappedPath>
               <target id="752df204-2237-4e43-b95f-e7d0401496cd" name="IsHeadOffice" type="element" specialization="Attribute" specializationId="0090fb93-483e-41af-a11d-5ad2dc796adf" />
+            </mappedPath>
+          </mappedClass>
+          <parentFolderId>64945c7f-9cc7-4716-b1c3-a2b7786aa9c9</parentFolderId>
+          <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+          <packageName>AndersonAPI.Domain</packageName>
+          <stereotypes />
+          <metadata />
+          <childElements />
+        </childElement>
+        <childElement id="07d7b3d8-da8e-4aba-aeca-4dac838b9975" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
+          <name>state</name>
+          <display>in : state: EntityState = EntityState.Enabled</display>
+          <isAbstract>false</isAbstract>
+          <value>EntityState.Enabled</value>
+          <genericTypes />
+          <typeReference id="6b57707f-1007-4aed-8343-f634a17e4265">
+            <typeId>0b91d0c5-4aa0-4fd0-854a-7a10a9808b4d</typeId>
+            <isNavigable>true</isNavigable>
+            <isNullable>false</isNullable>
+            <isCollection>false</isCollection>
+            <isRequired>true</isRequired>
+            <typePackageName>AndersonAPI.Domain</typePackageName>
+            <typePackageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</typePackageId>
+            <stereotypes />
+            <genericTypeParameters />
+          </typeReference>
+          <isMapped>true</isMapped>
+          <mappedClass>
+            <mappingSettingsId>7590bd83-04bc-40fe-8b5c-118277c049d4</mappingSettingsId>
+            <autoSyncTypeReference>true</autoSyncTypeReference>
+            <mappedPath>
+              <target id="b84bb00c-9bcd-4a79-a5c9-5d7023646a7c" name="base" type="association" specialization="Generalization Target End" specializationId="4686cc1d-b4d8-4b99-b45b-f77bd5496946" />
+              <target id="e7d98a52-57c9-410e-8128-8aca3ac31fbc" name="State" type="element" specialization="Attribute" specializationId="0090fb93-483e-41af-a11d-5ad2dc796adf" />
             </mappedPath>
           </mappedClass>
           <parentFolderId>64945c7f-9cc7-4716-b1c3-a2b7786aa9c9</parentFolderId>

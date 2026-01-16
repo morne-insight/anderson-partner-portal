@@ -96,5 +96,68 @@
       <metadata />
       <childElements />
     </childElement>
+    <childElement id="aa45dc0f-c767-4250-88ee-b3ce60554fad" type="Operation" typeId="e042bb67-a1df-480c-9935-b26210f78591">
+      <name>SetState</name>
+      <display>SetState(state: EntityState): void</display>
+      <isAbstract>false</isAbstract>
+      <sort-children>by-type-then-manually</sort-children>
+      <genericTypes />
+      <typeReference id="bd4c3d32-7f4c-41e7-bc5c-11d545a8e178">
+        <isNavigable>true</isNavigable>
+        <isNullable>false</isNullable>
+        <isCollection>false</isCollection>
+        <isRequired>true</isRequired>
+        <stereotypes />
+        <genericTypeParameters />
+      </typeReference>
+      <isMapped>true</isMapped>
+      <mappedClass isRoot="true">
+        <applicationId>e87261ce-2b9f-4042-8562-a503e4cf2759</applicationId>
+        <metadataId>6ab29b31-27af-4f56-a67c-986d82097d63</metadataId>
+        <mappingSettingsId>7590bd83-04bc-40fe-8b5c-118277c049d4</mappingSettingsId>
+        <autoSyncTypeReference>true</autoSyncTypeReference>
+        <mappedPath>
+          <target id="2727a645-85ae-4292-bf9c-cba3f82f444c" name="BaseEntity" type="element" specialization="Class" specializationId="04e12b51-ed12-42a3-9667-a6aa81bb6d10" />
+        </mappedPath>
+      </mappedClass>
+      <parentFolderId>2727a645-85ae-4292-bf9c-cba3f82f444c</parentFolderId>
+      <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+      <packageName>AndersonAPI.Domain</packageName>
+      <stereotypes />
+      <metadata />
+      <childElements>
+        <childElement id="61df254f-cb6b-408b-a69e-4a04212da387" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
+          <name>state</name>
+          <display>in : state: EntityState</display>
+          <isAbstract>false</isAbstract>
+          <genericTypes />
+          <typeReference id="548573fe-ca91-4a77-99b3-2762c8b3bc0c">
+            <typeId>0b91d0c5-4aa0-4fd0-854a-7a10a9808b4d</typeId>
+            <isNavigable>true</isNavigable>
+            <isNullable>false</isNullable>
+            <isCollection>false</isCollection>
+            <isRequired>true</isRequired>
+            <typePackageName>AndersonAPI.Domain</typePackageName>
+            <typePackageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</typePackageId>
+            <stereotypes />
+            <genericTypeParameters />
+          </typeReference>
+          <isMapped>true</isMapped>
+          <mappedClass>
+            <mappingSettingsId>7590bd83-04bc-40fe-8b5c-118277c049d4</mappingSettingsId>
+            <autoSyncTypeReference>true</autoSyncTypeReference>
+            <mappedPath>
+              <target id="e7d98a52-57c9-410e-8128-8aca3ac31fbc" name="State" type="element" specialization="Attribute" specializationId="0090fb93-483e-41af-a11d-5ad2dc796adf" />
+            </mappedPath>
+          </mappedClass>
+          <parentFolderId>aa45dc0f-c767-4250-88ee-b3ce60554fad</parentFolderId>
+          <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+          <packageName>AndersonAPI.Domain</packageName>
+          <stereotypes />
+          <metadata />
+          <childElements />
+        </childElement>
+      </childElements>
+    </childElement>
   </childElements>
 </class>

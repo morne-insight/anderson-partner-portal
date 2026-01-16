@@ -6,10 +6,11 @@ namespace AndersonAPI.Domain.Entities
 {
     public class Capability : BaseEntityList
     {
-        public Capability(string name, string description = "")
+        public Capability(string name, string description = "", EntityState state = EntityState.Enabled)
         {
             Name = name;
             Description = description;
+            State = state;
         }
 
         /// <summary>

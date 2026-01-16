@@ -6,11 +6,12 @@ namespace AndersonAPI.Domain.Entities
 {
     public class Country : BaseEntityList
     {
-        public Country(Guid? regionId, string name, string description = "")
+        public Country(Guid? regionId, string name, string description = "", EntityState state = EntityState.Enabled)
         {
             RegionId = regionId;
             Name = name;
             Description = description;
+            State = state;
         }
 
         /// <summary>

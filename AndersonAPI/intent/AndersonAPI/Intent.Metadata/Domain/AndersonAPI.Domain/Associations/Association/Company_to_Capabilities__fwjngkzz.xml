@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<association id="96f5d114-906e-479b-b2cc-c70d42272f64">
-  <sourceEnd id="3c95ea16-941f-4756-bfe4-7a3c57063d3d" type="Association Source End" typeId="8d9d2e5b-bd55-4f36-9ae4-2b9e84fd4e58">
-    <name>CompanyProfile</name>
-    <display>CompanyProfile: Company</display>
+<association id="ccaef3c8-10de-4ef8-880a-335769dea5a5">
+  <sourceEnd id="c8bb6479-e082-4bbc-aea3-2a5afcf0d816" type="Association Source End" typeId="8d9d2e5b-bd55-4f36-9ae4-2b9e84fd4e58">
+    <name>Company</name>
+    <display>Company: Company[*]?</display>
     <order>0</order>
-    <typeReference id="fc16718f-31ff-4a2f-97e0-f85dd806b270">
+    <typeReference id="e40600dd-2e70-4da3-8ca6-12f34f4ac943">
       <typeId>3259289c-5d51-46cb-8c99-78751b456c44</typeId>
       <isNavigable>false</isNavigable>
-      <isNullable>false</isNullable>
-      <isCollection>false</isCollection>
+      <isNullable>true</isNullable>
+      <isCollection>true</isCollection>
       <isRequired>true</isRequired>
       <typePackageName>AndersonAPI.Domain</typePackageName>
       <typePackageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</typePackageId>
@@ -19,12 +19,12 @@
     <metadata />
     <childElements />
   </sourceEnd>
-  <targetEnd id="96f5d114-906e-479b-b2cc-c70d42272f64" type="Association Target End" typeId="0a66489f-30aa-417b-a75d-b945863366fd">
-    <name>Locations</name>
-    <display>Locations: Location[*]</display>
-    <order>24</order>
-    <typeReference id="5d8ab85e-bf49-4949-b75b-32904c3c2d9a">
-      <typeId>93773201-e34f-4a1f-b82e-f3cedba6dbd1</typeId>
+  <targetEnd id="ccaef3c8-10de-4ef8-880a-335769dea5a5" type="Association Target End" typeId="0a66489f-30aa-417b-a75d-b945863366fd">
+    <name>Capabilities</name>
+    <display>Capabilities: Capability[*]</display>
+    <order>26</order>
+    <typeReference id="c5711083-9c90-4cb0-9429-9b4743063ee5">
+      <typeId>bc2527a3-bd77-4c15-9f2e-7c23786d30a2</typeId>
       <isNavigable>true</isNavigable>
       <isNullable>false</isNullable>
       <isCollection>true</isCollection>

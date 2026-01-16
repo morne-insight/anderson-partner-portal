@@ -14,5 +14,10 @@ namespace AndersonAPI.Domain.Entities
         public EntityState State { get; protected set; }
 
         public List<DomainEvent> DomainEvents { get; set; } = [];
+
+        public void SetState(EntityState state)
+        {
+            State = state;
+        }
     }
 }

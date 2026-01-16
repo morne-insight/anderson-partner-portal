@@ -25,7 +25,7 @@ namespace AndersonAPI.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("AndersonAPI.Domain.Entities.CompanyProfile", b =>
+            modelBuilder.Entity("AndersonAPI.Domain.Entities.Capability", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -35,11 +35,43 @@ namespace AndersonAPI.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
+
+                    b.Property<string>("State")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Capabilities");
+                });
+
+            modelBuilder.Entity("AndersonAPI.Domain.Entities.Company", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset>("CreatedDate")
+                        .HasColumnType("datetimeoffset");
+
                     b.Property<byte[]>("Embedding")
                         .HasColumnType("varbinary(max)");
 
                     b.Property<int>("EmployeeCount")
                         .HasColumnType("int");
+
+                    b.Property<string>("FullDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -53,6 +85,16 @@ namespace AndersonAPI.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("State")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("UpdatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset?>("UpdatedDate")
+                        .HasColumnType("datetimeoffset");
+
                     b.Property<string>("WebsiteUrl")
                         .IsRequired()
                         .HasMaxLength(200)
@@ -60,7 +102,377 @@ namespace AndersonAPI.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CompanyProfiles");
+                    b.ToTable("Companies");
+                });
+
+            modelBuilder.Entity("AndersonAPI.Domain.Entities.Country", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("RegionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("State")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RegionId");
+
+                    b.ToTable("Countries");
+                });
+
+            modelBuilder.Entity("AndersonAPI.Domain.Entities.Industry", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
+
+                    b.Property<string>("State")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Industries");
+                });
+
+            modelBuilder.Entity("AndersonAPI.Domain.Entities.Oppertunity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CompanyId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CountryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset>("CreatedDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<DateOnly?>("Deadline")
+                        .HasColumnType("date");
+
+                    b.Property<string>("FullDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("OppertunityTypeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ShortDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("State")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("UpdatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset?>("UpdatedDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("CountryId");
+
+                    b.HasIndex("OppertunityTypeId");
+
+                    b.ToTable("Oppertunities", t =>
+                        {
+                            t.HasCheckConstraint("oppertunity_status_check", "\"Status\" IN ('Open','Closed')");
+                        });
+                });
+
+            modelBuilder.Entity("AndersonAPI.Domain.Entities.OppertunityType", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
+
+                    b.Property<string>("State")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("OppertunityTypes");
+                });
+
+            modelBuilder.Entity("AndersonAPI.Domain.Entities.Region", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
+
+                    b.Property<string>("State")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Regions");
+                });
+
+            modelBuilder.Entity("AndersonAPI.Domain.Entities.Review", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ApplicationIdentityUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Comment")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset>("CreatedDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("ReviewerCompanyId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("State")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("UpdatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset?>("UpdatedDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationIdentityUserId");
+
+                    b.HasIndex("ReviewerCompanyId");
+
+                    b.ToTable("Reviews");
+                });
+
+            modelBuilder.Entity("AndersonAPI.Domain.Entities.ServiceType", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
+
+                    b.Property<string>("State")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ServiceTypes");
+                });
+
+            modelBuilder.Entity("ApplicationIdentityUserCompany", b =>
+                {
+                    b.Property<string>("ApplicationIdentityUsersId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<Guid>("CompanyId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ApplicationIdentityUsersId", "CompanyId");
+
+                    b.HasIndex("CompanyId");
+
+                    b.ToTable("CompanyApplicationIdentityUsers", (string)null);
+                });
+
+            modelBuilder.Entity("CapabilityCompany", b =>
+                {
+                    b.Property<Guid>("CapabilitiesId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CompanyId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("CapabilitiesId", "CompanyId");
+
+                    b.HasIndex("CompanyId");
+
+                    b.ToTable("CompanyCapabilities", (string)null);
+                });
+
+            modelBuilder.Entity("CapabilityOppertunity", b =>
+                {
+                    b.Property<Guid>("CapabilitiesId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("OppertunitiesId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("CapabilitiesId", "OppertunitiesId");
+
+                    b.HasIndex("OppertunitiesId");
+
+                    b.ToTable("OppertunityCapabilities", (string)null);
+                });
+
+            modelBuilder.Entity("CompanyIndustry", b =>
+                {
+                    b.Property<Guid>("CompanyId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("IndustriesId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("CompanyId", "IndustriesId");
+
+                    b.HasIndex("IndustriesId");
+
+                    b.ToTable("CompanyIndustries", (string)null);
+                });
+
+            modelBuilder.Entity("CompanyOppertunity", b =>
+                {
+                    b.Property<Guid>("InterestedPartnersId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("SavedOppertunitiesId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("InterestedPartnersId", "SavedOppertunitiesId");
+
+                    b.HasIndex("SavedOppertunitiesId");
+
+                    b.ToTable("OppertunityCompanies", (string)null);
+                });
+
+            modelBuilder.Entity("CompanyReview", b =>
+                {
+                    b.Property<Guid>("CompaniesId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ReviewsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("CompaniesId", "ReviewsId");
+
+                    b.HasIndex("ReviewsId");
+
+                    b.ToTable("ReviewCompanies", (string)null);
+                });
+
+            modelBuilder.Entity("CompanyServiceType", b =>
+                {
+                    b.Property<Guid>("CompanyId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ServiceTypesId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("CompanyId", "ServiceTypesId");
+
+                    b.HasIndex("ServiceTypesId");
+
+                    b.ToTable("CompanyServiceTypes", (string)null);
+                });
+
+            modelBuilder.Entity("IndustryOppertunity", b =>
+                {
+                    b.Property<Guid>("IndustriesId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("OppertunitiesId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("IndustriesId", "OppertunitiesId");
+
+                    b.HasIndex("OppertunitiesId");
+
+                    b.ToTable("OppertunityIndustries", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<string>", b =>
@@ -255,6 +667,21 @@ namespace AndersonAPI.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("OppertunityServiceType", b =>
+                {
+                    b.Property<Guid>("OppertunitiesId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ServiceTypesId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("OppertunitiesId", "ServiceTypesId");
+
+                    b.HasIndex("ServiceTypesId");
+
+                    b.ToTable("OppertunityServiceTypes", (string)null);
+                });
+
             modelBuilder.Entity("AndersonAPI.Domain.Entities.ApplicationIdentityUser", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser<string>");
@@ -273,6 +700,298 @@ namespace AndersonAPI.Infrastructure.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("AndersonAPI.Domain.Entities.Company", b =>
+                {
+                    b.OwnsMany("AndersonAPI.Domain.Entities.Contact", "Contacts", b1 =>
+                        {
+                            b1.Property<Guid>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<Guid>("CompanyId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<string>("CompanyPosition")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<Guid>("CreatedBy")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<DateTimeOffset>("CreatedDate")
+                                .HasColumnType("datetimeoffset");
+
+                            b1.Property<string>("EmailAddress")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("FirstName")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("LastName")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<int>("Order")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("State")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<Guid?>("UpdatedBy")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<DateTimeOffset?>("UpdatedDate")
+                                .HasColumnType("datetimeoffset");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("CompanyId");
+
+                            b1.ToTable("Contact");
+
+                            b1.WithOwner()
+                                .HasForeignKey("CompanyId");
+                        });
+
+                    b.OwnsMany("AndersonAPI.Domain.Entities.Location", "Locations", b1 =>
+                        {
+                            b1.Property<Guid>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<Guid>("CompanyId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<Guid>("CountryId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<bool>("IsHeadOffice")
+                                .HasColumnType("bit");
+
+                            b1.Property<string>("Name")
+                                .IsRequired()
+                                .HasMaxLength(200)
+                                .HasColumnType("nvarchar(200)");
+
+                            b1.Property<int>("Order")
+                                .HasColumnType("int");
+
+                            b1.Property<Guid>("RegionId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<string>("State")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("CompanyId");
+
+                            b1.HasIndex("CountryId");
+
+                            b1.HasIndex("RegionId");
+
+                            b1.ToTable("Location");
+
+                            b1.WithOwner()
+                                .HasForeignKey("CompanyId");
+
+                            b1.HasOne("AndersonAPI.Domain.Entities.Country", "Country")
+                                .WithMany()
+                                .HasForeignKey("CountryId")
+                                .OnDelete(DeleteBehavior.Restrict)
+                                .IsRequired();
+
+                            b1.HasOne("AndersonAPI.Domain.Entities.Region", "Region")
+                                .WithMany()
+                                .HasForeignKey("RegionId")
+                                .OnDelete(DeleteBehavior.Restrict)
+                                .IsRequired();
+
+                            b1.Navigation("Country");
+
+                            b1.Navigation("Region");
+                        });
+
+                    b.Navigation("Contacts");
+
+                    b.Navigation("Locations");
+                });
+
+            modelBuilder.Entity("AndersonAPI.Domain.Entities.Country", b =>
+                {
+                    b.HasOne("AndersonAPI.Domain.Entities.Region", null)
+                        .WithMany("Countries")
+                        .HasForeignKey("RegionId");
+                });
+
+            modelBuilder.Entity("AndersonAPI.Domain.Entities.Oppertunity", b =>
+                {
+                    b.HasOne("AndersonAPI.Domain.Entities.Company", "Company")
+                        .WithMany("Oppertunities")
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("AndersonAPI.Domain.Entities.Country", "Country")
+                        .WithMany()
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("AndersonAPI.Domain.Entities.OppertunityType", "OppertunityType")
+                        .WithMany()
+                        .HasForeignKey("OppertunityTypeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Company");
+
+                    b.Navigation("Country");
+
+                    b.Navigation("OppertunityType");
+                });
+
+            modelBuilder.Entity("AndersonAPI.Domain.Entities.Review", b =>
+                {
+                    b.HasOne("AndersonAPI.Domain.Entities.ApplicationIdentityUser", "ApplicationIdentityUser")
+                        .WithMany()
+                        .HasForeignKey("ApplicationIdentityUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("AndersonAPI.Domain.Entities.Company", "ReviewerCompany")
+                        .WithMany()
+                        .HasForeignKey("ReviewerCompanyId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("ApplicationIdentityUser");
+
+                    b.Navigation("ReviewerCompany");
+                });
+
+            modelBuilder.Entity("ApplicationIdentityUserCompany", b =>
+                {
+                    b.HasOne("AndersonAPI.Domain.Entities.ApplicationIdentityUser", null)
+                        .WithMany()
+                        .HasForeignKey("ApplicationIdentityUsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AndersonAPI.Domain.Entities.Company", null)
+                        .WithMany()
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("CapabilityCompany", b =>
+                {
+                    b.HasOne("AndersonAPI.Domain.Entities.Capability", null)
+                        .WithMany()
+                        .HasForeignKey("CapabilitiesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AndersonAPI.Domain.Entities.Company", null)
+                        .WithMany()
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("CapabilityOppertunity", b =>
+                {
+                    b.HasOne("AndersonAPI.Domain.Entities.Capability", null)
+                        .WithMany()
+                        .HasForeignKey("CapabilitiesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AndersonAPI.Domain.Entities.Oppertunity", null)
+                        .WithMany()
+                        .HasForeignKey("OppertunitiesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("CompanyIndustry", b =>
+                {
+                    b.HasOne("AndersonAPI.Domain.Entities.Company", null)
+                        .WithMany()
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AndersonAPI.Domain.Entities.Industry", null)
+                        .WithMany()
+                        .HasForeignKey("IndustriesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("CompanyOppertunity", b =>
+                {
+                    b.HasOne("AndersonAPI.Domain.Entities.Company", null)
+                        .WithMany()
+                        .HasForeignKey("InterestedPartnersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AndersonAPI.Domain.Entities.Oppertunity", null)
+                        .WithMany()
+                        .HasForeignKey("SavedOppertunitiesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("CompanyReview", b =>
+                {
+                    b.HasOne("AndersonAPI.Domain.Entities.Company", null)
+                        .WithMany()
+                        .HasForeignKey("CompaniesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AndersonAPI.Domain.Entities.Review", null)
+                        .WithMany()
+                        .HasForeignKey("ReviewsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("CompanyServiceType", b =>
+                {
+                    b.HasOne("AndersonAPI.Domain.Entities.Company", null)
+                        .WithMany()
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AndersonAPI.Domain.Entities.ServiceType", null)
+                        .WithMany()
+                        .HasForeignKey("ServiceTypesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("IndustryOppertunity", b =>
+                {
+                    b.HasOne("AndersonAPI.Domain.Entities.Industry", null)
+                        .WithMany()
+                        .HasForeignKey("IndustriesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AndersonAPI.Domain.Entities.Oppertunity", null)
+                        .WithMany()
+                        .HasForeignKey("OppertunitiesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -326,6 +1045,21 @@ namespace AndersonAPI.Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("OppertunityServiceType", b =>
+                {
+                    b.HasOne("AndersonAPI.Domain.Entities.Oppertunity", null)
+                        .WithMany()
+                        .HasForeignKey("OppertunitiesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AndersonAPI.Domain.Entities.ServiceType", null)
+                        .WithMany()
+                        .HasForeignKey("ServiceTypesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("AndersonAPI.Domain.Entities.ApplicationIdentityUser", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser<string>", null)
@@ -333,6 +1067,16 @@ namespace AndersonAPI.Infrastructure.Migrations
                         .HasForeignKey("AndersonAPI.Domain.Entities.ApplicationIdentityUser", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("AndersonAPI.Domain.Entities.Company", b =>
+                {
+                    b.Navigation("Oppertunities");
+                });
+
+            modelBuilder.Entity("AndersonAPI.Domain.Entities.Region", b =>
+                {
+                    b.Navigation("Countries");
                 });
 #pragma warning restore 612, 618
         }

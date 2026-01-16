@@ -14,6 +14,7 @@ namespace AndersonAPI.Domain.Entities
         private List<Contact> _contacts = [];
         private List<ApplicationIdentityUser> _applicationIdentityUsers = [];
         private List<Oppertunity> _oppertunities = [];
+        private List<Oppertunity> _savedOppertunities = [];
         private List<Review> _reviews = [];
         public Company(string name,
             string shortDescription,
@@ -22,7 +23,8 @@ namespace AndersonAPI.Domain.Entities
             int employeeCount,
             IEnumerable<Industry> industries,
             IEnumerable<Capability> capabilities,
-            IEnumerable<ServiceType> serviceTypes)
+            IEnumerable<ServiceType> serviceTypes,
+            EntityState state = EntityState.Enabled)
         {
             Name = name;
             ShortDescription = shortDescription;
@@ -32,15 +34,22 @@ namespace AndersonAPI.Domain.Entities
             _industries = new List<Industry>(industries);
             _capabilities = new List<Capability>(capabilities);
             _serviceTypes = new List<ServiceType>(serviceTypes);
+            State = state;
         }
 
-        public Company(string name, string shortDescription, string fullDescription, string websiteUrl, int employeeCount)
+        public Company(string name,
+            string shortDescription,
+            string fullDescription,
+            string websiteUrl,
+            int employeeCount,
+            EntityState state = EntityState.Enabled)
         {
             Name = name;
             ShortDescription = shortDescription;
             FullDescription = fullDescription;
             WebsiteUrl = websiteUrl;
             EmployeeCount = employeeCount;
+            State = state;
         }
         /// <summary>
         /// Required by Entity Framework.
@@ -113,6 +122,12 @@ namespace AndersonAPI.Domain.Entities
         {
             get => _oppertunities.AsReadOnly();
             private set => _oppertunities = new List<Oppertunity>(value);
+        }
+
+        public virtual IReadOnlyCollection<Oppertunity> SavedOppertunities
+        {
+            get => _savedOppertunities.AsReadOnly();
+            private set => _savedOppertunities = new List<Oppertunity>(value);
         }
 
         public void Update(string name, string shortDescription, string description, string websiteUrl, int employeeCount)

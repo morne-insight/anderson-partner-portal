@@ -14,7 +14,7 @@
   <childElements>
     <childElement id="6fa97e79-d69b-406b-aefd-16c6989e259d" type="Class Constructor" typeId="dec2bd12-4699-4f45-8ec9-3b62dc692d2b">
       <name>Constructor</name>
-      <display>Industry(name: string, description: string = "")</display>
+      <display>Industry(name: string, description: string = "", state: EntityState = EntityState.Enabled)</display>
       <isAbstract>false</isAbstract>
       <sort-children>by-type-then-manually</sort-children>
       <genericTypes />
@@ -90,6 +90,40 @@
             <mappedPath>
               <target id="9720508f-0266-4d5b-a633-167cda1bb98d" name="base" type="association" specialization="Generalization Target End" specializationId="4686cc1d-b4d8-4b99-b45b-f77bd5496946" />
               <target id="fa3009f6-24db-4102-86d7-3d1307028fd8" name="Description" type="element" specialization="Attribute" specializationId="0090fb93-483e-41af-a11d-5ad2dc796adf" />
+            </mappedPath>
+          </mappedClass>
+          <parentFolderId>6fa97e79-d69b-406b-aefd-16c6989e259d</parentFolderId>
+          <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+          <packageName>AndersonAPI.Domain</packageName>
+          <stereotypes />
+          <metadata />
+          <childElements />
+        </childElement>
+        <childElement id="ba52a979-7bd9-426b-8691-9a6adf2c23dc" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
+          <name>state</name>
+          <display>in : state: EntityState = EntityState.Enabled</display>
+          <isAbstract>false</isAbstract>
+          <value>EntityState.Enabled</value>
+          <genericTypes />
+          <typeReference id="9cc0ad69-00c1-4d05-bad7-f326f4f56dad">
+            <typeId>0b91d0c5-4aa0-4fd0-854a-7a10a9808b4d</typeId>
+            <isNavigable>true</isNavigable>
+            <isNullable>false</isNullable>
+            <isCollection>false</isCollection>
+            <isRequired>true</isRequired>
+            <typePackageName>AndersonAPI.Domain</typePackageName>
+            <typePackageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</typePackageId>
+            <stereotypes />
+            <genericTypeParameters />
+          </typeReference>
+          <isMapped>true</isMapped>
+          <mappedClass>
+            <mappingSettingsId>d6d0abfd-893c-4bec-92cb-419934ba5ba8</mappingSettingsId>
+            <autoSyncTypeReference>true</autoSyncTypeReference>
+            <mappedPath>
+              <target id="9720508f-0266-4d5b-a633-167cda1bb98d" name="base" type="association" specialization="Generalization Target End" specializationId="4686cc1d-b4d8-4b99-b45b-f77bd5496946" />
+              <target id="fc537b78-379d-4cc3-8f24-67772e8dc50d" name="base" type="association" specialization="Generalization Target End" specializationId="4686cc1d-b4d8-4b99-b45b-f77bd5496946" />
+              <target id="e7d98a52-57c9-410e-8128-8aca3ac31fbc" name="State" type="element" specialization="Attribute" specializationId="0090fb93-483e-41af-a11d-5ad2dc796adf" />
             </mappedPath>
           </mappedClass>
           <parentFolderId>6fa97e79-d69b-406b-aefd-16c6989e259d</parentFolderId>

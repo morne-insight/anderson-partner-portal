@@ -83,7 +83,7 @@
             <path>
               <target id="3e927715-656c-4eef-b1ca-01b028627764" name="Oppertunity" type="element" specialization="Class" specializationId="04e12b51-ed12-42a3-9667-a6aa81bb6d10" />
               <target id="50079345-9db0-4536-9170-2820b69b0b8f" name="SetServiceTypes" type="element" specialization="Operation" specializationId="e042bb67-a1df-480c-9935-b26210f78591" />
-              <target id="d9a4b789-2454-44f3-9260-5038ddd86cc0" name="serviceTypeIds" type="element" specialization="Parameter" specializationId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b" />
+              <target id="d9a4b789-2454-44f3-9260-5038ddd86cc0" name="serviceTypes" type="element" specialization="Parameter" specializationId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b" />
             </path>
             <sources>
               <source identifier="ServiceTypeIds" mappingType="Data Mapping" mappingTypeId="ca88649b-f20b-44db-a9c0-017c26155ba8">

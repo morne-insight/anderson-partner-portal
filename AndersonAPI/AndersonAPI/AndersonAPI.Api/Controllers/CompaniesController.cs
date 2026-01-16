@@ -14,6 +14,7 @@ using AndersonAPI.Application.Companies.SetCapabilitiesCompany;
 using AndersonAPI.Application.Companies.SetHeadOfficeCompany;
 using AndersonAPI.Application.Companies.SetIndustriesCompany;
 using AndersonAPI.Application.Companies.SetServiceTypesCompany;
+using AndersonAPI.Application.Companies.SetStateCompany;
 using AndersonAPI.Application.Companies.UpdateCompany;
 using AndersonAPI.Application.Companies.UpdateContactCompany;
 using AndersonAPI.Application.Companies.UpdateLocationCompany;
@@ -267,6 +268,35 @@ namespace AndersonAPI.Api.Controllers
         public async Task<ActionResult> SetServiceTypesCompany(
             [FromRoute] Guid id,
             [FromBody] SetServiceTypesCompanyCommand command,
+            CancellationToken cancellationToken = default)
+        {
+            if (command.Id == Guid.Empty)
+            {
+                command.Id = id;
+            }
+
+            if (id != command.Id)
+            {
+                return BadRequest();
+            }
+
+            await _mediator.Send(command, cancellationToken);
+            return NoContent();
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <response code="204">Successfully updated.</response>
+        /// <response code="400">One or more validation errors have occurred.</response>
+        /// <response code="404">One or more entities could not be found with the provided parameters.</response>
+        [HttpPut("api/companies/{id}/set-state")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> SetStateCompany(
+            [FromRoute] Guid id,
+            [FromBody] SetStateCompanyCommand command,
             CancellationToken cancellationToken = default)
         {
             if (command.Id == Guid.Empty)

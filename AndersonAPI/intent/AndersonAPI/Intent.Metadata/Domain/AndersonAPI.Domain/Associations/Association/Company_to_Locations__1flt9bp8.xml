@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<association id="849a62b3-f76e-4c40-bc43-a7e98ebb2286">
-  <sourceEnd id="2f10ac9a-4b77-485d-a3ed-6973573dea18" type="Association Source End" typeId="8d9d2e5b-bd55-4f36-9ae4-2b9e84fd4e58">
-    <name>CompanyProfiles</name>
-    <display>CompanyProfiles: Company[*]</display>
+<association id="96f5d114-906e-479b-b2cc-c70d42272f64">
+  <sourceEnd id="3c95ea16-941f-4756-bfe4-7a3c57063d3d" type="Association Source End" typeId="8d9d2e5b-bd55-4f36-9ae4-2b9e84fd4e58">
+    <name>Company</name>
+    <display>Company: Company</display>
     <order>0</order>
-    <typeReference id="cee67d67-015f-4d7a-bf1a-41e552350a6f">
+    <typeReference id="fc16718f-31ff-4a2f-97e0-f85dd806b270">
       <typeId>3259289c-5d51-46cb-8c99-78751b456c44</typeId>
       <isNavigable>false</isNavigable>
       <isNullable>false</isNullable>
-      <isCollection>true</isCollection>
+      <isCollection>false</isCollection>
       <isRequired>true</isRequired>
       <typePackageName>AndersonAPI.Domain</typePackageName>
       <typePackageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</typePackageId>
@@ -19,12 +19,12 @@
     <metadata />
     <childElements />
   </sourceEnd>
-  <targetEnd id="849a62b3-f76e-4c40-bc43-a7e98ebb2286" type="Association Target End" typeId="0a66489f-30aa-417b-a75d-b945863366fd">
-    <name>ServiceTypes</name>
-    <display>ServiceTypes: ServiceType[*]</display>
-    <order>27</order>
-    <typeReference id="faca5b33-c0f0-4f9d-ac5c-f76f1934623f">
-      <typeId>2858bc40-1a77-47e2-b6ea-8e09391a38d8</typeId>
+  <targetEnd id="96f5d114-906e-479b-b2cc-c70d42272f64" type="Association Target End" typeId="0a66489f-30aa-417b-a75d-b945863366fd">
+    <name>Locations</name>
+    <display>Locations: Location[*]</display>
+    <order>24</order>
+    <typeReference id="5d8ab85e-bf49-4949-b75b-32904c3c2d9a">
+      <typeId>93773201-e34f-4a1f-b82e-f3cedba6dbd1</typeId>
       <isNavigable>true</isNavigable>
       <isNullable>false</isNullable>
       <isCollection>true</isCollection>

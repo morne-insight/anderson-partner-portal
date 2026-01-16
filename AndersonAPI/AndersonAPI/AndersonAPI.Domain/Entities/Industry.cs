@@ -6,10 +6,11 @@ namespace AndersonAPI.Domain.Entities
 {
     public class Industry : BaseEntityList
     {
-        public Industry(string name, string description = "")
+        public Industry(string name, string description = "", EntityState state = EntityState.Enabled)
         {
             Name = name;
             Description = description;
+            State = state;
         }
 
         /// <summary>

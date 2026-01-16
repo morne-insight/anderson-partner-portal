@@ -8,10 +8,11 @@ namespace AndersonAPI.Domain.Entities
     {
         private List<Country> _countries = [];
 
-        public Region(string name, string description = "")
+        public Region(string name, string description = "", EntityState state = EntityState.Enabled)
         {
             Name = name;
             Description = description;
+            State = state;
         }
 
         /// <summary>

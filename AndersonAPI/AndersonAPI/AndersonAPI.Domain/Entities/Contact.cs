@@ -7,13 +7,19 @@ namespace AndersonAPI.Domain.Entities
 {
     public class Contact : BaseEntity, IAuditable
     {
-        public Contact(string firstName, string lastName, string? emailAddress, string? companyPosition, Guid companyId)
+        public Contact(string firstName,
+            string lastName,
+            string? emailAddress,
+            string? companyPosition,
+            Guid companyId,
+            EntityState state = EntityState.Enabled)
         {
             FirstName = firstName;
             LastName = lastName;
             EmailAddress = emailAddress;
             CompanyPosition = companyPosition;
             CompanyId = companyId;
+            State = state;
         }
 
         /// <summary>

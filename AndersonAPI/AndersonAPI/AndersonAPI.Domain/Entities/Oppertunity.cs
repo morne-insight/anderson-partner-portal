@@ -18,7 +18,8 @@ namespace AndersonAPI.Domain.Entities
             DateOnly? deadline,
             Guid oppertunityTypeId,
             Guid countryId,
-            Guid companyId)
+            Guid companyId,
+            EntityState state = EntityState.Enabled)
         {
             Title = title;
             ShortDescription = shortDescription;
@@ -27,6 +28,7 @@ namespace AndersonAPI.Domain.Entities
             OppertunityTypeId = oppertunityTypeId;
             CountryId = countryId;
             CompanyId = companyId;
+            State = state;
         }
 
         public Oppertunity(string title,
@@ -38,7 +40,8 @@ namespace AndersonAPI.Domain.Entities
             Guid companyId,
             IEnumerable<Guid> serviceTypes,
             IEnumerable<Guid> capabilities,
-            IEnumerable<Guid> industries)
+            IEnumerable<Guid> industries,
+            EntityState state = EntityState.Enabled)
         {
             Title = title;
             ShortDescription = shortDescription;
@@ -47,6 +50,7 @@ namespace AndersonAPI.Domain.Entities
             OppertunityTypeId = oppertunityTypeId;
             CountryId = countryId;
             CompanyId = companyId;
+            State = state;
         }
 
         /// <summary>

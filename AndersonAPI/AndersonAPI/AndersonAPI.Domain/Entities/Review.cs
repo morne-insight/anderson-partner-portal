@@ -9,12 +9,17 @@ namespace AndersonAPI.Domain.Entities
     {
         private List<Company> _companies = [];
 
-        public Review(string comment, int rating, string applicationIdentityUserId, Guid reviewerCompanyId)
+        public Review(string comment,
+            int rating,
+            string applicationIdentityUserId,
+            Guid reviewerCompanyId,
+            EntityState state = EntityState.Enabled)
         {
             Comment = comment;
             Rating = rating;
             ApplicationIdentityUserId = applicationIdentityUserId;
             ReviewerCompanyId = reviewerCompanyId;
+            State = state;
         }
         /// <summary>
         /// Required by Entity Framework.

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<association id="ccaef3c8-10de-4ef8-880a-335769dea5a5">
-  <sourceEnd id="c8bb6479-e082-4bbc-aea3-2a5afcf0d816" type="Association Source End" typeId="8d9d2e5b-bd55-4f36-9ae4-2b9e84fd4e58">
-    <name>CompanyProfiles</name>
-    <display>CompanyProfiles: Company[*]</display>
+<association id="ee35b477-4355-4b91-9740-fffa217261ab">
+  <sourceEnd id="9290b267-35b2-4d52-abb7-10bb485e03e0" type="Association Source End" typeId="8d9d2e5b-bd55-4f36-9ae4-2b9e84fd4e58">
+    <name>Company</name>
+    <display>Company: Company[*]?</display>
     <order>0</order>
-    <typeReference id="e40600dd-2e70-4da3-8ca6-12f34f4ac943">
+    <typeReference id="3227dfad-e3e4-46a9-86d7-7a200d2958a3">
       <typeId>3259289c-5d51-46cb-8c99-78751b456c44</typeId>
       <isNavigable>false</isNavigable>
-      <isNullable>false</isNullable>
+      <isNullable>true</isNullable>
       <isCollection>true</isCollection>
       <isRequired>true</isRequired>
       <typePackageName>AndersonAPI.Domain</typePackageName>
@@ -19,12 +19,12 @@
     <metadata />
     <childElements />
   </sourceEnd>
-  <targetEnd id="ccaef3c8-10de-4ef8-880a-335769dea5a5" type="Association Target End" typeId="0a66489f-30aa-417b-a75d-b945863366fd">
-    <name>Capabilities</name>
-    <display>Capabilities: Capability[*]</display>
-    <order>26</order>
-    <typeReference id="c5711083-9c90-4cb0-9429-9b4743063ee5">
-      <typeId>bc2527a3-bd77-4c15-9f2e-7c23786d30a2</typeId>
+  <targetEnd id="ee35b477-4355-4b91-9740-fffa217261ab" type="Association Target End" typeId="0a66489f-30aa-417b-a75d-b945863366fd">
+    <name>ApplicationIdentityUsers</name>
+    <display>ApplicationIdentityUsers: ApplicationIdentityUser[*]</display>
+    <order>29</order>
+    <typeReference id="15c13f31-553d-42ce-acef-4530177d14df">
+      <typeId>0cc17a59-dc32-4408-b0fc-d0814cb75815</typeId>
       <isNavigable>true</isNavigable>
       <isNullable>false</isNullable>
       <isCollection>true</isCollection>
