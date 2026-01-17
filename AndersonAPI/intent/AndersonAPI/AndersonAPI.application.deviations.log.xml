@@ -9,7 +9,7 @@
       <updatedByDisplayName>Morne</updatedByDisplayName>
       <updatedAt>2026-01-14T15:16:28.5766742Z</updatedAt>
       <deviationsHash>7B404A60B95A962A5E6D783B8080DF10E7C73762EA3D7E38ED3DD6686CC87BD8</deviationsHash>
-      <fileHash>5B70EBE5A84D6AD43A1EA53BBB7A3B1FD64252839D7D65F8C61ADE2498E0633E</fileHash>
+      <fileHash>88A9B972CE0ED71DEEC4B5B6411977D476F36DFC8BE0A027D3962C2685C4110D</fileHash>
     </file>
     <file>
       <correlationId>Intent.AspNetCore.Identity.AccountController.AccountController#0d6d45f7-7869-4975-9dad-9730556c530f</correlationId>
@@ -149,7 +149,7 @@
       <updatedByDisplayName>Morne</updatedByDisplayName>
       <updatedAt>2026-01-09T14:10:29.3288725Z</updatedAt>
       <deviationsHash>FE1B6922776643EAEE3B5C4F1B9B0323F0D9BF3718A7D2EB4D8C27154D935EE6</deviationsHash>
-      <fileHash>5CA2974903960B9CDEA5E45689D5211BB4FCB4B623678CF7527AD709B6B3B6A0</fileHash>
+      <fileHash>85DD8DBC96E67A0EE4E17D803969E9FF0E707E83C21EF946C8403AF0F613C227</fileHash>
     </file>
     <file>
       <correlationId>Intent.EntityFrameworkCore.EntityTypeConfiguration#3259289c-5d51-46cb-8c99-78751b456c44</correlationId>
@@ -160,6 +160,16 @@
       <updatedAt>2026-01-15T21:15:10.7037537Z</updatedAt>
       <deviationsHash>45E895E490A862A38FFC0A94C821CC56905A806E145F0790BD898885D87FDB8D</deviationsHash>
       <fileHash>86FF01DE458643FB71FB0D891ADB7046D6465A3F21D057FFDB07547CDEA19E16</fileHash>
+    </file>
+    <file>
+      <correlationId>Intent.EntityFrameworkCore.EntityTypeConfiguration#3e927715-656c-4eef-b1ca-01b028627764</correlationId>
+      <path>AndersonAPI.Infrastructure/Persistence/Configurations/OppertunityConfiguration.cs</path>
+      <count>1</count>
+      <updatedByAccountName>mvanzyl@insightconsulting.co.za</updatedByAccountName>
+      <updatedByDisplayName>Morne</updatedByDisplayName>
+      <updatedAt>2026-01-17T14:07:57.952567Z</updatedAt>
+      <deviationsHash>10BB95476E4EB5F5FA5799618BCD5E2AF86213EBF827DA17742A25AE9A40CB2A</deviationsHash>
+      <fileHash>63B640C1E06CBE08C43F0E8D14EB1D9BFF7447C56CD32F79BF3792B64667F169</fileHash>
     </file>
     <file>
       <correlationId>Intent.EntityFrameworkCore.Repositories.Repository#3259289c-5d51-46cb-8c99-78751b456c44</correlationId>

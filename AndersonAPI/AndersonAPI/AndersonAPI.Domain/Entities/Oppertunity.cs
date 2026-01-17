@@ -11,6 +11,7 @@ namespace AndersonAPI.Domain.Entities
         private List<Capability> _capabilities = [];
         private List<Industry> _industries = [];
         private List<Company> _interestedPartners = [];
+        private List<Message> _messages = [];
 
         public Oppertunity(string title,
             string shortDescription,
@@ -120,6 +121,12 @@ namespace AndersonAPI.Domain.Entities
 
         public virtual Company Company { get; private set; }
 
+        public virtual IReadOnlyCollection<Message> Messages
+        {
+            get => _messages.AsReadOnly();
+            private set => _messages = new List<Message>(value);
+        }
+
         public void Update(
             string title,
             string shortDescription,
@@ -225,6 +232,57 @@ namespace AndersonAPI.Domain.Entities
         public void SetStatus(OppertunityStatus status)
         {
             Status = status;
+        }
+
+        public void AddMessage(
+            Guid oppertunityId,
+            string content,
+            DateTimeOffset createdDate,
+            string createdByUser,
+            string? createdByPartner)
+        {
+            var message = new Message(oppertunityId, content, createdDate, createdByUser, createdByPartner);
+            _messages.Add(message);
+        }
+
+        public void UpdateMessage(Guid messageId, string content)
+        {
+            var message = _messages.FirstOrDefault(m => m.Id == messageId);
+
+            if (message == null)
+            {
+                throw new InvalidOperationException($"Message with ID '{messageId}' not found.");
+            }
+
+            // Get the last message ordered by CreatedDate
+            var lastMessage = _messages.OrderByDescending(m => m.CreatedDate).FirstOrDefault();
+
+            if (lastMessage == null || lastMessage.Id != messageId)
+            {
+                throw new InvalidOperationException("Only the most recent message can be updated.");
+            }
+
+            message.UpdateContent(content);
+        }
+
+        public void RemoveMessage(Guid id)
+        {
+            var message = _messages.FirstOrDefault(m => m.Id == id);
+
+            if (message == null)
+            {
+                throw new InvalidOperationException($"Message with ID '{id}' not found.");
+            }
+
+            // Get the last message ordered by CreatedDate
+            var lastMessage = _messages.OrderByDescending(m => m.CreatedDate).FirstOrDefault();
+
+            if (lastMessage == null || lastMessage.Id != id)
+            {
+                throw new InvalidOperationException("Only the most recent message can be updated.");
+            }
+
+            _messages.Remove(message);
         }
 
         void IAuditable.SetCreated(Guid createdBy, DateTimeOffset createdDate) => (CreatedBy, CreatedDate) = (createdBy, createdDate);

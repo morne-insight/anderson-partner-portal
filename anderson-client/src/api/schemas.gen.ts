@@ -64,6 +64,38 @@ export const AddLocationCompanyCommandSchema = {
     }
 } as const;
 
+export const AddMessageOppertunityCommandSchema = {
+    title: 'AddMessageOppertunityCommand',
+    required: [
+        'oppertunityId',
+        'content',
+        'createdDate',
+        'createdByUser',
+        'createdByPartner'
+    ],
+    type: 'object',
+    properties: {
+        oppertunityId: {
+            type: 'string',
+            format: 'uuid'
+        },
+        content: {
+            type: 'string'
+        },
+        createdDate: {
+            type: 'string',
+            format: 'date-time'
+        },
+        createdByUser: {
+            type: 'string'
+        },
+        createdByPartner: {
+            type: 'string',
+            nullable: true
+        }
+    }
+} as const;
+
 export const AndersonAPI_Api_Controllers_ResponseTypes_JsonResponse_Of_GuidSchema = {
     title: 'AndersonAPI.Api.Controllers.ResponseTypes.JsonResponse_Of_Guid',
     required: [
@@ -76,13 +108,6 @@ export const AndersonAPI_Api_Controllers_ResponseTypes_JsonResponse_Of_GuidSchem
             format: 'uuid'
         }
     }
-} as const;
-
-export const ByteArraySchema = {
-    title: 'ByteArray',
-    type: 'string',
-    format: 'byte',
-    nullable: true
 } as const;
 
 export const CapabilityDtoSchema = {
@@ -98,6 +123,54 @@ export const CapabilityDtoSchema = {
         id: {
             type: 'string',
             format: 'uuid'
+        },
+        order: {
+            type: 'integer',
+            format: 'int32'
+        }
+    }
+} as const;
+
+export const CompanyApplicationIdentityUserDtoSchema = {
+    title: 'CompanyApplicationIdentityUserDto',
+    type: 'object'
+} as const;
+
+export const CompanyCapabilityDtoSchema = {
+    title: 'CompanyCapabilityDto',
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string',
+            format: 'uuid'
+        },
+        name: {
+            type: 'string'
+        }
+    }
+} as const;
+
+export const CompanyContactDtoSchema = {
+    title: 'CompanyContactDto',
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string',
+            format: 'uuid'
+        },
+        firstName: {
+            type: 'string'
+        },
+        lastName: {
+            type: 'string'
+        },
+        emailAddress: {
+            type: 'string',
+            nullable: true
+        },
+        companyPosition: {
+            type: 'string',
+            nullable: true
         },
         order: {
             type: 'integer',
@@ -126,12 +199,162 @@ export const CompanyDtoSchema = {
             type: 'integer',
             format: 'int32'
         },
-        embedding: {
-            $ref: '#/components/schemas/ByteArray'
-        },
         id: {
             type: 'string',
             format: 'uuid'
+        },
+        order: {
+            type: 'integer',
+            format: 'int32'
+        }
+    }
+} as const;
+
+export const CompanyIndustryDtoSchema = {
+    title: 'CompanyIndustryDto',
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string',
+            format: 'uuid'
+        },
+        name: {
+            type: 'string'
+        }
+    }
+} as const;
+
+export const CompanyInviteDtoSchema = {
+    title: 'CompanyInviteDto',
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string',
+            format: 'uuid'
+        },
+        name: {
+            type: 'string'
+        },
+        email: {
+            type: 'string'
+        }
+    }
+} as const;
+
+export const CompanyLocationDtoSchema = {
+    title: 'CompanyLocationDto',
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string',
+            format: 'uuid'
+        },
+        name: {
+            type: 'string'
+        },
+        isHeadOffice: {
+            type: 'boolean'
+        },
+        regionId: {
+            type: 'string',
+            format: 'uuid'
+        },
+        countryId: {
+            type: 'string',
+            format: 'uuid'
+        },
+        order: {
+            type: 'integer',
+            format: 'int32'
+        }
+    }
+} as const;
+
+export const CompanyProfileDtoSchema = {
+    title: 'CompanyProfileDto',
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string',
+            format: 'uuid'
+        },
+        name: {
+            type: 'string'
+        },
+        shortDescription: {
+            type: 'string'
+        },
+        fullDescription: {
+            type: 'string'
+        },
+        websiteUrl: {
+            type: 'string'
+        },
+        employeeCount: {
+            type: 'integer',
+            format: 'int32'
+        },
+        applicationIdentityUsers: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/CompanyApplicationIdentityUserDto'
+            }
+        },
+        capabilities: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/CompanyCapabilityDto'
+            }
+        },
+        serviceTypes: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/CompanyServiceTypeDto'
+            }
+        },
+        industries: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/CompanyIndustryDto'
+            }
+        },
+        contacts: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/CompanyContactDto'
+            }
+        },
+        locations: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/CompanyLocationDto'
+            }
+        },
+        invites: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/CompanyInviteDto'
+            }
+        },
+        state: {
+            $ref: '#/components/schemas/EntityState'
+        }
+    }
+} as const;
+
+export const CompanyServiceTypeDtoSchema = {
+    title: 'CompanyServiceTypeDto',
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string',
+            format: 'uuid'
+        },
+        name: {
+            type: 'string'
+        },
+        description: {
+            type: 'string'
         },
         order: {
             type: 'integer',
@@ -398,6 +621,37 @@ export const CreateRegionCommandSchema = {
     }
 } as const;
 
+export const CreateReviewCommandSchema = {
+    title: 'CreateReviewCommand',
+    required: [
+        'comment',
+        'rating',
+        'applicationIdentityUserId',
+        'reviewerCompanyId',
+        'state'
+    ],
+    type: 'object',
+    properties: {
+        comment: {
+            type: 'string'
+        },
+        rating: {
+            type: 'integer',
+            format: 'int32'
+        },
+        applicationIdentityUserId: {
+            type: 'string'
+        },
+        reviewerCompanyId: {
+            type: 'string',
+            format: 'uuid'
+        },
+        state: {
+            $ref: '#/components/schemas/EntityState'
+        }
+    }
+} as const;
+
 export const CreateServiceTypeCommandSchema = {
     title: 'CreateServiceTypeCommand',
     required: [
@@ -426,6 +680,19 @@ export const ForgotPasswordDtoSchema = {
         email: {
             type: 'string',
             nullable: true
+        }
+    }
+} as const;
+
+export const GetPartnersByAIQuerySchema = {
+    title: 'GetPartnersByAIQuery',
+    required: [
+        'query'
+    ],
+    type: 'object',
+    properties: {
+        query: {
+            type: 'string'
         }
     }
 } as const;
@@ -462,6 +729,23 @@ export const InfoResponseDtoSchema = {
     }
 } as const;
 
+export const InterestedPartnerDtoSchema = {
+    title: 'InterestedPartnerDto',
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string',
+            format: 'uuid'
+        },
+        name: {
+            type: 'string'
+        },
+        websiteUrl: {
+            type: 'string'
+        }
+    }
+} as const;
+
 export const LoginDtoSchema = {
     title: 'LoginDto',
     type: 'object',
@@ -477,6 +761,20 @@ export const LoginDtoSchema = {
     }
 } as const;
 
+export const OppertunityCapabilityDtoSchema = {
+    title: 'OppertunityCapabilityDto',
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string',
+            format: 'uuid'
+        },
+        name: {
+            type: 'string'
+        }
+    }
+} as const;
+
 export const OppertunityDtoSchema = {
     title: 'OppertunityDto',
     type: 'object',
@@ -484,27 +782,17 @@ export const OppertunityDtoSchema = {
         title: {
             type: 'string'
         },
-        shortDescription: {
-            type: 'string'
-        },
         fullDescription: {
             type: 'string'
+        },
+        createdDate: {
+            type: 'string',
+            format: 'date-time'
         },
         deadline: {
             type: 'string',
             format: 'date',
             nullable: true
-        },
-        status: {
-            $ref: '#/components/schemas/OppertunityStatus'
-        },
-        oppertunityTypeId: {
-            type: 'string',
-            format: 'uuid'
-        },
-        countryId: {
-            type: 'string',
-            format: 'uuid'
         },
         companyId: {
             type: 'string',
@@ -517,6 +805,110 @@ export const OppertunityDtoSchema = {
         order: {
             type: 'integer',
             format: 'int32'
+        },
+        country: {
+            type: 'string'
+        },
+        oppertunityType: {
+            type: 'string'
+        },
+        interestedPartners: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/InterestedPartnerDto'
+            }
+        },
+        capabilities: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/OppertunityCapabilityDto'
+            }
+        },
+        industries: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/OppertunityIndustryDto'
+            }
+        },
+        serviceTypes: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/OppertunityServiceTypeDto'
+            }
+        }
+    }
+} as const;
+
+export const OppertunityIndustryDtoSchema = {
+    title: 'OppertunityIndustryDto',
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string',
+            format: 'uuid'
+        },
+        name: {
+            type: 'string'
+        }
+    }
+} as const;
+
+export const OppertunityListItemDtoSchema = {
+    title: 'OppertunityListItemDto',
+    type: 'object',
+    properties: {
+        title: {
+            type: 'string'
+        },
+        shortDescription: {
+            type: 'string'
+        },
+        createdDate: {
+            type: 'string',
+            format: 'date-time'
+        },
+        deadline: {
+            type: 'string',
+            format: 'date',
+            nullable: true
+        },
+        companyId: {
+            type: 'string',
+            format: 'uuid'
+        },
+        id: {
+            type: 'string',
+            format: 'uuid'
+        },
+        order: {
+            type: 'integer',
+            format: 'int32'
+        },
+        country: {
+            type: 'string'
+        },
+        oppertunityType: {
+            type: 'string'
+        },
+        interestedPartners: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/InterestedPartnerDto'
+            }
+        }
+    }
+} as const;
+
+export const OppertunityServiceTypeDtoSchema = {
+    title: 'OppertunityServiceTypeDto',
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string',
+            format: 'uuid'
+        },
+        name: {
+            type: 'string'
         }
     }
 } as const;
@@ -538,6 +930,282 @@ export const OppertunityTypeDtoSchema = {
         id: {
             type: 'string',
             format: 'uuid'
+        },
+        order: {
+            type: 'integer',
+            format: 'int32'
+        },
+        state: {
+            $ref: '#/components/schemas/EntityState'
+        }
+    }
+} as const;
+
+export const PartnerCapabilityDtoSchema = {
+    title: 'PartnerCapabilityDto',
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string',
+            format: 'uuid'
+        },
+        name: {
+            type: 'string'
+        }
+    }
+} as const;
+
+export const PartnerContactDtoSchema = {
+    title: 'PartnerContactDto',
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string',
+            format: 'uuid'
+        },
+        firstName: {
+            type: 'string'
+        },
+        lastName: {
+            type: 'string'
+        },
+        emailAddress: {
+            type: 'string',
+            nullable: true
+        },
+        companyPosition: {
+            type: 'string',
+            nullable: true
+        }
+    }
+} as const;
+
+export const PartnerIndustryDtoSchema = {
+    title: 'PartnerIndustryDto',
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string',
+            format: 'uuid'
+        },
+        name: {
+            type: 'string'
+        }
+    }
+} as const;
+
+export const PartnerLocationDtoSchema = {
+    title: 'PartnerLocationDto',
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string',
+            format: 'uuid'
+        },
+        name: {
+            type: 'string'
+        },
+        isHeadOffice: {
+            type: 'boolean'
+        },
+        regionId: {
+            type: 'string',
+            format: 'uuid'
+        },
+        countryId: {
+            type: 'string',
+            format: 'uuid'
+        }
+    }
+} as const;
+
+export const PartnerOppertunityDtoSchema = {
+    title: 'PartnerOppertunityDto',
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string',
+            format: 'uuid'
+        },
+        title: {
+            type: 'string'
+        },
+        shortDescription: {
+            type: 'string'
+        },
+        serviceTypes: {
+            type: 'array',
+            items: {
+                title: 'PartnerServiceTypeDto'
+            }
+        },
+        country: {
+            type: 'string'
+        },
+        deadline: {
+            type: 'string',
+            format: 'date',
+            nullable: true
+        },
+        status: {
+            $ref: '#/components/schemas/OppertunityStatus'
+        },
+        companyId: {
+            type: 'string',
+            format: 'uuid'
+        },
+        oppertunityType: {
+            type: 'string'
+        }
+    }
+} as const;
+
+export const PartnerProfileSchema = {
+    title: 'PartnerProfile',
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string',
+            format: 'uuid'
+        },
+        name: {
+            type: 'string'
+        },
+        fullDescription: {
+            type: 'string'
+        },
+        websiteUrl: {
+            type: 'string'
+        },
+        capabilities: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/PartnerCapabilityDto'
+            }
+        },
+        contacts: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/PartnerContactDto'
+            }
+        },
+        industries: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/PartnerIndustryDto'
+            }
+        },
+        locations: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/PartnerLocationDto'
+            }
+        },
+        serviceTypes: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/PartnerServiceTypeDto'
+            }
+        },
+        oppertunities: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/PartnerOppertunityDto'
+            }
+        },
+        reviews: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/PartnerReviewDto'
+            }
+        }
+    }
+} as const;
+
+export const PartnerProfileListItemSchema = {
+    title: 'PartnerProfileListItem',
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string',
+            format: 'uuid'
+        },
+        name: {
+            type: 'string'
+        },
+        shortDescription: {
+            type: 'string'
+        },
+        capabilities: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/PartnerCapabilityDto'
+            }
+        },
+        locations: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/PartnerLocationDto'
+            }
+        },
+        contacts: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/PartnerContactDto'
+            }
+        },
+        matchScore: {
+            type: 'integer',
+            format: 'int32'
+        }
+    }
+} as const;
+
+export const PartnerReviewDtoSchema = {
+    title: 'PartnerReviewDto',
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string',
+            format: 'uuid'
+        },
+        comment: {
+            type: 'string'
+        },
+        rating: {
+            type: 'integer',
+            format: 'int32'
+        },
+        applicationIdentityUserId: {
+            type: 'string'
+        },
+        reviewerCompanyId: {
+            type: 'string',
+            format: 'uuid'
+        },
+        order: {
+            type: 'integer',
+            format: 'int32'
+        },
+        state: {
+            $ref: '#/components/schemas/EntityState'
+        }
+    }
+} as const;
+
+export const PartnerServiceTypeDtoSchema = {
+    title: 'PartnerServiceTypeDto',
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string',
+            format: 'uuid'
+        },
+        name: {
+            type: 'string'
+        },
+        description: {
+            type: 'string'
         },
         order: {
             type: 'integer',
@@ -642,6 +1310,38 @@ export const ResetPasswordDtoSchema = {
         newPassword: {
             type: 'string',
             nullable: true
+        }
+    }
+} as const;
+
+export const ReviewDtoSchema = {
+    title: 'ReviewDto',
+    type: 'object',
+    properties: {
+        comment: {
+            type: 'string'
+        },
+        rating: {
+            type: 'integer',
+            format: 'int32'
+        },
+        applicationIdentityUserId: {
+            type: 'string'
+        },
+        reviewerCompanyId: {
+            type: 'string',
+            format: 'uuid'
+        },
+        id: {
+            type: 'string',
+            format: 'uuid'
+        },
+        order: {
+            type: 'integer',
+            format: 'int32'
+        },
+        state: {
+            $ref: '#/components/schemas/EntityState'
         }
     }
 } as const;
@@ -1294,6 +1994,29 @@ export const UpdateLocationCompanyCommandSchema = {
     }
 } as const;
 
+export const UpdateMessageOppertunityCommandSchema = {
+    title: 'UpdateMessageOppertunityCommand',
+    required: [
+        'id',
+        'messageId',
+        'content'
+    ],
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string',
+            format: 'uuid'
+        },
+        messageId: {
+            type: 'string',
+            format: 'uuid'
+        },
+        content: {
+            type: 'string'
+        }
+    }
+} as const;
+
 export const UpdateOppertunityCommandSchema = {
     title: 'UpdateOppertunityCommand',
     required: [
@@ -1376,6 +2099,29 @@ export const UpdateRegionCommandSchema = {
         },
         description: {
             type: 'string'
+        }
+    }
+} as const;
+
+export const UpdateReviewCommandSchema = {
+    title: 'UpdateReviewCommand',
+    required: [
+        'id',
+        'comment',
+        'rating'
+    ],
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string',
+            format: 'uuid'
+        },
+        comment: {
+            type: 'string'
+        },
+        rating: {
+            type: 'integer',
+            format: 'int32'
         }
     }
 } as const;

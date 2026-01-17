@@ -11,7 +11,13 @@ namespace AndersonAPI.Application.Oppertunities
     {
         public OppertunityDtoProfile()
         {
-            CreateMap<Oppertunity, OppertunityDto>();
+            CreateMap<Oppertunity, OppertunityDto>()
+                .ForMember(d => d.Country, opt => opt.MapFrom(src => src.Country.Name))
+                .ForMember(d => d.OppertunityType, opt => opt.MapFrom(src => src.OppertunityType.Name))
+                .ForMember(d => d.InterestedPartners, opt => opt.MapFrom(src => src.InterestedPartners))
+                .ForMember(d => d.Capabilities, opt => opt.MapFrom(src => src.Capabilities))
+                .ForMember(d => d.Industries, opt => opt.MapFrom(src => src.Industries))
+                .ForMember(d => d.ServiceTypes, opt => opt.MapFrom(src => src.ServiceTypes));
         }
     }
 

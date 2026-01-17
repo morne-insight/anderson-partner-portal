@@ -85,7 +85,42 @@ namespace AndersonAPI.Infrastructure.Persistence.Configurations
                 .HasForeignKey(x => x.CompanyId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            builder.OwnsMany(x => x.Messages, ConfigureMessages);
+
             builder.ToTable(tb => tb.HasCheckConstraint("oppertunity_status_check", $"\"Status\" IN ({string.Join(",", Enum.GetValues<OppertunityStatus>().Select(e => $"'{e}'"))})"));
+
+            builder.Ignore(e => e.DomainEvents);
+        }
+
+        [IntentManaged(Mode.Merge)]
+        public static void ConfigureMessages(OwnedNavigationBuilder<Oppertunity, Message> builder)
+        {
+            builder.WithOwner()
+                .HasForeignKey(x => x.OppertunityId);
+
+            builder.HasKey(x => x.Id);
+
+            builder.Property(x => x.Order)
+                .IsRequired();
+
+            builder.Property(x => x.State)
+                .IsRequired();
+
+            builder.Property(x => x.OppertunityId)
+                .IsRequired();
+
+            builder.Property(x => x.Content)
+                .IsRequired();
+
+            builder.Property(x => x.CreatedDate)
+                .IsRequired();
+
+            builder.Property(x => x.CreatedByUser)
+                .IsRequired()
+                .HasMaxLength(200);
+
+            builder.Property(x => x.CreatedByPartner)
+                .HasMaxLength(200);
 
             builder.Ignore(e => e.DomainEvents);
         }

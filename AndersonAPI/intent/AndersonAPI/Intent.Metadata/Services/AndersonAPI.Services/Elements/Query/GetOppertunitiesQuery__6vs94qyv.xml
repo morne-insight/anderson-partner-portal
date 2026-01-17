@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <class id="8dea5063-53c9-4321-9384-6d4e6ea4aff4" type="Query" typeId="e71b0662-e29d-4db2-868b-8a12464b25d0">
   <name>GetOppertunitiesQuery</name>
-  <display>GetOppertunitiesQuery: OppertunityDto[*]</display>
+  <display>GetOppertunitiesQuery: OppertunityListItemDto[*]</display>
   <isAbstract>false</isAbstract>
   <genericTypes />
   <typeReference id="05121ddf-9ea8-496b-9caf-06da9c3cb860">

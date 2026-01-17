@@ -27,16 +27,22 @@ export type AddLocationCompanyCommand = {
 };
 
 /**
+ * AddMessageOppertunityCommand
+ */
+export type AddMessageOppertunityCommand = {
+    oppertunityId: string;
+    content: string;
+    createdDate: Date;
+    createdByUser: string;
+    createdByPartner: string | null;
+};
+
+/**
  * AndersonAPI.Api.Controllers.ResponseTypes.JsonResponse_Of_Guid
  */
 export type AndersonApiApiControllersResponseTypesJsonResponseOfGuid = {
     value: string;
 };
-
-/**
- * ByteArray
- */
-export type ByteArray = string | null;
 
 /**
  * CapabilityDto
@@ -49,6 +55,33 @@ export type CapabilityDto = {
 };
 
 /**
+ * CompanyApplicationIdentityUserDto
+ */
+export type CompanyApplicationIdentityUserDto = {
+    [key: string]: unknown;
+};
+
+/**
+ * CompanyCapabilityDto
+ */
+export type CompanyCapabilityDto = {
+    id?: string;
+    name?: string;
+};
+
+/**
+ * CompanyContactDto
+ */
+export type CompanyContactDto = {
+    id?: string;
+    firstName?: string;
+    lastName?: string;
+    emailAddress?: string | null;
+    companyPosition?: string | null;
+    order?: number;
+};
+
+/**
  * CompanyDto
  */
 export type CompanyDto = {
@@ -57,8 +90,66 @@ export type CompanyDto = {
     fullDescription?: string;
     websiteUrl?: string;
     employeeCount?: number;
-    embedding?: ByteArray;
     id?: string;
+    order?: number;
+};
+
+/**
+ * CompanyIndustryDto
+ */
+export type CompanyIndustryDto = {
+    id?: string;
+    name?: string;
+};
+
+/**
+ * CompanyInviteDto
+ */
+export type CompanyInviteDto = {
+    id?: string;
+    name?: string;
+    email?: string;
+};
+
+/**
+ * CompanyLocationDto
+ */
+export type CompanyLocationDto = {
+    id?: string;
+    name?: string;
+    isHeadOffice?: boolean;
+    regionId?: string;
+    countryId?: string;
+    order?: number;
+};
+
+/**
+ * CompanyProfileDto
+ */
+export type CompanyProfileDto = {
+    id?: string;
+    name?: string;
+    shortDescription?: string;
+    fullDescription?: string;
+    websiteUrl?: string;
+    employeeCount?: number;
+    applicationIdentityUsers?: Array<CompanyApplicationIdentityUserDto>;
+    capabilities?: Array<CompanyCapabilityDto>;
+    serviceTypes?: Array<CompanyServiceTypeDto>;
+    industries?: Array<CompanyIndustryDto>;
+    contacts?: Array<CompanyContactDto>;
+    locations?: Array<CompanyLocationDto>;
+    invites?: Array<CompanyInviteDto>;
+    state?: EntityState;
+};
+
+/**
+ * CompanyServiceTypeDto
+ */
+export type CompanyServiceTypeDto = {
+    id?: string;
+    name?: string;
+    description?: string;
     order?: number;
     state?: EntityState;
 };
@@ -155,6 +246,17 @@ export type CreateRegionCommand = {
 };
 
 /**
+ * CreateReviewCommand
+ */
+export type CreateReviewCommand = {
+    comment: string;
+    rating: number;
+    applicationIdentityUserId: string;
+    reviewerCompanyId: string;
+    state: EntityState;
+};
+
+/**
  * CreateServiceTypeCommand
  */
 export type CreateServiceTypeCommand = {
@@ -169,6 +271,13 @@ export type EntityState = number;
  */
 export type ForgotPasswordDto = {
     email?: string | null;
+};
+
+/**
+ * GetPartnersByAIQuery
+ */
+export type GetPartnersByAiQuery = {
+    query: string;
 };
 
 /**
@@ -189,6 +298,15 @@ export type InfoResponseDto = {
 };
 
 /**
+ * InterestedPartnerDto
+ */
+export type InterestedPartnerDto = {
+    id?: string;
+    name?: string;
+    websiteUrl?: string;
+};
+
+/**
  * LoginDto
  */
 export type LoginDto = {
@@ -197,19 +315,62 @@ export type LoginDto = {
 };
 
 /**
+ * OppertunityCapabilityDto
+ */
+export type OppertunityCapabilityDto = {
+    id?: string;
+    name?: string;
+};
+
+/**
  * OppertunityDto
  */
 export type OppertunityDto = {
     title?: string;
-    shortDescription?: string;
     fullDescription?: string;
+    createdDate?: Date;
     deadline?: Date | null;
-    status?: OppertunityStatus;
-    oppertunityTypeId?: string;
-    countryId?: string;
     companyId?: string;
     id?: string;
     order?: number;
+    country?: string;
+    oppertunityType?: string;
+    interestedPartners?: Array<InterestedPartnerDto>;
+    capabilities?: Array<OppertunityCapabilityDto>;
+    industries?: Array<OppertunityIndustryDto>;
+    serviceTypes?: Array<OppertunityServiceTypeDto>;
+};
+
+/**
+ * OppertunityIndustryDto
+ */
+export type OppertunityIndustryDto = {
+    id?: string;
+    name?: string;
+};
+
+/**
+ * OppertunityListItemDto
+ */
+export type OppertunityListItemDto = {
+    title?: string;
+    shortDescription?: string;
+    createdDate?: Date;
+    deadline?: Date | null;
+    companyId?: string;
+    id?: string;
+    order?: number;
+    country?: string;
+    oppertunityType?: string;
+    interestedPartners?: Array<InterestedPartnerDto>;
+};
+
+/**
+ * OppertunityServiceTypeDto
+ */
+export type OppertunityServiceTypeDto = {
+    id?: string;
+    name?: string;
 };
 
 export type OppertunityStatus = number;
@@ -221,6 +382,113 @@ export type OppertunityTypeDto = {
     name?: string;
     description?: string;
     id?: string;
+    order?: number;
+    state?: EntityState;
+};
+
+/**
+ * PartnerCapabilityDto
+ */
+export type PartnerCapabilityDto = {
+    id?: string;
+    name?: string;
+};
+
+/**
+ * PartnerContactDto
+ */
+export type PartnerContactDto = {
+    id?: string;
+    firstName?: string;
+    lastName?: string;
+    emailAddress?: string | null;
+    companyPosition?: string | null;
+};
+
+/**
+ * PartnerIndustryDto
+ */
+export type PartnerIndustryDto = {
+    id?: string;
+    name?: string;
+};
+
+/**
+ * PartnerLocationDto
+ */
+export type PartnerLocationDto = {
+    id?: string;
+    name?: string;
+    isHeadOffice?: boolean;
+    regionId?: string;
+    countryId?: string;
+};
+
+/**
+ * PartnerOppertunityDto
+ */
+export type PartnerOppertunityDto = {
+    id?: string;
+    title?: string;
+    shortDescription?: string;
+    serviceTypes?: Array<unknown>;
+    country?: string;
+    deadline?: Date | null;
+    status?: OppertunityStatus;
+    companyId?: string;
+    oppertunityType?: string;
+};
+
+/**
+ * PartnerProfile
+ */
+export type PartnerProfile = {
+    id?: string;
+    name?: string;
+    fullDescription?: string;
+    websiteUrl?: string;
+    capabilities?: Array<PartnerCapabilityDto>;
+    contacts?: Array<PartnerContactDto>;
+    industries?: Array<PartnerIndustryDto>;
+    locations?: Array<PartnerLocationDto>;
+    serviceTypes?: Array<PartnerServiceTypeDto>;
+    oppertunities?: Array<PartnerOppertunityDto>;
+    reviews?: Array<PartnerReviewDto>;
+};
+
+/**
+ * PartnerProfileListItem
+ */
+export type PartnerProfileListItem = {
+    id?: string;
+    name?: string;
+    shortDescription?: string;
+    capabilities?: Array<PartnerCapabilityDto>;
+    locations?: Array<PartnerLocationDto>;
+    contacts?: Array<PartnerContactDto>;
+    matchScore?: number;
+};
+
+/**
+ * PartnerReviewDto
+ */
+export type PartnerReviewDto = {
+    id?: string;
+    comment?: string;
+    rating?: number;
+    applicationIdentityUserId?: string;
+    reviewerCompanyId?: string;
+    order?: number;
+    state?: EntityState;
+};
+
+/**
+ * PartnerServiceTypeDto
+ */
+export type PartnerServiceTypeDto = {
+    id?: string;
+    name?: string;
+    description?: string;
     order?: number;
     state?: EntityState;
 };
@@ -269,6 +537,19 @@ export type ResetPasswordDto = {
     email?: string | null;
     resetCode?: string | null;
     newPassword?: string | null;
+};
+
+/**
+ * ReviewDto
+ */
+export type ReviewDto = {
+    comment?: string;
+    rating?: number;
+    applicationIdentityUserId?: string;
+    reviewerCompanyId?: string;
+    id?: string;
+    order?: number;
+    state?: EntityState;
 };
 
 /**
@@ -518,6 +799,15 @@ export type UpdateLocationCompanyCommand = {
 };
 
 /**
+ * UpdateMessageOppertunityCommand
+ */
+export type UpdateMessageOppertunityCommand = {
+    id: string;
+    messageId: string;
+    content: string;
+};
+
+/**
  * UpdateOppertunityCommand
  */
 export type UpdateOppertunityCommand = {
@@ -546,6 +836,15 @@ export type UpdateRegionCommand = {
     id: string;
     name: string;
     description: string;
+};
+
+/**
+ * UpdateReviewCommand
+ */
+export type UpdateReviewCommand = {
+    id: string;
+    comment: string;
+    rating: number;
 };
 
 /**
@@ -1421,6 +1720,130 @@ export type PutApiCompaniesByIdSetStateResponses = {
 
 export type PutApiCompaniesByIdSetStateResponse = PutApiCompaniesByIdSetStateResponses[keyof PutApiCompaniesByIdSetStateResponses];
 
+export type GetApiCompaniesByIdProfileData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/companies/{id}/profile';
+};
+
+export type GetApiCompaniesByIdProfileErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type GetApiCompaniesByIdProfileError = GetApiCompaniesByIdProfileErrors[keyof GetApiCompaniesByIdProfileErrors];
+
+export type GetApiCompaniesByIdProfileResponses = {
+    /**
+     * OK
+     */
+    200: CompanyProfileDto;
+};
+
+export type GetApiCompaniesByIdProfileResponse = GetApiCompaniesByIdProfileResponses[keyof GetApiCompaniesByIdProfileResponses];
+
+export type GetApiCompaniesMeData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/companies/me';
+};
+
+export type GetApiCompaniesMeErrors = {
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type GetApiCompaniesMeError = GetApiCompaniesMeErrors[keyof GetApiCompaniesMeErrors];
+
+export type GetApiCompaniesMeResponses = {
+    /**
+     * OK
+     */
+    200: Array<CompanyProfileDto>;
+};
+
+export type GetApiCompaniesMeResponse = GetApiCompaniesMeResponses[keyof GetApiCompaniesMeResponses];
+
+export type GetApiCompaniesByIdPartnerData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/companies/{id}/partner';
+};
+
+export type GetApiCompaniesByIdPartnerErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type GetApiCompaniesByIdPartnerError = GetApiCompaniesByIdPartnerErrors[keyof GetApiCompaniesByIdPartnerErrors];
+
+export type GetApiCompaniesByIdPartnerResponses = {
+    /**
+     * OK
+     */
+    200: PartnerProfile;
+};
+
+export type GetApiCompaniesByIdPartnerResponse = GetApiCompaniesByIdPartnerResponses[keyof GetApiCompaniesByIdPartnerResponses];
+
+export type PutApiCompaniesPartnersData = {
+    body: GetPartnersByAiQuery;
+    path?: never;
+    query?: never;
+    url: '/api/companies/partners';
+};
+
+export type PutApiCompaniesPartnersErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type PutApiCompaniesPartnersError = PutApiCompaniesPartnersErrors[keyof PutApiCompaniesPartnersErrors];
+
+export type PutApiCompaniesPartnersResponses = {
+    /**
+     * OK
+     */
+    200: Array<PartnerProfileListItem>;
+};
+
+export type PutApiCompaniesPartnersResponse = PutApiCompaniesPartnersResponses[keyof PutApiCompaniesPartnersResponses];
+
 export type GetApiCountriesData = {
     body?: never;
     path?: never;
@@ -1805,6 +2228,33 @@ export type PutApiIndustriesByIdSetStateResponses = {
 
 export type PutApiIndustriesByIdSetStateResponse = PutApiIndustriesByIdSetStateResponses[keyof PutApiIndustriesByIdSetStateResponses];
 
+export type PostApiOppertunitiesMessageData = {
+    body: AddMessageOppertunityCommand;
+    path?: never;
+    query?: never;
+    url: '/api/oppertunities/message';
+};
+
+export type PostApiOppertunitiesMessageErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type PostApiOppertunitiesMessageError = PostApiOppertunitiesMessageErrors[keyof PostApiOppertunitiesMessageErrors];
+
+export type PostApiOppertunitiesMessageResponses = {
+    /**
+     * Created
+     */
+    201: unknown;
+};
+
 export type GetApiOppertunitiesData = {
     body?: never;
     path?: never;
@@ -1825,7 +2275,7 @@ export type GetApiOppertunitiesResponses = {
     /**
      * OK
      */
-    200: Array<OppertunityDto>;
+    200: Array<OppertunityListItemDto>;
 };
 
 export type GetApiOppertunitiesResponse = GetApiOppertunitiesResponses[keyof GetApiOppertunitiesResponses];
@@ -1961,6 +2411,76 @@ export type PutApiOppertunitiesByIdResponses = {
 };
 
 export type PutApiOppertunitiesByIdResponse = PutApiOppertunitiesByIdResponses[keyof PutApiOppertunitiesByIdResponses];
+
+export type DeleteApiOppertunitiesByIdMessageData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query: {
+        messageId: string;
+    };
+    url: '/api/oppertunities/{id}/message';
+};
+
+export type DeleteApiOppertunitiesByIdMessageErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type DeleteApiOppertunitiesByIdMessageError = DeleteApiOppertunitiesByIdMessageErrors[keyof DeleteApiOppertunitiesByIdMessageErrors];
+
+export type DeleteApiOppertunitiesByIdMessageResponses = {
+    /**
+     * OK
+     */
+    200: unknown;
+};
+
+export type PutApiOppertunitiesByIdMessageData = {
+    body: UpdateMessageOppertunityCommand;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/oppertunities/{id}/message';
+};
+
+export type PutApiOppertunitiesByIdMessageErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type PutApiOppertunitiesByIdMessageError = PutApiOppertunitiesByIdMessageErrors[keyof PutApiOppertunitiesByIdMessageErrors];
+
+export type PutApiOppertunitiesByIdMessageResponses = {
+    /**
+     * No Content
+     */
+    204: void;
+};
+
+export type PutApiOppertunitiesByIdMessageResponse = PutApiOppertunitiesByIdMessageResponses[keyof PutApiOppertunitiesByIdMessageResponses];
 
 export type PutApiOppertunitiesByIdCapabilitiesData = {
     body: SetCapabilitiesOppertunityCommand;
@@ -2590,6 +3110,163 @@ export type PutApiRegionsByIdSetStateResponses = {
 };
 
 export type PutApiRegionsByIdSetStateResponse = PutApiRegionsByIdSetStateResponses[keyof PutApiRegionsByIdSetStateResponses];
+
+export type GetApiReviewsData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/reviews';
+};
+
+export type GetApiReviewsErrors = {
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type GetApiReviewsError = GetApiReviewsErrors[keyof GetApiReviewsErrors];
+
+export type GetApiReviewsResponses = {
+    /**
+     * OK
+     */
+    200: Array<ReviewDto>;
+};
+
+export type GetApiReviewsResponse = GetApiReviewsResponses[keyof GetApiReviewsResponses];
+
+export type PostApiReviewsData = {
+    body: CreateReviewCommand;
+    path?: never;
+    query?: never;
+    url: '/api/reviews';
+};
+
+export type PostApiReviewsErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type PostApiReviewsError = PostApiReviewsErrors[keyof PostApiReviewsErrors];
+
+export type PostApiReviewsResponses = {
+    /**
+     * Created
+     */
+    201: AndersonApiApiControllersResponseTypesJsonResponseOfGuid;
+};
+
+export type PostApiReviewsResponse = PostApiReviewsResponses[keyof PostApiReviewsResponses];
+
+export type DeleteApiReviewsByIdData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/reviews/{id}';
+};
+
+export type DeleteApiReviewsByIdErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type DeleteApiReviewsByIdError = DeleteApiReviewsByIdErrors[keyof DeleteApiReviewsByIdErrors];
+
+export type DeleteApiReviewsByIdResponses = {
+    /**
+     * OK
+     */
+    200: unknown;
+};
+
+export type GetApiReviewsByIdData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/reviews/{id}';
+};
+
+export type GetApiReviewsByIdErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type GetApiReviewsByIdError = GetApiReviewsByIdErrors[keyof GetApiReviewsByIdErrors];
+
+export type GetApiReviewsByIdResponses = {
+    /**
+     * OK
+     */
+    200: ReviewDto;
+};
+
+export type GetApiReviewsByIdResponse = GetApiReviewsByIdResponses[keyof GetApiReviewsByIdResponses];
+
+export type PutApiReviewsByIdData = {
+    body: UpdateReviewCommand;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/reviews/{id}';
+};
+
+export type PutApiReviewsByIdErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type PutApiReviewsByIdError = PutApiReviewsByIdErrors[keyof PutApiReviewsByIdErrors];
+
+export type PutApiReviewsByIdResponses = {
+    /**
+     * No Content
+     */
+    204: void;
+};
+
+export type PutApiReviewsByIdResponse = PutApiReviewsByIdResponses[keyof PutApiReviewsByIdResponses];
 
 export type GetApiServiceTypesData = {
     body?: never;

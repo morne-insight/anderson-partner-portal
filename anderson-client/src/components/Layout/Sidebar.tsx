@@ -12,12 +12,14 @@ import {
   LogOut
 } from "lucide-react";
 import React, { useState } from "react";
+import { useAuth } from "../../contexts/auth-context";
 
 interface SidebarProps {
   isAdmin?: boolean;
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({ isAdmin }) => {
+  const { user, logout } = useAuth();
   const routerState = useRouterState();
   const currentPath = routerState.location.pathname;
 
@@ -82,7 +84,26 @@ export const Sidebar: React.FC<SidebarProps> = ({ isAdmin }) => {
       </nav>
 
       <div className="p-8 border-t border-gray-800">
-        {/* Settings ignored for this phase */}
+        {user && (
+          <div className="flex flex-col gap-6">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-full bg-red-600 flex items-center justify-center text-white font-bold text-xs ring-2 ring-black">
+                {user.email?.[0]?.toUpperCase()}
+              </div>
+              <div className="flex flex-col overflow-hidden">
+                <span className="text-sm font-medium text-white truncate w-40" title={user.email}>{user.email}</span>
+                <span className="text-[10px] text-gray-500 uppercase tracking-widest font-semibold">Partner</span>
+              </div>
+            </div>
+            <button
+              onClick={() => logout()}
+              className="flex items-center gap-3 text-gray-400 hover:text-red-500 transition-colors text-xs font-bold uppercase tracking-widest group"
+            >
+              <LogOut className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
+              Sign Out
+            </button>
+          </div>
+        )}
       </div>
     </aside>
   );

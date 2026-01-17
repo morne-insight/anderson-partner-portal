@@ -1,4 +1,3 @@
-using AndersonAPI.Domain;
 using Intent.RoslynWeaver.Attributes;
 
 [assembly: DefaultIntentManaged(Mode.Fully)]
@@ -11,45 +10,59 @@ namespace AndersonAPI.Application.Oppertunities
         public OppertunityDto()
         {
             Title = null!;
-            ShortDescription = null!;
             FullDescription = null!;
+            Country = null!;
+            OppertunityType = null!;
+            InterestedPartners = null!;
+            Capabilities = null!;
+            Industries = null!;
+            ServiceTypes = null!;
         }
 
         public string Title { get; set; }
-        public string ShortDescription { get; set; }
         public string FullDescription { get; set; }
+        public DateTimeOffset CreatedDate { get; set; }
         public DateOnly? Deadline { get; set; }
-        public OppertunityStatus Status { get; set; }
-        public Guid OppertunityTypeId { get; set; }
-        public Guid CountryId { get; set; }
         public Guid CompanyId { get; set; }
         public Guid Id { get; set; }
         public int Order { get; set; }
+        public string Country { get; set; }
+        public string OppertunityType { get; set; }
+        public List<InterestedPartnerDto> InterestedPartners { get; set; }
+        public List<OppertunityCapabilityDto> Capabilities { get; set; }
+        public List<OppertunityIndustryDto> Industries { get; set; }
+        public List<OppertunityServiceTypeDto> ServiceTypes { get; set; }
 
         public static OppertunityDto Create(
             string title,
-            string shortDescription,
             string fullDescription,
+            DateTimeOffset createdDate,
             DateOnly? deadline,
-            OppertunityStatus status,
-            Guid oppertunityTypeId,
-            Guid countryId,
             Guid companyId,
             Guid id,
-            int order)
+            int order,
+            string country,
+            string oppertunityType,
+            List<InterestedPartnerDto> interestedPartners,
+            List<OppertunityCapabilityDto> capabilities,
+            List<OppertunityIndustryDto> industries,
+            List<OppertunityServiceTypeDto> serviceTypes)
         {
             return new OppertunityDto
             {
                 Title = title,
-                ShortDescription = shortDescription,
                 FullDescription = fullDescription,
+                CreatedDate = createdDate,
                 Deadline = deadline,
-                Status = status,
-                OppertunityTypeId = oppertunityTypeId,
-                CountryId = countryId,
                 CompanyId = companyId,
                 Id = id,
-                Order = order
+                Order = order,
+                Country = country,
+                OppertunityType = oppertunityType,
+                InterestedPartners = interestedPartners,
+                Capabilities = capabilities,
+                Industries = industries,
+                ServiceTypes = serviceTypes
             };
         }
     }

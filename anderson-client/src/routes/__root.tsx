@@ -9,7 +9,6 @@ import {
 } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import NotFound from "@/components/NotFound";
-import Header from "../components/Header";
 import { AuthProvider } from "../contexts/auth-context";
 import appCss from "../styles.css?url";
 import "@/config/ts-client"; // Import global API configuration
@@ -52,7 +51,6 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       </head>
       <body>
         <AuthProvider>
-          <Header />
           {children}
         </AuthProvider>
         <TanStackDevtools

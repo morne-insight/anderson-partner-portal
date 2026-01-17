@@ -32,6 +32,7 @@ namespace AndersonAPI.Infrastructure.Persistence
         public DbSet<Company> Companies { get; set; }
         public DbSet<Country> Countries { get; set; }
         public DbSet<Industry> Industries { get; set; }
+        public DbSet<Invite> Invites { get; set; }
         public DbSet<Oppertunity> Oppertunities { get; set; }
         public DbSet<OppertunityType> OppertunityTypes { get; set; }
         public DbSet<Region> Regions { get; set; }
@@ -64,6 +65,7 @@ namespace AndersonAPI.Infrastructure.Persistence
             modelBuilder.ApplyConfiguration(new CompanyConfiguration());
             modelBuilder.ApplyConfiguration(new CountryConfiguration());
             modelBuilder.ApplyConfiguration(new IndustryConfiguration());
+            modelBuilder.ApplyConfiguration(new InviteConfiguration());
             modelBuilder.ApplyConfiguration(new OppertunityConfiguration());
             modelBuilder.ApplyConfiguration(new OppertunityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new RegionConfiguration());

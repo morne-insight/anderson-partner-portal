@@ -7,7 +7,7 @@ using MediatR;
 
 namespace AndersonAPI.Application.Oppertunities.GetOppertunities
 {
-    public class GetOppertunitiesQuery : IRequest<List<OppertunityDto>>, IQuery
+    public class GetOppertunitiesQuery : IRequest<List<OppertunityListItemDto>>, IQuery
     {
         public GetOppertunitiesQuery()
         {

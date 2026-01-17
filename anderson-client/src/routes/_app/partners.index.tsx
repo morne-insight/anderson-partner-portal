@@ -16,13 +16,22 @@ function PartnerSearch() {
 
   // Filter States
   const [showServiceDropdown, setShowServiceDropdown] = useState(false);
+  const [showRegionDropdown, setShowRegionDropdown] = useState(false);
   const [showCountryDropdown, setShowCountryDropdown] = useState(false);
   const [selectedCapabilities, setSelectedCapabilities] = useState<string[]>([]);
   const [selectedServiceType, setSelectedServiceType] = useState<string>("All");
   const [selectedCountry, setSelectedCountry] = useState<string>("All");
 
   const allServiceTypes = Array.from(new Set(MOCK_PARTNERS.map((p) => p.serviceType))).sort();
-  const allCountries = Array.from(new Set(MOCK_PARTNERS.flatMap((p) => p.locations.map((l) => l.country)))).sort();
+  const allRegions = ["Europe", "Africa", "North America", "Asia Pacific", "Latin America"];
+
+  const availableCountries = React.useMemo(() => {
+    const locations = MOCK_PARTNERS.flatMap((p) => p.locations);
+    const filteredLocations = activeRegionFilter === "All"
+      ? locations
+      : locations.filter((l) => l.region === activeRegionFilter);
+    return Array.from(new Set(filteredLocations.map((l) => l.country))).sort();
+  }, [activeRegionFilter]);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -168,8 +177,52 @@ function PartnerSearch() {
           <div className="relative">
             <button
               onClick={() => {
+                setShowRegionDropdown(!showRegionDropdown);
+                setShowServiceDropdown(false);
+                setShowCountryDropdown(false);
+              }}
+              className={`flex items-center gap-2 px-4 py-2 text-[10px] font-bold uppercase tracking-wider transition-colors border ${
+                activeRegionFilter !== "All"
+                  ? "bg-black text-white border-black"
+                  : "bg-white text-gray-900 border-gray-300 hover:border-gray-900"
+              }`}
+            >
+              Region: {activeRegionFilter} <ChevronDown className="w-3 h-3" />
+            </button>
+            {showRegionDropdown && (
+              <div className="absolute top-full left-0 mt-1 w-56 bg-white border border-gray-200 shadow-xl z-20 overflow-hidden">
+                <button
+                  onClick={() => {
+                    setActiveRegionFilter("All");
+                    setSelectedCountry("All"); // Reset country
+                    setShowRegionDropdown(false);
+                  }}
+                  className="w-full text-left px-4 py-3 text-xs hover:bg-gray-50 border-b"
+                >
+                  All Regions
+                </button>
+                {allRegions.map((region) => (
+                  <button
+                    key={region}
+                    onClick={() => {
+                      setActiveRegionFilter(region);
+                      setSelectedCountry("All"); // Reset country
+                      setShowRegionDropdown(false);
+                    }}
+                    className="w-full text-left px-4 py-3 text-xs hover:bg-gray-50 border-b last:border-0"
+                  >
+                    {region}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+          <div className="relative">
+            <button
+              onClick={() => {
                 setShowCountryDropdown(!showCountryDropdown);
                 setShowServiceDropdown(false);
+                setShowRegionDropdown(false);
               }}
               className={`flex items-center gap-2 px-4 py-2 text-[10px] font-bold uppercase tracking-wider transition-colors border ${
                 selectedCountry !== "All"
@@ -187,7 +240,7 @@ function PartnerSearch() {
                 >
                   All Countries
                 </button>
-                {allCountries.map((country) => (
+                {availableCountries.map((country) => (
                   <button
                     key={country}
                     onClick={() => handleCountrySelect(country)}
@@ -220,10 +273,13 @@ function PartnerSearch() {
 
       {/* Region Tabs */}
       <div className="flex gap-8 overflow-x-auto pb-0 border-b border-gray-200 no-scrollbar">
-        {["All", "Europe", "Africa", "North America", "Asia Pacific", "Latin America"].map((region) => (
+        {["All", ...allRegions].map((region) => (
           <button
             key={region}
-            onClick={() => setActiveRegionFilter(region)}
+            onClick={() => {
+              setActiveRegionFilter(region);
+              setSelectedCountry("All");
+            }}
             className={`pb-4 text-xs font-bold uppercase tracking-[0.1em] transition-colors whitespace-nowrap border-b-2 ${
               activeRegionFilter === region
                 ? "border-red-600 text-red-600"

@@ -1,10 +1,13 @@
+using System.ComponentModel.DataAnnotations;
 using System.Net.Mime;
 using AndersonAPI.Api.Controllers.ResponseTypes;
 using AndersonAPI.Application.Oppertunities;
+using AndersonAPI.Application.Oppertunities.AddMessageOppertunity;
 using AndersonAPI.Application.Oppertunities.CreateOppertunity;
 using AndersonAPI.Application.Oppertunities.DeleteOppertunity;
 using AndersonAPI.Application.Oppertunities.GetOppertunities;
 using AndersonAPI.Application.Oppertunities.GetOppertunityById;
+using AndersonAPI.Application.Oppertunities.RemoveMessageOppertunity;
 using AndersonAPI.Application.Oppertunities.SetCapabilitiesOppertunity;
 using AndersonAPI.Application.Oppertunities.SetIndustriesOppertunity;
 using AndersonAPI.Application.Oppertunities.SetInterestedPartnersOppertunity;
@@ -12,6 +15,7 @@ using AndersonAPI.Application.Oppertunities.SetServiceTypesOppertunity;
 using AndersonAPI.Application.Oppertunities.SetStateOppertunity;
 using AndersonAPI.Application.Oppertunities.SetStatusOppertunity;
 using AndersonAPI.Application.Oppertunities.UpdateFullOppertunity;
+using AndersonAPI.Application.Oppertunities.UpdateMessageOppertunity;
 using AndersonAPI.Application.Oppertunities.UpdateOppertunity;
 using Intent.RoslynWeaver.Attributes;
 using MediatR;
@@ -32,6 +36,22 @@ namespace AndersonAPI.Api.Controllers
         public OppertunitiesController(ISender mediator)
         {
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <response code="201">Successfully created.</response>
+        /// <response code="400">One or more validation errors have occurred.</response>
+        [HttpPost("api/oppertunities/message")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> AddMessageOppertunity(
+            [FromBody] AddMessageOppertunityCommand command,
+            CancellationToken cancellationToken = default)
+        {
+            await _mediator.Send(command, cancellationToken);
+            return Created(string.Empty, null);
         }
 
         /// <summary>
@@ -66,6 +86,25 @@ namespace AndersonAPI.Api.Controllers
             CancellationToken cancellationToken = default)
         {
             await _mediator.Send(new DeleteOppertunityCommand(id: id), cancellationToken);
+            return Ok();
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <response code="200">Successfully deleted.</response>
+        /// <response code="400">One or more validation errors have occurred.</response>
+        /// <response code="404">One or more entities could not be found with the provided parameters.</response>
+        [HttpDelete("api/oppertunities/{id}/message")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> RemoveMessageOppertunity(
+            [FromRoute] Guid id,
+            [FromQuery][Required] Guid messageId,
+            CancellationToken cancellationToken = default)
+        {
+            await _mediator.Send(new RemoveMessageOppertunityCommand(id: id, messageId: messageId), cancellationToken);
             return Ok();
         }
 
@@ -277,6 +316,35 @@ namespace AndersonAPI.Api.Controllers
         /// <response code="204">Successfully updated.</response>
         /// <response code="400">One or more validation errors have occurred.</response>
         /// <response code="404">One or more entities could not be found with the provided parameters.</response>
+        [HttpPut("api/oppertunities/{id}/message")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> UpdateMessageOppertunity(
+            [FromRoute] Guid id,
+            [FromBody] UpdateMessageOppertunityCommand command,
+            CancellationToken cancellationToken = default)
+        {
+            if (command.Id == Guid.Empty)
+            {
+                command.Id = id;
+            }
+
+            if (id != command.Id)
+            {
+                return BadRequest();
+            }
+
+            await _mediator.Send(command, cancellationToken);
+            return NoContent();
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <response code="204">Successfully updated.</response>
+        /// <response code="400">One or more validation errors have occurred.</response>
+        /// <response code="404">One or more entities could not be found with the provided parameters.</response>
         [HttpPut("api/oppertunities/{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -303,11 +371,11 @@ namespace AndersonAPI.Api.Controllers
 
         /// <summary>
         /// </summary>
-        /// <response code="200">Returns the specified List&lt;OppertunityDto&gt;.</response>
+        /// <response code="200">Returns the specified List&lt;OppertunityListItemDto&gt;.</response>
         [HttpGet("api/oppertunities")]
-        [ProducesResponseType(typeof(List<OppertunityDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(List<OppertunityListItemDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<List<OppertunityDto>>> GetOppertunities(CancellationToken cancellationToken = default)
+        public async Task<ActionResult<List<OppertunityListItemDto>>> GetOppertunities(CancellationToken cancellationToken = default)
         {
             var result = await _mediator.Send(new GetOppertunitiesQuery(), cancellationToken);
             return Ok(result);

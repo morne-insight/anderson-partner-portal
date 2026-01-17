@@ -22,7 +22,7 @@
   <targetEnd id="de1f8116-30f3-483c-9d99-b3111ee67249" type="Association Target End" typeId="0a66489f-30aa-417b-a75d-b945863366fd">
     <name>InterestedPartners</name>
     <display>InterestedPartners: Company[*]</display>
-    <order>27</order>
+    <order>30</order>
     <typeReference id="ddfb5894-54c1-4c03-bca6-e17f31edaadd">
       <typeId>3259289c-5d51-46cb-8c99-78751b456c44</typeId>
       <isNavigable>true</isNavigable>

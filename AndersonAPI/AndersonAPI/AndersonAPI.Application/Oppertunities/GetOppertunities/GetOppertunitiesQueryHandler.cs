@@ -8,7 +8,7 @@ using MediatR;
 namespace AndersonAPI.Application.Oppertunities.GetOppertunities
 {
     [IntentManaged(Mode.Merge, Signature = Mode.Fully)]
-    public class GetOppertunitiesQueryHandler : IRequestHandler<GetOppertunitiesQuery, List<OppertunityDto>>
+    public class GetOppertunitiesQueryHandler : IRequestHandler<GetOppertunitiesQuery, List<OppertunityListItemDto>>
     {
         private readonly IOppertunityRepository _oppertunityRepository;
 
@@ -19,9 +19,11 @@ namespace AndersonAPI.Application.Oppertunities.GetOppertunities
         }
 
         [IntentManaged(Mode.Fully, Body = Mode.Fully)]
-        public async Task<List<OppertunityDto>> Handle(GetOppertunitiesQuery request, CancellationToken cancellationToken)
+        public async Task<List<OppertunityListItemDto>> Handle(
+            GetOppertunitiesQuery request,
+            CancellationToken cancellationToken)
         {
-            var oppertunities = await _oppertunityRepository.FindAllProjectToAsync<OppertunityDto>(cancellationToken);
+            var oppertunities = await _oppertunityRepository.FindAllProjectToAsync<OppertunityListItemDto>(cancellationToken);
             return oppertunities;
         }
     }

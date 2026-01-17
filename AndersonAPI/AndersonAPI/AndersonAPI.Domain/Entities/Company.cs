@@ -15,6 +15,7 @@ namespace AndersonAPI.Domain.Entities
         private List<ApplicationIdentityUser> _applicationIdentityUsers = [];
         private List<Oppertunity> _oppertunities = [];
         private List<Oppertunity> _savedOppertunities = [];
+        private List<Invite> _invites = [];
         private List<Review> _reviews = [];
         public Company(string name,
             string shortDescription,
@@ -128,6 +129,12 @@ namespace AndersonAPI.Domain.Entities
         {
             get => _savedOppertunities.AsReadOnly();
             private set => _savedOppertunities = new List<Oppertunity>(value);
+        }
+
+        public virtual IReadOnlyCollection<Invite> Invites
+        {
+            get => _invites.AsReadOnly();
+            private set => _invites = new List<Invite>(value);
         }
 
         public void Update(string name, string shortDescription, string description, string websiteUrl, int employeeCount)
