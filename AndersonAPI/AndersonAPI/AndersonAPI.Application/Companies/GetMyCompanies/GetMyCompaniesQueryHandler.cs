@@ -24,7 +24,6 @@ namespace AndersonAPI.Application.Companies.GetMyCompanies
         [IntentManaged(Mode.Fully, Body = Mode.Fully)]
         public async Task<List<CompanyProfileDto>> Handle(GetMyCompaniesQuery request, CancellationToken cancellationToken)
         {
-            var currentUser = await _currentUserService.GetAsync();
             var companies = await _companyRepository.FindAllProjectToAsync<CompanyProfileDto>(cancellationToken);
             return companies;
         }

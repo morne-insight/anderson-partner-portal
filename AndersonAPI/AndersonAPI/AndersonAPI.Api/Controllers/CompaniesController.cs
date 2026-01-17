@@ -14,6 +14,7 @@ using AndersonAPI.Application.Companies.GetPartnerProfileById;
 using AndersonAPI.Application.Companies.GetPartnersByAI;
 using AndersonAPI.Application.Companies.RemoveContactCompany;
 using AndersonAPI.Application.Companies.RemoveLocationCompany;
+using AndersonAPI.Application.Companies.ScrapeWebsite;
 using AndersonAPI.Application.Companies.SetCapabilitiesCompany;
 using AndersonAPI.Application.Companies.SetHeadOfficeCompany;
 using AndersonAPI.Application.Companies.SetIndustriesCompany;
@@ -170,6 +171,22 @@ namespace AndersonAPI.Api.Controllers
         {
             await _mediator.Send(new RemoveLocationCompanyCommand(id: id, locationId: locationId), cancellationToken);
             return Ok();
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <response code="204">Successfully updated.</response>
+        /// <response code="400">One or more validation errors have occurred.</response>
+        [HttpPut("api/companies/scrape-website")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> ScrapeWebsite(
+            [FromBody] ScrapeWebsiteCommand command,
+            CancellationToken cancellationToken = default)
+        {
+            await _mediator.Send(command, cancellationToken);
+            return NoContent();
         }
 
         /// <summary>
