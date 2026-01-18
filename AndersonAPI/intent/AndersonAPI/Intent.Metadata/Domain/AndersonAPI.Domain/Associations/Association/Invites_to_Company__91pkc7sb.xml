@@ -3,7 +3,7 @@
   <sourceEnd id="d30e0569-1dc1-4876-9d4b-38bd89e0c913" type="Association Source End" typeId="8d9d2e5b-bd55-4f36-9ae4-2b9e84fd4e58">
     <name>Invites</name>
     <display>Invites: Invite[*]</display>
-    <order>33</order>
+    <order>35</order>
     <typeReference id="bf92e945-6020-43d4-bf87-30e1a5655d4f">
       <typeId>a94ef440-060b-4830-8152-8bb2cdbb98bb</typeId>
       <isNavigable>true</isNavigable>

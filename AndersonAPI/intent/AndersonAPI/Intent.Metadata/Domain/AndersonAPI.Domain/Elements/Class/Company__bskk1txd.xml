@@ -1821,5 +1821,99 @@
         </childElement>
       </childElements>
     </childElement>
+    <childElement id="01c91c2b-c77a-484f-9b28-f4a0951affbc" type="Operation" typeId="e042bb67-a1df-480c-9935-b26210f78591">
+      <name>AddUser</name>
+      <display>AddUser(user: ApplicationIdentityUser): void</display>
+      <isAbstract>false</isAbstract>
+      <sort-children>by-type-then-manually</sort-children>
+      <genericTypes />
+      <typeReference id="229c8707-1087-4ef2-8d19-9eaaccd9b244">
+        <isNavigable>true</isNavigable>
+        <isNullable>false</isNullable>
+        <isCollection>false</isCollection>
+        <isRequired>true</isRequired>
+        <stereotypes />
+        <genericTypeParameters />
+      </typeReference>
+      <isMapped>false</isMapped>
+      <parentFolderId>3259289c-5d51-46cb-8c99-78751b456c44</parentFolderId>
+      <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+      <packageName>AndersonAPI.Domain</packageName>
+      <stereotypes />
+      <metadata />
+      <childElements>
+        <childElement id="7cf95258-c64f-4f12-8c34-358a30420a9a" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
+          <name>user</name>
+          <display>in : user: ApplicationIdentityUser</display>
+          <isAbstract>false</isAbstract>
+          <genericTypes />
+          <typeReference id="c5715319-9645-4260-982d-9ae582bd2eb3">
+            <typeId>0cc17a59-dc32-4408-b0fc-d0814cb75815</typeId>
+            <isNavigable>true</isNavigable>
+            <isNullable>false</isNullable>
+            <isCollection>false</isCollection>
+            <isRequired>true</isRequired>
+            <typePackageName>AndersonAPI.Domain</typePackageName>
+            <typePackageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</typePackageId>
+            <stereotypes />
+            <genericTypeParameters />
+          </typeReference>
+          <isMapped>false</isMapped>
+          <parentFolderId>01c91c2b-c77a-484f-9b28-f4a0951affbc</parentFolderId>
+          <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+          <packageName>AndersonAPI.Domain</packageName>
+          <stereotypes />
+          <metadata />
+          <childElements />
+        </childElement>
+      </childElements>
+    </childElement>
+    <childElement id="11f53fec-a819-4799-bd05-1bab064c8599" type="Operation" typeId="e042bb67-a1df-480c-9935-b26210f78591">
+      <name>RemoveUser</name>
+      <display>RemoveUser(user: ApplicationIdentityUser): void</display>
+      <isAbstract>false</isAbstract>
+      <sort-children>by-type-then-manually</sort-children>
+      <genericTypes />
+      <typeReference id="34852d28-5177-416e-805f-d6d4c380320a">
+        <isNavigable>true</isNavigable>
+        <isNullable>false</isNullable>
+        <isCollection>false</isCollection>
+        <isRequired>true</isRequired>
+        <stereotypes />
+        <genericTypeParameters />
+      </typeReference>
+      <isMapped>false</isMapped>
+      <parentFolderId>3259289c-5d51-46cb-8c99-78751b456c44</parentFolderId>
+      <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+      <packageName>AndersonAPI.Domain</packageName>
+      <stereotypes />
+      <metadata />
+      <childElements>
+        <childElement id="326917d4-2129-41b5-801f-f19f10f22e42" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
+          <name>user</name>
+          <display>in : user: ApplicationIdentityUser</display>
+          <isAbstract>false</isAbstract>
+          <genericTypes />
+          <typeReference id="753dc8df-bda8-49dd-a3ba-3aa92b0007ed">
+            <typeId>0cc17a59-dc32-4408-b0fc-d0814cb75815</typeId>
+            <isNavigable>true</isNavigable>
+            <isNullable>false</isNullable>
+            <isCollection>false</isCollection>
+            <isRequired>true</isRequired>
+            <typePackageName>AndersonAPI.Domain</typePackageName>
+            <typePackageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</typePackageId>
+            <stereotypes />
+            <genericTypeParameters />
+          </typeReference>
+          <isMapped>false</isMapped>
+          <parentFolderId>11f53fec-a819-4799-bd05-1bab064c8599</parentFolderId>
+          <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+          <packageName>AndersonAPI.Domain</packageName>
+          <stereotypes />
+          <metadata />
+          <childElements />
+        </childElement>
+      </childElements>
+    </childElement>
   </childElements>
 </class>

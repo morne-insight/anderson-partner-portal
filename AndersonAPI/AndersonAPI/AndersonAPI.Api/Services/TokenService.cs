@@ -15,11 +15,13 @@ namespace AndersonAPI.Api.Services
     {
         private readonly IDataProtector _protector;
         private readonly IConfiguration _configuration;
+        private readonly ILogger<TokenService> _logger;
 
-        public TokenService(IConfiguration configuration, IDataProtectionProvider provider)
+        public TokenService(IConfiguration configuration, IDataProtectionProvider provider, ILogger<TokenService> logger)
         {
             _configuration = configuration;
             _protector = provider.CreateProtector("AndersonAPI.Api.Services.TokenService");
+            _logger = logger;
         }
 
         public (string Token, DateTime Expiry) GenerateAccessToken(string username, IList<Claim> claims)
@@ -41,9 +43,16 @@ namespace AndersonAPI.Api.Services
             }
 
             tokenClaims.AddRange(claims);
-            var signingKey = Convert.FromBase64String(_configuration.GetSection("JwtToken:SigningKey").Get<string>()!);
+            
+            var signingKeyBase64 = _configuration.GetSection("JwtToken:SigningKey").Get<string>()!;
+            _logger.LogInformation("Generating token with SigningKey (first 10 chars): {Key}", signingKeyBase64.Substring(0, Math.Min(10, signingKeyBase64.Length)));
+
+            var signingKey = Convert.FromBase64String(signingKeyBase64);
             var issuer = _configuration.GetSection("JwtToken:Issuer").Get<string>()!;
             var audience = _configuration.GetSection("JwtToken:Audience").Get<string>()!;
+
+            _logger.LogInformation("Token Issuer: {Issuer}, Audience: {Audience}", issuer, audience);
+
             var expires = DateTime.UtcNow.Add(_configuration.GetSection("JwtToken:AuthTokenExpiryTimeSpan").Get<TimeSpan?>() ?? TimeSpan.FromMinutes(120));
             var token = new JwtSecurityToken(
                 issuer: issuer,

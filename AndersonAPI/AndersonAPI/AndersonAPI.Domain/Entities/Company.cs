@@ -281,6 +281,16 @@ namespace AndersonAPI.Domain.Entities
             }
         }
 
+        public void AddUser(ApplicationIdentityUser user)
+        {
+            _applicationIdentityUsers.Add(user);
+        }
+
+        public void RemoveUser(ApplicationIdentityUser user)
+        {
+            _applicationIdentityUsers.RemoveAll(u => u.Id == user.Id);
+        }
+
         void IAuditable.SetCreated(Guid createdBy, DateTimeOffset createdDate) => (CreatedBy, CreatedDate) = (createdBy, createdDate);
 
         void IAuditable.SetUpdated(Guid updatedBy, DateTimeOffset updatedDate) => (UpdatedBy, UpdatedDate) = (updatedBy, updatedDate);

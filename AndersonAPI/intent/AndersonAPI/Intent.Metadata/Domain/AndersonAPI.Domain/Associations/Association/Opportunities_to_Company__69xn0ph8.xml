@@ -3,7 +3,7 @@
   <sourceEnd id="92b2ac98-6de4-4949-95a7-422eb4d8f1d4" type="Association Source End" typeId="8d9d2e5b-bd55-4f36-9ae4-2b9e84fd4e58">
     <name>Opportunities</name>
     <display>Opportunities: Opportunity[*]?</display>
-    <order>31</order>
+    <order>33</order>
     <typeReference id="4072d948-8752-4800-bf0c-54b73fc87bb0">
       <typeId>3e927715-656c-4eef-b1ca-01b028627764</typeId>
       <isNavigable>true</isNavigable>

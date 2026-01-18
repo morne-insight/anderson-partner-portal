@@ -1,3 +1,4 @@
+using AndersonAPI.Application.Common.Interfaces;
 using AndersonAPI.Domain.Repositories;
 using Intent.RoslynWeaver.Attributes;
 using MediatR;
@@ -11,11 +12,15 @@ namespace AndersonAPI.Application.Opportunities.GetMyOpportunities
     public class GetMyOpportunitiesQueryHandler : IRequestHandler<GetMyOpportunitiesQuery, List<OpportunityListItemDto>>
     {
         private readonly IOpportunityRepository _opportunityRepository;
+        private readonly ICurrentUserService _currentUserService;
+        private readonly ICompanyRepository _companyRepository;
 
         [IntentManaged(Mode.Merge)]
-        public GetMyOpportunitiesQueryHandler(IOpportunityRepository opportunityRepository)
+        public GetMyOpportunitiesQueryHandler(IOpportunityRepository opportunityRepository, ICurrentUserService currentUserService, ICompanyRepository companyRepository)
         {
             _opportunityRepository = opportunityRepository;
+            _currentUserService = currentUserService;
+            _companyRepository = companyRepository;
         }
 
         [IntentManaged(Mode.Fully, Body = Mode.Ignore)]
@@ -23,30 +28,29 @@ namespace AndersonAPI.Application.Opportunities.GetMyOpportunities
             GetMyOpportunitiesQuery request,
             CancellationToken cancellationToken)
         {
+            var user = await _currentUserService.GetAsync();
+            if (user == null) throw new UnauthorizedAccessException("The user is not authenticated");
 
-            // TODO: Implement code to get the current user's opportunities based on their linked companies.
+            var userId = user.Id;
 
-            throw new NotImplementedException();
-            //// Get the current user ID from the request context (will be populated by auth middleware)
-            //var userId = Guid.Parse("4A8CCC39-95C2-4F7A-B534-C0D166947E43"); // This would normally come from the ClaimsPrincipal
+            // Find all companies that the user is linked to
+            var companies = await _companyRepository
+                .FindAllAsync(c => c.ApplicationIdentityUsers.Any(u => u.Id == userId.ToString()), cancellationToken);
 
-            //// Find all companies that the user is linked to
-            //var companyIds = new List<Guid> { 
-            //    Guid.Parse("FC968C3A-B5F9-4F3F-9E6D-62FC53845625"),
-            //    Guid.Parse("D8A7F2F9-8A87-4D0A-9A45-28C44F20D602") 
-            //}; // This would normally come from a query to get the user's companies
+            // If no companies found, return empty list
+            if (companies == null || !companies.Any())
+            {
+                return new List<OpportunityListItemDto>();
+            }
 
-            //// If no companies found, return empty list
-            //if (!companyIds.Any())
-            //{
-            //    return new List<OpportunityListItemDto>();
-            //}
+            // Get the company IDs
+            var companyIds = companies.Select(c => c.Id).ToList();
 
-            //// Find all opportunities linked to those companies
-            //var opportunities = await _opportunityRepository.FindOpportunitiesByCompanyIdsProjectToAsync<OpportunityListItemDto>
-            //    (companyIds, cancellationToken);
+            // Find all opportunities linked to those companies
+            var opportunities = await _opportunityRepository
+                .FindAllProjectToAsync<OpportunityListItemDto>(o => companyIds.Contains(o.CompanyId), cancellationToken);
 
-            //return opportunities;
+            return opportunities;
         }
     }
 }
