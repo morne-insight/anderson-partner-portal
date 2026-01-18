@@ -21,13 +21,13 @@ namespace AndersonAPI.Application.Companies.GetMyCompanies
             _currentUserService = currentUserService;
         }
 
-        [IntentManaged(Mode.Fully, Body = Mode.Fully)]
+        [IntentManaged(Mode.Fully, Body = Mode.Ignore)]
         public async Task<List<CompanyProfileDto>> Handle(GetMyCompaniesQuery request, CancellationToken cancellationToken)
         {
             var currentUser = await _currentUserService.GetAsync();
             if (currentUser == null) throw new UnauthorizedAccessException("Current user is not authenticated.");
 
-            var companies = await _companyRepository.FindAllProjectToAsync<CompanyProfileDto>(x => x.CreatedBy ==  currentUser.Id, cancellationToken);
+            var companies = await _companyRepository.FindAllProjectToAsync<CompanyProfileDto>(x => x.CreatedBy == currentUser.Id, cancellationToken);
             return companies;
         }
     }

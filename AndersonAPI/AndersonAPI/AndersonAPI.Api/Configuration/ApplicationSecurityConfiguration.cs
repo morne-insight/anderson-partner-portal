@@ -17,7 +17,7 @@ namespace AndersonAPI.Api.Configuration
             this IServiceCollection services,
             IConfiguration configuration)
         {
-            services.AddScoped<ICurrentUserService, CurrentUserService>();
+            services.AddSingleton<ICurrentUserService, CurrentUserService>();
             JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
             services.AddHttpContextAccessor();
 
@@ -39,23 +39,6 @@ namespace AndersonAPI.Api.Configuration
 
                         options.TokenValidationParameters.RoleClaimType = "role";
                         options.SaveToken = true;
-
-                        options.Events = new JwtBearerEvents
-                        {
-                            OnAuthenticationFailed = context =>
-                            {
-                                var logger = context.HttpContext.RequestServices.GetRequiredService<ILogger<Program>>();
-                                logger.LogError(context.Exception, "Authentication failed");
-                                logger.LogError("Token: {Token}", context.Request.Headers.Authorization.ToString());
-                                return Task.CompletedTask;
-                            },
-                            OnTokenValidated = context =>
-                            {
-                                var logger = context.HttpContext.RequestServices.GetRequiredService<ILogger<Program>>();
-                                logger.LogInformation("Token validated successfully for user: {User}", context.Principal?.Identity?.Name);
-                                return Task.CompletedTask;
-                            }
-                        };
                     });
 
             services.AddAuthorization(ConfigureAuthorization);
