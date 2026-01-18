@@ -1804,6 +1804,78 @@
         }
       }
     },
+    "/api/companies/scrape-website": {
+      "put": {
+        "tags": [
+          "Companies"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ScrapeWebsiteCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ScrapeWebsiteCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ScrapeWebsiteCommand"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/companies/{id}/capabilities": {
       "put": {
         "tags": [
@@ -3675,26 +3747,26 @@
         }
       }
     },
-    "/api/oppertunities/message": {
+    "/api/opportunities/message": {
       "post": {
         "tags": [
-          "Oppertunities"
+          "Opportunities"
         ],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/AddMessageOppertunityCommand"
+                "$ref": "#/components/schemas/AddMessageOpportunityCommand"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/AddMessageOppertunityCommand"
+                "$ref": "#/components/schemas/AddMessageOpportunityCommand"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/AddMessageOppertunityCommand"
+                "$ref": "#/components/schemas/AddMessageOpportunityCommand"
               }
             }
           },
@@ -3747,26 +3819,26 @@
         }
       }
     },
-    "/api/oppertunities": {
+    "/api/opportunities": {
       "post": {
         "tags": [
-          "Oppertunities"
+          "Opportunities"
         ],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateOppertunityCommand"
+                "$ref": "#/components/schemas/CreateOpportunityCommand"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateOppertunityCommand"
+                "$ref": "#/components/schemas/CreateOpportunityCommand"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateOppertunityCommand"
+                "$ref": "#/components/schemas/CreateOpportunityCommand"
               }
             }
           },
@@ -3807,7 +3879,7 @@
       },
       "get": {
         "tags": [
-          "Oppertunities"
+          "Opportunities"
         ],
         "responses": {
           "200": {
@@ -3817,7 +3889,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/OppertunityListItemDto"
+                    "$ref": "#/components/schemas/OpportunityListItemDto"
                   }
                 }
               },
@@ -3825,7 +3897,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/OppertunityListItemDto"
+                    "$ref": "#/components/schemas/OpportunityListItemDto"
                   }
                 }
               },
@@ -3833,7 +3905,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/OppertunityListItemDto"
+                    "$ref": "#/components/schemas/OpportunityListItemDto"
                   }
                 }
               }
@@ -3862,10 +3934,10 @@
         }
       }
     },
-    "/api/oppertunities/{id}": {
+    "/api/opportunities/{id}": {
       "delete": {
         "tags": [
-          "Oppertunities"
+          "Opportunities"
         ],
         "parameters": [
           {
@@ -3946,7 +4018,7 @@
       },
       "put": {
         "tags": [
-          "Oppertunities"
+          "Opportunities"
         ],
         "parameters": [
           {
@@ -3963,17 +4035,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateOppertunityCommand"
+                "$ref": "#/components/schemas/UpdateOpportunityCommand"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateOppertunityCommand"
+                "$ref": "#/components/schemas/UpdateOpportunityCommand"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateOppertunityCommand"
+                "$ref": "#/components/schemas/UpdateOpportunityCommand"
               }
             }
           },
@@ -4047,7 +4119,7 @@
       },
       "get": {
         "tags": [
-          "Oppertunities"
+          "Opportunities"
         ],
         "parameters": [
           {
@@ -4066,17 +4138,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/OppertunityDto"
+                  "$ref": "#/components/schemas/OpportunityDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/OppertunityDto"
+                  "$ref": "#/components/schemas/OpportunityDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/OppertunityDto"
+                  "$ref": "#/components/schemas/OpportunityDto"
                 }
               }
             }
@@ -4144,10 +4216,10 @@
         }
       }
     },
-    "/api/oppertunities/{id}/message": {
+    "/api/opportunities/{id}/message": {
       "delete": {
         "tags": [
-          "Oppertunities"
+          "Opportunities"
         ],
         "parameters": [
           {
@@ -4237,7 +4309,7 @@
       },
       "put": {
         "tags": [
-          "Oppertunities"
+          "Opportunities"
         ],
         "parameters": [
           {
@@ -4254,17 +4326,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateMessageOppertunityCommand"
+                "$ref": "#/components/schemas/UpdateMessageOpportunityCommand"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateMessageOppertunityCommand"
+                "$ref": "#/components/schemas/UpdateMessageOpportunityCommand"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateMessageOppertunityCommand"
+                "$ref": "#/components/schemas/UpdateMessageOpportunityCommand"
               }
             }
           },
@@ -4337,10 +4409,10 @@
         }
       }
     },
-    "/api/oppertunities/{id}/capabilities": {
+    "/api/opportunities/{id}/capabilities": {
       "put": {
         "tags": [
-          "Oppertunities"
+          "Opportunities"
         ],
         "parameters": [
           {
@@ -4357,17 +4429,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/SetCapabilitiesOppertunityCommand"
+                "$ref": "#/components/schemas/SetCapabilitiesOpportunityCommand"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/SetCapabilitiesOppertunityCommand"
+                "$ref": "#/components/schemas/SetCapabilitiesOpportunityCommand"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/SetCapabilitiesOppertunityCommand"
+                "$ref": "#/components/schemas/SetCapabilitiesOpportunityCommand"
               }
             }
           },
@@ -4440,10 +4512,10 @@
         }
       }
     },
-    "/api/oppertunities/{id}/industries": {
+    "/api/opportunities/{id}/industries": {
       "put": {
         "tags": [
-          "Oppertunities"
+          "Opportunities"
         ],
         "parameters": [
           {
@@ -4460,17 +4532,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/SetIndustriesOppertunityCommand"
+                "$ref": "#/components/schemas/SetIndustriesOpportunityCommand"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/SetIndustriesOppertunityCommand"
+                "$ref": "#/components/schemas/SetIndustriesOpportunityCommand"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/SetIndustriesOppertunityCommand"
+                "$ref": "#/components/schemas/SetIndustriesOpportunityCommand"
               }
             }
           },
@@ -4543,10 +4615,10 @@
         }
       }
     },
-    "/api/oppertunities/{id}/interested-partners": {
+    "/api/opportunities/{id}/interested-partners": {
       "put": {
         "tags": [
-          "Oppertunities"
+          "Opportunities"
         ],
         "parameters": [
           {
@@ -4563,17 +4635,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/SetInterestedPartnersOppertunityCommand"
+                "$ref": "#/components/schemas/SetInterestedPartnersOpportunityCommand"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/SetInterestedPartnersOppertunityCommand"
+                "$ref": "#/components/schemas/SetInterestedPartnersOpportunityCommand"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/SetInterestedPartnersOppertunityCommand"
+                "$ref": "#/components/schemas/SetInterestedPartnersOpportunityCommand"
               }
             }
           },
@@ -4646,10 +4718,10 @@
         }
       }
     },
-    "/api/oppertunities/{id}/service-types": {
+    "/api/opportunities/{id}/service-types": {
       "put": {
         "tags": [
-          "Oppertunities"
+          "Opportunities"
         ],
         "parameters": [
           {
@@ -4666,17 +4738,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/SetServiceTypesOppertunityCommand"
+                "$ref": "#/components/schemas/SetServiceTypesOpportunityCommand"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/SetServiceTypesOppertunityCommand"
+                "$ref": "#/components/schemas/SetServiceTypesOpportunityCommand"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/SetServiceTypesOppertunityCommand"
+                "$ref": "#/components/schemas/SetServiceTypesOpportunityCommand"
               }
             }
           },
@@ -4749,10 +4821,10 @@
         }
       }
     },
-    "/api/oppertunities/{id}/set-state": {
+    "/api/opportunities/{id}/set-state": {
       "put": {
         "tags": [
-          "Oppertunities"
+          "Opportunities"
         ],
         "parameters": [
           {
@@ -4769,17 +4841,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/SetStateOppertunityCommand"
+                "$ref": "#/components/schemas/SetStateOpportunityCommand"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/SetStateOppertunityCommand"
+                "$ref": "#/components/schemas/SetStateOpportunityCommand"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/SetStateOppertunityCommand"
+                "$ref": "#/components/schemas/SetStateOpportunityCommand"
               }
             }
           },
@@ -4852,10 +4924,10 @@
         }
       }
     },
-    "/api/oppertunities/{id}/status": {
+    "/api/opportunities/{id}/status": {
       "put": {
         "tags": [
-          "Oppertunities"
+          "Opportunities"
         ],
         "parameters": [
           {
@@ -4872,17 +4944,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/SetStatusOppertunityCommand"
+                "$ref": "#/components/schemas/SetStatusOpportunityCommand"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/SetStatusOppertunityCommand"
+                "$ref": "#/components/schemas/SetStatusOpportunityCommand"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/SetStatusOppertunityCommand"
+                "$ref": "#/components/schemas/SetStatusOpportunityCommand"
               }
             }
           },
@@ -4955,10 +5027,10 @@
         }
       }
     },
-    "/api/oppertunities/{id}/full": {
+    "/api/opportunities/{id}/full": {
       "put": {
         "tags": [
-          "Oppertunities"
+          "Opportunities"
         ],
         "parameters": [
           {
@@ -4975,17 +5047,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateFullOppertunityCommand"
+                "$ref": "#/components/schemas/UpdateFullOpportunityCommand"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateFullOppertunityCommand"
+                "$ref": "#/components/schemas/UpdateFullOpportunityCommand"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateFullOppertunityCommand"
+                "$ref": "#/components/schemas/UpdateFullOpportunityCommand"
               }
             }
           },
@@ -5058,26 +5130,142 @@
         }
       }
     },
-    "/api/oppertunity-types": {
+    "/api/opportunities/me": {
+      "get": {
+        "tags": [
+          "Opportunities"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/OpportunityListItemDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/OpportunityListItemDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/OpportunityListItemDto"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/opportunities/saved": {
+      "get": {
+        "tags": [
+          "Opportunities"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/OpportunityListItemDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/OpportunityListItemDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/OpportunityListItemDto"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/opportunity-types": {
       "post": {
         "tags": [
-          "OppertunityTypes"
+          "OpportunityTypes"
         ],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateOppertunityTypeCommand"
+                "$ref": "#/components/schemas/CreateOpportunityTypeCommand"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateOppertunityTypeCommand"
+                "$ref": "#/components/schemas/CreateOpportunityTypeCommand"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateOppertunityTypeCommand"
+                "$ref": "#/components/schemas/CreateOpportunityTypeCommand"
               }
             }
           },
@@ -5118,7 +5306,7 @@
       },
       "get": {
         "tags": [
-          "OppertunityTypes"
+          "OpportunityTypes"
         ],
         "responses": {
           "200": {
@@ -5128,7 +5316,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/OppertunityTypeDto"
+                    "$ref": "#/components/schemas/OpportunityTypeDto"
                   }
                 }
               },
@@ -5136,7 +5324,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/OppertunityTypeDto"
+                    "$ref": "#/components/schemas/OpportunityTypeDto"
                   }
                 }
               },
@@ -5144,7 +5332,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/OppertunityTypeDto"
+                    "$ref": "#/components/schemas/OpportunityTypeDto"
                   }
                 }
               }
@@ -5173,10 +5361,10 @@
         }
       }
     },
-    "/api/oppertunity-types/{id}": {
+    "/api/opportunity-types/{id}": {
       "delete": {
         "tags": [
-          "OppertunityTypes"
+          "OpportunityTypes"
         ],
         "parameters": [
           {
@@ -5257,7 +5445,7 @@
       },
       "put": {
         "tags": [
-          "OppertunityTypes"
+          "OpportunityTypes"
         ],
         "parameters": [
           {
@@ -5274,17 +5462,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateOppertunityTypeCommand"
+                "$ref": "#/components/schemas/UpdateOpportunityTypeCommand"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateOppertunityTypeCommand"
+                "$ref": "#/components/schemas/UpdateOpportunityTypeCommand"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateOppertunityTypeCommand"
+                "$ref": "#/components/schemas/UpdateOpportunityTypeCommand"
               }
             }
           },
@@ -5358,7 +5546,7 @@
       },
       "get": {
         "tags": [
-          "OppertunityTypes"
+          "OpportunityTypes"
         ],
         "parameters": [
           {
@@ -5377,17 +5565,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/OppertunityTypeDto"
+                  "$ref": "#/components/schemas/OpportunityTypeDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/OppertunityTypeDto"
+                  "$ref": "#/components/schemas/OpportunityTypeDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/OppertunityTypeDto"
+                  "$ref": "#/components/schemas/OpportunityTypeDto"
                 }
               }
             }
@@ -5455,10 +5643,10 @@
         }
       }
     },
-    "/api/oppertunity-types/{id}/set-state": {
+    "/api/opportunity-types/{id}/set-state": {
       "put": {
         "tags": [
-          "OppertunityTypes"
+          "OpportunityTypes"
         ],
         "parameters": [
           {
@@ -5475,17 +5663,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/SetStateOppertunityTypeCommand"
+                "$ref": "#/components/schemas/SetStateOpportunityTypeCommand"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/SetStateOppertunityTypeCommand"
+                "$ref": "#/components/schemas/SetStateOpportunityTypeCommand"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/SetStateOppertunityTypeCommand"
+                "$ref": "#/components/schemas/SetStateOpportunityTypeCommand"
               }
             }
           },
@@ -7020,10 +7208,10 @@
           }
         }
       },
-      "AddMessageOppertunityCommand": {
-        "title": "AddMessageOppertunityCommand",
+      "AddMessageOpportunityCommand": {
+        "title": "AddMessageOpportunityCommand",
         "required": [
-          "oppertunityId",
+          "opportunityId",
           "content",
           "createdDate",
           "createdByUser",
@@ -7031,7 +7219,7 @@
         ],
         "type": "object",
         "properties": {
-          "oppertunityId": {
+          "opportunityId": {
             "type": "string",
             "format": "uuid"
           },
@@ -7459,14 +7647,14 @@
           }
         }
       },
-      "CreateOppertunityCommand": {
-        "title": "CreateOppertunityCommand",
+      "CreateOpportunityCommand": {
+        "title": "CreateOpportunityCommand",
         "required": [
           "title",
           "shortDescription",
           "fullDescription",
           "deadline",
-          "oppertunityTypeId",
+          "opportunityTypeId",
           "countryId",
           "serviceTypes",
           "capabilities",
@@ -7489,7 +7677,7 @@
             "format": "date",
             "nullable": true
           },
-          "oppertunityTypeId": {
+          "opportunityTypeId": {
             "type": "string",
             "format": "uuid"
           },
@@ -7524,8 +7712,8 @@
           }
         }
       },
-      "CreateOppertunityTypeCommand": {
-        "title": "CreateOppertunityTypeCommand",
+      "CreateOpportunityTypeCommand": {
+        "title": "CreateOpportunityTypeCommand",
         "required": [
           "name",
           "description"
@@ -7687,8 +7875,8 @@
           }
         }
       },
-      "OppertunityCapabilityDto": {
-        "title": "OppertunityCapabilityDto",
+      "OpportunityCapabilityDto": {
+        "title": "OpportunityCapabilityDto",
         "type": "object",
         "properties": {
           "id": {
@@ -7700,8 +7888,8 @@
           }
         }
       },
-      "OppertunityDto": {
-        "title": "OppertunityDto",
+      "OpportunityDto": {
+        "title": "OpportunityDto",
         "type": "object",
         "properties": {
           "title": {
@@ -7734,7 +7922,7 @@
           "country": {
             "type": "string"
           },
-          "oppertunityType": {
+          "opportunityType": {
             "type": "string"
           },
           "interestedPartners": {
@@ -7746,25 +7934,28 @@
           "capabilities": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/OppertunityCapabilityDto"
+              "$ref": "#/components/schemas/OpportunityCapabilityDto"
             }
           },
           "industries": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/OppertunityIndustryDto"
+              "$ref": "#/components/schemas/OpportunityIndustryDto"
             }
           },
           "serviceTypes": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/OppertunityServiceTypeDto"
+              "$ref": "#/components/schemas/OpportunityServiceTypeDto"
             }
+          },
+          "status": {
+            "$ref": "#/components/schemas/OpportunityStatus"
           }
         }
       },
-      "OppertunityIndustryDto": {
-        "title": "OppertunityIndustryDto",
+      "OpportunityIndustryDto": {
+        "title": "OpportunityIndustryDto",
         "type": "object",
         "properties": {
           "id": {
@@ -7776,8 +7967,8 @@
           }
         }
       },
-      "OppertunityListItemDto": {
-        "title": "OppertunityListItemDto",
+      "OpportunityListItemDto": {
+        "title": "OpportunityListItemDto",
         "type": "object",
         "properties": {
           "title": {
@@ -7799,6 +7990,9 @@
             "type": "string",
             "format": "uuid"
           },
+          "companyName": {
+            "type": "string"
+          },
           "id": {
             "type": "string",
             "format": "uuid"
@@ -7810,7 +8004,7 @@
           "country": {
             "type": "string"
           },
-          "oppertunityType": {
+          "opportunityTypeString": {
             "type": "string"
           },
           "interestedPartners": {
@@ -7818,11 +8012,17 @@
             "items": {
               "$ref": "#/components/schemas/InterestedPartnerDto"
             }
+          },
+          "capabilities": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OpportunityCapabilityDto"
+            }
           }
         }
       },
-      "OppertunityServiceTypeDto": {
-        "title": "OppertunityServiceTypeDto",
+      "OpportunityServiceTypeDto": {
+        "title": "OpportunityServiceTypeDto",
         "type": "object",
         "properties": {
           "id": {
@@ -7834,11 +8034,11 @@
           }
         }
       },
-      "OppertunityStatus": {
+      "OpportunityStatus": {
         "type": "integer"
       },
-      "OppertunityTypeDto": {
-        "title": "OppertunityTypeDto",
+      "OpportunityTypeDto": {
+        "title": "OpportunityTypeDto",
         "type": "object",
         "properties": {
           "name": {
@@ -7934,8 +8134,8 @@
           }
         }
       },
-      "PartnerOppertunityDto": {
-        "title": "PartnerOppertunityDto",
+      "PartnerOpportunityDto": {
+        "title": "PartnerOpportunityDto",
         "type": "object",
         "properties": {
           "id": {
@@ -7963,13 +8163,13 @@
             "nullable": true
           },
           "status": {
-            "$ref": "#/components/schemas/OppertunityStatus"
+            "$ref": "#/components/schemas/OpportunityStatus"
           },
           "companyId": {
             "type": "string",
             "format": "uuid"
           },
-          "oppertunityType": {
+          "opportunityType": {
             "type": "string"
           }
         }
@@ -8021,10 +8221,10 @@
               "$ref": "#/components/schemas/PartnerServiceTypeDto"
             }
           },
-          "oppertunities": {
+          "opportunities": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/PartnerOppertunityDto"
+              "$ref": "#/components/schemas/PartnerOpportunityDto"
             }
           },
           "reviews": {
@@ -8250,6 +8450,18 @@
           }
         }
       },
+      "ScrapeWebsiteCommand": {
+        "title": "ScrapeWebsiteCommand",
+        "required": [
+          "url"
+        ],
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string"
+          }
+        }
+      },
       "ServiceTypeDto": {
         "title": "ServiceTypeDto",
         "type": "object",
@@ -8294,8 +8506,8 @@
           }
         }
       },
-      "SetCapabilitiesOppertunityCommand": {
-        "title": "SetCapabilitiesOppertunityCommand",
+      "SetCapabilitiesOpportunityCommand": {
+        "title": "SetCapabilitiesOpportunityCommand",
         "required": [
           "id",
           "capabilityIds"
@@ -8354,8 +8566,8 @@
           }
         }
       },
-      "SetIndustriesOppertunityCommand": {
-        "title": "SetIndustriesOppertunityCommand",
+      "SetIndustriesOpportunityCommand": {
+        "title": "SetIndustriesOpportunityCommand",
         "required": [
           "id",
           "industryIds"
@@ -8375,8 +8587,8 @@
           }
         }
       },
-      "SetInterestedPartnersOppertunityCommand": {
-        "title": "SetInterestedPartnersOppertunityCommand",
+      "SetInterestedPartnersOpportunityCommand": {
+        "title": "SetInterestedPartnersOpportunityCommand",
         "required": [
           "id",
           "companyIds"
@@ -8417,8 +8629,8 @@
           }
         }
       },
-      "SetServiceTypesOppertunityCommand": {
-        "title": "SetServiceTypesOppertunityCommand",
+      "SetServiceTypesOpportunityCommand": {
+        "title": "SetServiceTypesOpportunityCommand",
         "required": [
           "id",
           "serviceTypeIds"
@@ -8506,8 +8718,8 @@
           }
         }
       },
-      "SetStateOppertunityCommand": {
-        "title": "SetStateOppertunityCommand",
+      "SetStateOpportunityCommand": {
+        "title": "SetStateOpportunityCommand",
         "required": [
           "id",
           "state"
@@ -8523,8 +8735,8 @@
           }
         }
       },
-      "SetStateOppertunityTypeCommand": {
-        "title": "SetStateOppertunityTypeCommand",
+      "SetStateOpportunityTypeCommand": {
+        "title": "SetStateOpportunityTypeCommand",
         "required": [
           "id",
           "state"
@@ -8574,11 +8786,11 @@
           }
         }
       },
-      "SetStatusOppertunityCommand": {
-        "title": "SetStatusOppertunityCommand",
+      "SetStatusOpportunityCommand": {
+        "title": "SetStatusOpportunityCommand",
         "required": [
           "id",
-          "status"
+          "statusOpportunityStatus"
         ],
         "type": "object",
         "properties": {
@@ -8586,8 +8798,8 @@
             "type": "string",
             "format": "uuid"
           },
-          "status": {
-            "$ref": "#/components/schemas/OppertunityStatus"
+          "statusOpportunityStatus": {
+            "$ref": "#/components/schemas/OpportunityStatus"
           }
         }
       },
@@ -8731,19 +8943,20 @@
           }
         }
       },
-      "UpdateFullOppertunityCommand": {
-        "title": "UpdateFullOppertunityCommand",
+      "UpdateFullOpportunityCommand": {
+        "title": "UpdateFullOpportunityCommand",
         "required": [
           "id",
           "title",
           "shortDescription",
           "fullDescription",
           "deadline",
-          "oppertunityTypeId",
+          "opportunityTypeId",
           "countryId",
           "serviceTypes",
           "capabilities",
-          "industries"
+          "industries",
+          "status"
         ],
         "type": "object",
         "properties": {
@@ -8765,7 +8978,7 @@
             "format": "date",
             "nullable": true
           },
-          "oppertunityTypeId": {
+          "opportunityTypeId": {
             "type": "string",
             "format": "uuid"
           },
@@ -8793,6 +9006,9 @@
               "type": "string",
               "format": "uuid"
             }
+          },
+          "status": {
+            "$ref": "#/components/schemas/OpportunityStatus"
           }
         }
       },
@@ -8871,8 +9087,8 @@
           }
         }
       },
-      "UpdateMessageOppertunityCommand": {
-        "title": "UpdateMessageOppertunityCommand",
+      "UpdateMessageOpportunityCommand": {
+        "title": "UpdateMessageOpportunityCommand",
         "required": [
           "id",
           "messageId",
@@ -8893,16 +9109,17 @@
           }
         }
       },
-      "UpdateOppertunityCommand": {
-        "title": "UpdateOppertunityCommand",
+      "UpdateOpportunityCommand": {
+        "title": "UpdateOpportunityCommand",
         "required": [
           "id",
           "title",
           "shortDescription",
           "fullDescription",
           "deadline",
-          "oppertunityTypeId",
-          "countryId"
+          "opportunityTypeId",
+          "countryId",
+          "status"
         ],
         "type": "object",
         "properties": {
@@ -8924,18 +9141,21 @@
             "format": "date",
             "nullable": true
           },
-          "oppertunityTypeId": {
+          "opportunityTypeId": {
             "type": "string",
             "format": "uuid"
           },
           "countryId": {
             "type": "string",
             "format": "uuid"
+          },
+          "status": {
+            "$ref": "#/components/schemas/OpportunityStatus"
           }
         }
       },
-      "UpdateOppertunityTypeCommand": {
-        "title": "UpdateOppertunityTypeCommand",
+      "UpdateOpportunityTypeCommand": {
+        "title": "UpdateOpportunityTypeCommand",
         "required": [
           "id",
           "name",
@@ -9038,10 +9258,10 @@
       "name": "Industries"
     },
     {
-      "name": "Oppertunities"
+      "name": "Opportunities"
     },
     {
-      "name": "OppertunityTypes"
+      "name": "OpportunityTypes"
     },
     {
       "name": "Regions"

@@ -27,7 +27,6 @@ namespace AndersonAPI.Application.Opportunities.GetMyOpportunities
             // TODO: Implement code to get the current user's opportunities based on their linked companies.
 
             throw new NotImplementedException();
-
             //// Get the current user ID from the request context (will be populated by auth middleware)
             //var userId = Guid.Parse("4A8CCC39-95C2-4F7A-B534-C0D166947E43"); // This would normally come from the ClaimsPrincipal
 

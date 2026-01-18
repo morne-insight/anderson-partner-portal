@@ -64,10 +64,10 @@ export const AddLocationCompanyCommandSchema = {
     }
 } as const;
 
-export const AddMessageOppertunityCommandSchema = {
-    title: 'AddMessageOppertunityCommand',
+export const AddMessageOpportunityCommandSchema = {
+    title: 'AddMessageOpportunityCommand',
     required: [
-        'oppertunityId',
+        'opportunityId',
         'content',
         'createdDate',
         'createdByUser',
@@ -75,7 +75,7 @@ export const AddMessageOppertunityCommandSchema = {
     ],
     type: 'object',
     properties: {
-        oppertunityId: {
+        opportunityId: {
             type: 'string',
             format: 'uuid'
         },
@@ -521,14 +521,14 @@ export const CreateIndustryCommandSchema = {
     }
 } as const;
 
-export const CreateOppertunityCommandSchema = {
-    title: 'CreateOppertunityCommand',
+export const CreateOpportunityCommandSchema = {
+    title: 'CreateOpportunityCommand',
     required: [
         'title',
         'shortDescription',
         'fullDescription',
         'deadline',
-        'oppertunityTypeId',
+        'opportunityTypeId',
         'countryId',
         'serviceTypes',
         'capabilities',
@@ -551,7 +551,7 @@ export const CreateOppertunityCommandSchema = {
             format: 'date',
             nullable: true
         },
-        oppertunityTypeId: {
+        opportunityTypeId: {
             type: 'string',
             format: 'uuid'
         },
@@ -587,8 +587,8 @@ export const CreateOppertunityCommandSchema = {
     }
 } as const;
 
-export const CreateOppertunityTypeCommandSchema = {
-    title: 'CreateOppertunityTypeCommand',
+export const CreateOpportunityTypeCommandSchema = {
+    title: 'CreateOpportunityTypeCommand',
     required: [
         'name',
         'description'
@@ -761,8 +761,8 @@ export const LoginDtoSchema = {
     }
 } as const;
 
-export const OppertunityCapabilityDtoSchema = {
-    title: 'OppertunityCapabilityDto',
+export const OpportunityCapabilityDtoSchema = {
+    title: 'OpportunityCapabilityDto',
     type: 'object',
     properties: {
         id: {
@@ -775,8 +775,8 @@ export const OppertunityCapabilityDtoSchema = {
     }
 } as const;
 
-export const OppertunityDtoSchema = {
-    title: 'OppertunityDto',
+export const OpportunityDtoSchema = {
+    title: 'OpportunityDto',
     type: 'object',
     properties: {
         title: {
@@ -809,7 +809,7 @@ export const OppertunityDtoSchema = {
         country: {
             type: 'string'
         },
-        oppertunityType: {
+        opportunityType: {
             type: 'string'
         },
         interestedPartners: {
@@ -821,26 +821,29 @@ export const OppertunityDtoSchema = {
         capabilities: {
             type: 'array',
             items: {
-                $ref: '#/components/schemas/OppertunityCapabilityDto'
+                $ref: '#/components/schemas/OpportunityCapabilityDto'
             }
         },
         industries: {
             type: 'array',
             items: {
-                $ref: '#/components/schemas/OppertunityIndustryDto'
+                $ref: '#/components/schemas/OpportunityIndustryDto'
             }
         },
         serviceTypes: {
             type: 'array',
             items: {
-                $ref: '#/components/schemas/OppertunityServiceTypeDto'
+                $ref: '#/components/schemas/OpportunityServiceTypeDto'
             }
+        },
+        status: {
+            $ref: '#/components/schemas/OpportunityStatus'
         }
     }
 } as const;
 
-export const OppertunityIndustryDtoSchema = {
-    title: 'OppertunityIndustryDto',
+export const OpportunityIndustryDtoSchema = {
+    title: 'OpportunityIndustryDto',
     type: 'object',
     properties: {
         id: {
@@ -853,8 +856,8 @@ export const OppertunityIndustryDtoSchema = {
     }
 } as const;
 
-export const OppertunityListItemDtoSchema = {
-    title: 'OppertunityListItemDto',
+export const OpportunityListItemDtoSchema = {
+    title: 'OpportunityListItemDto',
     type: 'object',
     properties: {
         title: {
@@ -876,6 +879,9 @@ export const OppertunityListItemDtoSchema = {
             type: 'string',
             format: 'uuid'
         },
+        companyName: {
+            type: 'string'
+        },
         id: {
             type: 'string',
             format: 'uuid'
@@ -887,7 +893,7 @@ export const OppertunityListItemDtoSchema = {
         country: {
             type: 'string'
         },
-        oppertunityType: {
+        opportunityTypeString: {
             type: 'string'
         },
         interestedPartners: {
@@ -895,12 +901,18 @@ export const OppertunityListItemDtoSchema = {
             items: {
                 $ref: '#/components/schemas/InterestedPartnerDto'
             }
+        },
+        capabilities: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/OpportunityCapabilityDto'
+            }
         }
     }
 } as const;
 
-export const OppertunityServiceTypeDtoSchema = {
-    title: 'OppertunityServiceTypeDto',
+export const OpportunityServiceTypeDtoSchema = {
+    title: 'OpportunityServiceTypeDto',
     type: 'object',
     properties: {
         id: {
@@ -913,12 +925,12 @@ export const OppertunityServiceTypeDtoSchema = {
     }
 } as const;
 
-export const OppertunityStatusSchema = {
+export const OpportunityStatusSchema = {
     type: 'integer'
 } as const;
 
-export const OppertunityTypeDtoSchema = {
-    title: 'OppertunityTypeDto',
+export const OpportunityTypeDtoSchema = {
+    title: 'OpportunityTypeDto',
     type: 'object',
     properties: {
         name: {
@@ -1019,8 +1031,8 @@ export const PartnerLocationDtoSchema = {
     }
 } as const;
 
-export const PartnerOppertunityDtoSchema = {
-    title: 'PartnerOppertunityDto',
+export const PartnerOpportunityDtoSchema = {
+    title: 'PartnerOpportunityDto',
     type: 'object',
     properties: {
         id: {
@@ -1048,13 +1060,13 @@ export const PartnerOppertunityDtoSchema = {
             nullable: true
         },
         status: {
-            $ref: '#/components/schemas/OppertunityStatus'
+            $ref: '#/components/schemas/OpportunityStatus'
         },
         companyId: {
             type: 'string',
             format: 'uuid'
         },
-        oppertunityType: {
+        opportunityType: {
             type: 'string'
         }
     }
@@ -1107,10 +1119,10 @@ export const PartnerProfileSchema = {
                 $ref: '#/components/schemas/PartnerServiceTypeDto'
             }
         },
-        oppertunities: {
+        opportunities: {
             type: 'array',
             items: {
-                $ref: '#/components/schemas/PartnerOppertunityDto'
+                $ref: '#/components/schemas/PartnerOpportunityDto'
             }
         },
         reviews: {
@@ -1346,6 +1358,19 @@ export const ReviewDtoSchema = {
     }
 } as const;
 
+export const ScrapeWebsiteCommandSchema = {
+    title: 'ScrapeWebsiteCommand',
+    required: [
+        'url'
+    ],
+    type: 'object',
+    properties: {
+        url: {
+            type: 'string'
+        }
+    }
+} as const;
+
 export const ServiceTypeDtoSchema = {
     title: 'ServiceTypeDto',
     type: 'object',
@@ -1392,8 +1417,8 @@ export const SetCapabilitiesCompanyCommandSchema = {
     }
 } as const;
 
-export const SetCapabilitiesOppertunityCommandSchema = {
-    title: 'SetCapabilitiesOppertunityCommand',
+export const SetCapabilitiesOpportunityCommandSchema = {
+    title: 'SetCapabilitiesOpportunityCommand',
     required: [
         'id',
         'capabilityIds'
@@ -1455,8 +1480,8 @@ export const SetIndustriesCompanyCommandSchema = {
     }
 } as const;
 
-export const SetIndustriesOppertunityCommandSchema = {
-    title: 'SetIndustriesOppertunityCommand',
+export const SetIndustriesOpportunityCommandSchema = {
+    title: 'SetIndustriesOpportunityCommand',
     required: [
         'id',
         'industryIds'
@@ -1477,8 +1502,8 @@ export const SetIndustriesOppertunityCommandSchema = {
     }
 } as const;
 
-export const SetInterestedPartnersOppertunityCommandSchema = {
-    title: 'SetInterestedPartnersOppertunityCommand',
+export const SetInterestedPartnersOpportunityCommandSchema = {
+    title: 'SetInterestedPartnersOpportunityCommand',
     required: [
         'id',
         'companyIds'
@@ -1521,8 +1546,8 @@ export const SetServiceTypesCompanyCommandSchema = {
     }
 } as const;
 
-export const SetServiceTypesOppertunityCommandSchema = {
-    title: 'SetServiceTypesOppertunityCommand',
+export const SetServiceTypesOpportunityCommandSchema = {
+    title: 'SetServiceTypesOpportunityCommand',
     required: [
         'id',
         'serviceTypeIds'
@@ -1615,8 +1640,8 @@ export const SetStateIndustryCommandSchema = {
     }
 } as const;
 
-export const SetStateOppertunityCommandSchema = {
-    title: 'SetStateOppertunityCommand',
+export const SetStateOpportunityCommandSchema = {
+    title: 'SetStateOpportunityCommand',
     required: [
         'id',
         'state'
@@ -1633,8 +1658,8 @@ export const SetStateOppertunityCommandSchema = {
     }
 } as const;
 
-export const SetStateOppertunityTypeCommandSchema = {
-    title: 'SetStateOppertunityTypeCommand',
+export const SetStateOpportunityTypeCommandSchema = {
+    title: 'SetStateOpportunityTypeCommand',
     required: [
         'id',
         'state'
@@ -1687,11 +1712,11 @@ export const SetStateServiceTypeCommandSchema = {
     }
 } as const;
 
-export const SetStatusOppertunityCommandSchema = {
-    title: 'SetStatusOppertunityCommand',
+export const SetStatusOpportunityCommandSchema = {
+    title: 'SetStatusOpportunityCommand',
     required: [
         'id',
-        'status'
+        'statusOpportunityStatus'
     ],
     type: 'object',
     properties: {
@@ -1699,8 +1724,8 @@ export const SetStatusOppertunityCommandSchema = {
             type: 'string',
             format: 'uuid'
         },
-        status: {
-            $ref: '#/components/schemas/OppertunityStatus'
+        statusOpportunityStatus: {
+            $ref: '#/components/schemas/OpportunityStatus'
         }
     }
 } as const;
@@ -1850,19 +1875,20 @@ export const UpdateCountryCommandSchema = {
     }
 } as const;
 
-export const UpdateFullOppertunityCommandSchema = {
-    title: 'UpdateFullOppertunityCommand',
+export const UpdateFullOpportunityCommandSchema = {
+    title: 'UpdateFullOpportunityCommand',
     required: [
         'id',
         'title',
         'shortDescription',
         'fullDescription',
         'deadline',
-        'oppertunityTypeId',
+        'opportunityTypeId',
         'countryId',
         'serviceTypes',
         'capabilities',
-        'industries'
+        'industries',
+        'status'
     ],
     type: 'object',
     properties: {
@@ -1884,7 +1910,7 @@ export const UpdateFullOppertunityCommandSchema = {
             format: 'date',
             nullable: true
         },
-        oppertunityTypeId: {
+        opportunityTypeId: {
             type: 'string',
             format: 'uuid'
         },
@@ -1912,6 +1938,9 @@ export const UpdateFullOppertunityCommandSchema = {
                 type: 'string',
                 format: 'uuid'
             }
+        },
+        status: {
+            $ref: '#/components/schemas/OpportunityStatus'
         }
     }
 } as const;
@@ -1994,8 +2023,8 @@ export const UpdateLocationCompanyCommandSchema = {
     }
 } as const;
 
-export const UpdateMessageOppertunityCommandSchema = {
-    title: 'UpdateMessageOppertunityCommand',
+export const UpdateMessageOpportunityCommandSchema = {
+    title: 'UpdateMessageOpportunityCommand',
     required: [
         'id',
         'messageId',
@@ -2017,16 +2046,17 @@ export const UpdateMessageOppertunityCommandSchema = {
     }
 } as const;
 
-export const UpdateOppertunityCommandSchema = {
-    title: 'UpdateOppertunityCommand',
+export const UpdateOpportunityCommandSchema = {
+    title: 'UpdateOpportunityCommand',
     required: [
         'id',
         'title',
         'shortDescription',
         'fullDescription',
         'deadline',
-        'oppertunityTypeId',
-        'countryId'
+        'opportunityTypeId',
+        'countryId',
+        'status'
     ],
     type: 'object',
     properties: {
@@ -2048,19 +2078,22 @@ export const UpdateOppertunityCommandSchema = {
             format: 'date',
             nullable: true
         },
-        oppertunityTypeId: {
+        opportunityTypeId: {
             type: 'string',
             format: 'uuid'
         },
         countryId: {
             type: 'string',
             format: 'uuid'
+        },
+        status: {
+            $ref: '#/components/schemas/OpportunityStatus'
         }
     }
 } as const;
 
-export const UpdateOppertunityTypeCommandSchema = {
-    title: 'UpdateOppertunityTypeCommand',
+export const UpdateOpportunityTypeCommandSchema = {
+    title: 'UpdateOpportunityTypeCommand',
     required: [
         'id',
         'name',

@@ -1,3 +1,4 @@
+using AndersonAPI.Application.Common.Interfaces;
 using AndersonAPI.Domain.Entities;
 using AndersonAPI.Domain.Repositories;
 using Intent.RoslynWeaver.Attributes;
@@ -15,22 +16,27 @@ namespace AndersonAPI.Application.Opportunities.CreateOpportunity
         private readonly IServiceTypeRepository _serviceTypeRepository;
         private readonly ICapabilityRepository _capabilityRepository;
         private readonly IIndustryRepository _industryRepository;
+        private readonly ICurrentUserService _currentUserService;
 
         [IntentManaged(Mode.Merge)]
         public CreateOpportunityCommandHandler(
-IOpportunityRepository opportunityRepository, IServiceTypeRepository serviceTypeRepository,
+            IOpportunityRepository opportunityRepository, 
+            IServiceTypeRepository serviceTypeRepository,
             ICapabilityRepository capabilityRepository,
-            IIndustryRepository industryRepository)
+            IIndustryRepository industryRepository,
+            ICurrentUserService currentUserService)
         {
             _serviceTypeRepository = serviceTypeRepository;
             _capabilityRepository = capabilityRepository;
             _industryRepository = industryRepository;
             _opportunityRepository = opportunityRepository;
+            _currentUserService = currentUserService;   
         }
 
         [IntentManaged(Mode.Fully, Body = Mode.Ignore)]
         public async Task<Guid> Handle(CreateOpportunityCommand request, CancellationToken cancellationToken)
         {
+            var user = await _currentUserService.GetAsync();
 
             var opportunity = new Opportunity(
                 title: request.Title,

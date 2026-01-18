@@ -27,10 +27,10 @@ export type AddLocationCompanyCommand = {
 };
 
 /**
- * AddMessageOppertunityCommand
+ * AddMessageOpportunityCommand
  */
-export type AddMessageOppertunityCommand = {
-    oppertunityId: string;
+export type AddMessageOpportunityCommand = {
+    opportunityId: string;
     content: string;
     createdDate: Date;
     createdByUser: string;
@@ -214,14 +214,14 @@ export type CreateIndustryCommand = {
 };
 
 /**
- * CreateOppertunityCommand
+ * CreateOpportunityCommand
  */
-export type CreateOppertunityCommand = {
+export type CreateOpportunityCommand = {
     title: string;
     shortDescription: string;
     fullDescription: string;
     deadline: Date | null;
-    oppertunityTypeId: string;
+    opportunityTypeId: string;
     countryId: string;
     serviceTypes: Array<string>;
     capabilities: Array<string>;
@@ -230,9 +230,9 @@ export type CreateOppertunityCommand = {
 };
 
 /**
- * CreateOppertunityTypeCommand
+ * CreateOpportunityTypeCommand
  */
-export type CreateOppertunityTypeCommand = {
+export type CreateOpportunityTypeCommand = {
     name: string;
     description: string;
 };
@@ -315,17 +315,17 @@ export type LoginDto = {
 };
 
 /**
- * OppertunityCapabilityDto
+ * OpportunityCapabilityDto
  */
-export type OppertunityCapabilityDto = {
+export type OpportunityCapabilityDto = {
     id?: string;
     name?: string;
 };
 
 /**
- * OppertunityDto
+ * OpportunityDto
  */
-export type OppertunityDto = {
+export type OpportunityDto = {
     title?: string;
     fullDescription?: string;
     createdDate?: Date;
@@ -334,51 +334,54 @@ export type OppertunityDto = {
     id?: string;
     order?: number;
     country?: string;
-    oppertunityType?: string;
+    opportunityType?: string;
     interestedPartners?: Array<InterestedPartnerDto>;
-    capabilities?: Array<OppertunityCapabilityDto>;
-    industries?: Array<OppertunityIndustryDto>;
-    serviceTypes?: Array<OppertunityServiceTypeDto>;
+    capabilities?: Array<OpportunityCapabilityDto>;
+    industries?: Array<OpportunityIndustryDto>;
+    serviceTypes?: Array<OpportunityServiceTypeDto>;
+    status?: OpportunityStatus;
 };
 
 /**
- * OppertunityIndustryDto
+ * OpportunityIndustryDto
  */
-export type OppertunityIndustryDto = {
+export type OpportunityIndustryDto = {
     id?: string;
     name?: string;
 };
 
 /**
- * OppertunityListItemDto
+ * OpportunityListItemDto
  */
-export type OppertunityListItemDto = {
+export type OpportunityListItemDto = {
     title?: string;
     shortDescription?: string;
     createdDate?: Date;
     deadline?: Date | null;
     companyId?: string;
+    companyName?: string;
     id?: string;
     order?: number;
     country?: string;
-    oppertunityType?: string;
+    opportunityTypeString?: string;
     interestedPartners?: Array<InterestedPartnerDto>;
+    capabilities?: Array<OpportunityCapabilityDto>;
 };
 
 /**
- * OppertunityServiceTypeDto
+ * OpportunityServiceTypeDto
  */
-export type OppertunityServiceTypeDto = {
+export type OpportunityServiceTypeDto = {
     id?: string;
     name?: string;
 };
 
-export type OppertunityStatus = number;
+export type OpportunityStatus = number;
 
 /**
- * OppertunityTypeDto
+ * OpportunityTypeDto
  */
-export type OppertunityTypeDto = {
+export type OpportunityTypeDto = {
     name?: string;
     description?: string;
     id?: string;
@@ -425,18 +428,18 @@ export type PartnerLocationDto = {
 };
 
 /**
- * PartnerOppertunityDto
+ * PartnerOpportunityDto
  */
-export type PartnerOppertunityDto = {
+export type PartnerOpportunityDto = {
     id?: string;
     title?: string;
     shortDescription?: string;
     serviceTypes?: Array<unknown>;
     country?: string;
     deadline?: Date | null;
-    status?: OppertunityStatus;
+    status?: OpportunityStatus;
     companyId?: string;
-    oppertunityType?: string;
+    opportunityType?: string;
 };
 
 /**
@@ -452,7 +455,7 @@ export type PartnerProfile = {
     industries?: Array<PartnerIndustryDto>;
     locations?: Array<PartnerLocationDto>;
     serviceTypes?: Array<PartnerServiceTypeDto>;
-    oppertunities?: Array<PartnerOppertunityDto>;
+    opportunities?: Array<PartnerOpportunityDto>;
     reviews?: Array<PartnerReviewDto>;
 };
 
@@ -553,6 +556,13 @@ export type ReviewDto = {
 };
 
 /**
+ * ScrapeWebsiteCommand
+ */
+export type ScrapeWebsiteCommand = {
+    url: string;
+};
+
+/**
  * ServiceTypeDto
  */
 export type ServiceTypeDto = {
@@ -572,9 +582,9 @@ export type SetCapabilitiesCompanyCommand = {
 };
 
 /**
- * SetCapabilitiesOppertunityCommand
+ * SetCapabilitiesOpportunityCommand
  */
-export type SetCapabilitiesOppertunityCommand = {
+export type SetCapabilitiesOpportunityCommand = {
     id: string;
     capabilityIds: Array<string>;
 };
@@ -596,17 +606,17 @@ export type SetIndustriesCompanyCommand = {
 };
 
 /**
- * SetIndustriesOppertunityCommand
+ * SetIndustriesOpportunityCommand
  */
-export type SetIndustriesOppertunityCommand = {
+export type SetIndustriesOpportunityCommand = {
     id: string;
     industryIds: Array<string>;
 };
 
 /**
- * SetInterestedPartnersOppertunityCommand
+ * SetInterestedPartnersOpportunityCommand
  */
-export type SetInterestedPartnersOppertunityCommand = {
+export type SetInterestedPartnersOpportunityCommand = {
     id: string;
     companyIds: Array<string>;
 };
@@ -620,9 +630,9 @@ export type SetServiceTypesCompanyCommand = {
 };
 
 /**
- * SetServiceTypesOppertunityCommand
+ * SetServiceTypesOpportunityCommand
  */
-export type SetServiceTypesOppertunityCommand = {
+export type SetServiceTypesOpportunityCommand = {
     id: string;
     serviceTypeIds: Array<string>;
 };
@@ -660,17 +670,17 @@ export type SetStateIndustryCommand = {
 };
 
 /**
- * SetStateOppertunityCommand
+ * SetStateOpportunityCommand
  */
-export type SetStateOppertunityCommand = {
+export type SetStateOpportunityCommand = {
     id: string;
     state: EntityState;
 };
 
 /**
- * SetStateOppertunityTypeCommand
+ * SetStateOpportunityTypeCommand
  */
-export type SetStateOppertunityTypeCommand = {
+export type SetStateOpportunityTypeCommand = {
     id: string;
     state: EntityState;
 };
@@ -692,11 +702,11 @@ export type SetStateServiceTypeCommand = {
 };
 
 /**
- * SetStatusOppertunityCommand
+ * SetStatusOpportunityCommand
  */
-export type SetStatusOppertunityCommand = {
+export type SetStatusOpportunityCommand = {
     id: string;
-    status: OppertunityStatus;
+    statusOpportunityStatus: OpportunityStatus;
 };
 
 /**
@@ -753,19 +763,20 @@ export type UpdateCountryCommand = {
 };
 
 /**
- * UpdateFullOppertunityCommand
+ * UpdateFullOpportunityCommand
  */
-export type UpdateFullOppertunityCommand = {
+export type UpdateFullOpportunityCommand = {
     id: string;
     title: string;
     shortDescription: string;
     fullDescription: string;
     deadline: Date | null;
-    oppertunityTypeId: string;
+    opportunityTypeId: string;
     countryId: string;
     serviceTypes: Array<string>;
     capabilities: Array<string>;
     industries: Array<string>;
+    status: OpportunityStatus;
 };
 
 /**
@@ -799,31 +810,32 @@ export type UpdateLocationCompanyCommand = {
 };
 
 /**
- * UpdateMessageOppertunityCommand
+ * UpdateMessageOpportunityCommand
  */
-export type UpdateMessageOppertunityCommand = {
+export type UpdateMessageOpportunityCommand = {
     id: string;
     messageId: string;
     content: string;
 };
 
 /**
- * UpdateOppertunityCommand
+ * UpdateOpportunityCommand
  */
-export type UpdateOppertunityCommand = {
+export type UpdateOpportunityCommand = {
     id: string;
     title: string;
     shortDescription: string;
     fullDescription: string;
     deadline: Date | null;
-    oppertunityTypeId: string;
+    opportunityTypeId: string;
     countryId: string;
+    status: OpportunityStatus;
 };
 
 /**
- * UpdateOppertunityTypeCommand
+ * UpdateOpportunityTypeCommand
  */
-export type UpdateOppertunityTypeCommand = {
+export type UpdateOpportunityTypeCommand = {
     id: string;
     name: string;
     description: string;
@@ -1545,6 +1557,35 @@ export type PutApiCompaniesByIdResponses = {
 
 export type PutApiCompaniesByIdResponse = PutApiCompaniesByIdResponses[keyof PutApiCompaniesByIdResponses];
 
+export type PutApiCompaniesScrapeWebsiteData = {
+    body: ScrapeWebsiteCommand;
+    path?: never;
+    query?: never;
+    url: '/api/companies/scrape-website';
+};
+
+export type PutApiCompaniesScrapeWebsiteErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type PutApiCompaniesScrapeWebsiteError = PutApiCompaniesScrapeWebsiteErrors[keyof PutApiCompaniesScrapeWebsiteErrors];
+
+export type PutApiCompaniesScrapeWebsiteResponses = {
+    /**
+     * No Content
+     */
+    204: void;
+};
+
+export type PutApiCompaniesScrapeWebsiteResponse = PutApiCompaniesScrapeWebsiteResponses[keyof PutApiCompaniesScrapeWebsiteResponses];
+
 export type PutApiCompaniesByIdCapabilitiesData = {
     body: SetCapabilitiesCompanyCommand;
     path: {
@@ -2228,14 +2269,14 @@ export type PutApiIndustriesByIdSetStateResponses = {
 
 export type PutApiIndustriesByIdSetStateResponse = PutApiIndustriesByIdSetStateResponses[keyof PutApiIndustriesByIdSetStateResponses];
 
-export type PostApiOppertunitiesMessageData = {
-    body: AddMessageOppertunityCommand;
+export type PostApiOpportunitiesMessageData = {
+    body: AddMessageOpportunityCommand;
     path?: never;
     query?: never;
-    url: '/api/oppertunities/message';
+    url: '/api/opportunities/message';
 };
 
-export type PostApiOppertunitiesMessageErrors = {
+export type PostApiOpportunitiesMessageErrors = {
     /**
      * Bad Request
      */
@@ -2246,48 +2287,48 @@ export type PostApiOppertunitiesMessageErrors = {
     500: ProblemDetails;
 };
 
-export type PostApiOppertunitiesMessageError = PostApiOppertunitiesMessageErrors[keyof PostApiOppertunitiesMessageErrors];
+export type PostApiOpportunitiesMessageError = PostApiOpportunitiesMessageErrors[keyof PostApiOpportunitiesMessageErrors];
 
-export type PostApiOppertunitiesMessageResponses = {
+export type PostApiOpportunitiesMessageResponses = {
     /**
      * Created
      */
     201: unknown;
 };
 
-export type GetApiOppertunitiesData = {
+export type GetApiOpportunitiesData = {
     body?: never;
     path?: never;
     query?: never;
-    url: '/api/oppertunities';
+    url: '/api/opportunities';
 };
 
-export type GetApiOppertunitiesErrors = {
+export type GetApiOpportunitiesErrors = {
     /**
      * Internal Server Error
      */
     500: ProblemDetails;
 };
 
-export type GetApiOppertunitiesError = GetApiOppertunitiesErrors[keyof GetApiOppertunitiesErrors];
+export type GetApiOpportunitiesError = GetApiOpportunitiesErrors[keyof GetApiOpportunitiesErrors];
 
-export type GetApiOppertunitiesResponses = {
+export type GetApiOpportunitiesResponses = {
     /**
      * OK
      */
-    200: Array<OppertunityListItemDto>;
+    200: Array<OpportunityListItemDto>;
 };
 
-export type GetApiOppertunitiesResponse = GetApiOppertunitiesResponses[keyof GetApiOppertunitiesResponses];
+export type GetApiOpportunitiesResponse = GetApiOpportunitiesResponses[keyof GetApiOpportunitiesResponses];
 
-export type PostApiOppertunitiesData = {
-    body: CreateOppertunityCommand;
+export type PostApiOpportunitiesData = {
+    body: CreateOpportunityCommand;
     path?: never;
     query?: never;
-    url: '/api/oppertunities';
+    url: '/api/opportunities';
 };
 
-export type PostApiOppertunitiesErrors = {
+export type PostApiOpportunitiesErrors = {
     /**
      * Bad Request
      */
@@ -2298,27 +2339,27 @@ export type PostApiOppertunitiesErrors = {
     500: ProblemDetails;
 };
 
-export type PostApiOppertunitiesError = PostApiOppertunitiesErrors[keyof PostApiOppertunitiesErrors];
+export type PostApiOpportunitiesError = PostApiOpportunitiesErrors[keyof PostApiOpportunitiesErrors];
 
-export type PostApiOppertunitiesResponses = {
+export type PostApiOpportunitiesResponses = {
     /**
      * Created
      */
     201: AndersonApiApiControllersResponseTypesJsonResponseOfGuid;
 };
 
-export type PostApiOppertunitiesResponse = PostApiOppertunitiesResponses[keyof PostApiOppertunitiesResponses];
+export type PostApiOpportunitiesResponse = PostApiOpportunitiesResponses[keyof PostApiOpportunitiesResponses];
 
-export type DeleteApiOppertunitiesByIdData = {
+export type DeleteApiOpportunitiesByIdData = {
     body?: never;
     path: {
         id: string;
     };
     query?: never;
-    url: '/api/oppertunities/{id}';
+    url: '/api/opportunities/{id}';
 };
 
-export type DeleteApiOppertunitiesByIdErrors = {
+export type DeleteApiOpportunitiesByIdErrors = {
     /**
      * Bad Request
      */
@@ -2333,25 +2374,25 @@ export type DeleteApiOppertunitiesByIdErrors = {
     500: ProblemDetails;
 };
 
-export type DeleteApiOppertunitiesByIdError = DeleteApiOppertunitiesByIdErrors[keyof DeleteApiOppertunitiesByIdErrors];
+export type DeleteApiOpportunitiesByIdError = DeleteApiOpportunitiesByIdErrors[keyof DeleteApiOpportunitiesByIdErrors];
 
-export type DeleteApiOppertunitiesByIdResponses = {
+export type DeleteApiOpportunitiesByIdResponses = {
     /**
      * OK
      */
     200: unknown;
 };
 
-export type GetApiOppertunitiesByIdData = {
+export type GetApiOpportunitiesByIdData = {
     body?: never;
     path: {
         id: string;
     };
     query?: never;
-    url: '/api/oppertunities/{id}';
+    url: '/api/opportunities/{id}';
 };
 
-export type GetApiOppertunitiesByIdErrors = {
+export type GetApiOpportunitiesByIdErrors = {
     /**
      * Bad Request
      */
@@ -2366,27 +2407,27 @@ export type GetApiOppertunitiesByIdErrors = {
     500: ProblemDetails;
 };
 
-export type GetApiOppertunitiesByIdError = GetApiOppertunitiesByIdErrors[keyof GetApiOppertunitiesByIdErrors];
+export type GetApiOpportunitiesByIdError = GetApiOpportunitiesByIdErrors[keyof GetApiOpportunitiesByIdErrors];
 
-export type GetApiOppertunitiesByIdResponses = {
+export type GetApiOpportunitiesByIdResponses = {
     /**
      * OK
      */
-    200: OppertunityDto;
+    200: OpportunityDto;
 };
 
-export type GetApiOppertunitiesByIdResponse = GetApiOppertunitiesByIdResponses[keyof GetApiOppertunitiesByIdResponses];
+export type GetApiOpportunitiesByIdResponse = GetApiOpportunitiesByIdResponses[keyof GetApiOpportunitiesByIdResponses];
 
-export type PutApiOppertunitiesByIdData = {
-    body: UpdateOppertunityCommand;
+export type PutApiOpportunitiesByIdData = {
+    body: UpdateOpportunityCommand;
     path: {
         id: string;
     };
     query?: never;
-    url: '/api/oppertunities/{id}';
+    url: '/api/opportunities/{id}';
 };
 
-export type PutApiOppertunitiesByIdErrors = {
+export type PutApiOpportunitiesByIdErrors = {
     /**
      * Bad Request
      */
@@ -2401,18 +2442,18 @@ export type PutApiOppertunitiesByIdErrors = {
     500: ProblemDetails;
 };
 
-export type PutApiOppertunitiesByIdError = PutApiOppertunitiesByIdErrors[keyof PutApiOppertunitiesByIdErrors];
+export type PutApiOpportunitiesByIdError = PutApiOpportunitiesByIdErrors[keyof PutApiOpportunitiesByIdErrors];
 
-export type PutApiOppertunitiesByIdResponses = {
+export type PutApiOpportunitiesByIdResponses = {
     /**
      * No Content
      */
     204: void;
 };
 
-export type PutApiOppertunitiesByIdResponse = PutApiOppertunitiesByIdResponses[keyof PutApiOppertunitiesByIdResponses];
+export type PutApiOpportunitiesByIdResponse = PutApiOpportunitiesByIdResponses[keyof PutApiOpportunitiesByIdResponses];
 
-export type DeleteApiOppertunitiesByIdMessageData = {
+export type DeleteApiOpportunitiesByIdMessageData = {
     body?: never;
     path: {
         id: string;
@@ -2420,10 +2461,10 @@ export type DeleteApiOppertunitiesByIdMessageData = {
     query: {
         messageId: string;
     };
-    url: '/api/oppertunities/{id}/message';
+    url: '/api/opportunities/{id}/message';
 };
 
-export type DeleteApiOppertunitiesByIdMessageErrors = {
+export type DeleteApiOpportunitiesByIdMessageErrors = {
     /**
      * Bad Request
      */
@@ -2438,25 +2479,25 @@ export type DeleteApiOppertunitiesByIdMessageErrors = {
     500: ProblemDetails;
 };
 
-export type DeleteApiOppertunitiesByIdMessageError = DeleteApiOppertunitiesByIdMessageErrors[keyof DeleteApiOppertunitiesByIdMessageErrors];
+export type DeleteApiOpportunitiesByIdMessageError = DeleteApiOpportunitiesByIdMessageErrors[keyof DeleteApiOpportunitiesByIdMessageErrors];
 
-export type DeleteApiOppertunitiesByIdMessageResponses = {
+export type DeleteApiOpportunitiesByIdMessageResponses = {
     /**
      * OK
      */
     200: unknown;
 };
 
-export type PutApiOppertunitiesByIdMessageData = {
-    body: UpdateMessageOppertunityCommand;
+export type PutApiOpportunitiesByIdMessageData = {
+    body: UpdateMessageOpportunityCommand;
     path: {
         id: string;
     };
     query?: never;
-    url: '/api/oppertunities/{id}/message';
+    url: '/api/opportunities/{id}/message';
 };
 
-export type PutApiOppertunitiesByIdMessageErrors = {
+export type PutApiOpportunitiesByIdMessageErrors = {
     /**
      * Bad Request
      */
@@ -2471,27 +2512,27 @@ export type PutApiOppertunitiesByIdMessageErrors = {
     500: ProblemDetails;
 };
 
-export type PutApiOppertunitiesByIdMessageError = PutApiOppertunitiesByIdMessageErrors[keyof PutApiOppertunitiesByIdMessageErrors];
+export type PutApiOpportunitiesByIdMessageError = PutApiOpportunitiesByIdMessageErrors[keyof PutApiOpportunitiesByIdMessageErrors];
 
-export type PutApiOppertunitiesByIdMessageResponses = {
+export type PutApiOpportunitiesByIdMessageResponses = {
     /**
      * No Content
      */
     204: void;
 };
 
-export type PutApiOppertunitiesByIdMessageResponse = PutApiOppertunitiesByIdMessageResponses[keyof PutApiOppertunitiesByIdMessageResponses];
+export type PutApiOpportunitiesByIdMessageResponse = PutApiOpportunitiesByIdMessageResponses[keyof PutApiOpportunitiesByIdMessageResponses];
 
-export type PutApiOppertunitiesByIdCapabilitiesData = {
-    body: SetCapabilitiesOppertunityCommand;
+export type PutApiOpportunitiesByIdCapabilitiesData = {
+    body: SetCapabilitiesOpportunityCommand;
     path: {
         id: string;
     };
     query?: never;
-    url: '/api/oppertunities/{id}/capabilities';
+    url: '/api/opportunities/{id}/capabilities';
 };
 
-export type PutApiOppertunitiesByIdCapabilitiesErrors = {
+export type PutApiOpportunitiesByIdCapabilitiesErrors = {
     /**
      * Bad Request
      */
@@ -2506,27 +2547,27 @@ export type PutApiOppertunitiesByIdCapabilitiesErrors = {
     500: ProblemDetails;
 };
 
-export type PutApiOppertunitiesByIdCapabilitiesError = PutApiOppertunitiesByIdCapabilitiesErrors[keyof PutApiOppertunitiesByIdCapabilitiesErrors];
+export type PutApiOpportunitiesByIdCapabilitiesError = PutApiOpportunitiesByIdCapabilitiesErrors[keyof PutApiOpportunitiesByIdCapabilitiesErrors];
 
-export type PutApiOppertunitiesByIdCapabilitiesResponses = {
+export type PutApiOpportunitiesByIdCapabilitiesResponses = {
     /**
      * No Content
      */
     204: void;
 };
 
-export type PutApiOppertunitiesByIdCapabilitiesResponse = PutApiOppertunitiesByIdCapabilitiesResponses[keyof PutApiOppertunitiesByIdCapabilitiesResponses];
+export type PutApiOpportunitiesByIdCapabilitiesResponse = PutApiOpportunitiesByIdCapabilitiesResponses[keyof PutApiOpportunitiesByIdCapabilitiesResponses];
 
-export type PutApiOppertunitiesByIdIndustriesData = {
-    body: SetIndustriesOppertunityCommand;
+export type PutApiOpportunitiesByIdIndustriesData = {
+    body: SetIndustriesOpportunityCommand;
     path: {
         id: string;
     };
     query?: never;
-    url: '/api/oppertunities/{id}/industries';
+    url: '/api/opportunities/{id}/industries';
 };
 
-export type PutApiOppertunitiesByIdIndustriesErrors = {
+export type PutApiOpportunitiesByIdIndustriesErrors = {
     /**
      * Bad Request
      */
@@ -2541,27 +2582,27 @@ export type PutApiOppertunitiesByIdIndustriesErrors = {
     500: ProblemDetails;
 };
 
-export type PutApiOppertunitiesByIdIndustriesError = PutApiOppertunitiesByIdIndustriesErrors[keyof PutApiOppertunitiesByIdIndustriesErrors];
+export type PutApiOpportunitiesByIdIndustriesError = PutApiOpportunitiesByIdIndustriesErrors[keyof PutApiOpportunitiesByIdIndustriesErrors];
 
-export type PutApiOppertunitiesByIdIndustriesResponses = {
+export type PutApiOpportunitiesByIdIndustriesResponses = {
     /**
      * No Content
      */
     204: void;
 };
 
-export type PutApiOppertunitiesByIdIndustriesResponse = PutApiOppertunitiesByIdIndustriesResponses[keyof PutApiOppertunitiesByIdIndustriesResponses];
+export type PutApiOpportunitiesByIdIndustriesResponse = PutApiOpportunitiesByIdIndustriesResponses[keyof PutApiOpportunitiesByIdIndustriesResponses];
 
-export type PutApiOppertunitiesByIdInterestedPartnersData = {
-    body: SetInterestedPartnersOppertunityCommand;
+export type PutApiOpportunitiesByIdInterestedPartnersData = {
+    body: SetInterestedPartnersOpportunityCommand;
     path: {
         id: string;
     };
     query?: never;
-    url: '/api/oppertunities/{id}/interested-partners';
+    url: '/api/opportunities/{id}/interested-partners';
 };
 
-export type PutApiOppertunitiesByIdInterestedPartnersErrors = {
+export type PutApiOpportunitiesByIdInterestedPartnersErrors = {
     /**
      * Bad Request
      */
@@ -2576,27 +2617,27 @@ export type PutApiOppertunitiesByIdInterestedPartnersErrors = {
     500: ProblemDetails;
 };
 
-export type PutApiOppertunitiesByIdInterestedPartnersError = PutApiOppertunitiesByIdInterestedPartnersErrors[keyof PutApiOppertunitiesByIdInterestedPartnersErrors];
+export type PutApiOpportunitiesByIdInterestedPartnersError = PutApiOpportunitiesByIdInterestedPartnersErrors[keyof PutApiOpportunitiesByIdInterestedPartnersErrors];
 
-export type PutApiOppertunitiesByIdInterestedPartnersResponses = {
+export type PutApiOpportunitiesByIdInterestedPartnersResponses = {
     /**
      * No Content
      */
     204: void;
 };
 
-export type PutApiOppertunitiesByIdInterestedPartnersResponse = PutApiOppertunitiesByIdInterestedPartnersResponses[keyof PutApiOppertunitiesByIdInterestedPartnersResponses];
+export type PutApiOpportunitiesByIdInterestedPartnersResponse = PutApiOpportunitiesByIdInterestedPartnersResponses[keyof PutApiOpportunitiesByIdInterestedPartnersResponses];
 
-export type PutApiOppertunitiesByIdServiceTypesData = {
-    body: SetServiceTypesOppertunityCommand;
+export type PutApiOpportunitiesByIdServiceTypesData = {
+    body: SetServiceTypesOpportunityCommand;
     path: {
         id: string;
     };
     query?: never;
-    url: '/api/oppertunities/{id}/service-types';
+    url: '/api/opportunities/{id}/service-types';
 };
 
-export type PutApiOppertunitiesByIdServiceTypesErrors = {
+export type PutApiOpportunitiesByIdServiceTypesErrors = {
     /**
      * Bad Request
      */
@@ -2611,27 +2652,27 @@ export type PutApiOppertunitiesByIdServiceTypesErrors = {
     500: ProblemDetails;
 };
 
-export type PutApiOppertunitiesByIdServiceTypesError = PutApiOppertunitiesByIdServiceTypesErrors[keyof PutApiOppertunitiesByIdServiceTypesErrors];
+export type PutApiOpportunitiesByIdServiceTypesError = PutApiOpportunitiesByIdServiceTypesErrors[keyof PutApiOpportunitiesByIdServiceTypesErrors];
 
-export type PutApiOppertunitiesByIdServiceTypesResponses = {
+export type PutApiOpportunitiesByIdServiceTypesResponses = {
     /**
      * No Content
      */
     204: void;
 };
 
-export type PutApiOppertunitiesByIdServiceTypesResponse = PutApiOppertunitiesByIdServiceTypesResponses[keyof PutApiOppertunitiesByIdServiceTypesResponses];
+export type PutApiOpportunitiesByIdServiceTypesResponse = PutApiOpportunitiesByIdServiceTypesResponses[keyof PutApiOpportunitiesByIdServiceTypesResponses];
 
-export type PutApiOppertunitiesByIdSetStateData = {
-    body: SetStateOppertunityCommand;
+export type PutApiOpportunitiesByIdSetStateData = {
+    body: SetStateOpportunityCommand;
     path: {
         id: string;
     };
     query?: never;
-    url: '/api/oppertunities/{id}/set-state';
+    url: '/api/opportunities/{id}/set-state';
 };
 
-export type PutApiOppertunitiesByIdSetStateErrors = {
+export type PutApiOpportunitiesByIdSetStateErrors = {
     /**
      * Bad Request
      */
@@ -2646,27 +2687,27 @@ export type PutApiOppertunitiesByIdSetStateErrors = {
     500: ProblemDetails;
 };
 
-export type PutApiOppertunitiesByIdSetStateError = PutApiOppertunitiesByIdSetStateErrors[keyof PutApiOppertunitiesByIdSetStateErrors];
+export type PutApiOpportunitiesByIdSetStateError = PutApiOpportunitiesByIdSetStateErrors[keyof PutApiOpportunitiesByIdSetStateErrors];
 
-export type PutApiOppertunitiesByIdSetStateResponses = {
+export type PutApiOpportunitiesByIdSetStateResponses = {
     /**
      * No Content
      */
     204: void;
 };
 
-export type PutApiOppertunitiesByIdSetStateResponse = PutApiOppertunitiesByIdSetStateResponses[keyof PutApiOppertunitiesByIdSetStateResponses];
+export type PutApiOpportunitiesByIdSetStateResponse = PutApiOpportunitiesByIdSetStateResponses[keyof PutApiOpportunitiesByIdSetStateResponses];
 
-export type PutApiOppertunitiesByIdStatusData = {
-    body: SetStatusOppertunityCommand;
+export type PutApiOpportunitiesByIdStatusData = {
+    body: SetStatusOpportunityCommand;
     path: {
         id: string;
     };
     query?: never;
-    url: '/api/oppertunities/{id}/status';
+    url: '/api/opportunities/{id}/status';
 };
 
-export type PutApiOppertunitiesByIdStatusErrors = {
+export type PutApiOpportunitiesByIdStatusErrors = {
     /**
      * Bad Request
      */
@@ -2681,27 +2722,27 @@ export type PutApiOppertunitiesByIdStatusErrors = {
     500: ProblemDetails;
 };
 
-export type PutApiOppertunitiesByIdStatusError = PutApiOppertunitiesByIdStatusErrors[keyof PutApiOppertunitiesByIdStatusErrors];
+export type PutApiOpportunitiesByIdStatusError = PutApiOpportunitiesByIdStatusErrors[keyof PutApiOpportunitiesByIdStatusErrors];
 
-export type PutApiOppertunitiesByIdStatusResponses = {
+export type PutApiOpportunitiesByIdStatusResponses = {
     /**
      * No Content
      */
     204: void;
 };
 
-export type PutApiOppertunitiesByIdStatusResponse = PutApiOppertunitiesByIdStatusResponses[keyof PutApiOppertunitiesByIdStatusResponses];
+export type PutApiOpportunitiesByIdStatusResponse = PutApiOpportunitiesByIdStatusResponses[keyof PutApiOpportunitiesByIdStatusResponses];
 
-export type PutApiOppertunitiesByIdFullData = {
-    body: UpdateFullOppertunityCommand;
+export type PutApiOpportunitiesByIdFullData = {
+    body: UpdateFullOpportunityCommand;
     path: {
         id: string;
     };
     query?: never;
-    url: '/api/oppertunities/{id}/full';
+    url: '/api/opportunities/{id}/full';
 };
 
-export type PutApiOppertunitiesByIdFullErrors = {
+export type PutApiOpportunitiesByIdFullErrors = {
     /**
      * Bad Request
      */
@@ -2716,50 +2757,100 @@ export type PutApiOppertunitiesByIdFullErrors = {
     500: ProblemDetails;
 };
 
-export type PutApiOppertunitiesByIdFullError = PutApiOppertunitiesByIdFullErrors[keyof PutApiOppertunitiesByIdFullErrors];
+export type PutApiOpportunitiesByIdFullError = PutApiOpportunitiesByIdFullErrors[keyof PutApiOpportunitiesByIdFullErrors];
 
-export type PutApiOppertunitiesByIdFullResponses = {
+export type PutApiOpportunitiesByIdFullResponses = {
     /**
      * No Content
      */
     204: void;
 };
 
-export type PutApiOppertunitiesByIdFullResponse = PutApiOppertunitiesByIdFullResponses[keyof PutApiOppertunitiesByIdFullResponses];
+export type PutApiOpportunitiesByIdFullResponse = PutApiOpportunitiesByIdFullResponses[keyof PutApiOpportunitiesByIdFullResponses];
 
-export type GetApiOppertunityTypesData = {
+export type GetApiOpportunitiesMeData = {
     body?: never;
     path?: never;
     query?: never;
-    url: '/api/oppertunity-types';
+    url: '/api/opportunities/me';
 };
 
-export type GetApiOppertunityTypesErrors = {
+export type GetApiOpportunitiesMeErrors = {
     /**
      * Internal Server Error
      */
     500: ProblemDetails;
 };
 
-export type GetApiOppertunityTypesError = GetApiOppertunityTypesErrors[keyof GetApiOppertunityTypesErrors];
+export type GetApiOpportunitiesMeError = GetApiOpportunitiesMeErrors[keyof GetApiOpportunitiesMeErrors];
 
-export type GetApiOppertunityTypesResponses = {
+export type GetApiOpportunitiesMeResponses = {
     /**
      * OK
      */
-    200: Array<OppertunityTypeDto>;
+    200: Array<OpportunityListItemDto>;
 };
 
-export type GetApiOppertunityTypesResponse = GetApiOppertunityTypesResponses[keyof GetApiOppertunityTypesResponses];
+export type GetApiOpportunitiesMeResponse = GetApiOpportunitiesMeResponses[keyof GetApiOpportunitiesMeResponses];
 
-export type PostApiOppertunityTypesData = {
-    body: CreateOppertunityTypeCommand;
+export type GetApiOpportunitiesSavedData = {
+    body?: never;
     path?: never;
     query?: never;
-    url: '/api/oppertunity-types';
+    url: '/api/opportunities/saved';
 };
 
-export type PostApiOppertunityTypesErrors = {
+export type GetApiOpportunitiesSavedErrors = {
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type GetApiOpportunitiesSavedError = GetApiOpportunitiesSavedErrors[keyof GetApiOpportunitiesSavedErrors];
+
+export type GetApiOpportunitiesSavedResponses = {
+    /**
+     * OK
+     */
+    200: Array<OpportunityListItemDto>;
+};
+
+export type GetApiOpportunitiesSavedResponse = GetApiOpportunitiesSavedResponses[keyof GetApiOpportunitiesSavedResponses];
+
+export type GetApiOpportunityTypesData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/opportunity-types';
+};
+
+export type GetApiOpportunityTypesErrors = {
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type GetApiOpportunityTypesError = GetApiOpportunityTypesErrors[keyof GetApiOpportunityTypesErrors];
+
+export type GetApiOpportunityTypesResponses = {
+    /**
+     * OK
+     */
+    200: Array<OpportunityTypeDto>;
+};
+
+export type GetApiOpportunityTypesResponse = GetApiOpportunityTypesResponses[keyof GetApiOpportunityTypesResponses];
+
+export type PostApiOpportunityTypesData = {
+    body: CreateOpportunityTypeCommand;
+    path?: never;
+    query?: never;
+    url: '/api/opportunity-types';
+};
+
+export type PostApiOpportunityTypesErrors = {
     /**
      * Bad Request
      */
@@ -2770,27 +2861,27 @@ export type PostApiOppertunityTypesErrors = {
     500: ProblemDetails;
 };
 
-export type PostApiOppertunityTypesError = PostApiOppertunityTypesErrors[keyof PostApiOppertunityTypesErrors];
+export type PostApiOpportunityTypesError = PostApiOpportunityTypesErrors[keyof PostApiOpportunityTypesErrors];
 
-export type PostApiOppertunityTypesResponses = {
+export type PostApiOpportunityTypesResponses = {
     /**
      * Created
      */
     201: AndersonApiApiControllersResponseTypesJsonResponseOfGuid;
 };
 
-export type PostApiOppertunityTypesResponse = PostApiOppertunityTypesResponses[keyof PostApiOppertunityTypesResponses];
+export type PostApiOpportunityTypesResponse = PostApiOpportunityTypesResponses[keyof PostApiOpportunityTypesResponses];
 
-export type DeleteApiOppertunityTypesByIdData = {
+export type DeleteApiOpportunityTypesByIdData = {
     body?: never;
     path: {
         id: string;
     };
     query?: never;
-    url: '/api/oppertunity-types/{id}';
+    url: '/api/opportunity-types/{id}';
 };
 
-export type DeleteApiOppertunityTypesByIdErrors = {
+export type DeleteApiOpportunityTypesByIdErrors = {
     /**
      * Bad Request
      */
@@ -2805,25 +2896,25 @@ export type DeleteApiOppertunityTypesByIdErrors = {
     500: ProblemDetails;
 };
 
-export type DeleteApiOppertunityTypesByIdError = DeleteApiOppertunityTypesByIdErrors[keyof DeleteApiOppertunityTypesByIdErrors];
+export type DeleteApiOpportunityTypesByIdError = DeleteApiOpportunityTypesByIdErrors[keyof DeleteApiOpportunityTypesByIdErrors];
 
-export type DeleteApiOppertunityTypesByIdResponses = {
+export type DeleteApiOpportunityTypesByIdResponses = {
     /**
      * OK
      */
     200: unknown;
 };
 
-export type GetApiOppertunityTypesByIdData = {
+export type GetApiOpportunityTypesByIdData = {
     body?: never;
     path: {
         id: string;
     };
     query?: never;
-    url: '/api/oppertunity-types/{id}';
+    url: '/api/opportunity-types/{id}';
 };
 
-export type GetApiOppertunityTypesByIdErrors = {
+export type GetApiOpportunityTypesByIdErrors = {
     /**
      * Bad Request
      */
@@ -2838,27 +2929,27 @@ export type GetApiOppertunityTypesByIdErrors = {
     500: ProblemDetails;
 };
 
-export type GetApiOppertunityTypesByIdError = GetApiOppertunityTypesByIdErrors[keyof GetApiOppertunityTypesByIdErrors];
+export type GetApiOpportunityTypesByIdError = GetApiOpportunityTypesByIdErrors[keyof GetApiOpportunityTypesByIdErrors];
 
-export type GetApiOppertunityTypesByIdResponses = {
+export type GetApiOpportunityTypesByIdResponses = {
     /**
      * OK
      */
-    200: OppertunityTypeDto;
+    200: OpportunityTypeDto;
 };
 
-export type GetApiOppertunityTypesByIdResponse = GetApiOppertunityTypesByIdResponses[keyof GetApiOppertunityTypesByIdResponses];
+export type GetApiOpportunityTypesByIdResponse = GetApiOpportunityTypesByIdResponses[keyof GetApiOpportunityTypesByIdResponses];
 
-export type PutApiOppertunityTypesByIdData = {
-    body: UpdateOppertunityTypeCommand;
+export type PutApiOpportunityTypesByIdData = {
+    body: UpdateOpportunityTypeCommand;
     path: {
         id: string;
     };
     query?: never;
-    url: '/api/oppertunity-types/{id}';
+    url: '/api/opportunity-types/{id}';
 };
 
-export type PutApiOppertunityTypesByIdErrors = {
+export type PutApiOpportunityTypesByIdErrors = {
     /**
      * Bad Request
      */
@@ -2873,27 +2964,27 @@ export type PutApiOppertunityTypesByIdErrors = {
     500: ProblemDetails;
 };
 
-export type PutApiOppertunityTypesByIdError = PutApiOppertunityTypesByIdErrors[keyof PutApiOppertunityTypesByIdErrors];
+export type PutApiOpportunityTypesByIdError = PutApiOpportunityTypesByIdErrors[keyof PutApiOpportunityTypesByIdErrors];
 
-export type PutApiOppertunityTypesByIdResponses = {
+export type PutApiOpportunityTypesByIdResponses = {
     /**
      * No Content
      */
     204: void;
 };
 
-export type PutApiOppertunityTypesByIdResponse = PutApiOppertunityTypesByIdResponses[keyof PutApiOppertunityTypesByIdResponses];
+export type PutApiOpportunityTypesByIdResponse = PutApiOpportunityTypesByIdResponses[keyof PutApiOpportunityTypesByIdResponses];
 
-export type PutApiOppertunityTypesByIdSetStateData = {
-    body: SetStateOppertunityTypeCommand;
+export type PutApiOpportunityTypesByIdSetStateData = {
+    body: SetStateOpportunityTypeCommand;
     path: {
         id: string;
     };
     query?: never;
-    url: '/api/oppertunity-types/{id}/set-state';
+    url: '/api/opportunity-types/{id}/set-state';
 };
 
-export type PutApiOppertunityTypesByIdSetStateErrors = {
+export type PutApiOpportunityTypesByIdSetStateErrors = {
     /**
      * Bad Request
      */
@@ -2908,16 +2999,16 @@ export type PutApiOppertunityTypesByIdSetStateErrors = {
     500: ProblemDetails;
 };
 
-export type PutApiOppertunityTypesByIdSetStateError = PutApiOppertunityTypesByIdSetStateErrors[keyof PutApiOppertunityTypesByIdSetStateErrors];
+export type PutApiOpportunityTypesByIdSetStateError = PutApiOpportunityTypesByIdSetStateErrors[keyof PutApiOpportunityTypesByIdSetStateErrors];
 
-export type PutApiOppertunityTypesByIdSetStateResponses = {
+export type PutApiOpportunityTypesByIdSetStateResponses = {
     /**
      * No Content
      */
     204: void;
 };
 
-export type PutApiOppertunityTypesByIdSetStateResponse = PutApiOppertunityTypesByIdSetStateResponses[keyof PutApiOppertunityTypesByIdSetStateResponses];
+export type PutApiOpportunityTypesByIdSetStateResponse = PutApiOpportunityTypesByIdSetStateResponses[keyof PutApiOpportunityTypesByIdSetStateResponses];
 
 export type GetApiRegionsData = {
     body?: never;
