@@ -536,8 +536,8 @@
       <childElements />
     </childElement>
     <childElement id="74e584e3-786e-4190-8c44-805b599b5374" type="DTO-Field" typeId="7baed1fd-469b-4980-8fd9-4cefb8331eb2">
-      <name>Oppertunities</name>
-      <display>Oppertunities: PartnerOppertunityDto[*]</display>
+      <name>Opportunities</name>
+      <display>Opportunities: PartnerOpportunityDto[*]</display>
       <isAbstract>false</isAbstract>
       <genericTypes />
       <typeReference id="704e8ead-5a88-4dd5-a2c6-7ac255bf50fd">
@@ -556,7 +556,7 @@
         <mappingSettingsId>1f747d14-681c-4a20-8c68-34223f41b825</mappingSettingsId>
         <autoSyncTypeReference>false</autoSyncTypeReference>
         <mappedPath>
-          <target id="92b2ac98-6de4-4949-95a7-422eb4d8f1d4" name="Oppertunities" type="association-end" specialization="Association Source End" specializationId="8d9d2e5b-bd55-4f36-9ae4-2b9e84fd4e58" />
+          <target id="92b2ac98-6de4-4949-95a7-422eb4d8f1d4" name="Opportunities" type="association-end" specialization="Association Source End" specializationId="8d9d2e5b-bd55-4f36-9ae4-2b9e84fd4e58" />
         </mappedPath>
       </mappedClass>
       <parentFolderId>27936876-f854-421f-824b-3155c5222a5c</parentFolderId>

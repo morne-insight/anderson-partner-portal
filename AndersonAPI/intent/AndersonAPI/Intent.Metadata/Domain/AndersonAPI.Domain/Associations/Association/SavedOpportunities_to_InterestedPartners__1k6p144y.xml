@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<association id="de1f8116-30f3-483c-9d99-b3111ee67249">
+  <sourceEnd id="90eff1ea-aff5-490b-aa4f-647eff746c7a" type="Association Source End" typeId="8d9d2e5b-bd55-4f36-9ae4-2b9e84fd4e58">
+    <name>SavedOpportunities</name>
+    <display>SavedOpportunities: Opportunity[*]?</display>
+    <order>32</order>
+    <typeReference id="4b163adb-d2d5-4798-b8a7-5ed55ba0e710">
+      <typeId>3e927715-656c-4eef-b1ca-01b028627764</typeId>
+      <isNavigable>true</isNavigable>
+      <isNullable>true</isNullable>
+      <isCollection>true</isCollection>
+      <isRequired>true</isRequired>
+      <typePackageName>AndersonAPI.Domain</typePackageName>
+      <typePackageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</typePackageId>
+      <stereotypes />
+      <genericTypeParameters />
+    </typeReference>
+    <stereotypes />
+    <metadata />
+    <childElements />
+  </sourceEnd>
+  <targetEnd id="de1f8116-30f3-483c-9d99-b3111ee67249" type="Association Target End" typeId="0a66489f-30aa-417b-a75d-b945863366fd">
+    <name>InterestedPartners</name>
+    <display>InterestedPartners: Company[*]</display>
+    <order>26</order>
+    <typeReference id="ddfb5894-54c1-4c03-bca6-e17f31edaadd">
+      <typeId>3259289c-5d51-46cb-8c99-78751b456c44</typeId>
+      <isNavigable>true</isNavigable>
+      <isNullable>false</isNullable>
+      <isCollection>true</isCollection>
+      <isRequired>true</isRequired>
+      <typePackageName>AndersonAPI.Domain</typePackageName>
+      <typePackageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</typePackageId>
+      <stereotypes />
+      <genericTypeParameters />
+    </typeReference>
+    <stereotypes />
+    <metadata />
+    <childElements />
+  </targetEnd>
+  <associationType>Association</associationType>
+  <associationTypeId>eaf9ed4e-0b61-4ac1-ba88-09f912c12087</associationTypeId>
+  <stereotypes />
+</association>

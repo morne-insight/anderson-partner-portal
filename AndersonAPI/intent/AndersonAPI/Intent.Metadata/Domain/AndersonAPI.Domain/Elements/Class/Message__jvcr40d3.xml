@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <class id="b68ed1f3-fac6-45f1-9b56-046fd04c6524" type="Class" typeId="04e12b51-ed12-42a3-9667-a6aa81bb6d10">
+  <comment />
   <name>Message</name>
   <display>Message : BaseEntity</display>
   <isAbstract>false</isAbstract>
@@ -13,8 +14,8 @@
   <metadata />
   <childElements>
     <childElement id="f8e20da6-0b2a-4920-97bd-362b8a159bff" type="Attribute" typeId="0090fb93-483e-41af-a11d-5ad2dc796adf">
-      <name>OppertunityId</name>
-      <display>OppertunityId: guid</display>
+      <name>OpportunityId</name>
+      <display>OpportunityId: guid</display>
       <isAbstract>false</isAbstract>
       <genericTypes />
       <typeReference id="bd4e3c6d-6834-4801-af59-654f9954f572">
@@ -180,7 +181,7 @@
     </childElement>
     <childElement id="c69e50bb-7a78-4b76-ae3e-468ee6b095d3" type="Class Constructor" typeId="dec2bd12-4699-4f45-8ec9-3b62dc692d2b">
       <name>Constructor</name>
-      <display>Message(oppertunityId: guid, content: string, createdDate: datetimeoffset, createdByUser: string, createdByPartner: string?)</display>
+      <display>Message(opportunityId: guid, content: string, createdDate: datetimeoffset, createdByUser: string, createdByPartner: string?)</display>
       <isAbstract>false</isAbstract>
       <sort-children>by-type-then-manually</sort-children>
       <genericTypes />
@@ -201,8 +202,8 @@
       <metadata />
       <childElements>
         <childElement id="910975ce-961f-47fd-8548-4200060b3672" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
-          <name>oppertunityId</name>
-          <display>in : oppertunityId: guid</display>
+          <name>opportunityId</name>
+          <display>in : opportunityId: guid</display>
           <isAbstract>false</isAbstract>
           <genericTypes />
           <typeReference id="3dbdce9d-c1c8-4877-998b-92e95eb6bf44">
@@ -221,7 +222,7 @@
             <mappingSettingsId>d6d0abfd-893c-4bec-92cb-419934ba5ba8</mappingSettingsId>
             <autoSyncTypeReference>true</autoSyncTypeReference>
             <mappedPath>
-              <target id="f8e20da6-0b2a-4920-97bd-362b8a159bff" name="OppertunityId" type="element" specialization="Attribute" specializationId="0090fb93-483e-41af-a11d-5ad2dc796adf" />
+              <target id="f8e20da6-0b2a-4920-97bd-362b8a159bff" name="OpportunityId" type="element" specialization="Attribute" specializationId="0090fb93-483e-41af-a11d-5ad2dc796adf" />
             </mappedPath>
           </mappedClass>
           <parentFolderId>c69e50bb-7a78-4b76-ae3e-468ee6b095d3</parentFolderId>

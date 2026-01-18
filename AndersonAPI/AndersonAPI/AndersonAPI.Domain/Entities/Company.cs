@@ -13,10 +13,10 @@ namespace AndersonAPI.Domain.Entities
         private List<ServiceType> _serviceTypes = [];
         private List<Contact> _contacts = [];
         private List<ApplicationIdentityUser> _applicationIdentityUsers = [];
-        private List<Oppertunity> _oppertunities = [];
-        private List<Oppertunity> _savedOppertunities = [];
         private List<Invite> _invites = [];
         private List<Review> _reviews = [];
+        private List<Opportunity> _opportunities = [];
+        private List<Opportunity> _savedOpportunities = [];
         public Company(string name,
             string shortDescription,
             string fullDescription,
@@ -119,18 +119,6 @@ namespace AndersonAPI.Domain.Entities
             private set => _applicationIdentityUsers = new List<ApplicationIdentityUser>(value);
         }
 
-        public virtual IReadOnlyCollection<Oppertunity> Oppertunities
-        {
-            get => _oppertunities.AsReadOnly();
-            private set => _oppertunities = new List<Oppertunity>(value);
-        }
-
-        public virtual IReadOnlyCollection<Oppertunity> SavedOppertunities
-        {
-            get => _savedOppertunities.AsReadOnly();
-            private set => _savedOppertunities = new List<Oppertunity>(value);
-        }
-
         public virtual IReadOnlyCollection<Invite> Invites
         {
             get => _invites.AsReadOnly();
@@ -150,6 +138,18 @@ namespace AndersonAPI.Domain.Entities
         {
             get => _reviews.AsReadOnly();
             private set => _reviews = new List<Review>(value);
+        }
+
+        public virtual IReadOnlyCollection<Opportunity>? Opportunities
+        {
+            get => _opportunities.AsReadOnly();
+            private set => _opportunities = new List<Opportunity>(value);
+        }
+
+        public virtual IReadOnlyCollection<Opportunity>? SavedOpportunities
+        {
+            get => _savedOpportunities.AsReadOnly();
+            private set => _savedOpportunities = new List<Opportunity>(value);
         }
 
         public void AddLocation(string name, Guid regionId, Guid countryId, bool isHeadOffice)
@@ -176,8 +176,6 @@ namespace AndersonAPI.Domain.Entities
                 throw new InvalidOperationException($"Location with ID {locationId} not found.");
             }
 
-            location.Update(name, regionId, countryId, isHeadOffice);
-
             if (isHeadOffice && !location.IsHeadOffice)
             {
                 // If this location is being set as head office, ensure no other location is a head office
@@ -191,6 +189,8 @@ namespace AndersonAPI.Domain.Entities
             {
                 location.SetHeadOffice(false);
             }
+
+            location.Update(name, regionId, countryId, isHeadOffice);
         }
 
         public void RemoveLocation(Guid locationId)

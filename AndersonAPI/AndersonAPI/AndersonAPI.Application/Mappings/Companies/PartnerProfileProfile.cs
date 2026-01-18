@@ -17,7 +17,7 @@ namespace AndersonAPI.Application.Companies
                 .ForMember(d => d.Industries, opt => opt.MapFrom(src => src.Industries))
                 .ForMember(d => d.Locations, opt => opt.MapFrom(src => src.Locations))
                 .ForMember(d => d.ServiceTypes, opt => opt.MapFrom(src => src.ServiceTypes))
-                .ForMember(d => d.Oppertunities, opt => opt.MapFrom(src => src.Oppertunities))
+                .ForMember(d => d.Opportunities, opt => opt.MapFrom(src => src.Opportunities))
                 .ForMember(d => d.Reviews, opt => opt.MapFrom(src => src.Reviews));
         }
     }

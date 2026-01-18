@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<association id="65836b02-6bae-4d33-924b-edc0f21d2eb0">
+  <sourceEnd id="1288270b-848f-43a4-9b9c-72c12e62e909" type="Query Entity Action Source End" typeId="32a65f26-2555-4616-8a2c-6a90805600bb">
+    <display>: GetMyOpportunitiesQuery</display>
+    <order>0</order>
+    <typeReference id="b31cf0fd-44ea-4dfc-894e-56d635871da0">
+      <typeId>2bc28f49-639b-47d6-94cf-71872f7b733e</typeId>
+      <isNavigable>false</isNavigable>
+      <isNullable>false</isNullable>
+      <isCollection>false</isCollection>
+      <isRequired>true</isRequired>
+      <typePackageName>AndersonAPI.Services</typePackageName>
+      <typePackageId>c8555d38-5afc-4ea2-9a61-c7a505212753</typePackageId>
+      <stereotypes />
+      <genericTypeParameters />
+    </typeReference>
+    <stereotypes />
+    <metadata />
+    <childElements />
+  </sourceEnd>
+  <targetEnd id="65836b02-6bae-4d33-924b-edc0f21d2eb0" type="Query Entity Action Target End" typeId="93ef6675-cba4-4998-adff-cb22d5343ed4">
+    <name>opportunities</name>
+    <display>[query] opportunities: Opportunity[*]?</display>
+    <order>0</order>
+    <traits>
+      <trait id="d00a2ab0-9a23-4192-b8bb-166798fc7dba" name="[Processing Action]" />
+    </traits>
+    <typeReference id="b80b13ce-beb4-46fd-9522-af035459ce38">
+      <typeId>3e927715-656c-4eef-b1ca-01b028627764</typeId>
+      <isNavigable>true</isNavigable>
+      <isNullable>true</isNullable>
+      <isCollection>true</isCollection>
+      <isRequired>true</isRequired>
+      <typePackageName>AndersonAPI.Domain</typePackageName>
+      <typePackageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</typePackageId>
+      <stereotypes />
+      <genericTypeParameters />
+    </typeReference>
+    <stereotypes />
+    <mappings>
+      <mapping type="Query Entity Mapping" typeId="25f25af9-c38b-4053-9474-b0fabe9d7ea7">
+        <source applicationId="e87261ce-2b9f-4042-8562-a503e4cf2759" designerId="81104ae6-2bc5-4bae-b05a-f987b0372d81" elementId="2bc28f49-639b-47d6-94cf-71872f7b733e" location="[AndersonAPI].[Services].[GetMyOpportunitiesQuery]" />
+        <target applicationId="e87261ce-2b9f-4042-8562-a503e4cf2759" designerId="6ab29b31-27af-4f56-a67c-986d82097d63" elementId="3e927715-656c-4eef-b1ca-01b028627764" location="[AndersonAPI].[Services].[Opportunity]" />
+        <mappedEnds />
+      </mapping>
+    </mappings>
+    <metadata />
+    <childElements />
+  </targetEnd>
+  <associationType>Query Entity Action</associationType>
+  <associationTypeId>47ab5888-a258-4bec-a9fc-a83de69eb79d</associationTypeId>
+  <stereotypes />
+</association>

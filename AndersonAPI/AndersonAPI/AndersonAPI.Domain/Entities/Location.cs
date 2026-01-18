@@ -6,13 +6,19 @@ namespace AndersonAPI.Domain.Entities
 {
     public class Location : BaseEntity
     {
-        public Location(string name, Guid regionId, Guid countryId, bool isHeadOffice, Guid companyId)
+        public Location(string name,
+            Guid regionId,
+            Guid countryId,
+            bool isHeadOffice,
+            Guid companyId,
+            EntityState state = EntityState.Enabled)
         {
             Name = name;
             RegionId = regionId;
             CountryId = countryId;
             IsHeadOffice = isHeadOffice;
             CompanyId = companyId;
+            State = state;
         }
         /// <summary>
         /// Required by Entity Framework.

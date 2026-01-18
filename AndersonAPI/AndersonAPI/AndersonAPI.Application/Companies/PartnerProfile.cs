@@ -17,7 +17,7 @@ namespace AndersonAPI.Application.Companies
             Industries = null!;
             Locations = null!;
             ServiceTypes = null!;
-            Oppertunities = null!;
+            Opportunities = null!;
             Reviews = null!;
         }
 
@@ -30,7 +30,7 @@ namespace AndersonAPI.Application.Companies
         public List<PartnerIndustryDto> Industries { get; set; }
         public List<PartnerLocationDto> Locations { get; set; }
         public List<PartnerServiceTypeDto> ServiceTypes { get; set; }
-        public List<PartnerOppertunityDto> Oppertunities { get; set; }
+        public List<PartnerOpportunityDto> Opportunities { get; set; }
         public List<PartnerReviewDto> Reviews { get; set; }
 
         public static PartnerProfile Create(
@@ -43,7 +43,7 @@ namespace AndersonAPI.Application.Companies
             List<PartnerIndustryDto> industries,
             List<PartnerLocationDto> locations,
             List<PartnerServiceTypeDto> serviceTypes,
-            List<PartnerOppertunityDto> oppertunities,
+            List<PartnerOpportunityDto> opportunities,
             List<PartnerReviewDto> reviews)
         {
             return new PartnerProfile
@@ -57,7 +57,7 @@ namespace AndersonAPI.Application.Companies
                 Industries = industries,
                 Locations = locations,
                 ServiceTypes = serviceTypes,
-                Oppertunities = oppertunities,
+                Opportunities = opportunities,
                 Reviews = reviews
             };
         }

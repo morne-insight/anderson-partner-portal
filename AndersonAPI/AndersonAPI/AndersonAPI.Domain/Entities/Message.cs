@@ -6,13 +6,13 @@ namespace AndersonAPI.Domain.Entities
 {
     public class Message : BaseEntity
     {
-        public Message(Guid oppertunityId,
+        public Message(Guid opportunityId,
     string content,
     DateTimeOffset createdDate,
     string createdByUser,
     string? createdByPartner)
         {
-            OppertunityId = oppertunityId;
+            OpportunityId = opportunityId;
             Content = content;
             CreatedDate = createdDate;
             CreatedByUser = createdByUser;
@@ -28,7 +28,7 @@ namespace AndersonAPI.Domain.Entities
             CreatedByUser = null!;
         }
 
-        public Guid OppertunityId { get; private set; }
+        public Guid OpportunityId { get; private set; }
 
         public string Content { get; private set; }
 
