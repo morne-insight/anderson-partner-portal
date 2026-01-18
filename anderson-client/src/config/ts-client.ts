@@ -15,6 +15,25 @@ export const configureApiClient = () => {
         : import.meta.env.VITE_API_BASE_URL || "https://localhost:44395",
   });
 
+  // Global Request Interceptor for Authentication
+  client.interceptors.request.use(async (request) => {
+    // Only run this on the server
+    if (typeof window === "undefined") {
+      try {
+        // Dynamic import to avoid bringing server-only code to the browser
+        const { useAppSession } = await import("../utils/session");
+        const session = await useAppSession();
+        const token = session.data.userId;
+        if (token) {
+          request.headers.set("Authorization", `Bearer ${token}`);
+        }
+      } catch (e) {
+        // Not in a request context (e.g., during build/init)
+      }
+    }
+    return request;
+  });
+  
   // Add response interceptor for logging (client-side only)
   if (typeof window !== "undefined") {
     client.interceptors.response.use((response) => {

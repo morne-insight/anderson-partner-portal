@@ -1,17 +1,17 @@
 import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
-import { getApiCompaniesMe, putApiCompaniesScrapeWebsite, postApiCompanies } from "../../../api/sdk.gen";
 import { useMutation } from "@tanstack/react-query";
 import { Building2, ChevronRight, Globe, Users, Plus, Loader2 } from "lucide-react";
 import { useState } from "react";
-import { Button } from "../../../components/ui/button";
-import { Input } from "../../../components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { callApi } from "@/server/proxy";
 
 export const Route = createFileRoute("/_app/profile/")({
   component: ProfileIndex,
   loader: async () => {
     try {
-      const response = await getApiCompaniesMe();
-      return { companies: (response.data || []) as any[] };
+      const response = await callApi({ data: { fn: 'getApiCompaniesMe' } });
+      return { companies: (response || []) as any[] };
     } catch (error) {
       console.error("Failed to fetch companies", error);
       return { companies: [] };
@@ -21,6 +21,7 @@ export const Route = createFileRoute("/_app/profile/")({
 
 function ProfileIndex() {
   const { companies } = Route.useLoaderData();
+  console.log("companies", companies)
   const router = useRouter();
   const [scrapeUrl, setScrapeUrl] = useState("");
   const [newFirmName, setNewFirmName] = useState("");
@@ -36,7 +37,7 @@ function ProfileIndex() {
 
   const scrapeMutation = useMutation({
     mutationFn: async (url: string) => {
-      return putApiCompaniesScrapeWebsite({ body: { url } });
+      return callApi({ data: { fn: 'putApiCompaniesScrapeWebsite', args: { body: { url } } } });
     },
     onSuccess: () => {
       refreshData();
@@ -49,8 +50,7 @@ function ProfileIndex() {
 
   const createMutation = useMutation({
     mutationFn: async () => {
-      return postApiCompanies({
-        body: {
+      return callApi({ data: { fn: 'postApiCompanies', args: { body: {
             name: newFirmName || "New Firm",
             shortDescription: "",
             fullDescription: "",
@@ -59,13 +59,12 @@ function ProfileIndex() {
             serviceTypes: [],
             capabilities: [],
             industries: []
-        }
-      });
+        }  }}});
     },
     onSuccess: (data) => {
       refreshData();
-      if (data.data?.value) {
-        router.navigate({ to: "/profile/$companyId", params: { companyId: data.data.value } });
+      if (data?.value) {
+        router.navigate({ to: "/profile/$companyId", params: { companyId: data.value } });
       }
     },
     onError: (err) => {

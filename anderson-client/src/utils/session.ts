@@ -10,10 +10,10 @@ export interface SessionData {
 }
 
 export function useAppSession() {
+
   return useSession<SessionData>({
     name: "app-session",
-    password:
-      process.env.SESSION_SECRET || "anderson-partner-portal-secret-key", // >= 32 chars
+    password: process.env.SESSION_SECRET || "anderson-partner-portal-secret-key",
     cookie: {
       httpOnly: true,
       sameSite: "lax",

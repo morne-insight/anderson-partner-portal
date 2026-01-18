@@ -29,6 +29,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isAdmin }) => {
     { to: "/opportunities", label: "Opportunities", icon: Globe },
     { to: "/profile", label: "My Profile", icon: FileText },
     { to: "/directory", label: "Network Directory", icon: Users },
+    { to: "/dev", label: "Dev", icon: Users },
   ];
 
   if (isAdmin) {

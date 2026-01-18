@@ -14,6 +14,7 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as AppRouteImport } from './routes/_app'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppDirectoryRouteImport } from './routes/_app/directory'
+import { Route as AppDevRouteImport } from './routes/_app/dev'
 import { Route as AppDashboardRouteImport } from './routes/_app/dashboard'
 import { Route as AppProfileIndexRouteImport } from './routes/_app/profile/index'
 import { Route as AppPartnersIndexRouteImport } from './routes/_app/partners.index'
@@ -45,6 +46,11 @@ const IndexRoute = IndexRouteImport.update({
 const AppDirectoryRoute = AppDirectoryRouteImport.update({
   id: '/directory',
   path: '/directory',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppDevRoute = AppDevRouteImport.update({
+  id: '/dev',
+  path: '/dev',
   getParentRoute: () => AppRoute,
 } as any)
 const AppDashboardRoute = AppDashboardRouteImport.update({
@@ -94,6 +100,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/dashboard': typeof AppDashboardRoute
+  '/dev': typeof AppDevRoute
   '/directory': typeof AppDirectoryRoute
   '/opportunities/$opportunityId': typeof AppOpportunitiesOpportunityIdRoute
   '/opportunities/new': typeof AppOpportunitiesNewRoute
@@ -108,6 +115,7 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/dashboard': typeof AppDashboardRoute
+  '/dev': typeof AppDevRoute
   '/directory': typeof AppDirectoryRoute
   '/opportunities/$opportunityId': typeof AppOpportunitiesOpportunityIdRoute
   '/opportunities/new': typeof AppOpportunitiesNewRoute
@@ -124,6 +132,7 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/_app/dashboard': typeof AppDashboardRoute
+  '/_app/dev': typeof AppDevRoute
   '/_app/directory': typeof AppDirectoryRoute
   '/_app/opportunities/$opportunityId': typeof AppOpportunitiesOpportunityIdRoute
   '/_app/opportunities/new': typeof AppOpportunitiesNewRoute
@@ -140,6 +149,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/dashboard'
+    | '/dev'
     | '/directory'
     | '/opportunities/$opportunityId'
     | '/opportunities/new'
@@ -154,6 +164,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/dashboard'
+    | '/dev'
     | '/directory'
     | '/opportunities/$opportunityId'
     | '/opportunities/new'
@@ -169,6 +180,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/_app/dashboard'
+    | '/_app/dev'
     | '/_app/directory'
     | '/_app/opportunities/$opportunityId'
     | '/_app/opportunities/new'
@@ -221,6 +233,13 @@ declare module '@tanstack/react-router' {
       path: '/directory'
       fullPath: '/directory'
       preLoaderRoute: typeof AppDirectoryRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/dev': {
+      id: '/_app/dev'
+      path: '/dev'
+      fullPath: '/dev'
+      preLoaderRoute: typeof AppDevRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/dashboard': {
@@ -284,6 +303,7 @@ declare module '@tanstack/react-router' {
 
 interface AppRouteChildren {
   AppDashboardRoute: typeof AppDashboardRoute
+  AppDevRoute: typeof AppDevRoute
   AppDirectoryRoute: typeof AppDirectoryRoute
   AppOpportunitiesOpportunityIdRoute: typeof AppOpportunitiesOpportunityIdRoute
   AppOpportunitiesNewRoute: typeof AppOpportunitiesNewRoute
@@ -296,6 +316,7 @@ interface AppRouteChildren {
 
 const AppRouteChildren: AppRouteChildren = {
   AppDashboardRoute: AppDashboardRoute,
+  AppDevRoute: AppDevRoute,
   AppDirectoryRoute: AppDirectoryRoute,
   AppOpportunitiesOpportunityIdRoute: AppOpportunitiesOpportunityIdRoute,
   AppOpportunitiesNewRoute: AppOpportunitiesNewRoute,

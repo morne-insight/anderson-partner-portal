@@ -1,23 +1,6 @@
 import { createFileRoute, useRouter } from "@tanstack/react-router";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useForm } from "@tanstack/react-form";
-import { 
-  getApiCompaniesByIdProfile, 
-  putApiCompaniesScrapeWebsite, 
-  putApiCompaniesById, 
-  putApiCompaniesByIdCapabilities,
-  putApiCompaniesByIdIndustries,
-  postApiCompaniesByIdLocation,
-  putApiCompaniesByIdLocation,
-  deleteApiCompaniesByIdLocation,
-  postApiCompaniesByIdContact,
-  putApiCompaniesByIdContact,
-  deleteApiCompaniesByIdContact,
-  getApiCapabilities,
-  getApiIndustries,
-  getApiCountries,
-  getApiRegions
-} from "@/api/sdk.gen";
 import { CompanyProfileDto } from "@/api/types.gen";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -36,27 +19,28 @@ import {
   Briefcase, 
   Building 
 } from "lucide-react";
-import React, { useState } from "react";
+import { useState } from "react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { callApi } from "@/server/proxy";
 
 export const Route = createFileRoute("/_app/profile/$companyId")({
   component: ProfileEdit,
   loader: async ({ params }) => {
     // Fetch all required reference data and company profile
     const [company, capabilities, industries, countries, regions] = await Promise.all([
-      getApiCompaniesByIdProfile({ path: { id: params.companyId } }),
-      getApiCapabilities(),
-      getApiIndustries(),
-      getApiCountries(),
-      getApiRegions(),
+      callApi({ data: { fn: 'getApiCompaniesByIdProfile', args: { path: { id: params.companyId } } } }),
+      callApi({ data: { fn: 'getApiCapabilities' } }),
+      callApi({ data: { fn: 'getApiIndustries' } }),
+      callApi({ data: { fn: 'getApiCountries' } }),
+      callApi({ data: { fn: 'getApiRegions' } }),
     ]);
 
     return {
-      company: company.data as any,
-      capabilities: capabilities.data || [],
-      industries: industries.data || [],
-      countries: countries.data || [],
-      regions: regions.data || [],
+      company: company as any,
+      capabilities: capabilities || [],
+      industries: industries || [],
+      countries: countries || [],
+      regions: regions || [],
     };
   },
 });
@@ -85,7 +69,7 @@ function ProfileEdit() {
     mutationFn: async (url: string) => {
       // Note: putApiCompaniesScrapeWebsite needs a body, checking signature...
       // Signature: (options) => ... options.body is ScrapeWebsiteCommand { url: string }
-      return putApiCompaniesScrapeWebsite({ body: { url } });
+      return callApi({ data: { fn: 'putApiCompaniesScrapeWebsite', args: { body: { url } } } });
     },
     onSuccess: () => {
       refreshData();
@@ -108,28 +92,27 @@ function ProfileEdit() {
     },
     onSubmit: async ({ value }) => {
       try {
-        await putApiCompaniesById({
-          path: { id: companyId },
-          body: {
-            id: companyId,
-            name: value.name,
-            shortDescription: value.shortDescription,
-            description: value.fullDescription, // Mapping fullDescription to description as per types
-            websiteUrl: value.websiteUrl,
-            employeeCount: value.employeeCount,
-          }
-        });
+        await callApi({ 
+            data: { 
+              fn: 'putApiCompaniesById', 
+              args: { 
+                path: { id: companyId }, 
+                body: { 
+                  id: companyId, 
+                  name: value.name, 
+                  shortDescription: value.shortDescription,
+                  description: value.fullDescription, 
+                  websiteUrl: value.websiteUrl,
+                  employeeCount: value.employeeCount,
+                }
+              } 
+            }
+          });
         
         // Also save Capabilities and Industries
-        await putApiCompaniesByIdCapabilities({
-          path: { id: companyId },
-          body: { id: companyId, capabilityIds: selectedCapabilityIds }
-        });
+        await callApi({ data: { fn: 'putApiCompaniesByIdCapabilities', args: { path: { id: companyId }, body: { id: companyId, capabilityIds: selectedCapabilityIds } } } });
         
-        await putApiCompaniesByIdIndustries({
-            path: { id: companyId },
-            body: { id: companyId, industryIds: selectedIndustryIds }
-        });
+        await callApi({ data: { fn: 'putApiCompaniesByIdIndustries', args: { path: { id: companyId }, body: { id: companyId, industryIds: selectedIndustryIds } } } });
 
         alert("Profile saved successfully!");
         refreshData();
@@ -173,14 +156,19 @@ function ProfileEdit() {
   
   const addLocationMutation = useMutation({
     mutationFn: async () => {
-      return postApiCompaniesByIdLocation({
-        path: { id: companyId },
-        body: {
-          id: companyId,
-          name: newLocation.name,
-          regionId: newLocation.regionId,
-          countryId: newLocation.countryId,
-          isHeadOffice: newLocation.isHeadOffice
+      return callApi({
+        data: {
+          fn: 'postApiCompaniesByIdLocation',
+          args: {
+            path: { id: companyId },
+            body: {
+              id: companyId,
+              name: newLocation.name,
+              regionId: newLocation.regionId,
+              countryId: newLocation.countryId,
+              isHeadOffice: newLocation.isHeadOffice
+            }
+          }
         }
       });
     },
@@ -193,7 +181,7 @@ function ProfileEdit() {
 
   const deleteLocationMutation = useMutation({
     mutationFn: async (locationId: string) => {
-      return deleteApiCompaniesByIdLocation({ path: { id: companyId }, query: { locationId } });
+      return callApi({ data: { fn: 'deleteApiCompaniesByIdLocation', args: { path: { id: companyId }, query: { locationId } } } });
     },
     onSuccess: () => {
       refreshData();
@@ -202,15 +190,20 @@ function ProfileEdit() {
 
   const updateLocationMutation = useMutation({
     mutationFn: async (locationId: string) => {
-      return putApiCompaniesByIdLocation({
-        path: { id: companyId },
-        body: {
-          id: companyId,
-          locationId,
-          name: editLocation.name,
-          regionId: editLocation.regionId,
-          countryId: editLocation.countryId,
-          isHeadOffice: editLocation.isHeadOffice
+      return callApi({
+        data: {
+          fn: 'putApiCompaniesByIdLocation',
+          args: {
+            path: { id: companyId },
+            body: {
+              id: companyId,
+              locationId,
+              name: editLocation.name,
+              regionId: editLocation.regionId,
+              countryId: editLocation.countryId,
+              isHeadOffice: editLocation.isHeadOffice
+            }
+          }
         }
       });
     },
@@ -238,16 +231,21 @@ function ProfileEdit() {
   const addContactMutation = useMutation({
     mutationFn: async () => {
         // PostApiCompaniesByIdContactData
-      return postApiCompaniesByIdContact({
-        path: { id: companyId },
-        body: {
+      return callApi({
+        data: {
+          fn: 'postApiCompaniesByIdContact',
+          args: {
+            path: { id: companyId },
+            body: {
             id: companyId,
             firstName: newContact.firstName,
             lastName: newContact.lastName,
             emailAddress: newContact.email,
             companyPosition: newContact.position
         }
-      });
+      }
+    }
+    });
     },
     onSuccess: () => {
       setIsAddingContact(false);
@@ -258,7 +256,7 @@ function ProfileEdit() {
 
   const deleteContactMutation = useMutation({
     mutationFn: async (contactId: string) => {
-       return deleteApiCompaniesByIdContact({ path: { id: companyId }, query: { contactId } });
+       return callApi({ data: { fn: 'deleteApiCompaniesByIdContact', args: { path: { id: companyId }, query: { contactId } } } });
     },
     onSuccess: () => {
         refreshData();
@@ -270,9 +268,12 @@ function ProfileEdit() {
 
   const updateContactMutation = useMutation({
     mutationFn: async (contactId: string) => {
-      return putApiCompaniesByIdContact({
-        path: { id: companyId },
-        body: {
+      return callApi({
+        data: {
+          fn: 'putApiCompaniesByIdContact',
+          args: {
+            path: { id: companyId },
+            body: {
           id: companyId,
           contactId,
           firstName: editContact.firstName,
@@ -280,7 +281,9 @@ function ProfileEdit() {
           emailAddress: editContact.email,
           companyPosition: editContact.position
         }
-      });
+      }
+    }
+    });
     },
     onSuccess: () => {
       setEditingContactId(null);
