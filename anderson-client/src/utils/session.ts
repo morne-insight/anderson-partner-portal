@@ -7,6 +7,7 @@ export interface SessionData {
   roles?: string[];
   accessToken?: string; // store JWT here (server-only cookie session)
   accessTokenExpiresAt?: number;
+  refreshToken?: string; // store refresh token for token renewal
 }
 
 export function useAppSession() {

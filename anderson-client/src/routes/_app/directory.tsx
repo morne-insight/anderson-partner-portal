@@ -24,31 +24,28 @@ interface DirectoryLoaderData {
   serviceTypes: ServiceTypeDto[];
 }
 
-interface ProfileLoaderData {
-  companies: CompanyProfileDto[];
-}
 
 export const Route = createFileRoute("/_app/directory")({
   component: NetworkDirectory,
   loader: async () => {
-    // const [companies, countries, regions, capabilities, industries, serviceTypes] = await Promise.all([
-    //   callApi({ data: { fn: 'getApiCompanies' } }),
-    //   callApi({ data: { fn: 'getApiCountries' } }),
-    //   callApi({ data: { fn: 'getApiRegions' } }),
-    //   callApi({ data: { fn: 'getApiCapabilities' } }),
-    //   callApi({ data: { fn: 'getApiIndustries' } }),
-    //   callApi({ data: { fn: 'getApiServiceTypes' } })
-    // ]);
+    const [companies, countries, regions, capabilities, industries, serviceTypes] = await Promise.all([
+      callApi({ data: { fn: 'getApiCompanies' } }),
+      callApi({ data: { fn: 'getApiCountries' } }),
+      callApi({ data: { fn: 'getApiRegions' } }),
+      callApi({ data: { fn: 'getApiCapabilities' } }),
+      callApi({ data: { fn: 'getApiIndustries' } }),
+      callApi({ data: { fn: 'getApiServiceTypes' } })
+    ]);
 
-    // return {
-    //   companies: companies || [],
-    //   countries: countries || [],
-    //   regions: regions || [],
-    //   capabilities: capabilities || [],
-    //   industries: industries || [],
-    //   serviceTypes: serviceTypes || []
-    // } as DirectoryLoaderData;
-    return { companies: [] } as ProfileLoaderData;
+    return {
+      companies: companies || [],
+      countries: countries || [],
+      regions: regions || [],
+      capabilities: capabilities || [],
+      industries: industries || [],
+      serviceTypes: serviceTypes || []
+    } as DirectoryLoaderData;
+    // return { companies: [] } as ProfileLoaderData;
   }
 });
 
