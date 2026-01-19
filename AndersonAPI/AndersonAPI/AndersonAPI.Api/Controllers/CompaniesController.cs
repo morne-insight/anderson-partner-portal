@@ -8,8 +8,13 @@ using AndersonAPI.Application.Companies.CreateCompany;
 using AndersonAPI.Application.Companies.DeleteCompany;
 using AndersonAPI.Application.Companies.GetCompanies;
 using AndersonAPI.Application.Companies.GetCompanyById;
+using AndersonAPI.Application.Companies.GetCompanyProfileById;
+using AndersonAPI.Application.Companies.GetMyCompanies;
+using AndersonAPI.Application.Companies.GetPartnerProfileById;
+using AndersonAPI.Application.Companies.GetPartnersByAI;
 using AndersonAPI.Application.Companies.RemoveContactCompany;
 using AndersonAPI.Application.Companies.RemoveLocationCompany;
+using AndersonAPI.Application.Companies.ScrapeWebsite;
 using AndersonAPI.Application.Companies.SetCapabilitiesCompany;
 using AndersonAPI.Application.Companies.SetHeadOfficeCompany;
 using AndersonAPI.Application.Companies.SetIndustriesCompany;
@@ -166,6 +171,22 @@ namespace AndersonAPI.Api.Controllers
         {
             await _mediator.Send(new RemoveLocationCompanyCommand(id: id, locationId: locationId), cancellationToken);
             return Ok();
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <response code="204">Successfully updated.</response>
+        /// <response code="400">One or more validation errors have occurred.</response>
+        [HttpPut("api/companies/scrape-website")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> ScrapeWebsite(
+            [FromBody] ScrapeWebsiteCommand command,
+            CancellationToken cancellationToken = default)
+        {
+            await _mediator.Send(command, cancellationToken);
+            return NoContent();
         }
 
         /// <summary>
@@ -402,11 +423,11 @@ namespace AndersonAPI.Api.Controllers
 
         /// <summary>
         /// </summary>
-        /// <response code="200">Returns the specified List&lt;CompanyDto&gt;.</response>
+        /// <response code="200">Returns the specified List&lt;DirectoryProfileListItem&gt;.</response>
         [HttpGet("api/companies")]
-        [ProducesResponseType(typeof(List<CompanyDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(List<DirectoryProfileListItem>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<List<CompanyDto>>> GetCompanies(CancellationToken cancellationToken = default)
+        public async Task<ActionResult<List<DirectoryProfileListItem>>> GetCompanies(CancellationToken cancellationToken = default)
         {
             var result = await _mediator.Send(new GetCompaniesQuery(), cancellationToken);
             return Ok(result);
@@ -428,6 +449,70 @@ namespace AndersonAPI.Api.Controllers
         {
             var result = await _mediator.Send(new GetCompanyByIdQuery(id: id), cancellationToken);
             return result == null ? NotFound() : Ok(result);
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <response code="200">Returns the specified CompanyProfileDto.</response>
+        /// <response code="400">One or more validation errors have occurred.</response>
+        /// <response code="404">No CompanyProfileDto could be found with the provided parameters.</response>
+        [HttpGet("api/companies/{id}/profile")]
+        [ProducesResponseType(typeof(CompanyProfileDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<CompanyProfileDto>> GetCompanyProfileById(
+            [FromRoute] Guid id,
+            CancellationToken cancellationToken = default)
+        {
+            var result = await _mediator.Send(new GetCompanyProfileByIdQuery(id: id), cancellationToken);
+            return result == null ? NotFound() : Ok(result);
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <response code="200">Returns the specified List&lt;CompanyProfileDto&gt;.</response>
+        [HttpGet("api/companies/me")]
+        [ProducesResponseType(typeof(List<CompanyProfileDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<List<CompanyProfileDto>>> GetMyCompanies(CancellationToken cancellationToken = default)
+        {
+            var result = await _mediator.Send(new GetMyCompaniesQuery(), cancellationToken);
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <response code="200">Returns the specified PartnerProfile.</response>
+        /// <response code="400">One or more validation errors have occurred.</response>
+        /// <response code="404">No PartnerProfile could be found with the provided parameters.</response>
+        [HttpGet("api/companies/{id}/partner")]
+        [ProducesResponseType(typeof(PartnerProfile), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<PartnerProfile>> GetPartnerProfileById(
+            [FromRoute] Guid id,
+            CancellationToken cancellationToken = default)
+        {
+            var result = await _mediator.Send(new GetPartnerProfileByIdQuery(id: id), cancellationToken);
+            return result == null ? NotFound() : Ok(result);
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <response code="200">Successfully updated.</response>
+        /// <response code="400">One or more validation errors have occurred.</response>
+        [HttpPut("api/companies/partners")]
+        [ProducesResponseType(typeof(List<PartnerProfileListItem>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<List<PartnerProfileListItem>>> GetPartnersByAI(
+            [FromBody] GetPartnersByAIQuery query,
+            CancellationToken cancellationToken = default)
+        {
+            var result = await _mediator.Send(query, cancellationToken);
+            return Ok(result);
         }
     }
 }

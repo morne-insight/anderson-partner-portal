@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<association id="42e3e071-e4da-42e4-986c-e3a54fe71448">
+  <sourceEnd id="31769353-47b9-44ce-987f-f74c82123a3c" type="Association Source End" typeId="8d9d2e5b-bd55-4f36-9ae4-2b9e84fd4e58">
+    <name>Opportunities</name>
+    <display>Opportunities: Opportunity[*]?</display>
+    <order>0</order>
+    <typeReference id="b96df820-167a-468a-b1d7-3fd69897470a">
+      <typeId>3e927715-656c-4eef-b1ca-01b028627764</typeId>
+      <isNavigable>false</isNavigable>
+      <isNullable>true</isNullable>
+      <isCollection>true</isCollection>
+      <isRequired>true</isRequired>
+      <typePackageName>AndersonAPI.Domain</typePackageName>
+      <typePackageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</typePackageId>
+      <stereotypes />
+      <genericTypeParameters />
+    </typeReference>
+    <stereotypes />
+    <metadata />
+    <childElements />
+  </sourceEnd>
+  <targetEnd id="42e3e071-e4da-42e4-986c-e3a54fe71448" type="Association Target End" typeId="0a66489f-30aa-417b-a75d-b945863366fd">
+    <name>ServiceTypes</name>
+    <display>ServiceTypes: ServiceType[*]</display>
+    <order>29</order>
+    <typeReference id="9837e0c1-a5a9-4c20-9685-a63eaf82e681">
+      <typeId>2858bc40-1a77-47e2-b6ea-8e09391a38d8</typeId>
+      <isNavigable>true</isNavigable>
+      <isNullable>false</isNullable>
+      <isCollection>true</isCollection>
+      <isRequired>true</isRequired>
+      <typePackageName>AndersonAPI.Domain</typePackageName>
+      <typePackageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</typePackageId>
+      <stereotypes />
+      <genericTypeParameters />
+    </typeReference>
+    <stereotypes />
+    <metadata />
+    <childElements />
+  </targetEnd>
+  <associationType>Association</associationType>
+  <associationTypeId>eaf9ed4e-0b61-4ac1-ba88-09f912c12087</associationTypeId>
+  <stereotypes />
+</association>

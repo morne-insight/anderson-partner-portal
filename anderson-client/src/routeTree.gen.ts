@@ -13,7 +13,16 @@ import { Route as RegisterRouteImport } from './routes/register'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as AppRouteImport } from './routes/_app'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AppDirectoryRouteImport } from './routes/_app/directory'
+import { Route as AppDevRouteImport } from './routes/_app/dev'
 import { Route as AppDashboardRouteImport } from './routes/_app/dashboard'
+import { Route as AppProfileIndexRouteImport } from './routes/_app/profile/index'
+import { Route as AppPartnersIndexRouteImport } from './routes/_app/partners.index'
+import { Route as AppOpportunitiesIndexRouteImport } from './routes/_app/opportunities/index'
+import { Route as AppProfileCompanyIdRouteImport } from './routes/_app/profile/$companyId'
+import { Route as AppPartnersIdRouteImport } from './routes/_app/partners.$id'
+import { Route as AppOpportunitiesNewRouteImport } from './routes/_app/opportunities/new'
+import { Route as AppOpportunitiesOpportunityIdRouteImport } from './routes/_app/opportunities/$opportunityId'
 
 const RegisterRoute = RegisterRouteImport.update({
   id: '/register',
@@ -34,23 +43,87 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppDirectoryRoute = AppDirectoryRouteImport.update({
+  id: '/directory',
+  path: '/directory',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppDevRoute = AppDevRouteImport.update({
+  id: '/dev',
+  path: '/dev',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppDashboardRoute = AppDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
   getParentRoute: () => AppRoute,
 } as any)
+const AppProfileIndexRoute = AppProfileIndexRouteImport.update({
+  id: '/profile/',
+  path: '/profile/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppPartnersIndexRoute = AppPartnersIndexRouteImport.update({
+  id: '/partners/',
+  path: '/partners/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppOpportunitiesIndexRoute = AppOpportunitiesIndexRouteImport.update({
+  id: '/opportunities/',
+  path: '/opportunities/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppProfileCompanyIdRoute = AppProfileCompanyIdRouteImport.update({
+  id: '/profile/$companyId',
+  path: '/profile/$companyId',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppPartnersIdRoute = AppPartnersIdRouteImport.update({
+  id: '/partners/$id',
+  path: '/partners/$id',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppOpportunitiesNewRoute = AppOpportunitiesNewRouteImport.update({
+  id: '/opportunities/new',
+  path: '/opportunities/new',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppOpportunitiesOpportunityIdRoute =
+  AppOpportunitiesOpportunityIdRouteImport.update({
+    id: '/opportunities/$opportunityId',
+    path: '/opportunities/$opportunityId',
+    getParentRoute: () => AppRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/dashboard': typeof AppDashboardRoute
+  '/dev': typeof AppDevRoute
+  '/directory': typeof AppDirectoryRoute
+  '/opportunities/$opportunityId': typeof AppOpportunitiesOpportunityIdRoute
+  '/opportunities/new': typeof AppOpportunitiesNewRoute
+  '/partners/$id': typeof AppPartnersIdRoute
+  '/profile/$companyId': typeof AppProfileCompanyIdRoute
+  '/opportunities': typeof AppOpportunitiesIndexRoute
+  '/partners': typeof AppPartnersIndexRoute
+  '/profile': typeof AppProfileIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/dashboard': typeof AppDashboardRoute
+  '/dev': typeof AppDevRoute
+  '/directory': typeof AppDirectoryRoute
+  '/opportunities/$opportunityId': typeof AppOpportunitiesOpportunityIdRoute
+  '/opportunities/new': typeof AppOpportunitiesNewRoute
+  '/partners/$id': typeof AppPartnersIdRoute
+  '/profile/$companyId': typeof AppProfileCompanyIdRoute
+  '/opportunities': typeof AppOpportunitiesIndexRoute
+  '/partners': typeof AppPartnersIndexRoute
+  '/profile': typeof AppProfileIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -59,13 +132,63 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/_app/dashboard': typeof AppDashboardRoute
+  '/_app/dev': typeof AppDevRoute
+  '/_app/directory': typeof AppDirectoryRoute
+  '/_app/opportunities/$opportunityId': typeof AppOpportunitiesOpportunityIdRoute
+  '/_app/opportunities/new': typeof AppOpportunitiesNewRoute
+  '/_app/partners/$id': typeof AppPartnersIdRoute
+  '/_app/profile/$companyId': typeof AppProfileCompanyIdRoute
+  '/_app/opportunities/': typeof AppOpportunitiesIndexRoute
+  '/_app/partners/': typeof AppPartnersIndexRoute
+  '/_app/profile/': typeof AppProfileIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/register' | '/dashboard'
+  fullPaths:
+    | '/'
+    | '/login'
+    | '/register'
+    | '/dashboard'
+    | '/dev'
+    | '/directory'
+    | '/opportunities/$opportunityId'
+    | '/opportunities/new'
+    | '/partners/$id'
+    | '/profile/$companyId'
+    | '/opportunities'
+    | '/partners'
+    | '/profile'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/register' | '/dashboard'
-  id: '__root__' | '/' | '/_app' | '/login' | '/register' | '/_app/dashboard'
+  to:
+    | '/'
+    | '/login'
+    | '/register'
+    | '/dashboard'
+    | '/dev'
+    | '/directory'
+    | '/opportunities/$opportunityId'
+    | '/opportunities/new'
+    | '/partners/$id'
+    | '/profile/$companyId'
+    | '/opportunities'
+    | '/partners'
+    | '/profile'
+  id:
+    | '__root__'
+    | '/'
+    | '/_app'
+    | '/login'
+    | '/register'
+    | '/_app/dashboard'
+    | '/_app/dev'
+    | '/_app/directory'
+    | '/_app/opportunities/$opportunityId'
+    | '/_app/opportunities/new'
+    | '/_app/partners/$id'
+    | '/_app/profile/$companyId'
+    | '/_app/opportunities/'
+    | '/_app/partners/'
+    | '/_app/profile/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -105,6 +228,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_app/directory': {
+      id: '/_app/directory'
+      path: '/directory'
+      fullPath: '/directory'
+      preLoaderRoute: typeof AppDirectoryRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/dev': {
+      id: '/_app/dev'
+      path: '/dev'
+      fullPath: '/dev'
+      preLoaderRoute: typeof AppDevRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/dashboard': {
       id: '/_app/dashboard'
       path: '/dashboard'
@@ -112,15 +249,82 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppDashboardRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/profile/': {
+      id: '/_app/profile/'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof AppProfileIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/partners/': {
+      id: '/_app/partners/'
+      path: '/partners'
+      fullPath: '/partners'
+      preLoaderRoute: typeof AppPartnersIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/opportunities/': {
+      id: '/_app/opportunities/'
+      path: '/opportunities'
+      fullPath: '/opportunities'
+      preLoaderRoute: typeof AppOpportunitiesIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/profile/$companyId': {
+      id: '/_app/profile/$companyId'
+      path: '/profile/$companyId'
+      fullPath: '/profile/$companyId'
+      preLoaderRoute: typeof AppProfileCompanyIdRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/partners/$id': {
+      id: '/_app/partners/$id'
+      path: '/partners/$id'
+      fullPath: '/partners/$id'
+      preLoaderRoute: typeof AppPartnersIdRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/opportunities/new': {
+      id: '/_app/opportunities/new'
+      path: '/opportunities/new'
+      fullPath: '/opportunities/new'
+      preLoaderRoute: typeof AppOpportunitiesNewRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/opportunities/$opportunityId': {
+      id: '/_app/opportunities/$opportunityId'
+      path: '/opportunities/$opportunityId'
+      fullPath: '/opportunities/$opportunityId'
+      preLoaderRoute: typeof AppOpportunitiesOpportunityIdRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
 interface AppRouteChildren {
   AppDashboardRoute: typeof AppDashboardRoute
+  AppDevRoute: typeof AppDevRoute
+  AppDirectoryRoute: typeof AppDirectoryRoute
+  AppOpportunitiesOpportunityIdRoute: typeof AppOpportunitiesOpportunityIdRoute
+  AppOpportunitiesNewRoute: typeof AppOpportunitiesNewRoute
+  AppPartnersIdRoute: typeof AppPartnersIdRoute
+  AppProfileCompanyIdRoute: typeof AppProfileCompanyIdRoute
+  AppOpportunitiesIndexRoute: typeof AppOpportunitiesIndexRoute
+  AppPartnersIndexRoute: typeof AppPartnersIndexRoute
+  AppProfileIndexRoute: typeof AppProfileIndexRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
   AppDashboardRoute: AppDashboardRoute,
+  AppDevRoute: AppDevRoute,
+  AppDirectoryRoute: AppDirectoryRoute,
+  AppOpportunitiesOpportunityIdRoute: AppOpportunitiesOpportunityIdRoute,
+  AppOpportunitiesNewRoute: AppOpportunitiesNewRoute,
+  AppPartnersIdRoute: AppPartnersIdRoute,
+  AppProfileCompanyIdRoute: AppProfileCompanyIdRoute,
+  AppOpportunitiesIndexRoute: AppOpportunitiesIndexRoute,
+  AppPartnersIndexRoute: AppPartnersIndexRoute,
+  AppProfileIndexRoute: AppProfileIndexRoute,
 }
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)

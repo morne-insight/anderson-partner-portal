@@ -7,13 +7,14 @@ export interface SessionData {
   roles?: string[];
   accessToken?: string; // store JWT here (server-only cookie session)
   accessTokenExpiresAt?: number;
+  refreshToken?: string; // store refresh token for token renewal
 }
 
 export function useAppSession() {
+
   return useSession<SessionData>({
     name: "app-session",
-    password:
-      process.env.SESSION_SECRET || "anderson-partner-portal-secret-key", // >= 32 chars
+    password: process.env.SESSION_SECRET || "anderson-partner-portal-secret-key",
     cookie: {
       httpOnly: true,
       sameSite: "lax",

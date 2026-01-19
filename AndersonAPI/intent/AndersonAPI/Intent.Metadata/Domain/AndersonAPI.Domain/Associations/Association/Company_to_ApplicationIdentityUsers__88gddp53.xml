@@ -22,7 +22,7 @@
   <targetEnd id="ee35b477-4355-4b91-9740-fffa217261ab" type="Association Target End" typeId="0a66489f-30aa-417b-a75d-b945863366fd">
     <name>ApplicationIdentityUsers</name>
     <display>ApplicationIdentityUsers: ApplicationIdentityUser[*]</display>
-    <order>29</order>
+    <order>35</order>
     <typeReference id="15c13f31-553d-42ce-acef-4530177d14df">
       <typeId>0cc17a59-dc32-4408-b0fc-d0814cb75815</typeId>
       <isNavigable>true</isNavigable>

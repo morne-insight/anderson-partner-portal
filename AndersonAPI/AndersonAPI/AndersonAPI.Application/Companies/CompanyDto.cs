@@ -1,4 +1,3 @@
-using AndersonAPI.Domain;
 using Intent.RoslynWeaver.Attributes;
 
 [assembly: DefaultIntentManaged(Mode.Fully)]
@@ -21,33 +20,27 @@ namespace AndersonAPI.Application.Companies
         public string FullDescription { get; set; }
         public string WebsiteUrl { get; set; }
         public int EmployeeCount { get; set; }
-        public byte[]? Embedding { get; set; }
         public Guid Id { get; set; }
         public int Order { get; set; }
-        public EntityState State { get; set; }
 
         public static CompanyDto Create(
+            Guid id,
             string name,
             string shortDescription,
             string fullDescription,
             string websiteUrl,
             int employeeCount,
-            byte[]? embedding,
-            Guid id,
-            int order,
-            EntityState state)
+            int order)
         {
             return new CompanyDto
             {
+                Id = id,
                 Name = name,
                 ShortDescription = shortDescription,
                 FullDescription = fullDescription,
                 WebsiteUrl = websiteUrl,
                 EmployeeCount = employeeCount,
-                Embedding = embedding,
-                Id = id,
-                Order = order,
-                State = state
+                Order = order
             };
         }
     }

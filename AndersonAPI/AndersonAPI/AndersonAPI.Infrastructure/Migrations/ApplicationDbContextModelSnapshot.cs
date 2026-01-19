@@ -66,6 +66,16 @@ namespace AndersonAPI.Infrastructure.Migrations
                     b.Property<byte[]>("Embedding")
                         .HasColumnType("varbinary(max)");
 
+                    b.Property<int?>("EmbeddingDim")
+                        .HasColumnType("int");
+
+                    b.Property<string>("EmbeddingModel")
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<DateTimeOffset?>("EmbeddingUpdated")
+                        .HasColumnType("datetimeoffset");
+
                     b.Property<int>("EmployeeCount")
                         .HasColumnType("int");
 
@@ -162,7 +172,43 @@ namespace AndersonAPI.Infrastructure.Migrations
                     b.ToTable("Industries");
                 });
 
-            modelBuilder.Entity("AndersonAPI.Domain.Entities.Oppertunity", b =>
+            modelBuilder.Entity("AndersonAPI.Domain.Entities.Invite", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CompanyId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
+
+                    b.Property<string>("State")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.ToTable("Invites");
+                });
+
+            modelBuilder.Entity("AndersonAPI.Domain.Entities.Opportunity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -187,7 +233,7 @@ namespace AndersonAPI.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("OppertunityTypeId")
+                    b.Property<Guid>("OpportunityTypeId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Order")
@@ -221,15 +267,15 @@ namespace AndersonAPI.Infrastructure.Migrations
 
                     b.HasIndex("CountryId");
 
-                    b.HasIndex("OppertunityTypeId");
+                    b.HasIndex("OpportunityTypeId");
 
-                    b.ToTable("Oppertunities", t =>
+                    b.ToTable("Opportunities", t =>
                         {
-                            t.HasCheckConstraint("oppertunity_status_check", "\"Status\" IN ('Open','Closed')");
+                            t.HasCheckConstraint("opportunity_status_check", "\"Status\" IN ('Open','Closed')");
                         });
                 });
 
-            modelBuilder.Entity("AndersonAPI.Domain.Entities.OppertunityType", b =>
+            modelBuilder.Entity("AndersonAPI.Domain.Entities.OpportunityType", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -252,7 +298,7 @@ namespace AndersonAPI.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("OppertunityTypes");
+                    b.ToTable("OpportunityTypes");
                 });
 
             modelBuilder.Entity("AndersonAPI.Domain.Entities.Region", b =>
@@ -385,19 +431,19 @@ namespace AndersonAPI.Infrastructure.Migrations
                     b.ToTable("CompanyCapabilities", (string)null);
                 });
 
-            modelBuilder.Entity("CapabilityOppertunity", b =>
+            modelBuilder.Entity("CapabilityOpportunity", b =>
                 {
                     b.Property<Guid>("CapabilitiesId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("OppertunitiesId")
+                    b.Property<Guid>("OpportunitiesId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("CapabilitiesId", "OppertunitiesId");
+                    b.HasKey("CapabilitiesId", "OpportunitiesId");
 
-                    b.HasIndex("OppertunitiesId");
+                    b.HasIndex("OpportunitiesId");
 
-                    b.ToTable("OppertunityCapabilities", (string)null);
+                    b.ToTable("OpportunityCapabilities", (string)null);
                 });
 
             modelBuilder.Entity("CompanyIndustry", b =>
@@ -415,19 +461,19 @@ namespace AndersonAPI.Infrastructure.Migrations
                     b.ToTable("CompanyIndustries", (string)null);
                 });
 
-            modelBuilder.Entity("CompanyOppertunity", b =>
+            modelBuilder.Entity("CompanyOpportunity", b =>
                 {
                     b.Property<Guid>("InterestedPartnersId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("SavedOppertunitiesId")
+                    b.Property<Guid>("SavedOpportunitiesId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("InterestedPartnersId", "SavedOppertunitiesId");
+                    b.HasKey("InterestedPartnersId", "SavedOpportunitiesId");
 
-                    b.HasIndex("SavedOppertunitiesId");
+                    b.HasIndex("SavedOpportunitiesId");
 
-                    b.ToTable("OppertunityCompanies", (string)null);
+                    b.ToTable("OpportunityCompanies", (string)null);
                 });
 
             modelBuilder.Entity("CompanyReview", b =>
@@ -460,19 +506,19 @@ namespace AndersonAPI.Infrastructure.Migrations
                     b.ToTable("CompanyServiceTypes", (string)null);
                 });
 
-            modelBuilder.Entity("IndustryOppertunity", b =>
+            modelBuilder.Entity("IndustryOpportunity", b =>
                 {
                     b.Property<Guid>("IndustriesId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("OppertunitiesId")
+                    b.Property<Guid>("OpportunitiesId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("IndustriesId", "OppertunitiesId");
+                    b.HasKey("IndustriesId", "OpportunitiesId");
 
-                    b.HasIndex("OppertunitiesId");
+                    b.HasIndex("OpportunitiesId");
 
-                    b.ToTable("OppertunityIndustries", (string)null);
+                    b.ToTable("OpportunityIndustries", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<string>", b =>
@@ -667,19 +713,19 @@ namespace AndersonAPI.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("OppertunityServiceType", b =>
+            modelBuilder.Entity("OpportunityServiceType", b =>
                 {
-                    b.Property<Guid>("OppertunitiesId")
+                    b.Property<Guid>("OpportunitiesId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("ServiceTypesId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("OppertunitiesId", "ServiceTypesId");
+                    b.HasKey("OpportunitiesId", "ServiceTypesId");
 
                     b.HasIndex("ServiceTypesId");
 
-                    b.ToTable("OppertunityServiceTypes", (string)null);
+                    b.ToTable("OpportunityServiceTypes", (string)null);
                 });
 
             modelBuilder.Entity("AndersonAPI.Domain.Entities.ApplicationIdentityUser", b =>
@@ -828,10 +874,21 @@ namespace AndersonAPI.Infrastructure.Migrations
                         .HasForeignKey("RegionId");
                 });
 
-            modelBuilder.Entity("AndersonAPI.Domain.Entities.Oppertunity", b =>
+            modelBuilder.Entity("AndersonAPI.Domain.Entities.Invite", b =>
                 {
                     b.HasOne("AndersonAPI.Domain.Entities.Company", "Company")
-                        .WithMany("Oppertunities")
+                        .WithMany("Invites")
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Company");
+                });
+
+            modelBuilder.Entity("AndersonAPI.Domain.Entities.Opportunity", b =>
+                {
+                    b.HasOne("AndersonAPI.Domain.Entities.Company", "Company")
+                        .WithMany("Opportunities")
                         .HasForeignKey("CompanyId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -842,17 +899,61 @@ namespace AndersonAPI.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("AndersonAPI.Domain.Entities.OppertunityType", "OppertunityType")
+                    b.HasOne("AndersonAPI.Domain.Entities.OpportunityType", "OpportunityType")
                         .WithMany()
-                        .HasForeignKey("OppertunityTypeId")
+                        .HasForeignKey("OpportunityTypeId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.OwnsMany("AndersonAPI.Domain.Entities.Message", "Messages", b1 =>
+                        {
+                            b1.Property<Guid>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<string>("Content")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("CreatedByPartner")
+                                .HasMaxLength(200)
+                                .HasColumnType("nvarchar(200)");
+
+                            b1.Property<string>("CreatedByUser")
+                                .IsRequired()
+                                .HasMaxLength(200)
+                                .HasColumnType("nvarchar(200)");
+
+                            b1.Property<DateTimeOffset>("CreatedDate")
+                                .HasColumnType("datetimeoffset");
+
+                            b1.Property<Guid>("OpportunityId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<int>("Order")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("State")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("OpportunityId");
+
+                            b1.ToTable("Message");
+
+                            b1.WithOwner()
+                                .HasForeignKey("OpportunityId");
+                        });
 
                     b.Navigation("Company");
 
                     b.Navigation("Country");
 
-                    b.Navigation("OppertunityType");
+                    b.Navigation("Messages");
+
+                    b.Navigation("OpportunityType");
                 });
 
             modelBuilder.Entity("AndersonAPI.Domain.Entities.Review", b =>
@@ -904,7 +1005,7 @@ namespace AndersonAPI.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("CapabilityOppertunity", b =>
+            modelBuilder.Entity("CapabilityOpportunity", b =>
                 {
                     b.HasOne("AndersonAPI.Domain.Entities.Capability", null)
                         .WithMany()
@@ -912,9 +1013,9 @@ namespace AndersonAPI.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AndersonAPI.Domain.Entities.Oppertunity", null)
+                    b.HasOne("AndersonAPI.Domain.Entities.Opportunity", null)
                         .WithMany()
-                        .HasForeignKey("OppertunitiesId")
+                        .HasForeignKey("OpportunitiesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -934,7 +1035,7 @@ namespace AndersonAPI.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("CompanyOppertunity", b =>
+            modelBuilder.Entity("CompanyOpportunity", b =>
                 {
                     b.HasOne("AndersonAPI.Domain.Entities.Company", null)
                         .WithMany()
@@ -942,9 +1043,9 @@ namespace AndersonAPI.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AndersonAPI.Domain.Entities.Oppertunity", null)
+                    b.HasOne("AndersonAPI.Domain.Entities.Opportunity", null)
                         .WithMany()
-                        .HasForeignKey("SavedOppertunitiesId")
+                        .HasForeignKey("SavedOpportunitiesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -979,7 +1080,7 @@ namespace AndersonAPI.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("IndustryOppertunity", b =>
+            modelBuilder.Entity("IndustryOpportunity", b =>
                 {
                     b.HasOne("AndersonAPI.Domain.Entities.Industry", null)
                         .WithMany()
@@ -987,9 +1088,9 @@ namespace AndersonAPI.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AndersonAPI.Domain.Entities.Oppertunity", null)
+                    b.HasOne("AndersonAPI.Domain.Entities.Opportunity", null)
                         .WithMany()
-                        .HasForeignKey("OppertunitiesId")
+                        .HasForeignKey("OpportunitiesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -1045,11 +1146,11 @@ namespace AndersonAPI.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("OppertunityServiceType", b =>
+            modelBuilder.Entity("OpportunityServiceType", b =>
                 {
-                    b.HasOne("AndersonAPI.Domain.Entities.Oppertunity", null)
+                    b.HasOne("AndersonAPI.Domain.Entities.Opportunity", null)
                         .WithMany()
-                        .HasForeignKey("OppertunitiesId")
+                        .HasForeignKey("OpportunitiesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1071,7 +1172,9 @@ namespace AndersonAPI.Infrastructure.Migrations
 
             modelBuilder.Entity("AndersonAPI.Domain.Entities.Company", b =>
                 {
-                    b.Navigation("Oppertunities");
+                    b.Navigation("Invites");
+
+                    b.Navigation("Opportunities");
                 });
 
             modelBuilder.Entity("AndersonAPI.Domain.Entities.Region", b =>

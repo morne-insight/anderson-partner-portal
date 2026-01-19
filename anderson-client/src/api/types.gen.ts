@@ -5,89 +5,49 @@ export type ClientOptions = {
 };
 
 /**
- * AndersonAPI.Api.Controllers.ConfirmEmailDto
+ * AddContactCompanyCommand
  */
-export type AndersonApiApiControllersConfirmEmailDto = {
-    userId?: string | null;
-    code?: string | null;
+export type AddContactCompanyCommand = {
+    id: string;
+    firstName: string;
+    lastName: string;
+    emailAddress: string | null;
+    companyPosition: string | null;
 };
 
 /**
- * AndersonAPI.Api.Controllers.ForgotPasswordDto
+ * AddLocationCompanyCommand
  */
-export type AndersonApiApiControllersForgotPasswordDto = {
-    email?: string | null;
+export type AddLocationCompanyCommand = {
+    id: string;
+    name: string;
+    regionId: string;
+    countryId: string;
+    isHeadOffice: boolean;
 };
 
 /**
- * AndersonAPI.Api.Controllers.InfoResponseDto
+ * AddMessageOpportunityCommand
  */
-export type AndersonApiApiControllersInfoResponseDto = {
-    email?: string | null;
+export type AddMessageOpportunityCommand = {
+    opportunityId: string;
+    content: string;
+    createdDate: Date;
+    createdByUser: string;
+    createdByPartner: string | null;
 };
 
 /**
- * AndersonAPI.Api.Controllers.LoginDto
+ * AndersonAPI.Api.Controllers.ResponseTypes.JsonResponse_Of_Guid
  */
-export type AndersonApiApiControllersLoginDto = {
-    email?: string | null;
-    password?: string | null;
-};
-
-/**
- * AndersonAPI.Api.Controllers.RefreshTokenDto
- */
-export type AndersonApiApiControllersRefreshTokenDto = {
-    refreshToken?: string | null;
-};
-
-/**
- * AndersonAPI.Api.Controllers.RegisterDto
- */
-export type AndersonApiApiControllersRegisterDto = {
-    email?: string | null;
-    password?: string | null;
-};
-
-/**
- * AndersonAPI.Api.Controllers.ResetPasswordDto
- */
-export type AndersonApiApiControllersResetPasswordDto = {
-    email?: string | null;
-    resetCode?: string | null;
-    newPassword?: string | null;
-};
-
-/**
- * AndersonAPI.Api.Controllers.ResponseTypes.JsonResponse_Of_System.Guid
- */
-export type AndersonApiApiControllersResponseTypesJsonResponseOfSystemGuid = {
+export type AndersonApiApiControllersResponseTypesJsonResponseOfGuid = {
     value: string;
 };
 
 /**
- * AndersonAPI.Api.Controllers.TokenResultDto
+ * CapabilityDto
  */
-export type AndersonApiApiControllersTokenResultDto = {
-    tokenType?: string | null;
-    authenticationToken?: string | null;
-    expiresIn?: number;
-    refreshToken?: string | null;
-};
-
-/**
- * AndersonAPI.Api.Controllers.UpdateInfoDto
- */
-export type AndersonApiApiControllersUpdateInfoDto = {
-    newEmail?: string | null;
-    newPassword?: string | null;
-    oldPassword?: string | null;
-};
-
-/**
- * AndersonAPI.Application.Capabilities.CapabilityDto
- */
-export type AndersonApiApplicationCapabilitiesCapabilityDto = {
+export type CapabilityDto = {
     name?: string;
     description?: string;
     id?: string;
@@ -95,161 +55,117 @@ export type AndersonApiApplicationCapabilitiesCapabilityDto = {
 };
 
 /**
- * AndersonAPI.Application.Capabilities.CreateCapability.CreateCapabilityCommand
+ * CompanyApplicationIdentityUserDto
  */
-export type AndersonApiApplicationCapabilitiesCreateCapabilityCreateCapabilityCommand = {
-    name: string;
-    description: string;
+export type CompanyApplicationIdentityUserDto = {
+    [key: string]: unknown;
 };
 
 /**
- * AndersonAPI.Application.Capabilities.SetStateCapability.SetStateCapabilityCommand
+ * CompanyCapabilityDto
  */
-export type AndersonApiApplicationCapabilitiesSetStateCapabilitySetStateCapabilityCommand = {
-    id: string;
-    state: EntityState;
+export type CompanyCapabilityDto = {
+    id?: string;
+    name?: string;
 };
 
 /**
- * AndersonAPI.Application.Capabilities.UpdateCapability.UpdateCapabilityCommand
+ * CompanyContactDto
  */
-export type AndersonApiApplicationCapabilitiesUpdateCapabilityUpdateCapabilityCommand = {
-    id: string;
-    name: string;
-    description: string;
+export type CompanyContactDto = {
+    id?: string;
+    firstName?: string;
+    lastName?: string;
+    emailAddress?: string | null;
+    companyPosition?: string | null;
+    order?: number;
 };
 
 /**
- * AndersonAPI.Application.Companies.AddContactCompany.AddContactCompanyCommand
+ * CompanyDto
  */
-export type AndersonApiApplicationCompaniesAddContactCompanyAddContactCompanyCommand = {
-    id: string;
-    firstName: string;
-    lastName: string;
-    emailAddress: string | null;
-    companyPosition: string | null;
-};
-
-/**
- * AndersonAPI.Application.Companies.AddLocationCompany.AddLocationCompanyCommand
- */
-export type AndersonApiApplicationCompaniesAddLocationCompanyAddLocationCompanyCommand = {
-    id: string;
-    name: string;
-    regionId: string;
-    countryId: string;
-    isHeadOffice: boolean;
-};
-
-/**
- * AndersonAPI.Application.Companies.CompanyDto
- */
-export type AndersonApiApplicationCompaniesCompanyDto = {
+export type CompanyDto = {
     name?: string;
     shortDescription?: string;
     fullDescription?: string;
     websiteUrl?: string;
     employeeCount?: number;
-    embedding?: SystemByteArray;
     id?: string;
+    order?: number;
+};
+
+/**
+ * CompanyIndustryDto
+ */
+export type CompanyIndustryDto = {
+    id?: string;
+    name?: string;
+};
+
+/**
+ * CompanyInviteDto
+ */
+export type CompanyInviteDto = {
+    id?: string;
+    name?: string;
+    email?: string;
+};
+
+/**
+ * CompanyLocationDto
+ */
+export type CompanyLocationDto = {
+    id?: string;
+    name?: string;
+    isHeadOffice?: boolean;
+    regionId?: string;
+    countryId?: string;
+    order?: number;
+};
+
+/**
+ * CompanyProfileDto
+ */
+export type CompanyProfileDto = {
+    id?: string;
+    name?: string;
+    shortDescription?: string;
+    fullDescription?: string;
+    websiteUrl?: string;
+    employeeCount?: number;
+    applicationIdentityUsers?: Array<CompanyApplicationIdentityUserDto>;
+    capabilities?: Array<CompanyCapabilityDto>;
+    serviceTypes?: Array<CompanyServiceTypeDto>;
+    industries?: Array<CompanyIndustryDto>;
+    contacts?: Array<CompanyContactDto>;
+    locations?: Array<CompanyLocationDto>;
+    invites?: Array<CompanyInviteDto>;
+    state?: EntityState;
+};
+
+/**
+ * CompanyServiceTypeDto
+ */
+export type CompanyServiceTypeDto = {
+    id?: string;
+    name?: string;
+    description?: string;
     order?: number;
     state?: EntityState;
 };
 
 /**
- * AndersonAPI.Application.Companies.CreateCompany.CreateCompanyCommand
+ * ConfirmEmailDto
  */
-export type AndersonApiApplicationCompaniesCreateCompanyCreateCompanyCommand = {
-    name: string;
-    shortDescription: string;
-    fullDescription: string;
-    websiteUrl: string;
-    employeeCount: number;
-    serviceTypes: Array<string>;
-    capabilities: Array<string>;
-    industries: Array<string>;
+export type ConfirmEmailDto = {
+    userId?: string | null;
+    code?: string | null;
 };
 
 /**
- * AndersonAPI.Application.Companies.SetCapabilitiesCompany.SetCapabilitiesCompanyCommand
+ * CountryDto
  */
-export type AndersonApiApplicationCompaniesSetCapabilitiesCompanySetCapabilitiesCompanyCommand = {
-    id: string;
-    capabilityIds: Array<string>;
-};
-
-/**
- * AndersonAPI.Application.Companies.SetHeadOfficeCompany.SetHeadOfficeCompanyCommand
- */
-export type AndersonApiApplicationCompaniesSetHeadOfficeCompanySetHeadOfficeCompanyCommand = {
-    id: string;
-    locationId: string;
-};
-
-/**
- * AndersonAPI.Application.Companies.SetIndustriesCompany.SetIndustriesCompanyCommand
- */
-export type AndersonApiApplicationCompaniesSetIndustriesCompanySetIndustriesCompanyCommand = {
-    id: string;
-    industryIds: Array<string>;
-};
-
-/**
- * AndersonAPI.Application.Companies.SetServiceTypesCompany.SetServiceTypesCompanyCommand
- */
-export type AndersonApiApplicationCompaniesSetServiceTypesCompanySetServiceTypesCompanyCommand = {
-    id: string;
-    serviceTypeIds: Array<string>;
-};
-
-/**
- * AndersonAPI.Application.Companies.SetStateCompany.SetStateCompanyCommand
- */
-export type AndersonApiApplicationCompaniesSetStateCompanySetStateCompanyCommand = {
-    id: string;
-    state: EntityState;
-};
-
-/**
- * AndersonAPI.Application.Companies.UpdateCompany.UpdateCompanyCommand
- */
-export type AndersonApiApplicationCompaniesUpdateCompanyUpdateCompanyCommand = {
-    id: string;
-    name: string;
-    shortDescription: string;
-    description: string;
-    websiteUrl: string;
-    employeeCount: number;
-};
-
-/**
- * AndersonAPI.Application.Companies.UpdateContactCompany.UpdateContactCompanyCommand
- */
-export type AndersonApiApplicationCompaniesUpdateContactCompanyUpdateContactCompanyCommand = {
-    id: string;
-    contactId: string;
-    firstName: string;
-    lastName: string;
-    emailAddress: string | null;
-    companyPosition: string | null;
-};
-
-/**
- * AndersonAPI.Application.Companies.UpdateLocationCompany.UpdateLocationCompanyCommand
- */
-export type AndersonApiApplicationCompaniesUpdateLocationCompanyUpdateLocationCompanyCommand = {
-    id: string;
-    locationId: string;
-    name: string;
-    regionId: string;
-    countryId: string;
-    isHeadOffice: boolean;
-};
-
-/**
- * AndersonAPI.Application.Countries.CountryDto
- */
-export type AndersonApiApplicationCountriesCountryDto = {
+export type CountryDto = {
     regionId?: string | null;
     name?: string;
     description?: string;
@@ -259,76 +175,53 @@ export type AndersonApiApplicationCountriesCountryDto = {
 };
 
 /**
- * AndersonAPI.Application.Countries.CreateCountry.CreateCountryCommand
+ * CreateCapabilityCommand
  */
-export type AndersonApiApplicationCountriesCreateCountryCreateCountryCommand = {
+export type CreateCapabilityCommand = {
+    name: string;
+    description: string;
+};
+
+/**
+ * CreateCompanyCommand
+ */
+export type CreateCompanyCommand = {
+    name: string;
+    shortDescription: string;
+    fullDescription: string;
+    websiteUrl: string;
+    employeeCount: number;
+    serviceTypes: Array<string>;
+    capabilities: Array<string>;
+    industries: Array<string>;
+};
+
+/**
+ * CreateCountryCommand
+ */
+export type CreateCountryCommand = {
     regionId: string | null;
     name: string;
     description: string;
 };
 
 /**
- * AndersonAPI.Application.Countries.SetStateCountry.SetStateCountryCommand
+ * CreateIndustryCommand
  */
-export type AndersonApiApplicationCountriesSetStateCountrySetStateCountryCommand = {
-    id: string;
-    state: EntityState;
-};
-
-/**
- * AndersonAPI.Application.Countries.UpdateCountry.UpdateCountryCommand
- */
-export type AndersonApiApplicationCountriesUpdateCountryUpdateCountryCommand = {
-    id: string;
-    regionId: string | null;
+export type CreateIndustryCommand = {
     name: string;
     description: string;
 };
 
 /**
- * AndersonAPI.Application.Industries.CreateIndustry.CreateIndustryCommand
+ * CreateOpportunityCommand
  */
-export type AndersonApiApplicationIndustriesCreateIndustryCreateIndustryCommand = {
-    name: string;
-    description: string;
-};
-
-/**
- * AndersonAPI.Application.Industries.IndustryDto
- */
-export type AndersonApiApplicationIndustriesIndustryDto = {
-    name?: string;
-    description?: string;
-    id?: string;
-    order?: number;
-};
-
-/**
- * AndersonAPI.Application.Industries.SetStateIndustry.SetStateIndustryCommand
- */
-export type AndersonApiApplicationIndustriesSetStateIndustrySetStateIndustryCommand = {
-    id: string;
-    state: EntityState;
-};
-
-/**
- * AndersonAPI.Application.Industries.UpdateIndustry.UpdateIndustryCommand
- */
-export type AndersonApiApplicationIndustriesUpdateIndustryUpdateIndustryCommand = {
-    id: string;
-    name: string;
-    description: string;
-};
-
-/**
- * AndersonAPI.Application.Oppertunities.CreateOppertunity.CreateOppertunityCommand
- */
-export type AndersonApiApplicationOppertunitiesCreateOppertunityCreateOppertunityCommand = {
+export type CreateOpportunityCommand = {
     title: string;
     shortDescription: string;
     fullDescription: string;
     deadline: Date | null;
-    oppertunityTypeId: string;
+    opportunityTypeId: string;
     countryId: string;
     serviceTypes: Array<string>;
     capabilities: Array<string>;
@@ -337,212 +230,293 @@ export type AndersonApiApplicationOppertunitiesCreateOppertunityCreateOppertunit
 };
 
 /**
- * AndersonAPI.Application.Oppertunities.OppertunityDto
+ * CreateOpportunityTypeCommand
  */
-export type AndersonApiApplicationOppertunitiesOppertunityDto = {
-    title?: string;
+export type CreateOpportunityTypeCommand = {
+    name: string;
+    description: string;
+};
+
+/**
+ * CreateRegionCommand
+ */
+export type CreateRegionCommand = {
+    name: string;
+    description: string;
+};
+
+/**
+ * CreateReviewCommand
+ */
+export type CreateReviewCommand = {
+    comment: string;
+    rating: number;
+    applicationIdentityUserId: string;
+    reviewerCompanyId: string;
+    state: EntityState;
+};
+
+/**
+ * CreateServiceTypeCommand
+ */
+export type CreateServiceTypeCommand = {
+    name: string;
+    description: string;
+};
+
+/**
+ * DirectoryProfileListItem
+ */
+export type DirectoryProfileListItem = {
+    id?: string;
+    name?: string;
     shortDescription?: string;
-    fullDescription?: string;
-    deadline?: Date | null;
-    status?: OppertunityStatus;
-    oppertunityTypeId?: string;
-    countryId?: string;
-    companyId?: string;
-    id?: string;
-    order?: number;
-};
-
-/**
- * AndersonAPI.Application.Oppertunities.SetCapabilitiesOppertunity.SetCapabilitiesOppertunityCommand
- */
-export type AndersonApiApplicationOppertunitiesSetCapabilitiesOppertunitySetCapabilitiesOppertunityCommand = {
-    id: string;
-    capabilityIds: Array<string>;
-};
-
-/**
- * AndersonAPI.Application.Oppertunities.SetIndustriesOppertunity.SetIndustriesOppertunityCommand
- */
-export type AndersonApiApplicationOppertunitiesSetIndustriesOppertunitySetIndustriesOppertunityCommand = {
-    id: string;
-    industryIds: Array<string>;
-};
-
-/**
- * AndersonAPI.Application.Oppertunities.SetInterestedPartnersOppertunity.SetInterestedPartnersOppertunityCommand
- */
-export type AndersonApiApplicationOppertunitiesSetInterestedPartnersOppertunitySetInterestedPartnersOppertunityCommand = {
-    id: string;
-    companyIds: Array<string>;
-};
-
-/**
- * AndersonAPI.Application.Oppertunities.SetServiceTypesOppertunity.SetServiceTypesOppertunityCommand
- */
-export type AndersonApiApplicationOppertunitiesSetServiceTypesOppertunitySetServiceTypesOppertunityCommand = {
-    id: string;
-    serviceTypeIds: Array<string>;
-};
-
-/**
- * AndersonAPI.Application.Oppertunities.SetStateOppertunity.SetStateOppertunityCommand
- */
-export type AndersonApiApplicationOppertunitiesSetStateOppertunitySetStateOppertunityCommand = {
-    id: string;
-    state: EntityState;
-};
-
-/**
- * AndersonAPI.Application.Oppertunities.SetStatusOppertunity.SetStatusOppertunityCommand
- */
-export type AndersonApiApplicationOppertunitiesSetStatusOppertunitySetStatusOppertunityCommand = {
-    id: string;
-    status: OppertunityStatus;
-};
-
-/**
- * AndersonAPI.Application.Oppertunities.UpdateFullOppertunity.UpdateFullOppertunityCommand
- */
-export type AndersonApiApplicationOppertunitiesUpdateFullOppertunityUpdateFullOppertunityCommand = {
-    id: string;
-    title: string;
-    shortDescription: string;
-    fullDescription: string;
-    deadline: Date | null;
-    oppertunityTypeId: string;
-    countryId: string;
-    serviceTypes: Array<string>;
-    capabilities: Array<string>;
-    industries: Array<string>;
-};
-
-/**
- * AndersonAPI.Application.Oppertunities.UpdateOppertunity.UpdateOppertunityCommand
- */
-export type AndersonApiApplicationOppertunitiesUpdateOppertunityUpdateOppertunityCommand = {
-    id: string;
-    title: string;
-    shortDescription: string;
-    fullDescription: string;
-    deadline: Date | null;
-    oppertunityTypeId: string;
-    countryId: string;
-};
-
-/**
- * AndersonAPI.Application.OppertunityTypes.CreateOppertunityType.CreateOppertunityTypeCommand
- */
-export type AndersonApiApplicationOppertunityTypesCreateOppertunityTypeCreateOppertunityTypeCommand = {
-    name: string;
-    description: string;
-};
-
-/**
- * AndersonAPI.Application.OppertunityTypes.OppertunityTypeDto
- */
-export type AndersonApiApplicationOppertunityTypesOppertunityTypeDto = {
-    name?: string;
-    description?: string;
-    id?: string;
-    order?: number;
-    state?: EntityState;
-};
-
-/**
- * AndersonAPI.Application.OppertunityTypes.SetStateOppertunityType.SetStateOppertunityTypeCommand
- */
-export type AndersonApiApplicationOppertunityTypesSetStateOppertunityTypeSetStateOppertunityTypeCommand = {
-    id: string;
-    state: EntityState;
-};
-
-/**
- * AndersonAPI.Application.OppertunityTypes.UpdateOppertunityType.UpdateOppertunityTypeCommand
- */
-export type AndersonApiApplicationOppertunityTypesUpdateOppertunityTypeUpdateOppertunityTypeCommand = {
-    id: string;
-    name: string;
-    description: string;
-};
-
-/**
- * AndersonAPI.Application.Regions.CreateRegion.CreateRegionCommand
- */
-export type AndersonApiApplicationRegionsCreateRegionCreateRegionCommand = {
-    name: string;
-    description: string;
-};
-
-/**
- * AndersonAPI.Application.Regions.RegionDto
- */
-export type AndersonApiApplicationRegionsRegionDto = {
-    name?: string;
-    description?: string;
-    id?: string;
-    order?: number;
-    state?: EntityState;
-};
-
-/**
- * AndersonAPI.Application.Regions.SetStateRegion.SetStateRegionCommand
- */
-export type AndersonApiApplicationRegionsSetStateRegionSetStateRegionCommand = {
-    id: string;
-    state: EntityState;
-};
-
-/**
- * AndersonAPI.Application.Regions.UpdateRegion.UpdateRegionCommand
- */
-export type AndersonApiApplicationRegionsUpdateRegionUpdateRegionCommand = {
-    id: string;
-    name: string;
-    description: string;
-};
-
-/**
- * AndersonAPI.Application.ServiceTypes.CreateServiceType.CreateServiceTypeCommand
- */
-export type AndersonApiApplicationServiceTypesCreateServiceTypeCreateServiceTypeCommand = {
-    name: string;
-    description: string;
-};
-
-/**
- * AndersonAPI.Application.ServiceTypes.ServiceTypeDto
- */
-export type AndersonApiApplicationServiceTypesServiceTypeDto = {
-    name?: string;
-    description?: string;
-    id?: string;
-    order?: number;
-    state?: EntityState;
-};
-
-/**
- * AndersonAPI.Application.ServiceTypes.SetStateServiceType.SetStateServiceTypeCommand
- */
-export type AndersonApiApplicationServiceTypesSetStateServiceTypeSetStateServiceTypeCommand = {
-    id: string;
-    state: EntityState;
-};
-
-/**
- * AndersonAPI.Application.ServiceTypes.UpdateServiceType.UpdateServiceTypeCommand
- */
-export type AndersonApiApplicationServiceTypesUpdateServiceTypeUpdateServiceTypeCommand = {
-    id: string;
-    name: string;
-    description: string;
+    capabilities?: Array<PartnerCapabilityDto>;
+    locations?: Array<PartnerLocationDto>;
+    contacts?: Array<PartnerContactDto>;
+    industries?: Array<PartnerIndustryDto>;
+    serviceTypes?: Array<PartnerServiceTypeDto>;
 };
 
 export type EntityState = number;
 
 /**
- * Microsoft.AspNetCore.Mvc.ProblemDetails
+ * ForgotPasswordDto
  */
-export type MicrosoftAspNetCoreMvcProblemDetails = {
+export type ForgotPasswordDto = {
+    email?: string | null;
+};
+
+/**
+ * GetPartnersByAIQuery
+ */
+export type GetPartnersByAiQuery = {
+    query: string;
+};
+
+/**
+ * IndustryDto
+ */
+export type IndustryDto = {
+    name?: string;
+    description?: string;
+    id?: string;
+    order?: number;
+};
+
+/**
+ * InfoResponseDto
+ */
+export type InfoResponseDto = {
+    email?: string | null;
+};
+
+/**
+ * InterestedPartnerDto
+ */
+export type InterestedPartnerDto = {
+    id?: string;
+    name?: string;
+    websiteUrl?: string;
+};
+
+/**
+ * LoginDto
+ */
+export type LoginDto = {
+    email?: string | null;
+    password?: string | null;
+};
+
+/**
+ * OpportunityCapabilityDto
+ */
+export type OpportunityCapabilityDto = {
+    id?: string;
+    name?: string;
+};
+
+/**
+ * OpportunityDto
+ */
+export type OpportunityDto = {
+    title?: string;
+    fullDescription?: string;
+    createdDate?: Date;
+    deadline?: Date | null;
+    companyId?: string;
+    id?: string;
+    country?: string;
+    opportunityType?: string;
+    capabilities?: Array<OpportunityCapabilityDto>;
+    industries?: Array<OpportunityIndustryDto>;
+    serviceTypes?: Array<OpportunityServiceTypeDto>;
+    status?: OpportunityStatus;
+    shortDescription?: string;
+    opportunityTypeId?: string;
+    countryId?: string;
+};
+
+/**
+ * OpportunityIndustryDto
+ */
+export type OpportunityIndustryDto = {
+    id?: string;
+    name?: string;
+};
+
+/**
+ * OpportunityListItemDto
+ */
+export type OpportunityListItemDto = {
+    title?: string;
+    shortDescription?: string;
+    createdDate?: Date;
+    deadline?: Date | null;
+    companyId?: string;
+    companyName?: string;
+    id?: string;
+    order?: number;
+    country?: string;
+    opportunityTypeString?: string;
+    interestedPartners?: Array<InterestedPartnerDto>;
+    capabilities?: Array<OpportunityCapabilityDto>;
+};
+
+/**
+ * OpportunityServiceTypeDto
+ */
+export type OpportunityServiceTypeDto = {
+    id?: string;
+    name?: string;
+};
+
+export type OpportunityStatus = number;
+
+/**
+ * OpportunityTypeDto
+ */
+export type OpportunityTypeDto = {
+    name?: string;
+    description?: string;
+    id?: string;
+    order?: number;
+    state?: EntityState;
+};
+
+/**
+ * PartnerCapabilityDto
+ */
+export type PartnerCapabilityDto = {
+    id?: string;
+    name?: string;
+};
+
+/**
+ * PartnerContactDto
+ */
+export type PartnerContactDto = {
+    id?: string;
+    firstName?: string;
+    lastName?: string;
+    emailAddress?: string | null;
+    companyPosition?: string | null;
+};
+
+/**
+ * PartnerIndustryDto
+ */
+export type PartnerIndustryDto = {
+    id?: string;
+    name?: string;
+};
+
+/**
+ * PartnerLocationDto
+ */
+export type PartnerLocationDto = {
+    id?: string;
+    name?: string;
+    isHeadOffice?: boolean;
+    countryId?: string;
+    country?: string;
+    regionId?: string;
+    region?: string;
+};
+
+/**
+ * PartnerOpportunityDto
+ */
+export type PartnerOpportunityDto = {
+    id?: string;
+    title?: string;
+    shortDescription?: string;
+    serviceTypes?: Array<unknown>;
+    country?: string;
+    deadline?: Date | null;
+    status?: OpportunityStatus;
+    companyId?: string;
+    opportunityType?: string;
+};
+
+/**
+ * PartnerProfile
+ */
+export type PartnerProfile = {
+    id?: string;
+    name?: string;
+    fullDescription?: string;
+    websiteUrl?: string;
+    capabilities?: Array<PartnerCapabilityDto>;
+    contacts?: Array<PartnerContactDto>;
+    industries?: Array<PartnerIndustryDto>;
+    locations?: Array<PartnerLocationDto>;
+    serviceTypes?: Array<PartnerServiceTypeDto>;
+    opportunities?: Array<PartnerOpportunityDto>;
+    reviews?: Array<PartnerReviewDto>;
+};
+
+/**
+ * PartnerProfileListItem
+ */
+export type PartnerProfileListItem = {
+    id?: string;
+    name?: string;
+    shortDescription?: string;
+    capabilities?: Array<PartnerCapabilityDto>;
+    locations?: Array<PartnerLocationDto>;
+    contacts?: Array<PartnerContactDto>;
+    matchScore?: number;
+};
+
+/**
+ * PartnerReviewDto
+ */
+export type PartnerReviewDto = {
+    id?: string;
+    comment?: string;
+    rating?: number;
+    applicationIdentityUserId?: string;
+    reviewerCompanyId?: string;
+    order?: number;
+    state?: EntityState;
+};
+
+/**
+ * PartnerServiceTypeDto
+ */
+export type PartnerServiceTypeDto = {
+    id?: string;
+    name?: string;
+    description?: string;
+    order?: number;
+    state?: EntityState;
+};
+
+/**
+ * ProblemDetails
+ */
+export type ProblemDetails = {
     type?: string | null;
     title?: string | null;
     status?: number | null;
@@ -550,15 +524,367 @@ export type MicrosoftAspNetCoreMvcProblemDetails = {
     instance?: string | null;
 };
 
-export type OppertunityStatus = number;
+/**
+ * RefreshTokenDto
+ */
+export type RefreshTokenDto = {
+    refreshToken?: string | null;
+};
 
 /**
- * System.ByteArray
+ * RegionDto
  */
-export type SystemByteArray = string | null;
+export type RegionDto = {
+    name?: string;
+    description?: string;
+    id?: string;
+    order?: number;
+    state?: EntityState;
+};
+
+/**
+ * RegisterDto
+ */
+export type RegisterDto = {
+    email?: string | null;
+    password?: string | null;
+};
+
+/**
+ * ResetPasswordDto
+ */
+export type ResetPasswordDto = {
+    email?: string | null;
+    resetCode?: string | null;
+    newPassword?: string | null;
+};
+
+/**
+ * ReviewDto
+ */
+export type ReviewDto = {
+    comment?: string;
+    rating?: number;
+    applicationIdentityUserId?: string;
+    reviewerCompanyId?: string;
+    id?: string;
+    order?: number;
+    state?: EntityState;
+};
+
+/**
+ * ScrapeWebsiteCommand
+ */
+export type ScrapeWebsiteCommand = {
+    url: string;
+};
+
+/**
+ * ServiceTypeDto
+ */
+export type ServiceTypeDto = {
+    name?: string;
+    description?: string;
+    id?: string;
+    order?: number;
+    state?: EntityState;
+};
+
+/**
+ * SetCapabilitiesCompanyCommand
+ */
+export type SetCapabilitiesCompanyCommand = {
+    id: string;
+    capabilityIds: Array<string>;
+};
+
+/**
+ * SetCapabilitiesOpportunityCommand
+ */
+export type SetCapabilitiesOpportunityCommand = {
+    id: string;
+    capabilityIds: Array<string>;
+};
+
+/**
+ * SetHeadOfficeCompanyCommand
+ */
+export type SetHeadOfficeCompanyCommand = {
+    id: string;
+    locationId: string;
+};
+
+/**
+ * SetIndustriesCompanyCommand
+ */
+export type SetIndustriesCompanyCommand = {
+    id: string;
+    industryIds: Array<string>;
+};
+
+/**
+ * SetIndustriesOpportunityCommand
+ */
+export type SetIndustriesOpportunityCommand = {
+    id: string;
+    industryIds: Array<string>;
+};
+
+/**
+ * SetInterestedPartnersOpportunityCommand
+ */
+export type SetInterestedPartnersOpportunityCommand = {
+    id: string;
+    companyIds: Array<string>;
+};
+
+/**
+ * SetServiceTypesCompanyCommand
+ */
+export type SetServiceTypesCompanyCommand = {
+    id: string;
+    serviceTypeIds: Array<string>;
+};
+
+/**
+ * SetServiceTypesOpportunityCommand
+ */
+export type SetServiceTypesOpportunityCommand = {
+    id: string;
+    serviceTypeIds: Array<string>;
+};
+
+/**
+ * SetStateCapabilityCommand
+ */
+export type SetStateCapabilityCommand = {
+    id: string;
+    state: EntityState;
+};
+
+/**
+ * SetStateCompanyCommand
+ */
+export type SetStateCompanyCommand = {
+    id: string;
+    state: EntityState;
+};
+
+/**
+ * SetStateCountryCommand
+ */
+export type SetStateCountryCommand = {
+    id: string;
+    state: EntityState;
+};
+
+/**
+ * SetStateIndustryCommand
+ */
+export type SetStateIndustryCommand = {
+    id: string;
+    state: EntityState;
+};
+
+/**
+ * SetStateOpportunityCommand
+ */
+export type SetStateOpportunityCommand = {
+    id: string;
+    state: EntityState;
+};
+
+/**
+ * SetStateOpportunityTypeCommand
+ */
+export type SetStateOpportunityTypeCommand = {
+    id: string;
+    state: EntityState;
+};
+
+/**
+ * SetStateRegionCommand
+ */
+export type SetStateRegionCommand = {
+    id: string;
+    state: EntityState;
+};
+
+/**
+ * SetStateServiceTypeCommand
+ */
+export type SetStateServiceTypeCommand = {
+    id: string;
+    state: EntityState;
+};
+
+/**
+ * SetStatusOpportunityCommand
+ */
+export type SetStatusOpportunityCommand = {
+    id: string;
+    statusOpportunityStatus: OpportunityStatus;
+};
+
+/**
+ * TokenResultDto
+ */
+export type TokenResultDto = {
+    tokenType?: string | null;
+    authenticationToken?: string | null;
+    expiresIn?: number;
+    refreshToken?: string | null;
+};
+
+/**
+ * UpdateCapabilityCommand
+ */
+export type UpdateCapabilityCommand = {
+    id: string;
+    name: string;
+    description: string;
+};
+
+/**
+ * UpdateCompanyCommand
+ */
+export type UpdateCompanyCommand = {
+    id: string;
+    name: string;
+    shortDescription: string;
+    description: string;
+    websiteUrl: string;
+    employeeCount: number;
+};
+
+/**
+ * UpdateContactCompanyCommand
+ */
+export type UpdateContactCompanyCommand = {
+    id: string;
+    contactId: string;
+    firstName: string;
+    lastName: string;
+    emailAddress: string | null;
+    companyPosition: string | null;
+};
+
+/**
+ * UpdateCountryCommand
+ */
+export type UpdateCountryCommand = {
+    id: string;
+    regionId: string | null;
+    name: string;
+    description: string;
+};
+
+/**
+ * UpdateFullOpportunityCommand
+ */
+export type UpdateFullOpportunityCommand = {
+    id: string;
+    title: string;
+    shortDescription: string;
+    fullDescription: string;
+    deadline: Date | null;
+    opportunityTypeId: string;
+    countryId: string;
+    serviceTypes: Array<string>;
+    capabilities: Array<string>;
+    industries: Array<string>;
+};
+
+/**
+ * UpdateIndustryCommand
+ */
+export type UpdateIndustryCommand = {
+    id: string;
+    name: string;
+    description: string;
+};
+
+/**
+ * UpdateInfoDto
+ */
+export type UpdateInfoDto = {
+    newEmail?: string | null;
+    newPassword?: string | null;
+    oldPassword?: string | null;
+};
+
+/**
+ * UpdateLocationCompanyCommand
+ */
+export type UpdateLocationCompanyCommand = {
+    id: string;
+    locationId: string;
+    name: string;
+    regionId: string;
+    countryId: string;
+    isHeadOffice: boolean;
+};
+
+/**
+ * UpdateMessageOpportunityCommand
+ */
+export type UpdateMessageOpportunityCommand = {
+    id: string;
+    messageId: string;
+    content: string;
+};
+
+/**
+ * UpdateOpportunityCommand
+ */
+export type UpdateOpportunityCommand = {
+    id: string;
+    title: string;
+    shortDescription: string;
+    fullDescription: string;
+    deadline: Date | null;
+    opportunityTypeId: string;
+    countryId: string;
+};
+
+/**
+ * UpdateOpportunityTypeCommand
+ */
+export type UpdateOpportunityTypeCommand = {
+    id: string;
+    name: string;
+    description: string;
+};
+
+/**
+ * UpdateRegionCommand
+ */
+export type UpdateRegionCommand = {
+    id: string;
+    name: string;
+    description: string;
+};
+
+/**
+ * UpdateReviewCommand
+ */
+export type UpdateReviewCommand = {
+    id: string;
+    comment: string;
+    rating: number;
+};
+
+/**
+ * UpdateServiceTypeCommand
+ */
+export type UpdateServiceTypeCommand = {
+    id: string;
+    name: string;
+    description: string;
+};
 
 export type PostApiAccountRegisterData = {
-    body: AndersonApiApiControllersRegisterDto;
+    body: RegisterDto;
     path?: never;
     query?: never;
     url: '/api/Account/Register';
@@ -572,7 +898,7 @@ export type PostApiAccountRegisterResponses = {
 };
 
 export type PostApiAccountLoginData = {
-    body: AndersonApiApiControllersLoginDto;
+    body: LoginDto;
     path?: never;
     query?: never;
     url: '/api/Account/Login';
@@ -582,13 +908,13 @@ export type PostApiAccountLoginResponses = {
     /**
      * OK
      */
-    200: AndersonApiApiControllersTokenResultDto;
+    200: TokenResultDto;
 };
 
 export type PostApiAccountLoginResponse = PostApiAccountLoginResponses[keyof PostApiAccountLoginResponses];
 
 export type PostApiAccountRefreshData = {
-    body: AndersonApiApiControllersRefreshTokenDto;
+    body: RefreshTokenDto;
     path?: never;
     query?: never;
     url: '/api/Account/Refresh';
@@ -598,13 +924,13 @@ export type PostApiAccountRefreshResponses = {
     /**
      * OK
      */
-    200: AndersonApiApiControllersTokenResultDto;
+    200: TokenResultDto;
 };
 
 export type PostApiAccountRefreshResponse = PostApiAccountRefreshResponses[keyof PostApiAccountRefreshResponses];
 
 export type PostApiAccountConfirmEmailData = {
-    body: AndersonApiApiControllersConfirmEmailDto;
+    body: ConfirmEmailDto;
     path?: never;
     query?: never;
     url: '/api/Account/ConfirmEmail';
@@ -618,7 +944,7 @@ export type PostApiAccountConfirmEmailResponses = {
 };
 
 export type PostApiAccountForgotPasswordData = {
-    body: AndersonApiApiControllersForgotPasswordDto;
+    body: ForgotPasswordDto;
     path?: never;
     query?: never;
     url: '/api/Account/forgotPassword';
@@ -632,7 +958,7 @@ export type PostApiAccountForgotPasswordResponses = {
 };
 
 export type PostApiAccountResetPasswordData = {
-    body: AndersonApiApiControllersResetPasswordDto;
+    body: ResetPasswordDto;
     path?: never;
     query?: never;
     url: '/api/Account/resetPassword';
@@ -656,13 +982,13 @@ export type GetApiAccountManageInfoResponses = {
     /**
      * OK
      */
-    200: AndersonApiApiControllersInfoResponseDto;
+    200: InfoResponseDto;
 };
 
 export type GetApiAccountManageInfoResponse = GetApiAccountManageInfoResponses[keyof GetApiAccountManageInfoResponses];
 
 export type PostApiAccountManageInfoData = {
-    body: AndersonApiApiControllersUpdateInfoDto;
+    body: UpdateInfoDto;
     path?: never;
     query?: never;
     url: '/api/Account/manage/info';
@@ -672,7 +998,7 @@ export type PostApiAccountManageInfoResponses = {
     /**
      * OK
      */
-    200: AndersonApiApiControllersInfoResponseDto;
+    200: InfoResponseDto;
 };
 
 export type PostApiAccountManageInfoResponse = PostApiAccountManageInfoResponses[keyof PostApiAccountManageInfoResponses];
@@ -702,7 +1028,7 @@ export type GetApiCapabilitiesErrors = {
     /**
      * Internal Server Error
      */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
+    500: ProblemDetails;
 };
 
 export type GetApiCapabilitiesError = GetApiCapabilitiesErrors[keyof GetApiCapabilitiesErrors];
@@ -711,13 +1037,13 @@ export type GetApiCapabilitiesResponses = {
     /**
      * OK
      */
-    200: Array<AndersonApiApplicationCapabilitiesCapabilityDto>;
+    200: Array<CapabilityDto>;
 };
 
 export type GetApiCapabilitiesResponse = GetApiCapabilitiesResponses[keyof GetApiCapabilitiesResponses];
 
 export type PostApiCapabilitiesData = {
-    body: AndersonApiApplicationCapabilitiesCreateCapabilityCreateCapabilityCommand;
+    body: CreateCapabilityCommand;
     path?: never;
     query?: never;
     url: '/api/capabilities';
@@ -727,11 +1053,11 @@ export type PostApiCapabilitiesErrors = {
     /**
      * Bad Request
      */
-    400: MicrosoftAspNetCoreMvcProblemDetails;
+    400: ProblemDetails;
     /**
      * Internal Server Error
      */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
+    500: ProblemDetails;
 };
 
 export type PostApiCapabilitiesError = PostApiCapabilitiesErrors[keyof PostApiCapabilitiesErrors];
@@ -740,7 +1066,7 @@ export type PostApiCapabilitiesResponses = {
     /**
      * Created
      */
-    201: AndersonApiApiControllersResponseTypesJsonResponseOfSystemGuid;
+    201: AndersonApiApiControllersResponseTypesJsonResponseOfGuid;
 };
 
 export type PostApiCapabilitiesResponse = PostApiCapabilitiesResponses[keyof PostApiCapabilitiesResponses];
@@ -758,15 +1084,15 @@ export type DeleteApiCapabilitiesByIdErrors = {
     /**
      * Bad Request
      */
-    400: MicrosoftAspNetCoreMvcProblemDetails;
+    400: ProblemDetails;
     /**
      * Not Found
      */
-    404: MicrosoftAspNetCoreMvcProblemDetails;
+    404: ProblemDetails;
     /**
      * Internal Server Error
      */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
+    500: ProblemDetails;
 };
 
 export type DeleteApiCapabilitiesByIdError = DeleteApiCapabilitiesByIdErrors[keyof DeleteApiCapabilitiesByIdErrors];
@@ -791,15 +1117,15 @@ export type GetApiCapabilitiesByIdErrors = {
     /**
      * Bad Request
      */
-    400: MicrosoftAspNetCoreMvcProblemDetails;
+    400: ProblemDetails;
     /**
      * Not Found
      */
-    404: MicrosoftAspNetCoreMvcProblemDetails;
+    404: ProblemDetails;
     /**
      * Internal Server Error
      */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
+    500: ProblemDetails;
 };
 
 export type GetApiCapabilitiesByIdError = GetApiCapabilitiesByIdErrors[keyof GetApiCapabilitiesByIdErrors];
@@ -808,13 +1134,13 @@ export type GetApiCapabilitiesByIdResponses = {
     /**
      * OK
      */
-    200: AndersonApiApplicationCapabilitiesCapabilityDto;
+    200: CapabilityDto;
 };
 
 export type GetApiCapabilitiesByIdResponse = GetApiCapabilitiesByIdResponses[keyof GetApiCapabilitiesByIdResponses];
 
 export type PutApiCapabilitiesByIdData = {
-    body: AndersonApiApplicationCapabilitiesUpdateCapabilityUpdateCapabilityCommand;
+    body: UpdateCapabilityCommand;
     path: {
         id: string;
     };
@@ -826,15 +1152,15 @@ export type PutApiCapabilitiesByIdErrors = {
     /**
      * Bad Request
      */
-    400: MicrosoftAspNetCoreMvcProblemDetails;
+    400: ProblemDetails;
     /**
      * Not Found
      */
-    404: MicrosoftAspNetCoreMvcProblemDetails;
+    404: ProblemDetails;
     /**
      * Internal Server Error
      */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
+    500: ProblemDetails;
 };
 
 export type PutApiCapabilitiesByIdError = PutApiCapabilitiesByIdErrors[keyof PutApiCapabilitiesByIdErrors];
@@ -849,7 +1175,7 @@ export type PutApiCapabilitiesByIdResponses = {
 export type PutApiCapabilitiesByIdResponse = PutApiCapabilitiesByIdResponses[keyof PutApiCapabilitiesByIdResponses];
 
 export type PutApiCapabilitiesByIdSetStateData = {
-    body: AndersonApiApplicationCapabilitiesSetStateCapabilitySetStateCapabilityCommand;
+    body: SetStateCapabilityCommand;
     path: {
         id: string;
     };
@@ -861,15 +1187,15 @@ export type PutApiCapabilitiesByIdSetStateErrors = {
     /**
      * Bad Request
      */
-    400: MicrosoftAspNetCoreMvcProblemDetails;
+    400: ProblemDetails;
     /**
      * Not Found
      */
-    404: MicrosoftAspNetCoreMvcProblemDetails;
+    404: ProblemDetails;
     /**
      * Internal Server Error
      */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
+    500: ProblemDetails;
 };
 
 export type PutApiCapabilitiesByIdSetStateError = PutApiCapabilitiesByIdSetStateErrors[keyof PutApiCapabilitiesByIdSetStateErrors];
@@ -898,15 +1224,15 @@ export type DeleteApiCompaniesByIdContactErrors = {
     /**
      * Bad Request
      */
-    400: MicrosoftAspNetCoreMvcProblemDetails;
+    400: ProblemDetails;
     /**
      * Not Found
      */
-    404: MicrosoftAspNetCoreMvcProblemDetails;
+    404: ProblemDetails;
     /**
      * Internal Server Error
      */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
+    500: ProblemDetails;
 };
 
 export type DeleteApiCompaniesByIdContactError = DeleteApiCompaniesByIdContactErrors[keyof DeleteApiCompaniesByIdContactErrors];
@@ -919,7 +1245,7 @@ export type DeleteApiCompaniesByIdContactResponses = {
 };
 
 export type PostApiCompaniesByIdContactData = {
-    body: AndersonApiApplicationCompaniesAddContactCompanyAddContactCompanyCommand;
+    body: AddContactCompanyCommand;
     path: {
         id: string;
     };
@@ -931,15 +1257,15 @@ export type PostApiCompaniesByIdContactErrors = {
     /**
      * Bad Request
      */
-    400: MicrosoftAspNetCoreMvcProblemDetails;
+    400: ProblemDetails;
     /**
      * Not Found
      */
-    404: MicrosoftAspNetCoreMvcProblemDetails;
+    404: ProblemDetails;
     /**
      * Internal Server Error
      */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
+    500: ProblemDetails;
 };
 
 export type PostApiCompaniesByIdContactError = PostApiCompaniesByIdContactErrors[keyof PostApiCompaniesByIdContactErrors];
@@ -952,7 +1278,7 @@ export type PostApiCompaniesByIdContactResponses = {
 };
 
 export type PutApiCompaniesByIdContactData = {
-    body: AndersonApiApplicationCompaniesUpdateContactCompanyUpdateContactCompanyCommand;
+    body: UpdateContactCompanyCommand;
     path: {
         id: string;
     };
@@ -964,15 +1290,15 @@ export type PutApiCompaniesByIdContactErrors = {
     /**
      * Bad Request
      */
-    400: MicrosoftAspNetCoreMvcProblemDetails;
+    400: ProblemDetails;
     /**
      * Not Found
      */
-    404: MicrosoftAspNetCoreMvcProblemDetails;
+    404: ProblemDetails;
     /**
      * Internal Server Error
      */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
+    500: ProblemDetails;
 };
 
 export type PutApiCompaniesByIdContactError = PutApiCompaniesByIdContactErrors[keyof PutApiCompaniesByIdContactErrors];
@@ -1001,15 +1327,15 @@ export type DeleteApiCompaniesByIdLocationErrors = {
     /**
      * Bad Request
      */
-    400: MicrosoftAspNetCoreMvcProblemDetails;
+    400: ProblemDetails;
     /**
      * Not Found
      */
-    404: MicrosoftAspNetCoreMvcProblemDetails;
+    404: ProblemDetails;
     /**
      * Internal Server Error
      */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
+    500: ProblemDetails;
 };
 
 export type DeleteApiCompaniesByIdLocationError = DeleteApiCompaniesByIdLocationErrors[keyof DeleteApiCompaniesByIdLocationErrors];
@@ -1022,7 +1348,7 @@ export type DeleteApiCompaniesByIdLocationResponses = {
 };
 
 export type PostApiCompaniesByIdLocationData = {
-    body: AndersonApiApplicationCompaniesAddLocationCompanyAddLocationCompanyCommand;
+    body: AddLocationCompanyCommand;
     path: {
         id: string;
     };
@@ -1034,15 +1360,15 @@ export type PostApiCompaniesByIdLocationErrors = {
     /**
      * Bad Request
      */
-    400: MicrosoftAspNetCoreMvcProblemDetails;
+    400: ProblemDetails;
     /**
      * Not Found
      */
-    404: MicrosoftAspNetCoreMvcProblemDetails;
+    404: ProblemDetails;
     /**
      * Internal Server Error
      */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
+    500: ProblemDetails;
 };
 
 export type PostApiCompaniesByIdLocationError = PostApiCompaniesByIdLocationErrors[keyof PostApiCompaniesByIdLocationErrors];
@@ -1055,7 +1381,7 @@ export type PostApiCompaniesByIdLocationResponses = {
 };
 
 export type PutApiCompaniesByIdLocationData = {
-    body: AndersonApiApplicationCompaniesUpdateLocationCompanyUpdateLocationCompanyCommand;
+    body: UpdateLocationCompanyCommand;
     path: {
         id: string;
     };
@@ -1067,15 +1393,15 @@ export type PutApiCompaniesByIdLocationErrors = {
     /**
      * Bad Request
      */
-    400: MicrosoftAspNetCoreMvcProblemDetails;
+    400: ProblemDetails;
     /**
      * Not Found
      */
-    404: MicrosoftAspNetCoreMvcProblemDetails;
+    404: ProblemDetails;
     /**
      * Internal Server Error
      */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
+    500: ProblemDetails;
 };
 
 export type PutApiCompaniesByIdLocationError = PutApiCompaniesByIdLocationErrors[keyof PutApiCompaniesByIdLocationErrors];
@@ -1100,7 +1426,7 @@ export type GetApiCompaniesErrors = {
     /**
      * Internal Server Error
      */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
+    500: ProblemDetails;
 };
 
 export type GetApiCompaniesError = GetApiCompaniesErrors[keyof GetApiCompaniesErrors];
@@ -1109,13 +1435,13 @@ export type GetApiCompaniesResponses = {
     /**
      * OK
      */
-    200: Array<AndersonApiApplicationCompaniesCompanyDto>;
+    200: Array<DirectoryProfileListItem>;
 };
 
 export type GetApiCompaniesResponse = GetApiCompaniesResponses[keyof GetApiCompaniesResponses];
 
 export type PostApiCompaniesData = {
-    body: AndersonApiApplicationCompaniesCreateCompanyCreateCompanyCommand;
+    body: CreateCompanyCommand;
     path?: never;
     query?: never;
     url: '/api/companies';
@@ -1125,11 +1451,11 @@ export type PostApiCompaniesErrors = {
     /**
      * Bad Request
      */
-    400: MicrosoftAspNetCoreMvcProblemDetails;
+    400: ProblemDetails;
     /**
      * Internal Server Error
      */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
+    500: ProblemDetails;
 };
 
 export type PostApiCompaniesError = PostApiCompaniesErrors[keyof PostApiCompaniesErrors];
@@ -1138,7 +1464,7 @@ export type PostApiCompaniesResponses = {
     /**
      * Created
      */
-    201: AndersonApiApiControllersResponseTypesJsonResponseOfSystemGuid;
+    201: AndersonApiApiControllersResponseTypesJsonResponseOfGuid;
 };
 
 export type PostApiCompaniesResponse = PostApiCompaniesResponses[keyof PostApiCompaniesResponses];
@@ -1156,15 +1482,15 @@ export type DeleteApiCompaniesByIdErrors = {
     /**
      * Bad Request
      */
-    400: MicrosoftAspNetCoreMvcProblemDetails;
+    400: ProblemDetails;
     /**
      * Not Found
      */
-    404: MicrosoftAspNetCoreMvcProblemDetails;
+    404: ProblemDetails;
     /**
      * Internal Server Error
      */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
+    500: ProblemDetails;
 };
 
 export type DeleteApiCompaniesByIdError = DeleteApiCompaniesByIdErrors[keyof DeleteApiCompaniesByIdErrors];
@@ -1189,15 +1515,15 @@ export type GetApiCompaniesByIdErrors = {
     /**
      * Bad Request
      */
-    400: MicrosoftAspNetCoreMvcProblemDetails;
+    400: ProblemDetails;
     /**
      * Not Found
      */
-    404: MicrosoftAspNetCoreMvcProblemDetails;
+    404: ProblemDetails;
     /**
      * Internal Server Error
      */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
+    500: ProblemDetails;
 };
 
 export type GetApiCompaniesByIdError = GetApiCompaniesByIdErrors[keyof GetApiCompaniesByIdErrors];
@@ -1206,13 +1532,13 @@ export type GetApiCompaniesByIdResponses = {
     /**
      * OK
      */
-    200: AndersonApiApplicationCompaniesCompanyDto;
+    200: CompanyDto;
 };
 
 export type GetApiCompaniesByIdResponse = GetApiCompaniesByIdResponses[keyof GetApiCompaniesByIdResponses];
 
 export type PutApiCompaniesByIdData = {
-    body: AndersonApiApplicationCompaniesUpdateCompanyUpdateCompanyCommand;
+    body: UpdateCompanyCommand;
     path: {
         id: string;
     };
@@ -1224,15 +1550,15 @@ export type PutApiCompaniesByIdErrors = {
     /**
      * Bad Request
      */
-    400: MicrosoftAspNetCoreMvcProblemDetails;
+    400: ProblemDetails;
     /**
      * Not Found
      */
-    404: MicrosoftAspNetCoreMvcProblemDetails;
+    404: ProblemDetails;
     /**
      * Internal Server Error
      */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
+    500: ProblemDetails;
 };
 
 export type PutApiCompaniesByIdError = PutApiCompaniesByIdErrors[keyof PutApiCompaniesByIdErrors];
@@ -1246,8 +1572,37 @@ export type PutApiCompaniesByIdResponses = {
 
 export type PutApiCompaniesByIdResponse = PutApiCompaniesByIdResponses[keyof PutApiCompaniesByIdResponses];
 
+export type PutApiCompaniesScrapeWebsiteData = {
+    body: ScrapeWebsiteCommand;
+    path?: never;
+    query?: never;
+    url: '/api/companies/scrape-website';
+};
+
+export type PutApiCompaniesScrapeWebsiteErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type PutApiCompaniesScrapeWebsiteError = PutApiCompaniesScrapeWebsiteErrors[keyof PutApiCompaniesScrapeWebsiteErrors];
+
+export type PutApiCompaniesScrapeWebsiteResponses = {
+    /**
+     * No Content
+     */
+    204: void;
+};
+
+export type PutApiCompaniesScrapeWebsiteResponse = PutApiCompaniesScrapeWebsiteResponses[keyof PutApiCompaniesScrapeWebsiteResponses];
+
 export type PutApiCompaniesByIdCapabilitiesData = {
-    body: AndersonApiApplicationCompaniesSetCapabilitiesCompanySetCapabilitiesCompanyCommand;
+    body: SetCapabilitiesCompanyCommand;
     path: {
         id: string;
     };
@@ -1259,15 +1614,15 @@ export type PutApiCompaniesByIdCapabilitiesErrors = {
     /**
      * Bad Request
      */
-    400: MicrosoftAspNetCoreMvcProblemDetails;
+    400: ProblemDetails;
     /**
      * Not Found
      */
-    404: MicrosoftAspNetCoreMvcProblemDetails;
+    404: ProblemDetails;
     /**
      * Internal Server Error
      */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
+    500: ProblemDetails;
 };
 
 export type PutApiCompaniesByIdCapabilitiesError = PutApiCompaniesByIdCapabilitiesErrors[keyof PutApiCompaniesByIdCapabilitiesErrors];
@@ -1282,7 +1637,7 @@ export type PutApiCompaniesByIdCapabilitiesResponses = {
 export type PutApiCompaniesByIdCapabilitiesResponse = PutApiCompaniesByIdCapabilitiesResponses[keyof PutApiCompaniesByIdCapabilitiesResponses];
 
 export type PutApiCompaniesByIdHeadOfficeData = {
-    body: AndersonApiApplicationCompaniesSetHeadOfficeCompanySetHeadOfficeCompanyCommand;
+    body: SetHeadOfficeCompanyCommand;
     path: {
         id: string;
     };
@@ -1294,15 +1649,15 @@ export type PutApiCompaniesByIdHeadOfficeErrors = {
     /**
      * Bad Request
      */
-    400: MicrosoftAspNetCoreMvcProblemDetails;
+    400: ProblemDetails;
     /**
      * Not Found
      */
-    404: MicrosoftAspNetCoreMvcProblemDetails;
+    404: ProblemDetails;
     /**
      * Internal Server Error
      */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
+    500: ProblemDetails;
 };
 
 export type PutApiCompaniesByIdHeadOfficeError = PutApiCompaniesByIdHeadOfficeErrors[keyof PutApiCompaniesByIdHeadOfficeErrors];
@@ -1317,7 +1672,7 @@ export type PutApiCompaniesByIdHeadOfficeResponses = {
 export type PutApiCompaniesByIdHeadOfficeResponse = PutApiCompaniesByIdHeadOfficeResponses[keyof PutApiCompaniesByIdHeadOfficeResponses];
 
 export type PutApiCompaniesByIdIndustriesData = {
-    body: AndersonApiApplicationCompaniesSetIndustriesCompanySetIndustriesCompanyCommand;
+    body: SetIndustriesCompanyCommand;
     path: {
         id: string;
     };
@@ -1329,15 +1684,15 @@ export type PutApiCompaniesByIdIndustriesErrors = {
     /**
      * Bad Request
      */
-    400: MicrosoftAspNetCoreMvcProblemDetails;
+    400: ProblemDetails;
     /**
      * Not Found
      */
-    404: MicrosoftAspNetCoreMvcProblemDetails;
+    404: ProblemDetails;
     /**
      * Internal Server Error
      */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
+    500: ProblemDetails;
 };
 
 export type PutApiCompaniesByIdIndustriesError = PutApiCompaniesByIdIndustriesErrors[keyof PutApiCompaniesByIdIndustriesErrors];
@@ -1352,7 +1707,7 @@ export type PutApiCompaniesByIdIndustriesResponses = {
 export type PutApiCompaniesByIdIndustriesResponse = PutApiCompaniesByIdIndustriesResponses[keyof PutApiCompaniesByIdIndustriesResponses];
 
 export type PutApiCompaniesByIdServiceTypesData = {
-    body: AndersonApiApplicationCompaniesSetServiceTypesCompanySetServiceTypesCompanyCommand;
+    body: SetServiceTypesCompanyCommand;
     path: {
         id: string;
     };
@@ -1364,15 +1719,15 @@ export type PutApiCompaniesByIdServiceTypesErrors = {
     /**
      * Bad Request
      */
-    400: MicrosoftAspNetCoreMvcProblemDetails;
+    400: ProblemDetails;
     /**
      * Not Found
      */
-    404: MicrosoftAspNetCoreMvcProblemDetails;
+    404: ProblemDetails;
     /**
      * Internal Server Error
      */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
+    500: ProblemDetails;
 };
 
 export type PutApiCompaniesByIdServiceTypesError = PutApiCompaniesByIdServiceTypesErrors[keyof PutApiCompaniesByIdServiceTypesErrors];
@@ -1387,7 +1742,7 @@ export type PutApiCompaniesByIdServiceTypesResponses = {
 export type PutApiCompaniesByIdServiceTypesResponse = PutApiCompaniesByIdServiceTypesResponses[keyof PutApiCompaniesByIdServiceTypesResponses];
 
 export type PutApiCompaniesByIdSetStateData = {
-    body: AndersonApiApplicationCompaniesSetStateCompanySetStateCompanyCommand;
+    body: SetStateCompanyCommand;
     path: {
         id: string;
     };
@@ -1399,15 +1754,15 @@ export type PutApiCompaniesByIdSetStateErrors = {
     /**
      * Bad Request
      */
-    400: MicrosoftAspNetCoreMvcProblemDetails;
+    400: ProblemDetails;
     /**
      * Not Found
      */
-    404: MicrosoftAspNetCoreMvcProblemDetails;
+    404: ProblemDetails;
     /**
      * Internal Server Error
      */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
+    500: ProblemDetails;
 };
 
 export type PutApiCompaniesByIdSetStateError = PutApiCompaniesByIdSetStateErrors[keyof PutApiCompaniesByIdSetStateErrors];
@@ -1421,6 +1776,130 @@ export type PutApiCompaniesByIdSetStateResponses = {
 
 export type PutApiCompaniesByIdSetStateResponse = PutApiCompaniesByIdSetStateResponses[keyof PutApiCompaniesByIdSetStateResponses];
 
+export type GetApiCompaniesByIdProfileData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/companies/{id}/profile';
+};
+
+export type GetApiCompaniesByIdProfileErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type GetApiCompaniesByIdProfileError = GetApiCompaniesByIdProfileErrors[keyof GetApiCompaniesByIdProfileErrors];
+
+export type GetApiCompaniesByIdProfileResponses = {
+    /**
+     * OK
+     */
+    200: CompanyProfileDto;
+};
+
+export type GetApiCompaniesByIdProfileResponse = GetApiCompaniesByIdProfileResponses[keyof GetApiCompaniesByIdProfileResponses];
+
+export type GetApiCompaniesMeData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/companies/me';
+};
+
+export type GetApiCompaniesMeErrors = {
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type GetApiCompaniesMeError = GetApiCompaniesMeErrors[keyof GetApiCompaniesMeErrors];
+
+export type GetApiCompaniesMeResponses = {
+    /**
+     * OK
+     */
+    200: Array<CompanyProfileDto>;
+};
+
+export type GetApiCompaniesMeResponse = GetApiCompaniesMeResponses[keyof GetApiCompaniesMeResponses];
+
+export type GetApiCompaniesByIdPartnerData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/companies/{id}/partner';
+};
+
+export type GetApiCompaniesByIdPartnerErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type GetApiCompaniesByIdPartnerError = GetApiCompaniesByIdPartnerErrors[keyof GetApiCompaniesByIdPartnerErrors];
+
+export type GetApiCompaniesByIdPartnerResponses = {
+    /**
+     * OK
+     */
+    200: PartnerProfile;
+};
+
+export type GetApiCompaniesByIdPartnerResponse = GetApiCompaniesByIdPartnerResponses[keyof GetApiCompaniesByIdPartnerResponses];
+
+export type PutApiCompaniesPartnersData = {
+    body: GetPartnersByAiQuery;
+    path?: never;
+    query?: never;
+    url: '/api/companies/partners';
+};
+
+export type PutApiCompaniesPartnersErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type PutApiCompaniesPartnersError = PutApiCompaniesPartnersErrors[keyof PutApiCompaniesPartnersErrors];
+
+export type PutApiCompaniesPartnersResponses = {
+    /**
+     * OK
+     */
+    200: Array<PartnerProfileListItem>;
+};
+
+export type PutApiCompaniesPartnersResponse = PutApiCompaniesPartnersResponses[keyof PutApiCompaniesPartnersResponses];
+
 export type GetApiCountriesData = {
     body?: never;
     path?: never;
@@ -1432,7 +1911,7 @@ export type GetApiCountriesErrors = {
     /**
      * Internal Server Error
      */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
+    500: ProblemDetails;
 };
 
 export type GetApiCountriesError = GetApiCountriesErrors[keyof GetApiCountriesErrors];
@@ -1441,13 +1920,13 @@ export type GetApiCountriesResponses = {
     /**
      * OK
      */
-    200: Array<AndersonApiApplicationCountriesCountryDto>;
+    200: Array<CountryDto>;
 };
 
 export type GetApiCountriesResponse = GetApiCountriesResponses[keyof GetApiCountriesResponses];
 
 export type PostApiCountriesData = {
-    body: AndersonApiApplicationCountriesCreateCountryCreateCountryCommand;
+    body: CreateCountryCommand;
     path?: never;
     query?: never;
     url: '/api/countries';
@@ -1457,11 +1936,11 @@ export type PostApiCountriesErrors = {
     /**
      * Bad Request
      */
-    400: MicrosoftAspNetCoreMvcProblemDetails;
+    400: ProblemDetails;
     /**
      * Internal Server Error
      */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
+    500: ProblemDetails;
 };
 
 export type PostApiCountriesError = PostApiCountriesErrors[keyof PostApiCountriesErrors];
@@ -1470,7 +1949,7 @@ export type PostApiCountriesResponses = {
     /**
      * Created
      */
-    201: AndersonApiApiControllersResponseTypesJsonResponseOfSystemGuid;
+    201: AndersonApiApiControllersResponseTypesJsonResponseOfGuid;
 };
 
 export type PostApiCountriesResponse = PostApiCountriesResponses[keyof PostApiCountriesResponses];
@@ -1488,15 +1967,15 @@ export type DeleteApiCountriesByIdErrors = {
     /**
      * Bad Request
      */
-    400: MicrosoftAspNetCoreMvcProblemDetails;
+    400: ProblemDetails;
     /**
      * Not Found
      */
-    404: MicrosoftAspNetCoreMvcProblemDetails;
+    404: ProblemDetails;
     /**
      * Internal Server Error
      */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
+    500: ProblemDetails;
 };
 
 export type DeleteApiCountriesByIdError = DeleteApiCountriesByIdErrors[keyof DeleteApiCountriesByIdErrors];
@@ -1521,15 +2000,15 @@ export type GetApiCountriesByIdErrors = {
     /**
      * Bad Request
      */
-    400: MicrosoftAspNetCoreMvcProblemDetails;
+    400: ProblemDetails;
     /**
      * Not Found
      */
-    404: MicrosoftAspNetCoreMvcProblemDetails;
+    404: ProblemDetails;
     /**
      * Internal Server Error
      */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
+    500: ProblemDetails;
 };
 
 export type GetApiCountriesByIdError = GetApiCountriesByIdErrors[keyof GetApiCountriesByIdErrors];
@@ -1538,13 +2017,13 @@ export type GetApiCountriesByIdResponses = {
     /**
      * OK
      */
-    200: AndersonApiApplicationCountriesCountryDto;
+    200: CountryDto;
 };
 
 export type GetApiCountriesByIdResponse = GetApiCountriesByIdResponses[keyof GetApiCountriesByIdResponses];
 
 export type PutApiCountriesByIdData = {
-    body: AndersonApiApplicationCountriesUpdateCountryUpdateCountryCommand;
+    body: UpdateCountryCommand;
     path: {
         id: string;
     };
@@ -1556,15 +2035,15 @@ export type PutApiCountriesByIdErrors = {
     /**
      * Bad Request
      */
-    400: MicrosoftAspNetCoreMvcProblemDetails;
+    400: ProblemDetails;
     /**
      * Not Found
      */
-    404: MicrosoftAspNetCoreMvcProblemDetails;
+    404: ProblemDetails;
     /**
      * Internal Server Error
      */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
+    500: ProblemDetails;
 };
 
 export type PutApiCountriesByIdError = PutApiCountriesByIdErrors[keyof PutApiCountriesByIdErrors];
@@ -1579,7 +2058,7 @@ export type PutApiCountriesByIdResponses = {
 export type PutApiCountriesByIdResponse = PutApiCountriesByIdResponses[keyof PutApiCountriesByIdResponses];
 
 export type PutApiCountriesByIdSetStateData = {
-    body: AndersonApiApplicationCountriesSetStateCountrySetStateCountryCommand;
+    body: SetStateCountryCommand;
     path: {
         id: string;
     };
@@ -1591,15 +2070,15 @@ export type PutApiCountriesByIdSetStateErrors = {
     /**
      * Bad Request
      */
-    400: MicrosoftAspNetCoreMvcProblemDetails;
+    400: ProblemDetails;
     /**
      * Not Found
      */
-    404: MicrosoftAspNetCoreMvcProblemDetails;
+    404: ProblemDetails;
     /**
      * Internal Server Error
      */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
+    500: ProblemDetails;
 };
 
 export type PutApiCountriesByIdSetStateError = PutApiCountriesByIdSetStateErrors[keyof PutApiCountriesByIdSetStateErrors];
@@ -1624,7 +2103,7 @@ export type GetApiIndustriesErrors = {
     /**
      * Internal Server Error
      */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
+    500: ProblemDetails;
 };
 
 export type GetApiIndustriesError = GetApiIndustriesErrors[keyof GetApiIndustriesErrors];
@@ -1633,13 +2112,13 @@ export type GetApiIndustriesResponses = {
     /**
      * OK
      */
-    200: Array<AndersonApiApplicationIndustriesIndustryDto>;
+    200: Array<IndustryDto>;
 };
 
 export type GetApiIndustriesResponse = GetApiIndustriesResponses[keyof GetApiIndustriesResponses];
 
 export type PostApiIndustriesData = {
-    body: AndersonApiApplicationIndustriesCreateIndustryCreateIndustryCommand;
+    body: CreateIndustryCommand;
     path?: never;
     query?: never;
     url: '/api/industries';
@@ -1649,11 +2128,11 @@ export type PostApiIndustriesErrors = {
     /**
      * Bad Request
      */
-    400: MicrosoftAspNetCoreMvcProblemDetails;
+    400: ProblemDetails;
     /**
      * Internal Server Error
      */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
+    500: ProblemDetails;
 };
 
 export type PostApiIndustriesError = PostApiIndustriesErrors[keyof PostApiIndustriesErrors];
@@ -1662,7 +2141,7 @@ export type PostApiIndustriesResponses = {
     /**
      * Created
      */
-    201: AndersonApiApiControllersResponseTypesJsonResponseOfSystemGuid;
+    201: AndersonApiApiControllersResponseTypesJsonResponseOfGuid;
 };
 
 export type PostApiIndustriesResponse = PostApiIndustriesResponses[keyof PostApiIndustriesResponses];
@@ -1680,15 +2159,15 @@ export type DeleteApiIndustriesByIdErrors = {
     /**
      * Bad Request
      */
-    400: MicrosoftAspNetCoreMvcProblemDetails;
+    400: ProblemDetails;
     /**
      * Not Found
      */
-    404: MicrosoftAspNetCoreMvcProblemDetails;
+    404: ProblemDetails;
     /**
      * Internal Server Error
      */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
+    500: ProblemDetails;
 };
 
 export type DeleteApiIndustriesByIdError = DeleteApiIndustriesByIdErrors[keyof DeleteApiIndustriesByIdErrors];
@@ -1713,15 +2192,15 @@ export type GetApiIndustriesByIdErrors = {
     /**
      * Bad Request
      */
-    400: MicrosoftAspNetCoreMvcProblemDetails;
+    400: ProblemDetails;
     /**
      * Not Found
      */
-    404: MicrosoftAspNetCoreMvcProblemDetails;
+    404: ProblemDetails;
     /**
      * Internal Server Error
      */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
+    500: ProblemDetails;
 };
 
 export type GetApiIndustriesByIdError = GetApiIndustriesByIdErrors[keyof GetApiIndustriesByIdErrors];
@@ -1730,13 +2209,13 @@ export type GetApiIndustriesByIdResponses = {
     /**
      * OK
      */
-    200: AndersonApiApplicationIndustriesIndustryDto;
+    200: IndustryDto;
 };
 
 export type GetApiIndustriesByIdResponse = GetApiIndustriesByIdResponses[keyof GetApiIndustriesByIdResponses];
 
 export type PutApiIndustriesByIdData = {
-    body: AndersonApiApplicationIndustriesUpdateIndustryUpdateIndustryCommand;
+    body: UpdateIndustryCommand;
     path: {
         id: string;
     };
@@ -1748,15 +2227,15 @@ export type PutApiIndustriesByIdErrors = {
     /**
      * Bad Request
      */
-    400: MicrosoftAspNetCoreMvcProblemDetails;
+    400: ProblemDetails;
     /**
      * Not Found
      */
-    404: MicrosoftAspNetCoreMvcProblemDetails;
+    404: ProblemDetails;
     /**
      * Internal Server Error
      */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
+    500: ProblemDetails;
 };
 
 export type PutApiIndustriesByIdError = PutApiIndustriesByIdErrors[keyof PutApiIndustriesByIdErrors];
@@ -1771,7 +2250,7 @@ export type PutApiIndustriesByIdResponses = {
 export type PutApiIndustriesByIdResponse = PutApiIndustriesByIdResponses[keyof PutApiIndustriesByIdResponses];
 
 export type PutApiIndustriesByIdSetStateData = {
-    body: AndersonApiApplicationIndustriesSetStateIndustrySetStateIndustryCommand;
+    body: SetStateIndustryCommand;
     path: {
         id: string;
     };
@@ -1783,15 +2262,15 @@ export type PutApiIndustriesByIdSetStateErrors = {
     /**
      * Bad Request
      */
-    400: MicrosoftAspNetCoreMvcProblemDetails;
+    400: ProblemDetails;
     /**
      * Not Found
      */
-    404: MicrosoftAspNetCoreMvcProblemDetails;
+    404: ProblemDetails;
     /**
      * Internal Server Error
      */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
+    500: ProblemDetails;
 };
 
 export type PutApiIndustriesByIdSetStateError = PutApiIndustriesByIdSetStateErrors[keyof PutApiIndustriesByIdSetStateErrors];
@@ -1805,599 +2284,746 @@ export type PutApiIndustriesByIdSetStateResponses = {
 
 export type PutApiIndustriesByIdSetStateResponse = PutApiIndustriesByIdSetStateResponses[keyof PutApiIndustriesByIdSetStateResponses];
 
-export type GetApiOppertunitiesData = {
-    body?: never;
+export type PostApiOpportunitiesMessageData = {
+    body: AddMessageOpportunityCommand;
     path?: never;
     query?: never;
-    url: '/api/oppertunities';
+    url: '/api/opportunities/message';
 };
 
-export type GetApiOppertunitiesErrors = {
-    /**
-     * Internal Server Error
-     */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
-};
-
-export type GetApiOppertunitiesError = GetApiOppertunitiesErrors[keyof GetApiOppertunitiesErrors];
-
-export type GetApiOppertunitiesResponses = {
-    /**
-     * OK
-     */
-    200: Array<AndersonApiApplicationOppertunitiesOppertunityDto>;
-};
-
-export type GetApiOppertunitiesResponse = GetApiOppertunitiesResponses[keyof GetApiOppertunitiesResponses];
-
-export type PostApiOppertunitiesData = {
-    body: AndersonApiApplicationOppertunitiesCreateOppertunityCreateOppertunityCommand;
-    path?: never;
-    query?: never;
-    url: '/api/oppertunities';
-};
-
-export type PostApiOppertunitiesErrors = {
+export type PostApiOpportunitiesMessageErrors = {
     /**
      * Bad Request
      */
-    400: MicrosoftAspNetCoreMvcProblemDetails;
+    400: ProblemDetails;
     /**
      * Internal Server Error
      */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
+    500: ProblemDetails;
 };
 
-export type PostApiOppertunitiesError = PostApiOppertunitiesErrors[keyof PostApiOppertunitiesErrors];
+export type PostApiOpportunitiesMessageError = PostApiOpportunitiesMessageErrors[keyof PostApiOpportunitiesMessageErrors];
 
-export type PostApiOppertunitiesResponses = {
+export type PostApiOpportunitiesMessageResponses = {
     /**
      * Created
      */
-    201: AndersonApiApiControllersResponseTypesJsonResponseOfSystemGuid;
+    201: unknown;
 };
 
-export type PostApiOppertunitiesResponse = PostApiOppertunitiesResponses[keyof PostApiOppertunitiesResponses];
+export type GetApiOpportunitiesData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/opportunities';
+};
 
-export type DeleteApiOppertunitiesByIdData = {
+export type GetApiOpportunitiesErrors = {
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type GetApiOpportunitiesError = GetApiOpportunitiesErrors[keyof GetApiOpportunitiesErrors];
+
+export type GetApiOpportunitiesResponses = {
+    /**
+     * OK
+     */
+    200: Array<OpportunityListItemDto>;
+};
+
+export type GetApiOpportunitiesResponse = GetApiOpportunitiesResponses[keyof GetApiOpportunitiesResponses];
+
+export type PostApiOpportunitiesData = {
+    body: CreateOpportunityCommand;
+    path?: never;
+    query?: never;
+    url: '/api/opportunities';
+};
+
+export type PostApiOpportunitiesErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type PostApiOpportunitiesError = PostApiOpportunitiesErrors[keyof PostApiOpportunitiesErrors];
+
+export type PostApiOpportunitiesResponses = {
+    /**
+     * Created
+     */
+    201: AndersonApiApiControllersResponseTypesJsonResponseOfGuid;
+};
+
+export type PostApiOpportunitiesResponse = PostApiOpportunitiesResponses[keyof PostApiOpportunitiesResponses];
+
+export type DeleteApiOpportunitiesByIdData = {
     body?: never;
     path: {
         id: string;
     };
     query?: never;
-    url: '/api/oppertunities/{id}';
+    url: '/api/opportunities/{id}';
 };
 
-export type DeleteApiOppertunitiesByIdErrors = {
+export type DeleteApiOpportunitiesByIdErrors = {
     /**
      * Bad Request
      */
-    400: MicrosoftAspNetCoreMvcProblemDetails;
+    400: ProblemDetails;
     /**
      * Not Found
      */
-    404: MicrosoftAspNetCoreMvcProblemDetails;
+    404: ProblemDetails;
     /**
      * Internal Server Error
      */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
+    500: ProblemDetails;
 };
 
-export type DeleteApiOppertunitiesByIdError = DeleteApiOppertunitiesByIdErrors[keyof DeleteApiOppertunitiesByIdErrors];
+export type DeleteApiOpportunitiesByIdError = DeleteApiOpportunitiesByIdErrors[keyof DeleteApiOpportunitiesByIdErrors];
 
-export type DeleteApiOppertunitiesByIdResponses = {
+export type DeleteApiOpportunitiesByIdResponses = {
     /**
      * OK
      */
     200: unknown;
 };
 
-export type GetApiOppertunitiesByIdData = {
+export type GetApiOpportunitiesByIdData = {
     body?: never;
     path: {
         id: string;
     };
     query?: never;
-    url: '/api/oppertunities/{id}';
+    url: '/api/opportunities/{id}';
 };
 
-export type GetApiOppertunitiesByIdErrors = {
+export type GetApiOpportunitiesByIdErrors = {
     /**
      * Bad Request
      */
-    400: MicrosoftAspNetCoreMvcProblemDetails;
+    400: ProblemDetails;
     /**
      * Not Found
      */
-    404: MicrosoftAspNetCoreMvcProblemDetails;
+    404: ProblemDetails;
     /**
      * Internal Server Error
      */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
+    500: ProblemDetails;
 };
 
-export type GetApiOppertunitiesByIdError = GetApiOppertunitiesByIdErrors[keyof GetApiOppertunitiesByIdErrors];
+export type GetApiOpportunitiesByIdError = GetApiOpportunitiesByIdErrors[keyof GetApiOpportunitiesByIdErrors];
 
-export type GetApiOppertunitiesByIdResponses = {
+export type GetApiOpportunitiesByIdResponses = {
     /**
      * OK
      */
-    200: AndersonApiApplicationOppertunitiesOppertunityDto;
+    200: OpportunityDto;
 };
 
-export type GetApiOppertunitiesByIdResponse = GetApiOppertunitiesByIdResponses[keyof GetApiOppertunitiesByIdResponses];
+export type GetApiOpportunitiesByIdResponse = GetApiOpportunitiesByIdResponses[keyof GetApiOpportunitiesByIdResponses];
 
-export type PutApiOppertunitiesByIdData = {
-    body: AndersonApiApplicationOppertunitiesUpdateOppertunityUpdateOppertunityCommand;
+export type PutApiOpportunitiesByIdData = {
+    body: UpdateOpportunityCommand;
     path: {
         id: string;
     };
     query?: never;
-    url: '/api/oppertunities/{id}';
+    url: '/api/opportunities/{id}';
 };
 
-export type PutApiOppertunitiesByIdErrors = {
+export type PutApiOpportunitiesByIdErrors = {
     /**
      * Bad Request
      */
-    400: MicrosoftAspNetCoreMvcProblemDetails;
+    400: ProblemDetails;
     /**
      * Not Found
      */
-    404: MicrosoftAspNetCoreMvcProblemDetails;
+    404: ProblemDetails;
     /**
      * Internal Server Error
      */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
+    500: ProblemDetails;
 };
 
-export type PutApiOppertunitiesByIdError = PutApiOppertunitiesByIdErrors[keyof PutApiOppertunitiesByIdErrors];
+export type PutApiOpportunitiesByIdError = PutApiOpportunitiesByIdErrors[keyof PutApiOpportunitiesByIdErrors];
 
-export type PutApiOppertunitiesByIdResponses = {
+export type PutApiOpportunitiesByIdResponses = {
     /**
      * No Content
      */
     204: void;
 };
 
-export type PutApiOppertunitiesByIdResponse = PutApiOppertunitiesByIdResponses[keyof PutApiOppertunitiesByIdResponses];
+export type PutApiOpportunitiesByIdResponse = PutApiOpportunitiesByIdResponses[keyof PutApiOpportunitiesByIdResponses];
 
-export type PutApiOppertunitiesByIdCapabilitiesData = {
-    body: AndersonApiApplicationOppertunitiesSetCapabilitiesOppertunitySetCapabilitiesOppertunityCommand;
-    path: {
-        id: string;
-    };
-    query?: never;
-    url: '/api/oppertunities/{id}/capabilities';
-};
-
-export type PutApiOppertunitiesByIdCapabilitiesErrors = {
-    /**
-     * Bad Request
-     */
-    400: MicrosoftAspNetCoreMvcProblemDetails;
-    /**
-     * Not Found
-     */
-    404: MicrosoftAspNetCoreMvcProblemDetails;
-    /**
-     * Internal Server Error
-     */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
-};
-
-export type PutApiOppertunitiesByIdCapabilitiesError = PutApiOppertunitiesByIdCapabilitiesErrors[keyof PutApiOppertunitiesByIdCapabilitiesErrors];
-
-export type PutApiOppertunitiesByIdCapabilitiesResponses = {
-    /**
-     * No Content
-     */
-    204: void;
-};
-
-export type PutApiOppertunitiesByIdCapabilitiesResponse = PutApiOppertunitiesByIdCapabilitiesResponses[keyof PutApiOppertunitiesByIdCapabilitiesResponses];
-
-export type PutApiOppertunitiesByIdIndustriesData = {
-    body: AndersonApiApplicationOppertunitiesSetIndustriesOppertunitySetIndustriesOppertunityCommand;
-    path: {
-        id: string;
-    };
-    query?: never;
-    url: '/api/oppertunities/{id}/industries';
-};
-
-export type PutApiOppertunitiesByIdIndustriesErrors = {
-    /**
-     * Bad Request
-     */
-    400: MicrosoftAspNetCoreMvcProblemDetails;
-    /**
-     * Not Found
-     */
-    404: MicrosoftAspNetCoreMvcProblemDetails;
-    /**
-     * Internal Server Error
-     */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
-};
-
-export type PutApiOppertunitiesByIdIndustriesError = PutApiOppertunitiesByIdIndustriesErrors[keyof PutApiOppertunitiesByIdIndustriesErrors];
-
-export type PutApiOppertunitiesByIdIndustriesResponses = {
-    /**
-     * No Content
-     */
-    204: void;
-};
-
-export type PutApiOppertunitiesByIdIndustriesResponse = PutApiOppertunitiesByIdIndustriesResponses[keyof PutApiOppertunitiesByIdIndustriesResponses];
-
-export type PutApiOppertunitiesByIdInterestedPartnersData = {
-    body: AndersonApiApplicationOppertunitiesSetInterestedPartnersOppertunitySetInterestedPartnersOppertunityCommand;
-    path: {
-        id: string;
-    };
-    query?: never;
-    url: '/api/oppertunities/{id}/interested-partners';
-};
-
-export type PutApiOppertunitiesByIdInterestedPartnersErrors = {
-    /**
-     * Bad Request
-     */
-    400: MicrosoftAspNetCoreMvcProblemDetails;
-    /**
-     * Not Found
-     */
-    404: MicrosoftAspNetCoreMvcProblemDetails;
-    /**
-     * Internal Server Error
-     */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
-};
-
-export type PutApiOppertunitiesByIdInterestedPartnersError = PutApiOppertunitiesByIdInterestedPartnersErrors[keyof PutApiOppertunitiesByIdInterestedPartnersErrors];
-
-export type PutApiOppertunitiesByIdInterestedPartnersResponses = {
-    /**
-     * No Content
-     */
-    204: void;
-};
-
-export type PutApiOppertunitiesByIdInterestedPartnersResponse = PutApiOppertunitiesByIdInterestedPartnersResponses[keyof PutApiOppertunitiesByIdInterestedPartnersResponses];
-
-export type PutApiOppertunitiesByIdServiceTypesData = {
-    body: AndersonApiApplicationOppertunitiesSetServiceTypesOppertunitySetServiceTypesOppertunityCommand;
-    path: {
-        id: string;
-    };
-    query?: never;
-    url: '/api/oppertunities/{id}/service-types';
-};
-
-export type PutApiOppertunitiesByIdServiceTypesErrors = {
-    /**
-     * Bad Request
-     */
-    400: MicrosoftAspNetCoreMvcProblemDetails;
-    /**
-     * Not Found
-     */
-    404: MicrosoftAspNetCoreMvcProblemDetails;
-    /**
-     * Internal Server Error
-     */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
-};
-
-export type PutApiOppertunitiesByIdServiceTypesError = PutApiOppertunitiesByIdServiceTypesErrors[keyof PutApiOppertunitiesByIdServiceTypesErrors];
-
-export type PutApiOppertunitiesByIdServiceTypesResponses = {
-    /**
-     * No Content
-     */
-    204: void;
-};
-
-export type PutApiOppertunitiesByIdServiceTypesResponse = PutApiOppertunitiesByIdServiceTypesResponses[keyof PutApiOppertunitiesByIdServiceTypesResponses];
-
-export type PutApiOppertunitiesByIdSetStateData = {
-    body: AndersonApiApplicationOppertunitiesSetStateOppertunitySetStateOppertunityCommand;
-    path: {
-        id: string;
-    };
-    query?: never;
-    url: '/api/oppertunities/{id}/set-state';
-};
-
-export type PutApiOppertunitiesByIdSetStateErrors = {
-    /**
-     * Bad Request
-     */
-    400: MicrosoftAspNetCoreMvcProblemDetails;
-    /**
-     * Not Found
-     */
-    404: MicrosoftAspNetCoreMvcProblemDetails;
-    /**
-     * Internal Server Error
-     */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
-};
-
-export type PutApiOppertunitiesByIdSetStateError = PutApiOppertunitiesByIdSetStateErrors[keyof PutApiOppertunitiesByIdSetStateErrors];
-
-export type PutApiOppertunitiesByIdSetStateResponses = {
-    /**
-     * No Content
-     */
-    204: void;
-};
-
-export type PutApiOppertunitiesByIdSetStateResponse = PutApiOppertunitiesByIdSetStateResponses[keyof PutApiOppertunitiesByIdSetStateResponses];
-
-export type PutApiOppertunitiesByIdStatusData = {
-    body: AndersonApiApplicationOppertunitiesSetStatusOppertunitySetStatusOppertunityCommand;
-    path: {
-        id: string;
-    };
-    query?: never;
-    url: '/api/oppertunities/{id}/status';
-};
-
-export type PutApiOppertunitiesByIdStatusErrors = {
-    /**
-     * Bad Request
-     */
-    400: MicrosoftAspNetCoreMvcProblemDetails;
-    /**
-     * Not Found
-     */
-    404: MicrosoftAspNetCoreMvcProblemDetails;
-    /**
-     * Internal Server Error
-     */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
-};
-
-export type PutApiOppertunitiesByIdStatusError = PutApiOppertunitiesByIdStatusErrors[keyof PutApiOppertunitiesByIdStatusErrors];
-
-export type PutApiOppertunitiesByIdStatusResponses = {
-    /**
-     * No Content
-     */
-    204: void;
-};
-
-export type PutApiOppertunitiesByIdStatusResponse = PutApiOppertunitiesByIdStatusResponses[keyof PutApiOppertunitiesByIdStatusResponses];
-
-export type PutApiOppertunitiesByIdFullData = {
-    body: AndersonApiApplicationOppertunitiesUpdateFullOppertunityUpdateFullOppertunityCommand;
-    path: {
-        id: string;
-    };
-    query?: never;
-    url: '/api/oppertunities/{id}/full';
-};
-
-export type PutApiOppertunitiesByIdFullErrors = {
-    /**
-     * Bad Request
-     */
-    400: MicrosoftAspNetCoreMvcProblemDetails;
-    /**
-     * Not Found
-     */
-    404: MicrosoftAspNetCoreMvcProblemDetails;
-    /**
-     * Internal Server Error
-     */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
-};
-
-export type PutApiOppertunitiesByIdFullError = PutApiOppertunitiesByIdFullErrors[keyof PutApiOppertunitiesByIdFullErrors];
-
-export type PutApiOppertunitiesByIdFullResponses = {
-    /**
-     * No Content
-     */
-    204: void;
-};
-
-export type PutApiOppertunitiesByIdFullResponse = PutApiOppertunitiesByIdFullResponses[keyof PutApiOppertunitiesByIdFullResponses];
-
-export type GetApiOppertunityTypesData = {
-    body?: never;
-    path?: never;
-    query?: never;
-    url: '/api/oppertunity-types';
-};
-
-export type GetApiOppertunityTypesErrors = {
-    /**
-     * Internal Server Error
-     */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
-};
-
-export type GetApiOppertunityTypesError = GetApiOppertunityTypesErrors[keyof GetApiOppertunityTypesErrors];
-
-export type GetApiOppertunityTypesResponses = {
-    /**
-     * OK
-     */
-    200: Array<AndersonApiApplicationOppertunityTypesOppertunityTypeDto>;
-};
-
-export type GetApiOppertunityTypesResponse = GetApiOppertunityTypesResponses[keyof GetApiOppertunityTypesResponses];
-
-export type PostApiOppertunityTypesData = {
-    body: AndersonApiApplicationOppertunityTypesCreateOppertunityTypeCreateOppertunityTypeCommand;
-    path?: never;
-    query?: never;
-    url: '/api/oppertunity-types';
-};
-
-export type PostApiOppertunityTypesErrors = {
-    /**
-     * Bad Request
-     */
-    400: MicrosoftAspNetCoreMvcProblemDetails;
-    /**
-     * Internal Server Error
-     */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
-};
-
-export type PostApiOppertunityTypesError = PostApiOppertunityTypesErrors[keyof PostApiOppertunityTypesErrors];
-
-export type PostApiOppertunityTypesResponses = {
-    /**
-     * Created
-     */
-    201: AndersonApiApiControllersResponseTypesJsonResponseOfSystemGuid;
-};
-
-export type PostApiOppertunityTypesResponse = PostApiOppertunityTypesResponses[keyof PostApiOppertunityTypesResponses];
-
-export type DeleteApiOppertunityTypesByIdData = {
+export type DeleteApiOpportunitiesByIdMessageData = {
     body?: never;
     path: {
         id: string;
     };
-    query?: never;
-    url: '/api/oppertunity-types/{id}';
+    query: {
+        messageId: string;
+    };
+    url: '/api/opportunities/{id}/message';
 };
 
-export type DeleteApiOppertunityTypesByIdErrors = {
+export type DeleteApiOpportunitiesByIdMessageErrors = {
     /**
      * Bad Request
      */
-    400: MicrosoftAspNetCoreMvcProblemDetails;
+    400: ProblemDetails;
     /**
      * Not Found
      */
-    404: MicrosoftAspNetCoreMvcProblemDetails;
+    404: ProblemDetails;
     /**
      * Internal Server Error
      */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
+    500: ProblemDetails;
 };
 
-export type DeleteApiOppertunityTypesByIdError = DeleteApiOppertunityTypesByIdErrors[keyof DeleteApiOppertunityTypesByIdErrors];
+export type DeleteApiOpportunitiesByIdMessageError = DeleteApiOpportunitiesByIdMessageErrors[keyof DeleteApiOpportunitiesByIdMessageErrors];
 
-export type DeleteApiOppertunityTypesByIdResponses = {
+export type DeleteApiOpportunitiesByIdMessageResponses = {
     /**
      * OK
      */
     200: unknown;
 };
 
-export type GetApiOppertunityTypesByIdData = {
+export type PutApiOpportunitiesByIdMessageData = {
+    body: UpdateMessageOpportunityCommand;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/opportunities/{id}/message';
+};
+
+export type PutApiOpportunitiesByIdMessageErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type PutApiOpportunitiesByIdMessageError = PutApiOpportunitiesByIdMessageErrors[keyof PutApiOpportunitiesByIdMessageErrors];
+
+export type PutApiOpportunitiesByIdMessageResponses = {
+    /**
+     * No Content
+     */
+    204: void;
+};
+
+export type PutApiOpportunitiesByIdMessageResponse = PutApiOpportunitiesByIdMessageResponses[keyof PutApiOpportunitiesByIdMessageResponses];
+
+export type PutApiOpportunitiesByIdCapabilitiesData = {
+    body: SetCapabilitiesOpportunityCommand;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/opportunities/{id}/capabilities';
+};
+
+export type PutApiOpportunitiesByIdCapabilitiesErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type PutApiOpportunitiesByIdCapabilitiesError = PutApiOpportunitiesByIdCapabilitiesErrors[keyof PutApiOpportunitiesByIdCapabilitiesErrors];
+
+export type PutApiOpportunitiesByIdCapabilitiesResponses = {
+    /**
+     * No Content
+     */
+    204: void;
+};
+
+export type PutApiOpportunitiesByIdCapabilitiesResponse = PutApiOpportunitiesByIdCapabilitiesResponses[keyof PutApiOpportunitiesByIdCapabilitiesResponses];
+
+export type PutApiOpportunitiesByIdIndustriesData = {
+    body: SetIndustriesOpportunityCommand;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/opportunities/{id}/industries';
+};
+
+export type PutApiOpportunitiesByIdIndustriesErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type PutApiOpportunitiesByIdIndustriesError = PutApiOpportunitiesByIdIndustriesErrors[keyof PutApiOpportunitiesByIdIndustriesErrors];
+
+export type PutApiOpportunitiesByIdIndustriesResponses = {
+    /**
+     * No Content
+     */
+    204: void;
+};
+
+export type PutApiOpportunitiesByIdIndustriesResponse = PutApiOpportunitiesByIdIndustriesResponses[keyof PutApiOpportunitiesByIdIndustriesResponses];
+
+export type PutApiOpportunitiesByIdInterestedPartnersData = {
+    body: SetInterestedPartnersOpportunityCommand;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/opportunities/{id}/interested-partners';
+};
+
+export type PutApiOpportunitiesByIdInterestedPartnersErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type PutApiOpportunitiesByIdInterestedPartnersError = PutApiOpportunitiesByIdInterestedPartnersErrors[keyof PutApiOpportunitiesByIdInterestedPartnersErrors];
+
+export type PutApiOpportunitiesByIdInterestedPartnersResponses = {
+    /**
+     * No Content
+     */
+    204: void;
+};
+
+export type PutApiOpportunitiesByIdInterestedPartnersResponse = PutApiOpportunitiesByIdInterestedPartnersResponses[keyof PutApiOpportunitiesByIdInterestedPartnersResponses];
+
+export type PutApiOpportunitiesByIdServiceTypesData = {
+    body: SetServiceTypesOpportunityCommand;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/opportunities/{id}/service-types';
+};
+
+export type PutApiOpportunitiesByIdServiceTypesErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type PutApiOpportunitiesByIdServiceTypesError = PutApiOpportunitiesByIdServiceTypesErrors[keyof PutApiOpportunitiesByIdServiceTypesErrors];
+
+export type PutApiOpportunitiesByIdServiceTypesResponses = {
+    /**
+     * No Content
+     */
+    204: void;
+};
+
+export type PutApiOpportunitiesByIdServiceTypesResponse = PutApiOpportunitiesByIdServiceTypesResponses[keyof PutApiOpportunitiesByIdServiceTypesResponses];
+
+export type PutApiOpportunitiesByIdSetStateData = {
+    body: SetStateOpportunityCommand;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/opportunities/{id}/set-state';
+};
+
+export type PutApiOpportunitiesByIdSetStateErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type PutApiOpportunitiesByIdSetStateError = PutApiOpportunitiesByIdSetStateErrors[keyof PutApiOpportunitiesByIdSetStateErrors];
+
+export type PutApiOpportunitiesByIdSetStateResponses = {
+    /**
+     * No Content
+     */
+    204: void;
+};
+
+export type PutApiOpportunitiesByIdSetStateResponse = PutApiOpportunitiesByIdSetStateResponses[keyof PutApiOpportunitiesByIdSetStateResponses];
+
+export type PutApiOpportunitiesByIdStatusData = {
+    body: SetStatusOpportunityCommand;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/opportunities/{id}/status';
+};
+
+export type PutApiOpportunitiesByIdStatusErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type PutApiOpportunitiesByIdStatusError = PutApiOpportunitiesByIdStatusErrors[keyof PutApiOpportunitiesByIdStatusErrors];
+
+export type PutApiOpportunitiesByIdStatusResponses = {
+    /**
+     * No Content
+     */
+    204: void;
+};
+
+export type PutApiOpportunitiesByIdStatusResponse = PutApiOpportunitiesByIdStatusResponses[keyof PutApiOpportunitiesByIdStatusResponses];
+
+export type PutApiOpportunitiesByIdFullData = {
+    body: UpdateFullOpportunityCommand;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/opportunities/{id}/full';
+};
+
+export type PutApiOpportunitiesByIdFullErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type PutApiOpportunitiesByIdFullError = PutApiOpportunitiesByIdFullErrors[keyof PutApiOpportunitiesByIdFullErrors];
+
+export type PutApiOpportunitiesByIdFullResponses = {
+    /**
+     * No Content
+     */
+    204: void;
+};
+
+export type PutApiOpportunitiesByIdFullResponse = PutApiOpportunitiesByIdFullResponses[keyof PutApiOpportunitiesByIdFullResponses];
+
+export type GetApiOpportunitiesMeData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/opportunities/me';
+};
+
+export type GetApiOpportunitiesMeErrors = {
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type GetApiOpportunitiesMeError = GetApiOpportunitiesMeErrors[keyof GetApiOpportunitiesMeErrors];
+
+export type GetApiOpportunitiesMeResponses = {
+    /**
+     * OK
+     */
+    200: Array<OpportunityListItemDto>;
+};
+
+export type GetApiOpportunitiesMeResponse = GetApiOpportunitiesMeResponses[keyof GetApiOpportunitiesMeResponses];
+
+export type GetApiOpportunitiesSavedData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/opportunities/saved';
+};
+
+export type GetApiOpportunitiesSavedErrors = {
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type GetApiOpportunitiesSavedError = GetApiOpportunitiesSavedErrors[keyof GetApiOpportunitiesSavedErrors];
+
+export type GetApiOpportunitiesSavedResponses = {
+    /**
+     * OK
+     */
+    200: Array<OpportunityListItemDto>;
+};
+
+export type GetApiOpportunitiesSavedResponse = GetApiOpportunitiesSavedResponses[keyof GetApiOpportunitiesSavedResponses];
+
+export type GetApiOpportunityTypesData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/opportunity-types';
+};
+
+export type GetApiOpportunityTypesErrors = {
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type GetApiOpportunityTypesError = GetApiOpportunityTypesErrors[keyof GetApiOpportunityTypesErrors];
+
+export type GetApiOpportunityTypesResponses = {
+    /**
+     * OK
+     */
+    200: Array<OpportunityTypeDto>;
+};
+
+export type GetApiOpportunityTypesResponse = GetApiOpportunityTypesResponses[keyof GetApiOpportunityTypesResponses];
+
+export type PostApiOpportunityTypesData = {
+    body: CreateOpportunityTypeCommand;
+    path?: never;
+    query?: never;
+    url: '/api/opportunity-types';
+};
+
+export type PostApiOpportunityTypesErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type PostApiOpportunityTypesError = PostApiOpportunityTypesErrors[keyof PostApiOpportunityTypesErrors];
+
+export type PostApiOpportunityTypesResponses = {
+    /**
+     * Created
+     */
+    201: AndersonApiApiControllersResponseTypesJsonResponseOfGuid;
+};
+
+export type PostApiOpportunityTypesResponse = PostApiOpportunityTypesResponses[keyof PostApiOpportunityTypesResponses];
+
+export type DeleteApiOpportunityTypesByIdData = {
     body?: never;
     path: {
         id: string;
     };
     query?: never;
-    url: '/api/oppertunity-types/{id}';
+    url: '/api/opportunity-types/{id}';
 };
 
-export type GetApiOppertunityTypesByIdErrors = {
+export type DeleteApiOpportunityTypesByIdErrors = {
     /**
      * Bad Request
      */
-    400: MicrosoftAspNetCoreMvcProblemDetails;
+    400: ProblemDetails;
     /**
      * Not Found
      */
-    404: MicrosoftAspNetCoreMvcProblemDetails;
+    404: ProblemDetails;
     /**
      * Internal Server Error
      */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
+    500: ProblemDetails;
 };
 
-export type GetApiOppertunityTypesByIdError = GetApiOppertunityTypesByIdErrors[keyof GetApiOppertunityTypesByIdErrors];
+export type DeleteApiOpportunityTypesByIdError = DeleteApiOpportunityTypesByIdErrors[keyof DeleteApiOpportunityTypesByIdErrors];
 
-export type GetApiOppertunityTypesByIdResponses = {
+export type DeleteApiOpportunityTypesByIdResponses = {
     /**
      * OK
      */
-    200: AndersonApiApplicationOppertunityTypesOppertunityTypeDto;
+    200: unknown;
 };
 
-export type GetApiOppertunityTypesByIdResponse = GetApiOppertunityTypesByIdResponses[keyof GetApiOppertunityTypesByIdResponses];
-
-export type PutApiOppertunityTypesByIdData = {
-    body: AndersonApiApplicationOppertunityTypesUpdateOppertunityTypeUpdateOppertunityTypeCommand;
+export type GetApiOpportunityTypesByIdData = {
+    body?: never;
     path: {
         id: string;
     };
     query?: never;
-    url: '/api/oppertunity-types/{id}';
+    url: '/api/opportunity-types/{id}';
 };
 
-export type PutApiOppertunityTypesByIdErrors = {
+export type GetApiOpportunityTypesByIdErrors = {
     /**
      * Bad Request
      */
-    400: MicrosoftAspNetCoreMvcProblemDetails;
+    400: ProblemDetails;
     /**
      * Not Found
      */
-    404: MicrosoftAspNetCoreMvcProblemDetails;
+    404: ProblemDetails;
     /**
      * Internal Server Error
      */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
+    500: ProblemDetails;
 };
 
-export type PutApiOppertunityTypesByIdError = PutApiOppertunityTypesByIdErrors[keyof PutApiOppertunityTypesByIdErrors];
+export type GetApiOpportunityTypesByIdError = GetApiOpportunityTypesByIdErrors[keyof GetApiOpportunityTypesByIdErrors];
 
-export type PutApiOppertunityTypesByIdResponses = {
+export type GetApiOpportunityTypesByIdResponses = {
+    /**
+     * OK
+     */
+    200: OpportunityTypeDto;
+};
+
+export type GetApiOpportunityTypesByIdResponse = GetApiOpportunityTypesByIdResponses[keyof GetApiOpportunityTypesByIdResponses];
+
+export type PutApiOpportunityTypesByIdData = {
+    body: UpdateOpportunityTypeCommand;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/opportunity-types/{id}';
+};
+
+export type PutApiOpportunityTypesByIdErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type PutApiOpportunityTypesByIdError = PutApiOpportunityTypesByIdErrors[keyof PutApiOpportunityTypesByIdErrors];
+
+export type PutApiOpportunityTypesByIdResponses = {
     /**
      * No Content
      */
     204: void;
 };
 
-export type PutApiOppertunityTypesByIdResponse = PutApiOppertunityTypesByIdResponses[keyof PutApiOppertunityTypesByIdResponses];
+export type PutApiOpportunityTypesByIdResponse = PutApiOpportunityTypesByIdResponses[keyof PutApiOpportunityTypesByIdResponses];
 
-export type PutApiOppertunityTypesByIdSetStateData = {
-    body: AndersonApiApplicationOppertunityTypesSetStateOppertunityTypeSetStateOppertunityTypeCommand;
+export type PutApiOpportunityTypesByIdSetStateData = {
+    body: SetStateOpportunityTypeCommand;
     path: {
         id: string;
     };
     query?: never;
-    url: '/api/oppertunity-types/{id}/set-state';
+    url: '/api/opportunity-types/{id}/set-state';
 };
 
-export type PutApiOppertunityTypesByIdSetStateErrors = {
+export type PutApiOpportunityTypesByIdSetStateErrors = {
     /**
      * Bad Request
      */
-    400: MicrosoftAspNetCoreMvcProblemDetails;
+    400: ProblemDetails;
     /**
      * Not Found
      */
-    404: MicrosoftAspNetCoreMvcProblemDetails;
+    404: ProblemDetails;
     /**
      * Internal Server Error
      */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
+    500: ProblemDetails;
 };
 
-export type PutApiOppertunityTypesByIdSetStateError = PutApiOppertunityTypesByIdSetStateErrors[keyof PutApiOppertunityTypesByIdSetStateErrors];
+export type PutApiOpportunityTypesByIdSetStateError = PutApiOpportunityTypesByIdSetStateErrors[keyof PutApiOpportunityTypesByIdSetStateErrors];
 
-export type PutApiOppertunityTypesByIdSetStateResponses = {
+export type PutApiOpportunityTypesByIdSetStateResponses = {
     /**
      * No Content
      */
     204: void;
 };
 
-export type PutApiOppertunityTypesByIdSetStateResponse = PutApiOppertunityTypesByIdSetStateResponses[keyof PutApiOppertunityTypesByIdSetStateResponses];
+export type PutApiOpportunityTypesByIdSetStateResponse = PutApiOpportunityTypesByIdSetStateResponses[keyof PutApiOpportunityTypesByIdSetStateResponses];
 
 export type GetApiRegionsData = {
     body?: never;
@@ -2410,7 +3036,7 @@ export type GetApiRegionsErrors = {
     /**
      * Internal Server Error
      */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
+    500: ProblemDetails;
 };
 
 export type GetApiRegionsError = GetApiRegionsErrors[keyof GetApiRegionsErrors];
@@ -2419,13 +3045,13 @@ export type GetApiRegionsResponses = {
     /**
      * OK
      */
-    200: Array<AndersonApiApplicationRegionsRegionDto>;
+    200: Array<RegionDto>;
 };
 
 export type GetApiRegionsResponse = GetApiRegionsResponses[keyof GetApiRegionsResponses];
 
 export type PostApiRegionsData = {
-    body: AndersonApiApplicationRegionsCreateRegionCreateRegionCommand;
+    body: CreateRegionCommand;
     path?: never;
     query?: never;
     url: '/api/regions';
@@ -2435,11 +3061,11 @@ export type PostApiRegionsErrors = {
     /**
      * Bad Request
      */
-    400: MicrosoftAspNetCoreMvcProblemDetails;
+    400: ProblemDetails;
     /**
      * Internal Server Error
      */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
+    500: ProblemDetails;
 };
 
 export type PostApiRegionsError = PostApiRegionsErrors[keyof PostApiRegionsErrors];
@@ -2448,7 +3074,7 @@ export type PostApiRegionsResponses = {
     /**
      * Created
      */
-    201: AndersonApiApiControllersResponseTypesJsonResponseOfSystemGuid;
+    201: AndersonApiApiControllersResponseTypesJsonResponseOfGuid;
 };
 
 export type PostApiRegionsResponse = PostApiRegionsResponses[keyof PostApiRegionsResponses];
@@ -2466,15 +3092,15 @@ export type DeleteApiRegionsByIdErrors = {
     /**
      * Bad Request
      */
-    400: MicrosoftAspNetCoreMvcProblemDetails;
+    400: ProblemDetails;
     /**
      * Not Found
      */
-    404: MicrosoftAspNetCoreMvcProblemDetails;
+    404: ProblemDetails;
     /**
      * Internal Server Error
      */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
+    500: ProblemDetails;
 };
 
 export type DeleteApiRegionsByIdError = DeleteApiRegionsByIdErrors[keyof DeleteApiRegionsByIdErrors];
@@ -2499,15 +3125,15 @@ export type GetApiRegionsByIdErrors = {
     /**
      * Bad Request
      */
-    400: MicrosoftAspNetCoreMvcProblemDetails;
+    400: ProblemDetails;
     /**
      * Not Found
      */
-    404: MicrosoftAspNetCoreMvcProblemDetails;
+    404: ProblemDetails;
     /**
      * Internal Server Error
      */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
+    500: ProblemDetails;
 };
 
 export type GetApiRegionsByIdError = GetApiRegionsByIdErrors[keyof GetApiRegionsByIdErrors];
@@ -2516,13 +3142,13 @@ export type GetApiRegionsByIdResponses = {
     /**
      * OK
      */
-    200: AndersonApiApplicationRegionsRegionDto;
+    200: RegionDto;
 };
 
 export type GetApiRegionsByIdResponse = GetApiRegionsByIdResponses[keyof GetApiRegionsByIdResponses];
 
 export type PutApiRegionsByIdData = {
-    body: AndersonApiApplicationRegionsUpdateRegionUpdateRegionCommand;
+    body: UpdateRegionCommand;
     path: {
         id: string;
     };
@@ -2534,15 +3160,15 @@ export type PutApiRegionsByIdErrors = {
     /**
      * Bad Request
      */
-    400: MicrosoftAspNetCoreMvcProblemDetails;
+    400: ProblemDetails;
     /**
      * Not Found
      */
-    404: MicrosoftAspNetCoreMvcProblemDetails;
+    404: ProblemDetails;
     /**
      * Internal Server Error
      */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
+    500: ProblemDetails;
 };
 
 export type PutApiRegionsByIdError = PutApiRegionsByIdErrors[keyof PutApiRegionsByIdErrors];
@@ -2557,7 +3183,7 @@ export type PutApiRegionsByIdResponses = {
 export type PutApiRegionsByIdResponse = PutApiRegionsByIdResponses[keyof PutApiRegionsByIdResponses];
 
 export type PutApiRegionsByIdSetStateData = {
-    body: AndersonApiApplicationRegionsSetStateRegionSetStateRegionCommand;
+    body: SetStateRegionCommand;
     path: {
         id: string;
     };
@@ -2569,15 +3195,15 @@ export type PutApiRegionsByIdSetStateErrors = {
     /**
      * Bad Request
      */
-    400: MicrosoftAspNetCoreMvcProblemDetails;
+    400: ProblemDetails;
     /**
      * Not Found
      */
-    404: MicrosoftAspNetCoreMvcProblemDetails;
+    404: ProblemDetails;
     /**
      * Internal Server Error
      */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
+    500: ProblemDetails;
 };
 
 export type PutApiRegionsByIdSetStateError = PutApiRegionsByIdSetStateErrors[keyof PutApiRegionsByIdSetStateErrors];
@@ -2591,6 +3217,163 @@ export type PutApiRegionsByIdSetStateResponses = {
 
 export type PutApiRegionsByIdSetStateResponse = PutApiRegionsByIdSetStateResponses[keyof PutApiRegionsByIdSetStateResponses];
 
+export type GetApiReviewsData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/reviews';
+};
+
+export type GetApiReviewsErrors = {
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type GetApiReviewsError = GetApiReviewsErrors[keyof GetApiReviewsErrors];
+
+export type GetApiReviewsResponses = {
+    /**
+     * OK
+     */
+    200: Array<ReviewDto>;
+};
+
+export type GetApiReviewsResponse = GetApiReviewsResponses[keyof GetApiReviewsResponses];
+
+export type PostApiReviewsData = {
+    body: CreateReviewCommand;
+    path?: never;
+    query?: never;
+    url: '/api/reviews';
+};
+
+export type PostApiReviewsErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type PostApiReviewsError = PostApiReviewsErrors[keyof PostApiReviewsErrors];
+
+export type PostApiReviewsResponses = {
+    /**
+     * Created
+     */
+    201: AndersonApiApiControllersResponseTypesJsonResponseOfGuid;
+};
+
+export type PostApiReviewsResponse = PostApiReviewsResponses[keyof PostApiReviewsResponses];
+
+export type DeleteApiReviewsByIdData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/reviews/{id}';
+};
+
+export type DeleteApiReviewsByIdErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type DeleteApiReviewsByIdError = DeleteApiReviewsByIdErrors[keyof DeleteApiReviewsByIdErrors];
+
+export type DeleteApiReviewsByIdResponses = {
+    /**
+     * OK
+     */
+    200: unknown;
+};
+
+export type GetApiReviewsByIdData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/reviews/{id}';
+};
+
+export type GetApiReviewsByIdErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type GetApiReviewsByIdError = GetApiReviewsByIdErrors[keyof GetApiReviewsByIdErrors];
+
+export type GetApiReviewsByIdResponses = {
+    /**
+     * OK
+     */
+    200: ReviewDto;
+};
+
+export type GetApiReviewsByIdResponse = GetApiReviewsByIdResponses[keyof GetApiReviewsByIdResponses];
+
+export type PutApiReviewsByIdData = {
+    body: UpdateReviewCommand;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/reviews/{id}';
+};
+
+export type PutApiReviewsByIdErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type PutApiReviewsByIdError = PutApiReviewsByIdErrors[keyof PutApiReviewsByIdErrors];
+
+export type PutApiReviewsByIdResponses = {
+    /**
+     * No Content
+     */
+    204: void;
+};
+
+export type PutApiReviewsByIdResponse = PutApiReviewsByIdResponses[keyof PutApiReviewsByIdResponses];
+
 export type GetApiServiceTypesData = {
     body?: never;
     path?: never;
@@ -2602,7 +3385,7 @@ export type GetApiServiceTypesErrors = {
     /**
      * Internal Server Error
      */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
+    500: ProblemDetails;
 };
 
 export type GetApiServiceTypesError = GetApiServiceTypesErrors[keyof GetApiServiceTypesErrors];
@@ -2611,13 +3394,13 @@ export type GetApiServiceTypesResponses = {
     /**
      * OK
      */
-    200: Array<AndersonApiApplicationServiceTypesServiceTypeDto>;
+    200: Array<ServiceTypeDto>;
 };
 
 export type GetApiServiceTypesResponse = GetApiServiceTypesResponses[keyof GetApiServiceTypesResponses];
 
 export type PostApiServiceTypesData = {
-    body: AndersonApiApplicationServiceTypesCreateServiceTypeCreateServiceTypeCommand;
+    body: CreateServiceTypeCommand;
     path?: never;
     query?: never;
     url: '/api/service-types';
@@ -2627,11 +3410,11 @@ export type PostApiServiceTypesErrors = {
     /**
      * Bad Request
      */
-    400: MicrosoftAspNetCoreMvcProblemDetails;
+    400: ProblemDetails;
     /**
      * Internal Server Error
      */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
+    500: ProblemDetails;
 };
 
 export type PostApiServiceTypesError = PostApiServiceTypesErrors[keyof PostApiServiceTypesErrors];
@@ -2640,7 +3423,7 @@ export type PostApiServiceTypesResponses = {
     /**
      * Created
      */
-    201: AndersonApiApiControllersResponseTypesJsonResponseOfSystemGuid;
+    201: AndersonApiApiControllersResponseTypesJsonResponseOfGuid;
 };
 
 export type PostApiServiceTypesResponse = PostApiServiceTypesResponses[keyof PostApiServiceTypesResponses];
@@ -2658,15 +3441,15 @@ export type DeleteApiServiceTypesByIdErrors = {
     /**
      * Bad Request
      */
-    400: MicrosoftAspNetCoreMvcProblemDetails;
+    400: ProblemDetails;
     /**
      * Not Found
      */
-    404: MicrosoftAspNetCoreMvcProblemDetails;
+    404: ProblemDetails;
     /**
      * Internal Server Error
      */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
+    500: ProblemDetails;
 };
 
 export type DeleteApiServiceTypesByIdError = DeleteApiServiceTypesByIdErrors[keyof DeleteApiServiceTypesByIdErrors];
@@ -2691,15 +3474,15 @@ export type GetApiServiceTypesByIdErrors = {
     /**
      * Bad Request
      */
-    400: MicrosoftAspNetCoreMvcProblemDetails;
+    400: ProblemDetails;
     /**
      * Not Found
      */
-    404: MicrosoftAspNetCoreMvcProblemDetails;
+    404: ProblemDetails;
     /**
      * Internal Server Error
      */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
+    500: ProblemDetails;
 };
 
 export type GetApiServiceTypesByIdError = GetApiServiceTypesByIdErrors[keyof GetApiServiceTypesByIdErrors];
@@ -2708,13 +3491,13 @@ export type GetApiServiceTypesByIdResponses = {
     /**
      * OK
      */
-    200: AndersonApiApplicationServiceTypesServiceTypeDto;
+    200: ServiceTypeDto;
 };
 
 export type GetApiServiceTypesByIdResponse = GetApiServiceTypesByIdResponses[keyof GetApiServiceTypesByIdResponses];
 
 export type PutApiServiceTypesByIdData = {
-    body: AndersonApiApplicationServiceTypesUpdateServiceTypeUpdateServiceTypeCommand;
+    body: UpdateServiceTypeCommand;
     path: {
         id: string;
     };
@@ -2726,15 +3509,15 @@ export type PutApiServiceTypesByIdErrors = {
     /**
      * Bad Request
      */
-    400: MicrosoftAspNetCoreMvcProblemDetails;
+    400: ProblemDetails;
     /**
      * Not Found
      */
-    404: MicrosoftAspNetCoreMvcProblemDetails;
+    404: ProblemDetails;
     /**
      * Internal Server Error
      */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
+    500: ProblemDetails;
 };
 
 export type PutApiServiceTypesByIdError = PutApiServiceTypesByIdErrors[keyof PutApiServiceTypesByIdErrors];
@@ -2749,7 +3532,7 @@ export type PutApiServiceTypesByIdResponses = {
 export type PutApiServiceTypesByIdResponse = PutApiServiceTypesByIdResponses[keyof PutApiServiceTypesByIdResponses];
 
 export type PutApiServiceTypesByIdSetStateData = {
-    body: AndersonApiApplicationServiceTypesSetStateServiceTypeSetStateServiceTypeCommand;
+    body: SetStateServiceTypeCommand;
     path: {
         id: string;
     };
@@ -2761,15 +3544,15 @@ export type PutApiServiceTypesByIdSetStateErrors = {
     /**
      * Bad Request
      */
-    400: MicrosoftAspNetCoreMvcProblemDetails;
+    400: ProblemDetails;
     /**
      * Not Found
      */
-    404: MicrosoftAspNetCoreMvcProblemDetails;
+    404: ProblemDetails;
     /**
      * Internal Server Error
      */
-    500: MicrosoftAspNetCoreMvcProblemDetails;
+    500: ProblemDetails;
 };
 
 export type PutApiServiceTypesByIdSetStateError = PutApiServiceTypesByIdSetStateErrors[keyof PutApiServiceTypesByIdSetStateErrors];

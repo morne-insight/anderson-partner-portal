@@ -41,9 +41,11 @@ namespace AndersonAPI.Api.Services
             }
 
             tokenClaims.AddRange(claims);
+
             var signingKey = Convert.FromBase64String(_configuration.GetSection("JwtToken:SigningKey").Get<string>()!);
             var issuer = _configuration.GetSection("JwtToken:Issuer").Get<string>()!;
             var audience = _configuration.GetSection("JwtToken:Audience").Get<string>()!;
+
             var expires = DateTime.UtcNow.Add(_configuration.GetSection("JwtToken:AuthTokenExpiryTimeSpan").Get<TimeSpan?>() ?? TimeSpan.FromMinutes(120));
             var token = new JwtSecurityToken(
                 issuer: issuer,

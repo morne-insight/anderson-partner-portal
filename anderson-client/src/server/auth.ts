@@ -37,7 +37,6 @@ export const loginFn = createServerFn({ method: "POST" })
 export const registerFn = createServerFn({ method: "POST" })
   .inputValidator((data: { email: string; password: string }) => data)
   .handler(async ({ data }) => {
-    console.log(data);
     try {
       await postApiAccountRegister({
         body: data,

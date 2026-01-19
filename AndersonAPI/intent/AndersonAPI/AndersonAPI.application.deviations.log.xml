@@ -9,7 +9,7 @@
       <updatedByDisplayName>Morne</updatedByDisplayName>
       <updatedAt>2026-01-14T15:16:28.5766742Z</updatedAt>
       <deviationsHash>7B404A60B95A962A5E6D783B8080DF10E7C73762EA3D7E38ED3DD6686CC87BD8</deviationsHash>
-      <fileHash>5B70EBE5A84D6AD43A1EA53BBB7A3B1FD64252839D7D65F8C61ADE2498E0633E</fileHash>
+      <fileHash>88A9B972CE0ED71DEEC4B5B6411977D476F36DFC8BE0A027D3962C2685C4110D</fileHash>
     </file>
     <file>
       <correlationId>Intent.AspNetCore.Identity.AccountController.AccountController#0d6d45f7-7869-4975-9dad-9730556c530f</correlationId>
@@ -19,7 +19,7 @@
       <updatedByDisplayName>Morne</updatedByDisplayName>
       <updatedAt>2026-01-08T20:23:59.7013665Z</updatedAt>
       <deviationsHash>0442C219BE83B9ABE4C229025A9EE5E68EFA955BBE17C4EC511BB285C5ECCEB6</deviationsHash>
-      <fileHash>BB5CF1B4903BB96E1E03F256F55C26EF2B9B6A5FF9B3030324A17339E4F2BA00</fileHash>
+      <fileHash>C42CEC3F0CD4D704D7F34DE06C5593624915BFE21BA624D8511C32621A492E70</fileHash>
     </file>
     <file>
       <correlationId>Intent.AspNetCore.Program#ad457389-55ed-4603-9832-83f59fee22c9</correlationId>
@@ -39,7 +39,27 @@
       <updatedByDisplayName>Morne</updatedByDisplayName>
       <updatedAt>2026-01-15T19:34:54.4052437Z</updatedAt>
       <deviationsHash>1698D4E6C3122F793BD061A645A4C8E11604B6B794ACFF964679E4673E6A8493</deviationsHash>
-      <fileHash>706544FEA070AF0F66AC9AB496D4B598F948FA19B27AC510B4DC7FDABB90A2D8</fileHash>
+      <fileHash>4B7D0415CF1D6CEF85DA82FC83A095EB3C319E3AF657085B3C05AB3F7EF15C6D</fileHash>
+    </file>
+    <file>
+      <correlationId>Intent.Application.MediatR.QueryHandler#f79304cf-2de3-4efc-9fba-1980773959a0</correlationId>
+      <path>AndersonAPI.Application/Companies/GetMyCompanies/GetMyCompaniesQueryHandler.cs</path>
+      <count>1</count>
+      <updatedByAccountName>mvanzyl@insightconsulting.co.za</updatedByAccountName>
+      <updatedByDisplayName>Morne</updatedByDisplayName>
+      <updatedAt>2026-01-18T21:36:21.5989299Z</updatedAt>
+      <deviationsHash>3CA1722F232E861758BFAEF8F52016C40D46D5942F2AE76D237D6EC733939A26</deviationsHash>
+      <fileHash>A94C67A61F914792D27947F15D7013F45245B25D462D73EC1E940431AE3AE086</fileHash>
+    </file>
+    <file>
+      <correlationId>Intent.Application.MediatR.QueryHandler#783beb9a-5cb2-4bf6-874f-d2145ca7b8ec</correlationId>
+      <path>AndersonAPI.Application/Companies/GetPartnersByAI/GetPartnersByAIQueryHandler.cs</path>
+      <count>1</count>
+      <updatedByAccountName>mvanzyl@insightconsulting.co.za</updatedByAccountName>
+      <updatedByDisplayName>Morne</updatedByDisplayName>
+      <updatedAt>2026-01-19T02:46:22.2386266Z</updatedAt>
+      <deviationsHash>83888A0C0CE93EAB5FAD14B7847C2EEBB4CBEBEBDE2046FDB562975B56ECC375</deviationsHash>
+      <fileHash>4D550B1539A423479CE4BAD06E3D0EA7E2F497035B2605B24DF2EFE15130D52E</fileHash>
     </file>
     <file>
       <correlationId>Intent.Application.MediatR.CommandHandler#14841a6a-9393-4c60-b890-fb81707325c0</correlationId>
@@ -59,7 +79,7 @@
       <updatedByDisplayName>Morne</updatedByDisplayName>
       <updatedAt>2026-01-15T18:48:34.7038957Z</updatedAt>
       <deviationsHash>B8CC74F620C7F706353D6C8F810F0345FAE553A22252E80C64685E3CC66EC8BF</deviationsHash>
-      <fileHash>8DD07F63BFFAA7C41A176B559676D85684190A470CC635138BD0A2379991C748</fileHash>
+      <fileHash>FF5321F8B479ECF396F6D7B2C4EC72189E3C81D2D2B34D24C55AE8BE4628EDA3</fileHash>
     </file>
     <file>
       <correlationId>Intent.Application.MediatR.CommandHandler#989d40be-88c5-4d32-b652-5906bd68295f</correlationId>
@@ -72,54 +92,94 @@
       <fileHash>EEE2CA3BCB126B7107D3E006AB7D427ED0685D45B968DFC803C3C77D234CD767</fileHash>
     </file>
     <file>
-      <correlationId>Intent.Application.MediatR.CommandHandler#3426c73f-fbf8-4172-baa4-7a6bfa22bbdb</correlationId>
-      <path>AndersonAPI.Application/Oppertunities/CreateOppertunity/CreateOppertunityCommandHandler.cs</path>
+      <correlationId>Intent.Application.MediatR.CommandHandler#210f7ae1-e774-4745-bc8e-1226f53fc985</correlationId>
+      <path>AndersonAPI.Application/Companies/UpdateCompany/UpdateCompanyCommandHandler.cs</path>
       <count>1</count>
       <updatedByAccountName>mvanzyl@insightconsulting.co.za</updatedByAccountName>
       <updatedByDisplayName>Morne</updatedByDisplayName>
-      <updatedAt>2026-01-15T19:34:54.405287Z</updatedAt>
-      <deviationsHash>148ADEC2B6D4C5EE18EE2F0567C2D8D6A26C84A31A2D180ACDC98B3335EFDB2B</deviationsHash>
-      <fileHash>4858279514947F936B678C614AFDE551554373C10707A26FA1A841C986030417</fileHash>
+      <updatedAt>2026-01-19T03:06:25.0066345Z</updatedAt>
+      <deviationsHash>6576F6BDCC71F0A13703AFF986B7C037B6FD98C83FFB117889C2071D50A2EF1D</deviationsHash>
+      <fileHash>BFEAB9E18C337826E58688933BBF0441D99674F7ADB0F593AF9DE875A65DFE5A</fileHash>
+    </file>
+    <file>
+      <correlationId>Intent.Application.MediatR.CommandHandler#3426c73f-fbf8-4172-baa4-7a6bfa22bbdb</correlationId>
+      <path>AndersonAPI.Application/Opportunities/CreateOpportunity/CreateOpportunityCommandHandler.cs</path>
+      <count>1</count>
+      <updatedByAccountName>mvanzyl@insightconsulting.co.za</updatedByAccountName>
+      <updatedByDisplayName>Morne</updatedByDisplayName>
+      <updatedAt>2026-01-18T15:09:29.7786138Z</updatedAt>
+      <deviationsHash>5164A4B643109755B11E69C75EDA8D61A467CE2E34F3CF4449003EC7E1902B6E</deviationsHash>
+      <fileHash>CFADC0F14A6C060B1D20DF5DC09E8451A9E7C27669B16201BD15F9380F949FFE</fileHash>
+    </file>
+    <file>
+      <correlationId>Intent.Application.MediatR.QueryHandler#2bc28f49-639b-47d6-94cf-71872f7b733e</correlationId>
+      <path>AndersonAPI.Application/Opportunities/GetMyOpportunities/GetMyOpportunitiesQueryHandler.cs</path>
+      <count>1</count>
+      <updatedByAccountName>mvanzyl@insightconsulting.co.za</updatedByAccountName>
+      <updatedByDisplayName>Morne</updatedByDisplayName>
+      <updatedAt>2026-01-18T15:58:12.6912962Z</updatedAt>
+      <deviationsHash>653923773723B1828FD8CCF543953AF00B034078CB755DE203DF8C5F1F4BC494</deviationsHash>
+      <fileHash>750BAA6A4E9ABD0A954F3CD5851BF4C9F733912E72FEB41FC5625DECA59397CF</fileHash>
+    </file>
+    <file>
+      <correlationId>Intent.Application.MediatR.QueryHandler#8dea5063-53c9-4321-9384-6d4e6ea4aff4</correlationId>
+      <path>AndersonAPI.Application/Opportunities/GetOpportunities/GetOpportunitiesQueryHandler.cs</path>
+      <count>1</count>
+      <updatedByAccountName>mvanzyl@insightconsulting.co.za</updatedByAccountName>
+      <updatedByDisplayName>Morne</updatedByDisplayName>
+      <updatedAt>2026-01-19T09:36:42.7020632Z</updatedAt>
+      <deviationsHash>B7F2914195C948D9941EDE3ABF50746BC2025A62080D281653DE76BCF161B042</deviationsHash>
+      <fileHash>AD9AFCD4726CE2102B9D1D7D9C384C84493C95FA81E70E483B12420D500D2514</fileHash>
+    </file>
+    <file>
+      <correlationId>Intent.Application.MediatR.QueryHandler#9c2edf74-2468-474e-b29d-41b7ee839033</correlationId>
+      <path>AndersonAPI.Application/Opportunities/GetSavedOpportunities/GetSavedOpportunitiesQueryHandler.cs</path>
+      <count>1</count>
+      <updatedByAccountName>mvanzyl@insightconsulting.co.za</updatedByAccountName>
+      <updatedByDisplayName>Morne</updatedByDisplayName>
+      <updatedAt>2026-01-19T09:36:42.7022761Z</updatedAt>
+      <deviationsHash>397E0A6F2CD97DE39DBE944D868C4A174AD4F988D3022A14527422313CB4002F</deviationsHash>
+      <fileHash>958D5FD0ADAB8A266F327E6D969A1AB3109057FB98D17D6BC48623D79C9DB021</fileHash>
     </file>
     <file>
       <correlationId>Intent.Application.MediatR.CommandHandler#af4eb9b3-d69f-4bfa-878d-55264a166b2d</correlationId>
-      <path>AndersonAPI.Application/Oppertunities/SetCapabilitiesOppertunity/SetCapabilitiesOppertunityCommandHandler.cs</path>
+      <path>AndersonAPI.Application/Opportunities/SetCapabilitiesOpportunity/SetCapabilitiesOpportunityCommandHandler.cs</path>
       <count>1</count>
       <updatedByAccountName>mvanzyl@insightconsulting.co.za</updatedByAccountName>
       <updatedByDisplayName>Morne</updatedByDisplayName>
-      <updatedAt>2026-01-15T20:03:36.5779848Z</updatedAt>
-      <deviationsHash>789EAB0B538FF65CAD79E3C3BE757D14E3C91A94BEB517261B2AA2ABD6FA7982</deviationsHash>
-      <fileHash>60CD5E54D46496545F4C87C4063921164E32A2C1A7E5FA1A1BB4224B4B6938B8</fileHash>
+      <updatedAt>2026-01-18T15:09:29.7806841Z</updatedAt>
+      <deviationsHash>045ACA922F285245FD95F10B7B1480E21D71C594EBF21BDAFADACA1360EDEC00</deviationsHash>
+      <fileHash>CACA2B3CF6E623269F41460B877F159CFAC71747DCC7ED3B568171F5CCA43326</fileHash>
     </file>
     <file>
       <correlationId>Intent.Application.MediatR.CommandHandler#3a078972-a469-4ce5-815d-257462738a7a</correlationId>
-      <path>AndersonAPI.Application/Oppertunities/SetIndustriesOppertunity/SetIndustriesOppertunityCommandHandler.cs</path>
+      <path>AndersonAPI.Application/Opportunities/SetIndustriesOpportunity/SetIndustriesOpportunityCommandHandler.cs</path>
       <count>1</count>
       <updatedByAccountName>mvanzyl@insightconsulting.co.za</updatedByAccountName>
       <updatedByDisplayName>Morne</updatedByDisplayName>
-      <updatedAt>2026-01-15T20:03:36.5780343Z</updatedAt>
-      <deviationsHash>99F5A1AF8BD9C828D909CCD8FF2054E8AE66BC36CFE182A069170319835CB958</deviationsHash>
-      <fileHash>98B9B87F227C4543CEA6D2F878200805939A8F330132CE661702E6F7B823FB15</fileHash>
+      <updatedAt>2026-01-18T15:09:29.7807593Z</updatedAt>
+      <deviationsHash>21546CF4CAD683306A149BF37DECC0697F5C5F540B455CC9F30E330184DCCFD1</deviationsHash>
+      <fileHash>1E144DF9E38ED96DD5086C3EEA9D26CB8D9708A56AD73186830A420ACF607375</fileHash>
     </file>
     <file>
       <correlationId>Intent.Application.MediatR.CommandHandler#34e30f0f-ef27-4def-adfb-5e0295277955</correlationId>
-      <path>AndersonAPI.Application/Oppertunities/SetInterestedPartnersOppertunity/SetInterestedPartnersOppertunityCommandHandler.cs</path>
+      <path>AndersonAPI.Application/Opportunities/SetInterestedPartnersOpportunity/SetInterestedPartnersOpportunityCommandHandler.cs</path>
       <count>1</count>
       <updatedByAccountName>mvanzyl@insightconsulting.co.za</updatedByAccountName>
       <updatedByDisplayName>Morne</updatedByDisplayName>
-      <updatedAt>2026-01-15T14:58:54.7219109Z</updatedAt>
-      <deviationsHash>F937A7AB87C9C042930AF64C634E6C7B003440932062BB9240B1A5DCCC1C5763</deviationsHash>
-      <fileHash>AA2D24E0D1BD8CED1E40B9AD4075AA4DA5BD5E61E914F33B9A3F91FC7AE9126B</fileHash>
+      <updatedAt>2026-01-18T15:09:29.780833Z</updatedAt>
+      <deviationsHash>D0E3F0945ED01A6C946EC957FA7FC659EA76A93A2C1CD677F4D97B66872B95A5</deviationsHash>
+      <fileHash>DE1A795C1A11BFD0AE123A63E46F9FEB2682BC41930547DAF1D784CC57498FFB</fileHash>
     </file>
     <file>
       <correlationId>Intent.Application.MediatR.CommandHandler#0bedee11-e8c8-4d83-ab08-c5cf22cf3b79</correlationId>
-      <path>AndersonAPI.Application/Oppertunities/SetServiceTypesOppertunity/SetServiceTypesOppertunityCommandHandler.cs</path>
+      <path>AndersonAPI.Application/Opportunities/SetServiceTypesOpportunity/SetServiceTypesOpportunityCommandHandler.cs</path>
       <count>1</count>
       <updatedByAccountName>mvanzyl@insightconsulting.co.za</updatedByAccountName>
       <updatedByDisplayName>Morne</updatedByDisplayName>
-      <updatedAt>2026-01-15T20:03:36.5781222Z</updatedAt>
-      <deviationsHash>AD487D07976F22FA0E830ECCEBB03D3BA0C3C9EE1CDB0FDFC4B5876D148BA035</deviationsHash>
-      <fileHash>F90E78B8C91059265B690212BD6FCCD52E3007A937257034604618EF61D38A45</fileHash>
+      <updatedAt>2026-01-18T15:09:29.7808859Z</updatedAt>
+      <deviationsHash>A2933E00DFA312FCD1260B8E5566147F7C2986146FFB39EC6A3240F0AAEC550E</deviationsHash>
+      <fileHash>79782ACFB51A19AA7F2852A6B9B4CADEDFF121876161EBAA06C930846509555B</fileHash>
     </file>
     <file>
       <correlationId>Intent.Entities.DomainEntity#0cc17a59-dc32-4408-b0fc-d0814cb75815</correlationId>
@@ -144,12 +204,12 @@
     <file>
       <correlationId>Intent.Infrastructure.DependencyInjection.DependencyInjection#3dff9542-119a-42bf-9de8-29a368cdcce1</correlationId>
       <path>AndersonAPI.Infrastructure/DependencyInjection.cs</path>
-      <count>1</count>
+      <count>2</count>
       <updatedByAccountName>mvanzyl@insightconsulting.co.za</updatedByAccountName>
       <updatedByDisplayName>Morne</updatedByDisplayName>
-      <updatedAt>2026-01-09T14:10:29.3288725Z</updatedAt>
-      <deviationsHash>FE1B6922776643EAEE3B5C4F1B9B0323F0D9BF3718A7D2EB4D8C27154D935EE6</deviationsHash>
-      <fileHash>5CA2974903960B9CDEA5E45689D5211BB4FCB4B623678CF7527AD709B6B3B6A0</fileHash>
+      <updatedAt>2026-01-19T02:02:33.4582687Z</updatedAt>
+      <deviationsHash>0AC6A4FD5DC6C68CE08501B411302691D59A46799A298E5B8125EAD139272BE8</deviationsHash>
+      <fileHash>ECED8E17B62A7567EA32C2062E70F7563DE868B956C1F1F02C0386E40574DF80</fileHash>
     </file>
     <file>
       <correlationId>Intent.EntityFrameworkCore.EntityTypeConfiguration#3259289c-5d51-46cb-8c99-78751b456c44</correlationId>
@@ -159,7 +219,17 @@
       <updatedByDisplayName>Morne</updatedByDisplayName>
       <updatedAt>2026-01-15T21:15:10.7037537Z</updatedAt>
       <deviationsHash>45E895E490A862A38FFC0A94C821CC56905A806E145F0790BD898885D87FDB8D</deviationsHash>
-      <fileHash>86FF01DE458643FB71FB0D891ADB7046D6465A3F21D057FFDB07547CDEA19E16</fileHash>
+      <fileHash>D71081D5740714FF9180F3AD414CAA11EE6B9BFBB23E7CF044C861EDB1185914</fileHash>
+    </file>
+    <file>
+      <correlationId>Intent.EntityFrameworkCore.EntityTypeConfiguration#3e927715-656c-4eef-b1ca-01b028627764</correlationId>
+      <path>AndersonAPI.Infrastructure/Persistence/Configurations/OpportunityConfiguration.cs</path>
+      <count>1</count>
+      <updatedByAccountName>mvanzyl@insightconsulting.co.za</updatedByAccountName>
+      <updatedByDisplayName>Morne</updatedByDisplayName>
+      <updatedAt>2026-01-18T15:09:29.7893653Z</updatedAt>
+      <deviationsHash>E5C5827E787CFA8234199DE8052AF367B1DDD8975FB28D665571DBF0C187C311</deviationsHash>
+      <fileHash>6FC1A1FDEF7F7E87EEDFFD6816BC560866BA6FA2A2E464B9A0F6AF2B54FDA457</fileHash>
     </file>
     <file>
       <correlationId>Intent.EntityFrameworkCore.Repositories.Repository#3259289c-5d51-46cb-8c99-78751b456c44</correlationId>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<association id="0ed1e71c-132e-4429-b316-ae0209deeb9f">
+  <sourceEnd id="1de83153-2968-429e-849b-4b35e348213c" type="Update Entity Action Source End" typeId="6bc95978-6def-4d0c-a4f5-25bdeda8a9f6">
+    <display>updated by : Opportunities.SetInterestedPartnersOpportunityCommand</display>
+    <order>0</order>
+    <typeReference id="cfd6c6f6-d7e0-4190-be7d-ce3463f5b7b5">
+      <typeId>34e30f0f-ef27-4def-adfb-5e0295277955</typeId>
+      <isNavigable>false</isNavigable>
+      <isNullable>false</isNullable>
+      <isCollection>false</isCollection>
+      <isRequired>true</isRequired>
+      <typePackageName>AndersonAPI.Services</typePackageName>
+      <typePackageId>c8555d38-5afc-4ea2-9a61-c7a505212753</typePackageId>
+      <stereotypes />
+      <genericTypeParameters />
+    </typeReference>
+    <stereotypes />
+    <metadata />
+    <childElements />
+  </sourceEnd>
+  <targetEnd id="0ed1e71c-132e-4429-b316-ae0209deeb9f" type="Update Entity Action Target End" typeId="516069f6-09cc-4de8-8e31-3c71ca823452">
+    <name>opportunity</name>
+    <display>[update] opportunity: SetInterestedPartners</display>
+    <order>2</order>
+    <traits>
+      <trait id="d00a2ab0-9a23-4192-b8bb-166798fc7dba" name="[Processing Action]" />
+    </traits>
+    <typeReference id="39695c36-e908-4f40-95ca-d740b6849a17">
+      <typeId>df28a3b6-5082-4da5-91b1-bed37b0719c2</typeId>
+      <isNavigable>true</isNavigable>
+      <isNullable>false</isNullable>
+      <isCollection>false</isCollection>
+      <isRequired>true</isRequired>
+      <typePackageName>AndersonAPI.Domain</typePackageName>
+      <typePackageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</typePackageId>
+      <stereotypes />
+      <genericTypeParameters />
+    </typeReference>
+    <stereotypes />
+    <mappings>
+      <mapping type="Query Entity Mapping" typeId="25f25af9-c38b-4053-9474-b0fabe9d7ea7">
+        <source applicationId="e87261ce-2b9f-4042-8562-a503e4cf2759" designerId="81104ae6-2bc5-4bae-b05a-f987b0372d81" elementId="34e30f0f-ef27-4def-adfb-5e0295277955" location="[AndersonAPI].[Services].[SetInterestedPartnersOpportunityCommand]" />
+        <target applicationId="e87261ce-2b9f-4042-8562-a503e4cf2759" designerId="6ab29b31-27af-4f56-a67c-986d82097d63" elementId="3e927715-656c-4eef-b1ca-01b028627764" location="[AndersonAPI].[Services].[Opportunity]" />
+        <mappedEnds>
+          <mappedEnd>
+            <expression>{Id}</expression>
+            <path>
+              <target id="3e927715-656c-4eef-b1ca-01b028627764" name="Opportunity" type="element" specialization="Class" specializationId="04e12b51-ed12-42a3-9667-a6aa81bb6d10" />
+              <target id="0350fc0f-79a1-4c60-b8c4-ea974b6e7850" name="base" type="association" specialization="Generalization Target End" specializationId="4686cc1d-b4d8-4b99-b45b-f77bd5496946" />
+              <target id="9ed19ba4-548e-4be5-b0ed-eea43cc82348" name="Id" type="element" specialization="Attribute" specializationId="0090fb93-483e-41af-a11d-5ad2dc796adf" />
+            </path>
+            <sources>
+              <source identifier="Id" mappingType="Filter Mapping" mappingTypeId="01d09a7f-0e7c-4670-b7bc-395d7e893ef2">
+                <path>
+                  <target id="34e30f0f-ef27-4def-adfb-5e0295277955" name="SetInterestedPartnersOpportunityCommand" type="element" specialization="Command" specializationId="ccf14eb6-3a55-4d81-b5b9-d27311c70cb9" />
+                  <target id="8a37cd03-3b8b-4e42-9140-650d92b46f20" name="Id" type="element" specialization="DTO-Field" specializationId="7baed1fd-469b-4980-8fd9-4cefb8331eb2" />
+                </path>
+              </source>
+            </sources>
+          </mappedEnd>
+        </mappedEnds>
+      </mapping>
+      <mapping type="Update Entity Mapping" typeId="01721b1a-a85d-4320-a5cd-8bd39247196a">
+        <source applicationId="e87261ce-2b9f-4042-8562-a503e4cf2759" designerId="81104ae6-2bc5-4bae-b05a-f987b0372d81" elementId="34e30f0f-ef27-4def-adfb-5e0295277955" location="[AndersonAPI].[Services].[SetInterestedPartnersOpportunityCommand]" />
+        <target applicationId="e87261ce-2b9f-4042-8562-a503e4cf2759" designerId="6ab29b31-27af-4f56-a67c-986d82097d63" elementId="3e927715-656c-4eef-b1ca-01b028627764" location="[AndersonAPI].[Services].[Opportunity]" />
+        <mappedEnds>
+          <mappedEnd>
+            <expression>{SetInterestedPartnersOpportunityCommand}</expression>
+            <path>
+              <target id="3e927715-656c-4eef-b1ca-01b028627764" name="Opportunity" type="element" specialization="Class" specializationId="04e12b51-ed12-42a3-9667-a6aa81bb6d10" />
+              <target id="df28a3b6-5082-4da5-91b1-bed37b0719c2" name="SetInterestedPartners" type="element" specialization="Operation" specializationId="e042bb67-a1df-480c-9935-b26210f78591" />
+            </path>
+            <sources>
+              <source identifier="SetInterestedPartnersOpportunityCommand" mappingType="Invocation Mapping" mappingTypeId="d30bdba1-9c47-4917-b81d-29230fed5d6a">
+                <path>
+                  <target id="34e30f0f-ef27-4def-adfb-5e0295277955" name="SetInterestedPartnersOpportunityCommand" type="element" specialization="Command" specializationId="ccf14eb6-3a55-4d81-b5b9-d27311c70cb9" />
+                </path>
+              </source>
+            </sources>
+          </mappedEnd>
+          <mappedEnd>
+            <expression>{CompanyIds}</expression>
+            <path>
+              <target id="3e927715-656c-4eef-b1ca-01b028627764" name="Opportunity" type="element" specialization="Class" specializationId="04e12b51-ed12-42a3-9667-a6aa81bb6d10" />
+              <target id="df28a3b6-5082-4da5-91b1-bed37b0719c2" name="SetInterestedPartners" type="element" specialization="Operation" specializationId="e042bb67-a1df-480c-9935-b26210f78591" />
+              <target id="2f3e3c58-1f9e-4c14-ba19-ca8afd1a1421" name="Companies" type="element" specialization="Parameter" specializationId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b" />
+            </path>
+            <sources>
+              <source identifier="CompanyIds" mappingType="Data Mapping" mappingTypeId="ca88649b-f20b-44db-a9c0-017c26155ba8">
+                <path>
+                  <target id="34e30f0f-ef27-4def-adfb-5e0295277955" name="SetInterestedPartnersOpportunityCommand" type="element" specialization="Command" specializationId="ccf14eb6-3a55-4d81-b5b9-d27311c70cb9" />
+                  <target id="b5388b37-7ba2-4e0d-aed5-c8f5c9224f8f" name="CompanyIds" type="element" specialization="DTO-Field" specializationId="7baed1fd-469b-4980-8fd9-4cefb8331eb2" />
+                </path>
+              </source>
+            </sources>
+          </mappedEnd>
+        </mappedEnds>
+      </mapping>
+    </mappings>
+    <metadata />
+    <childElements />
+  </targetEnd>
+  <associationType>Update Entity Action</associationType>
+  <associationTypeId>9ea0382a-4617-412a-a8c8-af987bbce226</associationTypeId>
+  <stereotypes />
+</association>
