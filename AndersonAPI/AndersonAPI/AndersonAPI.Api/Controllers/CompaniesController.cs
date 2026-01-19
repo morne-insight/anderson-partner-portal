@@ -423,11 +423,11 @@ namespace AndersonAPI.Api.Controllers
 
         /// <summary>
         /// </summary>
-        /// <response code="200">Returns the specified List&lt;CompanyDto&gt;.</response>
+        /// <response code="200">Returns the specified List&lt;DirectoryProfileListItem&gt;.</response>
         [HttpGet("api/companies")]
-        [ProducesResponseType(typeof(List<CompanyDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(List<DirectoryProfileListItem>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<List<CompanyDto>>> GetCompanies(CancellationToken cancellationToken = default)
+        public async Task<ActionResult<List<DirectoryProfileListItem>>> GetCompanies(CancellationToken cancellationToken = default)
         {
             var result = await _mediator.Send(new GetCompaniesQuery(), cancellationToken);
             return Ok(result);

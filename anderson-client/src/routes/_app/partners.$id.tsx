@@ -1,21 +1,67 @@
-import { createFileRoute, Link, useParams } from "@tanstack/react-router";
-import { ArrowLeft, MapPin, Globe, Mail, CheckCircle, Award, Building, Briefcase, Star, Users } from "lucide-react";
-import React from "react";
-import { MOCK_PARTNERS } from "../../services/mock/data";
-import { Partner, Review, Contact, LocationEntry, PartnerUser } from "../../services/mock/data";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { ArrowLeft, MapPin, Globe, CheckCircle, Building, Briefcase, Star, Users } from "lucide-react";
+import { callApi } from "@/server/proxy";
 
 export const Route = createFileRoute("/_app/partners/$id")({
   component: PartnerProfile,
-  loader: ({ params }) => {
+  validateSearch: (search: Record<string, unknown>) => ({
+    from: search.from as string | undefined,
+  }),
+  loader: async ({ params }) => {
+    console.log("Loading partner:", params.id);
+    const [partner, countries, regions] = await Promise.all([
+      callApi({ data: { fn: 'getApiCompaniesByIdPartner', args: { path: { id: params.id } } } }),
+      callApi({ data: { fn: 'getApiCountries' } }),
+      callApi({ data: { fn: 'getApiRegions' } }),
+    ]);
+
+    if (!partner) return { partner: null };
+
+    // Transform PartnerProfile to Partner interface
+    const transformedPartner = {
+      id: partner.id,
+      name: partner.name,
+      website: partner.websiteUrl || "",
+      description: partner.fullDescription || "",
+      serviceType: partner.serviceTypes?.[0]?.name || "Partner",
+      skills: partner.capabilities?.map((c: any) => c.name) || [],
+      industries: partner.industries?.map((i: any) => i.name) || [],
+      certifications: [], // Not in API currently
+      verified: true,
+      contacts: partner.contacts?.map((c: any) => ({
+        name: `${c.firstName} ${c.lastName}`,
+        email: c.emailAddress,
+        isDefault: true // Mocking default
+      })) || [],
+      locations: partner.locations?.map((l: any) => ({
+        country: countries.find((c: any) => c.id === l.countryId)?.name || "Unknown",
+        region: regions.find((r: any) => r.id === l.regionId)?.name || "Unknown",
+        isHeadOffice: l.isHeadOffice
+      })) || [],
+      users: partner.contacts?.map((c: any) => ({
+        email: c.emailAddress,
+        firstName: c.firstName,
+        lastName: c.lastName,
+        title: c.companyPosition || "Representative"
+      })) || [],
+      reviews: partner.reviews?.map((r: any) => ({
+        rating: r.rating || 5,
+        comment: r.comment || "",
+        date: "Recently", // Mock date format
+        reviewerName: "Verified Client"
+      })) || []
+    };
+
     return {
-      partner: MOCK_PARTNERS.find((p) => p.id === params.id),
+      partner: transformedPartner,
     };
   },
 });
 
 function PartnerProfile() {
   const { partner } = Route.useLoaderData();
-  const { id } = useParams({ from: "/_app/partners/$id" });
+  const search = Route.useSearch();
+  const fromDirectory = search?.from === 'directory';
 
   if (!partner) {
     return (
@@ -26,14 +72,17 @@ function PartnerProfile() {
     )
   }
 
-  const headOffice = partner.locations.find((l: LocationEntry) => l.isHeadOffice) || partner.locations[0];
+  const headOffice = partner.locations.find((l: any) => l.isHeadOffice) || partner.locations[0];
 
   return (
     <div className="space-y-8 animate-fade-in">
       <nav className="flex items-center text-xs text-gray-500 mb-8 uppercase tracking-wider font-medium">
-        <Link to="/partners" className="flex items-center hover:text-red-600 transition-colors">
+        <Link 
+          to={fromDirectory ? "/directory" : "/partners"} 
+          className="flex items-center hover:text-red-600 transition-colors"
+        >
           <ArrowLeft className="w-3 h-3 mr-2" />
-          Back to Search
+          {fromDirectory ? "Back to Directory" : "Back to Search"}
         </Link>
         <span className="mx-3 text-gray-300">/</span>
         <span className="text-gray-900">{partner.name}</span>
@@ -101,7 +150,7 @@ function PartnerProfile() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Main Info */}
-        <div className="lg:col-span-2 space-y-8">
+        <div className="lg:col-span-3 space-y-8">
           {/* Team Section */}
           <div className="bg-white p-8 border border-gray-200 shadow-sm">
             <h3 className="text-xl font-serif text-black mb-6 flex items-center border-b border-gray-100 pb-4">
@@ -109,7 +158,7 @@ function PartnerProfile() {
               Key Personnel
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {partner.users.map((user: PartnerUser) => (
+              {partner.users.map((user: any) => (
                 <div
                   key={user.email}
                   className="flex items-center gap-4 p-4 border border-gray-50 bg-gray-50/50"
@@ -170,8 +219,8 @@ function PartnerProfile() {
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {partner.locations
-                .sort((a: LocationEntry, b: LocationEntry) => (a.isHeadOffice ? -1 : 1))
-                .map((loc: LocationEntry, i: number) => (
+                .sort((a: any, b: any) => (a.isHeadOffice ? -1 : 1))
+                .map((loc: any, i: number) => (
                   <div
                     key={i}
                     className={`p-4 border ${
@@ -202,10 +251,10 @@ function PartnerProfile() {
             </h3>
             <div className="space-y-8">
               {partner.reviews.length > 0 ? (
-                partner.reviews.map((rev: Review, i: number) => (
+                partner.reviews.map((rev: any, i: number) => (
                   <div
                     key={i}
-                    className="border-l-4 border-gray-100 pl-6 pb-6 border-b last:border-b-0 border-gray-50"
+                    className="border-l-4 border-gray-100 pl-6 pb-6 border-b last:border-b-0"
                   >
                     <div className="flex items-center gap-1 mb-3">
                       {[...Array(5)].map((_, idx) => (
@@ -233,60 +282,7 @@ function PartnerProfile() {
 
         {/* Sidebar Info */}
         <div className="space-y-8">
-          {/* Contacts Card */}
-          <div className="bg-white p-8 border border-gray-200 shadow-sm">
-            <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-gray-400 mb-6">
-              Contact Directory
-            </h3>
-            <div className="space-y-6">
-              {partner.contacts
-                .sort((a: Contact, b: Contact) => (a.isDefault ? -1 : 1))
-                .map((contact: Contact, i: number) => (
-                  <div key={i} className="group">
-                    <div className="flex items-center gap-4 mb-2">
-                      <div
-                        className={`w-10 h-10 flex items-center justify-center text-lg font-serif ${
-                          contact.isDefault ? "bg-red-600 text-white" : "bg-gray-100 text-gray-400"
-                        }`}
-                      >
-                        {contact.name.charAt(0)}
-                      </div>
-                      <div>
-                        <p className="font-bold text-gray-900 text-sm font-serif">{contact.name}</p>
-                        {contact.isDefault && (
-                          <p className="text-[9px] text-red-600 uppercase tracking-widest font-bold">
-                            Primary Liaison
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                    <div className="flex items-center text-xs text-gray-500 group-hover:text-black transition-colors pl-14">
-                      <Mail className="w-3.5 h-3.5 mr-2 text-gray-300" />
-                      <a href={`mailto:${contact.email}`}>{contact.email}</a>
-                    </div>
-                  </div>
-                ))}
-            </div>
-          </div>
-
-          {/* Certifications */}
-          <div className="bg-white p-8 border border-gray-200 shadow-sm">
-            <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-gray-400 mb-6 flex items-center">
-              <Award className="w-4 h-4 mr-2" />
-              Accreditations
-            </h3>
-            <ul className="space-y-4">
-              {partner.certifications.map((cert: string, i: number) => (
-                <li
-                  key={i}
-                  className="flex items-start text-sm text-gray-700 border-b border-gray-50 pb-3 last:border-0"
-                >
-                  <CheckCircle className="w-4 h-4 mr-3 text-red-600 mt-0.5 shrink-0" />
-                  <span className="font-medium">{cert}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {/* Contact Directory and Accreditations sections hidden */}
         </div>
       </div>
     </div>

@@ -39,6 +39,13 @@ namespace AndersonAPI.Infrastructure.Persistence.Configurations
 
             builder.Property(x => x.Embedding);
 
+            builder.Property(x => x.EmbeddingModel)
+                .HasMaxLength(64);
+
+            builder.Property(x => x.EmbeddingDim);
+
+            builder.Property(x => x.EmbeddingUpdated);
+
             builder.Property(x => x.CreatedBy)
                 .IsRequired();
 
@@ -114,7 +121,7 @@ namespace AndersonAPI.Infrastructure.Persistence.Configurations
 
             builder.Ignore(e => e.DomainEvents);
         }
-        
+
         [IntentManaged(Mode.Merge)]
         public static void ConfigureContacts(OwnedNavigationBuilder<Company, Contact> builder)
         {

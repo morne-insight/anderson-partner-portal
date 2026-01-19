@@ -2,17 +2,7 @@ import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { useForm } from "@tanstack/react-form";
-import { 
-  getApiCompaniesMe,
-  getApiOpportunityTypes,
-  getApiCountries,
-  getApiServiceTypes,
-  getApiCapabilities,
-  getApiIndustries,
-  getApiOpportunitiesById,
-  putApiOpportunitiesByIdFull,
-  deleteApiOpportunitiesById
-} from "@/api/sdk.gen";
+import { callApi } from "@/server/proxy";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -32,23 +22,23 @@ export const Route = createFileRoute("/_app/opportunities/$opportunityId")({
   component: EditOpportunity,
   loader: async ({ params }) => {
     const [opportunity, companies, opportunityTypes, countries, serviceTypes, capabilities, industries] = await Promise.all([
-      getApiOpportunitiesById({ path: { id: params.opportunityId } }),
-      getApiCompaniesMe(),
-      getApiOpportunityTypes(),
-      getApiCountries(),
-      getApiServiceTypes(),
-      getApiCapabilities(),
-      getApiIndustries(),
+      callApi({ data: { fn: 'getApiOpportunitiesById', args: { path: { id: params.opportunityId } } } }),
+      callApi({ data: { fn: 'getApiCompaniesMe' } }),
+      callApi({ data: { fn: 'getApiOpportunityTypes' } }),
+      callApi({ data: { fn: 'getApiCountries' } }),
+      callApi({ data: { fn: 'getApiServiceTypes' } }),
+      callApi({ data: { fn: 'getApiCapabilities' } }),
+      callApi({ data: { fn: 'getApiIndustries' } }),
     ]);
 
     return {
-      opportunity: opportunity.data as any,
-      companies: companies.data || [],
-      opportunityTypes: opportunityTypes.data || [],
-      countries: countries.data || [],
-      serviceTypes: serviceTypes.data || [],
-      capabilities: capabilities.data || [],
-      industries: industries.data || [],
+      opportunity: opportunity || {},
+      companies: companies || [],
+      opportunityTypes: opportunityTypes || [],
+      countries: countries || [],
+      serviceTypes: serviceTypes || [],
+      capabilities: capabilities || [],
+      industries: industries || [],
     };
   },
 });
@@ -72,16 +62,18 @@ function EditOpportunity() {
 
   const updateMutation = useMutation({
     mutationFn: async (values: any) => {
-      const response = await putApiOpportunitiesByIdFull({
-        path: { id: opportunity.id },
-        body: values
+      const response = await callApi({
+        data: { fn: 'putApiOpportunitiesByIdFull', args: { path: { id: opportunity.id }, body: values } }
       });
-      if (response.error) {
+      console.log('Update response:', response);
+      // 204 No Content is a successful response for updates
+      if (response && response.error && response.status !== 204) {
         throw response.error;
       }
       return response;
     },
     onSuccess: () => {
+      console.log('Update successful, navigating to opportunities');
       router.navigate({ to: "/opportunities" });
     },
     onError: (err) => {
@@ -92,7 +84,9 @@ function EditOpportunity() {
 
   const deleteMutation = useMutation({
     mutationFn: async () => {
-        const response = await deleteApiOpportunitiesById({ path: { id: opportunity.id } });
+        const response = await callApi({
+          data: { fn: 'deleteApiOpportunitiesById', args: { path: { id: opportunity.id } } }
+        });
         if (response.error) {
             throw response.error;
         }
@@ -121,20 +115,39 @@ function EditOpportunity() {
       industries: getIds(opportunity.industries),
     },
     validators: {
-      onChange: ({ value }) => ({
-             title: !value.title ? "Title is required" : undefined,
-             shortDescription: !value.shortDescription ? "Short description is required" : undefined,
-             opportunityTypeId: !value.opportunityTypeId ? "Type is required" : undefined,
-             countryId: !value.countryId ? "Country is required" : undefined,
-             companyId: !value.companyId ? "Company is required" : undefined,
-      })
+      onSubmit: ({ value }) => {
+        const errors: any = {};
+        if (!value.title?.trim()) errors.title = "Title is required";
+        if (!value.shortDescription?.trim()) errors.shortDescription = "Short description is required";
+        if (!value.opportunityTypeId) errors.opportunityTypeId = "Type is required";
+        if (!value.countryId) errors.countryId = "Country is required";
+        if (!value.companyId) errors.companyId = "Company is required";
+        
+        return Object.keys(errors).length > 0 ? errors : undefined;
+      }
     },
     onSubmit: async ({ value }) => {
-      const payload = {
-        ...value,
-        deadline: value.deadline ? new Date(value.deadline.getTime() - (value.deadline.getTimezoneOffset() * 60000)).toISOString().split('T')[0] : null
-      };
-      await updateMutation.mutateAsync(payload);
+      try {
+        // Save main opportunity data
+        const payload = {
+          id: opportunity.id,
+          title: value.title,
+          shortDescription: value.shortDescription,
+          fullDescription: value.fullDescription,
+          deadline: value.deadline ? new Date(value.deadline.getTime() - (value.deadline.getTimezoneOffset() * 60000)).toISOString().split('T')[0] : null,
+          opportunityTypeId: value.opportunityTypeId,
+          countryId: value.countryId,
+          companyId: value.companyId,
+          serviceTypes: value.serviceTypes,
+          capabilities: value.capabilities,
+          industries: value.industries,
+        };
+        
+        await updateMutation.mutateAsync(payload);
+      } catch (error) {
+        console.error('Failed to save opportunity:', error);
+        alert('Failed to save opportunity. Please try again.');
+      }
     },
   });
 

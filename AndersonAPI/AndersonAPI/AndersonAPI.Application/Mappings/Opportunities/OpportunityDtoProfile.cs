@@ -23,7 +23,6 @@ namespace AndersonAPI.Application.Opportunities
             CreateMap<Opportunity, OpportunityDto>()
                 .ForMember(d => d.Country, opt => opt.MapFrom(src => src.Country.Name))
                 .ForMember(d => d.OpportunityType, opt => opt.MapFrom(src => src.OpportunityType.Name))
-                .ForMember(d => d.InterestedPartners, opt => opt.MapFrom(src => src.InterestedPartners))
                 .ForMember(d => d.Capabilities, opt => opt.MapFrom(src => src.Capabilities))
                 .ForMember(d => d.Industries, opt => opt.MapFrom(src => src.Industries))
                 .ForMember(d => d.ServiceTypes, opt => opt.MapFrom(src => src.ServiceTypes));

@@ -1,64 +1,120 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { Search, Sparkles, MapPin, CheckCircle, Filter, ChevronDown, Briefcase, X, User } from "lucide-react";
-import React, { useState } from "react";
-import { MOCK_PARTNERS } from "../../services/mock/data";
+import React from "react";
+import { useStore } from "@tanstack/react-store";
+import { callApi } from "@/server/proxy";
+import {
+  partnersSearchStore,
+  setQuery,
+  setResults,
+  setIsSearching,
+  setActiveRegionFilter,
+  setSelectedServiceType,
+  setSelectedCountry,
+  setShowServiceDropdown,
+  setShowRegionDropdown,
+  setShowCountryDropdown,
+  clearFilters
+} from "@/stores/partnersSearchStore";
+import { CapabilityDto, CountryDto, RegionDto } from "@/api";
+
+interface PartnerSearchLoaderData {
+  countries: CountryDto[];
+  regions: RegionDto[];
+  capabilities: CapabilityDto[];
+}
 
 export const Route = createFileRoute("/_app/partners/")({
   component: PartnerSearch,
+  loader: async () => {
+    const [capabilities, countries, regions] = await Promise.all([
+      callApi({ data: { fn: 'getApiCapabilities' } }),
+      callApi({ data: { fn: 'getApiCountries' } }),
+      callApi({ data: { fn: 'getApiRegions' } }),
+    ]);
+
+    return {
+      capabilities: capabilities || [],
+      countries: countries || [],
+      regions: regions || [],
+    } as PartnerSearchLoaderData; 
+  },
 });
 
 function PartnerSearch() {
   const navigate = useNavigate();
-  const [query, setQuery] = useState("");
-  const [isSearching, setIsSearching] = useState(false);
-  const [results, setResults] = useState(MOCK_PARTNERS);
-  const [activeRegionFilter, setActiveRegionFilter] = useState("All");
+  const { countries, regions } = Route.useLoaderData();
+  
+  const searchState = useStore(partnersSearchStore);
+  const {
+    query,
+    results,
+    isSearching,
+    filters: {
+      activeRegionFilter,
+      selectedServiceType,
+      selectedCountry,
+      selectedCapabilities
+    },
+    showServiceDropdown,
+    showRegionDropdown,
+    showCountryDropdown
+  } = searchState;
 
-  // Filter States
-  const [showServiceDropdown, setShowServiceDropdown] = useState(false);
-  const [showRegionDropdown, setShowRegionDropdown] = useState(false);
-  const [showCountryDropdown, setShowCountryDropdown] = useState(false);
-  const [selectedCapabilities, setSelectedCapabilities] = useState<string[]>([]);
-  const [selectedServiceType, setSelectedServiceType] = useState<string>("All");
-  const [selectedCountry, setSelectedCountry] = useState<string>("All");
-
-  const allServiceTypes = Array.from(new Set(MOCK_PARTNERS.map((p) => p.serviceType))).sort();
-  const allRegions = ["Europe", "Africa", "North America", "Asia Pacific", "Latin America"];
+  const allServiceTypes = ["Advisory", "Tax Consulting", "IT Consulting", "Financial Law", "Supply Chain Advisory"];
+  const allRegions = regions.map((r: any) => r.name).sort();
 
   const availableCountries = React.useMemo(() => {
-    const locations = MOCK_PARTNERS.flatMap((p) => p.locations);
-    const filteredLocations = activeRegionFilter === "All"
-      ? locations
-      : locations.filter((l) => l.region === activeRegionFilter);
-    return Array.from(new Set(filteredLocations.map((l) => l.country))).sort();
-  }, [activeRegionFilter]);
+    if (activeRegionFilter === "All") return countries.map((c: any) => c.name).sort();
+    const regionId = regions.find((r: any) => r.name === activeRegionFilter)?.id;
+    return countries
+      .filter((c: any) => c.regionId === regionId)
+      .map((c: any) => c.name)
+      .sort();
+  }, [activeRegionFilter, countries, regions]);
 
-  const handleSearch = (e: React.FormEvent) => {
+  const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!query.trim()) return;
+    
     setIsSearching(true);
-    setTimeout(() => {
-      performSearch(query);
-      setIsSearching(false);
-    }, 1000);
-  };
-
-  const performSearch = (searchQuery: string) => {
-    const lowerQuery = searchQuery.toLowerCase();
-    const scored = MOCK_PARTNERS.map((partner) => {
-      let score = 60;
-      const locString = partner.locations.map((l) => `${l.country} ${l.region}`).join(" ");
-      const searchString = `${partner.name} ${partner.skills.join(" ")} ${partner.description} ${locString} ${partner.serviceType}`.toLowerCase();
-
-      const keywords = lowerQuery.split(" ");
-      keywords.forEach((word) => {
-        if (word.length > 2 && searchString.includes(word)) {
-          score += 15;
-        }
+    try {
+      const response = await callApi({ 
+        data: { 
+          fn: 'putApiCompaniesPartners', 
+          args: { body: { query } } 
+        } 
       });
-      return { ...partner, matchScore: Math.min(score, 99) };
-    });
-    const filtered = lowerQuery ? scored.filter((p) => p.matchScore && p.matchScore > 60) : scored;
-    setResults(filtered.sort((a, b) => (b.matchScore || 0) - (a.matchScore || 0)));
+      
+      const transformed = (response || []).map((partner: any) => {
+
+        return {
+          id: partner.id,
+          name: partner.name,
+          description: partner.shortDescription || "No description provided.",
+          matchScore: partner.matchScore ? Math.round(partner.matchScore) : 85,
+          skills: partner.capabilities?.map((c: any) => c.name) || [],
+          verified: true, // Default to true for AI results in this UI
+          serviceType: "Partner", // Generic since list view doesnt have it
+          locations: partner.locations?.map((l: any) => ({
+             country: countries.find((c: any) => c.id === l.countryId)?.name || "Unknown",
+             region: regions.find((r: any) => r.id === l.regionId)?.name || "Unknown",
+             isHeadOffice: l.isHeadOffice
+          })) || [],
+          contacts: partner.contacts?.map((c: any) => ({
+            name: `${c.firstName} ${c.lastName}`,
+            email: c.emailAddress,
+            isDefault: true
+          })) || []
+        };
+      });
+      
+      setResults(transformed);
+    } catch (error) {
+      console.error("AI Search failed", error);
+    } finally {
+      setIsSearching(false);
+    }
   };
 
   const handleCountrySelect = (country: string) => {
@@ -66,22 +122,19 @@ function PartnerSearch() {
     setShowCountryDropdown(false);
   };
 
-  const displayedResults = results.filter((partner) => {
-    if (activeRegionFilter !== "All" && !partner.locations.some((l) => l.region === activeRegionFilter)) return false;
+  const displayedResults = results.filter((partner: any) => {
+    if (activeRegionFilter !== "All" && !partner.locations.some((l: any) => l.region === activeRegionFilter)) return false;
     if (selectedServiceType !== "All" && partner.serviceType !== selectedServiceType) return false;
-    if (selectedCountry !== "All" && !partner.locations.some((l) => l.country === selectedCountry)) return false;
+    if (selectedCountry !== "All" && !partner.locations.some((l: any) => l.country === selectedCountry)) return false;
     if (selectedCapabilities.length > 0) {
-      const hasAll = selectedCapabilities.every((cap) => partner.skills.includes(cap));
+      const hasAll = selectedCapabilities.every((cap: any) => partner.skills.includes(cap));
       if (!hasAll) return false;
     }
     return true;
   });
 
-  const clearFilters = () => {
-    setActiveRegionFilter("All");
-    setSelectedServiceType("All");
-    setSelectedCapabilities([]);
-    setSelectedCountry("All");
+  const handleClearFilters = () => {
+    clearFilters();
   };
 
   return (
@@ -136,10 +189,7 @@ function PartnerSearch() {
           </span>
           <div className="relative">
             <button
-              onClick={() => {
-                setShowServiceDropdown(!showServiceDropdown);
-                setShowCountryDropdown(false);
-              }}
+              onClick={() => setShowServiceDropdown(!showServiceDropdown)}
               className={`flex items-center gap-2 px-4 py-2 text-[10px] font-bold uppercase tracking-wider transition-colors border ${
                 selectedServiceType !== "All"
                   ? "bg-black text-white border-black"
@@ -176,11 +226,7 @@ function PartnerSearch() {
           </div>
           <div className="relative">
             <button
-              onClick={() => {
-                setShowRegionDropdown(!showRegionDropdown);
-                setShowServiceDropdown(false);
-                setShowCountryDropdown(false);
-              }}
+              onClick={() => setShowRegionDropdown(!showRegionDropdown)}
               className={`flex items-center gap-2 px-4 py-2 text-[10px] font-bold uppercase tracking-wider transition-colors border ${
                 activeRegionFilter !== "All"
                   ? "bg-black text-white border-black"
@@ -194,19 +240,17 @@ function PartnerSearch() {
                 <button
                   onClick={() => {
                     setActiveRegionFilter("All");
-                    setSelectedCountry("All"); // Reset country
                     setShowRegionDropdown(false);
                   }}
                   className="w-full text-left px-4 py-3 text-xs hover:bg-gray-50 border-b"
                 >
                   All Regions
                 </button>
-                {allRegions.map((region) => (
+                {allRegions.map((region: any) => (
                   <button
                     key={region}
                     onClick={() => {
                       setActiveRegionFilter(region);
-                      setSelectedCountry("All"); // Reset country
                       setShowRegionDropdown(false);
                     }}
                     className="w-full text-left px-4 py-3 text-xs hover:bg-gray-50 border-b last:border-0"
@@ -219,11 +263,7 @@ function PartnerSearch() {
           </div>
           <div className="relative">
             <button
-              onClick={() => {
-                setShowCountryDropdown(!showCountryDropdown);
-                setShowServiceDropdown(false);
-                setShowRegionDropdown(false);
-              }}
+              onClick={() => setShowCountryDropdown(!showCountryDropdown)}
               className={`flex items-center gap-2 px-4 py-2 text-[10px] font-bold uppercase tracking-wider transition-colors border ${
                 selectedCountry !== "All"
                   ? "bg-black text-white border-black"
@@ -240,7 +280,7 @@ function PartnerSearch() {
                 >
                   All Countries
                 </button>
-                {availableCountries.map((country) => (
+                {availableCountries.map((country: any) => (
                   <button
                     key={country}
                     onClick={() => handleCountrySelect(country)}
@@ -262,7 +302,7 @@ function PartnerSearch() {
             selectedCapabilities.length > 0 ||
             selectedCountry !== "All") && (
             <button
-              onClick={clearFilters}
+              onClick={handleClearFilters}
               className="flex items-center text-red-600 hover:text-black text-[10px] font-bold uppercase tracking-widest transition-colors"
             >
               <X className="w-3 h-3 mr-1" /> Clear All
@@ -276,11 +316,8 @@ function PartnerSearch() {
         {["All", ...allRegions].map((region) => (
           <button
             key={region}
-            onClick={() => {
-              setActiveRegionFilter(region);
-              setSelectedCountry("All");
-            }}
-            className={`pb-4 text-xs font-bold uppercase tracking-[0.1em] transition-colors whitespace-nowrap border-b-2 ${
+            onClick={() => setActiveRegionFilter(region)}
+            className={`pb-4 text-xs font-bold uppercase tracking-widest transition-colors whitespace-nowrap border-b-2 ${
               activeRegionFilter === region
                 ? "border-red-600 text-red-600"
                 : "border-transparent text-gray-400 hover:text-gray-900"
@@ -293,9 +330,9 @@ function PartnerSearch() {
 
       {/* Results Grid */}
       <div className="grid grid-cols-1 gap-6 pt-4">
-        {displayedResults.map((partner) => {
-          const headOffice = partner.locations.find((l) => l.isHeadOffice) || partner.locations[0];
-          const primaryContact = partner.contacts.find((c) => c.isDefault) || partner.contacts[0];
+        {displayedResults.map((partner: any) => {
+          const headOffice = partner.locations.find((l: any) => l.isHeadOffice) || partner.locations[0];
+          const primaryContact = partner.contacts.find((c: any) => c.isDefault) || partner.contacts[0];
 
           return (
             <div
@@ -340,7 +377,7 @@ function PartnerSearch() {
                   {partner.description}
                 </p>
                 <div className="mt-6 flex flex-wrap gap-2">
-                  {partner.skills.slice(0, 5).map((skill) => (
+                  {partner.skills.slice(0, 5).map((skill: string) => (
                     <span
                       key={skill}
                       className="bg-gray-50 text-gray-600 px-3 py-1.5 text-xs font-medium border border-gray-200 uppercase tracking-wide"

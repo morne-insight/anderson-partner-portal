@@ -2,11 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { Calendar, MapPin, ArrowRight, Loader2, Building } from "lucide-react";
 import { useState } from "react";
-import { 
-  getApiOpportunities, 
-  getApiOpportunitiesMe, 
-  getApiOpportunitiesSaved 
-} from "@/api/sdk.gen";
+import { callApi } from "@/server/proxy";
 
 export const Route = createFileRoute("/_app/opportunities/")({ 
   component: Opportunities,
@@ -18,27 +14,27 @@ function Opportunities() {
   const { data: allOpportunities, isLoading: isLoadingAll } = useQuery({
     queryKey: ['opportunities', 'all'],
     queryFn: async () => {
-        const res = await getApiOpportunities();
+        const res = await callApi({data:{fn: 'getApiOpportunities'}});
         if (res.error) throw res.error;
-        return res.data || [];
+        return res || [];
     }
   });
 
   const { data: myOpportunities, isLoading: isLoadingMe } = useQuery({
     queryKey: ['opportunities', 'me'],
     queryFn: async () => {
-        const res = await getApiOpportunitiesMe();
+        const res = await callApi({data:{fn: 'getApiOpportunitiesMe'}});
         if (res.error) throw res.error;
-        return res.data || [];
+        return res || [];
     }
   });
 
   const { data: savedOpportunities, isLoading: isLoadingSaved } = useQuery({
     queryKey: ['opportunities', 'saved'],
     queryFn: async () => {
-        const res = await getApiOpportunitiesSaved();
+        const res = await callApi({data:{fn: 'getApiOpportunitiesSaved'}});
         if (res.error) throw res.error;
-        return res.data || [];
+        return res || [];
     }
   });
 

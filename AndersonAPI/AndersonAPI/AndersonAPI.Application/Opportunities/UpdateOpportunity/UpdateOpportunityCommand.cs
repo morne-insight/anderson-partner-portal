@@ -1,5 +1,4 @@
 using AndersonAPI.Application.Common.Interfaces;
-using AndersonAPI.Domain;
 using Intent.RoslynWeaver.Attributes;
 using MediatR;
 
@@ -16,8 +15,7 @@ namespace AndersonAPI.Application.Opportunities.UpdateOpportunity
             string fullDescription,
             DateOnly? deadline,
             Guid opportunityTypeId,
-            Guid countryId,
-            OpportunityStatus status)
+            Guid countryId)
         {
             Id = id;
             Title = title;
@@ -26,7 +24,6 @@ namespace AndersonAPI.Application.Opportunities.UpdateOpportunity
             Deadline = deadline;
             OpportunityTypeId = opportunityTypeId;
             CountryId = countryId;
-            Status = status;
         }
 
         public Guid Id { get; set; }
@@ -36,6 +33,5 @@ namespace AndersonAPI.Application.Opportunities.UpdateOpportunity
         public DateOnly? Deadline { get; set; }
         public Guid OpportunityTypeId { get; set; }
         public Guid CountryId { get; set; }
-        public OpportunityStatus Status { get; set; }
     }
 }

@@ -66,6 +66,16 @@ namespace AndersonAPI.Infrastructure.Migrations
                     b.Property<byte[]>("Embedding")
                         .HasColumnType("varbinary(max)");
 
+                    b.Property<int?>("EmbeddingDim")
+                        .HasColumnType("int");
+
+                    b.Property<string>("EmbeddingModel")
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<DateTimeOffset?>("EmbeddingUpdated")
+                        .HasColumnType("datetimeoffset");
+
                     b.Property<int>("EmployeeCount")
                         .HasColumnType("int");
 

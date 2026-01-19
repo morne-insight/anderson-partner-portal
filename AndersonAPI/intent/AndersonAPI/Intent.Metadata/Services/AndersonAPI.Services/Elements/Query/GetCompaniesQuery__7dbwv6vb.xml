@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <class id="9f047403-2058-40fb-8a3b-4a5462701291" type="Query" typeId="e71b0662-e29d-4db2-868b-8a12464b25d0">
   <name>GetCompaniesQuery</name>
-  <display>GetCompaniesQuery: CompanyDto[*]</display>
+  <display>GetCompaniesQuery: DirectoryProfileListItem[*]</display>
   <isAbstract>false</isAbstract>
   <genericTypes />
   <typeReference id="a25b8f0c-3a79-4fe5-8ec0-a6173520e6d1">
-    <typeId>432c0581-2f2c-44ff-b2ab-4b08cbe6da82</typeId>
+    <typeId>82bd453a-98fc-4c6a-a048-aa3b3f7d7db6</typeId>
     <isNavigable>true</isNavigable>
     <isNullable>false</isNullable>
     <isCollection>true</isCollection>

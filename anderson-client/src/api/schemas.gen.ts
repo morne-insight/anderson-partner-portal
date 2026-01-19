@@ -669,6 +669,53 @@ export const CreateServiceTypeCommandSchema = {
     }
 } as const;
 
+export const DirectoryProfileListItemSchema = {
+    title: 'DirectoryProfileListItem',
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string',
+            format: 'uuid'
+        },
+        name: {
+            type: 'string'
+        },
+        shortDescription: {
+            type: 'string'
+        },
+        capabilities: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/PartnerCapabilityDto'
+            }
+        },
+        locations: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/PartnerLocationDto'
+            }
+        },
+        contacts: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/PartnerContactDto'
+            }
+        },
+        industries: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/PartnerIndustryDto'
+            }
+        },
+        serviceTypes: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/PartnerServiceTypeDto'
+            }
+        }
+    }
+} as const;
+
 export const EntityStateSchema = {
     type: 'integer'
 } as const;
@@ -802,21 +849,11 @@ export const OpportunityDtoSchema = {
             type: 'string',
             format: 'uuid'
         },
-        order: {
-            type: 'integer',
-            format: 'int32'
-        },
         country: {
             type: 'string'
         },
         opportunityType: {
             type: 'string'
-        },
-        interestedPartners: {
-            type: 'array',
-            items: {
-                $ref: '#/components/schemas/InterestedPartnerDto'
-            }
         },
         capabilities: {
             type: 'array',
@@ -838,6 +875,17 @@ export const OpportunityDtoSchema = {
         },
         status: {
             $ref: '#/components/schemas/OpportunityStatus'
+        },
+        shortDescription: {
+            type: 'string'
+        },
+        opportunityTypeId: {
+            type: 'string',
+            format: 'uuid'
+        },
+        countryId: {
+            type: 'string',
+            format: 'uuid'
         }
     }
 } as const;
@@ -1020,13 +1068,19 @@ export const PartnerLocationDtoSchema = {
         isHeadOffice: {
             type: 'boolean'
         },
+        countryId: {
+            type: 'string',
+            format: 'uuid'
+        },
+        country: {
+            type: 'string'
+        },
         regionId: {
             type: 'string',
             format: 'uuid'
         },
-        countryId: {
-            type: 'string',
-            format: 'uuid'
+        region: {
+            type: 'string'
         }
     }
 } as const;
@@ -1167,8 +1221,8 @@ export const PartnerProfileListItemSchema = {
             }
         },
         matchScore: {
-            type: 'integer',
-            format: 'int32'
+            type: 'number',
+            format: 'double'
         }
     }
 } as const;
@@ -1887,8 +1941,7 @@ export const UpdateFullOpportunityCommandSchema = {
         'countryId',
         'serviceTypes',
         'capabilities',
-        'industries',
-        'status'
+        'industries'
     ],
     type: 'object',
     properties: {
@@ -1938,9 +1991,6 @@ export const UpdateFullOpportunityCommandSchema = {
                 type: 'string',
                 format: 'uuid'
             }
-        },
-        status: {
-            $ref: '#/components/schemas/OpportunityStatus'
         }
     }
 } as const;
@@ -2055,8 +2105,7 @@ export const UpdateOpportunityCommandSchema = {
         'fullDescription',
         'deadline',
         'opportunityTypeId',
-        'countryId',
-        'status'
+        'countryId'
     ],
     type: 'object',
     properties: {
@@ -2085,9 +2134,6 @@ export const UpdateOpportunityCommandSchema = {
         countryId: {
             type: 'string',
             format: 'uuid'
-        },
-        status: {
-            $ref: '#/components/schemas/OpportunityStatus'
         }
     }
 } as const;

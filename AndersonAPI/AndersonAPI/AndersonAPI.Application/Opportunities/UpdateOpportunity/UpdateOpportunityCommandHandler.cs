@@ -34,8 +34,7 @@ namespace AndersonAPI.Application.Opportunities.UpdateOpportunity
                 request.FullDescription,
                 request.Deadline,
                 request.OpportunityTypeId,
-                request.CountryId,
-                request.Status);
+                request.CountryId);
         }
     }
 }

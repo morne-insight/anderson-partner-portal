@@ -34,10 +34,6 @@ namespace AndersonAPI.Application.Opportunities.UpdateFullOpportunity
 
             RuleFor(v => v.Industries)
                 .NotNull();
-
-            RuleFor(v => v.Status)
-                .NotNull()
-                .IsInEnum();
         }
     }
 }

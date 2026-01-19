@@ -75,6 +75,12 @@ namespace AndersonAPI.Domain.Entities
 
         public byte[]? Embedding { get; private set; }
 
+        public string? EmbeddingModel { get; private set; }
+
+        public int? EmbeddingDim { get; private set; }
+
+        public DateTimeOffset? EmbeddingUpdated { get; private set; }
+
         public Guid CreatedBy { get; private set; }
 
         public DateTimeOffset CreatedDate { get; private set; }
@@ -289,6 +295,18 @@ namespace AndersonAPI.Domain.Entities
         public void RemoveUser(ApplicationIdentityUser user)
         {
             _applicationIdentityUsers.RemoveAll(u => u.Id == user.Id);
+        }
+
+        public void SetEmbedding(
+            byte[]? embedding,
+            string? embeddingModel,
+            int? embeddingDim,
+            DateTimeOffset? embeddingUpdated)
+        {
+            Embedding = embedding;
+            EmbeddingModel = embeddingModel;
+            EmbeddingDim = embeddingDim;
+            EmbeddingUpdated = embeddingUpdated;
         }
 
         void IAuditable.SetCreated(Guid createdBy, DateTimeOffset createdDate) => (CreatedBy, CreatedDate) = (createdBy, createdDate);

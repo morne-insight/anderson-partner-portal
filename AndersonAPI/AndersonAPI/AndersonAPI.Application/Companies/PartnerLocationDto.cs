@@ -10,23 +10,36 @@ namespace AndersonAPI.Application.Companies
         public PartnerLocationDto()
         {
             Name = null!;
+            Country = null!;
+            Region = null!;
         }
 
         public Guid Id { get; set; }
         public string Name { get; set; }
         public bool IsHeadOffice { get; set; }
-        public Guid RegionId { get; set; }
         public Guid CountryId { get; set; }
+        public string Country { get; set; }
+        public Guid RegionId { get; set; }
+        public string Region { get; set; }
 
-        public static PartnerLocationDto Create(Guid id, string name, bool isHeadOffice, Guid regionId, Guid countryId)
+        public static PartnerLocationDto Create(
+            Guid id,
+            string name,
+            bool isHeadOffice,
+            Guid countryId,
+            string country,
+            Guid regionId,
+            string region)
         {
             return new PartnerLocationDto
             {
                 Id = id,
                 Name = name,
                 IsHeadOffice = isHeadOffice,
+                CountryId = countryId,
+                Country = country,
                 RegionId = regionId,
-                CountryId = countryId
+                Region = region
             };
         }
     }

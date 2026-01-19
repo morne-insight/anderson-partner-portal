@@ -8,7 +8,7 @@ using MediatR;
 namespace AndersonAPI.Application.Companies.GetCompanies
 {
     [IntentManaged(Mode.Merge, Signature = Mode.Fully)]
-    public class GetCompaniesQueryHandler : IRequestHandler<GetCompaniesQuery, List<CompanyDto>>
+    public class GetCompaniesQueryHandler : IRequestHandler<GetCompaniesQuery, List<DirectoryProfileListItem>>
     {
         private readonly ICompanyRepository _companyRepository;
 
@@ -19,9 +19,11 @@ namespace AndersonAPI.Application.Companies.GetCompanies
         }
 
         [IntentManaged(Mode.Fully, Body = Mode.Fully)]
-        public async Task<List<CompanyDto>> Handle(GetCompaniesQuery request, CancellationToken cancellationToken)
+        public async Task<List<DirectoryProfileListItem>> Handle(
+            GetCompaniesQuery request,
+            CancellationToken cancellationToken)
         {
-            var companies = await _companyRepository.FindAllProjectToAsync<CompanyDto>(cancellationToken);
+            var companies = await _companyRepository.FindAllProjectToAsync<DirectoryProfileListItem>(cancellationToken);
             return companies;
         }
     }

@@ -123,8 +123,7 @@ namespace AndersonAPI.Domain.Entities
             string fullDescription,
             DateOnly? deadline,
             Guid opportunityTypeId,
-            Guid countryId,
-            OpportunityStatus status)
+            Guid countryId)
         {
             Title = title;
             ShortDescription = shortDescription;
@@ -132,7 +131,6 @@ namespace AndersonAPI.Domain.Entities
             Deadline = deadline;
             OpportunityTypeId = opportunityTypeId;
             CountryId = countryId;
-            Status = status;
         }
 
         public void UpdateFull(
@@ -144,8 +142,7 @@ namespace AndersonAPI.Domain.Entities
             Guid countryId,
             IEnumerable<Guid> serviceTypes,
             IEnumerable<Guid> capabilities,
-            IEnumerable<Guid> industries,
-            OpportunityStatus status)
+            IEnumerable<Guid> industries)
         {
             Title = title;
             ShortDescription = shortDescription;
@@ -153,7 +150,6 @@ namespace AndersonAPI.Domain.Entities
             Deadline = deadline;
             OpportunityTypeId = opportunityTypeId;
             CountryId = countryId;
-            Status = status;
         }
 
         public virtual IReadOnlyCollection<Company> InterestedPartners
@@ -212,12 +208,22 @@ namespace AndersonAPI.Domain.Entities
             var targetIds = targetList.Select(i => i.Id).ToHashSet();
 
             // Remove any capabilities that are no longer in the new collection
-            _capabilities.RemoveAll(p => !targetIds.Contains(p.Id));
+            for (int i = _capabilities.Count - 1; i >= 0; i--)
+            {
+                if (!targetIds.Contains(_capabilities[i].Id))
+                {
+                    _capabilities.RemoveAt(i);
+                }
+            }
 
             // Add any new capabilities that are not already in the collection
             var currentIds = _capabilities.Select(p => p.Id).ToHashSet();
             var newCapabilities = targetList.Where(capability => !currentIds.Contains(capability.Id));
-            _capabilities.AddRange(newCapabilities);
+
+            foreach (var capability in newCapabilities)
+            {
+                _capabilities.Add(capability);
+            }
         }
 
         public void SetServiceTypes(IEnumerable<ServiceType> serviceTypes)

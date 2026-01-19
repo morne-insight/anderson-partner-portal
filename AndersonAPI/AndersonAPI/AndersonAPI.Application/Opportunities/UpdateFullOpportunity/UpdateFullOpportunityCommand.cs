@@ -1,5 +1,4 @@
 using AndersonAPI.Application.Common.Interfaces;
-using AndersonAPI.Domain;
 using Intent.RoslynWeaver.Attributes;
 using MediatR;
 
@@ -19,8 +18,7 @@ namespace AndersonAPI.Application.Opportunities.UpdateFullOpportunity
             Guid countryId,
             List<Guid> serviceTypes,
             List<Guid> capabilities,
-            List<Guid> industries,
-            OpportunityStatus status)
+            List<Guid> industries)
         {
             Id = id;
             Title = title;
@@ -32,7 +30,6 @@ namespace AndersonAPI.Application.Opportunities.UpdateFullOpportunity
             ServiceTypes = serviceTypes;
             Capabilities = capabilities;
             Industries = industries;
-            Status = status;
         }
 
         public Guid Id { get; set; }
@@ -45,6 +42,5 @@ namespace AndersonAPI.Application.Opportunities.UpdateFullOpportunity
         public List<Guid> ServiceTypes { get; set; }
         public List<Guid> Capabilities { get; set; }
         public List<Guid> Industries { get; set; }
-        public OpportunityStatus Status { get; set; }
     }
 }

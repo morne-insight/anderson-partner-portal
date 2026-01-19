@@ -2,15 +2,6 @@ import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { useForm } from "@tanstack/react-form";
-import { 
-  getApiCompaniesMe,
-  getApiOpportunityTypes,
-  getApiCountries,
-  getApiServiceTypes,
-  getApiCapabilities,
-  getApiIndustries,
-  postApiOpportunities
-} from "@/api/sdk.gen";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -24,26 +15,27 @@ import {
   Building,
   ChevronDown
 } from "lucide-react";
+import { callApi } from "@/server/proxy";
 
 export const Route = createFileRoute("/_app/opportunities/new")({
   component: CreateOpportunity,
   loader: async () => {
     const [companies, opportunityTypes, countries, serviceTypes, capabilities, industries] = await Promise.all([
-      getApiCompaniesMe(),
-      getApiOpportunityTypes(),
-      getApiCountries(),
-      getApiServiceTypes(),
-      getApiCapabilities(),
-      getApiIndustries(),
+      callApi({data:{fn: 'getApiCompaniesMe'}}),
+      callApi({data:{fn: 'getApiOpportunityTypes'}}),
+      callApi({data:{fn: 'getApiCountries'}}),
+      callApi({data:{fn: 'getApiServiceTypes'}}),
+      callApi({data:{fn: 'getApiCapabilities'}}),
+      callApi({data:{fn: 'getApiIndustries'}}),
     ]);
 
     return {
-      companies: companies.data || [],
-      opportunityTypes: opportunityTypes.data || [],
-      countries: countries.data || [],
-      serviceTypes: serviceTypes.data || [],
-      capabilities: capabilities.data || [],
-      industries: industries.data || [],
+      companies: companies || [],
+      opportunityTypes: opportunityTypes || [],
+      countries: countries || [],
+      serviceTypes: serviceTypes || [],
+      capabilities: capabilities || [],
+      industries: industries || [],
     };
   },
 });
@@ -63,9 +55,7 @@ function CreateOpportunity() {
 
   const createMutation = useMutation({
     mutationFn: async (values: any) => {
-      const response = await postApiOpportunities({
-        body: values
-      });
+      const response = await callApi({data:{fn: 'postApiOpportunities', args: {body: values}}} ); 
       if (response.error) {
         throw response.error;
       }
@@ -88,19 +78,31 @@ function CreateOpportunity() {
       deadline: null as Date | null,
       opportunityTypeId: "",
       countryId: "",
-      companyId: companies.length === 1 ? companies[0]?.id ?? "" : "",
+      companyId: companies.length === 1 ? (companies[0]?.id || "") : "",
       serviceTypes: [] as string[],
       capabilities: [] as string[],
       industries: [] as string[],
     },
     validators: {
-      onChange: ({ value }) => ({
-         title: !value.title ? "Title is required" : undefined,
-         shortDescription: !value.shortDescription ? "Short description is required" : undefined,
-         opportunityTypeId: !value.opportunityTypeId ? "Type is required" : undefined,
-         countryId: !value.countryId ? "Country is required" : undefined,
-         companyId: !value.companyId ? "Company is required" : undefined,
-      })
+      onSubmit: ({ value }) => {
+        console.log('Form validation values:', {
+          title: value.title,
+          shortDescription: value.shortDescription,
+          opportunityTypeId: value.opportunityTypeId,
+          countryId: value.countryId,
+          companyId: value.companyId,
+          deadline: value.deadline,
+        });
+        const errors: any = {};
+        if (!value.title?.trim()) errors.title = "Title is required";
+        if (!value.shortDescription?.trim()) errors.shortDescription = "Short description is required";
+        if (!value.opportunityTypeId) errors.opportunityTypeId = "Type is required";
+        if (!value.countryId) errors.countryId = "Country is required";
+        if (!value.companyId) errors.companyId = "Company is required";
+        
+        console.log('Validation errors:', errors);
+        return Object.keys(errors).length > 0 ? errors : undefined;
+      }
     },
     onSubmit: async ({ value }) => {
       const payload = {
@@ -247,33 +249,39 @@ function CreateOpportunity() {
 
             <form.Field
                 name="deadline"
-                children={(field) => (
-                    <div className="space-y-2">
-                        <Label>Deadline</Label>
-                        <Popover open={datePickerOpen} onOpenChange={setDatePickerOpen}>
-                        <PopoverTrigger asChild>
-                            <Button
-                            variant="outline"
-                            className="w-full md:w-64 justify-between font-normal"
-                            >
-                            {field.state.value ? field.state.value.toLocaleDateString() : "Select deadline"}
-                            <ChevronDown className="w-4 h-4" />
-                            </Button>
-                        </PopoverTrigger>
-                        <PopoverContent className="w-auto overflow-hidden p-0" align="start">
-                            <Calendar
-                            mode="single"
-                            selected={field.state.value ?? undefined}
-                            captionLayout="dropdown"
-                            onSelect={(date) => {
-                                field.handleChange(date ?? null);
-                                setDatePickerOpen(false);
-                            }}
-                            />
-                        </PopoverContent>
-                        </Popover>
-                    </div>
-                )}
+                mode="value"
+                children={(field) => {
+                    console.log('Deadline field state:', field.state.value);
+                    return (
+                        <div className="space-y-2">
+                            <Label>Deadline</Label>
+                            <Popover open={datePickerOpen} onOpenChange={setDatePickerOpen}>
+                            <PopoverTrigger asChild>
+                                <Button
+                                variant="outline"
+                                className="w-full md:w-64 justify-between font-normal"
+                                >
+                                {field.state.value ? field.state.value.toLocaleDateString() : "Select deadline"}
+                                <ChevronDown className="w-4 h-4" />
+                                </Button>
+                            </PopoverTrigger>
+                            <PopoverContent className="w-auto overflow-hidden p-0" align="start">
+                                <Calendar
+                                mode="single"
+                                selected={field.state.value ?? undefined}
+                                captionLayout="dropdown"
+                                onSelect={(date) => {
+                                    console.log('Deadline selected:', date, 'Field before change:', field.state.value);
+                                    field.setValue(date || null);
+                                    console.log('Using field.setValue method');
+                                    setDatePickerOpen(false);
+                                }}
+                                />
+                            </PopoverContent>
+                            </Popover>
+                        </div>
+                    );
+                }}
             />
 
             <form.Field

@@ -264,6 +264,20 @@ export type CreateServiceTypeCommand = {
     description: string;
 };
 
+/**
+ * DirectoryProfileListItem
+ */
+export type DirectoryProfileListItem = {
+    id?: string;
+    name?: string;
+    shortDescription?: string;
+    capabilities?: Array<PartnerCapabilityDto>;
+    locations?: Array<PartnerLocationDto>;
+    contacts?: Array<PartnerContactDto>;
+    industries?: Array<PartnerIndustryDto>;
+    serviceTypes?: Array<PartnerServiceTypeDto>;
+};
+
 export type EntityState = number;
 
 /**
@@ -332,14 +346,15 @@ export type OpportunityDto = {
     deadline?: Date | null;
     companyId?: string;
     id?: string;
-    order?: number;
     country?: string;
     opportunityType?: string;
-    interestedPartners?: Array<InterestedPartnerDto>;
     capabilities?: Array<OpportunityCapabilityDto>;
     industries?: Array<OpportunityIndustryDto>;
     serviceTypes?: Array<OpportunityServiceTypeDto>;
     status?: OpportunityStatus;
+    shortDescription?: string;
+    opportunityTypeId?: string;
+    countryId?: string;
 };
 
 /**
@@ -423,8 +438,10 @@ export type PartnerLocationDto = {
     id?: string;
     name?: string;
     isHeadOffice?: boolean;
-    regionId?: string;
     countryId?: string;
+    country?: string;
+    regionId?: string;
+    region?: string;
 };
 
 /**
@@ -776,7 +793,6 @@ export type UpdateFullOpportunityCommand = {
     serviceTypes: Array<string>;
     capabilities: Array<string>;
     industries: Array<string>;
-    status: OpportunityStatus;
 };
 
 /**
@@ -829,7 +845,6 @@ export type UpdateOpportunityCommand = {
     deadline: Date | null;
     opportunityTypeId: string;
     countryId: string;
-    status: OpportunityStatus;
 };
 
 /**
@@ -1420,7 +1435,7 @@ export type GetApiCompaniesResponses = {
     /**
      * OK
      */
-    200: Array<CompanyDto>;
+    200: Array<DirectoryProfileListItem>;
 };
 
 export type GetApiCompaniesResponse = GetApiCompaniesResponses[keyof GetApiCompaniesResponses];
@@ -2776,14 +2791,6 @@ export type GetApiOpportunitiesMeData = {
 };
 
 export type GetApiOpportunitiesMeErrors = {
-    /**
-     * Unauthorized
-     */
-    401: ProblemDetails;
-    /**
-     * Forbidden
-     */
-    403: ProblemDetails;
     /**
      * Internal Server Error
      */

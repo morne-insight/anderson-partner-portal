@@ -354,6 +354,11 @@ namespace AndersonAPI.Api.Controllers
             var username = User.Identity!.Name!;
             var user = (await _userManager.FindByNameAsync(username))!;
 
+            if (user == null)
+            {
+                user = (await _userManager.FindByIdAsync(username))!;
+            }
+
             user.UpdateRefreshToken(null, null);
 
             await _userManager.UpdateAsync(user);

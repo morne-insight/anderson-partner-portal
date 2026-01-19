@@ -7,7 +7,7 @@ using MediatR;
 
 namespace AndersonAPI.Application.Companies.GetCompanies
 {
-    public class GetCompaniesQuery : IRequest<List<CompanyDto>>, IQuery
+    public class GetCompaniesQuery : IRequest<List<DirectoryProfileListItem>>, IQuery
     {
         public GetCompaniesQuery()
         {

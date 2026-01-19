@@ -92,6 +92,12 @@ function ProfileEdit() {
     },
     onSubmit: async ({ value }) => {
       try {
+        // Save Capabilities and Industries first, to ensure embedding are created with the latest data
+        await callApi({ data: { fn: 'putApiCompaniesByIdCapabilities', args: { path: { id: companyId }, body: { id: companyId, capabilityIds: selectedCapabilityIds } } } });
+        
+        await callApi({ data: { fn: 'putApiCompaniesByIdIndustries', args: { path: { id: companyId }, body: { id: companyId, industryIds: selectedIndustryIds } } } });
+
+        // Save Company 
         await callApi({ 
             data: { 
               fn: 'putApiCompaniesById', 
@@ -109,11 +115,6 @@ function ProfileEdit() {
             }
           });
         
-        // Also save Capabilities and Industries
-        await callApi({ data: { fn: 'putApiCompaniesByIdCapabilities', args: { path: { id: companyId }, body: { id: companyId, capabilityIds: selectedCapabilityIds } } } });
-        
-        await callApi({ data: { fn: 'putApiCompaniesByIdIndustries', args: { path: { id: companyId }, body: { id: companyId, industryIds: selectedIndustryIds } } } });
-
         alert("Profile saved successfully!");
         refreshData();
       } catch (error) {

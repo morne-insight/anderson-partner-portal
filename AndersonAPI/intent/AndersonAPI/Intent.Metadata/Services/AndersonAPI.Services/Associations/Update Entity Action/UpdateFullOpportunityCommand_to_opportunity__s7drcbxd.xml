@@ -21,7 +21,7 @@
   <targetEnd id="0542500b-5c1b-4a27-b9a7-9c87a3a44332" type="Update Entity Action Target End" typeId="516069f6-09cc-4de8-8e31-3c71ca823452">
     <name>opportunity</name>
     <display>[update] opportunity: UpdateFull</display>
-    <order>11</order>
+    <order>10</order>
     <traits>
       <trait id="d00a2ab0-9a23-4192-b8bb-166798fc7dba" name="[Processing Action]" />
     </traits>
@@ -218,22 +218,6 @@
                 <path>
                   <target id="e537143b-d867-4b71-96d3-457209fad034" name="UpdateFullOpportunityCommand" type="element" specialization="Command" specializationId="ccf14eb6-3a55-4d81-b5b9-d27311c70cb9" />
                   <target id="3806ffcc-ab5b-40bc-9c1f-08c65e2749f9" name="Industries" type="element" specialization="DTO-Field" specializationId="7baed1fd-469b-4980-8fd9-4cefb8331eb2" />
-                </path>
-              </source>
-            </sources>
-          </mappedEnd>
-          <mappedEnd>
-            <expression>{Status}</expression>
-            <path>
-              <target id="3e927715-656c-4eef-b1ca-01b028627764" name="Opportunity" type="element" specialization="Class" specializationId="04e12b51-ed12-42a3-9667-a6aa81bb6d10" />
-              <target id="c44a86a0-feb6-421a-9850-547c9a0d114b" name="UpdateFull" type="element" specialization="Operation" specializationId="e042bb67-a1df-480c-9935-b26210f78591" />
-              <target id="2724efc7-714b-4c5c-862b-d6c63b485e25" name="status" type="element" specialization="Parameter" specializationId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b" />
-            </path>
-            <sources>
-              <source identifier="Status" mappingType="Data Mapping" mappingTypeId="ca88649b-f20b-44db-a9c0-017c26155ba8">
-                <path>
-                  <target id="e537143b-d867-4b71-96d3-457209fad034" name="UpdateFullOpportunityCommand" type="element" specialization="Command" specializationId="ccf14eb6-3a55-4d81-b5b9-d27311c70cb9" />
-                  <target id="041ea225-cf1b-4f9d-9fb3-07e447a67974" name="Status" type="element" specialization="DTO-Field" specializationId="7baed1fd-469b-4980-8fd9-4cefb8331eb2" />
                 </path>
               </source>
             </sources>

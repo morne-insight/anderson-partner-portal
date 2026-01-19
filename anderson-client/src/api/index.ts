@@ -166,6 +166,7 @@ export type {
   DeleteApiServiceTypesByIdError,
   DeleteApiServiceTypesByIdErrors,
   DeleteApiServiceTypesByIdResponses,
+  DirectoryProfileListItem,
   EntityState,
   ForgotPasswordDto,
   GetApiAccountManageInfoData,

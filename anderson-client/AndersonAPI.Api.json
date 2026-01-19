@@ -1477,7 +1477,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/CompanyDto"
+                    "$ref": "#/components/schemas/DirectoryProfileListItem"
                   }
                 }
               },
@@ -1485,7 +1485,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/CompanyDto"
+                    "$ref": "#/components/schemas/DirectoryProfileListItem"
                   }
                 }
               },
@@ -1493,7 +1493,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/CompanyDto"
+                    "$ref": "#/components/schemas/DirectoryProfileListItem"
                   }
                 }
               }
@@ -5165,46 +5165,6 @@
               }
             }
           },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
           "500": {
             "description": "Internal Server Error",
             "content": {
@@ -7830,6 +7790,52 @@
           }
         }
       },
+      "DirectoryProfileListItem": {
+        "title": "DirectoryProfileListItem",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "shortDescription": {
+            "type": "string"
+          },
+          "capabilities": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PartnerCapabilityDto"
+            }
+          },
+          "locations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PartnerLocationDto"
+            }
+          },
+          "contacts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PartnerContactDto"
+            }
+          },
+          "industries": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PartnerIndustryDto"
+            }
+          },
+          "serviceTypes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PartnerServiceTypeDto"
+            }
+          }
+        }
+      },
       "EntityState": {
         "type": "integer"
       },
@@ -7955,21 +7961,11 @@
             "type": "string",
             "format": "uuid"
           },
-          "order": {
-            "type": "integer",
-            "format": "int32"
-          },
           "country": {
             "type": "string"
           },
           "opportunityType": {
             "type": "string"
-          },
-          "interestedPartners": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/InterestedPartnerDto"
-            }
           },
           "capabilities": {
             "type": "array",
@@ -7991,6 +7987,17 @@
           },
           "status": {
             "$ref": "#/components/schemas/OpportunityStatus"
+          },
+          "shortDescription": {
+            "type": "string"
+          },
+          "opportunityTypeId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "countryId": {
+            "type": "string",
+            "format": "uuid"
           }
         }
       },
@@ -8164,13 +8171,19 @@
           "isHeadOffice": {
             "type": "boolean"
           },
+          "countryId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "country": {
+            "type": "string"
+          },
           "regionId": {
             "type": "string",
             "format": "uuid"
           },
-          "countryId": {
-            "type": "string",
-            "format": "uuid"
+          "region": {
+            "type": "string"
           }
         }
       },
@@ -8308,8 +8321,8 @@
             }
           },
           "matchScore": {
-            "type": "integer",
-            "format": "int32"
+            "type": "number",
+            "format": "double"
           }
         }
       },
@@ -8995,8 +9008,7 @@
           "countryId",
           "serviceTypes",
           "capabilities",
-          "industries",
-          "status"
+          "industries"
         ],
         "type": "object",
         "properties": {
@@ -9046,9 +9058,6 @@
               "type": "string",
               "format": "uuid"
             }
-          },
-          "status": {
-            "$ref": "#/components/schemas/OpportunityStatus"
           }
         }
       },
@@ -9158,8 +9167,7 @@
           "fullDescription",
           "deadline",
           "opportunityTypeId",
-          "countryId",
-          "status"
+          "countryId"
         ],
         "type": "object",
         "properties": {
@@ -9188,9 +9196,6 @@
           "countryId": {
             "type": "string",
             "format": "uuid"
-          },
-          "status": {
-            "$ref": "#/components/schemas/OpportunityStatus"
           }
         }
       },

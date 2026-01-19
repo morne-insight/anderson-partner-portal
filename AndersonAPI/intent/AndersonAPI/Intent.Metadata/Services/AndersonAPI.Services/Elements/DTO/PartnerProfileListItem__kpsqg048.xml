@@ -272,6 +272,7 @@
         <autoSyncTypeReference>false</autoSyncTypeReference>
         <mappedPath>
           <target id="96f5d114-906e-479b-b2cc-c70d42272f64" name="Locations" type="association" specialization="Association Target End" specializationId="0a66489f-30aa-417b-a75d-b945863366fd" />
+          <target name="Where(l =&gt; l.IsHeadOffice)" type="n/a" />
         </mappedPath>
       </mappedClass>
       <parentFolderId>5a4c4308-25fa-4a52-8d46-05f45d3e5dec</parentFolderId>
@@ -366,11 +367,11 @@
     </childElement>
     <childElement id="cc8d550b-a1fc-4a67-8eab-31d6051cb9c7" type="DTO-Field" typeId="7baed1fd-469b-4980-8fd9-4cefb8331eb2">
       <name>MatchScore</name>
-      <display>MatchScore: int</display>
+      <display>MatchScore: double</display>
       <isAbstract>false</isAbstract>
       <genericTypes />
       <typeReference id="1aa2814d-d7c6-448a-b852-de5d966edf11">
-        <typeId>fb0a362d-e9e2-40de-b6ff-5ce8167cbe74</typeId>
+        <typeId>24A77F70-5B97-40DD-8F9A-4208AD5F9219</typeId>
         <isNavigable>true</isNavigable>
         <isNullable>false</isNullable>
         <isCollection>false</isCollection>
@@ -395,8 +396,8 @@
             <property name="490e08cd-5fb4-4bfd-80cf-fda3b88f745e" display="Not Equal" isActive="true" />
             <property name="c94dc001-4ec7-42a0-a1e0-5b75502e7bec" display="Min Length" isActive="false" />
             <property name="cbd52384-0f1e-4f41-9e98-314231b731e1" display="Max Length" isActive="false" />
-            <property name="f9802e6b-b033-4280-ad83-e4b064943d87" display="Min" isActive="true" />
-            <property name="aca206a8-cb7e-4537-b3f5-c5c301863c14" display="Max" isActive="true" />
+            <property name="f9802e6b-b033-4280-ad83-e4b064943d87" display="Min" isActive="false" />
+            <property name="aca206a8-cb7e-4537-b3f5-c5c301863c14" display="Max" isActive="false" />
             <property name="ad0c1113-ee22-4275-8177-576494ecfa45" display="Regular Expression" isActive="true" />
             <property name="a4fdee2f-36d9-463c-bb2e-54579a16083e" display="Regular Expression Message" isActive="false" />
             <property name="25d15e9b-7dbd-403e-837d-2fcfc786d3f2" display="Regular Expression Timeout" value="1" isActive="false" />

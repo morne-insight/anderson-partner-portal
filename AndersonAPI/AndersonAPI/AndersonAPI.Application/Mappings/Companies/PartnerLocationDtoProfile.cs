@@ -11,7 +11,9 @@ namespace AndersonAPI.Application.Companies
     {
         public PartnerLocationDtoProfile()
         {
-            CreateMap<Location, PartnerLocationDto>();
+            CreateMap<Location, PartnerLocationDto>()
+                .ForMember(d => d.Country, opt => opt.MapFrom(src => src.Country.Name))
+                .ForMember(d => d.Region, opt => opt.MapFrom(src => src.Region.Name));
         }
     }
 

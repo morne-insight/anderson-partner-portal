@@ -14,10 +14,10 @@ namespace AndersonAPI.Application.Opportunities
             FullDescription = null!;
             Country = null!;
             OpportunityType = null!;
-            InterestedPartners = null!;
             Capabilities = null!;
             Industries = null!;
             ServiceTypes = null!;
+            ShortDescription = null!;
         }
 
         public string Title { get; set; }
@@ -26,14 +26,15 @@ namespace AndersonAPI.Application.Opportunities
         public DateOnly? Deadline { get; set; }
         public Guid CompanyId { get; set; }
         public Guid Id { get; set; }
-        public int Order { get; set; }
         public string Country { get; set; }
         public string OpportunityType { get; set; }
-        public List<InterestedPartnerDto> InterestedPartners { get; set; }
         public List<OpportunityCapabilityDto> Capabilities { get; set; }
         public List<OpportunityIndustryDto> Industries { get; set; }
         public List<OpportunityServiceTypeDto> ServiceTypes { get; set; }
         public OpportunityStatus Status { get; set; }
+        public string ShortDescription { get; set; }
+        public Guid OpportunityTypeId { get; set; }
+        public Guid CountryId { get; set; }
 
         public static OpportunityDto Create(
             Guid id,
@@ -42,14 +43,15 @@ namespace AndersonAPI.Application.Opportunities
             DateTimeOffset createdDate,
             DateOnly? deadline,
             Guid companyId,
-            int order,
             string country,
             string opportunityType,
-            List<InterestedPartnerDto> interestedPartners,
             List<OpportunityCapabilityDto> capabilities,
             List<OpportunityIndustryDto> industries,
             List<OpportunityServiceTypeDto> serviceTypes,
-            OpportunityStatus status)
+            OpportunityStatus status,
+            string shortDescription,
+            Guid opportunityTypeId,
+            Guid countryId)
         {
             return new OpportunityDto
             {
@@ -59,14 +61,16 @@ namespace AndersonAPI.Application.Opportunities
                 CreatedDate = createdDate,
                 Deadline = deadline,
                 CompanyId = companyId,
-                Order = order,
                 Country = country,
                 OpportunityType = opportunityType,
-                InterestedPartners = interestedPartners,
                 Capabilities = capabilities,
                 Industries = industries,
                 ServiceTypes = serviceTypes,
                 Status = status
+,
+                ShortDescription = shortDescription,
+                OpportunityTypeId = opportunityTypeId,
+                CountryId = countryId
             };
         }
     }

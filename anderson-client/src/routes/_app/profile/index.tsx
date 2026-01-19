@@ -6,12 +6,20 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { callApi } from "@/server/proxy";
 
+type Company = {
+  id?: string;
+  name?: string;
+  shortDescription?: string;
+  websiteUrl?: string;
+  employeeCount?: number;
+};
+
 export const Route = createFileRoute("/_app/profile/")({
   component: ProfileIndex,
   loader: async () => {
     try {
       const response = await callApi({ data: { fn: 'getApiCompaniesMe' } });
-      return { companies: (response || []) as any[] };
+      return { companies: (response || []) };
     } catch (error) {
       console.error("Failed to fetch companies", error);
       return { companies: [] };
@@ -21,7 +29,6 @@ export const Route = createFileRoute("/_app/profile/")({
 
 function ProfileIndex() {
   const { companies } = Route.useLoaderData();
-  console.log("companies", companies)
   const router = useRouter();
   const [scrapeUrl, setScrapeUrl] = useState("");
   const [newFirmName, setNewFirmName] = useState("");
@@ -72,6 +79,15 @@ function ProfileIndex() {
         alert("Failed to create profile.");
     }
   });
+
+  const getHostname = (url: string) => {
+    try {
+      const normalizedUrl = url.startsWith("http") ? url : `https://${url}`;
+      return new URL(normalizedUrl).hostname;
+    } catch {
+      return url;
+    }
+  };
 
   return (
     <div className="space-y-8 animate-fade-in">
@@ -150,7 +166,7 @@ function ProfileIndex() {
           </div>
         ) : (
           <div className="grid grid-cols-1 gap-6">
-            {companies.map((company) => (
+            {companies.map((company: Company) => (
               <div
                 key={company.id}
                 className="bg-white border border-gray-200 p-8 flex flex-col md:flex-row items-center gap-8 hover:shadow-lg transition-all duration-300 group"
@@ -167,8 +183,8 @@ function ProfileIndex() {
                     {company.websiteUrl && (
                       <div className="flex items-center gap-2">
                         <Globe className="w-4 h-4" />
-                        <a href={company.websiteUrl} target="_blank" rel="noopener noreferrer" className="hover:text-red-600 transition-colors">
-                          {new URL(company.websiteUrl).hostname}
+                        <a href={company.websiteUrl.startsWith("http") ? company.websiteUrl : `https://${company.websiteUrl}`} target="_blank" rel="noopener noreferrer" className="hover:text-red-600 transition-colors">
+                          {getHostname(company.websiteUrl)}
                         </a>
                       </div>
                     )}

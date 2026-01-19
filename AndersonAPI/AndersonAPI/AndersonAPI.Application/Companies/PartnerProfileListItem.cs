@@ -22,7 +22,7 @@ namespace AndersonAPI.Application.Companies
         public List<PartnerCapabilityDto> Capabilities { get; set; }
         public List<PartnerLocationDto> Locations { get; set; }
         public List<PartnerContactDto> Contacts { get; set; }
-        public int MatchScore { get; set; }
+        public double MatchScore { get; set; }
 
         public static PartnerProfileListItem Create(
             Guid id,
@@ -31,7 +31,7 @@ namespace AndersonAPI.Application.Companies
             List<PartnerCapabilityDto> capabilities,
             List<PartnerLocationDto> locations,
             List<PartnerContactDto> contacts,
-            int matchScore)
+            double matchScore)
         {
             return new PartnerProfileListItem
             {
