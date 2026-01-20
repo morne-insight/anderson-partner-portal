@@ -19,11 +19,14 @@ export const loginFn = createServerFn({ method: "POST" })
         return { error: "Invalid credentials" };
       }
 
-      // Create session with user data
+      // Create session with user data and tokens
       const session = await useAppSession();
       await session.update({
         userId: response.data.authenticationToken ?? undefined, // or extract user ID from JWT
         email: data.email,
+        accessToken: response.data.authenticationToken ?? undefined,
+        accessTokenExpiresAt: response.data.expiresIn ? Date.now() + (response.data.expiresIn * 1000) : undefined,
+        refreshToken: response.data.refreshToken ?? undefined,
       });
 
       // Return success instead of throwing redirect
