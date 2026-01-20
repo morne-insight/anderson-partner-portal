@@ -91,90 +91,99 @@ export const configureApiClient = () => {
   
   // Add response interceptor for handling authentication errors and retries
   client.interceptors.response.use(async (response, request, options) => {
-    // Success response - clear retry count for this request
     const requestKey = `${request.method || 'unknown'}-${response.url}`;
-    requestRetryMap.delete(requestKey);
     
-    if (typeof window !== "undefined" && response.status === 200) {
-      console.log(`request to ${response.url} was successful`);
-    }
-    return response;
-  });
-  
-  // Add error interceptor for handling authentication errors and retries
-  client.interceptors.error.use(async (error: any, response?: Response, request?: Request, options?: any) => {
-    console.log('request', request);
-    console.log('response', response);
-    console.log('error', error);
-    if (!request || !response) {
-      return error;
-    }
-    
-    const requestKey = `${request.method || 'unknown'}-${request.url || 'unknown'}`;
-    const currentRetries = requestRetryMap.get(requestKey) || 0;
-    
-    // Handle 401 Unauthorized errors
-    if (response.status === 401 && currentRetries < MAX_RETRY_ATTEMPTS) {
-      requestRetryMap.set(requestKey, currentRetries + 1);
+    // Handle 401 Unauthorized errors with token refresh
+    if (response.status === 401) {
+      const currentRetries = requestRetryMap.get(requestKey) || 0;
       
-      try {
-        let refreshToken: string | null = null;
+      if (currentRetries < MAX_RETRY_ATTEMPTS) {
+        requestRetryMap.set(requestKey, currentRetries + 1);
         
-        // Get refresh token from appropriate storage
-        if (typeof window === "undefined") {
-          // Server-side
-          const { useAppSession } = await import("../utils/session");
-          const session = await useAppSession();
-          refreshToken = session.data.refreshToken ?? null;
-        } else {
-          // Client-side
-          refreshToken = localStorage.getItem('refreshToken');
-        }
-        
-        if (refreshToken) {
-          const newAccessToken = await refreshAccessToken(refreshToken);
+        try {
+          let refreshToken: string | null = null;
           
-          if (newAccessToken) {
-            // Create a new request with the updated token
-            const newRequest = new Request(request.url, {
-              method: request.method,
-              headers: {
-                ...Object.fromEntries(request.headers.entries()),
-                'Authorization': `Bearer ${newAccessToken}`
-              },
-              body: request.body
-            });
-            
-            // Retry the request with the new token
-            try {
-              const retryResponse = await fetch(newRequest);
-              if (retryResponse.ok) {
-                requestRetryMap.delete(requestKey);
-                return retryResponse;
-              }
-            } catch (retryError) {
-              console.error('Retry request failed:', retryError);
-            }
+          // Get refresh token from appropriate storage
+          if (typeof window === "undefined") {
+            // Server-side
+            const { useAppSession } = await import("../utils/session");
+            const session = await useAppSession();
+            refreshToken = session.data.refreshToken ?? null;
+          } else {
+            // Client-side
+            refreshToken = localStorage.getItem('refreshToken');
           }
+          
+          if (refreshToken) {
+            console.log(`Attempting token refresh (attempt ${currentRetries + 1}/${MAX_RETRY_ATTEMPTS})`);
+            const newAccessToken = await refreshAccessToken(refreshToken);
+            
+            if (newAccessToken) {
+              // Update the original request with new token
+              const newHeaders = new Headers(request.headers);
+              newHeaders.set('Authorization', `Bearer ${newAccessToken}`);
+              
+              // Retry the request with the new token using fetch directly
+              try {
+                console.log('Retrying request with new token');
+                const retryResponse = await fetch(request.url, {
+                  method: request.method,
+                  headers: newHeaders,
+                  body: request.body,
+                  mode: request.mode,
+                  credentials: request.credentials,
+                  cache: request.cache,
+                  redirect: request.redirect,
+                  referrer: request.referrer,
+                  referrerPolicy: request.referrerPolicy,
+                  integrity: request.integrity,
+                  keepalive: request.keepalive,
+                  signal: request.signal
+                });
+                
+                if (retryResponse.ok || retryResponse.status !== 401) {
+                  requestRetryMap.delete(requestKey);
+                  console.log('Token refresh and retry successful');
+                  return retryResponse;
+                } else {
+                  console.warn('Retry still returned 401, continuing with retry logic');
+                }
+              } catch (retryError) {
+                console.error('Retry request failed:', retryError);
+              }
+            } else {
+              console.warn('Token refresh failed - no new access token received');
+            }
+          } else {
+            console.warn('No refresh token available for token refresh');
+          }
+        } catch (refreshError) {
+          console.error('Token refresh failed:', refreshError);
         }
-      } catch (refreshError) {
-        console.error('Token refresh failed:', refreshError);
-      }
-      
-      // If we've reached max retries or refresh failed, terminate session
-      if (currentRetries >= MAX_RETRY_ATTEMPTS - 1) {
-        console.warn(`Max retry attempts (${MAX_RETRY_ATTEMPTS}) reached for ${requestKey}. Terminating session.`);
+        
+        // If we've reached max retries or refresh failed, terminate session
+        if (currentRetries >= MAX_RETRY_ATTEMPTS - 1) {
+          console.warn(`Max retry attempts (${MAX_RETRY_ATTEMPTS}) reached for ${requestKey}. Terminating session.`);
+          requestRetryMap.delete(requestKey);
+          await terminateSession();
+          return response; // Return the original 401 response
+        }
+      } else {
+        // Already at max retries, terminate session immediately
+        console.warn('Authentication failed after max retries. Terminating session.');
         requestRetryMap.delete(requestKey);
         await terminateSession();
       }
-    } else if (response.status === 401) {
-      // Already at max retries, terminate session immediately
-      console.warn('Authentication failed after max retries. Terminating session.');
+    } else {
+      // Success response - clear retry count for this request
       requestRetryMap.delete(requestKey);
-      await terminateSession();
+      
+      if (typeof window !== "undefined" && response.status === 200) {
+        console.log(`request to ${response.url} was successful`);
+      }
     }
     
-    return error;
+    return response;
   });
 };
 
