@@ -17,28 +17,19 @@ import {
   ChevronDown,
   Trash2
 } from "lucide-react";
+import { usePrefetchReferenceData } from "@/hooks/useReferenceData";
 
 export const Route = createFileRoute("/_app/opportunities/$opportunityId")({
   component: EditOpportunity,
   loader: async ({ params }) => {
-    const [opportunity, companies, opportunityTypes, countries, serviceTypes, capabilities, industries] = await Promise.all([
+    const [opportunity, companies] = await Promise.all([
       callApi({ data: { fn: 'getApiOpportunitiesById', args: { path: { id: params.opportunityId } } } }),
       callApi({ data: { fn: 'getApiCompaniesMe' } }),
-      callApi({ data: { fn: 'getApiOpportunityTypes' } }),
-      callApi({ data: { fn: 'getApiCountries' } }),
-      callApi({ data: { fn: 'getApiServiceTypes' } }),
-      callApi({ data: { fn: 'getApiCapabilities' } }),
-      callApi({ data: { fn: 'getApiIndustries' } }),
     ]);
 
     return {
       opportunity: opportunity || {},
       companies: companies || [],
-      opportunityTypes: opportunityTypes || [],
-      countries: countries || [],
-      serviceTypes: serviceTypes || [],
-      capabilities: capabilities || [],
-      industries: industries || [],
     };
   },
 });
@@ -47,13 +38,18 @@ function EditOpportunity() {
   const router = useRouter();
   const { 
     opportunity,
-    companies, 
+    companies 
+  } = Route.useLoaderData();
+  
+  const { 
     opportunityTypes, 
     countries, 
     serviceTypes, 
     capabilities, 
-    industries 
-  } = Route.useLoaderData();
+    industries,
+    isLoading,
+    isError,
+  } = usePrefetchReferenceData();
 
   // Helper to safely extract IDs from array of objects or strings
   const getIds = (items: any[]) => items?.map((item: any) => typeof item === 'string' ? item : item.id) || [];
@@ -128,6 +124,7 @@ function EditOpportunity() {
     },
     onSubmit: async ({ value }) => {
       try {
+
         // Save main opportunity data
         const payload = {
           id: opportunity.id,
@@ -137,10 +134,7 @@ function EditOpportunity() {
           deadline: value.deadline ? new Date(value.deadline.getTime() - (value.deadline.getTimezoneOffset() * 60000)).toISOString().split('T')[0] : null,
           opportunityTypeId: value.opportunityTypeId,
           countryId: value.countryId,
-          companyId: value.companyId,
-          serviceTypes: value.serviceTypes,
-          capabilities: value.capabilities,
-          industries: value.industries,
+          companyId: value.companyId
         };
         
         await updateMutation.mutateAsync(payload);
@@ -150,6 +144,27 @@ function EditOpportunity() {
       }
     },
   });
+
+  // Show loading state while reference data is loading  
+    if (isLoading) {
+      return (
+        <div className="flex justify-center items-center min-h-screen">
+          <Loader2 className="w-8 h-8 animate-spin text-gray-300" />
+        </div>
+      );
+    }
+  
+    // Ensure we have the data before proceeding
+    if (isError) {
+      return (
+        <div className="flex justify-center items-center min-h-screen">
+          <div className="text-center">
+            <p className="text-red-600 mb-4">Failed to load reference data</p>
+            <Button onClick={() => window.location.reload()}>Retry</Button>
+          </div>
+        </div>
+      );
+    }
 
   return (
     <div className="space-y-8 animate-fade-in pb-20">
@@ -262,7 +277,7 @@ function EditOpportunity() {
                         <SelectValue placeholder="Select type" />
                       </SelectTrigger>
                       <SelectContent>
-                        {opportunityTypes.map((type: any) => (
+                        {opportunityTypes.data?.map((type: any) => (
                           <SelectItem key={type.id} value={type.id!}>
                             {type.name}
                           </SelectItem>
@@ -283,7 +298,7 @@ function EditOpportunity() {
                         <SelectValue placeholder="Select country" />
                       </SelectTrigger>
                       <SelectContent>
-                        {countries.map((country: any) => (
+                        {countries.data?.map((country: any) => (
                           <SelectItem key={country.id} value={country.id!}>
                             {country.name}
                           </SelectItem>
@@ -374,7 +389,7 @@ function EditOpportunity() {
                     name="serviceTypes"
                     children={(field) => (
                         <div className="flex flex-wrap gap-2">
-                            {serviceTypes.map((st: any) => {
+                            {serviceTypes.data?.map((st: any) => {
                             const isSelected = field.state.value.includes(st.id!);
                             return (
                                 <button
@@ -410,7 +425,7 @@ function EditOpportunity() {
                     name="capabilities"
                     children={(field) => (
                         <div className="flex flex-wrap gap-2">
-                            {capabilities.map((cap: any) => {
+                            {capabilities.data?.map((cap: any) => {
                             const isSelected = field.state.value.includes(cap.id!);
                             return (
                                 <button
@@ -446,7 +461,7 @@ function EditOpportunity() {
                     name="industries"
                     children={(field) => (
                         <div className="flex flex-wrap gap-2">
-                            {industries.map((ind: any) => {
+                            {industries.data?.map((ind: any) => {
                             const isSelected = field.state.value.includes(ind.id!);
                             return (
                                 <button

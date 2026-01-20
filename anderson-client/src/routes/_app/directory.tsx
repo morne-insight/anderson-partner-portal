@@ -13,45 +13,30 @@ import {
   setNameFilter,
   clearAllDirectoryFilters
 } from "@/stores/directoryFilterStore";
-import { CountryDto, DirectoryProfileListItem, RegionDto, CapabilityDto, IndustryDto, ServiceTypeDto, CompanyProfileDto } from "@/api";
+import { CountryDto, DirectoryProfileListItem } from "@/api";
+import { usePrefetchReferenceData } from "@/hooks/useReferenceData";  
 
 interface DirectoryLoaderData {
   companies: DirectoryProfileListItem[];
-  countries: CountryDto[];
-  regions: RegionDto[];
-  capabilities: CapabilityDto[];
-  industries: IndustryDto[];
-  serviceTypes: ServiceTypeDto[];
 }
-
 
 export const Route = createFileRoute("/_app/directory")({
   component: NetworkDirectory,
   loader: async () => {
-    const [companies, countries, regions, capabilities, industries, serviceTypes] = await Promise.all([
+    const [companies] = await Promise.all([
       callApi({ data: { fn: 'getApiCompanies' } }),
-      callApi({ data: { fn: 'getApiCountries' } }),
-      callApi({ data: { fn: 'getApiRegions' } }),
-      callApi({ data: { fn: 'getApiCapabilities' } }),
-      callApi({ data: { fn: 'getApiIndustries' } }),
-      callApi({ data: { fn: 'getApiServiceTypes' } })
     ]);
 
     return {
       companies: companies || [],
-      countries: countries || [],
-      regions: regions || [],
-      capabilities: capabilities || [],
-      industries: industries || [],
-      serviceTypes: serviceTypes || []
     } as DirectoryLoaderData;
-    // return { companies: [] } as ProfileLoaderData;
   }
 });
 
 function NetworkDirectory() {
   const navigate = useNavigate();
-  const { companies, countries, regions, capabilities, industries, serviceTypes } = Route.useLoaderData();
+  const { companies } = Route.useLoaderData();
+  const { countries, regions, capabilities, industries, serviceTypes } = usePrefetchReferenceData();
   
   // Get filter state from store
   const filterState = useStore(directoryFilterStore);
@@ -67,7 +52,6 @@ function NetworkDirectory() {
   // Transform companies data to match expected format
   const transformedCompanies = useMemo(() => {
     return (companies || []).map((company: any) => {
-      const headOffice = company.locations?.find((l: any) => l.isHeadOffice) || company.locations?.[0];
       return {
         id: company.id,
         name: company.name || 'Unknown Company',
@@ -77,8 +61,8 @@ function NetworkDirectory() {
         industries: company.industries?.map((i: any) => i.name) || [],
         verified: true,
         locations: company.locations?.map((l: any) => ({
-          country: countries.find((c: any) => c.id === l.countryId)?.name || 'Unknown',
-          region: regions.find((r: any) => r.id === l.regionId)?.name || 'Unknown',
+          country: countries.data?.find((c: any) => c.id === l.countryId)?.name || 'Unknown',
+          region: regions.data?.find((r: any) => r.id === l.regionId)?.name || 'Unknown',
           isHeadOffice: l.isHeadOffice
         })) || [],
         contacts: company.contacts?.map((c: any) => ({
@@ -127,10 +111,10 @@ function NetworkDirectory() {
     (selectedCapability !== 'All' ? 1 : 0) +
     (nameFilter ? 1 : 0);
 
-  const allRegions = regions.map((r: any) => r.name).sort();
-  const allServiceTypes = serviceTypes.map((s: any) => s.name).sort();
-  const allIndustries = industries.map((i: any) => i.name).sort();
-  const allCapabilities = capabilities.map((c: any) => c.name).sort();
+  const allRegions = regions?.data?.map((r) => r.name).sort();
+  const allServiceTypes = serviceTypes?.data?.map((s) => s.name).sort();
+  const allIndustries = industries?.data?.map((i) => i.name).sort();
+  const allCapabilities = capabilities?.data?.map((c) => c.name).sort();
 
   return (
     <div className="space-y-10 animate-fade-in">
@@ -182,7 +166,7 @@ function NetworkDirectory() {
                   className="w-full bg-gray-50 border border-gray-200 px-3 py-2 text-xs outline-none focus:border-black appearance-none"
                 >
                   <option value="All">All Regions</option>
-                  {allRegions.map(r => <option key={r} value={r}>{r}</option>)}
+                  {allRegions?.map(r => <option key={r} value={r}>{r}</option>)}
                 </select>
               </div>
 
@@ -195,8 +179,7 @@ function NetworkDirectory() {
                   className="w-full bg-gray-50 border border-gray-200 px-3 py-2 text-xs outline-none focus:border-black appearance-none"
                 >
                   <option value="All">All Countries</option>
-                  {countries
-                    .filter((c: any) => selectedRegion === 'All' || regions.find((r: any) => r.id === c.regionId)?.name === selectedRegion)
+                  {countries.data?.filter((c: any) => selectedRegion === 'All' || regions.data?.find((r: any) => r.id === c.regionId)?.name === selectedRegion)
                     .map((c: any) => <option key={c.name} value={c.name}>{c.name}</option>)}
                 </select>
               </div>
@@ -210,7 +193,7 @@ function NetworkDirectory() {
                   className="w-full bg-gray-50 border border-gray-200 px-3 py-2 text-xs outline-none focus:border-black appearance-none"
                 >
                   <option value="All">All Services</option>
-                  {allServiceTypes.map(s => <option key={s} value={s}>{s}</option>)}
+                  {allServiceTypes?.map(s => <option key={s} value={s}>{s}</option>)}
                 </select>
               </div>
 
@@ -223,7 +206,7 @@ function NetworkDirectory() {
                   className="w-full bg-gray-50 border border-gray-200 px-3 py-2 text-xs outline-none focus:border-black appearance-none"
                 >
                   <option value="All">All Industries</option>
-                  {allIndustries.map(i => <option key={i} value={i}>{i}</option>)}
+                  {allIndustries?.map(i => <option key={i} value={i}>{i}</option>)}
                 </select>
               </div>
 
@@ -236,7 +219,7 @@ function NetworkDirectory() {
                   className="w-full bg-gray-50 border border-gray-200 px-3 py-2 text-xs outline-none focus:border-black appearance-none"
                 >
                   <option value="All">All Capabilities</option>
-                  {allCapabilities.map((capability: string) => <option key={capability} value={capability}>{capability}</option>)}
+                  {allCapabilities?.map((capability) => <option key={capability} value={capability}>{capability}</option>)}
                 </select>
               </div>
             </div>

@@ -17,13 +17,8 @@ type Company = {
 export const Route = createFileRoute("/_app/profile/")({
   component: ProfileIndex,
   loader: async () => {
-    try {
       const response = await callApi({ data: { fn: 'getApiCompaniesMe' } });
       return { companies: (response || []) };
-    } catch (error) {
-      console.error("Failed to fetch companies", error);
-      return { companies: [] };
-    }
   },
 });
 

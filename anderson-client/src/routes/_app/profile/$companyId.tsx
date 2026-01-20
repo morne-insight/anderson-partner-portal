@@ -1,7 +1,7 @@
 import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "@tanstack/react-form";
-import { CompanyProfileDto } from "@/api/types.gen";
+import { CompanyProfileDto, UpdateCompanyCommand } from "@/api/types.gen";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -22,41 +22,64 @@ import {
 import { useState } from "react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { callApi } from "@/server/proxy";
+import { useCapabilities, useIndustries, useCountries, useRegions, usePrefetchReferenceData } from "@/hooks/useReferenceData";
+import z from "zod";
 
 export const Route = createFileRoute("/_app/profile/$companyId")({
   component: ProfileEdit,
   loader: async ({ params }) => {
-    // Fetch all required reference data and company profile
-    const [company, capabilities, industries, countries, regions] = await Promise.all([
-      callApi({ data: { fn: 'getApiCompaniesByIdProfile', args: { path: { id: params.companyId } } } }),
-      callApi({ data: { fn: 'getApiCapabilities' } }),
-      callApi({ data: { fn: 'getApiIndustries' } }),
-      callApi({ data: { fn: 'getApiCountries' } }),
-      callApi({ data: { fn: 'getApiRegions' } }),
-    ]);
+    // Only fetch company profile, reference data will be cached via hooks
+    const company = await callApi({ data: { fn: 'getApiCompaniesByIdProfile', args: { path: { id: params.companyId } } } });
 
     return {
-      company: company as any,
-      capabilities: capabilities || [],
-      industries: industries || [],
-      countries: countries || [],
-      regions: regions || [],
+      company: company || {},
     };
   },
 });
 
 function ProfileEdit() {
   const { companyId } = Route.useParams();
+  const { company } = Route.useLoaderData();
+  
+  // Use cached reference data hooks
   const { 
-    company, 
-    capabilities: allCapabilities, 
-    industries: allIndustries,
-    countries: allCountries,
-    regions: allRegions 
-  } = Route.useLoaderData();
+    capabilities: capabilitiesQuery, 
+    industries: industriesQuery, 
+    countries: countriesQuery, 
+    regions: regionsQuery, 
+    isLoading, 
+    isError 
+  } = usePrefetchReferenceData();
 
   const initialCompany = company as CompanyProfileDto;
   const router = useRouter();
+
+  // Show loading state while reference data is loading  
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <Loader2 className="w-8 h-8 animate-spin text-gray-300" />
+      </div>
+    );
+  }
+
+  // Ensure we have the data before proceeding
+  if (isError) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="text-center">
+          <p className="text-red-600 mb-4">Failed to load reference data</p>
+          <Button onClick={() => window.location.reload()}>Retry</Button>
+        </div>
+      </div>
+    );
+  }
+
+  // Type assertions after null checks - TypeScript now knows these are defined
+  const capabilities = capabilitiesQuery.data;
+  const industries = industriesQuery.data;
+  const countries = countriesQuery.data;
+  const regions = regionsQuery.data;
 
   // Refetch handler to update view after mutations
   const refreshData = () => {
@@ -90,7 +113,30 @@ function ProfileEdit() {
       websiteUrl: initialCompany?.websiteUrl || "",
       employeeCount: initialCompany?.employeeCount || 0,
     },
-    onSubmit: async ({ value }) => {
+    validators: {
+      onSubmit: ({value} : {value: UpdateCompanyCommand}) => {
+        const schema = z.object({
+          name: z.string().min(1, "Name is required"),
+          shortDescription: z.string().optional(),
+          fullDescription: z.string().optional(),
+          websiteUrl: z.string().url("Invalid URL").optional().or(z.literal("")),
+          employeeCount: z.number().min(0).optional(),
+        });
+        
+        const result = schema.safeParse(value);
+        if (!result.success) {
+          const errors: Record<string, string> = {};
+          result.error.issues.forEach((issue) => {
+            if (issue.path[0]) {
+              errors[issue.path[0] as string] = issue.message;
+            }
+          });
+          return errors;
+        }
+        return undefined;
+      }
+    },
+    onSubmit: async ({ value }: {value: UpdateCompanyCommand}) => {
       try {
         // Save Capabilities and Industries first, to ensure embedding are created with the latest data
         await callApi({ data: { fn: 'putApiCompaniesByIdCapabilities', args: { path: { id: companyId }, body: { id: companyId, capabilityIds: selectedCapabilityIds } } } });
@@ -107,7 +153,7 @@ function ProfileEdit() {
                   id: companyId, 
                   name: value.name, 
                   shortDescription: value.shortDescription,
-                  description: value.fullDescription, 
+                  description: value.description, 
                   websiteUrl: value.websiteUrl,
                   employeeCount: value.employeeCount,
                 }
@@ -303,7 +349,6 @@ function ProfileEdit() {
     });
   };
 
-
   return (
     <div className="space-y-8 animate-fade-in pb-20">
       {/* Header */}
@@ -365,7 +410,7 @@ function ProfileEdit() {
                   <Input 
                     id={field.name} 
                     name={field.name} 
-                    value={field.state.value} 
+                    value={field.state.value as string} 
                     onBlur={field.handleBlur}
                     onChange={(e: any) => field.handleChange(e.target.value)} 
                   />
@@ -382,7 +427,7 @@ function ProfileEdit() {
                     <Input 
                         id={field.name} 
                         name={field.name} 
-                        value={field.state.value} 
+                        value={field.state.value as string} 
                         onBlur={field.handleBlur}
                         onChange={(e: any) => field.handleChange(e.target.value)} 
                     />
@@ -398,7 +443,7 @@ function ProfileEdit() {
                         id={field.name} 
                         name={field.name} 
                         type="number"
-                        value={field.state.value} 
+                        value={field.state.value as string} 
                         onBlur={field.handleBlur}
                         onChange={(e: any) => field.handleChange(Number(e.target.value))} 
                     />
@@ -415,7 +460,7 @@ function ProfileEdit() {
                   <Textarea 
                       id={field.name} 
                       name={field.name} 
-                      value={field.state.value} 
+                      value={field.state.value as string} 
                       onBlur={field.handleBlur}
                       onChange={(e: any) => field.handleChange(e.target.value)} 
                    />
@@ -432,7 +477,7 @@ function ProfileEdit() {
                   <Textarea 
                       id={field.name} 
                       name={field.name} 
-                      value={field.state.value} 
+                      value={field.state.value as string} 
                       onBlur={field.handleBlur}
                       onChange={(e: any) => field.handleChange(e.target.value)} 
                       className="min-h-[150px]"
@@ -467,7 +512,7 @@ function ProfileEdit() {
                               <Select value={editLocation.regionId} onValueChange={(v: string) => setEditLocation({...editLocation, regionId: v})}>
                                 <SelectTrigger><SelectValue placeholder="Select Region" /></SelectTrigger>
                                 <SelectContent>
-                                  {allRegions.map((r: any) => <SelectItem key={r.id} value={r.id!}>{r.name}</SelectItem>)}
+                                  {regions?.map((r: any) => <SelectItem key={r.id} value={r.id!}>{r.name}</SelectItem>)}
                                 </SelectContent>
                               </Select>
                             </div>
@@ -476,8 +521,7 @@ function ProfileEdit() {
                               <Select value={editLocation.countryId} onValueChange={(v: string) => setEditLocation({...editLocation, countryId: v})}>
                                 <SelectTrigger><SelectValue placeholder="Select Country" /></SelectTrigger>
                                 <SelectContent>
-                                  {allCountries
-                                    .filter((c: any) => !editLocation.regionId || c.regionId === editLocation.regionId)
+                                  {countries?.filter((c: any) => !editLocation.regionId || c.regionId === editLocation.regionId)
                                     .map((c: any) => <SelectItem key={c.id} value={c.id!}>{c.name}</SelectItem>)
                                   }
                                 </SelectContent>
@@ -513,7 +557,7 @@ function ProfileEdit() {
                             <div>
                               <div className="font-bold text-sm text-gray-900">{loc.name} {loc.isHeadOffice && <span className="text-[10px] bg-black text-white px-2 py-0.5 ml-2 uppercase tracking-wide">Head Office</span>}</div>
                               <div className="text-xs text-gray-500 uppercase tracking-wide mt-1">
-                                {allCountries.find(c => c.id === loc.countryId)?.name}, {allRegions.find(r => r.id === loc.regionId)?.name}
+                                {countries?.find(c => c.id === loc.countryId)?.name}, {regions?.find(r => r.id === loc.regionId)?.name}
                               </div>
                             </div>
                           </div>
@@ -552,7 +596,7 @@ function ProfileEdit() {
                                 <Select value={newLocation.regionId} onValueChange={(v: string) => setNewLocation({...newLocation, regionId: v})}>
                                     <SelectTrigger><SelectValue placeholder="Select Region" /></SelectTrigger>
                                     <SelectContent>
-                                        {allRegions.map((r: any) => <SelectItem key={r.id} value={r.id!}>{r.name}</SelectItem>)}
+                                        {regions?.map((r: any) => <SelectItem key={r.id} value={r.id!}>{r.name}</SelectItem>)}
                                     </SelectContent>
                                 </Select>
                             </div>
@@ -561,8 +605,8 @@ function ProfileEdit() {
                                 <Select value={newLocation.countryId} onValueChange={(v: string) => setNewLocation({...newLocation, countryId: v})}>
                                     <SelectTrigger><SelectValue placeholder="Select Country" /></SelectTrigger>
                                     <SelectContent>
-                                        {allCountries
-                                            .filter((c: any) => !newLocation.regionId || c.regionId === newLocation.regionId)
+                                        {countries
+                                            ?.filter((c: any) => !newLocation.regionId || c.regionId === newLocation.regionId)
                                             .map((c: any) => <SelectItem key={c.id} value={c.id!}>{c.name}</SelectItem>)
                                         }
                                     </SelectContent>
@@ -727,7 +771,7 @@ function ProfileEdit() {
                 </h3>
                 <div className="p-6 bg-white border border-gray-200 shadow-sm">
                     <div className="flex flex-wrap gap-2 mb-4">
-                        {allCapabilities.map((cap: any) => {
+                        {capabilities?.map((cap: any) => {
                             const isSelected = selectedCapabilityIds.includes(cap.id!);
                             return (
                                 <button
@@ -757,7 +801,7 @@ function ProfileEdit() {
                 </h3>
                   <div className="p-6 bg-white border border-gray-200 shadow-sm">
                     <div className="flex flex-wrap gap-2 mb-4">
-                        {allIndustries.map((ind: any) => {
+                        {industries?.map((ind: any) => {
                             const isSelected = selectedIndustryIds.includes(ind.id!);
                             return (
                                 <button

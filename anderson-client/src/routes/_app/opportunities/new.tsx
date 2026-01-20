@@ -16,40 +16,34 @@ import {
   ChevronDown
 } from "lucide-react";
 import { callApi } from "@/server/proxy";
+import { usePrefetchReferenceData } from "@/hooks/useReferenceData";
 
 export const Route = createFileRoute("/_app/opportunities/new")({
   component: CreateOpportunity,
   loader: async () => {
-    const [companies, opportunityTypes, countries, serviceTypes, capabilities, industries] = await Promise.all([
+    const [companies, ] = await Promise.all([
       callApi({data:{fn: 'getApiCompaniesMe'}}),
-      callApi({data:{fn: 'getApiOpportunityTypes'}}),
-      callApi({data:{fn: 'getApiCountries'}}),
-      callApi({data:{fn: 'getApiServiceTypes'}}),
-      callApi({data:{fn: 'getApiCapabilities'}}),
-      callApi({data:{fn: 'getApiIndustries'}}),
     ]);
 
     return {
-      companies: companies || [],
-      opportunityTypes: opportunityTypes || [],
-      countries: countries || [],
-      serviceTypes: serviceTypes || [],
-      capabilities: capabilities || [],
-      industries: industries || [],
+      companies: companies || []
     };
   },
 });
 
 function CreateOpportunity() {
   const router = useRouter();
+  const { companies } = Route.useLoaderData();
+
   const { 
-    companies, 
     opportunityTypes, 
     countries, 
     serviceTypes, 
     capabilities, 
-    industries 
-  } = Route.useLoaderData();
+    industries,
+    isLoading: isLoadingReferenceData,
+    isError: isErrorReferenceData
+  } = usePrefetchReferenceData();
 
   const [datePickerOpen, setDatePickerOpen] = useState(false);
 
@@ -69,6 +63,33 @@ function CreateOpportunity() {
       alert("Failed to create opportunity. Please try again.");
     }
   });
+
+  // Show loading state while reference data is loading
+  if (isLoadingReferenceData) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <Loader2 className="w-8 h-8 animate-spin text-gray-300" />
+      </div>
+    );
+  }
+
+  // Show error state if reference data failed to load
+  if (isErrorReferenceData) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="text-center">
+          <p className="text-red-600 mb-4">Failed to load reference data</p>
+          <Button onClick={() => window.location.reload()}>Retry</Button>
+        </div>
+      </div>
+    );
+  }
+
+  const opportunityTypesData = opportunityTypes.data || [];
+  const countriesData = countries.data || [];
+  const serviceTypesData = serviceTypes.data || [];
+  const capabilitiesData = capabilities.data || [];
+  const industriesData = industries.data || [];
 
   const form = useForm({
     defaultValues: {
@@ -214,7 +235,7 @@ function CreateOpportunity() {
                             <SelectValue placeholder="Select type" />
                         </SelectTrigger>
                         <SelectContent>
-                            {opportunityTypes.map((type: any) => (
+                            {opportunityTypesData.map((type: any) => (
                             <SelectItem key={type.id} value={type.id!}>
                                 {type.name}
                             </SelectItem>
@@ -235,7 +256,7 @@ function CreateOpportunity() {
                             <SelectValue placeholder="Select country" />
                         </SelectTrigger>
                         <SelectContent>
-                            {countries.map((country: any) => (
+                            {countriesData.map((country: any) => (
                             <SelectItem key={country.id} value={country.id!}>
                                 {country.name}
                             </SelectItem>
@@ -332,7 +353,7 @@ function CreateOpportunity() {
                     name="serviceTypes"
                     children={(field) => (
                         <div className="flex flex-wrap gap-2">
-                            {serviceTypes.map((st: any) => {
+                            {serviceTypesData.map((st: any) => {
                             const isSelected = field.state.value.includes(st.id!);
                             return (
                                 <button
@@ -368,7 +389,7 @@ function CreateOpportunity() {
                     name="capabilities"
                     children={(field) => (
                         <div className="flex flex-wrap gap-2">
-                            {capabilities.map((cap: any) => {
+                            {capabilitiesData.map((cap: any) => {
                             const isSelected = field.state.value.includes(cap.id!);
                             return (
                                 <button
@@ -404,7 +425,7 @@ function CreateOpportunity() {
                     name="industries"
                     children={(field) => (
                         <div className="flex flex-wrap gap-2">
-                            {industries.map((ind: any) => {
+                            {industriesData.map((ind: any) => {
                             const isSelected = field.state.value.includes(ind.id!);
                             return (
                                 <button

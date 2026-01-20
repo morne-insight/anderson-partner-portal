@@ -103,6 +103,9 @@ export const configureApiClient = () => {
   
   // Add error interceptor for handling authentication errors and retries
   client.interceptors.error.use(async (error: any, response?: Response, request?: Request, options?: any) => {
+    console.log('request', request);
+    console.log('response', response);
+    console.log('error', error);
     if (!request || !response) {
       return error;
     }

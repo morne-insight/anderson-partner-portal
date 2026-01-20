@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { Search, Sparkles, MapPin, CheckCircle, Filter, ChevronDown, Briefcase, X, User } from "lucide-react";
+import { Search, Sparkles, MapPin, CheckCircle, Filter, ChevronDown, Briefcase, X, User, Loader2 } from "lucide-react";
 import React from "react";
 import { useStore } from "@tanstack/react-store";
 import { callApi } from "@/server/proxy";
@@ -16,34 +16,16 @@ import {
   setShowCountryDropdown,
   clearFilters
 } from "@/stores/partnersSearchStore";
-import { CapabilityDto, CountryDto, RegionDto } from "@/api";
-
-interface PartnerSearchLoaderData {
-  countries: CountryDto[];
-  regions: RegionDto[];
-  capabilities: CapabilityDto[];
-}
+import { usePrefetchReferenceData } from "@/hooks/useReferenceData";
+import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/_app/partners/")({
   component: PartnerSearch,
-  loader: async () => {
-    const [capabilities, countries, regions] = await Promise.all([
-      callApi({ data: { fn: 'getApiCapabilities' } }),
-      callApi({ data: { fn: 'getApiCountries' } }),
-      callApi({ data: { fn: 'getApiRegions' } }),
-    ]);
-
-    return {
-      capabilities: capabilities || [],
-      countries: countries || [],
-      regions: regions || [],
-    } as PartnerSearchLoaderData; 
-  },
 });
 
 function PartnerSearch() {
   const navigate = useNavigate();
-  const { countries, regions } = Route.useLoaderData();
+  const { countries, regions, isLoading, isError } = usePrefetchReferenceData();
   
   const searchState = useStore(partnersSearchStore);
   const {
@@ -61,14 +43,35 @@ function PartnerSearch() {
     showCountryDropdown
   } = searchState;
 
+  // Show loading state while reference data is loading  
+      if (isLoading) {
+        return (
+          <div className="flex justify-center items-center min-h-screen">
+            <Loader2 className="w-8 h-8 animate-spin text-gray-300" />
+          </div>
+        );
+      }
+    
+      // Ensure we have the data before proceeding
+      if (isError) {
+        return (
+          <div className="flex justify-center items-center min-h-screen">
+            <div className="text-center">
+              <p className="text-red-600 mb-4">Failed to load reference data</p>
+              <Button onClick={() => window.location.reload()}>Retry</Button>
+            </div>
+          </div>
+        );
+      }
+      
   const allServiceTypes = ["Advisory", "Tax Consulting", "IT Consulting", "Financial Law", "Supply Chain Advisory"];
-  const allRegions = regions.map((r: any) => r.name).sort();
+  const allRegions = regions.data?.map((r: any) => r.name).sort();
 
   const availableCountries = React.useMemo(() => {
-    if (activeRegionFilter === "All") return countries.map((c: any) => c.name).sort();
-    const regionId = regions.find((r: any) => r.name === activeRegionFilter)?.id;
-    return countries
-      .filter((c: any) => c.regionId === regionId)
+    if (activeRegionFilter === "All") return countries.data?.map((c: any) => c.name).sort();
+    const regionId = regions.data?.find((r: any) => r.name === activeRegionFilter)?.id;
+    return countries.data
+      ?.filter((c: any) => c.regionId === regionId)
       .map((c: any) => c.name)
       .sort();
   }, [activeRegionFilter, countries, regions]);
@@ -97,8 +100,8 @@ function PartnerSearch() {
           verified: true, // Default to true for AI results in this UI
           serviceType: "Partner", // Generic since list view doesnt have it
           locations: partner.locations?.map((l: any) => ({
-             country: countries.find((c: any) => c.id === l.countryId)?.name || "Unknown",
-             region: regions.find((r: any) => r.id === l.regionId)?.name || "Unknown",
+             country: countries?.data?.find((c: any) => c.id === l.countryId)?.name || "Unknown",
+             region: regions?.data?.find((r: any) => r.id === l.regionId)?.name || "Unknown",
              isHeadOffice: l.isHeadOffice
           })) || [],
           contacts: partner.contacts?.map((c: any) => ({
@@ -246,7 +249,7 @@ function PartnerSearch() {
                 >
                   All Regions
                 </button>
-                {allRegions.map((region: any) => (
+                {allRegions?.map((region: any) => (
                   <button
                     key={region}
                     onClick={() => {
@@ -280,7 +283,7 @@ function PartnerSearch() {
                 >
                   All Countries
                 </button>
-                {availableCountries.map((country: any) => (
+                {availableCountries?.map((country: any) => (
                   <button
                     key={country}
                     onClick={() => handleCountrySelect(country)}
@@ -313,7 +316,7 @@ function PartnerSearch() {
 
       {/* Region Tabs */}
       <div className="flex gap-8 overflow-x-auto pb-0 border-b border-gray-200 no-scrollbar">
-        {["All", ...allRegions].map((region) => (
+        {["All", ...allRegions || []].map((region) => (
           <button
             key={region}
             onClick={() => setActiveRegionFilter(region)}

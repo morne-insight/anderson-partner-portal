@@ -8,7 +8,6 @@ export const Route = createFileRoute("/_app/partners/$id")({
     from: search.from as string | undefined,
   }),
   loader: async ({ params }) => {
-    console.log("Loading partner:", params.id);
     const [partner, countries, regions] = await Promise.all([
       callApi({ data: { fn: 'getApiCompaniesByIdPartner', args: { path: { id: params.id } } } }),
       callApi({ data: { fn: 'getApiCountries' } }),
