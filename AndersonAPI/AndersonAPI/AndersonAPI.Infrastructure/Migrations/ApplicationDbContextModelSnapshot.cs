@@ -91,6 +91,9 @@ namespace AndersonAPI.Infrastructure.Migrations
                     b.Property<int>("Order")
                         .HasColumnType("int");
 
+                    b.Property<Guid?>("ServiceTypeId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("ShortDescription")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -111,6 +114,8 @@ namespace AndersonAPI.Infrastructure.Migrations
                         .HasColumnType("nvarchar(200)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ServiceTypeId");
 
                     b.ToTable("Companies");
                 });
@@ -301,6 +306,47 @@ namespace AndersonAPI.Infrastructure.Migrations
                     b.ToTable("OpportunityTypes");
                 });
 
+            modelBuilder.Entity("AndersonAPI.Domain.Entities.Quarterly", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CompanyId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset>("CreatedDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<bool>("IsSubmitted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quarter")
+                        .HasColumnType("int");
+
+                    b.Property<string>("State")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("UpdatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset?>("UpdatedDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.ToTable("Quarterlies");
+                });
+
             modelBuilder.Entity("AndersonAPI.Domain.Entities.Region", b =>
                 {
                     b.Property<Guid>("Id")
@@ -489,21 +535,6 @@ namespace AndersonAPI.Infrastructure.Migrations
                     b.HasIndex("ReviewsId");
 
                     b.ToTable("ReviewCompanies", (string)null);
-                });
-
-            modelBuilder.Entity("CompanyServiceType", b =>
-                {
-                    b.Property<Guid>("CompanyId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ServiceTypesId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("CompanyId", "ServiceTypesId");
-
-                    b.HasIndex("ServiceTypesId");
-
-                    b.ToTable("CompanyServiceTypes", (string)null);
                 });
 
             modelBuilder.Entity("IndustryOpportunity", b =>
@@ -750,6 +781,11 @@ namespace AndersonAPI.Infrastructure.Migrations
 
             modelBuilder.Entity("AndersonAPI.Domain.Entities.Company", b =>
                 {
+                    b.HasOne("AndersonAPI.Domain.Entities.ServiceType", "ServiceType")
+                        .WithMany()
+                        .HasForeignKey("ServiceTypeId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.OwnsMany("AndersonAPI.Domain.Entities.Contact", "Contacts", b1 =>
                         {
                             b1.Property<Guid>("Id")
@@ -865,6 +901,8 @@ namespace AndersonAPI.Infrastructure.Migrations
                     b.Navigation("Contacts");
 
                     b.Navigation("Locations");
+
+                    b.Navigation("ServiceType");
                 });
 
             modelBuilder.Entity("AndersonAPI.Domain.Entities.Country", b =>
@@ -954,6 +992,106 @@ namespace AndersonAPI.Infrastructure.Migrations
                     b.Navigation("Messages");
 
                     b.Navigation("OpportunityType");
+                });
+
+            modelBuilder.Entity("AndersonAPI.Domain.Entities.Quarterly", b =>
+                {
+                    b.HasOne("AndersonAPI.Domain.Entities.Company", "Company")
+                        .WithMany("Quarterlies")
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.OwnsMany("AndersonAPI.Domain.Entities.ReportLine", "ReportLines", b1 =>
+                        {
+                            b1.Property<Guid>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<int>("ClientCount")
+                                .HasColumnType("int");
+
+                            b1.Property<double>("EstimatedRevenue")
+                                .HasColumnType("float");
+
+                            b1.Property<int>("Headcount")
+                                .HasColumnType("int");
+
+                            b1.Property<int>("LawyerCount")
+                                .HasColumnType("int");
+
+                            b1.Property<int>("OfficeCount")
+                                .HasColumnType("int");
+
+                            b1.Property<int>("Order")
+                                .HasColumnType("int");
+
+                            b1.Property<int>("PartnerCount")
+                                .HasColumnType("int");
+
+                            b1.Property<Guid>("QuarterlyId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<string>("State")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("QuarterlyId");
+
+                            b1.ToTable("ReportLine");
+
+                            b1.WithOwner()
+                                .HasForeignKey("QuarterlyId");
+                        });
+
+                    b.OwnsMany("AndersonAPI.Domain.Entities.ReportPartner", "Partners", b1 =>
+                        {
+                            b1.Property<Guid>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<string>("Description")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("Name")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<int>("Order")
+                                .HasColumnType("int");
+
+                            b1.Property<Guid>("QuaterlyId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<string>("State")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("Status")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("QuaterlyId");
+
+                            b1.ToTable("ReportPartner", t =>
+                                {
+                                    t.HasCheckConstraint("report_partner_status_check", "\"Status\" IN ('Hired','Promoted','Terminated')");
+                                });
+
+                            b1.WithOwner()
+                                .HasForeignKey("QuaterlyId");
+                        });
+
+                    b.Navigation("Company");
+
+                    b.Navigation("Partners");
+
+                    b.Navigation("ReportLines");
                 });
 
             modelBuilder.Entity("AndersonAPI.Domain.Entities.Review", b =>
@@ -1065,21 +1203,6 @@ namespace AndersonAPI.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("CompanyServiceType", b =>
-                {
-                    b.HasOne("AndersonAPI.Domain.Entities.Company", null)
-                        .WithMany()
-                        .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("AndersonAPI.Domain.Entities.ServiceType", null)
-                        .WithMany()
-                        .HasForeignKey("ServiceTypesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("IndustryOpportunity", b =>
                 {
                     b.HasOne("AndersonAPI.Domain.Entities.Industry", null)
@@ -1175,6 +1298,8 @@ namespace AndersonAPI.Infrastructure.Migrations
                     b.Navigation("Invites");
 
                     b.Navigation("Opportunities");
+
+                    b.Navigation("Quarterlies");
                 });
 
             modelBuilder.Entity("AndersonAPI.Domain.Entities.Region", b =>

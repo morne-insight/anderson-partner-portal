@@ -1,0 +1,1167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<class id="666e0055-bc9c-4fd6-acd8-975f4719ee0b" type="Class" typeId="04e12b51-ed12-42a3-9667-a6aa81bb6d10">
+  <name>Quarterly</name>
+  <display>Quarterly : BaseEntity</display>
+  <isAbstract>false</isAbstract>
+  <sort-children>by-type-then-manually</sort-children>
+  <genericTypes />
+  <isMapped>false</isMapped>
+  <parentFolderId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</parentFolderId>
+  <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+  <packageName>AndersonAPI.Domain</packageName>
+  <stereotypes>
+    <stereotype stereotypeDefinitionId="796ec2fb-cdb9-4f8e-b096-a4f72c7a7f93" name="Basic Auditing">
+      <addedByDefault>false</addedByDefault>
+      <definitionPackageName>Intent.Entities.BasicAuditing</definitionPackageName>
+      <definitionPackageId>bed6bd70-2214-4a74-a437-dfb3b68dd198</definitionPackageId>
+      <properties />
+    </stereotype>
+  </stereotypes>
+  <metadata />
+  <childElements>
+    <childElement id="3ac9895a-e7e1-486f-9f3a-cb4776158449" type="Attribute" typeId="0090fb93-483e-41af-a11d-5ad2dc796adf">
+      <name>Quarter</name>
+      <display>Quarter: int</display>
+      <isAbstract>false</isAbstract>
+      <genericTypes />
+      <typeReference id="72c5d9db-927f-4d26-a9f5-d1e5f42a6b2b">
+        <typeId>fb0a362d-e9e2-40de-b6ff-5ce8167cbe74</typeId>
+        <isNavigable>true</isNavigable>
+        <isNullable>false</isNullable>
+        <isCollection>false</isCollection>
+        <isRequired>true</isRequired>
+        <typePackageName>Intent.Common.Types</typePackageName>
+        <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
+        <stereotypes />
+        <genericTypeParameters />
+      </typeReference>
+      <isMapped>false</isMapped>
+      <parentFolderId>666e0055-bc9c-4fd6-acd8-975f4719ee0b</parentFolderId>
+      <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+      <packageName>AndersonAPI.Domain</packageName>
+      <stereotypes />
+      <metadata />
+      <childElements />
+    </childElement>
+    <childElement id="71b8e675-3b0f-428f-a0c4-6bca716db622" type="Attribute" typeId="0090fb93-483e-41af-a11d-5ad2dc796adf">
+      <name>CreatedBy</name>
+      <display>CreatedBy: guid</display>
+      <isAbstract>false</isAbstract>
+      <genericTypes />
+      <typeReference id="00004e2c-b7c5-4b50-b938-7dd6972bf1c1">
+        <typeId>6b649125-18ea-48fd-a6ba-0bfff0d8f488</typeId>
+        <isNavigable>true</isNavigable>
+        <isNullable>false</isNullable>
+        <isCollection>false</isCollection>
+        <isRequired>true</isRequired>
+        <typePackageName>Intent.Common.Types</typePackageName>
+        <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
+        <stereotypes />
+        <genericTypeParameters />
+      </typeReference>
+      <isMapped>false</isMapped>
+      <parentFolderId>666e0055-bc9c-4fd6-acd8-975f4719ee0b</parentFolderId>
+      <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+      <packageName>AndersonAPI.Domain</packageName>
+      <stereotypes />
+      <metadata>
+        <entry key="set-by-infrastructure" value="true" />
+      </metadata>
+      <childElements />
+    </childElement>
+    <childElement id="c393ebf9-8a1c-48cc-a075-05737bca7e21" type="Attribute" typeId="0090fb93-483e-41af-a11d-5ad2dc796adf">
+      <name>CreatedDate</name>
+      <display>CreatedDate: datetimeoffset</display>
+      <isAbstract>false</isAbstract>
+      <genericTypes />
+      <typeReference id="fe3e7920-2b50-4eed-98b5-bd7eae75db73">
+        <typeId>f1ba4df3-a5bc-427e-a591-4f6029f89bd7</typeId>
+        <isNavigable>true</isNavigable>
+        <isNullable>false</isNullable>
+        <isCollection>false</isCollection>
+        <isRequired>true</isRequired>
+        <typePackageName>Intent.Common.Types</typePackageName>
+        <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
+        <stereotypes />
+        <genericTypeParameters />
+      </typeReference>
+      <isMapped>false</isMapped>
+      <parentFolderId>666e0055-bc9c-4fd6-acd8-975f4719ee0b</parentFolderId>
+      <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+      <packageName>AndersonAPI.Domain</packageName>
+      <stereotypes />
+      <metadata>
+        <entry key="set-by-infrastructure" value="true" />
+      </metadata>
+      <childElements />
+    </childElement>
+    <childElement id="d40eaef0-0e86-4861-88c8-26dbcf047dfe" type="Attribute" typeId="0090fb93-483e-41af-a11d-5ad2dc796adf">
+      <name>UpdatedBy</name>
+      <display>UpdatedBy: guid?</display>
+      <isAbstract>false</isAbstract>
+      <genericTypes />
+      <typeReference id="e52d943b-0f5c-4e2f-9f41-00c6711173ea">
+        <typeId>6b649125-18ea-48fd-a6ba-0bfff0d8f488</typeId>
+        <isNavigable>true</isNavigable>
+        <isNullable>true</isNullable>
+        <isCollection>false</isCollection>
+        <isRequired>true</isRequired>
+        <typePackageName>Intent.Common.Types</typePackageName>
+        <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
+        <stereotypes />
+        <genericTypeParameters />
+      </typeReference>
+      <isMapped>false</isMapped>
+      <parentFolderId>666e0055-bc9c-4fd6-acd8-975f4719ee0b</parentFolderId>
+      <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+      <packageName>AndersonAPI.Domain</packageName>
+      <stereotypes />
+      <metadata>
+        <entry key="set-by-infrastructure" value="true" />
+      </metadata>
+      <childElements />
+    </childElement>
+    <childElement id="f7a46293-ee03-4e6c-a2c5-79570d42b81e" type="Attribute" typeId="0090fb93-483e-41af-a11d-5ad2dc796adf">
+      <name>UpdatedDate</name>
+      <display>UpdatedDate: datetimeoffset?</display>
+      <isAbstract>false</isAbstract>
+      <genericTypes />
+      <typeReference id="39a0d001-9402-4b06-921a-173ac462baf9">
+        <typeId>f1ba4df3-a5bc-427e-a591-4f6029f89bd7</typeId>
+        <isNavigable>true</isNavigable>
+        <isNullable>true</isNullable>
+        <isCollection>false</isCollection>
+        <isRequired>true</isRequired>
+        <typePackageName>Intent.Common.Types</typePackageName>
+        <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
+        <stereotypes />
+        <genericTypeParameters />
+      </typeReference>
+      <isMapped>false</isMapped>
+      <parentFolderId>666e0055-bc9c-4fd6-acd8-975f4719ee0b</parentFolderId>
+      <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+      <packageName>AndersonAPI.Domain</packageName>
+      <stereotypes />
+      <metadata>
+        <entry key="set-by-infrastructure" value="true" />
+      </metadata>
+      <childElements />
+    </childElement>
+    <childElement id="7fa4991f-e9ea-4928-8a11-a8489d7939dd" type="Attribute" typeId="0090fb93-483e-41af-a11d-5ad2dc796adf">
+      <name>IsSubmitted</name>
+      <display>IsSubmitted: bool</display>
+      <isAbstract>false</isAbstract>
+      <genericTypes />
+      <typeReference id="df90f558-f119-45ed-acee-9c05e490faf6">
+        <typeId>e6f92b09-b2c5-4536-8270-a4d9e5bbd930</typeId>
+        <isNavigable>true</isNavigable>
+        <isNullable>false</isNullable>
+        <isCollection>false</isCollection>
+        <isRequired>true</isRequired>
+        <typePackageName>Intent.Common.Types</typePackageName>
+        <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
+        <stereotypes />
+        <genericTypeParameters />
+      </typeReference>
+      <isMapped>false</isMapped>
+      <parentFolderId>666e0055-bc9c-4fd6-acd8-975f4719ee0b</parentFolderId>
+      <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+      <packageName>AndersonAPI.Domain</packageName>
+      <stereotypes />
+      <metadata />
+      <childElements />
+    </childElement>
+    <childElement id="77929853-5f54-4e88-bf28-f505221386fa" type="Attribute" typeId="0090fb93-483e-41af-a11d-5ad2dc796adf">
+      <name>CompanyId</name>
+      <display>CompanyId: guid</display>
+      <isAbstract>false</isAbstract>
+      <genericTypes />
+      <typeReference id="1814fc2b-0a85-4c95-b7c9-7aca9ffcdde6">
+        <typeId>6b649125-18ea-48fd-a6ba-0bfff0d8f488</typeId>
+        <isNavigable>true</isNavigable>
+        <isNullable>false</isNullable>
+        <isCollection>false</isCollection>
+        <isRequired>true</isRequired>
+        <typePackageName>Intent.Common.Types</typePackageName>
+        <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
+        <stereotypes />
+        <genericTypeParameters />
+      </typeReference>
+      <isMapped>false</isMapped>
+      <parentFolderId>666e0055-bc9c-4fd6-acd8-975f4719ee0b</parentFolderId>
+      <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+      <packageName>AndersonAPI.Domain</packageName>
+      <stereotypes>
+        <stereotype stereotypeDefinitionId="793a5128-57a1-440b-a206-af5722b752a6" name="Foreign Key">
+          <addedByDefault>false</addedByDefault>
+          <definitionPackageName>Intent.Metadata.RDBMS</definitionPackageName>
+          <definitionPackageId>AF8F3810-745C-42A2-93C8-798860DC45B1</definitionPackageId>
+          <properties>
+            <property name="42e4f9b5-f834-4e5f-86aa-d3a35c505076" display="Association" value="6a0c4d46-48f1-40a3-81c0-5149bf6d8adb" isActive="true" />
+          </properties>
+        </stereotype>
+      </stereotypes>
+      <metadata>
+        <entry key="fk-original-name" value="CompanyId" />
+        <entry key="association" value="6a0c4d46-48f1-40a3-81c0-5149bf6d8adb" />
+        <entry key="is-managed-key" value="true" />
+      </metadata>
+      <childElements />
+    </childElement>
+    <childElement id="055bc13f-961d-4929-add7-4e4fb393e610" type="Class Constructor" typeId="dec2bd12-4699-4f45-8ec9-3b62dc692d2b">
+      <name>Constructor</name>
+      <display>Quarterly(quarter: int, companyId: guid, partners: ReportPartner[*], reports: ReportLine[*], state: EntityState = EntityState.Enabled)</display>
+      <isAbstract>false</isAbstract>
+      <sort-children>by-type-then-manually</sort-children>
+      <genericTypes />
+      <isMapped>true</isMapped>
+      <mappedClass isRoot="true">
+        <applicationId>e87261ce-2b9f-4042-8562-a503e4cf2759</applicationId>
+        <metadataId>6ab29b31-27af-4f56-a67c-986d82097d63</metadataId>
+        <mappingSettingsId>d6d0abfd-893c-4bec-92cb-419934ba5ba8</mappingSettingsId>
+        <autoSyncTypeReference>true</autoSyncTypeReference>
+        <mappedPath>
+          <target id="666e0055-bc9c-4fd6-acd8-975f4719ee0b" name="Quarterly" type="element" specialization="Class" specializationId="04e12b51-ed12-42a3-9667-a6aa81bb6d10" />
+        </mappedPath>
+      </mappedClass>
+      <parentFolderId>666e0055-bc9c-4fd6-acd8-975f4719ee0b</parentFolderId>
+      <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+      <packageName>AndersonAPI.Domain</packageName>
+      <stereotypes />
+      <metadata />
+      <childElements>
+        <childElement id="90b39b23-e286-467e-a5c6-9aa0ca1ca41f" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
+          <name>quarter</name>
+          <display>in : quarter: int</display>
+          <isAbstract>false</isAbstract>
+          <genericTypes />
+          <typeReference id="52f1b0f2-d6a9-4ace-aec3-f93f2231b53e">
+            <typeId>fb0a362d-e9e2-40de-b6ff-5ce8167cbe74</typeId>
+            <isNavigable>true</isNavigable>
+            <isNullable>false</isNullable>
+            <isCollection>false</isCollection>
+            <isRequired>true</isRequired>
+            <typePackageName>Intent.Common.Types</typePackageName>
+            <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
+            <stereotypes />
+            <genericTypeParameters />
+          </typeReference>
+          <isMapped>true</isMapped>
+          <mappedClass>
+            <mappingSettingsId>d6d0abfd-893c-4bec-92cb-419934ba5ba8</mappingSettingsId>
+            <autoSyncTypeReference>true</autoSyncTypeReference>
+            <mappedPath>
+              <target id="3ac9895a-e7e1-486f-9f3a-cb4776158449" name="Quarter" type="element" specialization="Attribute" specializationId="0090fb93-483e-41af-a11d-5ad2dc796adf" />
+            </mappedPath>
+          </mappedClass>
+          <parentFolderId>055bc13f-961d-4929-add7-4e4fb393e610</parentFolderId>
+          <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+          <packageName>AndersonAPI.Domain</packageName>
+          <stereotypes />
+          <metadata />
+          <childElements />
+        </childElement>
+        <childElement id="e5b7a414-9e80-4d70-8530-eabf020c6ac9" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
+          <name>companyId</name>
+          <display>in : companyId: guid</display>
+          <isAbstract>false</isAbstract>
+          <genericTypes />
+          <typeReference id="3115cd3a-5c7a-4f36-a6a2-7c818d6901c9">
+            <typeId>6b649125-18ea-48fd-a6ba-0bfff0d8f488</typeId>
+            <isNavigable>true</isNavigable>
+            <isNullable>false</isNullable>
+            <isCollection>false</isCollection>
+            <isRequired>true</isRequired>
+            <typePackageName>Intent.Common.Types</typePackageName>
+            <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
+            <stereotypes />
+            <genericTypeParameters />
+          </typeReference>
+          <isMapped>true</isMapped>
+          <mappedClass>
+            <mappingSettingsId>d6d0abfd-893c-4bec-92cb-419934ba5ba8</mappingSettingsId>
+            <autoSyncTypeReference>true</autoSyncTypeReference>
+            <mappedPath>
+              <target id="77929853-5f54-4e88-bf28-f505221386fa" name="CompanyId" type="element" specialization="Attribute" specializationId="0090fb93-483e-41af-a11d-5ad2dc796adf" />
+            </mappedPath>
+          </mappedClass>
+          <parentFolderId>055bc13f-961d-4929-add7-4e4fb393e610</parentFolderId>
+          <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+          <packageName>AndersonAPI.Domain</packageName>
+          <stereotypes />
+          <metadata />
+          <childElements />
+        </childElement>
+        <childElement id="f13637aa-cdf4-43dc-ad5c-108567b8265f" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
+          <name>partners</name>
+          <display>in : partners: ReportPartner[*]</display>
+          <isAbstract>false</isAbstract>
+          <genericTypes />
+          <typeReference id="ad1dcc83-b416-40e3-bb9c-ba4670f579a5">
+            <typeId>f0c47e7b-9319-414d-ae72-ead6d20c6d53</typeId>
+            <isNavigable>true</isNavigable>
+            <isNullable>false</isNullable>
+            <isCollection>true</isCollection>
+            <isRequired>true</isRequired>
+            <typePackageName>AndersonAPI.Domain</typePackageName>
+            <typePackageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</typePackageId>
+            <stereotypes />
+            <genericTypeParameters />
+          </typeReference>
+          <isMapped>true</isMapped>
+          <mappedClass>
+            <mappingSettingsId>d6d0abfd-893c-4bec-92cb-419934ba5ba8</mappingSettingsId>
+            <autoSyncTypeReference>true</autoSyncTypeReference>
+            <mappedPath>
+              <target id="67067817-3b2d-4d6b-be4d-6c5725a946b8" name="Partners" type="association" specialization="Association Target End" specializationId="0a66489f-30aa-417b-a75d-b945863366fd" />
+            </mappedPath>
+          </mappedClass>
+          <parentFolderId>055bc13f-961d-4929-add7-4e4fb393e610</parentFolderId>
+          <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+          <packageName>AndersonAPI.Domain</packageName>
+          <stereotypes />
+          <metadata />
+          <childElements />
+        </childElement>
+        <childElement id="ed277254-76c1-4b89-848d-ff3e71b031d1" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
+          <name>reports</name>
+          <display>in : reports: ReportLine[*]</display>
+          <isAbstract>false</isAbstract>
+          <genericTypes />
+          <typeReference id="78e7e7c8-ef44-4325-a207-89efc497a314">
+            <typeId>d2961a5d-cca7-4e61-9fc4-c253aa2165ab</typeId>
+            <isNavigable>true</isNavigable>
+            <isNullable>false</isNullable>
+            <isCollection>true</isCollection>
+            <isRequired>true</isRequired>
+            <typePackageName>AndersonAPI.Domain</typePackageName>
+            <typePackageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</typePackageId>
+            <stereotypes />
+            <genericTypeParameters />
+          </typeReference>
+          <isMapped>true</isMapped>
+          <mappedClass>
+            <mappingSettingsId>d6d0abfd-893c-4bec-92cb-419934ba5ba8</mappingSettingsId>
+            <autoSyncTypeReference>true</autoSyncTypeReference>
+            <mappedPath>
+              <target id="8e8b21ef-d696-46e6-bed7-810668e106d5" name="ReportLines" type="association" specialization="Association Target End" specializationId="0a66489f-30aa-417b-a75d-b945863366fd" />
+            </mappedPath>
+          </mappedClass>
+          <parentFolderId>055bc13f-961d-4929-add7-4e4fb393e610</parentFolderId>
+          <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+          <packageName>AndersonAPI.Domain</packageName>
+          <stereotypes />
+          <metadata />
+          <childElements />
+        </childElement>
+        <childElement id="fcecb611-8ebd-45fa-ab9b-65710c04fab6" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
+          <name>state</name>
+          <display>in : state: EntityState = EntityState.Enabled</display>
+          <isAbstract>false</isAbstract>
+          <value>EntityState.Enabled</value>
+          <genericTypes />
+          <typeReference id="1a9cd3f8-8adc-4a40-8610-05f13f477fdf">
+            <typeId>0b91d0c5-4aa0-4fd0-854a-7a10a9808b4d</typeId>
+            <isNavigable>true</isNavigable>
+            <isNullable>false</isNullable>
+            <isCollection>false</isCollection>
+            <isRequired>true</isRequired>
+            <typePackageName>AndersonAPI.Domain</typePackageName>
+            <typePackageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</typePackageId>
+            <stereotypes />
+            <genericTypeParameters />
+          </typeReference>
+          <isMapped>true</isMapped>
+          <mappedClass>
+            <mappingSettingsId>d6d0abfd-893c-4bec-92cb-419934ba5ba8</mappingSettingsId>
+            <autoSyncTypeReference>true</autoSyncTypeReference>
+            <mappedPath>
+              <target id="8c5311cf-6694-4fc9-880d-f324dfd6d9fc" name="base" type="association" specialization="Generalization Target End" specializationId="4686cc1d-b4d8-4b99-b45b-f77bd5496946" />
+              <target id="e7d98a52-57c9-410e-8128-8aca3ac31fbc" name="State" type="element" specialization="Attribute" specializationId="0090fb93-483e-41af-a11d-5ad2dc796adf" />
+            </mappedPath>
+          </mappedClass>
+          <parentFolderId>055bc13f-961d-4929-add7-4e4fb393e610</parentFolderId>
+          <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+          <packageName>AndersonAPI.Domain</packageName>
+          <stereotypes />
+          <metadata />
+          <childElements />
+        </childElement>
+      </childElements>
+    </childElement>
+    <childElement id="ad80eb0f-bcc8-4ef2-8cf2-593d1456a2e3" type="Operation" typeId="e042bb67-a1df-480c-9935-b26210f78591">
+      <name>Update</name>
+      <display>Update(quarter: int): void</display>
+      <isAbstract>false</isAbstract>
+      <sort-children>by-type-then-manually</sort-children>
+      <genericTypes />
+      <typeReference id="1e664200-49b3-4ca9-82ae-966633de383d">
+        <isNavigable>true</isNavigable>
+        <isNullable>false</isNullable>
+        <isCollection>false</isCollection>
+        <isRequired>true</isRequired>
+        <stereotypes />
+        <genericTypeParameters />
+      </typeReference>
+      <isMapped>true</isMapped>
+      <mappedClass isRoot="true">
+        <applicationId>e87261ce-2b9f-4042-8562-a503e4cf2759</applicationId>
+        <metadataId>6ab29b31-27af-4f56-a67c-986d82097d63</metadataId>
+        <mappingSettingsId>7590bd83-04bc-40fe-8b5c-118277c049d4</mappingSettingsId>
+        <autoSyncTypeReference>true</autoSyncTypeReference>
+        <mappedPath>
+          <target id="666e0055-bc9c-4fd6-acd8-975f4719ee0b" name="Quarterly" type="element" specialization="Class" specializationId="04e12b51-ed12-42a3-9667-a6aa81bb6d10" />
+        </mappedPath>
+      </mappedClass>
+      <parentFolderId>666e0055-bc9c-4fd6-acd8-975f4719ee0b</parentFolderId>
+      <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+      <packageName>AndersonAPI.Domain</packageName>
+      <stereotypes />
+      <metadata />
+      <childElements>
+        <childElement id="07f33b32-b003-4616-af8f-5555f6acc755" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
+          <name>quarter</name>
+          <display>in : quarter: int</display>
+          <isAbstract>false</isAbstract>
+          <genericTypes />
+          <typeReference id="a4ef6cd8-5238-4c6b-a8e0-bd520336bf72">
+            <typeId>fb0a362d-e9e2-40de-b6ff-5ce8167cbe74</typeId>
+            <isNavigable>true</isNavigable>
+            <isNullable>false</isNullable>
+            <isCollection>false</isCollection>
+            <isRequired>true</isRequired>
+            <typePackageName>Intent.Common.Types</typePackageName>
+            <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
+            <stereotypes />
+            <genericTypeParameters />
+          </typeReference>
+          <isMapped>true</isMapped>
+          <mappedClass>
+            <mappingSettingsId>7590bd83-04bc-40fe-8b5c-118277c049d4</mappingSettingsId>
+            <autoSyncTypeReference>true</autoSyncTypeReference>
+            <mappedPath>
+              <target id="3ac9895a-e7e1-486f-9f3a-cb4776158449" name="Quarter" type="element" specialization="Attribute" specializationId="0090fb93-483e-41af-a11d-5ad2dc796adf" />
+            </mappedPath>
+          </mappedClass>
+          <parentFolderId>ad80eb0f-bcc8-4ef2-8cf2-593d1456a2e3</parentFolderId>
+          <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+          <packageName>AndersonAPI.Domain</packageName>
+          <stereotypes />
+          <metadata />
+          <childElements />
+        </childElement>
+      </childElements>
+    </childElement>
+    <childElement id="60ff5dc3-b0e2-4b77-a697-d5214d2d42a6" type="Operation" typeId="e042bb67-a1df-480c-9935-b26210f78591">
+      <name>SetSubmitted</name>
+      <display>SetSubmitted(isSubmitted: bool): void</display>
+      <isAbstract>false</isAbstract>
+      <sort-children>by-type-then-manually</sort-children>
+      <genericTypes />
+      <typeReference id="24d1329e-83ca-444d-8530-f86c87173a4c">
+        <isNavigable>true</isNavigable>
+        <isNullable>false</isNullable>
+        <isCollection>false</isCollection>
+        <isRequired>true</isRequired>
+        <stereotypes />
+        <genericTypeParameters />
+      </typeReference>
+      <isMapped>true</isMapped>
+      <mappedClass isRoot="true">
+        <applicationId>e87261ce-2b9f-4042-8562-a503e4cf2759</applicationId>
+        <metadataId>6ab29b31-27af-4f56-a67c-986d82097d63</metadataId>
+        <mappingSettingsId>7590bd83-04bc-40fe-8b5c-118277c049d4</mappingSettingsId>
+        <autoSyncTypeReference>true</autoSyncTypeReference>
+        <mappedPath>
+          <target id="666e0055-bc9c-4fd6-acd8-975f4719ee0b" name="Quarterly" type="element" specialization="Class" specializationId="04e12b51-ed12-42a3-9667-a6aa81bb6d10" />
+        </mappedPath>
+      </mappedClass>
+      <parentFolderId>666e0055-bc9c-4fd6-acd8-975f4719ee0b</parentFolderId>
+      <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+      <packageName>AndersonAPI.Domain</packageName>
+      <stereotypes />
+      <metadata />
+      <childElements>
+        <childElement id="a131e1d4-3531-4e4b-a00d-b00be9a989fd" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
+          <name>isSubmitted</name>
+          <display>in : isSubmitted: bool</display>
+          <isAbstract>false</isAbstract>
+          <genericTypes />
+          <typeReference id="5b03b19d-e37c-40b4-96c4-7e0586abfbe1">
+            <typeId>e6f92b09-b2c5-4536-8270-a4d9e5bbd930</typeId>
+            <isNavigable>true</isNavigable>
+            <isNullable>false</isNullable>
+            <isCollection>false</isCollection>
+            <isRequired>true</isRequired>
+            <typePackageName>Intent.Common.Types</typePackageName>
+            <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
+            <stereotypes />
+            <genericTypeParameters />
+          </typeReference>
+          <isMapped>true</isMapped>
+          <mappedClass>
+            <mappingSettingsId>7590bd83-04bc-40fe-8b5c-118277c049d4</mappingSettingsId>
+            <autoSyncTypeReference>true</autoSyncTypeReference>
+            <mappedPath>
+              <target id="7fa4991f-e9ea-4928-8a11-a8489d7939dd" name="IsSubmitted" type="element" specialization="Attribute" specializationId="0090fb93-483e-41af-a11d-5ad2dc796adf" />
+            </mappedPath>
+          </mappedClass>
+          <parentFolderId>60ff5dc3-b0e2-4b77-a697-d5214d2d42a6</parentFolderId>
+          <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+          <packageName>AndersonAPI.Domain</packageName>
+          <stereotypes />
+          <metadata />
+          <childElements />
+        </childElement>
+      </childElements>
+    </childElement>
+    <childElement id="c43672d0-f420-4439-99a8-a832f2b99f08" type="Operation" typeId="e042bb67-a1df-480c-9935-b26210f78591">
+      <name>AddReportLine</name>
+      <display>AddReportLine(quarterlyId: guid, partnerCount: int = 0, headcount: int = 0, clientCount: int = 0, officeCount: int = 0, lawyerCount: int = 0, estimatedRevenue: double = 0): void</display>
+      <isAbstract>false</isAbstract>
+      <sort-children>by-type-then-manually</sort-children>
+      <genericTypes />
+      <typeReference id="4211df22-e9f8-422d-ae92-43f342b5fcf8">
+        <isNavigable>true</isNavigable>
+        <isNullable>false</isNullable>
+        <isCollection>false</isCollection>
+        <isRequired>true</isRequired>
+        <stereotypes />
+        <genericTypeParameters />
+      </typeReference>
+      <isMapped>false</isMapped>
+      <parentFolderId>666e0055-bc9c-4fd6-acd8-975f4719ee0b</parentFolderId>
+      <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+      <packageName>AndersonAPI.Domain</packageName>
+      <stereotypes />
+      <metadata />
+      <childElements>
+        <childElement id="556e4fa4-76d9-4b03-a740-d9e776fbc88b" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
+          <name>quarterlyId</name>
+          <display>in : quarterlyId: guid</display>
+          <isAbstract>false</isAbstract>
+          <genericTypes />
+          <typeReference id="74c4a1a9-d137-4f05-8aa5-2a1fd3f0a96e">
+            <typeId>6b649125-18ea-48fd-a6ba-0bfff0d8f488</typeId>
+            <isNavigable>true</isNavigable>
+            <isNullable>false</isNullable>
+            <isCollection>false</isCollection>
+            <isRequired>true</isRequired>
+            <typePackageName>Intent.Common.Types</typePackageName>
+            <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
+            <stereotypes />
+            <genericTypeParameters />
+          </typeReference>
+          <isMapped>false</isMapped>
+          <parentFolderId>c43672d0-f420-4439-99a8-a832f2b99f08</parentFolderId>
+          <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+          <packageName>AndersonAPI.Domain</packageName>
+          <stereotypes />
+          <metadata />
+          <childElements />
+        </childElement>
+        <childElement id="8ba30277-801a-46d4-96d1-f785f5c67de0" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
+          <name>partnerCount</name>
+          <display>in : partnerCount: int = 0</display>
+          <isAbstract>false</isAbstract>
+          <value>0</value>
+          <genericTypes />
+          <typeReference id="9ce3e369-cd92-4a22-a090-c0e7daf5d2ad">
+            <typeId>fb0a362d-e9e2-40de-b6ff-5ce8167cbe74</typeId>
+            <isNavigable>true</isNavigable>
+            <isNullable>false</isNullable>
+            <isCollection>false</isCollection>
+            <isRequired>true</isRequired>
+            <typePackageName>Intent.Common.Types</typePackageName>
+            <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
+            <stereotypes />
+            <genericTypeParameters />
+          </typeReference>
+          <isMapped>false</isMapped>
+          <parentFolderId>c43672d0-f420-4439-99a8-a832f2b99f08</parentFolderId>
+          <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+          <packageName>AndersonAPI.Domain</packageName>
+          <stereotypes />
+          <metadata />
+          <childElements />
+        </childElement>
+        <childElement id="93d1b767-d6bc-4d3d-9918-072cb56ec3e7" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
+          <name>headcount</name>
+          <display>in : headcount: int = 0</display>
+          <isAbstract>false</isAbstract>
+          <value>0</value>
+          <genericTypes />
+          <typeReference id="49b84992-6929-49c8-892d-9a9a5eb0a7e7">
+            <typeId>fb0a362d-e9e2-40de-b6ff-5ce8167cbe74</typeId>
+            <isNavigable>true</isNavigable>
+            <isNullable>false</isNullable>
+            <isCollection>false</isCollection>
+            <isRequired>true</isRequired>
+            <typePackageName>Intent.Common.Types</typePackageName>
+            <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
+            <stereotypes />
+            <genericTypeParameters />
+          </typeReference>
+          <isMapped>false</isMapped>
+          <parentFolderId>c43672d0-f420-4439-99a8-a832f2b99f08</parentFolderId>
+          <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+          <packageName>AndersonAPI.Domain</packageName>
+          <stereotypes />
+          <metadata />
+          <childElements />
+        </childElement>
+        <childElement id="9b4a0868-fc7d-4f3e-8658-9d0c7ed1a855" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
+          <name>clientCount</name>
+          <display>in : clientCount: int = 0</display>
+          <isAbstract>false</isAbstract>
+          <value>0</value>
+          <genericTypes />
+          <typeReference id="eafebcd0-eb66-450e-9547-f42e1e89cd88">
+            <typeId>fb0a362d-e9e2-40de-b6ff-5ce8167cbe74</typeId>
+            <isNavigable>true</isNavigable>
+            <isNullable>false</isNullable>
+            <isCollection>false</isCollection>
+            <isRequired>true</isRequired>
+            <typePackageName>Intent.Common.Types</typePackageName>
+            <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
+            <stereotypes />
+            <genericTypeParameters />
+          </typeReference>
+          <isMapped>false</isMapped>
+          <parentFolderId>c43672d0-f420-4439-99a8-a832f2b99f08</parentFolderId>
+          <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+          <packageName>AndersonAPI.Domain</packageName>
+          <stereotypes />
+          <metadata />
+          <childElements />
+        </childElement>
+        <childElement id="1ca14ea3-8375-42a0-bde8-3e914b45e19b" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
+          <name>officeCount</name>
+          <display>in : officeCount: int = 0</display>
+          <isAbstract>false</isAbstract>
+          <value>0</value>
+          <genericTypes />
+          <typeReference id="35fd725f-1d99-4e46-8045-de0a37d8477a">
+            <typeId>fb0a362d-e9e2-40de-b6ff-5ce8167cbe74</typeId>
+            <isNavigable>true</isNavigable>
+            <isNullable>false</isNullable>
+            <isCollection>false</isCollection>
+            <isRequired>true</isRequired>
+            <typePackageName>Intent.Common.Types</typePackageName>
+            <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
+            <stereotypes />
+            <genericTypeParameters />
+          </typeReference>
+          <isMapped>false</isMapped>
+          <parentFolderId>c43672d0-f420-4439-99a8-a832f2b99f08</parentFolderId>
+          <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+          <packageName>AndersonAPI.Domain</packageName>
+          <stereotypes />
+          <metadata />
+          <childElements />
+        </childElement>
+        <childElement id="636ab2eb-e6f6-46af-a892-3854c8e9e924" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
+          <name>lawyerCount</name>
+          <display>in : lawyerCount: int = 0</display>
+          <isAbstract>false</isAbstract>
+          <value>0</value>
+          <genericTypes />
+          <typeReference id="b97de983-c8eb-4471-afd7-0e63f976b7cb">
+            <typeId>fb0a362d-e9e2-40de-b6ff-5ce8167cbe74</typeId>
+            <isNavigable>true</isNavigable>
+            <isNullable>false</isNullable>
+            <isCollection>false</isCollection>
+            <isRequired>true</isRequired>
+            <typePackageName>Intent.Common.Types</typePackageName>
+            <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
+            <stereotypes />
+            <genericTypeParameters />
+          </typeReference>
+          <isMapped>false</isMapped>
+          <parentFolderId>c43672d0-f420-4439-99a8-a832f2b99f08</parentFolderId>
+          <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+          <packageName>AndersonAPI.Domain</packageName>
+          <stereotypes />
+          <metadata />
+          <childElements />
+        </childElement>
+        <childElement id="6cfc5955-4df7-4168-97e3-fc687375cece" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
+          <name>estimatedRevenue</name>
+          <display>in : estimatedRevenue: double = 0</display>
+          <isAbstract>false</isAbstract>
+          <value>0</value>
+          <genericTypes />
+          <typeReference id="6dbc7468-9e2e-45fa-8e41-22a54a27f6d3">
+            <typeId>24A77F70-5B97-40DD-8F9A-4208AD5F9219</typeId>
+            <isNavigable>true</isNavigable>
+            <isNullable>false</isNullable>
+            <isCollection>false</isCollection>
+            <isRequired>true</isRequired>
+            <typePackageName>Intent.Common.Types</typePackageName>
+            <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
+            <stereotypes />
+            <genericTypeParameters />
+          </typeReference>
+          <isMapped>false</isMapped>
+          <parentFolderId>c43672d0-f420-4439-99a8-a832f2b99f08</parentFolderId>
+          <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+          <packageName>AndersonAPI.Domain</packageName>
+          <stereotypes />
+          <metadata />
+          <childElements />
+        </childElement>
+      </childElements>
+    </childElement>
+    <childElement id="327b075f-4405-4c37-8331-6ad8c069c538" type="Operation" typeId="e042bb67-a1df-480c-9935-b26210f78591">
+      <name>UpdateReportLine</name>
+      <display>UpdateReportLine(reprotLineId: guid, partnerCount: int, headcount: int, clientCount: int, officeCount: int, lawyerCount: int, estimatedRevenue: double): void</display>
+      <isAbstract>false</isAbstract>
+      <sort-children>by-type-then-manually</sort-children>
+      <genericTypes />
+      <typeReference id="ddc603d9-c54b-4880-a668-20c07695cf1b">
+        <isNavigable>true</isNavigable>
+        <isNullable>false</isNullable>
+        <isCollection>false</isCollection>
+        <isRequired>true</isRequired>
+        <stereotypes />
+        <genericTypeParameters />
+      </typeReference>
+      <isMapped>false</isMapped>
+      <parentFolderId>666e0055-bc9c-4fd6-acd8-975f4719ee0b</parentFolderId>
+      <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+      <packageName>AndersonAPI.Domain</packageName>
+      <stereotypes />
+      <metadata />
+      <childElements>
+        <childElement id="c4ef8dcd-f342-4b19-898a-db950c2eb16e" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
+          <name>reprotLineId</name>
+          <display>in : reprotLineId: guid</display>
+          <isAbstract>false</isAbstract>
+          <genericTypes />
+          <typeReference id="dfb1ff3d-7361-4738-b403-3336646fae13">
+            <typeId>6b649125-18ea-48fd-a6ba-0bfff0d8f488</typeId>
+            <isNavigable>true</isNavigable>
+            <isNullable>false</isNullable>
+            <isCollection>false</isCollection>
+            <isRequired>true</isRequired>
+            <typePackageName>Intent.Common.Types</typePackageName>
+            <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
+            <stereotypes />
+            <genericTypeParameters />
+          </typeReference>
+          <isMapped>false</isMapped>
+          <parentFolderId>327b075f-4405-4c37-8331-6ad8c069c538</parentFolderId>
+          <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+          <packageName>AndersonAPI.Domain</packageName>
+          <stereotypes />
+          <metadata />
+          <childElements />
+        </childElement>
+        <childElement id="9ffa8fa9-00e6-4cb0-9ecd-ceb49c72b417" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
+          <name>partnerCount</name>
+          <display>in : partnerCount: int</display>
+          <isAbstract>false</isAbstract>
+          <genericTypes />
+          <typeReference id="580a0757-a324-47f1-b68f-9bff7f125c63">
+            <typeId>fb0a362d-e9e2-40de-b6ff-5ce8167cbe74</typeId>
+            <isNavigable>true</isNavigable>
+            <isNullable>false</isNullable>
+            <isCollection>false</isCollection>
+            <isRequired>true</isRequired>
+            <typePackageName>Intent.Common.Types</typePackageName>
+            <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
+            <stereotypes />
+            <genericTypeParameters />
+          </typeReference>
+          <isMapped>false</isMapped>
+          <parentFolderId>327b075f-4405-4c37-8331-6ad8c069c538</parentFolderId>
+          <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+          <packageName>AndersonAPI.Domain</packageName>
+          <stereotypes />
+          <metadata />
+          <childElements />
+        </childElement>
+        <childElement id="e5fb9c92-06ae-48b6-8732-7e8fdeccd6d9" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
+          <name>headcount</name>
+          <display>in : headcount: int</display>
+          <isAbstract>false</isAbstract>
+          <genericTypes />
+          <typeReference id="ed1b1b50-0dd1-40ba-80c8-c0750c074792">
+            <typeId>fb0a362d-e9e2-40de-b6ff-5ce8167cbe74</typeId>
+            <isNavigable>true</isNavigable>
+            <isNullable>false</isNullable>
+            <isCollection>false</isCollection>
+            <isRequired>true</isRequired>
+            <typePackageName>Intent.Common.Types</typePackageName>
+            <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
+            <stereotypes />
+            <genericTypeParameters />
+          </typeReference>
+          <isMapped>false</isMapped>
+          <parentFolderId>327b075f-4405-4c37-8331-6ad8c069c538</parentFolderId>
+          <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+          <packageName>AndersonAPI.Domain</packageName>
+          <stereotypes />
+          <metadata />
+          <childElements />
+        </childElement>
+        <childElement id="c3334ffd-45a8-4dfa-b50a-fad42f22c86b" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
+          <name>clientCount</name>
+          <display>in : clientCount: int</display>
+          <isAbstract>false</isAbstract>
+          <genericTypes />
+          <typeReference id="b41e22dc-bf02-4c1c-bf00-a9b752820ebe">
+            <typeId>fb0a362d-e9e2-40de-b6ff-5ce8167cbe74</typeId>
+            <isNavigable>true</isNavigable>
+            <isNullable>false</isNullable>
+            <isCollection>false</isCollection>
+            <isRequired>true</isRequired>
+            <typePackageName>Intent.Common.Types</typePackageName>
+            <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
+            <stereotypes />
+            <genericTypeParameters />
+          </typeReference>
+          <isMapped>false</isMapped>
+          <parentFolderId>327b075f-4405-4c37-8331-6ad8c069c538</parentFolderId>
+          <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+          <packageName>AndersonAPI.Domain</packageName>
+          <stereotypes />
+          <metadata />
+          <childElements />
+        </childElement>
+        <childElement id="5a6410c4-59cf-4701-9677-4e78bbaacdcb" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
+          <name>officeCount</name>
+          <display>in : officeCount: int</display>
+          <isAbstract>false</isAbstract>
+          <genericTypes />
+          <typeReference id="9788a73c-5934-40e3-85ac-fce540a39a9d">
+            <typeId>fb0a362d-e9e2-40de-b6ff-5ce8167cbe74</typeId>
+            <isNavigable>true</isNavigable>
+            <isNullable>false</isNullable>
+            <isCollection>false</isCollection>
+            <isRequired>true</isRequired>
+            <typePackageName>Intent.Common.Types</typePackageName>
+            <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
+            <stereotypes />
+            <genericTypeParameters />
+          </typeReference>
+          <isMapped>false</isMapped>
+          <parentFolderId>327b075f-4405-4c37-8331-6ad8c069c538</parentFolderId>
+          <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+          <packageName>AndersonAPI.Domain</packageName>
+          <stereotypes />
+          <metadata />
+          <childElements />
+        </childElement>
+        <childElement id="6ad927ff-8cab-4ba2-97f2-482e5417847b" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
+          <name>lawyerCount</name>
+          <display>in : lawyerCount: int</display>
+          <isAbstract>false</isAbstract>
+          <genericTypes />
+          <typeReference id="9eaa851d-2504-4539-bfe3-4b4c4c58369e">
+            <typeId>fb0a362d-e9e2-40de-b6ff-5ce8167cbe74</typeId>
+            <isNavigable>true</isNavigable>
+            <isNullable>false</isNullable>
+            <isCollection>false</isCollection>
+            <isRequired>true</isRequired>
+            <typePackageName>Intent.Common.Types</typePackageName>
+            <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
+            <stereotypes />
+            <genericTypeParameters />
+          </typeReference>
+          <isMapped>false</isMapped>
+          <parentFolderId>327b075f-4405-4c37-8331-6ad8c069c538</parentFolderId>
+          <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+          <packageName>AndersonAPI.Domain</packageName>
+          <stereotypes />
+          <metadata />
+          <childElements />
+        </childElement>
+        <childElement id="c4a3a78a-697d-4123-b023-0ef7f2392140" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
+          <name>estimatedRevenue</name>
+          <display>in : estimatedRevenue: double</display>
+          <isAbstract>false</isAbstract>
+          <genericTypes />
+          <typeReference id="ab3c58c0-1d77-4598-9101-acfbb565006a">
+            <typeId>24A77F70-5B97-40DD-8F9A-4208AD5F9219</typeId>
+            <isNavigable>true</isNavigable>
+            <isNullable>false</isNullable>
+            <isCollection>false</isCollection>
+            <isRequired>true</isRequired>
+            <typePackageName>Intent.Common.Types</typePackageName>
+            <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
+            <stereotypes />
+            <genericTypeParameters />
+          </typeReference>
+          <isMapped>false</isMapped>
+          <parentFolderId>327b075f-4405-4c37-8331-6ad8c069c538</parentFolderId>
+          <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+          <packageName>AndersonAPI.Domain</packageName>
+          <stereotypes />
+          <metadata />
+          <childElements />
+        </childElement>
+      </childElements>
+    </childElement>
+    <childElement id="c7b4edf5-a480-4367-896e-40fe37c683cf" type="Operation" typeId="e042bb67-a1df-480c-9935-b26210f78591">
+      <name>RemoveReportLine</name>
+      <display>RemoveReportLine(reportLineId: guid): void</display>
+      <isAbstract>false</isAbstract>
+      <sort-children>by-type-then-manually</sort-children>
+      <genericTypes />
+      <typeReference id="56cd7bc7-0b40-42ee-b02a-8abba20d4aee">
+        <isNavigable>true</isNavigable>
+        <isNullable>false</isNullable>
+        <isCollection>false</isCollection>
+        <isRequired>true</isRequired>
+        <stereotypes />
+        <genericTypeParameters />
+      </typeReference>
+      <isMapped>false</isMapped>
+      <parentFolderId>666e0055-bc9c-4fd6-acd8-975f4719ee0b</parentFolderId>
+      <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+      <packageName>AndersonAPI.Domain</packageName>
+      <stereotypes />
+      <metadata />
+      <childElements>
+        <childElement id="1be6e76f-f463-4db2-bf20-455901427293" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
+          <name>reportLineId</name>
+          <display>in : reportLineId: guid</display>
+          <isAbstract>false</isAbstract>
+          <genericTypes />
+          <typeReference id="2b23c0b8-21d8-4900-8aaf-022a85650045">
+            <typeId>6b649125-18ea-48fd-a6ba-0bfff0d8f488</typeId>
+            <isNavigable>true</isNavigable>
+            <isNullable>false</isNullable>
+            <isCollection>false</isCollection>
+            <isRequired>true</isRequired>
+            <typePackageName>Intent.Common.Types</typePackageName>
+            <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
+            <stereotypes />
+            <genericTypeParameters />
+          </typeReference>
+          <isMapped>false</isMapped>
+          <parentFolderId>c7b4edf5-a480-4367-896e-40fe37c683cf</parentFolderId>
+          <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+          <packageName>AndersonAPI.Domain</packageName>
+          <stereotypes />
+          <metadata />
+          <childElements />
+        </childElement>
+      </childElements>
+    </childElement>
+    <childElement id="c5a49aa8-aaf9-4daf-a42b-0fa0eba59494" type="Operation" typeId="e042bb67-a1df-480c-9935-b26210f78591">
+      <name>AddReportPartner</name>
+      <display>AddReportPartner(quaterlyId: guid, name: string, state: EntityState): void</display>
+      <isAbstract>false</isAbstract>
+      <sort-children>by-type-then-manually</sort-children>
+      <genericTypes />
+      <typeReference id="3f2c778a-a838-42d4-a8b1-efa8869d33b7">
+        <isNavigable>true</isNavigable>
+        <isNullable>false</isNullable>
+        <isCollection>false</isCollection>
+        <isRequired>true</isRequired>
+        <stereotypes />
+        <genericTypeParameters />
+      </typeReference>
+      <isMapped>false</isMapped>
+      <parentFolderId>666e0055-bc9c-4fd6-acd8-975f4719ee0b</parentFolderId>
+      <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+      <packageName>AndersonAPI.Domain</packageName>
+      <stereotypes />
+      <metadata />
+      <childElements>
+        <childElement id="3e486985-afc6-4dea-805a-ee89b0990689" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
+          <name>quaterlyId</name>
+          <display>in : quaterlyId: guid</display>
+          <isAbstract>false</isAbstract>
+          <genericTypes />
+          <typeReference id="4f6ca7a6-5ca9-4fbb-af01-83dcb6fa2eb1">
+            <typeId>6b649125-18ea-48fd-a6ba-0bfff0d8f488</typeId>
+            <isNavigable>true</isNavigable>
+            <isNullable>false</isNullable>
+            <isCollection>false</isCollection>
+            <isRequired>true</isRequired>
+            <typePackageName>Intent.Common.Types</typePackageName>
+            <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
+            <stereotypes />
+            <genericTypeParameters />
+          </typeReference>
+          <isMapped>false</isMapped>
+          <parentFolderId>c5a49aa8-aaf9-4daf-a42b-0fa0eba59494</parentFolderId>
+          <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+          <packageName>AndersonAPI.Domain</packageName>
+          <stereotypes />
+          <metadata />
+          <childElements />
+        </childElement>
+        <childElement id="dc684882-a523-4fb6-ae20-5a8cd1e8d93b" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
+          <name>name</name>
+          <display>in : name: string</display>
+          <isAbstract>false</isAbstract>
+          <genericTypes />
+          <typeReference id="560f3f87-a6c7-47db-bb2b-cf3efc3e55bc">
+            <typeId>d384db9c-a279-45e1-801e-e4e8099625f2</typeId>
+            <isNavigable>true</isNavigable>
+            <isNullable>false</isNullable>
+            <isCollection>false</isCollection>
+            <isRequired>true</isRequired>
+            <typePackageName>Intent.Common.Types</typePackageName>
+            <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
+            <stereotypes />
+            <genericTypeParameters />
+          </typeReference>
+          <isMapped>false</isMapped>
+          <parentFolderId>c5a49aa8-aaf9-4daf-a42b-0fa0eba59494</parentFolderId>
+          <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+          <packageName>AndersonAPI.Domain</packageName>
+          <stereotypes />
+          <metadata />
+          <childElements />
+        </childElement>
+        <childElement id="4f56d1d0-2a71-4465-9ac9-2408a08867f4" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
+          <name>state</name>
+          <display>in : state: EntityState</display>
+          <isAbstract>false</isAbstract>
+          <genericTypes />
+          <typeReference id="0e78f1fd-e94c-467a-ac73-6f7a7cb2ee87">
+            <typeId>0b91d0c5-4aa0-4fd0-854a-7a10a9808b4d</typeId>
+            <isNavigable>true</isNavigable>
+            <isNullable>false</isNullable>
+            <isCollection>false</isCollection>
+            <isRequired>true</isRequired>
+            <typePackageName>AndersonAPI.Domain</typePackageName>
+            <typePackageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</typePackageId>
+            <stereotypes />
+            <genericTypeParameters />
+          </typeReference>
+          <isMapped>false</isMapped>
+          <parentFolderId>c5a49aa8-aaf9-4daf-a42b-0fa0eba59494</parentFolderId>
+          <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+          <packageName>AndersonAPI.Domain</packageName>
+          <stereotypes />
+          <metadata />
+          <childElements />
+        </childElement>
+      </childElements>
+    </childElement>
+    <childElement id="9bbbf704-866e-4057-bb09-5565a626a871" type="Operation" typeId="e042bb67-a1df-480c-9935-b26210f78591">
+      <name>UpdateReporPartner</name>
+      <display>UpdateReporPartner(reportPartnerId: guid, name: string): void</display>
+      <isAbstract>false</isAbstract>
+      <sort-children>by-type-then-manually</sort-children>
+      <genericTypes />
+      <typeReference id="5383b4e8-9f40-48bb-b89f-47afcce65686">
+        <isNavigable>true</isNavigable>
+        <isNullable>false</isNullable>
+        <isCollection>false</isCollection>
+        <isRequired>true</isRequired>
+        <stereotypes />
+        <genericTypeParameters />
+      </typeReference>
+      <isMapped>false</isMapped>
+      <parentFolderId>666e0055-bc9c-4fd6-acd8-975f4719ee0b</parentFolderId>
+      <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+      <packageName>AndersonAPI.Domain</packageName>
+      <stereotypes />
+      <metadata />
+      <childElements>
+        <childElement id="6af685f4-ef79-421b-872a-9260d5b498d2" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
+          <name>reportPartnerId</name>
+          <display>in : reportPartnerId: guid</display>
+          <isAbstract>false</isAbstract>
+          <genericTypes />
+          <typeReference id="7a1384b0-fc9e-47ee-b33b-f19e21180e0e">
+            <typeId>6b649125-18ea-48fd-a6ba-0bfff0d8f488</typeId>
+            <isNavigable>true</isNavigable>
+            <isNullable>false</isNullable>
+            <isCollection>false</isCollection>
+            <isRequired>true</isRequired>
+            <typePackageName>Intent.Common.Types</typePackageName>
+            <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
+            <stereotypes />
+            <genericTypeParameters />
+          </typeReference>
+          <isMapped>false</isMapped>
+          <parentFolderId>9bbbf704-866e-4057-bb09-5565a626a871</parentFolderId>
+          <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+          <packageName>AndersonAPI.Domain</packageName>
+          <stereotypes />
+          <metadata />
+          <childElements />
+        </childElement>
+        <childElement id="aea9f78c-e5b6-4075-9159-c1eaf1d22912" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
+          <name>name</name>
+          <display>in : name: string</display>
+          <isAbstract>false</isAbstract>
+          <genericTypes />
+          <typeReference id="62e0085d-bca8-490c-9528-bc4ab0a5f700">
+            <typeId>d384db9c-a279-45e1-801e-e4e8099625f2</typeId>
+            <isNavigable>true</isNavigable>
+            <isNullable>false</isNullable>
+            <isCollection>false</isCollection>
+            <isRequired>true</isRequired>
+            <typePackageName>Intent.Common.Types</typePackageName>
+            <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
+            <stereotypes />
+            <genericTypeParameters />
+          </typeReference>
+          <isMapped>false</isMapped>
+          <parentFolderId>9bbbf704-866e-4057-bb09-5565a626a871</parentFolderId>
+          <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+          <packageName>AndersonAPI.Domain</packageName>
+          <stereotypes />
+          <metadata />
+          <childElements />
+        </childElement>
+      </childElements>
+    </childElement>
+    <childElement id="b06a9fd2-4138-4b39-81e6-99f033e68564" type="Operation" typeId="e042bb67-a1df-480c-9935-b26210f78591">
+      <name>RemoveReportPartner</name>
+      <display>RemoveReportPartner(reportPartnerId: guid): void</display>
+      <isAbstract>false</isAbstract>
+      <sort-children>by-type-then-manually</sort-children>
+      <genericTypes />
+      <typeReference id="29e75160-7cda-46cc-81c5-53e65e9bd96c">
+        <isNavigable>true</isNavigable>
+        <isNullable>false</isNullable>
+        <isCollection>false</isCollection>
+        <isRequired>true</isRequired>
+        <stereotypes />
+        <genericTypeParameters />
+      </typeReference>
+      <isMapped>false</isMapped>
+      <parentFolderId>666e0055-bc9c-4fd6-acd8-975f4719ee0b</parentFolderId>
+      <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+      <packageName>AndersonAPI.Domain</packageName>
+      <stereotypes />
+      <metadata />
+      <childElements>
+        <childElement id="0499647d-acee-428e-8d7f-ab888a79cd6c" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
+          <name>reportPartnerId</name>
+          <display>in : reportPartnerId: guid</display>
+          <isAbstract>false</isAbstract>
+          <genericTypes />
+          <typeReference id="f97db132-d99d-47ee-900d-f0590e7271e5">
+            <typeId>6b649125-18ea-48fd-a6ba-0bfff0d8f488</typeId>
+            <isNavigable>true</isNavigable>
+            <isNullable>false</isNullable>
+            <isCollection>false</isCollection>
+            <isRequired>true</isRequired>
+            <typePackageName>Intent.Common.Types</typePackageName>
+            <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
+            <stereotypes />
+            <genericTypeParameters />
+          </typeReference>
+          <isMapped>false</isMapped>
+          <parentFolderId>b06a9fd2-4138-4b39-81e6-99f033e68564</parentFolderId>
+          <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+          <packageName>AndersonAPI.Domain</packageName>
+          <stereotypes />
+          <metadata />
+          <childElements />
+        </childElement>
+      </childElements>
+    </childElement>
+  </childElements>
+</class>

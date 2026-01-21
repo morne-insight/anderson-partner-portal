@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<association id="8e8b21ef-d696-46e6-bed7-810668e106d5">
+  <sourceEnd id="ac9fb603-a895-4412-a9db-6d037deca347" type="Association Source End" typeId="8d9d2e5b-bd55-4f36-9ae4-2b9e84fd4e58">
+    <name>Quarterly</name>
+    <display>Quarterly: Quarterly</display>
+    <order>0</order>
+    <typeReference id="e6a8c383-6c62-4f9a-ade2-d77a8577e0c2">
+      <typeId>666e0055-bc9c-4fd6-acd8-975f4719ee0b</typeId>
+      <isNavigable>false</isNavigable>
+      <isNullable>false</isNullable>
+      <isCollection>false</isCollection>
+      <isRequired>true</isRequired>
+      <typePackageName>AndersonAPI.Domain</typePackageName>
+      <typePackageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</typePackageId>
+      <stereotypes />
+      <genericTypeParameters />
+    </typeReference>
+    <stereotypes />
+    <metadata />
+    <childElements />
+  </sourceEnd>
+  <targetEnd id="8e8b21ef-d696-46e6-bed7-810668e106d5" type="Association Target End" typeId="0a66489f-30aa-417b-a75d-b945863366fd">
+    <name>ReportLines</name>
+    <display>ReportLines: ReportLine[*]</display>
+    <order>19</order>
+    <typeReference id="fafb3505-d242-465e-aecb-db4a9b6d3830">
+      <typeId>d2961a5d-cca7-4e61-9fc4-c253aa2165ab</typeId>
+      <isNavigable>true</isNavigable>
+      <isNullable>false</isNullable>
+      <isCollection>true</isCollection>
+      <isRequired>true</isRequired>
+      <typePackageName>AndersonAPI.Domain</typePackageName>
+      <typePackageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</typePackageId>
+      <stereotypes />
+      <genericTypeParameters />
+    </typeReference>
+    <stereotypes />
+    <metadata />
+    <childElements />
+  </targetEnd>
+  <associationType>Association</associationType>
+  <associationTypeId>eaf9ed4e-0b61-4ac1-ba88-09f912c12087</associationTypeId>
+  <stereotypes />
+</association>

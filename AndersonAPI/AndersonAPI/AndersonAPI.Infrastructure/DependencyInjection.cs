@@ -51,19 +51,25 @@ namespace AndersonAPI.Infrastructure
             services.AddTransient<IInviteRepository, InviteRepository>();
             services.AddTransient<IOpportunityRepository, OpportunityRepository>();
             services.AddTransient<IOpportunityTypeRepository, OpportunityTypeRepository>();
+            services.AddTransient<IQuarterlyRepository, QuarterlyRepository>();
             services.AddTransient<IRegionRepository, RegionRepository>();
             services.AddTransient<IReviewRepository, ReviewRepository>();
             services.AddTransient<IServiceTypeRepository, ServiceTypeRepository>();
             services.AddScoped<IDomainEventService, DomainEventService>();
+            ConfigureCustomServices(services);
 
+            return services;
+        }
+
+        [IntentManaged(Mode.Ignore)]
+        private static void ConfigureCustomServices(IServiceCollection services)
+        {
             services.AddSingleton<IAgentService, AgentService>();
             services.AddHttpClient<IEmbeddingService, EmbeddingService>((servieProvider, http) =>
             {
                 var options = servieProvider.GetRequiredService<Microsoft.Extensions.Options.IOptions<AzureAIOptions>>().Value;
                 http.BaseAddress = new Uri(options.Endpoint.TrimEnd('/') + "/");
             });
-
-            return services;
         }
     }
 }

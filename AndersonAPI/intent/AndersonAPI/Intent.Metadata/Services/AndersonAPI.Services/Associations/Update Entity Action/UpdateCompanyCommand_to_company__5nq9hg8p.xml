@@ -21,7 +21,7 @@
   <targetEnd id="fa390452-25e6-444d-9d16-737ace0ca41e" type="Update Entity Action Target End" typeId="516069f6-09cc-4de8-8e31-3c71ca823452">
     <name>company</name>
     <display>[update] company: Update</display>
-    <order>6</order>
+    <order>7</order>
     <traits>
       <trait id="d00a2ab0-9a23-4192-b8bb-166798fc7dba" name="[Processing Action]" />
     </traits>
@@ -111,17 +111,17 @@
             </sources>
           </mappedEnd>
           <mappedEnd>
-            <expression>{Description}</expression>
+            <expression>{FullDescription}</expression>
             <path>
               <target id="3259289c-5d51-46cb-8c99-78751b456c44" name="Company" type="element" specialization="Class" specializationId="04e12b51-ed12-42a3-9667-a6aa81bb6d10" />
               <target id="d6578f9c-1ede-4848-8166-d14a98ca0f46" name="Update" type="element" specialization="Operation" specializationId="e042bb67-a1df-480c-9935-b26210f78591" />
               <target id="a0db08aa-90a6-488e-9162-4b01f8cfa6ba" name="description" type="element" specialization="Parameter" specializationId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b" />
             </path>
             <sources>
-              <source identifier="Description" mappingType="Data Mapping" mappingTypeId="ca88649b-f20b-44db-a9c0-017c26155ba8">
+              <source identifier="FullDescription" mappingType="Data Mapping" mappingTypeId="ca88649b-f20b-44db-a9c0-017c26155ba8">
                 <path>
                   <target id="210f7ae1-e774-4745-bc8e-1226f53fc985" name="UpdateCompanyCommand" type="element" specialization="Command" specializationId="ccf14eb6-3a55-4d81-b5b9-d27311c70cb9" />
-                  <target id="103783fa-eadd-4637-b978-58cc4963995e" name="Description" type="element" specialization="DTO-Field" specializationId="7baed1fd-469b-4980-8fd9-4cefb8331eb2" />
+                  <target id="103783fa-eadd-4637-b978-58cc4963995e" name="FullDescription" type="element" specialization="DTO-Field" specializationId="7baed1fd-469b-4980-8fd9-4cefb8331eb2" />
                 </path>
               </source>
             </sources>
@@ -154,6 +154,22 @@
                 <path>
                   <target id="210f7ae1-e774-4745-bc8e-1226f53fc985" name="UpdateCompanyCommand" type="element" specialization="Command" specializationId="ccf14eb6-3a55-4d81-b5b9-d27311c70cb9" />
                   <target id="0ead75e3-6d5a-40af-bd94-8116c06b5352" name="EmployeeCount" type="element" specialization="DTO-Field" specializationId="7baed1fd-469b-4980-8fd9-4cefb8331eb2" />
+                </path>
+              </source>
+            </sources>
+          </mappedEnd>
+          <mappedEnd>
+            <expression>{ServiceTypeId}</expression>
+            <path>
+              <target id="3259289c-5d51-46cb-8c99-78751b456c44" name="Company" type="element" specialization="Class" specializationId="04e12b51-ed12-42a3-9667-a6aa81bb6d10" />
+              <target id="d6578f9c-1ede-4848-8166-d14a98ca0f46" name="Update" type="element" specialization="Operation" specializationId="e042bb67-a1df-480c-9935-b26210f78591" />
+              <target id="3da39ed8-20e5-48e8-ad4c-882eb4209784" name="serviceTypeId" type="element" specialization="Parameter" specializationId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b" />
+            </path>
+            <sources>
+              <source identifier="ServiceTypeId" mappingType="Data Mapping" mappingTypeId="ca88649b-f20b-44db-a9c0-017c26155ba8">
+                <path>
+                  <target id="210f7ae1-e774-4745-bc8e-1226f53fc985" name="UpdateCompanyCommand" type="element" specialization="Command" specializationId="ccf14eb6-3a55-4d81-b5b9-d27311c70cb9" />
+                  <target id="b0173aad-9a81-49f9-bff5-1fab9b66c07d" name="ServiceTypeId" type="element" specialization="DTO-Field" specializationId="7baed1fd-469b-4980-8fd9-4cefb8331eb2" />
                 </path>
               </source>
             </sources>

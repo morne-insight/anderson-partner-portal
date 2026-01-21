@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AndersonAPI.Api.Controllers
 {
     [ApiController]
+    [Authorize]
     public class OpportunityTypesController : ControllerBase
     {
         private readonly ISender _mediator;
@@ -32,10 +33,14 @@ namespace AndersonAPI.Api.Controllers
         /// </summary>
         /// <response code="201">Successfully created.</response>
         /// <response code="400">One or more validation errors have occurred.</response>
+        /// <response code="401">Unauthorized request.</response>
+        /// <response code="403">Forbidden request.</response>
         [HttpPost("api/opportunity-types")]
         [Produces(MediaTypeNames.Application.Json)]
         [ProducesResponseType(typeof(JsonResponse<Guid>), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<JsonResponse<Guid>>> CreateOpportunityType(
             [FromBody] CreateOpportunityTypeCommand command,
@@ -49,10 +54,14 @@ namespace AndersonAPI.Api.Controllers
         /// </summary>
         /// <response code="200">Successfully deleted.</response>
         /// <response code="400">One or more validation errors have occurred.</response>
+        /// <response code="401">Unauthorized request.</response>
+        /// <response code="403">Forbidden request.</response>
         /// <response code="404">One or more entities could not be found with the provided parameters.</response>
         [HttpDelete("api/opportunity-types/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> DeleteOpportunityType(
@@ -67,10 +76,14 @@ namespace AndersonAPI.Api.Controllers
         /// </summary>
         /// <response code="204">Successfully updated.</response>
         /// <response code="400">One or more validation errors have occurred.</response>
+        /// <response code="401">Unauthorized request.</response>
+        /// <response code="403">Forbidden request.</response>
         /// <response code="404">One or more entities could not be found with the provided parameters.</response>
         [HttpPut("api/opportunity-types/{id}/set-state")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> SetStateOpportunityType(
@@ -96,10 +109,14 @@ namespace AndersonAPI.Api.Controllers
         /// </summary>
         /// <response code="204">Successfully updated.</response>
         /// <response code="400">One or more validation errors have occurred.</response>
+        /// <response code="401">Unauthorized request.</response>
+        /// <response code="403">Forbidden request.</response>
         /// <response code="404">One or more entities could not be found with the provided parameters.</response>
         [HttpPut("api/opportunity-types/{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> UpdateOpportunityType(
@@ -125,10 +142,14 @@ namespace AndersonAPI.Api.Controllers
         /// </summary>
         /// <response code="200">Returns the specified OpportunityTypeDto.</response>
         /// <response code="400">One or more validation errors have occurred.</response>
+        /// <response code="401">Unauthorized request.</response>
+        /// <response code="403">Forbidden request.</response>
         /// <response code="404">No OpportunityTypeDto could be found with the provided parameters.</response>
         [HttpGet("api/opportunity-types/{id}")]
         [ProducesResponseType(typeof(OpportunityTypeDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<OpportunityTypeDto>> GetOpportunityTypeById(
@@ -142,8 +163,12 @@ namespace AndersonAPI.Api.Controllers
         /// <summary>
         /// </summary>
         /// <response code="200">Returns the specified List&lt;OpportunityTypeDto&gt;.</response>
+        /// <response code="401">Unauthorized request.</response>
+        /// <response code="403">Forbidden request.</response>
         [HttpGet("api/opportunity-types")]
         [ProducesResponseType(typeof(List<OpportunityTypeDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<List<OpportunityTypeDto>>> GetOpportunityTypes(CancellationToken cancellationToken = default)
         {

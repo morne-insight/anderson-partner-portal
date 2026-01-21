@@ -16,9 +16,9 @@ namespace AndersonAPI.Application.Companies
             Contacts = null!;
             Industries = null!;
             Locations = null!;
-            ServiceTypes = null!;
             Opportunities = null!;
             Reviews = null!;
+            ServiceTypeName = null!;
         }
 
         public Guid Id { get; set; }
@@ -29,9 +29,10 @@ namespace AndersonAPI.Application.Companies
         public List<PartnerContactDto> Contacts { get; set; }
         public List<PartnerIndustryDto> Industries { get; set; }
         public List<PartnerLocationDto> Locations { get; set; }
-        public List<PartnerServiceTypeDto> ServiceTypes { get; set; }
         public List<PartnerOpportunityDto> Opportunities { get; set; }
         public List<PartnerReviewDto> Reviews { get; set; }
+        public Guid? ServiceTypeId { get; set; }
+        public string ServiceTypeName { get; set; }
 
         public static PartnerProfile Create(
             Guid id,
@@ -42,9 +43,10 @@ namespace AndersonAPI.Application.Companies
             List<PartnerContactDto> contacts,
             List<PartnerIndustryDto> industries,
             List<PartnerLocationDto> locations,
-            List<PartnerServiceTypeDto> serviceTypes,
             List<PartnerOpportunityDto> opportunities,
-            List<PartnerReviewDto> reviews)
+            List<PartnerReviewDto> reviews,
+            Guid? serviceTypeId,
+            string serviceTypeName)
         {
             return new PartnerProfile
             {
@@ -56,9 +58,11 @@ namespace AndersonAPI.Application.Companies
                 Contacts = contacts,
                 Industries = industries,
                 Locations = locations,
-                ServiceTypes = serviceTypes,
                 Opportunities = opportunities,
                 Reviews = reviews
+,
+                ServiceTypeId = serviceTypeId,
+                ServiceTypeName = serviceTypeName
             };
         }
     }

@@ -12,6 +12,7 @@
     "openapi-ts": "cross-env NODE_TLS_REJECT_UNAUTHORIZED=0 openapi-ts"
   },
   "dependencies": {
+    "@base-ui-components/react": "1.0.0-rc.0",
     "@faker-js/faker": "^10.0.0",
     "@modelcontextprotocol/sdk": "^1.17.0",
     "@radix-ui/react-label": "^2.1.8",

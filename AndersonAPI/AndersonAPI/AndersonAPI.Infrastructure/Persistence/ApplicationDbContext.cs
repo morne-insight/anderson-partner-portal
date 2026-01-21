@@ -35,6 +35,7 @@ namespace AndersonAPI.Infrastructure.Persistence
         public DbSet<Invite> Invites { get; set; }
         public DbSet<Opportunity> Opportunities { get; set; }
         public DbSet<OpportunityType> OpportunityTypes { get; set; }
+        public DbSet<Quarterly> Quarterlies { get; set; }
         public DbSet<Region> Regions { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<ServiceType> ServiceTypes { get; set; }
@@ -68,6 +69,7 @@ namespace AndersonAPI.Infrastructure.Persistence
             modelBuilder.ApplyConfiguration(new InviteConfiguration());
             modelBuilder.ApplyConfiguration(new OpportunityConfiguration());
             modelBuilder.ApplyConfiguration(new OpportunityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new QuarterlyConfiguration());
             modelBuilder.ApplyConfiguration(new RegionConfiguration());
             modelBuilder.ApplyConfiguration(new ReviewConfiguration());
             modelBuilder.ApplyConfiguration(new ServiceTypeConfiguration());

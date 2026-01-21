@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AndersonAPI.Api.Controllers
 {
     [ApiController]
+    [Authorize]
     public class ReviewsController : ControllerBase
     {
         private readonly ISender _mediator;
@@ -31,10 +32,14 @@ namespace AndersonAPI.Api.Controllers
         /// </summary>
         /// <response code="201">Successfully created.</response>
         /// <response code="400">One or more validation errors have occurred.</response>
+        /// <response code="401">Unauthorized request.</response>
+        /// <response code="403">Forbidden request.</response>
         [HttpPost("api/reviews")]
         [Produces(MediaTypeNames.Application.Json)]
         [ProducesResponseType(typeof(JsonResponse<Guid>), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<JsonResponse<Guid>>> CreateReview(
             [FromBody] CreateReviewCommand command,
@@ -48,10 +53,14 @@ namespace AndersonAPI.Api.Controllers
         /// </summary>
         /// <response code="200">Successfully deleted.</response>
         /// <response code="400">One or more validation errors have occurred.</response>
+        /// <response code="401">Unauthorized request.</response>
+        /// <response code="403">Forbidden request.</response>
         /// <response code="404">One or more entities could not be found with the provided parameters.</response>
         [HttpDelete("api/reviews/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> DeleteReview([FromRoute] Guid id, CancellationToken cancellationToken = default)
@@ -64,10 +73,14 @@ namespace AndersonAPI.Api.Controllers
         /// </summary>
         /// <response code="204">Successfully updated.</response>
         /// <response code="400">One or more validation errors have occurred.</response>
+        /// <response code="401">Unauthorized request.</response>
+        /// <response code="403">Forbidden request.</response>
         /// <response code="404">One or more entities could not be found with the provided parameters.</response>
         [HttpPut("api/reviews/{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> UpdateReview(
@@ -93,10 +106,14 @@ namespace AndersonAPI.Api.Controllers
         /// </summary>
         /// <response code="200">Returns the specified ReviewDto.</response>
         /// <response code="400">One or more validation errors have occurred.</response>
+        /// <response code="401">Unauthorized request.</response>
+        /// <response code="403">Forbidden request.</response>
         /// <response code="404">No ReviewDto could be found with the provided parameters.</response>
         [HttpGet("api/reviews/{id}")]
         [ProducesResponseType(typeof(ReviewDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<ReviewDto>> GetReviewById(
@@ -110,8 +127,12 @@ namespace AndersonAPI.Api.Controllers
         /// <summary>
         /// </summary>
         /// <response code="200">Returns the specified List&lt;ReviewDto&gt;.</response>
+        /// <response code="401">Unauthorized request.</response>
+        /// <response code="403">Forbidden request.</response>
         [HttpGet("api/reviews")]
         [ProducesResponseType(typeof(List<ReviewDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<List<ReviewDto>>> GetReviews(CancellationToken cancellationToken = default)
         {

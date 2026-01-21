@@ -43,26 +43,7 @@ function PartnerSearch() {
     showCountryDropdown
   } = searchState;
 
-  // Show loading state while reference data is loading  
-      if (isLoading) {
-        return (
-          <div className="flex justify-center items-center min-h-screen">
-            <Loader2 className="w-8 h-8 animate-spin text-gray-300" />
-          </div>
-        );
-      }
-    
-      // Ensure we have the data before proceeding
-      if (isError) {
-        return (
-          <div className="flex justify-center items-center min-h-screen">
-            <div className="text-center">
-              <p className="text-red-600 mb-4">Failed to load reference data</p>
-              <Button onClick={() => window.location.reload()}>Retry</Button>
-            </div>
-          </div>
-        );
-      }
+  
       
   const allServiceTypes = ["Advisory", "Tax Consulting", "IT Consulting", "Financial Law", "Supply Chain Advisory"];
   const allRegions = regions.data?.map((r: any) => r.name).sort();
@@ -140,6 +121,27 @@ function PartnerSearch() {
     clearFilters();
   };
 
+  // Show loading state while reference data is loading  
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <Loader2 className="w-8 h-8 animate-spin text-gray-300" />
+      </div>
+    );
+  }
+
+  // Ensure we have the data before proceeding
+  if (isError) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="text-center">
+          <p className="text-red-600 mb-4">Failed to load reference data</p>
+          <Button onClick={() => window.location.reload()}>Retry</Button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-8 animate-fade-in">
       <header className="border-b border-gray-200 pb-6">
@@ -158,11 +160,19 @@ function PartnerSearch() {
             <textarea
               value={query}
               onChange={(e) => setQuery(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && e.shiftKey) {
+                  console.log("Shift + Enter pressed");
+                  e.preventDefault();
+                  handleSearch(e as unknown as React.FormEvent);
+                }
+              }}
               placeholder="I'm looking for a tax consulting partner based in Europe with SAP expertise..."
               className="w-full pl-10 pr-4 py-1 bg-transparent focus:outline-none resize-none min-h-[80px] text-gray-900 placeholder-gray-300 font-serif text-2xl leading-relaxed rounded-none"
             />
           </div>
-          <div className="flex justify-end">
+          <div className="flex justify-between items-center">
+            <span className="text-gray-400 text-xs">Shift + Enter to run search</span>
             <button
               type="submit"
               disabled={isSearching}

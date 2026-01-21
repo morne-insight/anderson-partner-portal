@@ -31,15 +31,15 @@ namespace AndersonAPI.Application.Opportunities.UpdateFullOpportunity
             _industryRepository = industryRepository;
         }
 
-        [IntentManaged(Mode.Fully, Body = Mode.Merge)]
+        [IntentManaged(Mode.Fully, Body = Mode.Ignore)]
         public async Task Handle(UpdateFullOpportunityCommand request, CancellationToken cancellationToken)
         {
             var opportunity = await _opportunityRepository
-                .FindByIdAsync(request.Id, 
+                .FindByIdAsync(request.Id,
                     queryOptions => queryOptions
                         .Include(q => q.Capabilities)
                         .Include(q => q.Industries)
-                        .Include(q => q.ServiceTypes), 
+                        .Include(q => q.ServiceTypes),
                     cancellationToken);
 
             if (opportunity is null)

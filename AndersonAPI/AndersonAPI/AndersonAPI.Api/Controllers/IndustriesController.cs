@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AndersonAPI.Api.Controllers
 {
     [ApiController]
+    [Authorize]
     public class IndustriesController : ControllerBase
     {
         private readonly ISender _mediator;
@@ -32,10 +33,14 @@ namespace AndersonAPI.Api.Controllers
         /// </summary>
         /// <response code="201">Successfully created.</response>
         /// <response code="400">One or more validation errors have occurred.</response>
+        /// <response code="401">Unauthorized request.</response>
+        /// <response code="403">Forbidden request.</response>
         [HttpPost("api/industries")]
         [Produces(MediaTypeNames.Application.Json)]
         [ProducesResponseType(typeof(JsonResponse<Guid>), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<JsonResponse<Guid>>> CreateIndustry(
             [FromBody] CreateIndustryCommand command,
@@ -49,10 +54,14 @@ namespace AndersonAPI.Api.Controllers
         /// </summary>
         /// <response code="200">Successfully deleted.</response>
         /// <response code="400">One or more validation errors have occurred.</response>
+        /// <response code="401">Unauthorized request.</response>
+        /// <response code="403">Forbidden request.</response>
         /// <response code="404">One or more entities could not be found with the provided parameters.</response>
         [HttpDelete("api/industries/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> DeleteIndustry([FromRoute] Guid id, CancellationToken cancellationToken = default)
@@ -65,10 +74,14 @@ namespace AndersonAPI.Api.Controllers
         /// </summary>
         /// <response code="204">Successfully updated.</response>
         /// <response code="400">One or more validation errors have occurred.</response>
+        /// <response code="401">Unauthorized request.</response>
+        /// <response code="403">Forbidden request.</response>
         /// <response code="404">One or more entities could not be found with the provided parameters.</response>
         [HttpPut("api/industries/{id}/set-state")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> SetStateIndustry(
@@ -94,10 +107,14 @@ namespace AndersonAPI.Api.Controllers
         /// </summary>
         /// <response code="204">Successfully updated.</response>
         /// <response code="400">One or more validation errors have occurred.</response>
+        /// <response code="401">Unauthorized request.</response>
+        /// <response code="403">Forbidden request.</response>
         /// <response code="404">One or more entities could not be found with the provided parameters.</response>
         [HttpPut("api/industries/{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> UpdateIndustry(
@@ -122,8 +139,12 @@ namespace AndersonAPI.Api.Controllers
         /// <summary>
         /// </summary>
         /// <response code="200">Returns the specified List&lt;IndustryDto&gt;.</response>
+        /// <response code="401">Unauthorized request.</response>
+        /// <response code="403">Forbidden request.</response>
         [HttpGet("api/industries")]
         [ProducesResponseType(typeof(List<IndustryDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<List<IndustryDto>>> GetIndustries(CancellationToken cancellationToken = default)
         {
@@ -135,10 +156,14 @@ namespace AndersonAPI.Api.Controllers
         /// </summary>
         /// <response code="200">Returns the specified IndustryDto.</response>
         /// <response code="400">One or more validation errors have occurred.</response>
+        /// <response code="401">Unauthorized request.</response>
+        /// <response code="403">Forbidden request.</response>
         /// <response code="404">No IndustryDto could be found with the provided parameters.</response>
         [HttpGet("api/industries/{id}")]
         [ProducesResponseType(typeof(IndustryDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<IndustryDto>> GetIndustryById(

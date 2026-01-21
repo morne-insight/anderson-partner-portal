@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<association id="6a0c4d46-48f1-40a3-81c0-5149bf6d8adb">
+  <sourceEnd id="8dddfcd0-4049-4346-8dd7-eaca9ef73338" type="Association Source End" typeId="8d9d2e5b-bd55-4f36-9ae4-2b9e84fd4e58">
+    <name>Quarterlies</name>
+    <display>Quarterlies: Quarterly[*]</display>
+    <order>40</order>
+    <typeReference id="a1584054-41d9-4285-90e2-9bf2af872651">
+      <typeId>666e0055-bc9c-4fd6-acd8-975f4719ee0b</typeId>
+      <isNavigable>true</isNavigable>
+      <isNullable>false</isNullable>
+      <isCollection>true</isCollection>
+      <isRequired>true</isRequired>
+      <typePackageName>AndersonAPI.Domain</typePackageName>
+      <typePackageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</typePackageId>
+      <stereotypes />
+      <genericTypeParameters />
+    </typeReference>
+    <stereotypes />
+    <metadata />
+    <childElements />
+  </sourceEnd>
+  <targetEnd id="6a0c4d46-48f1-40a3-81c0-5149bf6d8adb" type="Association Target End" typeId="0a66489f-30aa-417b-a75d-b945863366fd">
+    <name>Company</name>
+    <display>Company: Company</display>
+    <order>17</order>
+    <typeReference id="a5ccfc3f-e028-45f6-b9cc-b3a71e2fa218">
+      <typeId>3259289c-5d51-46cb-8c99-78751b456c44</typeId>
+      <isNavigable>true</isNavigable>
+      <isNullable>false</isNullable>
+      <isCollection>false</isCollection>
+      <isRequired>true</isRequired>
+      <typePackageName>AndersonAPI.Domain</typePackageName>
+      <typePackageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</typePackageId>
+      <stereotypes />
+      <genericTypeParameters />
+    </typeReference>
+    <stereotypes />
+    <metadata />
+    <childElements />
+  </targetEnd>
+  <associationType>Association</associationType>
+  <associationTypeId>eaf9ed4e-0b61-4ac1-ba88-09f912c12087</associationTypeId>
+  <stereotypes />
+</association>

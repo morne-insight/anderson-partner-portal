@@ -14,9 +14,9 @@ namespace AndersonAPI.Application.Companies
             ShortDescription = null!;
             FullDescription = null!;
             WebsiteUrl = null!;
+            ServiceTypeName = null!;
             ApplicationIdentityUsers = null!;
             Capabilities = null!;
-            ServiceTypes = null!;
             Industries = null!;
             Contacts = null!;
             Locations = null!;
@@ -29,9 +29,10 @@ namespace AndersonAPI.Application.Companies
         public string FullDescription { get; set; }
         public string WebsiteUrl { get; set; }
         public int EmployeeCount { get; set; }
-        public List<CompanyApplicationIdentityUserDto> ApplicationIdentityUsers { get; set; }
+        public Guid? ServiceTypeId { get; set; }
+        public string ServiceTypeName { get; set; }
+        public List<CompanyIdentityUserDto> ApplicationIdentityUsers { get; set; }
         public List<CompanyCapabilityDto> Capabilities { get; set; }
-        public List<CompanyServiceTypeDto> ServiceTypes { get; set; }
         public List<CompanyIndustryDto> Industries { get; set; }
         public List<CompanyContactDto> Contacts { get; set; }
         public List<CompanyLocationDto> Locations { get; set; }
@@ -45,9 +46,10 @@ namespace AndersonAPI.Application.Companies
             string fullDescription,
             string websiteUrl,
             int employeeCount,
-            List<CompanyApplicationIdentityUserDto> applicationIdentityUsers,
+            Guid? serviceTypeId,
+            string serviceTypeName,
+            List<CompanyIdentityUserDto> applicationIdentityUsers,
             List<CompanyCapabilityDto> capabilities,
-            List<CompanyServiceTypeDto> serviceTypes,
             List<CompanyIndustryDto> industries,
             List<CompanyContactDto> contacts,
             List<CompanyLocationDto> locations,
@@ -62,9 +64,10 @@ namespace AndersonAPI.Application.Companies
                 FullDescription = fullDescription,
                 WebsiteUrl = websiteUrl,
                 EmployeeCount = employeeCount,
+                ServiceTypeId = serviceTypeId,
+                ServiceTypeName = serviceTypeName,
                 ApplicationIdentityUsers = applicationIdentityUsers,
                 Capabilities = capabilities,
-                ServiceTypes = serviceTypes,
                 Industries = industries,
                 Contacts = contacts,
                 Locations = locations,

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<association id="67067817-3b2d-4d6b-be4d-6c5725a946b8">
+  <sourceEnd id="4e9dc9af-99a6-4eda-9261-8028859fbcaa" type="Association Source End" typeId="8d9d2e5b-bd55-4f36-9ae4-2b9e84fd4e58">
+    <name>Quarterly</name>
+    <display>Quarterly: Quarterly</display>
+    <order>0</order>
+    <typeReference id="4b2d7020-8363-4560-b0da-39fc8e53b22a">
+      <typeId>666e0055-bc9c-4fd6-acd8-975f4719ee0b</typeId>
+      <isNavigable>false</isNavigable>
+      <isNullable>false</isNullable>
+      <isCollection>false</isCollection>
+      <isRequired>true</isRequired>
+      <typePackageName>AndersonAPI.Domain</typePackageName>
+      <typePackageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</typePackageId>
+      <stereotypes />
+      <genericTypeParameters />
+    </typeReference>
+    <stereotypes />
+    <metadata />
+    <childElements />
+  </sourceEnd>
+  <targetEnd id="67067817-3b2d-4d6b-be4d-6c5725a946b8" type="Association Target End" typeId="0a66489f-30aa-417b-a75d-b945863366fd">
+    <name>Partners</name>
+    <display>Partners: ReportPartner[*]</display>
+    <order>18</order>
+    <typeReference id="4290684e-b981-4f7c-9264-fad4716441fc">
+      <typeId>f0c47e7b-9319-414d-ae72-ead6d20c6d53</typeId>
+      <isNavigable>true</isNavigable>
+      <isNullable>false</isNullable>
+      <isCollection>true</isCollection>
+      <isRequired>true</isRequired>
+      <typePackageName>AndersonAPI.Domain</typePackageName>
+      <typePackageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</typePackageId>
+      <stereotypes />
+      <genericTypeParameters />
+    </typeReference>
+    <stereotypes />
+    <metadata />
+    <childElements />
+  </targetEnd>
+  <associationType>Association</associationType>
+  <associationTypeId>eaf9ed4e-0b61-4ac1-ba88-09f912c12087</associationTypeId>
+  <stereotypes />
+</association>

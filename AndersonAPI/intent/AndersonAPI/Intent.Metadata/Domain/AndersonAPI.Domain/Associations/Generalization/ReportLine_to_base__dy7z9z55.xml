@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<association id="a79d0a06-8db6-4629-b086-fae0493bf51b">
+  <sourceEnd id="b9aebcef-c09b-4e8e-97cc-5e497bb0dede" type="Generalization Source End" typeId="8190bf43-222c-4b53-8a44-14626efe3574">
+    <display>: ReportLine</display>
+    <order>0</order>
+    <typeReference id="e8096003-67ab-4501-9fc5-81fad5dd2dcb">
+      <typeId>d2961a5d-cca7-4e61-9fc4-c253aa2165ab</typeId>
+      <isNavigable>false</isNavigable>
+      <isNullable>false</isNullable>
+      <isCollection>false</isCollection>
+      <isRequired>true</isRequired>
+      <typePackageName>AndersonAPI.Domain</typePackageName>
+      <typePackageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</typePackageId>
+      <stereotypes />
+      <genericTypeParameters />
+    </typeReference>
+    <stereotypes />
+    <metadata />
+    <childElements />
+  </sourceEnd>
+  <targetEnd id="a79d0a06-8db6-4629-b086-fae0493bf51b" type="Generalization Target End" typeId="4686cc1d-b4d8-4b99-b45b-f77bd5496946">
+    <name>base</name>
+    <display>extends BaseEntity</display>
+    <order>0</order>
+    <typeReference id="67917cdb-36c1-4efe-a4d4-f2b59ec884a6">
+      <typeId>2727a645-85ae-4292-bf9c-cba3f82f444c</typeId>
+      <isNavigable>true</isNavigable>
+      <isNullable>false</isNullable>
+      <isCollection>false</isCollection>
+      <isRequired>true</isRequired>
+      <typePackageName>AndersonAPI.Domain</typePackageName>
+      <typePackageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</typePackageId>
+      <stereotypes />
+      <genericTypeParameters />
+    </typeReference>
+    <stereotypes />
+    <metadata />
+    <childElements />
+  </targetEnd>
+  <associationType>Generalization</associationType>
+  <associationTypeId>5de35973-3ac7-4e65-b48c-385605aec561</associationTypeId>
+  <stereotypes />
+</association>

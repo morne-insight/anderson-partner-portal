@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<class id="4ffd7810-0645-453c-97a1-8fb666b53062" type="DTO" typeId="fee0edca-4aa0-4f77-a524-6bbd84e78734">
+  <name>AddUserCompanyUserDto</name>
+  <display>AddUserCompanyUserDto</display>
+  <isAbstract>false</isAbstract>
+  <genericTypes />
+  <isMapped>false</isMapped>
+  <parentFolderId>b399f172-da1c-40eb-9cba-6a3c2e2f6dc3</parentFolderId>
+  <packageId>c8555d38-5afc-4ea2-9a61-c7a505212753</packageId>
+  <packageName>AndersonAPI.Services</packageName>
+  <stereotypes />
+  <metadata />
+  <childElements />
+</class>

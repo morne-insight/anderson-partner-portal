@@ -1,4 +1,3 @@
-using AndersonAPI.Domain;
 using Intent.RoslynWeaver.Attributes;
 
 [assembly: DefaultIntentManaged(Mode.Fully)]
@@ -11,24 +10,17 @@ namespace AndersonAPI.Application.Companies
         public PartnerServiceTypeDto()
         {
             Name = null!;
-            Description = null!;
         }
 
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public string Description { get; set; }
-        public int Order { get; set; }
-        public EntityState State { get; set; }
 
-        public static PartnerServiceTypeDto Create(Guid id, string name, string description, int order, EntityState state)
+        public static PartnerServiceTypeDto Create(Guid id, string name)
         {
             return new PartnerServiceTypeDto
             {
                 Id = id,
-                Name = name,
-                Description = description,
-                Order = order,
-                State = state
+                Name = name
             };
         }
     }

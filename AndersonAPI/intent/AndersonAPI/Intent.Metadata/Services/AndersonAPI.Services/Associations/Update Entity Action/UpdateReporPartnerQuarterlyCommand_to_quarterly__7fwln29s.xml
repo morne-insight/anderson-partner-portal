@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<association id="ab6dc46b-97e4-4e83-bf3d-77cf0c0f1404">
+  <sourceEnd id="c807ec0a-8ef4-4b74-b991-aa534d945eea" type="Update Entity Action Source End" typeId="6bc95978-6def-4d0c-a4f5-25bdeda8a9f6">
+    <display>updated by : Quarterlies.UpdateReporPartnerQuarterlyCommand</display>
+    <order>0</order>
+    <typeReference id="d28cd396-e8dd-4c10-b945-636c82389e12">
+      <typeId>524f8db8-11a9-41c1-aba8-ba27614dd233</typeId>
+      <isNavigable>false</isNavigable>
+      <isNullable>false</isNullable>
+      <isCollection>false</isCollection>
+      <isRequired>true</isRequired>
+      <typePackageName>AndersonAPI.Services</typePackageName>
+      <typePackageId>c8555d38-5afc-4ea2-9a61-c7a505212753</typePackageId>
+      <stereotypes />
+      <genericTypeParameters />
+    </typeReference>
+    <stereotypes />
+    <metadata />
+    <childElements />
+  </sourceEnd>
+  <targetEnd id="ab6dc46b-97e4-4e83-bf3d-77cf0c0f1404" type="Update Entity Action Target End" typeId="516069f6-09cc-4de8-8e31-3c71ca823452">
+    <name>quarterly</name>
+    <display>[update] quarterly: UpdateReporPartner</display>
+    <order>3</order>
+    <traits>
+      <trait id="d00a2ab0-9a23-4192-b8bb-166798fc7dba" name="[Processing Action]" />
+    </traits>
+    <typeReference id="53cc6356-0f1a-4d12-a295-d4769e61ad75">
+      <typeId>9bbbf704-866e-4057-bb09-5565a626a871</typeId>
+      <isNavigable>true</isNavigable>
+      <isNullable>false</isNullable>
+      <isCollection>false</isCollection>
+      <isRequired>true</isRequired>
+      <typePackageName>AndersonAPI.Domain</typePackageName>
+      <typePackageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</typePackageId>
+      <stereotypes />
+      <genericTypeParameters />
+    </typeReference>
+    <stereotypes />
+    <mappings>
+      <mapping type="Query Entity Mapping" typeId="25f25af9-c38b-4053-9474-b0fabe9d7ea7">
+        <source applicationId="e87261ce-2b9f-4042-8562-a503e4cf2759" designerId="81104ae6-2bc5-4bae-b05a-f987b0372d81" elementId="524f8db8-11a9-41c1-aba8-ba27614dd233" location="[AndersonAPI].[Services].[UpdateReporPartnerQuarterlyCommand]" />
+        <target applicationId="e87261ce-2b9f-4042-8562-a503e4cf2759" designerId="6ab29b31-27af-4f56-a67c-986d82097d63" elementId="666e0055-bc9c-4fd6-acd8-975f4719ee0b" location="[AndersonAPI].[Services].[Quarterly]" />
+        <mappedEnds>
+          <mappedEnd>
+            <expression>{Id}</expression>
+            <path>
+              <target id="666e0055-bc9c-4fd6-acd8-975f4719ee0b" name="Quarterly" type="element" specialization="Class" specializationId="04e12b51-ed12-42a3-9667-a6aa81bb6d10" />
+              <target id="8c5311cf-6694-4fc9-880d-f324dfd6d9fc" name="base" type="association" specialization="Generalization Target End" specializationId="4686cc1d-b4d8-4b99-b45b-f77bd5496946" />
+              <target id="9ed19ba4-548e-4be5-b0ed-eea43cc82348" name="Id" type="element" specialization="Attribute" specializationId="0090fb93-483e-41af-a11d-5ad2dc796adf" />
+            </path>
+            <sources>
+              <source identifier="Id" mappingType="Filter Mapping" mappingTypeId="01d09a7f-0e7c-4670-b7bc-395d7e893ef2">
+                <path>
+                  <target id="524f8db8-11a9-41c1-aba8-ba27614dd233" name="UpdateReporPartnerQuarterlyCommand" type="element" specialization="Command" specializationId="ccf14eb6-3a55-4d81-b5b9-d27311c70cb9" />
+                  <target id="7e0442d6-e585-4d1f-948d-175d239e776c" name="Id" type="element" specialization="DTO-Field" specializationId="7baed1fd-469b-4980-8fd9-4cefb8331eb2" />
+                </path>
+              </source>
+            </sources>
+          </mappedEnd>
+        </mappedEnds>
+      </mapping>
+      <mapping type="Update Entity Mapping" typeId="01721b1a-a85d-4320-a5cd-8bd39247196a">
+        <source applicationId="e87261ce-2b9f-4042-8562-a503e4cf2759" designerId="81104ae6-2bc5-4bae-b05a-f987b0372d81" elementId="524f8db8-11a9-41c1-aba8-ba27614dd233" location="[AndersonAPI].[Services].[UpdateReporPartnerQuarterlyCommand]" />
+        <target applicationId="e87261ce-2b9f-4042-8562-a503e4cf2759" designerId="6ab29b31-27af-4f56-a67c-986d82097d63" elementId="666e0055-bc9c-4fd6-acd8-975f4719ee0b" location="[AndersonAPI].[Services].[Quarterly]" />
+        <mappedEnds>
+          <mappedEnd>
+            <expression>{UpdateReporPartnerQuarterlyCommand}</expression>
+            <path>
+              <target id="666e0055-bc9c-4fd6-acd8-975f4719ee0b" name="Quarterly" type="element" specialization="Class" specializationId="04e12b51-ed12-42a3-9667-a6aa81bb6d10" />
+              <target id="9bbbf704-866e-4057-bb09-5565a626a871" name="UpdateReporPartner" type="element" specialization="Operation" specializationId="e042bb67-a1df-480c-9935-b26210f78591" />
+            </path>
+            <sources>
+              <source identifier="UpdateReporPartnerQuarterlyCommand" mappingType="Invocation Mapping" mappingTypeId="d30bdba1-9c47-4917-b81d-29230fed5d6a">
+                <path>
+                  <target id="524f8db8-11a9-41c1-aba8-ba27614dd233" name="UpdateReporPartnerQuarterlyCommand" type="element" specialization="Command" specializationId="ccf14eb6-3a55-4d81-b5b9-d27311c70cb9" />
+                </path>
+              </source>
+            </sources>
+          </mappedEnd>
+          <mappedEnd>
+            <expression>{ReportPartnerId}</expression>
+            <path>
+              <target id="666e0055-bc9c-4fd6-acd8-975f4719ee0b" name="Quarterly" type="element" specialization="Class" specializationId="04e12b51-ed12-42a3-9667-a6aa81bb6d10" />
+              <target id="9bbbf704-866e-4057-bb09-5565a626a871" name="UpdateReporPartner" type="element" specialization="Operation" specializationId="e042bb67-a1df-480c-9935-b26210f78591" />
+              <target id="6af685f4-ef79-421b-872a-9260d5b498d2" name="reportPartnerId" type="element" specialization="Parameter" specializationId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b" />
+            </path>
+            <sources>
+              <source identifier="ReportPartnerId" mappingType="Data Mapping" mappingTypeId="ca88649b-f20b-44db-a9c0-017c26155ba8">
+                <path>
+                  <target id="524f8db8-11a9-41c1-aba8-ba27614dd233" name="UpdateReporPartnerQuarterlyCommand" type="element" specialization="Command" specializationId="ccf14eb6-3a55-4d81-b5b9-d27311c70cb9" />
+                  <target id="19d8a278-372b-4268-b3a8-150772196e7e" name="ReportPartnerId" type="element" specialization="DTO-Field" specializationId="7baed1fd-469b-4980-8fd9-4cefb8331eb2" />
+                </path>
+              </source>
+            </sources>
+          </mappedEnd>
+          <mappedEnd>
+            <expression>{Name}</expression>
+            <path>
+              <target id="666e0055-bc9c-4fd6-acd8-975f4719ee0b" name="Quarterly" type="element" specialization="Class" specializationId="04e12b51-ed12-42a3-9667-a6aa81bb6d10" />
+              <target id="9bbbf704-866e-4057-bb09-5565a626a871" name="UpdateReporPartner" type="element" specialization="Operation" specializationId="e042bb67-a1df-480c-9935-b26210f78591" />
+              <target id="aea9f78c-e5b6-4075-9159-c1eaf1d22912" name="name" type="element" specialization="Parameter" specializationId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b" />
+            </path>
+            <sources>
+              <source identifier="Name" mappingType="Data Mapping" mappingTypeId="ca88649b-f20b-44db-a9c0-017c26155ba8">
+                <path>
+                  <target id="524f8db8-11a9-41c1-aba8-ba27614dd233" name="UpdateReporPartnerQuarterlyCommand" type="element" specialization="Command" specializationId="ccf14eb6-3a55-4d81-b5b9-d27311c70cb9" />
+                  <target id="c93df24e-9688-468e-82ea-b660c1e3094f" name="Name" type="element" specialization="DTO-Field" specializationId="7baed1fd-469b-4980-8fd9-4cefb8331eb2" />
+                </path>
+              </source>
+            </sources>
+          </mappedEnd>
+        </mappedEnds>
+      </mapping>
+    </mappings>
+    <metadata />
+    <childElements />
+  </targetEnd>
+  <associationType>Update Entity Action</associationType>
+  <associationTypeId>9ea0382a-4617-412a-a8c8-af987bbce226</associationTypeId>
+  <stereotypes />
+</association>

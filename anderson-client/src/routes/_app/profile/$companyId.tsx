@@ -1,7 +1,7 @@
 import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "@tanstack/react-form";
-import { CompanyProfileDto, UpdateCompanyCommand } from "@/api/types.gen";
+import { CapabilityDto, CompanyProfileDto, UpdateCompanyCommand } from "@/api/types.gen";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -17,13 +17,28 @@ import {
   MapPin, 
   User, 
   Briefcase, 
-  Building 
+  Building,
+  MonitorCloud
 } from "lucide-react";
 import { useState } from "react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { callApi } from "@/server/proxy";
-import { useCapabilities, useIndustries, useCountries, useRegions, usePrefetchReferenceData } from "@/hooks/useReferenceData";
+import { usePrefetchReferenceData } from "@/hooks/useReferenceData";
 import z from "zod";
+import {
+  Combobox,
+  ComboboxChip,
+  ComboboxChipRemove,
+  ComboboxChips,
+  ComboboxContent,
+  ComboboxControl,
+  ComboboxEmpty,
+  ComboboxInput,
+  ComboboxItem,
+  ComboboxItemIndicator,
+  ComboboxList,
+  ComboboxValue,
+} from '@/components/ui/base-combobox';
 
 export const Route = createFileRoute("/_app/profile/$companyId")({
   component: ProfileEdit,
@@ -47,6 +62,7 @@ function ProfileEdit() {
     industries: industriesQuery, 
     countries: countriesQuery, 
     regions: regionsQuery, 
+    serviceTypes: serviceTypesQuery,
     isLoading, 
     isError 
   } = usePrefetchReferenceData();
@@ -54,38 +70,19 @@ function ProfileEdit() {
   const initialCompany = company as CompanyProfileDto;
   const router = useRouter();
 
-  // Show loading state while reference data is loading  
-  if (isLoading) {
-    return (
-      <div className="flex justify-center items-center min-h-screen">
-        <Loader2 className="w-8 h-8 animate-spin text-gray-300" />
-      </div>
-    );
-  }
-
-  // Ensure we have the data before proceeding
-  if (isError) {
-    return (
-      <div className="flex justify-center items-center min-h-screen">
-        <div className="text-center">
-          <p className="text-red-600 mb-4">Failed to load reference data</p>
-          <Button onClick={() => window.location.reload()}>Retry</Button>
-        </div>
-      </div>
-    );
-  }
-
+  
   // Type assertions after null checks - TypeScript now knows these are defined
   const capabilities = capabilitiesQuery.data;
   const industries = industriesQuery.data;
   const countries = countriesQuery.data;
   const regions = regionsQuery.data;
-
+  const serviceTypes = serviceTypesQuery.data;
+  
   // Refetch handler to update view after mutations
   const refreshData = () => {
     router.invalidate();
   };
-
+  
   // --- AI Scrape State ---
   const [scrapeUrl, setScrapeUrl] = useState(initialCompany?.websiteUrl || "");
   const scrapeMutation = useMutation({
@@ -103,7 +100,7 @@ function ProfileEdit() {
       alert("Failed to start AI Sync.");
     }
   });
-
+  
   // --- Main Form (General Info) ---
   const form = useForm({
     defaultValues: {
@@ -112,6 +109,7 @@ function ProfileEdit() {
       fullDescription: initialCompany?.fullDescription || "",
       websiteUrl: initialCompany?.websiteUrl || "",
       employeeCount: initialCompany?.employeeCount || 0,
+      serviceTypeId: initialCompany?.serviceTypeId || "",
     },
     validators: {
       onSubmit: ({value} : {value: UpdateCompanyCommand}) => {
@@ -121,6 +119,7 @@ function ProfileEdit() {
           fullDescription: z.string().optional(),
           websiteUrl: z.string().url("Invalid URL").optional().or(z.literal("")),
           employeeCount: z.number().min(0).optional(),
+          serviceTypeId: z.string().optional(),
         });
         
         const result = schema.safeParse(value);
@@ -142,36 +141,37 @@ function ProfileEdit() {
         await callApi({ data: { fn: 'putApiCompaniesByIdCapabilities', args: { path: { id: companyId }, body: { id: companyId, capabilityIds: selectedCapabilityIds } } } });
         
         await callApi({ data: { fn: 'putApiCompaniesByIdIndustries', args: { path: { id: companyId }, body: { id: companyId, industryIds: selectedIndustryIds } } } });
-
+        
         // Save Company 
         await callApi({ 
-            data: { 
-              fn: 'putApiCompaniesById', 
-              args: { 
-                path: { id: companyId }, 
-                body: { 
-                  id: companyId, 
-                  name: value.name, 
-                  shortDescription: value.shortDescription,
-                  description: value.description, 
-                  websiteUrl: value.websiteUrl,
-                  employeeCount: value.employeeCount,
-                }
-              } 
+          data: { 
+            fn: 'putApiCompaniesById', 
+            args: { 
+              path: { id: companyId }, 
+              body: { 
+                id: companyId, 
+                name: value.name, 
+                shortDescription: value.shortDescription,
+                fullDescription: value.fullDescription, 
+                websiteUrl: value.websiteUrl,
+                employeeCount: value.employeeCount,
+                serviceTypeId: value.serviceTypeId,
+              }
             }
-          });
-        
+          }
+        });   
+          
         alert("Profile saved successfully!");
         refreshData();
       } catch (error) {
         console.error(error);
-        alert("Failed to save changes.");
-      }
-    },
-    // validatorAdapter: zodValidator(),
-  } as any); // Cast to any to avoid complex form typing issues for now
-
-  // --- Capabilities & Industries State ---
+          alert("Failed to save changes.");
+        }
+      },
+      // validatorAdapter: zodValidator(),
+    } as any); // Cast to any to avoid complex form typing issues for now
+    
+    // --- Capabilities & Industries State ---
   const [selectedCapabilityIds, setSelectedCapabilityIds] = useState<string[]>(
     initialCompany?.capabilities?.map((c) => c.id!).filter(Boolean) || []
   );
@@ -179,21 +179,6 @@ function ProfileEdit() {
     initialCompany?.industries?.map((c) => c.id!).filter(Boolean) || []
   );
 
-  const toggleCapability = (id: string) => {
-    if (selectedCapabilityIds.includes(id)) {
-      setSelectedCapabilityIds(prev => prev.filter(c => c !== id));
-    } else {
-      setSelectedCapabilityIds(prev => [...prev, id]);
-    }
-  };
-
-  const toggleIndustry = (id: string) => {
-    if (selectedIndustryIds.includes(id)) {
-      setSelectedIndustryIds(prev => prev.filter(c => c !== id));
-    } else {
-      setSelectedIndustryIds(prev => [...prev, id]);
-    }
-  };
 
   // --- Locations State ---
   const [isAddingLocation, setIsAddingLocation] = useState(false);
@@ -275,6 +260,10 @@ function ProfileEdit() {
   const [isAddingContact, setIsAddingContact] = useState(false);
   const [newContact, setNewContact] = useState({ firstName: "", lastName: "", email: "", position: "" });
 
+  // --- Invites State ---
+  const [isAddingInvite, setIsAddingInvite] = useState(false);
+  const [newInvite, setNewInvite] = useState({ name: "", email: "" });
+
   const addContactMutation = useMutation({
     mutationFn: async () => {
         // PostApiCompaniesByIdContactData
@@ -310,6 +299,54 @@ function ProfileEdit() {
     }
   });
 
+  // --- ApplicationUser Mutations ---
+  const deleteUserMutation = useMutation({
+    mutationFn: async (userId: string) => {
+      return callApi({ data: { fn: 'deleteApiCompaniesByIdUser', args: { path: { id: companyId }, query: { userId } } } });
+    },
+    onSuccess: () => {
+      refreshData();
+    }
+  });
+
+  // --- Invite Mutations ---
+  const addInviteMutation = useMutation({
+    mutationFn: async () => {
+      return callApi({
+        data: {
+          fn: 'postApiInvites',
+          args: {
+            body: {
+              email: newInvite.email,
+              companyId: companyId
+            }
+          }
+        }
+      });
+    },
+    onSuccess: () => {
+      setIsAddingInvite(false);
+      setNewInvite({ name: "", email: "" });
+      refreshData();
+    }
+  });
+
+  const deleteInviteMutation = useMutation({
+    mutationFn: async (inviteId: string) => {
+      return callApi({
+        data: {
+          fn: 'deleteApiInvitesById',
+          args: {
+            path: { id: inviteId }
+          }
+        }
+      });
+    },
+    onSuccess: () => {
+      refreshData();
+    }
+  });
+
   const [editingContactId, setEditingContactId] = useState<string | null>(null);
   const [editContact, setEditContact] = useState({ firstName: "", lastName: "", email: "", position: "" });
 
@@ -338,6 +375,28 @@ function ProfileEdit() {
       refreshData();
     }
   });
+
+  // Show loading state while reference data is loading  
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <Loader2 className="w-8 h-8 animate-spin text-gray-300" />
+      </div>
+    );
+  }
+
+  // Ensure we have the data before proceeding
+  if (isError) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="text-center">
+          <p className="text-red-600 mb-4">Failed to load reference data</p>
+          <Button onClick={() => window.location.reload()}>Retry</Button>
+        </div>
+      </div>
+    );
+  }
+ 
 
   const startEditContact = (contact: any) => {
     setEditingContactId(contact.id!);
@@ -760,64 +819,291 @@ function ProfileEdit() {
             </div>
            </section>
 
+          {/* Application Users */}
+          <section className="space-y-6">
+            <div className="flex items-center justify-between border-b border-gray-100 pb-2">
+                <h3 className="text-lg font-bold uppercase tracking-widest">
+                    Application Users
+                </h3>
+            </div>
+            
+            <div className="space-y-4">
+                {initialCompany?.applicationIdentityUsers?.map((user, index: number) => (
+                    <div key={user.id || index} className="flex items-center justify-between p-4 bg-gray-50 border border-gray-100 rounded-sm">
+                        <div className="flex items-center gap-4">
+                            <div className="w-8 h-8 flex items-center justify-center bg-white border border-gray-200 rounded-full">
+                                <User className="w-4 h-4 text-gray-400" />
+                            </div>
+                            <div>
+                                <div className="font-bold text-sm text-gray-900">
+                                    {user.email || 'Unknown User'}
+                                </div>
+                                <div className="text-xs text-gray-500 uppercase tracking-wide mt-1">
+                                    {user.userName ||'Application User'}
+                                </div>
+                            </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <button 
+                                onClick={() => {
+                                    if (confirm("Are you sure you want to remove this user from the company?")) {
+                                        deleteUserMutation.mutate(user.id!);
+                                    }
+                                }}
+                                className="text-gray-400 hover:text-red-600 transition-colors"
+                                disabled={deleteUserMutation.isPending}
+                            >
+                                <Trash2 className="w-4 h-4" />
+                            </button>
+                        </div>
+                    </div>
+                ))}
+
+                {(!initialCompany?.applicationIdentityUsers || initialCompany.applicationIdentityUsers.length === 0) && (
+                    <div className="p-6 bg-gray-50 border border-gray-200 text-center">
+                        <p className="text-gray-500 text-sm">No application users found.</p>
+                    </div>
+                )}
+            </div>
+          </section>
+
+          {/* Company Invites */}
+          <section className="space-y-6">
+            <div className="flex items-center justify-between border-b border-gray-100 pb-2">
+                <h3 className="text-lg font-bold uppercase tracking-widest">
+                    Pending Invites
+                </h3>
+            </div>
+            
+            <div className="space-y-4">
+                {initialCompany?.invites?.map(invite => (
+                    <div key={invite.id} className="flex items-center justify-between p-4 bg-gray-50 border border-gray-100 rounded-sm">
+                        <div className="flex items-center gap-4">
+                            <div className="w-8 h-8 flex items-center justify-center bg-white border border-gray-200 rounded-full">
+                                <User className="w-4 h-4 text-gray-400" />
+                            </div>
+                            <div>
+                                <div className="font-bold text-sm text-gray-900">{invite.name}</div>
+                                <div className="text-xs text-gray-500 uppercase tracking-wide mt-1">
+                                    {invite.email} • Pending Invite
+                                </div>
+                            </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <button 
+                                onClick={() => {
+                                    if (confirm("Are you sure you want to cancel this invite?")) {
+                                        deleteInviteMutation.mutate(invite.id!);
+                                    }
+                                }}
+                                className="text-gray-400 hover:text-red-600 transition-colors"
+                                disabled={deleteInviteMutation.isPending}
+                            >
+                                <Trash2 className="w-4 h-4" />
+                            </button>
+                        </div>
+                    </div>
+                ))}
+
+                {isAddingInvite ? (
+                    <div className="p-6 bg-gray-50 border border-gray-200 space-y-4">
+                        <div className="space-y-2">
+                            <Label>Full Name</Label>
+                            <Input 
+                                value={newInvite.name} 
+                                onChange={(e: any) => setNewInvite({...newInvite, name: e.target.value})} 
+                                placeholder="Enter full name"
+                            />
+                        </div>
+                        <div className="space-y-2">
+                            <Label>Email Address</Label>
+                            <Input 
+                                type="email"
+                                value={newInvite.email} 
+                                onChange={(e: any) => setNewInvite({...newInvite, email: e.target.value})} 
+                                placeholder="Enter email address"
+                            />
+                        </div>
+                        <div className="flex gap-2 justify-end pt-2">
+                            <Button variant="outline" onClick={() => setIsAddingInvite(false)} size="sm">Cancel</Button>
+                            <Button 
+                                onClick={() => addInviteMutation.mutate()} 
+                                disabled={addInviteMutation.isPending || !newInvite.name || !newInvite.email}
+                                size="sm"
+                                className="bg-black hover:bg-gray-800"
+                            >
+                                {addInviteMutation.isPending ? "Sending..." : "Send Invite"}
+                            </Button>
+                        </div>
+                    </div>
+                ) : (
+                    <Button variant="outline" onClick={() => setIsAddingInvite(true)} className="w-full border-dashed border-gray-300 text-gray-500 hover:border-gray-900 hover:text-gray-900">
+                        <Plus className="w-4 h-4 mr-2" /> Send Invite
+                    </Button>
+                )}
+            </div>
+          </section>
+
         </div>
 
         {/* Right Column: Tags & Metadata */}
         <div className="space-y-12">
+             {/* Service Type */}
+            <section className="space-y-6">
+                <h3 className="text-lg font-bold uppercase tracking-widest border-b border-gray-100 pb-2 flex items-center gap-2 mb-0">
+                    <MonitorCloud className="w-4 h-4" /> Service Type
+                </h3>
+                <div className="p-6 pt-4 bg-white border border-gray-200 shadow-sm w-full">
+                    <p className="text-xs text-gray-400 italic mb-2">
+                        Select the primary service your firm provides.
+                    </p>
+                    <form.Field
+                        name="serviceTypeId"
+                        children={(field) => (
+                            <div>
+                                <Select 
+                                    value={field.state.value as string} 
+                                    onValueChange={field.handleChange}
+                                >
+                                    <SelectTrigger className="w-full">
+                                        <SelectValue placeholder="Select a service type" />
+                                    </SelectTrigger>
+                                    <SelectContent className="w-full">
+                                        {serviceTypes?.map((serviceType) => (
+                                            <SelectItem key={serviceType.id} value={serviceType.id!}>
+                                                {serviceType.name}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                                {field.state.meta.errors && (
+                                    <p className="text-red-500 text-xs mt-1">{field.state.meta.errors}</p>
+                                )}
+                            </div>
+                        )}
+                    />
+                </div>
+            </section>
+
              {/* Core Skills */}
             <section className="space-y-6">
-                <h3 className="text-lg font-bold uppercase tracking-widest border-b border-gray-100 pb-2 flex items-center gap-2">
+                <h3 className="text-lg font-bold uppercase tracking-widest border-b border-gray-100 pb-2 flex items-center gap-2 mb-0">
                     <Briefcase className="w-4 h-4" /> Core Skills
                 </h3>
-                <div className="p-6 bg-white border border-gray-200 shadow-sm">
-                    <div className="flex flex-wrap gap-2 mb-4">
-                        {capabilities?.map((cap: any) => {
-                            const isSelected = selectedCapabilityIds.includes(cap.id!);
-                            return (
-                                <button
-                                    key={cap.id}
-                                    onClick={() => toggleCapability(cap.id!)}
-                                    className={`px-3 py-1.5 text-[10px] uppercase font-bold tracking-wider border transition-all ${
-                                        isSelected 
-                                        ? "bg-black text-white border-black" 
-                                        : "bg-gray-50 text-gray-400 border-gray-200 hover:border-gray-400 hover:text-gray-600"
-                                    }`}
-                                >
-                                    {cap.name}
-                                </button>
-                            );
-                        })}
-                    </div>
-                    <p className="text-xs text-gray-400 italic">
+                <div className="p-6 pt-4 bg-white border border-gray-200 shadow-sm">
+                    <Combobox 
+                        items={capabilities || []} 
+                        multiple 
+                        value={capabilities?.filter(cap => selectedCapabilityIds.includes(cap.id!)) || []}
+                        onValueChange={(value: unknown) => {
+                            const selectedCapabilities = value as CapabilityDto[];
+                            setSelectedCapabilityIds(selectedCapabilities.map(cap => cap.id!));
+                        }}
+                    >
+                        <ComboboxChips className="p-0 border-0 shadow-none mb-4">
+                            <ComboboxValue>
+                                {(value: CapabilityDto[]) => (
+                                    <>
+                                        {value.length === 0 && (
+                                            <p className="text-xs text-gray-400 italic my-2">No capabilities selected.</p>
+                                        )}
+                                        {value.map((capability) => (
+                                            <ComboboxChip 
+                                                key={capability.id} 
+                                                aria-label={capability.name} 
+                                                className="px-3 py-1.5 text-[10px] uppercase font-bold tracking-wider border transition-all bg-black text-white border-black rounded-none"
+                                            >
+                                                {capability.name}
+                                                <ComboboxChipRemove />
+                                            </ComboboxChip>
+                                        ))}
+                                    </>
+                                )}
+                            </ComboboxValue>
+                        </ComboboxChips>
+
+                    <p className="text-xs text-gray-400 italic my-2">
                         Select all that apply to your firm.
                     </p>
+                        <ComboboxControl>
+                            <ComboboxValue>
+                                <ComboboxInput placeholder="Search and select capabilities..." />
+                            </ComboboxValue>
+                        </ComboboxControl>
+
+                        <ComboboxContent>
+                            <ComboboxEmpty>No capabilities found.</ComboboxEmpty>  
+                            <ComboboxList>
+                                {(capability: CapabilityDto) => (
+                                    <ComboboxItem key={capability.id} value={capability}>   
+                                        <ComboboxItemIndicator />
+                                        <div className="col-start-2">{capability.name}</div>  
+                                    </ComboboxItem>
+                                )}
+                            </ComboboxList> 
+                        </ComboboxContent>
+                    </Combobox>
                 </div>
             </section>
 
              {/* Industries */}
             <section className="space-y-6">
-                <h3 className="text-lg font-bold uppercase tracking-widest border-b border-gray-100 pb-2 flex items-center gap-2">
+                <h3 className="text-lg font-bold uppercase tracking-widest border-b border-gray-100 pb-2 flex items-center gap-2 mb-0">
                      <Building className="w-4 h-4" /> Primary Industries
                 </h3>
-                  <div className="p-6 bg-white border border-gray-200 shadow-sm">
-                    <div className="flex flex-wrap gap-2 mb-4">
-                        {industries?.map((ind: any) => {
-                            const isSelected = selectedIndustryIds.includes(ind.id!);
-                            return (
-                                <button
-                                    key={ind.id}
-                                    onClick={() => toggleIndustry(ind.id!)}
-                                    className={`px-3 py-1.5 text-[10px] uppercase font-bold tracking-wider border transition-all ${
-                                        isSelected 
-                                        ? "bg-red-600 text-white border-red-600" 
-                                        : "bg-gray-50 text-gray-400 border-gray-200 hover:border-gray-400 hover:text-gray-600"
-                                    }`}
-                                >
-                                    {ind.name}
-                                </button>
-                            );
-                        })}
-                    </div>
+                <div className="p-6 bg-white border border-gray-200 shadow-sm">
+                    <Combobox 
+                        items={industries || []} 
+                        multiple 
+                        value={industries?.filter(ind => selectedIndustryIds.includes(ind.id!)) || []}
+                        onValueChange={(value: unknown) => {
+                            const selectedIndustries = value as any[];
+                            setSelectedIndustryIds(selectedIndustries.map(ind => ind.id!));
+                        }}
+                    >
+                        <ComboboxChips className="p-0 border-0 shadow-none mb-4">
+                            <ComboboxValue>
+                                {(value: any[]) => (
+                                    <>
+                                        {value.length === 0 && (
+                                            <p className="text-xs text-gray-400 italic my-2">No industries selected.</p>
+                                        )}
+                                        {value.map((industry) => (
+                                            <ComboboxChip 
+                                                key={industry.id} 
+                                                aria-label={industry.name} 
+                                                className="px-3 py-1.5 text-[10px] uppercase font-bold tracking-wider border transition-all bg-red-600 text-white border-red-600 rounded-none"
+                                            >
+                                                {industry.name}
+                                                <ComboboxChipRemove />
+                                            </ComboboxChip>
+                                        ))}
+                                    </>
+                                )}
+                            </ComboboxValue>
+                        </ComboboxChips>
+
+                    <p className="text-xs text-gray-400 italic my-2">
+                        Select the primary industries your firm serves.
+                    </p>
+                        <ComboboxControl>
+                            <ComboboxValue>
+                                <ComboboxInput placeholder="Search and select industries..." />
+                            </ComboboxValue>
+                        </ComboboxControl>
+
+                        <ComboboxContent>
+                            <ComboboxEmpty>No industries found.</ComboboxEmpty>  
+                            <ComboboxList>
+                                {(industry: any) => (
+                                    <ComboboxItem key={industry.id} value={industry}>   
+                                        <ComboboxItemIndicator />
+                                        <div className="col-start-2">{industry.name}</div>  
+                                    </ComboboxItem>
+                                )}
+                            </ComboboxList> 
+                        </ComboboxContent>
+                    </Combobox>
                 </div>
             </section>
         </div>

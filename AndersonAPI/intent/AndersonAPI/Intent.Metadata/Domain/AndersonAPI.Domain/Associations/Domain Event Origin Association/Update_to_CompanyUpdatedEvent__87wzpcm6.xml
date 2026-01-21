@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<association id="9c1a7177-6ffb-413e-a524-fcadada607d8">
+  <sourceEnd id="91302505-762b-4b19-b09b-4465f623a069" type="Domain Event Origin Association Source End" typeId="2495d3ef-f7a2-441d-b749-b51b2546b45e">
+    <display>published by : Company.Update</display>
+    <order>0</order>
+    <typeReference id="01bfb584-cca4-4dbc-a459-f7d20802f727">
+      <typeId>d6578f9c-1ede-4848-8166-d14a98ca0f46</typeId>
+      <isNavigable>false</isNavigable>
+      <isNullable>false</isNullable>
+      <isCollection>false</isCollection>
+      <isRequired>true</isRequired>
+      <typePackageName>AndersonAPI.Domain</typePackageName>
+      <typePackageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</typePackageId>
+      <stereotypes />
+      <genericTypeParameters />
+    </typeReference>
+    <stereotypes />
+    <metadata />
+    <childElements />
+  </sourceEnd>
+  <targetEnd id="9c1a7177-6ffb-413e-a524-fcadada607d8" type="Domain Event Origin Association Target End" typeId="17046427-14e2-4081-8463-ef16c0fda399">
+    <display>publishes : CompanyUpdatedEvent</display>
+    <order>6</order>
+    <typeReference id="00ab34bb-e30a-4e34-85be-c05c5012bc7b">
+      <typeId>5d12c57e-731e-4c4f-833e-da4fedf0125e</typeId>
+      <isNavigable>true</isNavigable>
+      <isNullable>false</isNullable>
+      <isCollection>false</isCollection>
+      <isRequired>true</isRequired>
+      <typePackageName>AndersonAPI.Domain</typePackageName>
+      <typePackageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</typePackageId>
+      <stereotypes />
+      <genericTypeParameters />
+    </typeReference>
+    <stereotypes />
+    <metadata />
+    <childElements />
+  </targetEnd>
+  <associationType>Domain Event Origin Association</associationType>
+  <associationTypeId>4c0cc50b-8a9d-43cd-b731-9f354f69f3c9</associationTypeId>
+  <stereotypes />
+</association>

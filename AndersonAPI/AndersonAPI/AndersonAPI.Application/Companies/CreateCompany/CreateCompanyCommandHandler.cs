@@ -55,13 +55,12 @@ namespace AndersonAPI.Application.Companies.CreateCompany
                 shortDescription: request.ShortDescription,
                 fullDescription: request.FullDescription,
                 websiteUrl: request.WebsiteUrl,
-                employeeCount: request.EmployeeCount);
+                employeeCount: request.EmployeeCount,
+                serviceTypeId: request.ServiceTypeId);
 
-            var serviceTypes = request.ServiceTypes == null ? new List<ServiceType>() : await _serviceTypeRepository.FindByIdsAsync(request.ServiceTypes.ToArray(), cancellationToken);
             var capabilities = request.Capabilities == null ? new List<Capability>() : await _capabilityRepository.FindByIdsAsync(request.Capabilities.ToArray(), cancellationToken);
             var industries = request.Industries == null ? new List<Industry>() : await _industryRepository.FindByIdsAsync(request.Industries.ToArray(), cancellationToken);
 
-            company.SetServiceTypes(serviceTypes);
             company.SetCapabilities(capabilities);
             company.SetIndustries(industries);
             company.AddUser(applicationUser);

@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@base-ui-components/react':
+        specifier: 1.0.0-rc.0
+        version: 1.0.0-rc.0(@types/react@19.2.7)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       '@faker-js/faker':
         specifier: ^10.0.0
         version: 10.2.0
@@ -287,6 +290,29 @@ packages:
   '@babel/types@7.28.5':
     resolution: {integrity: sha512-qQ5m48eI/MFLQ5PxQj4PFaprjyCTLI37ElWMmNs0K8Lk3dVeOdNpB3ks8jc7yM5CDmVC73eMVk/trk3fgmrUpA==}
     engines: {node: '>=6.9.0'}
+
+  '@base-ui-components/react@1.0.0-rc.0':
+    resolution: {integrity: sha512-9lhUFbJcbXvc9KulLev1WTFxS/alJRBWDH/ibKSQaNvmDwMFS2gKp1sTeeldYSfKuS/KC1w2MZutc0wHu2hRHQ==}
+    engines: {node: '>=14.0.0'}
+    deprecated: Package was renamed to @base-ui/react
+    peerDependencies:
+      '@types/react': ^17 || ^18 || ^19
+      react: ^17 || ^18 || ^19
+      react-dom: ^17 || ^18 || ^19
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+
+  '@base-ui-components/utils@0.2.2':
+    resolution: {integrity: sha512-rNJCD6TFy3OSRDKVHJDzLpxO3esTV1/drRtWNUpe7rCpPN9HZVHUCuP+6rdDYDGWfXnQHbqi05xOyRP2iZAlkw==}
+    deprecated: Package was renamed to @base-ui/utils
+    peerDependencies:
+      '@types/react': ^17 || ^18 || ^19
+      react: ^17 || ^18 || ^19
+      react-dom: ^17 || ^18 || ^19
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
 
   '@biomejs/biome@2.3.11':
     resolution: {integrity: sha512-/zt+6qazBWguPG6+eWmiELqO+9jRsMZ/DBU3lfuU2ngtIQYzymocHhKiZRyrbra4aCOoyTg/BmY+6WH5mv9xmQ==}
@@ -3448,6 +3474,9 @@ packages:
   symbol-tree@3.2.4:
     resolution: {integrity: sha512-9QNk5KwDF+Bvz+PyObkmSYjI5ksVUYtjW7AU22r2NKcfLJcXp96hkDWU3+XndOsUb+AQ9QhfzfCT2O+CNWT5Tw==}
 
+  tabbable@6.4.0:
+    resolution: {integrity: sha512-05PUHKSNE8ou2dwIxTngl4EzcnsCDZGJ/iCLtDflR/SHB/ny14rXc+qU5P4mG9JkusiV7EivzY9Mhm55AzAvCg==}
+
   tailwind-merge@3.4.0:
     resolution: {integrity: sha512-uSaO4gnW+b3Y2aWoWfFpX62vn2sR3skfhbjsEnaBI81WD1wBLlHZe5sWf0AqjksNdYTbGBEd0UasQMT3SNV15g==}
 
@@ -4045,6 +4074,31 @@ snapshots:
     dependencies:
       '@babel/helper-string-parser': 7.27.1
       '@babel/helper-validator-identifier': 7.28.5
+
+  '@base-ui-components/react@1.0.0-rc.0(@types/react@19.2.7)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
+    dependencies:
+      '@babel/runtime': 7.28.4
+      '@base-ui-components/utils': 0.2.2(@types/react@19.2.7)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      '@floating-ui/react-dom': 2.1.6(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      '@floating-ui/utils': 0.2.10
+      react: 19.2.3
+      react-dom: 19.2.3(react@19.2.3)
+      reselect: 5.1.1
+      tabbable: 6.4.0
+      use-sync-external-store: 1.6.0(react@19.2.3)
+    optionalDependencies:
+      '@types/react': 19.2.7
+
+  '@base-ui-components/utils@0.2.2(@types/react@19.2.7)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
+    dependencies:
+      '@babel/runtime': 7.28.4
+      '@floating-ui/utils': 0.2.10
+      react: 19.2.3
+      react-dom: 19.2.3(react@19.2.3)
+      reselect: 5.1.1
+      use-sync-external-store: 1.6.0(react@19.2.3)
+    optionalDependencies:
+      '@types/react': 19.2.7
 
   '@biomejs/biome@2.3.11':
     optionalDependencies:
@@ -7099,6 +7153,8 @@ snapshots:
   supports-preserve-symlinks-flag@1.0.0: {}
 
   symbol-tree@3.2.4: {}
+
+  tabbable@6.4.0: {}
 
   tailwind-merge@3.4.0: {}
 

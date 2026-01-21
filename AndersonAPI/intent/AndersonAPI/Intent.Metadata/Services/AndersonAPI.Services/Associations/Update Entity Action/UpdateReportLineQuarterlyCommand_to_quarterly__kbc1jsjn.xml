@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<association id="292ecffa-f32e-4137-bcac-6bc07b2b0471">
+  <sourceEnd id="2a89f41c-85a7-48dd-9f82-1bd37e4dfd7e" type="Update Entity Action Source End" typeId="6bc95978-6def-4d0c-a4f5-25bdeda8a9f6">
+    <display>updated by : Quarterlies.UpdateReportLineQuarterlyCommand</display>
+    <order>0</order>
+    <typeReference id="fb5d9926-dbf8-4882-ba88-d6f101890973">
+      <typeId>36a07ff8-955e-4a15-a874-d5d53ce367e6</typeId>
+      <isNavigable>false</isNavigable>
+      <isNullable>false</isNullable>
+      <isCollection>false</isCollection>
+      <isRequired>true</isRequired>
+      <typePackageName>AndersonAPI.Services</typePackageName>
+      <typePackageId>c8555d38-5afc-4ea2-9a61-c7a505212753</typePackageId>
+      <stereotypes />
+      <genericTypeParameters />
+    </typeReference>
+    <stereotypes />
+    <metadata />
+    <childElements />
+  </sourceEnd>
+  <targetEnd id="292ecffa-f32e-4137-bcac-6bc07b2b0471" type="Update Entity Action Target End" typeId="516069f6-09cc-4de8-8e31-3c71ca823452">
+    <name>quarterly</name>
+    <display>[update] quarterly: UpdateReportLine</display>
+    <order>8</order>
+    <traits>
+      <trait id="d00a2ab0-9a23-4192-b8bb-166798fc7dba" name="[Processing Action]" />
+    </traits>
+    <typeReference id="53f46ad1-4213-4cfc-9676-8731234b38e9">
+      <typeId>327b075f-4405-4c37-8331-6ad8c069c538</typeId>
+      <isNavigable>true</isNavigable>
+      <isNullable>false</isNullable>
+      <isCollection>false</isCollection>
+      <isRequired>true</isRequired>
+      <typePackageName>AndersonAPI.Domain</typePackageName>
+      <typePackageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</typePackageId>
+      <stereotypes />
+      <genericTypeParameters />
+    </typeReference>
+    <stereotypes />
+    <mappings>
+      <mapping type="Query Entity Mapping" typeId="25f25af9-c38b-4053-9474-b0fabe9d7ea7">
+        <source applicationId="e87261ce-2b9f-4042-8562-a503e4cf2759" designerId="81104ae6-2bc5-4bae-b05a-f987b0372d81" elementId="36a07ff8-955e-4a15-a874-d5d53ce367e6" location="[AndersonAPI].[Services].[UpdateReportLineQuarterlyCommand]" />
+        <target applicationId="e87261ce-2b9f-4042-8562-a503e4cf2759" designerId="6ab29b31-27af-4f56-a67c-986d82097d63" elementId="666e0055-bc9c-4fd6-acd8-975f4719ee0b" location="[AndersonAPI].[Services].[Quarterly]" />
+        <mappedEnds>
+          <mappedEnd>
+            <expression>{Id}</expression>
+            <path>
+              <target id="666e0055-bc9c-4fd6-acd8-975f4719ee0b" name="Quarterly" type="element" specialization="Class" specializationId="04e12b51-ed12-42a3-9667-a6aa81bb6d10" />
+              <target id="8c5311cf-6694-4fc9-880d-f324dfd6d9fc" name="base" type="association" specialization="Generalization Target End" specializationId="4686cc1d-b4d8-4b99-b45b-f77bd5496946" />
+              <target id="9ed19ba4-548e-4be5-b0ed-eea43cc82348" name="Id" type="element" specialization="Attribute" specializationId="0090fb93-483e-41af-a11d-5ad2dc796adf" />
+            </path>
+            <sources>
+              <source identifier="Id" mappingType="Filter Mapping" mappingTypeId="01d09a7f-0e7c-4670-b7bc-395d7e893ef2">
+                <path>
+                  <target id="36a07ff8-955e-4a15-a874-d5d53ce367e6" name="UpdateReportLineQuarterlyCommand" type="element" specialization="Command" specializationId="ccf14eb6-3a55-4d81-b5b9-d27311c70cb9" />
+                  <target id="3418cba6-baf2-400b-b80d-9091bb6188d6" name="Id" type="element" specialization="DTO-Field" specializationId="7baed1fd-469b-4980-8fd9-4cefb8331eb2" />
+                </path>
+              </source>
+            </sources>
+          </mappedEnd>
+        </mappedEnds>
+      </mapping>
+      <mapping type="Update Entity Mapping" typeId="01721b1a-a85d-4320-a5cd-8bd39247196a">
+        <source applicationId="e87261ce-2b9f-4042-8562-a503e4cf2759" designerId="81104ae6-2bc5-4bae-b05a-f987b0372d81" elementId="36a07ff8-955e-4a15-a874-d5d53ce367e6" location="[AndersonAPI].[Services].[UpdateReportLineQuarterlyCommand]" />
+        <target applicationId="e87261ce-2b9f-4042-8562-a503e4cf2759" designerId="6ab29b31-27af-4f56-a67c-986d82097d63" elementId="666e0055-bc9c-4fd6-acd8-975f4719ee0b" location="[AndersonAPI].[Services].[Quarterly]" />
+        <mappedEnds>
+          <mappedEnd>
+            <expression>{UpdateReportLineQuarterlyCommand}</expression>
+            <path>
+              <target id="666e0055-bc9c-4fd6-acd8-975f4719ee0b" name="Quarterly" type="element" specialization="Class" specializationId="04e12b51-ed12-42a3-9667-a6aa81bb6d10" />
+              <target id="327b075f-4405-4c37-8331-6ad8c069c538" name="UpdateReportLine" type="element" specialization="Operation" specializationId="e042bb67-a1df-480c-9935-b26210f78591" />
+            </path>
+            <sources>
+              <source identifier="UpdateReportLineQuarterlyCommand" mappingType="Invocation Mapping" mappingTypeId="d30bdba1-9c47-4917-b81d-29230fed5d6a">
+                <path>
+                  <target id="36a07ff8-955e-4a15-a874-d5d53ce367e6" name="UpdateReportLineQuarterlyCommand" type="element" specialization="Command" specializationId="ccf14eb6-3a55-4d81-b5b9-d27311c70cb9" />
+                </path>
+              </source>
+            </sources>
+          </mappedEnd>
+          <mappedEnd>
+            <expression>{ReprotLineId}</expression>
+            <path>
+              <target id="666e0055-bc9c-4fd6-acd8-975f4719ee0b" name="Quarterly" type="element" specialization="Class" specializationId="04e12b51-ed12-42a3-9667-a6aa81bb6d10" />
+              <target id="327b075f-4405-4c37-8331-6ad8c069c538" name="UpdateReportLine" type="element" specialization="Operation" specializationId="e042bb67-a1df-480c-9935-b26210f78591" />
+              <target id="c4ef8dcd-f342-4b19-898a-db950c2eb16e" name="reprotLineId" type="element" specialization="Parameter" specializationId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b" />
+            </path>
+            <sources>
+              <source identifier="ReprotLineId" mappingType="Data Mapping" mappingTypeId="ca88649b-f20b-44db-a9c0-017c26155ba8">
+                <path>
+                  <target id="36a07ff8-955e-4a15-a874-d5d53ce367e6" name="UpdateReportLineQuarterlyCommand" type="element" specialization="Command" specializationId="ccf14eb6-3a55-4d81-b5b9-d27311c70cb9" />
+                  <target id="d1d1b269-675e-4bd0-8c50-01a553e67d0e" name="ReprotLineId" type="element" specialization="DTO-Field" specializationId="7baed1fd-469b-4980-8fd9-4cefb8331eb2" />
+                </path>
+              </source>
+            </sources>
+          </mappedEnd>
+          <mappedEnd>
+            <expression>{PartnerCount}</expression>
+            <path>
+              <target id="666e0055-bc9c-4fd6-acd8-975f4719ee0b" name="Quarterly" type="element" specialization="Class" specializationId="04e12b51-ed12-42a3-9667-a6aa81bb6d10" />
+              <target id="327b075f-4405-4c37-8331-6ad8c069c538" name="UpdateReportLine" type="element" specialization="Operation" specializationId="e042bb67-a1df-480c-9935-b26210f78591" />
+              <target id="9ffa8fa9-00e6-4cb0-9ecd-ceb49c72b417" name="partnerCount" type="element" specialization="Parameter" specializationId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b" />
+            </path>
+            <sources>
+              <source identifier="PartnerCount" mappingType="Data Mapping" mappingTypeId="ca88649b-f20b-44db-a9c0-017c26155ba8">
+                <path>
+                  <target id="36a07ff8-955e-4a15-a874-d5d53ce367e6" name="UpdateReportLineQuarterlyCommand" type="element" specialization="Command" specializationId="ccf14eb6-3a55-4d81-b5b9-d27311c70cb9" />
+                  <target id="025e01c9-db6e-4be0-b3d4-7121ce53aec3" name="PartnerCount" type="element" specialization="DTO-Field" specializationId="7baed1fd-469b-4980-8fd9-4cefb8331eb2" />
+                </path>
+              </source>
+            </sources>
+          </mappedEnd>
+          <mappedEnd>
+            <expression>{Headcount}</expression>
+            <path>
+              <target id="666e0055-bc9c-4fd6-acd8-975f4719ee0b" name="Quarterly" type="element" specialization="Class" specializationId="04e12b51-ed12-42a3-9667-a6aa81bb6d10" />
+              <target id="327b075f-4405-4c37-8331-6ad8c069c538" name="UpdateReportLine" type="element" specialization="Operation" specializationId="e042bb67-a1df-480c-9935-b26210f78591" />
+              <target id="e5fb9c92-06ae-48b6-8732-7e8fdeccd6d9" name="headcount" type="element" specialization="Parameter" specializationId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b" />
+            </path>
+            <sources>
+              <source identifier="Headcount" mappingType="Data Mapping" mappingTypeId="ca88649b-f20b-44db-a9c0-017c26155ba8">
+                <path>
+                  <target id="36a07ff8-955e-4a15-a874-d5d53ce367e6" name="UpdateReportLineQuarterlyCommand" type="element" specialization="Command" specializationId="ccf14eb6-3a55-4d81-b5b9-d27311c70cb9" />
+                  <target id="e9a8d74d-64bf-4da5-80d5-ab2a5ea72924" name="Headcount" type="element" specialization="DTO-Field" specializationId="7baed1fd-469b-4980-8fd9-4cefb8331eb2" />
+                </path>
+              </source>
+            </sources>
+          </mappedEnd>
+          <mappedEnd>
+            <expression>{ClientCount}</expression>
+            <path>
+              <target id="666e0055-bc9c-4fd6-acd8-975f4719ee0b" name="Quarterly" type="element" specialization="Class" specializationId="04e12b51-ed12-42a3-9667-a6aa81bb6d10" />
+              <target id="327b075f-4405-4c37-8331-6ad8c069c538" name="UpdateReportLine" type="element" specialization="Operation" specializationId="e042bb67-a1df-480c-9935-b26210f78591" />
+              <target id="c3334ffd-45a8-4dfa-b50a-fad42f22c86b" name="clientCount" type="element" specialization="Parameter" specializationId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b" />
+            </path>
+            <sources>
+              <source identifier="ClientCount" mappingType="Data Mapping" mappingTypeId="ca88649b-f20b-44db-a9c0-017c26155ba8">
+                <path>
+                  <target id="36a07ff8-955e-4a15-a874-d5d53ce367e6" name="UpdateReportLineQuarterlyCommand" type="element" specialization="Command" specializationId="ccf14eb6-3a55-4d81-b5b9-d27311c70cb9" />
+                  <target id="ebe165a3-5c0a-4e61-96dd-de8f87ffa697" name="ClientCount" type="element" specialization="DTO-Field" specializationId="7baed1fd-469b-4980-8fd9-4cefb8331eb2" />
+                </path>
+              </source>
+            </sources>
+          </mappedEnd>
+          <mappedEnd>
+            <expression>{OfficeCount}</expression>
+            <path>
+              <target id="666e0055-bc9c-4fd6-acd8-975f4719ee0b" name="Quarterly" type="element" specialization="Class" specializationId="04e12b51-ed12-42a3-9667-a6aa81bb6d10" />
+              <target id="327b075f-4405-4c37-8331-6ad8c069c538" name="UpdateReportLine" type="element" specialization="Operation" specializationId="e042bb67-a1df-480c-9935-b26210f78591" />
+              <target id="5a6410c4-59cf-4701-9677-4e78bbaacdcb" name="officeCount" type="element" specialization="Parameter" specializationId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b" />
+            </path>
+            <sources>
+              <source identifier="OfficeCount" mappingType="Data Mapping" mappingTypeId="ca88649b-f20b-44db-a9c0-017c26155ba8">
+                <path>
+                  <target id="36a07ff8-955e-4a15-a874-d5d53ce367e6" name="UpdateReportLineQuarterlyCommand" type="element" specialization="Command" specializationId="ccf14eb6-3a55-4d81-b5b9-d27311c70cb9" />
+                  <target id="2c1a075a-2647-4b3b-afee-93319d880679" name="OfficeCount" type="element" specialization="DTO-Field" specializationId="7baed1fd-469b-4980-8fd9-4cefb8331eb2" />
+                </path>
+              </source>
+            </sources>
+          </mappedEnd>
+          <mappedEnd>
+            <expression>{LawyerCount}</expression>
+            <path>
+              <target id="666e0055-bc9c-4fd6-acd8-975f4719ee0b" name="Quarterly" type="element" specialization="Class" specializationId="04e12b51-ed12-42a3-9667-a6aa81bb6d10" />
+              <target id="327b075f-4405-4c37-8331-6ad8c069c538" name="UpdateReportLine" type="element" specialization="Operation" specializationId="e042bb67-a1df-480c-9935-b26210f78591" />
+              <target id="6ad927ff-8cab-4ba2-97f2-482e5417847b" name="lawyerCount" type="element" specialization="Parameter" specializationId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b" />
+            </path>
+            <sources>
+              <source identifier="LawyerCount" mappingType="Data Mapping" mappingTypeId="ca88649b-f20b-44db-a9c0-017c26155ba8">
+                <path>
+                  <target id="36a07ff8-955e-4a15-a874-d5d53ce367e6" name="UpdateReportLineQuarterlyCommand" type="element" specialization="Command" specializationId="ccf14eb6-3a55-4d81-b5b9-d27311c70cb9" />
+                  <target id="5e76d837-7280-45d8-b6a4-db55bbb0f092" name="LawyerCount" type="element" specialization="DTO-Field" specializationId="7baed1fd-469b-4980-8fd9-4cefb8331eb2" />
+                </path>
+              </source>
+            </sources>
+          </mappedEnd>
+          <mappedEnd>
+            <expression>{EstimatedRevenue}</expression>
+            <path>
+              <target id="666e0055-bc9c-4fd6-acd8-975f4719ee0b" name="Quarterly" type="element" specialization="Class" specializationId="04e12b51-ed12-42a3-9667-a6aa81bb6d10" />
+              <target id="327b075f-4405-4c37-8331-6ad8c069c538" name="UpdateReportLine" type="element" specialization="Operation" specializationId="e042bb67-a1df-480c-9935-b26210f78591" />
+              <target id="c4a3a78a-697d-4123-b023-0ef7f2392140" name="estimatedRevenue" type="element" specialization="Parameter" specializationId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b" />
+            </path>
+            <sources>
+              <source identifier="EstimatedRevenue" mappingType="Data Mapping" mappingTypeId="ca88649b-f20b-44db-a9c0-017c26155ba8">
+                <path>
+                  <target id="36a07ff8-955e-4a15-a874-d5d53ce367e6" name="UpdateReportLineQuarterlyCommand" type="element" specialization="Command" specializationId="ccf14eb6-3a55-4d81-b5b9-d27311c70cb9" />
+                  <target id="1fefec41-a2aa-44b2-8b7c-8fd807c42256" name="EstimatedRevenue" type="element" specialization="DTO-Field" specializationId="7baed1fd-469b-4980-8fd9-4cefb8331eb2" />
+                </path>
+              </source>
+            </sources>
+          </mappedEnd>
+        </mappedEnds>
+      </mapping>
+    </mappings>
+    <metadata />
+    <childElements />
+  </targetEnd>
+  <associationType>Update Entity Action</associationType>
+  <associationTypeId>9ea0382a-4617-412a-a8c8-af987bbce226</associationTypeId>
+  <stereotypes />
+</association>

@@ -24,7 +24,7 @@ namespace AndersonAPI.Application.Companies.UpdateCompany
             RuleFor(v => v.ShortDescription)
                 .NotNull();
 
-            RuleFor(v => v.Description)
+            RuleFor(v => v.FullDescription)
                 .NotNull();
 
             RuleFor(v => v.WebsiteUrl)

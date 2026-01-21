@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<association id="c92786bd-e7d6-4972-ad59-2723c4d4767e">
+  <sourceEnd id="ee64ebcf-2718-4b06-9ca8-4966bf86b4bb" type="Update Entity Action Source End" typeId="6bc95978-6def-4d0c-a4f5-25bdeda8a9f6">
+    <display>updated by : Invites.UpdateInviteCommand</display>
+    <order>0</order>
+    <typeReference id="e193aec1-073c-4c3f-a83a-d15bd34cabc2">
+      <typeId>71a0dcce-0c8e-4865-b7e3-a7ed94446fd8</typeId>
+      <isNavigable>false</isNavigable>
+      <isNullable>false</isNullable>
+      <isCollection>false</isCollection>
+      <isRequired>true</isRequired>
+      <typePackageName>AndersonAPI.Services</typePackageName>
+      <typePackageId>c8555d38-5afc-4ea2-9a61-c7a505212753</typePackageId>
+      <stereotypes />
+      <genericTypeParameters />
+    </typeReference>
+    <stereotypes />
+    <metadata />
+    <childElements />
+  </sourceEnd>
+  <targetEnd id="c92786bd-e7d6-4972-ad59-2723c4d4767e" type="Update Entity Action Target End" typeId="516069f6-09cc-4de8-8e31-3c71ca823452">
+    <name>invite</name>
+    <display>[update] invite: Update</display>
+    <order>2</order>
+    <traits>
+      <trait id="d00a2ab0-9a23-4192-b8bb-166798fc7dba" name="[Processing Action]" />
+    </traits>
+    <typeReference id="73d9b5ac-8648-4a9d-a764-0432660d1da2">
+      <typeId>6632ee07-13a0-4188-9ea4-8f1d5809403b</typeId>
+      <isNavigable>true</isNavigable>
+      <isNullable>false</isNullable>
+      <isCollection>false</isCollection>
+      <isRequired>true</isRequired>
+      <typePackageName>AndersonAPI.Domain</typePackageName>
+      <typePackageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</typePackageId>
+      <stereotypes />
+      <genericTypeParameters />
+    </typeReference>
+    <stereotypes />
+    <mappings>
+      <mapping type="Query Entity Mapping" typeId="25f25af9-c38b-4053-9474-b0fabe9d7ea7">
+        <source applicationId="e87261ce-2b9f-4042-8562-a503e4cf2759" designerId="81104ae6-2bc5-4bae-b05a-f987b0372d81" elementId="71a0dcce-0c8e-4865-b7e3-a7ed94446fd8" location="[AndersonAPI].[Services].[UpdateInviteCommand]" />
+        <target applicationId="e87261ce-2b9f-4042-8562-a503e4cf2759" designerId="6ab29b31-27af-4f56-a67c-986d82097d63" elementId="a94ef440-060b-4830-8152-8bb2cdbb98bb" location="[AndersonAPI].[Services].[Invite]" />
+        <mappedEnds>
+          <mappedEnd>
+            <expression>{Id}</expression>
+            <path>
+              <target id="a94ef440-060b-4830-8152-8bb2cdbb98bb" name="Invite" type="element" specialization="Class" specializationId="04e12b51-ed12-42a3-9667-a6aa81bb6d10" />
+              <target id="7a9e975e-9e37-4ffa-b67e-5181562f0a66" name="base" type="association" specialization="Generalization Target End" specializationId="4686cc1d-b4d8-4b99-b45b-f77bd5496946" />
+              <target id="fc537b78-379d-4cc3-8f24-67772e8dc50d" name="base" type="association" specialization="Generalization Target End" specializationId="4686cc1d-b4d8-4b99-b45b-f77bd5496946" />
+              <target id="9ed19ba4-548e-4be5-b0ed-eea43cc82348" name="Id" type="element" specialization="Attribute" specializationId="0090fb93-483e-41af-a11d-5ad2dc796adf" />
+            </path>
+            <sources>
+              <source identifier="Id" mappingType="Filter Mapping" mappingTypeId="01d09a7f-0e7c-4670-b7bc-395d7e893ef2">
+                <path>
+                  <target id="71a0dcce-0c8e-4865-b7e3-a7ed94446fd8" name="UpdateInviteCommand" type="element" specialization="Command" specializationId="ccf14eb6-3a55-4d81-b5b9-d27311c70cb9" />
+                  <target id="6b2de01b-e1bf-419f-9b71-63373d09b3d2" name="Id" type="element" specialization="DTO-Field" specializationId="7baed1fd-469b-4980-8fd9-4cefb8331eb2" />
+                </path>
+              </source>
+            </sources>
+          </mappedEnd>
+        </mappedEnds>
+      </mapping>
+      <mapping type="Update Entity Mapping" typeId="01721b1a-a85d-4320-a5cd-8bd39247196a">
+        <source applicationId="e87261ce-2b9f-4042-8562-a503e4cf2759" designerId="81104ae6-2bc5-4bae-b05a-f987b0372d81" elementId="71a0dcce-0c8e-4865-b7e3-a7ed94446fd8" location="[AndersonAPI].[Services].[UpdateInviteCommand]" />
+        <target applicationId="e87261ce-2b9f-4042-8562-a503e4cf2759" designerId="6ab29b31-27af-4f56-a67c-986d82097d63" elementId="a94ef440-060b-4830-8152-8bb2cdbb98bb" location="[AndersonAPI].[Services].[Invite]" />
+        <mappedEnds>
+          <mappedEnd>
+            <expression>{UpdateInviteCommand}</expression>
+            <path>
+              <target id="a94ef440-060b-4830-8152-8bb2cdbb98bb" name="Invite" type="element" specialization="Class" specializationId="04e12b51-ed12-42a3-9667-a6aa81bb6d10" />
+              <target id="6632ee07-13a0-4188-9ea4-8f1d5809403b" name="Update" type="element" specialization="Operation" specializationId="e042bb67-a1df-480c-9935-b26210f78591" />
+            </path>
+            <sources>
+              <source identifier="UpdateInviteCommand" mappingType="Invocation Mapping" mappingTypeId="d30bdba1-9c47-4917-b81d-29230fed5d6a">
+                <path>
+                  <target id="71a0dcce-0c8e-4865-b7e3-a7ed94446fd8" name="UpdateInviteCommand" type="element" specialization="Command" specializationId="ccf14eb6-3a55-4d81-b5b9-d27311c70cb9" />
+                </path>
+              </source>
+            </sources>
+          </mappedEnd>
+          <mappedEnd>
+            <expression>{Email}</expression>
+            <path>
+              <target id="a94ef440-060b-4830-8152-8bb2cdbb98bb" name="Invite" type="element" specialization="Class" specializationId="04e12b51-ed12-42a3-9667-a6aa81bb6d10" />
+              <target id="6632ee07-13a0-4188-9ea4-8f1d5809403b" name="Update" type="element" specialization="Operation" specializationId="e042bb67-a1df-480c-9935-b26210f78591" />
+              <target id="52b1cb59-42a0-4a8c-abd1-8415becf05a5" name="email" type="element" specialization="Parameter" specializationId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b" />
+            </path>
+            <sources>
+              <source identifier="Email" mappingType="Data Mapping" mappingTypeId="ca88649b-f20b-44db-a9c0-017c26155ba8">
+                <path>
+                  <target id="71a0dcce-0c8e-4865-b7e3-a7ed94446fd8" name="UpdateInviteCommand" type="element" specialization="Command" specializationId="ccf14eb6-3a55-4d81-b5b9-d27311c70cb9" />
+                  <target id="35711116-5120-48cb-8564-c56019e348fa" name="Email" type="element" specialization="DTO-Field" specializationId="7baed1fd-469b-4980-8fd9-4cefb8331eb2" />
+                </path>
+              </source>
+            </sources>
+          </mappedEnd>
+        </mappedEnds>
+      </mapping>
+    </mappings>
+    <metadata />
+    <childElements />
+  </targetEnd>
+  <associationType>Update Entity Action</associationType>
+  <associationTypeId>9ea0382a-4617-412a-a8c8-af987bbce226</associationTypeId>
+  <stereotypes />
+</association>

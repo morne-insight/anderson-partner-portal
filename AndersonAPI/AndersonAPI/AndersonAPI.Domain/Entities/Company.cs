@@ -1,4 +1,5 @@
 using AndersonAPI.Domain.Common.Interfaces;
+using AndersonAPI.Domain.Events;
 using Intent.RoslynWeaver.Attributes;
 
 [assembly: IntentTemplate("Intent.Entities.DomainEntity", Version = "2.0")]
@@ -10,10 +11,10 @@ namespace AndersonAPI.Domain.Entities
         private List<Location> _locations = [];
         private List<Industry> _industries = [];
         private List<Capability> _capabilities = [];
-        private List<ServiceType> _serviceTypes = [];
         private List<Contact> _contacts = [];
         private List<ApplicationIdentityUser> _applicationIdentityUsers = [];
         private List<Invite> _invites = [];
+        private List<Quarterly> _quarterlies = [];
         private List<Review> _reviews = [];
         private List<Opportunity> _opportunities = [];
         private List<Opportunity> _savedOpportunities = [];
@@ -22,9 +23,9 @@ namespace AndersonAPI.Domain.Entities
             string fullDescription,
             string websiteUrl,
             int employeeCount,
+            Guid? serviceTypeId,
             IEnumerable<Industry> industries,
             IEnumerable<Capability> capabilities,
-            IEnumerable<ServiceType> serviceTypes,
             EntityState state = EntityState.Enabled)
         {
             Name = name;
@@ -32,9 +33,9 @@ namespace AndersonAPI.Domain.Entities
             FullDescription = fullDescription;
             WebsiteUrl = websiteUrl;
             EmployeeCount = employeeCount;
+            ServiceTypeId = serviceTypeId;
             _industries = new List<Industry>(industries);
             _capabilities = new List<Capability>(capabilities);
-            _serviceTypes = new List<ServiceType>(serviceTypes);
             State = state;
         }
 
@@ -43,6 +44,7 @@ namespace AndersonAPI.Domain.Entities
             string fullDescription,
             string websiteUrl,
             int employeeCount,
+            Guid? serviceTypeId,
             EntityState state = EntityState.Enabled)
         {
             Name = name;
@@ -50,6 +52,7 @@ namespace AndersonAPI.Domain.Entities
             FullDescription = fullDescription;
             WebsiteUrl = websiteUrl;
             EmployeeCount = employeeCount;
+            ServiceTypeId = serviceTypeId;
             State = state;
         }
         /// <summary>
@@ -89,6 +92,8 @@ namespace AndersonAPI.Domain.Entities
 
         public DateTimeOffset? UpdatedDate { get; private set; }
 
+        public Guid? ServiceTypeId { get; private set; }
+
         public virtual IReadOnlyCollection<Location> Locations
         {
             get => _locations.AsReadOnly();
@@ -107,12 +112,6 @@ namespace AndersonAPI.Domain.Entities
             private set => _capabilities = new List<Capability>(value);
         }
 
-        public virtual IReadOnlyCollection<ServiceType> ServiceTypes
-        {
-            get => _serviceTypes.AsReadOnly();
-            private set => _serviceTypes = new List<ServiceType>(value);
-        }
-
         public virtual IReadOnlyCollection<Contact> Contacts
         {
             get => _contacts.AsReadOnly();
@@ -125,19 +124,35 @@ namespace AndersonAPI.Domain.Entities
             private set => _applicationIdentityUsers = new List<ApplicationIdentityUser>(value);
         }
 
+        public virtual ServiceType? ServiceType { get; private set; }
+
         public virtual IReadOnlyCollection<Invite> Invites
         {
             get => _invites.AsReadOnly();
             private set => _invites = new List<Invite>(value);
         }
 
-        public void Update(string name, string shortDescription, string description, string websiteUrl, int employeeCount)
+        public virtual IReadOnlyCollection<Quarterly> Quarterlies
+        {
+            get => _quarterlies.AsReadOnly();
+            private set => _quarterlies = new List<Quarterly>(value);
+        }
+
+        public void Update(
+            string name,
+            string shortDescription,
+            string description,
+            string websiteUrl,
+            int employeeCount,
+            Guid? serviceTypeId)
         {
             Name = name;
             ShortDescription = shortDescription;
             FullDescription = description;
             WebsiteUrl = websiteUrl;
             EmployeeCount = employeeCount;
+            ServiceTypeId = serviceTypeId;
+            DomainEvents.Add(new CompanyUpdatedEvent(this));
         }
 
         public virtual IReadOnlyCollection<Review> Reviews
@@ -275,15 +290,6 @@ namespace AndersonAPI.Domain.Entities
             foreach (var capability in capabilities)
             {
                 _capabilities.Add(capability);
-            }
-        }
-
-        public void SetServiceTypes(IEnumerable<ServiceType> serviceTypes)
-        {
-            _serviceTypes.Clear();
-            foreach (var serviceType in serviceTypes)
-            {
-                _serviceTypes.Add(serviceType);
             }
         }
 

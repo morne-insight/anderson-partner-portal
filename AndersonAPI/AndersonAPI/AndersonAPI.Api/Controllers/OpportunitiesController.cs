@@ -31,6 +31,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AndersonAPI.Api.Controllers
 {
     [ApiController]
+    [Authorize]
     public class OpportunitiesController : ControllerBase
     {
         private readonly ISender _mediator;
@@ -44,9 +45,13 @@ namespace AndersonAPI.Api.Controllers
         /// </summary>
         /// <response code="201">Successfully created.</response>
         /// <response code="400">One or more validation errors have occurred.</response>
+        /// <response code="401">Unauthorized request.</response>
+        /// <response code="403">Forbidden request.</response>
         [HttpPost("api/opportunities/message")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> AddMessageOpportunity(
             [FromBody] AddMessageOpportunityCommand command,
@@ -60,10 +65,14 @@ namespace AndersonAPI.Api.Controllers
         /// </summary>
         /// <response code="201">Successfully created.</response>
         /// <response code="400">One or more validation errors have occurred.</response>
+        /// <response code="401">Unauthorized request.</response>
+        /// <response code="403">Forbidden request.</response>
         [HttpPost("api/opportunities")]
         [Produces(MediaTypeNames.Application.Json)]
         [ProducesResponseType(typeof(JsonResponse<Guid>), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<JsonResponse<Guid>>> CreateOpportunity(
             [FromBody] CreateOpportunityCommand command,
@@ -77,10 +86,14 @@ namespace AndersonAPI.Api.Controllers
         /// </summary>
         /// <response code="200">Successfully deleted.</response>
         /// <response code="400">One or more validation errors have occurred.</response>
+        /// <response code="401">Unauthorized request.</response>
+        /// <response code="403">Forbidden request.</response>
         /// <response code="404">One or more entities could not be found with the provided parameters.</response>
         [HttpDelete("api/opportunities/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> DeleteOpportunity(
@@ -95,10 +108,14 @@ namespace AndersonAPI.Api.Controllers
         /// </summary>
         /// <response code="200">Successfully deleted.</response>
         /// <response code="400">One or more validation errors have occurred.</response>
+        /// <response code="401">Unauthorized request.</response>
+        /// <response code="403">Forbidden request.</response>
         /// <response code="404">One or more entities could not be found with the provided parameters.</response>
         [HttpDelete("api/opportunities/{id}/message")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> RemoveMessageOpportunity(
@@ -114,10 +131,14 @@ namespace AndersonAPI.Api.Controllers
         /// </summary>
         /// <response code="204">Successfully updated.</response>
         /// <response code="400">One or more validation errors have occurred.</response>
+        /// <response code="401">Unauthorized request.</response>
+        /// <response code="403">Forbidden request.</response>
         /// <response code="404">One or more entities could not be found with the provided parameters.</response>
         [HttpPut("api/opportunities/{id}/capabilities")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> SetCapabilitiesOpportunity(
@@ -143,10 +164,14 @@ namespace AndersonAPI.Api.Controllers
         /// </summary>
         /// <response code="204">Successfully updated.</response>
         /// <response code="400">One or more validation errors have occurred.</response>
+        /// <response code="401">Unauthorized request.</response>
+        /// <response code="403">Forbidden request.</response>
         /// <response code="404">One or more entities could not be found with the provided parameters.</response>
         [HttpPut("api/opportunities/{id}/industries")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> SetIndustriesOpportunity(
@@ -172,10 +197,14 @@ namespace AndersonAPI.Api.Controllers
         /// </summary>
         /// <response code="204">Successfully updated.</response>
         /// <response code="400">One or more validation errors have occurred.</response>
+        /// <response code="401">Unauthorized request.</response>
+        /// <response code="403">Forbidden request.</response>
         /// <response code="404">One or more entities could not be found with the provided parameters.</response>
         [HttpPut("api/opportunities/{id}/interested-partners")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> SetInterestedPartnersOpportunity(
@@ -201,10 +230,14 @@ namespace AndersonAPI.Api.Controllers
         /// </summary>
         /// <response code="204">Successfully updated.</response>
         /// <response code="400">One or more validation errors have occurred.</response>
+        /// <response code="401">Unauthorized request.</response>
+        /// <response code="403">Forbidden request.</response>
         /// <response code="404">One or more entities could not be found with the provided parameters.</response>
         [HttpPut("api/opportunities/{id}/service-types")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> SetServiceTypesOpportunity(
@@ -230,10 +263,14 @@ namespace AndersonAPI.Api.Controllers
         /// </summary>
         /// <response code="204">Successfully updated.</response>
         /// <response code="400">One or more validation errors have occurred.</response>
+        /// <response code="401">Unauthorized request.</response>
+        /// <response code="403">Forbidden request.</response>
         /// <response code="404">One or more entities could not be found with the provided parameters.</response>
         [HttpPut("api/opportunities/{id}/set-state")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> SetStateOpportunity(
@@ -259,10 +296,14 @@ namespace AndersonAPI.Api.Controllers
         /// </summary>
         /// <response code="204">Successfully updated.</response>
         /// <response code="400">One or more validation errors have occurred.</response>
+        /// <response code="401">Unauthorized request.</response>
+        /// <response code="403">Forbidden request.</response>
         /// <response code="404">One or more entities could not be found with the provided parameters.</response>
         [HttpPut("api/opportunities/{id}/status")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> SetStatusOpportunity(
@@ -288,10 +329,14 @@ namespace AndersonAPI.Api.Controllers
         /// </summary>
         /// <response code="204">Successfully updated.</response>
         /// <response code="400">One or more validation errors have occurred.</response>
+        /// <response code="401">Unauthorized request.</response>
+        /// <response code="403">Forbidden request.</response>
         /// <response code="404">One or more entities could not be found with the provided parameters.</response>
         [HttpPut("api/opportunities/{id}/full")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> UpdateFullOpportunity(
@@ -317,10 +362,14 @@ namespace AndersonAPI.Api.Controllers
         /// </summary>
         /// <response code="204">Successfully updated.</response>
         /// <response code="400">One or more validation errors have occurred.</response>
+        /// <response code="401">Unauthorized request.</response>
+        /// <response code="403">Forbidden request.</response>
         /// <response code="404">One or more entities could not be found with the provided parameters.</response>
         [HttpPut("api/opportunities/{id}/message")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> UpdateMessageOpportunity(
@@ -346,10 +395,14 @@ namespace AndersonAPI.Api.Controllers
         /// </summary>
         /// <response code="204">Successfully updated.</response>
         /// <response code="400">One or more validation errors have occurred.</response>
+        /// <response code="401">Unauthorized request.</response>
+        /// <response code="403">Forbidden request.</response>
         /// <response code="404">One or more entities could not be found with the provided parameters.</response>
         [HttpPut("api/opportunities/{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> UpdateOpportunity(
@@ -374,8 +427,12 @@ namespace AndersonAPI.Api.Controllers
         /// <summary>
         /// </summary>
         /// <response code="200">Returns the specified List&lt;OpportunityListItemDto&gt;.</response>
+        /// <response code="401">Unauthorized request.</response>
+        /// <response code="403">Forbidden request.</response>
         [HttpGet("api/opportunities/me")]
         [ProducesResponseType(typeof(List<OpportunityListItemDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<List<OpportunityListItemDto>>> GetMyOpportunities(CancellationToken cancellationToken = default)
         {
@@ -386,8 +443,12 @@ namespace AndersonAPI.Api.Controllers
         /// <summary>
         /// </summary>
         /// <response code="200">Returns the specified List&lt;OpportunityListItemDto&gt;.</response>
+        /// <response code="401">Unauthorized request.</response>
+        /// <response code="403">Forbidden request.</response>
         [HttpGet("api/opportunities")]
         [ProducesResponseType(typeof(List<OpportunityListItemDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<List<OpportunityListItemDto>>> GetOpportunities(CancellationToken cancellationToken = default)
         {
@@ -399,10 +460,14 @@ namespace AndersonAPI.Api.Controllers
         /// </summary>
         /// <response code="200">Returns the specified OpportunityDto.</response>
         /// <response code="400">One or more validation errors have occurred.</response>
+        /// <response code="401">Unauthorized request.</response>
+        /// <response code="403">Forbidden request.</response>
         /// <response code="404">No OpportunityDto could be found with the provided parameters.</response>
         [HttpGet("api/opportunities/{id}")]
         [ProducesResponseType(typeof(OpportunityDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<OpportunityDto>> GetOpportunityById(
@@ -416,8 +481,12 @@ namespace AndersonAPI.Api.Controllers
         /// <summary>
         /// </summary>
         /// <response code="200">Returns the specified List&lt;OpportunityListItemDto&gt;.</response>
+        /// <response code="401">Unauthorized request.</response>
+        /// <response code="403">Forbidden request.</response>
         [HttpGet("api/opportunities/saved")]
         [ProducesResponseType(typeof(List<OpportunityListItemDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<List<OpportunityListItemDto>>> GetSavedOpportunities(CancellationToken cancellationToken = default)
         {

@@ -394,9 +394,46 @@
       </metadata>
       <childElements />
     </childElement>
+    <childElement id="35abd6f2-ce99-4c4e-a484-73f7f9c23742" type="Attribute" typeId="0090fb93-483e-41af-a11d-5ad2dc796adf">
+      <name>ServiceTypeId</name>
+      <display>ServiceTypeId: guid?</display>
+      <isAbstract>false</isAbstract>
+      <genericTypes />
+      <typeReference id="f0262883-d218-4239-8153-c17a3df75640">
+        <typeId>6b649125-18ea-48fd-a6ba-0bfff0d8f488</typeId>
+        <isNavigable>true</isNavigable>
+        <isNullable>true</isNullable>
+        <isCollection>false</isCollection>
+        <isRequired>true</isRequired>
+        <typePackageName>Intent.Common.Types</typePackageName>
+        <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
+        <stereotypes />
+        <genericTypeParameters />
+      </typeReference>
+      <isMapped>false</isMapped>
+      <parentFolderId>3259289c-5d51-46cb-8c99-78751b456c44</parentFolderId>
+      <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+      <packageName>AndersonAPI.Domain</packageName>
+      <stereotypes>
+        <stereotype stereotypeDefinitionId="793a5128-57a1-440b-a206-af5722b752a6" name="Foreign Key">
+          <addedByDefault>false</addedByDefault>
+          <definitionPackageName>Intent.Metadata.RDBMS</definitionPackageName>
+          <definitionPackageId>AF8F3810-745C-42A2-93C8-798860DC45B1</definitionPackageId>
+          <properties>
+            <property name="42e4f9b5-f834-4e5f-86aa-d3a35c505076" display="Association" value="5f1aa8cf-ebe6-4d96-8726-172e65b793ab" isActive="true" />
+          </properties>
+        </stereotype>
+      </stereotypes>
+      <metadata>
+        <entry key="fk-original-name" value="ServiceTypeId" />
+        <entry key="association" value="5f1aa8cf-ebe6-4d96-8726-172e65b793ab" />
+        <entry key="is-managed-key" value="true" />
+      </metadata>
+      <childElements />
+    </childElement>
     <childElement id="d2667ce0-ba29-468a-8bb9-6fe53bb6b67b" type="Class Constructor" typeId="dec2bd12-4699-4f45-8ec9-3b62dc692d2b">
       <name>Constructor</name>
-      <display>Company(name: string, shortDescription: string, fullDescription: string, websiteUrl: string, employeeCount: int, industries: Industry[*], capabilities: Capability[*], serviceTypes: ServiceType[*], state: EntityState = EntityState.Enabled)</display>
+      <display>Company(name: string, shortDescription: string, fullDescription: string, websiteUrl: string, employeeCount: int, serviceTypeId: guid?, industries: Industry[*], capabilities: Capability[*], state: EntityState = EntityState.Enabled)</display>
       <isAbstract>false</isAbstract>
       <sort-children>by-type-then-manually</sort-children>
       <genericTypes />
@@ -571,6 +608,37 @@
           <metadata />
           <childElements />
         </childElement>
+        <childElement id="06b07678-ffb2-4e08-b7e8-69ff37d1f6d1" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
+          <name>serviceTypeId</name>
+          <display>in : serviceTypeId: guid?</display>
+          <isAbstract>false</isAbstract>
+          <genericTypes />
+          <typeReference id="fa1b169a-041c-45b4-b4de-1b7993a94d4a">
+            <typeId>6b649125-18ea-48fd-a6ba-0bfff0d8f488</typeId>
+            <isNavigable>true</isNavigable>
+            <isNullable>true</isNullable>
+            <isCollection>false</isCollection>
+            <isRequired>true</isRequired>
+            <typePackageName>Intent.Common.Types</typePackageName>
+            <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
+            <stereotypes />
+            <genericTypeParameters />
+          </typeReference>
+          <isMapped>true</isMapped>
+          <mappedClass>
+            <mappingSettingsId>d6d0abfd-893c-4bec-92cb-419934ba5ba8</mappingSettingsId>
+            <autoSyncTypeReference>true</autoSyncTypeReference>
+            <mappedPath>
+              <target id="35abd6f2-ce99-4c4e-a484-73f7f9c23742" name="ServiceTypeId" type="element" specialization="Attribute" specializationId="0090fb93-483e-41af-a11d-5ad2dc796adf" />
+            </mappedPath>
+          </mappedClass>
+          <parentFolderId>d2667ce0-ba29-468a-8bb9-6fe53bb6b67b</parentFolderId>
+          <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+          <packageName>AndersonAPI.Domain</packageName>
+          <stereotypes />
+          <metadata />
+          <childElements />
+        </childElement>
         <childElement id="2e07af5d-daa9-4bd9-b019-58588716c7cf" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
           <name>industries</name>
           <display>in : industries: Industry[*]</display>
@@ -633,37 +701,6 @@
           <metadata />
           <childElements />
         </childElement>
-        <childElement id="245f5283-7d42-4c91-a957-ae6320b85c87" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
-          <name>serviceTypes</name>
-          <display>in : serviceTypes: ServiceType[*]</display>
-          <isAbstract>false</isAbstract>
-          <genericTypes />
-          <typeReference id="01257f9a-c5f0-4905-9cb0-4c2ddd40f32e">
-            <typeId>2858bc40-1a77-47e2-b6ea-8e09391a38d8</typeId>
-            <isNavigable>true</isNavigable>
-            <isNullable>false</isNullable>
-            <isCollection>true</isCollection>
-            <isRequired>true</isRequired>
-            <typePackageName>AndersonAPI.Domain</typePackageName>
-            <typePackageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</typePackageId>
-            <stereotypes />
-            <genericTypeParameters />
-          </typeReference>
-          <isMapped>true</isMapped>
-          <mappedClass>
-            <mappingSettingsId>d6d0abfd-893c-4bec-92cb-419934ba5ba8</mappingSettingsId>
-            <autoSyncTypeReference>true</autoSyncTypeReference>
-            <mappedPath>
-              <target id="849a62b3-f76e-4c40-bc43-a7e98ebb2286" name="ServiceTypes" type="association" specialization="Association Target End" specializationId="0a66489f-30aa-417b-a75d-b945863366fd" />
-            </mappedPath>
-          </mappedClass>
-          <parentFolderId>d2667ce0-ba29-468a-8bb9-6fe53bb6b67b</parentFolderId>
-          <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
-          <packageName>AndersonAPI.Domain</packageName>
-          <stereotypes />
-          <metadata />
-          <childElements />
-        </childElement>
         <childElement id="6cabd531-491b-4ab1-b9a5-aeffa28768e4" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
           <name>state</name>
           <display>in : state: EntityState = EntityState.Enabled</display>
@@ -701,7 +738,7 @@
     </childElement>
     <childElement id="6cd8210b-e2c4-404d-89f0-20f16d0de66b" type="Class Constructor" typeId="dec2bd12-4699-4f45-8ec9-3b62dc692d2b">
       <name>Constructor</name>
-      <display>Company(name: string, shortDescription: string, fullDescription: string, websiteUrl: string, employeeCount: int, state: EntityState = EntityState.Enabled)</display>
+      <display>Company(name: string, shortDescription: string, fullDescription: string, websiteUrl: string, employeeCount: int, serviceTypeId: guid?, state: EntityState = EntityState.Enabled)</display>
       <isAbstract>false</isAbstract>
       <sort-children>by-type-then-manually</sort-children>
       <genericTypes />
@@ -876,6 +913,37 @@
           <metadata />
           <childElements />
         </childElement>
+        <childElement id="68932819-748b-42b7-b7d6-feb6b8e3a05b" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
+          <name>serviceTypeId</name>
+          <display>in : serviceTypeId: guid?</display>
+          <isAbstract>false</isAbstract>
+          <genericTypes />
+          <typeReference id="331b2578-02ca-40c9-9447-0067e52e8f30">
+            <typeId>6b649125-18ea-48fd-a6ba-0bfff0d8f488</typeId>
+            <isNavigable>true</isNavigable>
+            <isNullable>true</isNullable>
+            <isCollection>false</isCollection>
+            <isRequired>true</isRequired>
+            <typePackageName>Intent.Common.Types</typePackageName>
+            <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
+            <stereotypes />
+            <genericTypeParameters />
+          </typeReference>
+          <isMapped>true</isMapped>
+          <mappedClass>
+            <mappingSettingsId>d6d0abfd-893c-4bec-92cb-419934ba5ba8</mappingSettingsId>
+            <autoSyncTypeReference>true</autoSyncTypeReference>
+            <mappedPath>
+              <target id="35abd6f2-ce99-4c4e-a484-73f7f9c23742" name="ServiceTypeId" type="element" specialization="Attribute" specializationId="0090fb93-483e-41af-a11d-5ad2dc796adf" />
+            </mappedPath>
+          </mappedClass>
+          <parentFolderId>6cd8210b-e2c4-404d-89f0-20f16d0de66b</parentFolderId>
+          <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+          <packageName>AndersonAPI.Domain</packageName>
+          <stereotypes />
+          <metadata />
+          <childElements />
+        </childElement>
         <childElement id="486539d9-1495-4504-9a18-d95ead06f74f" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
           <name>state</name>
           <display>in : state: EntityState = EntityState.Enabled</display>
@@ -913,7 +981,7 @@
     </childElement>
     <childElement id="d6578f9c-1ede-4848-8166-d14a98ca0f46" type="Operation" typeId="e042bb67-a1df-480c-9935-b26210f78591">
       <name>Update</name>
-      <display>Update(name: string, shortDescription: string, description: string, websiteUrl: string, employeeCount: int): void</display>
+      <display>Update(name: string, shortDescription: string, description: string, websiteUrl: string, employeeCount: int, serviceTypeId: guid?): void</display>
       <isAbstract>false</isAbstract>
       <sort-children>by-type-then-manually</sort-children>
       <genericTypes />
@@ -1087,6 +1155,37 @@
             <autoSyncTypeReference>true</autoSyncTypeReference>
             <mappedPath>
               <target id="1a0d1336-c3ab-4d3a-b551-50d8e1e9d55e" name="EmployeeCount" type="element" specialization="Attribute" specializationId="0090fb93-483e-41af-a11d-5ad2dc796adf" />
+            </mappedPath>
+          </mappedClass>
+          <parentFolderId>d6578f9c-1ede-4848-8166-d14a98ca0f46</parentFolderId>
+          <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+          <packageName>AndersonAPI.Domain</packageName>
+          <stereotypes />
+          <metadata />
+          <childElements />
+        </childElement>
+        <childElement id="3da39ed8-20e5-48e8-ad4c-882eb4209784" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
+          <name>serviceTypeId</name>
+          <display>in : serviceTypeId: guid?</display>
+          <isAbstract>false</isAbstract>
+          <genericTypes />
+          <typeReference id="08ba491a-ef2a-4ac5-99bc-708608504508">
+            <typeId>6b649125-18ea-48fd-a6ba-0bfff0d8f488</typeId>
+            <isNavigable>true</isNavigable>
+            <isNullable>true</isNullable>
+            <isCollection>false</isCollection>
+            <isRequired>true</isRequired>
+            <typePackageName>Intent.Common.Types</typePackageName>
+            <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
+            <stereotypes />
+            <genericTypeParameters />
+          </typeReference>
+          <isMapped>true</isMapped>
+          <mappedClass>
+            <mappingSettingsId>7590bd83-04bc-40fe-8b5c-118277c049d4</mappingSettingsId>
+            <autoSyncTypeReference>true</autoSyncTypeReference>
+            <mappedPath>
+              <target id="35abd6f2-ce99-4c4e-a484-73f7f9c23742" name="ServiceTypeId" type="element" specialization="Attribute" specializationId="0090fb93-483e-41af-a11d-5ad2dc796adf" />
             </mappedPath>
           </mappedClass>
           <parentFolderId>d6578f9c-1ede-4848-8166-d14a98ca0f46</parentFolderId>
@@ -1849,53 +1948,6 @@
           </typeReference>
           <isMapped>false</isMapped>
           <parentFolderId>b36ed042-68ae-4aec-8ad2-67ddae2b3bb9</parentFolderId>
-          <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
-          <packageName>AndersonAPI.Domain</packageName>
-          <stereotypes />
-          <metadata />
-          <childElements />
-        </childElement>
-      </childElements>
-    </childElement>
-    <childElement id="ac761601-ea50-4bb3-9aff-1bd13288958a" type="Operation" typeId="e042bb67-a1df-480c-9935-b26210f78591">
-      <name>SetServiceTypes</name>
-      <display>SetServiceTypes(serviceTypes: ServiceType[*]): void</display>
-      <isAbstract>false</isAbstract>
-      <sort-children>by-type-then-manually</sort-children>
-      <genericTypes />
-      <typeReference id="64034feb-d381-4aca-8195-252410594ae1">
-        <isNavigable>true</isNavigable>
-        <isNullable>false</isNullable>
-        <isCollection>false</isCollection>
-        <isRequired>true</isRequired>
-        <stereotypes />
-        <genericTypeParameters />
-      </typeReference>
-      <isMapped>false</isMapped>
-      <parentFolderId>3259289c-5d51-46cb-8c99-78751b456c44</parentFolderId>
-      <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
-      <packageName>AndersonAPI.Domain</packageName>
-      <stereotypes />
-      <metadata />
-      <childElements>
-        <childElement id="e9283876-9947-473a-85e0-af769e064543" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
-          <name>serviceTypes</name>
-          <display>in : serviceTypes: ServiceType[*]</display>
-          <isAbstract>false</isAbstract>
-          <genericTypes />
-          <typeReference id="b1d2410f-7f67-4001-a2ba-536dc0353a59">
-            <typeId>2858bc40-1a77-47e2-b6ea-8e09391a38d8</typeId>
-            <isNavigable>true</isNavigable>
-            <isNullable>false</isNullable>
-            <isCollection>true</isCollection>
-            <isRequired>true</isRequired>
-            <typePackageName>AndersonAPI.Domain</typePackageName>
-            <typePackageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</typePackageId>
-            <stereotypes />
-            <genericTypeParameters />
-          </typeReference>
-          <isMapped>false</isMapped>
-          <parentFolderId>ac761601-ea50-4bb3-9aff-1bd13288958a</parentFolderId>
           <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
           <packageName>AndersonAPI.Domain</packageName>
           <stereotypes />

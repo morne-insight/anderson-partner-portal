@@ -12,23 +12,26 @@ namespace AndersonAPI.Application.Companies.UpdateCompany
         public UpdateCompanyCommand(Guid id,
             string name,
             string shortDescription,
-            string description,
+            string fullDescription,
             string websiteUrl,
-            int employeeCount)
+            int employeeCount,
+            Guid serviceTypeId)
         {
             Id = id;
             Name = name;
             ShortDescription = shortDescription;
-            Description = description;
+            FullDescription = fullDescription;
             WebsiteUrl = websiteUrl;
             EmployeeCount = employeeCount;
+            ServiceTypeId = serviceTypeId;
         }
 
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string ShortDescription { get; set; }
-        public string Description { get; set; }
+        public string FullDescription { get; set; }
         public string WebsiteUrl { get; set; }
         public int EmployeeCount { get; set; }
+        public Guid ServiceTypeId { get; set; }
     }
 }

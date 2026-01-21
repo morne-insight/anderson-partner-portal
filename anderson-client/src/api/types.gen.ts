@@ -55,13 +55,6 @@ export type CapabilityDto = {
 };
 
 /**
- * CompanyApplicationIdentityUserDto
- */
-export type CompanyApplicationIdentityUserDto = {
-    [key: string]: unknown;
-};
-
-/**
  * CompanyCapabilityDto
  */
 export type CompanyCapabilityDto = {
@@ -92,6 +85,16 @@ export type CompanyDto = {
     employeeCount?: number;
     id?: string;
     order?: number;
+    serviceTypeName?: string;
+};
+
+/**
+ * CompanyIdentityUserDto
+ */
+export type CompanyIdentityUserDto = {
+    id?: string;
+    email?: string;
+    userName?: string;
 };
 
 /**
@@ -133,24 +136,14 @@ export type CompanyProfileDto = {
     fullDescription?: string;
     websiteUrl?: string;
     employeeCount?: number;
-    applicationIdentityUsers?: Array<CompanyApplicationIdentityUserDto>;
+    serviceTypeId?: string | null;
+    serviceTypeName?: string;
+    applicationIdentityUsers?: Array<CompanyIdentityUserDto>;
     capabilities?: Array<CompanyCapabilityDto>;
-    serviceTypes?: Array<CompanyServiceTypeDto>;
     industries?: Array<CompanyIndustryDto>;
     contacts?: Array<CompanyContactDto>;
     locations?: Array<CompanyLocationDto>;
     invites?: Array<CompanyInviteDto>;
-    state?: EntityState;
-};
-
-/**
- * CompanyServiceTypeDto
- */
-export type CompanyServiceTypeDto = {
-    id?: string;
-    name?: string;
-    description?: string;
-    order?: number;
     state?: EntityState;
 };
 
@@ -191,9 +184,9 @@ export type CreateCompanyCommand = {
     fullDescription: string;
     websiteUrl: string;
     employeeCount: number;
-    serviceTypes: Array<string>;
     capabilities: Array<string>;
     industries: Array<string>;
+    serviceTypeId: string | null;
 };
 
 /**
@@ -211,6 +204,14 @@ export type CreateCountryCommand = {
 export type CreateIndustryCommand = {
     name: string;
     description: string;
+};
+
+/**
+ * CreateInviteCommand
+ */
+export type CreateInviteCommand = {
+    email: string;
+    companyId: string;
 };
 
 /**
@@ -275,7 +276,7 @@ export type DirectoryProfileListItem = {
     locations?: Array<PartnerLocationDto>;
     contacts?: Array<PartnerContactDto>;
     industries?: Array<PartnerIndustryDto>;
-    serviceTypes?: Array<PartnerServiceTypeDto>;
+    serviceTypeName?: string;
 };
 
 export type EntityState = number;
@@ -318,6 +319,16 @@ export type InterestedPartnerDto = {
     id?: string;
     name?: string;
     websiteUrl?: string;
+};
+
+/**
+ * InviteDto
+ */
+export type InviteDto = {
+    email?: string;
+    companyId?: string;
+    name?: string;
+    id?: string;
 };
 
 /**
@@ -451,7 +462,7 @@ export type PartnerOpportunityDto = {
     id?: string;
     title?: string;
     shortDescription?: string;
-    serviceTypes?: Array<unknown>;
+    serviceTypes?: Array<PartnerServiceTypeDto>;
     country?: string;
     deadline?: Date | null;
     status?: OpportunityStatus;
@@ -471,9 +482,10 @@ export type PartnerProfile = {
     contacts?: Array<PartnerContactDto>;
     industries?: Array<PartnerIndustryDto>;
     locations?: Array<PartnerLocationDto>;
-    serviceTypes?: Array<PartnerServiceTypeDto>;
     opportunities?: Array<PartnerOpportunityDto>;
     reviews?: Array<PartnerReviewDto>;
+    serviceTypeId?: string | null;
+    serviceTypeName?: string;
 };
 
 /**
@@ -508,9 +520,6 @@ export type PartnerReviewDto = {
 export type PartnerServiceTypeDto = {
     id?: string;
     name?: string;
-    description?: string;
-    order?: number;
-    state?: EntityState;
 };
 
 /**
@@ -639,14 +648,6 @@ export type SetInterestedPartnersOpportunityCommand = {
 };
 
 /**
- * SetServiceTypesCompanyCommand
- */
-export type SetServiceTypesCompanyCommand = {
-    id: string;
-    serviceTypeIds: Array<string>;
-};
-
-/**
  * SetServiceTypesOpportunityCommand
  */
 export type SetServiceTypesOpportunityCommand = {
@@ -752,9 +753,10 @@ export type UpdateCompanyCommand = {
     id: string;
     name: string;
     shortDescription: string;
-    description: string;
+    fullDescription: string;
     websiteUrl: string;
     employeeCount: number;
+    serviceTypeId: string;
 };
 
 /**
@@ -811,6 +813,14 @@ export type UpdateInfoDto = {
     newEmail?: string | null;
     newPassword?: string | null;
     oldPassword?: string | null;
+};
+
+/**
+ * UpdateInviteCommand
+ */
+export type UpdateInviteCommand = {
+    id: string;
+    email: string;
 };
 
 /**
@@ -1026,6 +1036,14 @@ export type GetApiCapabilitiesData = {
 
 export type GetApiCapabilitiesErrors = {
     /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
+    /**
      * Internal Server Error
      */
     500: ProblemDetails;
@@ -1054,6 +1072,14 @@ export type PostApiCapabilitiesErrors = {
      * Bad Request
      */
     400: ProblemDetails;
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
     /**
      * Internal Server Error
      */
@@ -1085,6 +1111,14 @@ export type DeleteApiCapabilitiesByIdErrors = {
      * Bad Request
      */
     400: ProblemDetails;
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
     /**
      * Not Found
      */
@@ -1118,6 +1152,14 @@ export type GetApiCapabilitiesByIdErrors = {
      * Bad Request
      */
     400: ProblemDetails;
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
     /**
      * Not Found
      */
@@ -1154,6 +1196,14 @@ export type PutApiCapabilitiesByIdErrors = {
      */
     400: ProblemDetails;
     /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
+    /**
      * Not Found
      */
     404: ProblemDetails;
@@ -1188,6 +1238,14 @@ export type PutApiCapabilitiesByIdSetStateErrors = {
      * Bad Request
      */
     400: ProblemDetails;
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
     /**
      * Not Found
      */
@@ -1226,6 +1284,14 @@ export type DeleteApiCompaniesByIdContactErrors = {
      */
     400: ProblemDetails;
     /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
+    /**
      * Not Found
      */
     404: ProblemDetails;
@@ -1259,6 +1325,14 @@ export type PostApiCompaniesByIdContactErrors = {
      */
     400: ProblemDetails;
     /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
+    /**
      * Not Found
      */
     404: ProblemDetails;
@@ -1291,6 +1365,14 @@ export type PutApiCompaniesByIdContactErrors = {
      * Bad Request
      */
     400: ProblemDetails;
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
     /**
      * Not Found
      */
@@ -1329,6 +1411,14 @@ export type DeleteApiCompaniesByIdLocationErrors = {
      */
     400: ProblemDetails;
     /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
+    /**
      * Not Found
      */
     404: ProblemDetails;
@@ -1361,6 +1451,14 @@ export type PostApiCompaniesByIdLocationErrors = {
      * Bad Request
      */
     400: ProblemDetails;
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
     /**
      * Not Found
      */
@@ -1395,6 +1493,14 @@ export type PutApiCompaniesByIdLocationErrors = {
      */
     400: ProblemDetails;
     /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
+    /**
      * Not Found
      */
     404: ProblemDetails;
@@ -1424,6 +1530,14 @@ export type GetApiCompaniesData = {
 
 export type GetApiCompaniesErrors = {
     /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
+    /**
      * Internal Server Error
      */
     500: ProblemDetails;
@@ -1452,6 +1566,14 @@ export type PostApiCompaniesErrors = {
      * Bad Request
      */
     400: ProblemDetails;
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
     /**
      * Internal Server Error
      */
@@ -1483,6 +1605,14 @@ export type DeleteApiCompaniesByIdErrors = {
      * Bad Request
      */
     400: ProblemDetails;
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
     /**
      * Not Found
      */
@@ -1516,6 +1646,14 @@ export type GetApiCompaniesByIdErrors = {
      * Bad Request
      */
     400: ProblemDetails;
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
     /**
      * Not Found
      */
@@ -1552,6 +1690,14 @@ export type PutApiCompaniesByIdErrors = {
      */
     400: ProblemDetails;
     /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
+    /**
      * Not Found
      */
     404: ProblemDetails;
@@ -1572,6 +1718,49 @@ export type PutApiCompaniesByIdResponses = {
 
 export type PutApiCompaniesByIdResponse = PutApiCompaniesByIdResponses[keyof PutApiCompaniesByIdResponses];
 
+export type DeleteApiCompaniesByIdUserData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query: {
+        userId: string;
+    };
+    url: '/api/companies/{id}/user';
+};
+
+export type DeleteApiCompaniesByIdUserErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type DeleteApiCompaniesByIdUserError = DeleteApiCompaniesByIdUserErrors[keyof DeleteApiCompaniesByIdUserErrors];
+
+export type DeleteApiCompaniesByIdUserResponses = {
+    /**
+     * OK
+     */
+    200: unknown;
+};
+
 export type PutApiCompaniesScrapeWebsiteData = {
     body: ScrapeWebsiteCommand;
     path?: never;
@@ -1584,6 +1773,14 @@ export type PutApiCompaniesScrapeWebsiteErrors = {
      * Bad Request
      */
     400: ProblemDetails;
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
     /**
      * Internal Server Error
      */
@@ -1615,6 +1812,14 @@ export type PutApiCompaniesByIdCapabilitiesErrors = {
      * Bad Request
      */
     400: ProblemDetails;
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
     /**
      * Not Found
      */
@@ -1651,6 +1856,14 @@ export type PutApiCompaniesByIdHeadOfficeErrors = {
      */
     400: ProblemDetails;
     /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
+    /**
      * Not Found
      */
     404: ProblemDetails;
@@ -1686,6 +1899,14 @@ export type PutApiCompaniesByIdIndustriesErrors = {
      */
     400: ProblemDetails;
     /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
+    /**
      * Not Found
      */
     404: ProblemDetails;
@@ -1706,41 +1927,6 @@ export type PutApiCompaniesByIdIndustriesResponses = {
 
 export type PutApiCompaniesByIdIndustriesResponse = PutApiCompaniesByIdIndustriesResponses[keyof PutApiCompaniesByIdIndustriesResponses];
 
-export type PutApiCompaniesByIdServiceTypesData = {
-    body: SetServiceTypesCompanyCommand;
-    path: {
-        id: string;
-    };
-    query?: never;
-    url: '/api/companies/{id}/service-types';
-};
-
-export type PutApiCompaniesByIdServiceTypesErrors = {
-    /**
-     * Bad Request
-     */
-    400: ProblemDetails;
-    /**
-     * Not Found
-     */
-    404: ProblemDetails;
-    /**
-     * Internal Server Error
-     */
-    500: ProblemDetails;
-};
-
-export type PutApiCompaniesByIdServiceTypesError = PutApiCompaniesByIdServiceTypesErrors[keyof PutApiCompaniesByIdServiceTypesErrors];
-
-export type PutApiCompaniesByIdServiceTypesResponses = {
-    /**
-     * No Content
-     */
-    204: void;
-};
-
-export type PutApiCompaniesByIdServiceTypesResponse = PutApiCompaniesByIdServiceTypesResponses[keyof PutApiCompaniesByIdServiceTypesResponses];
-
 export type PutApiCompaniesByIdSetStateData = {
     body: SetStateCompanyCommand;
     path: {
@@ -1755,6 +1941,14 @@ export type PutApiCompaniesByIdSetStateErrors = {
      * Bad Request
      */
     400: ProblemDetails;
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
     /**
      * Not Found
      */
@@ -1791,6 +1985,14 @@ export type GetApiCompaniesByIdProfileErrors = {
      */
     400: ProblemDetails;
     /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
+    /**
      * Not Found
      */
     404: ProblemDetails;
@@ -1819,6 +2021,14 @@ export type GetApiCompaniesMeData = {
 };
 
 export type GetApiCompaniesMeErrors = {
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
     /**
      * Internal Server Error
      */
@@ -1850,6 +2060,14 @@ export type GetApiCompaniesByIdPartnerErrors = {
      * Bad Request
      */
     400: ProblemDetails;
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
     /**
      * Not Found
      */
@@ -1884,6 +2102,14 @@ export type PutApiCompaniesPartnersErrors = {
      */
     400: ProblemDetails;
     /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
+    /**
      * Internal Server Error
      */
     500: ProblemDetails;
@@ -1908,6 +2134,14 @@ export type GetApiCountriesData = {
 };
 
 export type GetApiCountriesErrors = {
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
     /**
      * Internal Server Error
      */
@@ -1937,6 +2171,14 @@ export type PostApiCountriesErrors = {
      * Bad Request
      */
     400: ProblemDetails;
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
     /**
      * Internal Server Error
      */
@@ -1968,6 +2210,14 @@ export type DeleteApiCountriesByIdErrors = {
      * Bad Request
      */
     400: ProblemDetails;
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
     /**
      * Not Found
      */
@@ -2001,6 +2251,14 @@ export type GetApiCountriesByIdErrors = {
      * Bad Request
      */
     400: ProblemDetails;
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
     /**
      * Not Found
      */
@@ -2037,6 +2295,14 @@ export type PutApiCountriesByIdErrors = {
      */
     400: ProblemDetails;
     /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
+    /**
      * Not Found
      */
     404: ProblemDetails;
@@ -2072,6 +2338,14 @@ export type PutApiCountriesByIdSetStateErrors = {
      */
     400: ProblemDetails;
     /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
+    /**
      * Not Found
      */
     404: ProblemDetails;
@@ -2101,6 +2375,14 @@ export type GetApiIndustriesData = {
 
 export type GetApiIndustriesErrors = {
     /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
+    /**
      * Internal Server Error
      */
     500: ProblemDetails;
@@ -2129,6 +2411,14 @@ export type PostApiIndustriesErrors = {
      * Bad Request
      */
     400: ProblemDetails;
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
     /**
      * Internal Server Error
      */
@@ -2160,6 +2450,14 @@ export type DeleteApiIndustriesByIdErrors = {
      * Bad Request
      */
     400: ProblemDetails;
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
     /**
      * Not Found
      */
@@ -2193,6 +2491,14 @@ export type GetApiIndustriesByIdErrors = {
      * Bad Request
      */
     400: ProblemDetails;
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
     /**
      * Not Found
      */
@@ -2229,6 +2535,14 @@ export type PutApiIndustriesByIdErrors = {
      */
     400: ProblemDetails;
     /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
+    /**
      * Not Found
      */
     404: ProblemDetails;
@@ -2264,6 +2578,14 @@ export type PutApiIndustriesByIdSetStateErrors = {
      */
     400: ProblemDetails;
     /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
+    /**
      * Not Found
      */
     404: ProblemDetails;
@@ -2284,6 +2606,236 @@ export type PutApiIndustriesByIdSetStateResponses = {
 
 export type PutApiIndustriesByIdSetStateResponse = PutApiIndustriesByIdSetStateResponses[keyof PutApiIndustriesByIdSetStateResponses];
 
+export type GetApiInvitesData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/invites';
+};
+
+export type GetApiInvitesErrors = {
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type GetApiInvitesError = GetApiInvitesErrors[keyof GetApiInvitesErrors];
+
+export type GetApiInvitesResponses = {
+    /**
+     * OK
+     */
+    200: Array<InviteDto>;
+};
+
+export type GetApiInvitesResponse = GetApiInvitesResponses[keyof GetApiInvitesResponses];
+
+export type PostApiInvitesData = {
+    body: CreateInviteCommand;
+    path?: never;
+    query?: never;
+    url: '/api/invites';
+};
+
+export type PostApiInvitesErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type PostApiInvitesError = PostApiInvitesErrors[keyof PostApiInvitesErrors];
+
+export type PostApiInvitesResponses = {
+    /**
+     * Created
+     */
+    201: AndersonApiApiControllersResponseTypesJsonResponseOfGuid;
+};
+
+export type PostApiInvitesResponse = PostApiInvitesResponses[keyof PostApiInvitesResponses];
+
+export type DeleteApiInvitesByIdData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/invites/{id}';
+};
+
+export type DeleteApiInvitesByIdErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type DeleteApiInvitesByIdError = DeleteApiInvitesByIdErrors[keyof DeleteApiInvitesByIdErrors];
+
+export type DeleteApiInvitesByIdResponses = {
+    /**
+     * OK
+     */
+    200: unknown;
+};
+
+export type GetApiInvitesByIdData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/invites/{id}';
+};
+
+export type GetApiInvitesByIdErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type GetApiInvitesByIdError = GetApiInvitesByIdErrors[keyof GetApiInvitesByIdErrors];
+
+export type GetApiInvitesByIdResponses = {
+    /**
+     * OK
+     */
+    200: InviteDto;
+};
+
+export type GetApiInvitesByIdResponse = GetApiInvitesByIdResponses[keyof GetApiInvitesByIdResponses];
+
+export type PutApiInvitesByIdData = {
+    body: UpdateInviteCommand;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/invites/{id}';
+};
+
+export type PutApiInvitesByIdErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type PutApiInvitesByIdError = PutApiInvitesByIdErrors[keyof PutApiInvitesByIdErrors];
+
+export type PutApiInvitesByIdResponses = {
+    /**
+     * No Content
+     */
+    204: void;
+};
+
+export type PutApiInvitesByIdResponse = PutApiInvitesByIdResponses[keyof PutApiInvitesByIdResponses];
+
+export type GetApiInvitesMeData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/invites/me';
+};
+
+export type GetApiInvitesMeErrors = {
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type GetApiInvitesMeError = GetApiInvitesMeErrors[keyof GetApiInvitesMeErrors];
+
+export type GetApiInvitesMeResponses = {
+    /**
+     * OK
+     */
+    200: Array<InviteDto>;
+};
+
+export type GetApiInvitesMeResponse = GetApiInvitesMeResponses[keyof GetApiInvitesMeResponses];
+
 export type PostApiOpportunitiesMessageData = {
     body: AddMessageOpportunityCommand;
     path?: never;
@@ -2296,6 +2848,14 @@ export type PostApiOpportunitiesMessageErrors = {
      * Bad Request
      */
     400: ProblemDetails;
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
     /**
      * Internal Server Error
      */
@@ -2319,6 +2879,14 @@ export type GetApiOpportunitiesData = {
 };
 
 export type GetApiOpportunitiesErrors = {
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
     /**
      * Internal Server Error
      */
@@ -2348,6 +2916,14 @@ export type PostApiOpportunitiesErrors = {
      * Bad Request
      */
     400: ProblemDetails;
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
     /**
      * Internal Server Error
      */
@@ -2379,6 +2955,14 @@ export type DeleteApiOpportunitiesByIdErrors = {
      * Bad Request
      */
     400: ProblemDetails;
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
     /**
      * Not Found
      */
@@ -2412,6 +2996,14 @@ export type GetApiOpportunitiesByIdErrors = {
      * Bad Request
      */
     400: ProblemDetails;
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
     /**
      * Not Found
      */
@@ -2447,6 +3039,14 @@ export type PutApiOpportunitiesByIdErrors = {
      * Bad Request
      */
     400: ProblemDetails;
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
     /**
      * Not Found
      */
@@ -2485,6 +3085,14 @@ export type DeleteApiOpportunitiesByIdMessageErrors = {
      */
     400: ProblemDetails;
     /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
+    /**
      * Not Found
      */
     404: ProblemDetails;
@@ -2517,6 +3125,14 @@ export type PutApiOpportunitiesByIdMessageErrors = {
      * Bad Request
      */
     400: ProblemDetails;
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
     /**
      * Not Found
      */
@@ -2553,6 +3169,14 @@ export type PutApiOpportunitiesByIdCapabilitiesErrors = {
      */
     400: ProblemDetails;
     /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
+    /**
      * Not Found
      */
     404: ProblemDetails;
@@ -2587,6 +3211,14 @@ export type PutApiOpportunitiesByIdIndustriesErrors = {
      * Bad Request
      */
     400: ProblemDetails;
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
     /**
      * Not Found
      */
@@ -2623,6 +3255,14 @@ export type PutApiOpportunitiesByIdInterestedPartnersErrors = {
      */
     400: ProblemDetails;
     /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
+    /**
      * Not Found
      */
     404: ProblemDetails;
@@ -2657,6 +3297,14 @@ export type PutApiOpportunitiesByIdServiceTypesErrors = {
      * Bad Request
      */
     400: ProblemDetails;
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
     /**
      * Not Found
      */
@@ -2693,6 +3341,14 @@ export type PutApiOpportunitiesByIdSetStateErrors = {
      */
     400: ProblemDetails;
     /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
+    /**
      * Not Found
      */
     404: ProblemDetails;
@@ -2727,6 +3383,14 @@ export type PutApiOpportunitiesByIdStatusErrors = {
      * Bad Request
      */
     400: ProblemDetails;
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
     /**
      * Not Found
      */
@@ -2763,6 +3427,14 @@ export type PutApiOpportunitiesByIdFullErrors = {
      */
     400: ProblemDetails;
     /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
+    /**
      * Not Found
      */
     404: ProblemDetails;
@@ -2792,6 +3464,14 @@ export type GetApiOpportunitiesMeData = {
 
 export type GetApiOpportunitiesMeErrors = {
     /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
+    /**
      * Internal Server Error
      */
     500: ProblemDetails;
@@ -2817,6 +3497,14 @@ export type GetApiOpportunitiesSavedData = {
 
 export type GetApiOpportunitiesSavedErrors = {
     /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
+    /**
      * Internal Server Error
      */
     500: ProblemDetails;
@@ -2841,6 +3529,14 @@ export type GetApiOpportunityTypesData = {
 };
 
 export type GetApiOpportunityTypesErrors = {
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
     /**
      * Internal Server Error
      */
@@ -2870,6 +3566,14 @@ export type PostApiOpportunityTypesErrors = {
      * Bad Request
      */
     400: ProblemDetails;
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
     /**
      * Internal Server Error
      */
@@ -2901,6 +3605,14 @@ export type DeleteApiOpportunityTypesByIdErrors = {
      * Bad Request
      */
     400: ProblemDetails;
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
     /**
      * Not Found
      */
@@ -2934,6 +3646,14 @@ export type GetApiOpportunityTypesByIdErrors = {
      * Bad Request
      */
     400: ProblemDetails;
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
     /**
      * Not Found
      */
@@ -2970,6 +3690,14 @@ export type PutApiOpportunityTypesByIdErrors = {
      */
     400: ProblemDetails;
     /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
+    /**
      * Not Found
      */
     404: ProblemDetails;
@@ -3005,6 +3733,14 @@ export type PutApiOpportunityTypesByIdSetStateErrors = {
      */
     400: ProblemDetails;
     /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
+    /**
      * Not Found
      */
     404: ProblemDetails;
@@ -3034,6 +3770,14 @@ export type GetApiRegionsData = {
 
 export type GetApiRegionsErrors = {
     /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
+    /**
      * Internal Server Error
      */
     500: ProblemDetails;
@@ -3062,6 +3806,14 @@ export type PostApiRegionsErrors = {
      * Bad Request
      */
     400: ProblemDetails;
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
     /**
      * Internal Server Error
      */
@@ -3093,6 +3845,14 @@ export type DeleteApiRegionsByIdErrors = {
      * Bad Request
      */
     400: ProblemDetails;
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
     /**
      * Not Found
      */
@@ -3126,6 +3886,14 @@ export type GetApiRegionsByIdErrors = {
      * Bad Request
      */
     400: ProblemDetails;
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
     /**
      * Not Found
      */
@@ -3162,6 +3930,14 @@ export type PutApiRegionsByIdErrors = {
      */
     400: ProblemDetails;
     /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
+    /**
      * Not Found
      */
     404: ProblemDetails;
@@ -3197,6 +3973,14 @@ export type PutApiRegionsByIdSetStateErrors = {
      */
     400: ProblemDetails;
     /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
+    /**
      * Not Found
      */
     404: ProblemDetails;
@@ -3226,6 +4010,14 @@ export type GetApiReviewsData = {
 
 export type GetApiReviewsErrors = {
     /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
+    /**
      * Internal Server Error
      */
     500: ProblemDetails;
@@ -3254,6 +4046,14 @@ export type PostApiReviewsErrors = {
      * Bad Request
      */
     400: ProblemDetails;
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
     /**
      * Internal Server Error
      */
@@ -3285,6 +4085,14 @@ export type DeleteApiReviewsByIdErrors = {
      * Bad Request
      */
     400: ProblemDetails;
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
     /**
      * Not Found
      */
@@ -3318,6 +4126,14 @@ export type GetApiReviewsByIdErrors = {
      * Bad Request
      */
     400: ProblemDetails;
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
     /**
      * Not Found
      */
@@ -3354,6 +4170,14 @@ export type PutApiReviewsByIdErrors = {
      */
     400: ProblemDetails;
     /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
+    /**
      * Not Found
      */
     404: ProblemDetails;
@@ -3383,6 +4207,14 @@ export type GetApiServiceTypesData = {
 
 export type GetApiServiceTypesErrors = {
     /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
+    /**
      * Internal Server Error
      */
     500: ProblemDetails;
@@ -3411,6 +4243,14 @@ export type PostApiServiceTypesErrors = {
      * Bad Request
      */
     400: ProblemDetails;
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
     /**
      * Internal Server Error
      */
@@ -3442,6 +4282,14 @@ export type DeleteApiServiceTypesByIdErrors = {
      * Bad Request
      */
     400: ProblemDetails;
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
     /**
      * Not Found
      */
@@ -3475,6 +4323,14 @@ export type GetApiServiceTypesByIdErrors = {
      * Bad Request
      */
     400: ProblemDetails;
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
     /**
      * Not Found
      */
@@ -3511,6 +4367,14 @@ export type PutApiServiceTypesByIdErrors = {
      */
     400: ProblemDetails;
     /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
+    /**
      * Not Found
      */
     404: ProblemDetails;
@@ -3545,6 +4409,14 @@ export type PutApiServiceTypesByIdSetStateErrors = {
      * Bad Request
      */
     400: ProblemDetails;
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
     /**
      * Not Found
      */

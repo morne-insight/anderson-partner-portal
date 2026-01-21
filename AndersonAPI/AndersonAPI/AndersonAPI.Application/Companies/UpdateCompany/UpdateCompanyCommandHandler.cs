@@ -15,13 +15,12 @@ namespace AndersonAPI.Application.Companies.UpdateCompany
     public class UpdateCompanyCommandHandler : IRequestHandler<UpdateCompanyCommand>
     {
         private readonly ICompanyRepository _companyRepository;
-        private readonly IEmbeddingService _embeddingService;
+
 
         [IntentManaged(Mode.Merge)]
-        public UpdateCompanyCommandHandler(ICompanyRepository companyRepository, IEmbeddingService embeddingService)
+        public UpdateCompanyCommandHandler(ICompanyRepository companyRepository)
         {
             _companyRepository = companyRepository;
-            _embeddingService = embeddingService;
         }
 
         [IntentManaged(Mode.Fully, Body = Mode.Merge)]
@@ -36,23 +35,10 @@ namespace AndersonAPI.Application.Companies.UpdateCompany
             company.Update(
                 request.Name,
                 request.ShortDescription,
-                request.Description,
+                request.FullDescription,
                 request.WebsiteUrl,
-                request.EmployeeCount);
-
-            var textToEmbed = $"Company: {company.Name},{Environment.NewLine}" +
-                $"Capabilites: {string.Join(",", company.Capabilities.Select(c => c.Name))},{Environment.NewLine}" +
-                $"Industries: {string.Join(",", company.Industries.Select(c => c.Name))},{Environment.NewLine}" +
-                $"Regions: {string.Join(",", company.Locations.Select(c => c.Region.Name))},{Environment.NewLine}" +
-                $"Countries: {string.Join(",", company.Locations.Select(c => c.Country.Name))},{Environment.NewLine}" +
-                $"Description: {request.Description}";
-
-            var embedding = await _embeddingService.EmbedAsync(textToEmbed, cancellationToken);
-            
-            var vector = EmbeddingBinary.ToVarbinary(embedding.Vector);
-
-            company.SetEmbedding(vector, embedding.EmbeddingDeploymentName, embedding.Dimensions, DateTime.Now);
-
+                request.EmployeeCount,
+                request.ServiceTypeId);
         }
     }
 }
