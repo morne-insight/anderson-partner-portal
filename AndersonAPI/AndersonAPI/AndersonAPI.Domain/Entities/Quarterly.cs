@@ -49,6 +49,8 @@ namespace AndersonAPI.Domain.Entities
 
         public bool IsSubmitted { get; private set; }
 
+        public DateTimeOffset SubmittedDate { get; private set; }
+
         public virtual Company Company { get; private set; }
 
         public virtual IReadOnlyCollection<ReportPartner> Partners
@@ -72,19 +74,20 @@ namespace AndersonAPI.Domain.Entities
         public void SetSubmitted(bool isSubmitted)
         {
             IsSubmitted = isSubmitted;
+
         }
 
         public void AddReportLine(
-            Guid quarterlyId,
-            int partnerCount = 0,
-            int headcount = 0,
-            int clientCount = 0,
-            int officeCount = 0,
-            int lawyerCount = 0,
-            double estimatedRevenue = 0)
+            int partnerCount,
+            int headcount,
+            int clientCount,
+            int officeCount,
+            int lawyerCount,
+            double estimatedRevenue,
+            Guid countryId)
         {
-            // TODO: Implement AddReportLine (Quarterly) functionality
-            throw new NotImplementedException("Replace with your implementation...");
+            var line = new ReportLine(partnerCount, headcount, clientCount, officeCount, lawyerCount, estimatedRevenue, countryId);
+            _reportLines.Add(line);
         }
 
         public void UpdateReportLine(
@@ -94,34 +97,51 @@ namespace AndersonAPI.Domain.Entities
             int clientCount,
             int officeCount,
             int lawyerCount,
-            double estimatedRevenue)
+            double estimatedRevenue,
+            Guid countryId)
         {
-            // TODO: Implement UpdateReportLine (Quarterly) functionality
-            throw new NotImplementedException("Replace with your implementation...");
+            var line = _reportLines.FirstOrDefault(x => x.Id == reprotLineId);
+            if (line == null)
+            {
+                throw new InvalidOperationException($"Report Line with ID {reprotLineId} not found.");
+            }
+            line.Update(partnerCount, headcount, clientCount, officeCount, lawyerCount, estimatedRevenue, countryId);
         }
 
         public void RemoveReportLine(Guid reportLineId)
         {
-            // TODO: Implement RemoveReportLine (Quarterly) functionality
-            throw new NotImplementedException("Replace with your implementation...");
+            var line = _reportLines.FirstOrDefault(x => x.Id == reportLineId);
+            if (line == null)
+            {
+                throw new InvalidOperationException($"Report Line with ID {reportLineId} not found.");
+            }
+            _reportLines.Remove(line);
         }
 
-        public void AddReportPartner(Guid quaterlyId, string name, EntityState state)
+        public void AddReportPartner(string name, PartnerStatus status)
         {
-            // TODO: Implement AddReportPartner (Quarterly) functionality
-            throw new NotImplementedException("Replace with your implementation...");
+            var partner = new ReportPartner(name, status);
+            _partners.Add(partner);
         }
 
-        public void UpdateReporPartner(Guid reportPartnerId, string name)
+        public void UpdateReporPartner(Guid reportPartnerId, string name, PartnerStatus status)
         {
-            // TODO: Implement UpdateReporPartner (Quarterly) functionality
-            throw new NotImplementedException("Replace with your implementation...");
+            var partner = _partners.FirstOrDefault(x => x.Id == reportPartnerId);
+            if (partner == null)
+            {
+                throw new InvalidOperationException($"Report Partner with ID {reportPartnerId} not found.");
+            }
+            partner.Update(name, status);
         }
 
         public void RemoveReportPartner(Guid reportPartnerId)
         {
-            // TODO: Implement RemoveReportPartner (Quarterly) functionality
-            throw new NotImplementedException("Replace with your implementation...");
+            var partner = _partners.FirstOrDefault(x => x.Id == reportPartnerId);
+            if (partner == null)
+            {
+                throw new InvalidOperationException($"Report Partner with ID {reportPartnerId} not found.");
+            }
+            _partners.Remove(partner);
         }
 
         void IAuditable.SetCreated(Guid createdBy, DateTimeOffset createdDate) => (CreatedBy, CreatedDate) = (createdBy, createdDate);

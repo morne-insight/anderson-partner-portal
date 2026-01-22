@@ -10,7 +10,7 @@ export const callApi = createServerFn({ method: "POST" })
   .handler(async ({ data }) => {
     const apiFn = sdk[data.fn as keyof typeof sdk] as any;
     
-    console.log("serverApiFn", apiFn)
+    // console.log("serverApiFn", apiFn)
     
     if (typeof apiFn !== 'function') {
       throw new Error(`API function "${String(data.fn)}" not found`);
@@ -18,7 +18,7 @@ export const callApi = createServerFn({ method: "POST" })
     // The Global Interceptor we added in Part 1 will handle the token!
     const result = await apiFn(data.args);
     
-    console.log("serverApiResult", result)
+    // console.log("serverApiResult", result)
 
     if (result.error) throw result.error;
     return result.data;

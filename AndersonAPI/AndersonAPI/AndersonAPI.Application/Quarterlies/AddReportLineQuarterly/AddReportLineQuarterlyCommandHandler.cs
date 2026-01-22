@@ -29,13 +29,13 @@ namespace AndersonAPI.Application.Quarterlies.AddReportLineQuarterly
             }
 
             quarterly.AddReportLine(
-                request.QuarterlyId,
                 request.PartnerCount,
                 request.Headcount,
                 request.ClientCount,
                 request.OfficeCount,
                 request.LawyerCount,
-                request.EstimatedRevenue);
+                request.EstimatedRevenue,
+                request.CountryId);
         }
     }
 }

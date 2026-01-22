@@ -22,7 +22,7 @@
   <targetEnd id="8e8b21ef-d696-46e6-bed7-810668e106d5" type="Association Target End" typeId="0a66489f-30aa-417b-a75d-b945863366fd">
     <name>ReportLines</name>
     <display>ReportLines: ReportLine[*]</display>
-    <order>20</order>
+    <order>21</order>
     <typeReference id="fafb3505-d242-465e-aecb-db4a9b6d3830">
       <typeId>d2961a5d-cca7-4e61-9fc4-c253aa2165ab</typeId>
       <isNavigable>true</isNavigable>

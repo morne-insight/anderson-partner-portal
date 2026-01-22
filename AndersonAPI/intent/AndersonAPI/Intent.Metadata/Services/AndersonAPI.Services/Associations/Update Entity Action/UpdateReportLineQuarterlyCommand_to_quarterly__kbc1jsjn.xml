@@ -21,7 +21,7 @@
   <targetEnd id="292ecffa-f32e-4137-bcac-6bc07b2b0471" type="Update Entity Action Target End" typeId="516069f6-09cc-4de8-8e31-3c71ca823452">
     <name>quarterly</name>
     <display>[update] quarterly: UpdateReportLine</display>
-    <order>8</order>
+    <order>9</order>
     <traits>
       <trait id="d00a2ab0-9a23-4192-b8bb-166798fc7dba" name="[Processing Action]" />
     </traits>
@@ -186,6 +186,22 @@
                 <path>
                   <target id="36a07ff8-955e-4a15-a874-d5d53ce367e6" name="UpdateReportLineQuarterlyCommand" type="element" specialization="Command" specializationId="ccf14eb6-3a55-4d81-b5b9-d27311c70cb9" />
                   <target id="1fefec41-a2aa-44b2-8b7c-8fd807c42256" name="EstimatedRevenue" type="element" specialization="DTO-Field" specializationId="7baed1fd-469b-4980-8fd9-4cefb8331eb2" />
+                </path>
+              </source>
+            </sources>
+          </mappedEnd>
+          <mappedEnd>
+            <expression>{CountryId}</expression>
+            <path>
+              <target id="666e0055-bc9c-4fd6-acd8-975f4719ee0b" name="Quarterly" type="element" specialization="Class" specializationId="04e12b51-ed12-42a3-9667-a6aa81bb6d10" />
+              <target id="327b075f-4405-4c37-8331-6ad8c069c538" name="UpdateReportLine" type="element" specialization="Operation" specializationId="e042bb67-a1df-480c-9935-b26210f78591" />
+              <target id="a34d6427-a460-412b-bfce-bb74b265367d" name="countryId" type="element" specialization="Parameter" specializationId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b" />
+            </path>
+            <sources>
+              <source identifier="CountryId" mappingType="Data Mapping" mappingTypeId="ca88649b-f20b-44db-a9c0-017c26155ba8">
+                <path>
+                  <target id="36a07ff8-955e-4a15-a874-d5d53ce367e6" name="UpdateReportLineQuarterlyCommand" type="element" specialization="Command" specializationId="ccf14eb6-3a55-4d81-b5b9-d27311c70cb9" />
+                  <target id="435e0ba1-6170-4c47-a020-4f590f45afa6" name="CountryId" type="element" specialization="DTO-Field" specializationId="7baed1fd-469b-4980-8fd9-4cefb8331eb2" />
                 </path>
               </source>
             </sources>

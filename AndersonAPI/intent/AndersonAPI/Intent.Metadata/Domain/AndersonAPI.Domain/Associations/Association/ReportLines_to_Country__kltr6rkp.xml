@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<association id="6a0c4d46-48f1-40a3-81c0-5149bf6d8adb">
-  <sourceEnd id="8dddfcd0-4049-4346-8dd7-eaca9ef73338" type="Association Source End" typeId="8d9d2e5b-bd55-4f36-9ae4-2b9e84fd4e58">
-    <name>Quarterlies</name>
-    <display>Quarterlies: Quarterly[*]</display>
-    <order>40</order>
-    <typeReference id="a1584054-41d9-4285-90e2-9bf2af872651">
-      <typeId>666e0055-bc9c-4fd6-acd8-975f4719ee0b</typeId>
-      <isNavigable>true</isNavigable>
+<association id="06bcc3fe-e111-41fd-beb5-2637b6054eac">
+  <sourceEnd id="1470c297-6010-4792-a447-bae5968ffad8" type="Association Source End" typeId="8d9d2e5b-bd55-4f36-9ae4-2b9e84fd4e58">
+    <name>ReportLines</name>
+    <display>ReportLines: ReportLine[*]</display>
+    <order>0</order>
+    <typeReference id="7c068622-5288-495f-97e5-a5caac1b6be5">
+      <typeId>d2961a5d-cca7-4e61-9fc4-c253aa2165ab</typeId>
+      <isNavigable>false</isNavigable>
       <isNullable>false</isNullable>
       <isCollection>true</isCollection>
       <isRequired>true</isRequired>
@@ -19,12 +19,12 @@
     <metadata />
     <childElements />
   </sourceEnd>
-  <targetEnd id="6a0c4d46-48f1-40a3-81c0-5149bf6d8adb" type="Association Target End" typeId="0a66489f-30aa-417b-a75d-b945863366fd">
-    <name>Company</name>
-    <display>Company: Company</display>
-    <order>19</order>
-    <typeReference id="a5ccfc3f-e028-45f6-b9cc-b3a71e2fa218">
-      <typeId>3259289c-5d51-46cb-8c99-78751b456c44</typeId>
+  <targetEnd id="06bcc3fe-e111-41fd-beb5-2637b6054eac" type="Association Target End" typeId="0a66489f-30aa-417b-a75d-b945863366fd">
+    <name>Country</name>
+    <display>Country: Country</display>
+    <order>11</order>
+    <typeReference id="6cd0f173-eafb-4c00-a3e3-1a2b79166909">
+      <typeId>ee96084f-cea4-4d1c-910e-5405b5cd5657</typeId>
       <isNavigable>true</isNavigable>
       <isNullable>false</isNullable>
       <isCollection>false</isCollection>

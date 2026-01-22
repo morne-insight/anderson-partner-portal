@@ -38,6 +38,29 @@ export type AddMessageOpportunityCommand = {
 };
 
 /**
+ * AddReportLineQuarterlyCommand
+ */
+export type AddReportLineQuarterlyCommand = {
+    id: string;
+    partnerCount: number;
+    headcount: number;
+    clientCount: number;
+    officeCount: number;
+    lawyerCount: number;
+    estimatedRevenue: number;
+    countryId: string;
+};
+
+/**
+ * AddReportPartnerQuarterlyCommand
+ */
+export type AddReportPartnerQuarterlyCommand = {
+    id: string;
+    name: string;
+    status: PartnerStatus;
+};
+
+/**
  * AndersonAPI.Api.Controllers.ResponseTypes.JsonResponse_Of_Guid
  */
 export type AndersonApiApiControllersResponseTypesJsonResponseOfGuid = {
@@ -236,6 +259,39 @@ export type CreateOpportunityCommand = {
 export type CreateOpportunityTypeCommand = {
     name: string;
     description: string;
+};
+
+/**
+ * CreateQuarterlyCommand
+ */
+export type CreateQuarterlyCommand = {
+    year: number;
+    quarter: ReportQuarter;
+    companyId: string;
+    partners: Array<CreateQuarterlyPartnersDto>;
+    reports: Array<CreateQuarterlyReportsDto>;
+};
+
+/**
+ * CreateQuarterlyPartnersDto
+ */
+export type CreateQuarterlyPartnersDto = {
+    quaterlyId?: string;
+    status?: PartnerStatus;
+    name?: string;
+};
+
+/**
+ * CreateQuarterlyReportsDto
+ */
+export type CreateQuarterlyReportsDto = {
+    partnerCount?: number;
+    headcount?: number;
+    clientCount?: number;
+    officeCount?: number;
+    lawyerCount?: number;
+    estimatedRevenue?: number;
+    countryId?: string;
 };
 
 /**
@@ -522,6 +578,8 @@ export type PartnerServiceTypeDto = {
     name?: string;
 };
 
+export type PartnerStatus = number;
+
 /**
  * ProblemDetails
  */
@@ -531,6 +589,20 @@ export type ProblemDetails = {
     status?: number | null;
     detail?: string | null;
     instance?: string | null;
+};
+
+/**
+ * QuarterlyDto
+ */
+export type QuarterlyDto = {
+    quarter?: ReportQuarter;
+    isSubmitted?: boolean;
+    id?: string;
+    year?: number;
+    createdDate?: Date;
+    revenue?: number;
+    headcount?: number;
+    submittedDate?: Date;
 };
 
 /**
@@ -558,6 +630,8 @@ export type RegisterDto = {
     email?: string | null;
     password?: string | null;
 };
+
+export type ReportQuarter = number;
 
 /**
  * ResetPasswordDto
@@ -728,6 +802,14 @@ export type SetStatusOpportunityCommand = {
 };
 
 /**
+ * SetSubmittedQuarterlyCommand
+ */
+export type SetSubmittedQuarterlyCommand = {
+    id: string;
+    isSubmitted: boolean;
+};
+
+/**
  * TokenResultDto
  */
 export type TokenResultDto = {
@@ -867,12 +949,46 @@ export type UpdateOpportunityTypeCommand = {
 };
 
 /**
+ * UpdateQuarterlyCommand
+ */
+export type UpdateQuarterlyCommand = {
+    id: string;
+    year: number;
+    quarter: ReportQuarter;
+};
+
+/**
  * UpdateRegionCommand
  */
 export type UpdateRegionCommand = {
     id: string;
     name: string;
     description: string;
+};
+
+/**
+ * UpdateReporPartnerQuarterlyCommand
+ */
+export type UpdateReporPartnerQuarterlyCommand = {
+    id: string;
+    reportPartnerId: string;
+    name: string;
+    status: PartnerStatus;
+};
+
+/**
+ * UpdateReportLineQuarterlyCommand
+ */
+export type UpdateReportLineQuarterlyCommand = {
+    id: string;
+    reprotLineId: string;
+    partnerCount: number;
+    headcount: number;
+    clientCount: number;
+    officeCount: number;
+    lawyerCount: number;
+    estimatedRevenue: number;
+    countryId: string;
 };
 
 /**
@@ -3760,6 +3876,535 @@ export type PutApiOpportunityTypesByIdSetStateResponses = {
 };
 
 export type PutApiOpportunityTypesByIdSetStateResponse = PutApiOpportunityTypesByIdSetStateResponses[keyof PutApiOpportunityTypesByIdSetStateResponses];
+
+export type DeleteApiQuarterliesByIdReportLineData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query: {
+        reportLineId: string;
+    };
+    url: '/api/quarterlies/{id}/report-line';
+};
+
+export type DeleteApiQuarterliesByIdReportLineErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type DeleteApiQuarterliesByIdReportLineError = DeleteApiQuarterliesByIdReportLineErrors[keyof DeleteApiQuarterliesByIdReportLineErrors];
+
+export type DeleteApiQuarterliesByIdReportLineResponses = {
+    /**
+     * OK
+     */
+    200: unknown;
+};
+
+export type PostApiQuarterliesByIdReportLineData = {
+    body: AddReportLineQuarterlyCommand;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/quarterlies/{id}/report-line';
+};
+
+export type PostApiQuarterliesByIdReportLineErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type PostApiQuarterliesByIdReportLineError = PostApiQuarterliesByIdReportLineErrors[keyof PostApiQuarterliesByIdReportLineErrors];
+
+export type PostApiQuarterliesByIdReportLineResponses = {
+    /**
+     * Created
+     */
+    201: unknown;
+};
+
+export type PutApiQuarterliesByIdReportLineData = {
+    body: UpdateReportLineQuarterlyCommand;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/quarterlies/{id}/report-line';
+};
+
+export type PutApiQuarterliesByIdReportLineErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type PutApiQuarterliesByIdReportLineError = PutApiQuarterliesByIdReportLineErrors[keyof PutApiQuarterliesByIdReportLineErrors];
+
+export type PutApiQuarterliesByIdReportLineResponses = {
+    /**
+     * No Content
+     */
+    204: void;
+};
+
+export type PutApiQuarterliesByIdReportLineResponse = PutApiQuarterliesByIdReportLineResponses[keyof PutApiQuarterliesByIdReportLineResponses];
+
+export type DeleteApiQuarterliesByIdReportPartnerData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query: {
+        reportPartnerId: string;
+    };
+    url: '/api/quarterlies/{id}/report-partner';
+};
+
+export type DeleteApiQuarterliesByIdReportPartnerErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type DeleteApiQuarterliesByIdReportPartnerError = DeleteApiQuarterliesByIdReportPartnerErrors[keyof DeleteApiQuarterliesByIdReportPartnerErrors];
+
+export type DeleteApiQuarterliesByIdReportPartnerResponses = {
+    /**
+     * OK
+     */
+    200: unknown;
+};
+
+export type PostApiQuarterliesByIdReportPartnerData = {
+    body: AddReportPartnerQuarterlyCommand;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/quarterlies/{id}/report-partner';
+};
+
+export type PostApiQuarterliesByIdReportPartnerErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type PostApiQuarterliesByIdReportPartnerError = PostApiQuarterliesByIdReportPartnerErrors[keyof PostApiQuarterliesByIdReportPartnerErrors];
+
+export type PostApiQuarterliesByIdReportPartnerResponses = {
+    /**
+     * Created
+     */
+    201: unknown;
+};
+
+export type GetApiQuarterliesData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/quarterlies';
+};
+
+export type GetApiQuarterliesErrors = {
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type GetApiQuarterliesError = GetApiQuarterliesErrors[keyof GetApiQuarterliesErrors];
+
+export type GetApiQuarterliesResponses = {
+    /**
+     * OK
+     */
+    200: Array<QuarterlyDto>;
+};
+
+export type GetApiQuarterliesResponse = GetApiQuarterliesResponses[keyof GetApiQuarterliesResponses];
+
+export type PostApiQuarterliesData = {
+    body: CreateQuarterlyCommand;
+    path?: never;
+    query?: never;
+    url: '/api/quarterlies';
+};
+
+export type PostApiQuarterliesErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type PostApiQuarterliesError = PostApiQuarterliesErrors[keyof PostApiQuarterliesErrors];
+
+export type PostApiQuarterliesResponses = {
+    /**
+     * Created
+     */
+    201: AndersonApiApiControllersResponseTypesJsonResponseOfGuid;
+};
+
+export type PostApiQuarterliesResponse = PostApiQuarterliesResponses[keyof PostApiQuarterliesResponses];
+
+export type DeleteApiQuarterliesByIdData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/quarterlies/{id}';
+};
+
+export type DeleteApiQuarterliesByIdErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type DeleteApiQuarterliesByIdError = DeleteApiQuarterliesByIdErrors[keyof DeleteApiQuarterliesByIdErrors];
+
+export type DeleteApiQuarterliesByIdResponses = {
+    /**
+     * OK
+     */
+    200: unknown;
+};
+
+export type GetApiQuarterliesByIdData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/quarterlies/{id}';
+};
+
+export type GetApiQuarterliesByIdErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type GetApiQuarterliesByIdError = GetApiQuarterliesByIdErrors[keyof GetApiQuarterliesByIdErrors];
+
+export type GetApiQuarterliesByIdResponses = {
+    /**
+     * OK
+     */
+    200: QuarterlyDto;
+};
+
+export type GetApiQuarterliesByIdResponse = GetApiQuarterliesByIdResponses[keyof GetApiQuarterliesByIdResponses];
+
+export type PutApiQuarterliesByIdData = {
+    body: UpdateQuarterlyCommand;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/quarterlies/{id}';
+};
+
+export type PutApiQuarterliesByIdErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type PutApiQuarterliesByIdError = PutApiQuarterliesByIdErrors[keyof PutApiQuarterliesByIdErrors];
+
+export type PutApiQuarterliesByIdResponses = {
+    /**
+     * No Content
+     */
+    204: void;
+};
+
+export type PutApiQuarterliesByIdResponse = PutApiQuarterliesByIdResponses[keyof PutApiQuarterliesByIdResponses];
+
+export type PutApiQuarterliesByIdSubmittedData = {
+    body: SetSubmittedQuarterlyCommand;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/quarterlies/{id}/submitted';
+};
+
+export type PutApiQuarterliesByIdSubmittedErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type PutApiQuarterliesByIdSubmittedError = PutApiQuarterliesByIdSubmittedErrors[keyof PutApiQuarterliesByIdSubmittedErrors];
+
+export type PutApiQuarterliesByIdSubmittedResponses = {
+    /**
+     * No Content
+     */
+    204: void;
+};
+
+export type PutApiQuarterliesByIdSubmittedResponse = PutApiQuarterliesByIdSubmittedResponses[keyof PutApiQuarterliesByIdSubmittedResponses];
+
+export type PutApiQuarterliesByIdReporPartnerData = {
+    body: UpdateReporPartnerQuarterlyCommand;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/quarterlies/{id}/repor-partner';
+};
+
+export type PutApiQuarterliesByIdReporPartnerErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type PutApiQuarterliesByIdReporPartnerError = PutApiQuarterliesByIdReporPartnerErrors[keyof PutApiQuarterliesByIdReporPartnerErrors];
+
+export type PutApiQuarterliesByIdReporPartnerResponses = {
+    /**
+     * No Content
+     */
+    204: void;
+};
+
+export type PutApiQuarterliesByIdReporPartnerResponse = PutApiQuarterliesByIdReporPartnerResponses[keyof PutApiQuarterliesByIdReporPartnerResponses];
+
+export type GetApiQuarterliesByIdMeData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/quarterlies/{id}/me';
+};
+
+export type GetApiQuarterliesByIdMeErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type GetApiQuarterliesByIdMeError = GetApiQuarterliesByIdMeErrors[keyof GetApiQuarterliesByIdMeErrors];
+
+export type GetApiQuarterliesByIdMeResponses = {
+    /**
+     * OK
+     */
+    200: Array<QuarterlyDto>;
+};
+
+export type GetApiQuarterliesByIdMeResponse = GetApiQuarterliesByIdMeResponses[keyof GetApiQuarterliesByIdMeResponses];
 
 export type GetApiRegionsData = {
     body?: never;

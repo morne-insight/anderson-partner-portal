@@ -35,7 +35,8 @@ namespace AndersonAPI.Application.Quarterlies.UpdateReportLineQuarterly
                 request.ClientCount,
                 request.OfficeCount,
                 request.LawyerCount,
-                request.EstimatedRevenue);
+                request.EstimatedRevenue,
+                request.CountryId);
         }
     }
 }

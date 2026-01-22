@@ -13,50 +13,32 @@ import {
   CheckCircle,
   Clock
 } from "lucide-react";
-import { QuarterlyReportListItem, QUARTERS, AVAILABLE_YEARS } from "@/types/reports";
+import { QUARTERS, AVAILABLE_YEARS, getQuarterLabel } from "@/types/reports";
+import { type QuarterlyDto } from "@/api";
+import { callApi } from "@/server/proxy";
 
 export const Route = createFileRoute("/_app/profile/$companyId/reports/")({
   component: ReportsPage,
   loader: async ({ params }) => {
-    // TODO: Replace with actual API call when backend is implemented
-    // const reports = await callApi({ data: { fn: 'getApiCompaniesByIdReports', args: { path: { id: params.companyId } } } });
+    try {
+      // Fetch quarterly reports for the specific company
+      const response = await callApi({
+        data: {
+          fn: "getApiQuarterliesByIdMe",
+          args: { path: { id: params.companyId } },
+        },
+      });
 
-    // Mock data for now
-    const mockReports: QuarterlyReportListItem[] = [
-      {
-        id: '1',
-        year: 2024,
-        quarter: 'Q4',
-        isSubmitted: false,
-        createdDate: new Date('2024-12-01'),
-        revenue: 2500000,
-        netIncome: 450000
-      },
-      {
-        id: '2',
-        year: 2024,
-        quarter: 'Q3',
-        isSubmitted: true,
-        createdDate: new Date('2024-09-01'),
-        submittedDate: new Date('2024-10-15'),
-        revenue: 2200000,
-        netIncome: 380000
-      },
-      {
-        id: '3',
-        year: 2024,
-        quarter: 'Q2',
-        isSubmitted: true,
-        createdDate: new Date('2024-06-01'),
-        submittedDate: new Date('2024-07-10'),
-        revenue: 2100000,
-        netIncome: 350000
-      }
-    ];
+      // Transform QuarterlyDto to match UI expectations
+      const quarterlies = response || [];
 
-    return {
-      reports: mockReports,
-    };
+      return { reports: quarterlies as QuarterlyDto[] };
+
+    } catch (error) {
+      console.error('Failed to fetch quarterly reports:', error);
+      // Return empty array on error
+      return { reports: [] as QuarterlyDto[] };
+    }
   },
 });
 
@@ -64,14 +46,13 @@ function ReportsPage() {
   const { companyId } = Route.useParams();
   const { reports } = Route.useLoaderData();
   const router = useRouter();
-
   const [selectedYear, setSelectedYear] = useState<string>('all');
   const [selectedQuarter, setSelectedQuarter] = useState<string>('all');
 
   // Filter reports based on selected year and quarter
   const filteredReports = reports.filter(report => {
-    const yearMatch = selectedYear === 'all' || report.year.toString() === selectedYear;
-    const quarterMatch = selectedQuarter === 'all' || report.quarter === selectedQuarter;
+    const yearMatch = selectedYear === 'all' || report.year!.toString() === selectedYear;
+    const quarterMatch = selectedQuarter === 'all' || report.quarter!.toString() === selectedQuarter;
     return yearMatch && quarterMatch;
   });
 
@@ -83,7 +64,7 @@ function ReportsPage() {
 
     // Check if report already exists for this year/quarter
     const existingReport = reports.find(r =>
-      r.year.toString() === selectedYear && r.quarter === selectedQuarter
+      r.year!.toString() === selectedYear && r.quarter!.toString() === selectedQuarter
     );
 
     if (existingReport) {
@@ -172,8 +153,8 @@ function ReportsPage() {
                 <SelectContent>
                   <SelectItem value="all">All Quarters</SelectItem>
                   {QUARTERS.map(quarter => (
-                    <SelectItem key={quarter} value={quarter}>
-                      {quarter}
+                    <SelectItem key={quarter} value={quarter.toString()}>
+                      {getQuarterLabel(quarter)}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -217,7 +198,7 @@ function ReportsPage() {
                 className="bg-red-600 hover:bg-red-700 text-white"
               >
                 <Plus className="w-4 h-4 mr-2" />
-                Create {selectedYear} {selectedQuarter} Report
+                Create {selectedYear && selectedYear !== 'all' && selectedQuarter !== 'all' ? `${selectedYear} ` : ''}{selectedQuarter && selectedQuarter !== 'all' && selectedYear !== 'all' ? `${getQuarterLabel(parseInt(selectedQuarter))} ` : ''}Report
               </Button>
             )}
           </div>
@@ -233,10 +214,10 @@ function ReportsPage() {
                     Status
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Revenue
+                    Estimated Revenue
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Net Income
+                    Head Count
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Created
@@ -254,7 +235,7 @@ function ReportsPage() {
                         <Calendar className="w-4 h-4 text-gray-400 mr-2" />
                         <div>
                           <div className="text-sm font-medium text-gray-900">
-                            {report.quarter} {report.year}
+                            {getQuarterLabel(report.quarter!)} {report.year!}
                           </div>
                         </div>
                       </div>
@@ -281,7 +262,7 @@ function ReportsPage() {
                       <div className="flex items-center">
                         <DollarSign className="w-4 h-4 text-gray-400 mr-1" />
                         <span className="text-sm text-gray-900">
-                          {formatCurrency(report.revenue)}
+                          {formatCurrency(report.revenue!)}
                         </span>
                       </div>
                     </td>
@@ -289,12 +270,12 @@ function ReportsPage() {
                       <div className="flex items-center">
                         <TrendingUp className="w-4 h-4 text-gray-400 mr-1" />
                         <span className="text-sm text-gray-900">
-                          {formatCurrency(report.netIncome)}
+                          {report.headcount!}
                         </span>
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {formatDate(report.createdDate)}
+                      {formatDate(report.createdDate!)}
                       {report.submittedDate && (
                         <div className="text-xs text-gray-400">
                           Submitted: {formatDate(report.submittedDate)}
@@ -307,7 +288,7 @@ function ReportsPage() {
                           <Button
                             variant="outline"
                             size="sm"
-                            onClick={() => handleViewReport(report.id)}
+                            onClick={() => handleViewReport(report.id!)}
                             className="text-blue-600 hover:text-blue-700"
                           >
                             <Eye className="w-4 h-4 mr-1" />
@@ -317,7 +298,7 @@ function ReportsPage() {
                           <Button
                             variant="outline"
                             size="sm"
-                            onClick={() => handleEditReport(report.id)}
+                            onClick={() => handleEditReport(report.id!)}
                             className="text-green-600 hover:text-green-700"
                           >
                             <Edit className="w-4 h-4 mr-1" />

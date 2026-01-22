@@ -5,7 +5,7 @@
   <targetPrefPoint x="200" y="50" />
   <fixedPoints>
     <point x="200" y="120" />
-    <point x="200" y="260" />
-    <point x="100" y="260" />
+    <point x="200" y="230" />
+    <point x="100" y="230" />
   </fixedPoints>
 </associationVisual>

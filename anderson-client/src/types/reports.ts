@@ -1,74 +1,31 @@
-// Quarterly Report Types
-export interface QuarterlyReport {
-  id: string;
-  companyId: string;
-  year: number;
-  quarter: 'Q1' | 'Q2' | 'Q3' | 'Q4';
-  isSubmitted: boolean;
-  createdDate: Date;
-  submittedDate?: Date;
-  lastModifiedDate: Date;
-  
-  // Financial Data
-  revenue: number;
-  expenses: number;
-  netIncome: number;
-  
-  // Operational Metrics
-  employeeCount: number;
-  newClients: number;
-  projectsCompleted: number;
-  
-  // Strategic Information
-  keyAchievements: string;
-  challenges: string;
-  nextQuarterGoals: string;
-  
-  // Market Information
-  marketConditions: string;
-  competitivePosition: string;
-  
-  // Additional Notes
-  additionalNotes?: string;
-}
 
-export interface CreateQuarterlyReportCommand {
-  companyId: string;
-  year: number;
-  quarter: 'Q1' | 'Q2' | 'Q3' | 'Q4';
-  revenue: number;
-  expenses: number;
-  netIncome: number;
-  employeeCount: number;
-  newClients: number;
-  projectsCompleted: number;
-  keyAchievements: string;
-  challenges: string;
-  nextQuarterGoals: string;
-  marketConditions: string;
-  competitivePosition: string;
-  additionalNotes?: string;
-}
+// Helper functions
+export const getQuarterLabel = (quarter: ReportQuarter): string => {
+  return `Q${quarter}`;
+};
 
-export interface UpdateQuarterlyReportCommand extends CreateQuarterlyReportCommand {
-  id: string;
-}
+export const getQuarterNumber = (quarterLabel: string): ReportQuarter => {
+  return parseInt(quarterLabel.replace('Q', '')) as ReportQuarter;
+};
 
-export interface SubmitQuarterlyReportCommand {
-  id: string;
-}
-
-export interface QuarterlyReportListItem {
-  id: string;
-  year: number;
-  quarter: 'Q1' | 'Q2' | 'Q3' | 'Q4';
-  isSubmitted: boolean;
-  createdDate: Date;
-  submittedDate?: Date;
-  revenue: number;
-  netIncome: number;
-}
-
-export const QUARTERS = ['Q1', 'Q2', 'Q3', 'Q4'] as const;
+// Constants
+export const QUARTERS: ReportQuarter[] = [1, 2, 3, 4];
+export const QUARTER_LABELS = ['Q1', 'Q2', 'Q3', 'Q4'] as const;
 export const CURRENT_YEAR = new Date().getFullYear();
-export const AVAILABLE_YEARS = Array.from({ length: 10 }, (_, i) => CURRENT_YEAR - i);
+export const AVAILABLE_YEARS = Array.from(
+  { length: 10 }, 
+  (_, i) => CURRENT_YEAR - i
+);
+
+export enum ReportQuarter {
+    Q1 = 1,
+    Q2 = 2,
+    Q3 = 3,
+    Q4 = 4
+}
+
+export enum PartnerStatus {
+    Hired = 1,
+    Promoted = 2,
+    Terminated = 3
+}

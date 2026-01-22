@@ -10,17 +10,15 @@ namespace AndersonAPI.Application.Quarterlies.AddReportPartnerQuarterly
 {
     public class AddReportPartnerQuarterlyCommand : IRequest, ICommand
     {
-        public AddReportPartnerQuarterlyCommand(Guid id, Guid quaterlyId, string name, EntityState state)
+        public AddReportPartnerQuarterlyCommand(Guid id, string name, PartnerStatus status)
         {
             Id = id;
-            QuaterlyId = quaterlyId;
             Name = name;
-            State = state;
+            Status = status;
         }
 
         public Guid Id { get; set; }
-        public Guid QuaterlyId { get; set; }
         public string Name { get; set; }
-        public EntityState State { get; set; }
+        public PartnerStatus Status { get; set; }
     }
 }

@@ -79,22 +79,6 @@
             </sources>
           </mappedEnd>
           <mappedEnd>
-            <expression>{QuarterlyId}</expression>
-            <path>
-              <target id="666e0055-bc9c-4fd6-acd8-975f4719ee0b" name="Quarterly" type="element" specialization="Class" specializationId="04e12b51-ed12-42a3-9667-a6aa81bb6d10" />
-              <target id="c43672d0-f420-4439-99a8-a832f2b99f08" name="AddReportLine" type="element" specialization="Operation" specializationId="e042bb67-a1df-480c-9935-b26210f78591" />
-              <target id="556e4fa4-76d9-4b03-a740-d9e776fbc88b" name="quarterlyId" type="element" specialization="Parameter" specializationId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b" />
-            </path>
-            <sources>
-              <source identifier="QuarterlyId" mappingType="Data Mapping" mappingTypeId="ca88649b-f20b-44db-a9c0-017c26155ba8">
-                <path>
-                  <target id="aace9488-3dab-4887-a78b-fdf7dfd18eca" name="AddReportLineQuarterlyCommand" type="element" specialization="Command" specializationId="ccf14eb6-3a55-4d81-b5b9-d27311c70cb9" />
-                  <target id="287d9497-b61e-4b54-b0cb-0153beea1b2c" name="QuarterlyId" type="element" specialization="DTO-Field" specializationId="7baed1fd-469b-4980-8fd9-4cefb8331eb2" />
-                </path>
-              </source>
-            </sources>
-          </mappedEnd>
-          <mappedEnd>
             <expression>{PartnerCount}</expression>
             <path>
               <target id="666e0055-bc9c-4fd6-acd8-975f4719ee0b" name="Quarterly" type="element" specialization="Class" specializationId="04e12b51-ed12-42a3-9667-a6aa81bb6d10" />
@@ -186,6 +170,22 @@
                 <path>
                   <target id="aace9488-3dab-4887-a78b-fdf7dfd18eca" name="AddReportLineQuarterlyCommand" type="element" specialization="Command" specializationId="ccf14eb6-3a55-4d81-b5b9-d27311c70cb9" />
                   <target id="5acdf512-b441-416f-881a-7d38d5402374" name="EstimatedRevenue" type="element" specialization="DTO-Field" specializationId="7baed1fd-469b-4980-8fd9-4cefb8331eb2" />
+                </path>
+              </source>
+            </sources>
+          </mappedEnd>
+          <mappedEnd>
+            <expression>{CountryId}</expression>
+            <path>
+              <target id="666e0055-bc9c-4fd6-acd8-975f4719ee0b" name="Quarterly" type="element" specialization="Class" specializationId="04e12b51-ed12-42a3-9667-a6aa81bb6d10" />
+              <target id="c43672d0-f420-4439-99a8-a832f2b99f08" name="AddReportLine" type="element" specialization="Operation" specializationId="e042bb67-a1df-480c-9935-b26210f78591" />
+              <target id="45811010-b5a3-4b60-b62c-b28f93ddbd30" name="countryId" type="element" specialization="Parameter" specializationId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b" />
+            </path>
+            <sources>
+              <source identifier="CountryId" mappingType="Data Mapping" mappingTypeId="ca88649b-f20b-44db-a9c0-017c26155ba8">
+                <path>
+                  <target id="aace9488-3dab-4887-a78b-fdf7dfd18eca" name="AddReportLineQuarterlyCommand" type="element" specialization="Command" specializationId="ccf14eb6-3a55-4d81-b5b9-d27311c70cb9" />
+                  <target id="679eee21-afff-4526-a9a7-fc737126475a" name="CountryId" type="element" specialization="DTO-Field" specializationId="7baed1fd-469b-4980-8fd9-4cefb8331eb2" />
                 </path>
               </source>
             </sources>

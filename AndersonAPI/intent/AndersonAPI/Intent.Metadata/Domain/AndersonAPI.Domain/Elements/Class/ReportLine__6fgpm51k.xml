@@ -193,9 +193,46 @@
       </metadata>
       <childElements />
     </childElement>
+    <childElement id="48721562-779c-49db-a805-998cf7884bd0" type="Attribute" typeId="0090fb93-483e-41af-a11d-5ad2dc796adf">
+      <name>CountryId</name>
+      <display>CountryId: guid</display>
+      <isAbstract>false</isAbstract>
+      <genericTypes />
+      <typeReference id="1646ee4d-eff8-4d82-8abf-ac539e035ec5">
+        <typeId>6b649125-18ea-48fd-a6ba-0bfff0d8f488</typeId>
+        <isNavigable>true</isNavigable>
+        <isNullable>false</isNullable>
+        <isCollection>false</isCollection>
+        <isRequired>true</isRequired>
+        <typePackageName>Intent.Common.Types</typePackageName>
+        <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
+        <stereotypes />
+        <genericTypeParameters />
+      </typeReference>
+      <isMapped>false</isMapped>
+      <parentFolderId>d2961a5d-cca7-4e61-9fc4-c253aa2165ab</parentFolderId>
+      <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+      <packageName>AndersonAPI.Domain</packageName>
+      <stereotypes>
+        <stereotype stereotypeDefinitionId="793a5128-57a1-440b-a206-af5722b752a6" name="Foreign Key">
+          <addedByDefault>false</addedByDefault>
+          <definitionPackageName>Intent.Metadata.RDBMS</definitionPackageName>
+          <definitionPackageId>AF8F3810-745C-42A2-93C8-798860DC45B1</definitionPackageId>
+          <properties>
+            <property name="42e4f9b5-f834-4e5f-86aa-d3a35c505076" display="Association" value="06bcc3fe-e111-41fd-beb5-2637b6054eac" isActive="true" />
+          </properties>
+        </stereotype>
+      </stereotypes>
+      <metadata>
+        <entry key="fk-original-name" value="CountryId" />
+        <entry key="association" value="06bcc3fe-e111-41fd-beb5-2637b6054eac" />
+        <entry key="is-managed-key" value="true" />
+      </metadata>
+      <childElements />
+    </childElement>
     <childElement id="62fe363f-0e85-4801-9d81-9c6d04bd0d4a" type="Class Constructor" typeId="dec2bd12-4699-4f45-8ec9-3b62dc692d2b">
       <name>Constructor</name>
-      <display>ReportLine(quarterlyId: guid, partnerCount: int = 0, headcount: int = 0, clientCount: int = 0, officeCount: int = 0, lawyerCount: int = 0, estimatedRevenue: double = 0, state: EntityState = EntityState.Enabled)</display>
+      <display>ReportLine(partnerCount: int, headcount: int, clientCount: int, officeCount: int, lawyerCount: int, estimatedRevenue: double, countryId: guid, state: EntityState = EntityState.Enabled)</display>
       <isAbstract>false</isAbstract>
       <sort-children>by-type-then-manually</sort-children>
       <genericTypes />
@@ -215,42 +252,10 @@
       <stereotypes />
       <metadata />
       <childElements>
-        <childElement id="6f68cb76-2760-430a-8860-9d135f7bb09d" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
-          <name>quarterlyId</name>
-          <display>in : quarterlyId: guid</display>
-          <isAbstract>false</isAbstract>
-          <genericTypes />
-          <typeReference id="6c50b2e9-1265-45cc-a876-f0f89dc23e49">
-            <typeId>6b649125-18ea-48fd-a6ba-0bfff0d8f488</typeId>
-            <isNavigable>true</isNavigable>
-            <isNullable>false</isNullable>
-            <isCollection>false</isCollection>
-            <isRequired>true</isRequired>
-            <typePackageName>Intent.Common.Types</typePackageName>
-            <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
-            <stereotypes />
-            <genericTypeParameters />
-          </typeReference>
-          <isMapped>true</isMapped>
-          <mappedClass>
-            <mappingSettingsId>d6d0abfd-893c-4bec-92cb-419934ba5ba8</mappingSettingsId>
-            <autoSyncTypeReference>true</autoSyncTypeReference>
-            <mappedPath>
-              <target id="e1c95433-e3f9-49c0-bda5-ec69f6662dd7" name="QuarterlyId" type="element" specialization="Attribute" specializationId="0090fb93-483e-41af-a11d-5ad2dc796adf" />
-            </mappedPath>
-          </mappedClass>
-          <parentFolderId>62fe363f-0e85-4801-9d81-9c6d04bd0d4a</parentFolderId>
-          <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
-          <packageName>AndersonAPI.Domain</packageName>
-          <stereotypes />
-          <metadata />
-          <childElements />
-        </childElement>
         <childElement id="351da0bb-be1f-4d37-88cc-eaaa820d13c2" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
           <name>partnerCount</name>
-          <display>in : partnerCount: int = 0</display>
+          <display>in : partnerCount: int</display>
           <isAbstract>false</isAbstract>
-          <value>0</value>
           <genericTypes />
           <typeReference id="48256a1d-46ea-46c4-9b8e-8ea899709c0c">
             <typeId>fb0a362d-e9e2-40de-b6ff-5ce8167cbe74</typeId>
@@ -280,9 +285,8 @@
         </childElement>
         <childElement id="396b09ef-ae50-4f75-b387-bb1aecc7c622" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
           <name>headcount</name>
-          <display>in : headcount: int = 0</display>
+          <display>in : headcount: int</display>
           <isAbstract>false</isAbstract>
-          <value>0</value>
           <genericTypes />
           <typeReference id="1bd86675-997b-4b2e-9729-ccb62bebe2b9">
             <typeId>fb0a362d-e9e2-40de-b6ff-5ce8167cbe74</typeId>
@@ -312,9 +316,8 @@
         </childElement>
         <childElement id="307fa6a0-5fc4-48e3-bba0-93ed2cf4e903" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
           <name>clientCount</name>
-          <display>in : clientCount: int = 0</display>
+          <display>in : clientCount: int</display>
           <isAbstract>false</isAbstract>
-          <value>0</value>
           <genericTypes />
           <typeReference id="0e36b4a1-2e38-42ea-818f-c56a248ef108">
             <typeId>fb0a362d-e9e2-40de-b6ff-5ce8167cbe74</typeId>
@@ -344,9 +347,8 @@
         </childElement>
         <childElement id="17992c90-ffae-40b1-a99e-ce288041cf7e" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
           <name>officeCount</name>
-          <display>in : officeCount: int = 0</display>
+          <display>in : officeCount: int</display>
           <isAbstract>false</isAbstract>
-          <value>0</value>
           <genericTypes />
           <typeReference id="045c7781-3f48-4eb8-9d82-2206e7f941a8">
             <typeId>fb0a362d-e9e2-40de-b6ff-5ce8167cbe74</typeId>
@@ -376,9 +378,8 @@
         </childElement>
         <childElement id="6d80b777-d30c-4a1a-a2fb-1eedc438a8fb" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
           <name>lawyerCount</name>
-          <display>in : lawyerCount: int = 0</display>
+          <display>in : lawyerCount: int</display>
           <isAbstract>false</isAbstract>
-          <value>0</value>
           <genericTypes />
           <typeReference id="850d5027-69be-4ac2-8081-5caea6f4b73e">
             <typeId>fb0a362d-e9e2-40de-b6ff-5ce8167cbe74</typeId>
@@ -408,9 +409,8 @@
         </childElement>
         <childElement id="f244a0bf-301f-41b0-bec6-1f1c42dce9f6" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
           <name>estimatedRevenue</name>
-          <display>in : estimatedRevenue: double = 0</display>
+          <display>in : estimatedRevenue: double</display>
           <isAbstract>false</isAbstract>
-          <value>0</value>
           <genericTypes />
           <typeReference id="03362cac-78e4-4bfa-9751-b1bcc5fac887">
             <typeId>24A77F70-5B97-40DD-8F9A-4208AD5F9219</typeId>
@@ -429,6 +429,37 @@
             <autoSyncTypeReference>true</autoSyncTypeReference>
             <mappedPath>
               <target id="7ac73bf5-9645-40dd-b70c-50826432cd5f" name="EstimatedRevenue" type="element" specialization="Attribute" specializationId="0090fb93-483e-41af-a11d-5ad2dc796adf" />
+            </mappedPath>
+          </mappedClass>
+          <parentFolderId>62fe363f-0e85-4801-9d81-9c6d04bd0d4a</parentFolderId>
+          <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+          <packageName>AndersonAPI.Domain</packageName>
+          <stereotypes />
+          <metadata />
+          <childElements />
+        </childElement>
+        <childElement id="1ed9df17-1d33-45ce-9fb0-13a7840d1331" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
+          <name>countryId</name>
+          <display>in : countryId: guid</display>
+          <isAbstract>false</isAbstract>
+          <genericTypes />
+          <typeReference id="92168288-2038-4406-affe-d4504f3892ce">
+            <typeId>6b649125-18ea-48fd-a6ba-0bfff0d8f488</typeId>
+            <isNavigable>true</isNavigable>
+            <isNullable>false</isNullable>
+            <isCollection>false</isCollection>
+            <isRequired>true</isRequired>
+            <typePackageName>Intent.Common.Types</typePackageName>
+            <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
+            <stereotypes />
+            <genericTypeParameters />
+          </typeReference>
+          <isMapped>true</isMapped>
+          <mappedClass>
+            <mappingSettingsId>d6d0abfd-893c-4bec-92cb-419934ba5ba8</mappingSettingsId>
+            <autoSyncTypeReference>true</autoSyncTypeReference>
+            <mappedPath>
+              <target id="48721562-779c-49db-a805-998cf7884bd0" name="CountryId" type="element" specialization="Attribute" specializationId="0090fb93-483e-41af-a11d-5ad2dc796adf" />
             </mappedPath>
           </mappedClass>
           <parentFolderId>62fe363f-0e85-4801-9d81-9c6d04bd0d4a</parentFolderId>
@@ -475,7 +506,7 @@
     </childElement>
     <childElement id="a554b40d-bf2d-4661-ac64-88726d2f7bee" type="Operation" typeId="e042bb67-a1df-480c-9935-b26210f78591">
       <name>Update</name>
-      <display>Update(partnerCount: int, headcount: int, clientCount: int, officeCount: int, lawyerCount: int, estimatedRevenue: double): void</display>
+      <display>Update(partnerCount: int, headcount: int, clientCount: int, officeCount: int, lawyerCount: int, estimatedRevenue: double, countryId: guid): void</display>
       <isAbstract>false</isAbstract>
       <sort-children>by-type-then-manually</sort-children>
       <genericTypes />
@@ -680,6 +711,37 @@
             <autoSyncTypeReference>true</autoSyncTypeReference>
             <mappedPath>
               <target id="7ac73bf5-9645-40dd-b70c-50826432cd5f" name="EstimatedRevenue" type="element" specialization="Attribute" specializationId="0090fb93-483e-41af-a11d-5ad2dc796adf" />
+            </mappedPath>
+          </mappedClass>
+          <parentFolderId>a554b40d-bf2d-4661-ac64-88726d2f7bee</parentFolderId>
+          <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+          <packageName>AndersonAPI.Domain</packageName>
+          <stereotypes />
+          <metadata />
+          <childElements />
+        </childElement>
+        <childElement id="75f907f7-70cf-49b5-a114-0ef2eea840ba" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
+          <name>countryId</name>
+          <display>in : countryId: guid</display>
+          <isAbstract>false</isAbstract>
+          <genericTypes />
+          <typeReference id="5da4d278-adf7-4eb7-a6db-95f09ba87a57">
+            <typeId>6b649125-18ea-48fd-a6ba-0bfff0d8f488</typeId>
+            <isNavigable>true</isNavigable>
+            <isNullable>false</isNullable>
+            <isCollection>false</isCollection>
+            <isRequired>true</isRequired>
+            <typePackageName>Intent.Common.Types</typePackageName>
+            <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
+            <stereotypes />
+            <genericTypeParameters />
+          </typeReference>
+          <isMapped>true</isMapped>
+          <mappedClass>
+            <mappingSettingsId>7590bd83-04bc-40fe-8b5c-118277c049d4</mappingSettingsId>
+            <autoSyncTypeReference>true</autoSyncTypeReference>
+            <mappedPath>
+              <target id="48721562-779c-49db-a805-998cf7884bd0" name="CountryId" type="element" specialization="Attribute" specializationId="0090fb93-483e-41af-a11d-5ad2dc796adf" />
             </mappedPath>
           </mappedClass>
           <parentFolderId>a554b40d-bf2d-4661-ac64-88726d2f7bee</parentFolderId>

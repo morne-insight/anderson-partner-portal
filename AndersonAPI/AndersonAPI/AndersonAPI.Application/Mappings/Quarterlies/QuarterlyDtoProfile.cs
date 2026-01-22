@@ -11,7 +11,9 @@ namespace AndersonAPI.Application.Quarterlies
     {
         public QuarterlyDtoProfile()
         {
-            CreateMap<Quarterly, QuarterlyDto>();
+            CreateMap<Quarterly, QuarterlyDto>()
+                .ForMember(d => d.Revenue, opt => opt.MapFrom(src => src.ReportLines.Sum(s => s.EstimatedRevenue)))
+                .ForMember(d => d.Headcount, opt => opt.MapFrom(src => src.ReportLines.Sum(s => s.Headcount)));
         }
     }
 

@@ -16,7 +16,8 @@ namespace AndersonAPI.Application.Quarterlies.UpdateReportLineQuarterly
             int clientCount,
             int officeCount,
             int lawyerCount,
-            double estimatedRevenue)
+            double estimatedRevenue,
+            Guid countryId)
         {
             Id = id;
             ReprotLineId = reprotLineId;
@@ -26,6 +27,7 @@ namespace AndersonAPI.Application.Quarterlies.UpdateReportLineQuarterly
             OfficeCount = officeCount;
             LawyerCount = lawyerCount;
             EstimatedRevenue = estimatedRevenue;
+            CountryId = countryId;
         }
 
         public Guid Id { get; set; }
@@ -36,5 +38,6 @@ namespace AndersonAPI.Application.Quarterlies.UpdateReportLineQuarterly
         public int OfficeCount { get; set; }
         public int LawyerCount { get; set; }
         public double EstimatedRevenue { get; set; }
+        public Guid CountryId { get; set; }
     }
 }

@@ -14,10 +14,6 @@ import { QuarterlyReport } from "@/types/reports";
 
 export const Route = createFileRoute("/_app/profile/$companyId/reports/$reportId/")({
     component: ViewReportPage,
-    validateSearch: (search: Record<string, unknown>) => ({
-        year: search.year as string | undefined,
-        quarter: search.quarter as string | undefined,
-    }),
     loader: async ({ params }) => {
         // TODO: Replace with actual API call when backend is implemented
         // const report = await callApi({ data: { fn: 'getApiCompaniesByIdReportsById', args: { path: { id: params.companyId, reportId: params.reportId } } } });
@@ -27,7 +23,7 @@ export const Route = createFileRoute("/_app/profile/$companyId/reports/$reportId
             id: params.reportId,
             companyId: params.companyId,
             year: 2024,
-            quarter: 'Q3',
+            quarter: 3,
             isSubmitted: true,
             createdDate: new Date('2024-09-01'),
             submittedDate: new Date('2024-10-15'),
@@ -43,7 +39,30 @@ export const Route = createFileRoute("/_app/profile/$companyId/reports/$reportId
             nextQuarterGoals: 'Focus on expanding our market presence in the financial services sector, launch new AI-powered analytics products, and strengthen our partnership network.',
             marketConditions: 'The consulting market showed strong demand for digital transformation services, particularly in AI and data analytics. However, economic uncertainty led to longer sales cycles.',
             competitivePosition: 'We maintain a strong competitive position in data analytics but need to accelerate our AI capabilities development to stay ahead of emerging competitors.',
-            additionalNotes: 'Considering strategic acquisition opportunities to enhance our AI expertise and expand geographical reach.'
+            additionalNotes: 'Considering strategic acquisition opportunities to enhance our AI expertise and expand geographical reach.',
+            reports: [
+                {
+                    id: 'report-1',
+                    partnerCount: 8,
+                    headcount: 42,
+                    clientCount: 25,
+                    officeCount: 2,
+                    lawyerCount: 15,
+                    estimatedRevenue: 2200000
+                }
+            ],
+            partners: [
+                {
+                    id: 'partner-1',
+                    name: 'John Smith',
+                    status: 1
+                },
+                {
+                    id: 'partner-2',
+                    name: 'Sarah Johnson',
+                    status: 1
+                }
+            ]
         };
 
         return {

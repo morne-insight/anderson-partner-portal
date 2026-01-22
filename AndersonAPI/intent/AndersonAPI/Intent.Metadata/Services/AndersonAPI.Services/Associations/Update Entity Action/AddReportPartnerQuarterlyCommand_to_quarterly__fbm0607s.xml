@@ -21,7 +21,7 @@
   <targetEnd id="98710dc1-b344-4e12-81f5-2da920b55e75" type="Update Entity Action Target End" typeId="516069f6-09cc-4de8-8e31-3c71ca823452">
     <name>quarterly</name>
     <display>[update] quarterly: AddReportPartner</display>
-    <order>4</order>
+    <order>3</order>
     <traits>
       <trait id="d00a2ab0-9a23-4192-b8bb-166798fc7dba" name="[Processing Action]" />
     </traits>
@@ -79,22 +79,6 @@
             </sources>
           </mappedEnd>
           <mappedEnd>
-            <expression>{QuaterlyId}</expression>
-            <path>
-              <target id="666e0055-bc9c-4fd6-acd8-975f4719ee0b" name="Quarterly" type="element" specialization="Class" specializationId="04e12b51-ed12-42a3-9667-a6aa81bb6d10" />
-              <target id="c5a49aa8-aaf9-4daf-a42b-0fa0eba59494" name="AddReportPartner" type="element" specialization="Operation" specializationId="e042bb67-a1df-480c-9935-b26210f78591" />
-              <target id="3e486985-afc6-4dea-805a-ee89b0990689" name="quaterlyId" type="element" specialization="Parameter" specializationId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b" />
-            </path>
-            <sources>
-              <source identifier="QuaterlyId" mappingType="Data Mapping" mappingTypeId="ca88649b-f20b-44db-a9c0-017c26155ba8">
-                <path>
-                  <target id="d084eca1-8c1b-436c-872a-e744cbd637a4" name="AddReportPartnerQuarterlyCommand" type="element" specialization="Command" specializationId="ccf14eb6-3a55-4d81-b5b9-d27311c70cb9" />
-                  <target id="d706b558-9906-46fb-a2ef-b9a177a6a358" name="QuaterlyId" type="element" specialization="DTO-Field" specializationId="7baed1fd-469b-4980-8fd9-4cefb8331eb2" />
-                </path>
-              </source>
-            </sources>
-          </mappedEnd>
-          <mappedEnd>
             <expression>{Name}</expression>
             <path>
               <target id="666e0055-bc9c-4fd6-acd8-975f4719ee0b" name="Quarterly" type="element" specialization="Class" specializationId="04e12b51-ed12-42a3-9667-a6aa81bb6d10" />
@@ -111,17 +95,17 @@
             </sources>
           </mappedEnd>
           <mappedEnd>
-            <expression>{State}</expression>
+            <expression>{Status}</expression>
             <path>
               <target id="666e0055-bc9c-4fd6-acd8-975f4719ee0b" name="Quarterly" type="element" specialization="Class" specializationId="04e12b51-ed12-42a3-9667-a6aa81bb6d10" />
               <target id="c5a49aa8-aaf9-4daf-a42b-0fa0eba59494" name="AddReportPartner" type="element" specialization="Operation" specializationId="e042bb67-a1df-480c-9935-b26210f78591" />
-              <target id="4f56d1d0-2a71-4465-9ac9-2408a08867f4" name="state" type="element" specialization="Parameter" specializationId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b" />
+              <target id="4f56d1d0-2a71-4465-9ac9-2408a08867f4" name="status" type="element" specialization="Parameter" specializationId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b" />
             </path>
             <sources>
-              <source identifier="State" mappingType="Data Mapping" mappingTypeId="ca88649b-f20b-44db-a9c0-017c26155ba8">
+              <source identifier="Status" mappingType="Data Mapping" mappingTypeId="ca88649b-f20b-44db-a9c0-017c26155ba8">
                 <path>
                   <target id="d084eca1-8c1b-436c-872a-e744cbd637a4" name="AddReportPartnerQuarterlyCommand" type="element" specialization="Command" specializationId="ccf14eb6-3a55-4d81-b5b9-d27311c70cb9" />
-                  <target id="48366696-ef36-4a87-8810-8b6bdddabc81" name="State" type="element" specialization="DTO-Field" specializationId="7baed1fd-469b-4980-8fd9-4cefb8331eb2" />
+                  <target id="48366696-ef36-4a87-8810-8b6bdddabc81" name="Status" type="element" specialization="DTO-Field" specializationId="7baed1fd-469b-4980-8fd9-4cefb8331eb2" />
                 </path>
               </source>
             </sources>

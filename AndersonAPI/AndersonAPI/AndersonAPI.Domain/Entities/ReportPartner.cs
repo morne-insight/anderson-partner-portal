@@ -6,12 +6,15 @@ namespace AndersonAPI.Domain.Entities
 {
     public class ReportPartner : BaseEntityList
     {
-        public ReportPartner(Guid quaterlyId, string name, PartnerStatus status, EntityState state = EntityState.Enabled)
+        public ReportPartner(string name,
+            PartnerStatus status,
+            EntityState state = EntityState.Enabled,
+            string description = "")
         {
-            QuaterlyId = quaterlyId;
             Name = name;
             Status = status;
             State = state;
+            Description = description;
         }
         /// <summary>
         /// Required by Entity Framework.
@@ -24,9 +27,10 @@ namespace AndersonAPI.Domain.Entities
 
         public PartnerStatus Status { get; private set; }
 
-        public void Update(string name)
+        public void Update(string name, PartnerStatus status)
         {
             Name = name;
+            Status = status;
         }
     }
 }

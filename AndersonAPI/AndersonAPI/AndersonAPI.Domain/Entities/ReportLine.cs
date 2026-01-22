@@ -6,22 +6,22 @@ namespace AndersonAPI.Domain.Entities
 {
     public class ReportLine : BaseEntity
     {
-        public ReportLine(Guid quarterlyId,
-    int partnerCount = 0,
-    int headcount = 0,
-    int clientCount = 0,
-    int officeCount = 0,
-    int lawyerCount = 0,
-    double estimatedRevenue = 0,
+        public ReportLine(int partnerCount,
+    int headcount,
+    int clientCount,
+    int officeCount,
+    int lawyerCount,
+    double estimatedRevenue,
+    Guid countryId,
     EntityState state = EntityState.Enabled)
         {
-            QuarterlyId = quarterlyId;
             PartnerCount = partnerCount;
             Headcount = headcount;
             ClientCount = clientCount;
             OfficeCount = officeCount;
             LawyerCount = lawyerCount;
             EstimatedRevenue = estimatedRevenue;
+            CountryId = countryId;
             State = state;
         }
 
@@ -30,6 +30,7 @@ namespace AndersonAPI.Domain.Entities
         /// </summary>
         protected ReportLine()
         {
+            Country = null!;
         }
 
         public int PartnerCount { get; private set; }
@@ -46,13 +47,18 @@ namespace AndersonAPI.Domain.Entities
 
         public Guid QuarterlyId { get; private set; }
 
+        public Guid CountryId { get; private set; }
+
+        public virtual Country Country { get; private set; }
+
         public void Update(
             int partnerCount,
             int headcount,
             int clientCount,
             int officeCount,
             int lawyerCount,
-            double estimatedRevenue)
+            double estimatedRevenue,
+            Guid countryId)
         {
             PartnerCount = partnerCount;
             Headcount = headcount;
@@ -60,6 +66,7 @@ namespace AndersonAPI.Domain.Entities
             OfficeCount = officeCount;
             LawyerCount = lawyerCount;
             EstimatedRevenue = estimatedRevenue;
+            CountryId = countryId;
         }
     }
 }

@@ -17,6 +17,7 @@ namespace AndersonAPI.Application.Quarterlies
         public int OfficeCount { get; set; }
         public int LawyerCount { get; set; }
         public double EstimatedRevenue { get; set; }
+        public Guid CountryId { get; set; }
 
         public static CreateQuarterlyReportsDto Create(
             int partnerCount,
@@ -24,7 +25,8 @@ namespace AndersonAPI.Application.Quarterlies
             int clientCount,
             int officeCount,
             int lawyerCount,
-            double estimatedRevenue)
+            double estimatedRevenue,
+            Guid countryId)
         {
             return new CreateQuarterlyReportsDto
             {
@@ -33,7 +35,8 @@ namespace AndersonAPI.Application.Quarterlies
                 ClientCount = clientCount,
                 OfficeCount = officeCount,
                 LawyerCount = lawyerCount,
-                EstimatedRevenue = estimatedRevenue
+                EstimatedRevenue = estimatedRevenue,
+                CountryId = countryId
             };
         }
     }

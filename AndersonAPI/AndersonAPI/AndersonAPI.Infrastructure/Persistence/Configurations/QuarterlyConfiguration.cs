@@ -40,6 +40,9 @@ namespace AndersonAPI.Infrastructure.Persistence.Configurations
             builder.Property(x => x.IsSubmitted)
                 .IsRequired();
 
+            builder.Property(x => x.SubmittedDate)
+                .IsRequired();
+
             builder.Property(x => x.CompanyId)
                 .IsRequired();
 
@@ -121,6 +124,14 @@ namespace AndersonAPI.Infrastructure.Persistence.Configurations
 
             builder.Property(x => x.QuarterlyId)
                 .IsRequired();
+
+            builder.Property(x => x.CountryId)
+                .IsRequired();
+
+            builder.HasOne(x => x.Country)
+                .WithMany()
+                .HasForeignKey(x => x.CountryId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder.Ignore(e => e.DomainEvents);
         }

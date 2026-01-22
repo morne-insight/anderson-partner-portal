@@ -96,6 +96,77 @@ export const AddMessageOpportunityCommandSchema = {
     }
 } as const;
 
+export const AddReportLineQuarterlyCommandSchema = {
+    title: 'AddReportLineQuarterlyCommand',
+    required: [
+        'id',
+        'partnerCount',
+        'headcount',
+        'clientCount',
+        'officeCount',
+        'lawyerCount',
+        'estimatedRevenue',
+        'countryId'
+    ],
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string',
+            format: 'uuid'
+        },
+        partnerCount: {
+            type: 'integer',
+            format: 'int32'
+        },
+        headcount: {
+            type: 'integer',
+            format: 'int32'
+        },
+        clientCount: {
+            type: 'integer',
+            format: 'int32'
+        },
+        officeCount: {
+            type: 'integer',
+            format: 'int32'
+        },
+        lawyerCount: {
+            type: 'integer',
+            format: 'int32'
+        },
+        estimatedRevenue: {
+            type: 'number',
+            format: 'double'
+        },
+        countryId: {
+            type: 'string',
+            format: 'uuid'
+        }
+    }
+} as const;
+
+export const AddReportPartnerQuarterlyCommandSchema = {
+    title: 'AddReportPartnerQuarterlyCommand',
+    required: [
+        'id',
+        'name',
+        'status'
+    ],
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string',
+            format: 'uuid'
+        },
+        name: {
+            type: 'string'
+        },
+        status: {
+            $ref: '#/components/schemas/PartnerStatus'
+        }
+    }
+} as const;
+
 export const AndersonAPI_Api_Controllers_ResponseTypes_JsonResponse_Of_GuidSchema = {
     title: 'AndersonAPI.Api.Controllers.ResponseTypes.JsonResponse_Of_Guid',
     required: [
@@ -609,6 +680,95 @@ export const CreateOpportunityTypeCommandSchema = {
         },
         description: {
             type: 'string'
+        }
+    }
+} as const;
+
+export const CreateQuarterlyCommandSchema = {
+    title: 'CreateQuarterlyCommand',
+    required: [
+        'year',
+        'quarter',
+        'companyId',
+        'partners',
+        'reports'
+    ],
+    type: 'object',
+    properties: {
+        year: {
+            type: 'integer',
+            format: 'int32'
+        },
+        quarter: {
+            $ref: '#/components/schemas/ReportQuarter'
+        },
+        companyId: {
+            type: 'string',
+            format: 'uuid'
+        },
+        partners: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/CreateQuarterlyPartnersDto'
+            }
+        },
+        reports: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/CreateQuarterlyReportsDto'
+            }
+        }
+    }
+} as const;
+
+export const CreateQuarterlyPartnersDtoSchema = {
+    title: 'CreateQuarterlyPartnersDto',
+    type: 'object',
+    properties: {
+        quaterlyId: {
+            type: 'string',
+            format: 'uuid'
+        },
+        status: {
+            $ref: '#/components/schemas/PartnerStatus'
+        },
+        name: {
+            type: 'string'
+        }
+    }
+} as const;
+
+export const CreateQuarterlyReportsDtoSchema = {
+    title: 'CreateQuarterlyReportsDto',
+    type: 'object',
+    properties: {
+        partnerCount: {
+            type: 'integer',
+            format: 'int32'
+        },
+        headcount: {
+            type: 'integer',
+            format: 'int32'
+        },
+        clientCount: {
+            type: 'integer',
+            format: 'int32'
+        },
+        officeCount: {
+            type: 'integer',
+            format: 'int32'
+        },
+        lawyerCount: {
+            type: 'integer',
+            format: 'int32'
+        },
+        estimatedRevenue: {
+            type: 'number',
+            format: 'double'
+        },
+        countryId: {
+            type: 'string',
+            format: 'uuid'
         }
     }
 } as const;
@@ -1302,6 +1462,10 @@ export const PartnerServiceTypeDtoSchema = {
     }
 } as const;
 
+export const PartnerStatusSchema = {
+    type: 'integer'
+} as const;
+
 export const ProblemDetailsSchema = {
     title: 'ProblemDetails',
     type: 'object',
@@ -1326,6 +1490,43 @@ export const ProblemDetailsSchema = {
         instance: {
             type: 'string',
             nullable: true
+        }
+    }
+} as const;
+
+export const QuarterlyDtoSchema = {
+    title: 'QuarterlyDto',
+    type: 'object',
+    properties: {
+        quarter: {
+            $ref: '#/components/schemas/ReportQuarter'
+        },
+        isSubmitted: {
+            type: 'boolean'
+        },
+        id: {
+            type: 'string',
+            format: 'uuid'
+        },
+        year: {
+            type: 'integer',
+            format: 'int32'
+        },
+        createdDate: {
+            type: 'string',
+            format: 'date-time'
+        },
+        revenue: {
+            type: 'number',
+            format: 'double'
+        },
+        headcount: {
+            type: 'integer',
+            format: 'int32'
+        },
+        submittedDate: {
+            type: 'string',
+            format: 'date-time'
         }
     }
 } as const;
@@ -1378,6 +1579,10 @@ export const RegisterDtoSchema = {
             nullable: true
         }
     }
+} as const;
+
+export const ReportQuarterSchema = {
+    type: 'integer'
 } as const;
 
 export const ResetPasswordDtoSchema = {
@@ -1781,6 +1986,24 @@ export const SetStatusOpportunityCommandSchema = {
     }
 } as const;
 
+export const SetSubmittedQuarterlyCommandSchema = {
+    title: 'SetSubmittedQuarterlyCommand',
+    required: [
+        'id',
+        'isSubmitted'
+    ],
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string',
+            format: 'uuid'
+        },
+        isSubmitted: {
+            type: 'boolean'
+        }
+    }
+} as const;
+
 export const TokenResultDtoSchema = {
     title: 'TokenResultDto',
     type: 'object',
@@ -2180,6 +2403,29 @@ export const UpdateOpportunityTypeCommandSchema = {
     }
 } as const;
 
+export const UpdateQuarterlyCommandSchema = {
+    title: 'UpdateQuarterlyCommand',
+    required: [
+        'id',
+        'year',
+        'quarter'
+    ],
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string',
+            format: 'uuid'
+        },
+        year: {
+            type: 'integer',
+            format: 'int32'
+        },
+        quarter: {
+            $ref: '#/components/schemas/ReportQuarter'
+        }
+    }
+} as const;
+
 export const UpdateRegionCommandSchema = {
     title: 'UpdateRegionCommand',
     required: [
@@ -2198,6 +2444,87 @@ export const UpdateRegionCommandSchema = {
         },
         description: {
             type: 'string'
+        }
+    }
+} as const;
+
+export const UpdateReporPartnerQuarterlyCommandSchema = {
+    title: 'UpdateReporPartnerQuarterlyCommand',
+    required: [
+        'id',
+        'reportPartnerId',
+        'name',
+        'status'
+    ],
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string',
+            format: 'uuid'
+        },
+        reportPartnerId: {
+            type: 'string',
+            format: 'uuid'
+        },
+        name: {
+            type: 'string'
+        },
+        status: {
+            $ref: '#/components/schemas/PartnerStatus'
+        }
+    }
+} as const;
+
+export const UpdateReportLineQuarterlyCommandSchema = {
+    title: 'UpdateReportLineQuarterlyCommand',
+    required: [
+        'id',
+        'reprotLineId',
+        'partnerCount',
+        'headcount',
+        'clientCount',
+        'officeCount',
+        'lawyerCount',
+        'estimatedRevenue',
+        'countryId'
+    ],
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string',
+            format: 'uuid'
+        },
+        reprotLineId: {
+            type: 'string',
+            format: 'uuid'
+        },
+        partnerCount: {
+            type: 'integer',
+            format: 'int32'
+        },
+        headcount: {
+            type: 'integer',
+            format: 'int32'
+        },
+        clientCount: {
+            type: 'integer',
+            format: 'int32'
+        },
+        officeCount: {
+            type: 'integer',
+            format: 'int32'
+        },
+        lawyerCount: {
+            type: 'integer',
+            format: 'int32'
+        },
+        estimatedRevenue: {
+            type: 'number',
+            format: 'double'
+        },
+        countryId: {
+            type: 'string',
+            format: 'uuid'
         }
     }
 } as const;

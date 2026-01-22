@@ -21,7 +21,7 @@
   <targetEnd id="ab6dc46b-97e4-4e83-bf3d-77cf0c0f1404" type="Update Entity Action Target End" typeId="516069f6-09cc-4de8-8e31-3c71ca823452">
     <name>quarterly</name>
     <display>[update] quarterly: UpdateReporPartner</display>
-    <order>3</order>
+    <order>4</order>
     <traits>
       <trait id="d00a2ab0-9a23-4192-b8bb-166798fc7dba" name="[Processing Action]" />
     </traits>
@@ -106,6 +106,22 @@
                 <path>
                   <target id="524f8db8-11a9-41c1-aba8-ba27614dd233" name="UpdateReporPartnerQuarterlyCommand" type="element" specialization="Command" specializationId="ccf14eb6-3a55-4d81-b5b9-d27311c70cb9" />
                   <target id="c93df24e-9688-468e-82ea-b660c1e3094f" name="Name" type="element" specialization="DTO-Field" specializationId="7baed1fd-469b-4980-8fd9-4cefb8331eb2" />
+                </path>
+              </source>
+            </sources>
+          </mappedEnd>
+          <mappedEnd>
+            <expression>{Status}</expression>
+            <path>
+              <target id="666e0055-bc9c-4fd6-acd8-975f4719ee0b" name="Quarterly" type="element" specialization="Class" specializationId="04e12b51-ed12-42a3-9667-a6aa81bb6d10" />
+              <target id="9bbbf704-866e-4057-bb09-5565a626a871" name="UpdateReporPartner" type="element" specialization="Operation" specializationId="e042bb67-a1df-480c-9935-b26210f78591" />
+              <target id="8bdd6ddd-3230-4e6f-9d20-2d3096750c0a" name="status" type="element" specialization="Parameter" specializationId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b" />
+            </path>
+            <sources>
+              <source identifier="Status" mappingType="Data Mapping" mappingTypeId="ca88649b-f20b-44db-a9c0-017c26155ba8">
+                <path>
+                  <target id="524f8db8-11a9-41c1-aba8-ba27614dd233" name="UpdateReporPartnerQuarterlyCommand" type="element" specialization="Command" specializationId="ccf14eb6-3a55-4d81-b5b9-d27311c70cb9" />
+                  <target id="e10870fe-4c7f-4db0-b0d9-98c1dfbf0993" name="Status" type="element" specialization="DTO-Field" specializationId="7baed1fd-469b-4980-8fd9-4cefb8331eb2" />
                 </path>
               </source>
             </sources>

@@ -27,8 +27,10 @@ import { Route as AppProfileCompanyIdIndexRouteImport } from './routes/_app/prof
 import { Route as AppFooFooIdIndexRouteImport } from './routes/_app/foo/$fooId/index'
 import { Route as AppProfileCompanyIdReportsIndexRouteImport } from './routes/_app/profile/$companyId/reports/index'
 import { Route as AppFooFooIdBarIndexRouteImport } from './routes/_app/foo/$fooId/bar/index'
+import { Route as AppProfileCompanyIdReportsCreateRouteImport } from './routes/_app/profile/$companyId/reports/create'
 import { Route as AppProfileCompanyIdReportsReportIdIndexRouteImport } from './routes/_app/profile/$companyId/reports/$reportId/index'
 import { Route as AppFooFooIdBarBarIdIndexRouteImport } from './routes/_app/foo/$fooId/bar/$barId/index'
+import { Route as AppProfileCompanyIdReportsReportIdEditRouteImport } from './routes/_app/profile/$companyId/reports/$reportId/edit'
 
 const RegisterRoute = RegisterRouteImport.update({
   id: '/register',
@@ -122,6 +124,12 @@ const AppFooFooIdBarIndexRoute = AppFooFooIdBarIndexRouteImport.update({
   path: '/foo/$fooId/bar/',
   getParentRoute: () => AppRoute,
 } as any)
+const AppProfileCompanyIdReportsCreateRoute =
+  AppProfileCompanyIdReportsCreateRouteImport.update({
+    id: '/profile/$companyId/reports/create',
+    path: '/profile/$companyId/reports/create',
+    getParentRoute: () => AppRoute,
+  } as any)
 const AppProfileCompanyIdReportsReportIdIndexRoute =
   AppProfileCompanyIdReportsReportIdIndexRouteImport.update({
     id: '/profile/$companyId/reports/$reportId/',
@@ -132,6 +140,12 @@ const AppFooFooIdBarBarIdIndexRoute =
   AppFooFooIdBarBarIdIndexRouteImport.update({
     id: '/foo/$fooId/bar/$barId/',
     path: '/foo/$fooId/bar/$barId/',
+    getParentRoute: () => AppRoute,
+  } as any)
+const AppProfileCompanyIdReportsReportIdEditRoute =
+  AppProfileCompanyIdReportsReportIdEditRouteImport.update({
+    id: '/profile/$companyId/reports/$reportId/edit',
+    path: '/profile/$companyId/reports/$reportId/edit',
     getParentRoute: () => AppRoute,
   } as any)
 
@@ -151,8 +165,10 @@ export interface FileRoutesByFullPath {
   '/profile': typeof AppProfileIndexRoute
   '/foo/$fooId': typeof AppFooFooIdIndexRoute
   '/profile/$companyId': typeof AppProfileCompanyIdIndexRoute
+  '/profile/$companyId/reports/create': typeof AppProfileCompanyIdReportsCreateRoute
   '/foo/$fooId/bar': typeof AppFooFooIdBarIndexRoute
   '/profile/$companyId/reports': typeof AppProfileCompanyIdReportsIndexRoute
+  '/profile/$companyId/reports/$reportId/edit': typeof AppProfileCompanyIdReportsReportIdEditRoute
   '/foo/$fooId/bar/$barId': typeof AppFooFooIdBarBarIdIndexRoute
   '/profile/$companyId/reports/$reportId': typeof AppProfileCompanyIdReportsReportIdIndexRoute
 }
@@ -172,8 +188,10 @@ export interface FileRoutesByTo {
   '/profile': typeof AppProfileIndexRoute
   '/foo/$fooId': typeof AppFooFooIdIndexRoute
   '/profile/$companyId': typeof AppProfileCompanyIdIndexRoute
+  '/profile/$companyId/reports/create': typeof AppProfileCompanyIdReportsCreateRoute
   '/foo/$fooId/bar': typeof AppFooFooIdBarIndexRoute
   '/profile/$companyId/reports': typeof AppProfileCompanyIdReportsIndexRoute
+  '/profile/$companyId/reports/$reportId/edit': typeof AppProfileCompanyIdReportsReportIdEditRoute
   '/foo/$fooId/bar/$barId': typeof AppFooFooIdBarBarIdIndexRoute
   '/profile/$companyId/reports/$reportId': typeof AppProfileCompanyIdReportsReportIdIndexRoute
 }
@@ -195,8 +213,10 @@ export interface FileRoutesById {
   '/_app/profile/': typeof AppProfileIndexRoute
   '/_app/foo/$fooId/': typeof AppFooFooIdIndexRoute
   '/_app/profile/$companyId/': typeof AppProfileCompanyIdIndexRoute
+  '/_app/profile/$companyId/reports/create': typeof AppProfileCompanyIdReportsCreateRoute
   '/_app/foo/$fooId/bar/': typeof AppFooFooIdBarIndexRoute
   '/_app/profile/$companyId/reports/': typeof AppProfileCompanyIdReportsIndexRoute
+  '/_app/profile/$companyId/reports/$reportId/edit': typeof AppProfileCompanyIdReportsReportIdEditRoute
   '/_app/foo/$fooId/bar/$barId/': typeof AppFooFooIdBarBarIdIndexRoute
   '/_app/profile/$companyId/reports/$reportId/': typeof AppProfileCompanyIdReportsReportIdIndexRoute
 }
@@ -218,8 +238,10 @@ export interface FileRouteTypes {
     | '/profile'
     | '/foo/$fooId'
     | '/profile/$companyId'
+    | '/profile/$companyId/reports/create'
     | '/foo/$fooId/bar'
     | '/profile/$companyId/reports'
+    | '/profile/$companyId/reports/$reportId/edit'
     | '/foo/$fooId/bar/$barId'
     | '/profile/$companyId/reports/$reportId'
   fileRoutesByTo: FileRoutesByTo
@@ -239,8 +261,10 @@ export interface FileRouteTypes {
     | '/profile'
     | '/foo/$fooId'
     | '/profile/$companyId'
+    | '/profile/$companyId/reports/create'
     | '/foo/$fooId/bar'
     | '/profile/$companyId/reports'
+    | '/profile/$companyId/reports/$reportId/edit'
     | '/foo/$fooId/bar/$barId'
     | '/profile/$companyId/reports/$reportId'
   id:
@@ -261,8 +285,10 @@ export interface FileRouteTypes {
     | '/_app/profile/'
     | '/_app/foo/$fooId/'
     | '/_app/profile/$companyId/'
+    | '/_app/profile/$companyId/reports/create'
     | '/_app/foo/$fooId/bar/'
     | '/_app/profile/$companyId/reports/'
+    | '/_app/profile/$companyId/reports/$reportId/edit'
     | '/_app/foo/$fooId/bar/$barId/'
     | '/_app/profile/$companyId/reports/$reportId/'
   fileRoutesById: FileRoutesById
@@ -403,6 +429,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppFooFooIdBarIndexRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/profile/$companyId/reports/create': {
+      id: '/_app/profile/$companyId/reports/create'
+      path: '/profile/$companyId/reports/create'
+      fullPath: '/profile/$companyId/reports/create'
+      preLoaderRoute: typeof AppProfileCompanyIdReportsCreateRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/profile/$companyId/reports/$reportId/': {
       id: '/_app/profile/$companyId/reports/$reportId/'
       path: '/profile/$companyId/reports/$reportId'
@@ -415,6 +448,13 @@ declare module '@tanstack/react-router' {
       path: '/foo/$fooId/bar/$barId'
       fullPath: '/foo/$fooId/bar/$barId'
       preLoaderRoute: typeof AppFooFooIdBarBarIdIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/profile/$companyId/reports/$reportId/edit': {
+      id: '/_app/profile/$companyId/reports/$reportId/edit'
+      path: '/profile/$companyId/reports/$reportId/edit'
+      fullPath: '/profile/$companyId/reports/$reportId/edit'
+      preLoaderRoute: typeof AppProfileCompanyIdReportsReportIdEditRouteImport
       parentRoute: typeof AppRoute
     }
   }
@@ -432,8 +472,10 @@ interface AppRouteChildren {
   AppProfileIndexRoute: typeof AppProfileIndexRoute
   AppFooFooIdIndexRoute: typeof AppFooFooIdIndexRoute
   AppProfileCompanyIdIndexRoute: typeof AppProfileCompanyIdIndexRoute
+  AppProfileCompanyIdReportsCreateRoute: typeof AppProfileCompanyIdReportsCreateRoute
   AppFooFooIdBarIndexRoute: typeof AppFooFooIdBarIndexRoute
   AppProfileCompanyIdReportsIndexRoute: typeof AppProfileCompanyIdReportsIndexRoute
+  AppProfileCompanyIdReportsReportIdEditRoute: typeof AppProfileCompanyIdReportsReportIdEditRoute
   AppFooFooIdBarBarIdIndexRoute: typeof AppFooFooIdBarBarIdIndexRoute
   AppProfileCompanyIdReportsReportIdIndexRoute: typeof AppProfileCompanyIdReportsReportIdIndexRoute
 }
@@ -450,8 +492,11 @@ const AppRouteChildren: AppRouteChildren = {
   AppProfileIndexRoute: AppProfileIndexRoute,
   AppFooFooIdIndexRoute: AppFooFooIdIndexRoute,
   AppProfileCompanyIdIndexRoute: AppProfileCompanyIdIndexRoute,
+  AppProfileCompanyIdReportsCreateRoute: AppProfileCompanyIdReportsCreateRoute,
   AppFooFooIdBarIndexRoute: AppFooFooIdBarIndexRoute,
   AppProfileCompanyIdReportsIndexRoute: AppProfileCompanyIdReportsIndexRoute,
+  AppProfileCompanyIdReportsReportIdEditRoute:
+    AppProfileCompanyIdReportsReportIdEditRoute,
   AppFooFooIdBarBarIdIndexRoute: AppFooFooIdBarBarIdIndexRoute,
   AppProfileCompanyIdReportsReportIdIndexRoute:
     AppProfileCompanyIdReportsReportIdIndexRoute,

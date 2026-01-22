@@ -20,7 +20,7 @@ namespace AndersonAPI.Application.Quarterlies.AddReportPartnerQuarterly
             RuleFor(v => v.Name)
                 .NotNull();
 
-            RuleFor(v => v.State)
+            RuleFor(v => v.Status)
                 .NotNull()
                 .IsInEnum();
         }

@@ -28,7 +28,7 @@ namespace AndersonAPI.Application.Quarterlies.AddReportPartnerQuarterly
                 throw new NotFoundException($"Could not find Quarterly '{request.Id}'");
             }
 
-            quarterly.AddReportPartner(request.QuaterlyId, request.Name, request.State);
+            quarterly.AddReportPartner(request.Name, request.Status);
         }
     }
 }

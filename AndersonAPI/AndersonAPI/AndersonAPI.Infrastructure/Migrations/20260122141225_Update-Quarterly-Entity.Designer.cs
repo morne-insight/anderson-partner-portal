@@ -4,6 +4,7 @@ using AndersonAPI.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AndersonAPI.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260122141225_Update-Quarterly-Entity")]
+    partial class UpdateQuarterlyEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1021,9 +1024,6 @@ namespace AndersonAPI.Infrastructure.Migrations
                             b1.Property<int>("ClientCount")
                                 .HasColumnType("int");
 
-                            b1.Property<Guid>("CountryId")
-                                .HasColumnType("uniqueidentifier");
-
                             b1.Property<double>("EstimatedRevenue")
                                 .HasColumnType("float");
 
@@ -1051,22 +1051,12 @@ namespace AndersonAPI.Infrastructure.Migrations
 
                             b1.HasKey("Id");
 
-                            b1.HasIndex("CountryId");
-
                             b1.HasIndex("QuarterlyId");
 
                             b1.ToTable("ReportLine");
 
-                            b1.HasOne("AndersonAPI.Domain.Entities.Country", "Country")
-                                .WithMany()
-                                .HasForeignKey("CountryId")
-                                .OnDelete(DeleteBehavior.Restrict)
-                                .IsRequired();
-
                             b1.WithOwner()
                                 .HasForeignKey("QuarterlyId");
-
-                            b1.Navigation("Country");
                         });
 
                     b.OwnsMany("AndersonAPI.Domain.Entities.ReportPartner", "Partners", b1 =>
