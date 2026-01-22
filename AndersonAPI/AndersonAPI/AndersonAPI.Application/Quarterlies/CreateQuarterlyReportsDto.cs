@@ -1,4 +1,3 @@
-using AndersonAPI.Domain;
 using Intent.RoslynWeaver.Attributes;
 
 [assembly: DefaultIntentManaged(Mode.Fully)]
@@ -18,8 +17,6 @@ namespace AndersonAPI.Application.Quarterlies
         public int OfficeCount { get; set; }
         public int LawyerCount { get; set; }
         public double EstimatedRevenue { get; set; }
-        public int Order { get; set; }
-        public EntityState State { get; set; }
 
         public static CreateQuarterlyReportsDto Create(
             int partnerCount,
@@ -27,9 +24,7 @@ namespace AndersonAPI.Application.Quarterlies
             int clientCount,
             int officeCount,
             int lawyerCount,
-            double estimatedRevenue,
-            int order,
-            EntityState state)
+            double estimatedRevenue)
         {
             return new CreateQuarterlyReportsDto
             {
@@ -38,9 +33,7 @@ namespace AndersonAPI.Application.Quarterlies
                 ClientCount = clientCount,
                 OfficeCount = officeCount,
                 LawyerCount = lawyerCount,
-                EstimatedRevenue = estimatedRevenue,
-                Order = order,
-                State = state
+                EstimatedRevenue = estimatedRevenue
             };
         }
     }

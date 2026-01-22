@@ -10,12 +10,14 @@ namespace AndersonAPI.Domain.Entities
         private List<ReportPartner> _partners = [];
         private List<ReportLine> _reportLines = [];
 
-        public Quarterly(int quarter,
+        public Quarterly(int year,
+            ReportQuarter quarter,
             Guid companyId,
             IEnumerable<ReportPartner> partners,
             IEnumerable<ReportLine> reports,
             EntityState state = EntityState.Enabled)
         {
+            Year = year;
             Quarter = quarter;
             CompanyId = companyId;
             _partners = new List<ReportPartner>(partners);
@@ -31,7 +33,9 @@ namespace AndersonAPI.Domain.Entities
             Company = null!;
         }
 
-        public int Quarter { get; private set; }
+        public int Year { get; private set; }
+
+        public ReportQuarter Quarter { get; private set; }
 
         public Guid CompanyId { get; private set; }
 
@@ -59,8 +63,9 @@ namespace AndersonAPI.Domain.Entities
             private set => _reportLines = new List<ReportLine>(value);
         }
 
-        public void Update(int quarter)
+        public void Update(int year, ReportQuarter quarter)
         {
+            Year = year;
             Quarter = quarter;
         }
 

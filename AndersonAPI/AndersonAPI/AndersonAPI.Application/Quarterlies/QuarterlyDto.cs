@@ -12,23 +12,17 @@ namespace AndersonAPI.Application.Quarterlies
         {
         }
 
-        public int Quarter { get; set; }
+        public ReportQuarter Quarter { get; set; }
         public bool IsSubmitted { get; set; }
-        public Guid CompanyId { get; set; }
         public Guid Id { get; set; }
-        public int Order { get; set; }
-        public EntityState State { get; set; }
 
-        public static QuarterlyDto Create(int quarter, bool isSubmitted, Guid companyId, Guid id, int order, EntityState state)
+        public static QuarterlyDto Create(ReportQuarter quarter, bool isSubmitted, Guid id)
         {
             return new QuarterlyDto
             {
                 Quarter = quarter,
                 IsSubmitted = isSubmitted,
-                CompanyId = companyId,
-                Id = id,
-                Order = order,
-                State = state
+                Id = id
             };
         }
     }

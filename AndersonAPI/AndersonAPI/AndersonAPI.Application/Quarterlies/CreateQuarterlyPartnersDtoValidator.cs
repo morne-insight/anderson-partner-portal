@@ -23,13 +23,6 @@ namespace AndersonAPI.Application.Quarterlies
 
             RuleFor(v => v.Name)
                 .NotNull();
-
-            RuleFor(v => v.Description)
-                .NotNull();
-
-            RuleFor(v => v.State)
-                .NotNull()
-                .IsInEnum();
         }
     }
 }

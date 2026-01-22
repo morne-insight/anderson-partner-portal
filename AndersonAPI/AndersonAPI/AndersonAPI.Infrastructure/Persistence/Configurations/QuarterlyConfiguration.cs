@@ -21,6 +21,9 @@ namespace AndersonAPI.Infrastructure.Persistence.Configurations
             builder.Property(x => x.State)
                 .IsRequired();
 
+            builder.Property(x => x.Year)
+                .IsRequired();
+
             builder.Property(x => x.Quarter)
                 .IsRequired();
 
@@ -48,6 +51,8 @@ namespace AndersonAPI.Infrastructure.Persistence.Configurations
             builder.OwnsMany(x => x.Partners, ConfigurePartners);
 
             builder.OwnsMany(x => x.ReportLines, ConfigureReportLines);
+
+            builder.ToTable(tb => tb.HasCheckConstraint("quarterly_quarter_check", $"\"Quarter\" IN ({string.Join(",", Enum.GetValues<ReportQuarter>().Select(e => $"'{e}'"))})"));
 
             builder.Ignore(e => e.DomainEvents);
         }

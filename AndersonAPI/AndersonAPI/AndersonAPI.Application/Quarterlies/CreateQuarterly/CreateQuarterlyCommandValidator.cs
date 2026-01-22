@@ -18,17 +18,16 @@ namespace AndersonAPI.Application.Quarterlies.CreateQuarterly
 
         private void ConfigureValidationRules(IValidatorProvider provider)
         {
+            RuleFor(v => v.Quarter)
+                .NotNull()
+                .IsInEnum();
+
             RuleFor(v => v.Partners)
                 .NotNull()
                 .ForEach(x => x.SetValidator(provider.GetValidator<CreateQuarterlyPartnersDto>()!));
 
             RuleFor(v => v.Reports)
-                .NotNull()
-                .ForEach(x => x.SetValidator(provider.GetValidator<CreateQuarterlyReportsDto>()!));
-
-            RuleFor(v => v.State)
-                .NotNull()
-                .IsInEnum();
+                .NotNull();
         }
     }
 }

@@ -21,7 +21,7 @@
   <targetEnd id="14c086e7-c550-444f-bfdd-11d5320bd697" type="Update Entity Action Target End" typeId="516069f6-09cc-4de8-8e31-3c71ca823452">
     <name>quarterly</name>
     <display>[update] quarterly: Update</display>
-    <order>2</order>
+    <order>3</order>
     <traits>
       <trait id="d00a2ab0-9a23-4192-b8bb-166798fc7dba" name="[Processing Action]" />
     </traits>
@@ -74,6 +74,22 @@
               <source identifier="UpdateQuarterlyCommand" mappingType="Invocation Mapping" mappingTypeId="d30bdba1-9c47-4917-b81d-29230fed5d6a">
                 <path>
                   <target id="5a02540d-770a-4b46-852b-2560511df657" name="UpdateQuarterlyCommand" type="element" specialization="Command" specializationId="ccf14eb6-3a55-4d81-b5b9-d27311c70cb9" />
+                </path>
+              </source>
+            </sources>
+          </mappedEnd>
+          <mappedEnd>
+            <expression>{Year}</expression>
+            <path>
+              <target id="666e0055-bc9c-4fd6-acd8-975f4719ee0b" name="Quarterly" type="element" specialization="Class" specializationId="04e12b51-ed12-42a3-9667-a6aa81bb6d10" />
+              <target id="ad80eb0f-bcc8-4ef2-8cf2-593d1456a2e3" name="Update" type="element" specialization="Operation" specializationId="e042bb67-a1df-480c-9935-b26210f78591" />
+              <target id="521164bb-a29a-4646-9919-2ead98932209" name="year" type="element" specialization="Parameter" specializationId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b" />
+            </path>
+            <sources>
+              <source identifier="Year" mappingType="Data Mapping" mappingTypeId="ca88649b-f20b-44db-a9c0-017c26155ba8">
+                <path>
+                  <target id="5a02540d-770a-4b46-852b-2560511df657" name="UpdateQuarterlyCommand" type="element" specialization="Command" specializationId="ccf14eb6-3a55-4d81-b5b9-d27311c70cb9" />
+                  <target id="c746c900-53e5-4ba4-b0ba-26419c3be5f7" name="Year" type="element" specialization="DTO-Field" specializationId="7baed1fd-469b-4980-8fd9-4cefb8331eb2" />
                 </path>
               </source>
             </sources>

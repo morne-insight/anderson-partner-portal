@@ -10,23 +10,24 @@ namespace AndersonAPI.Application.Quarterlies.CreateQuarterly
 {
     public class CreateQuarterlyCommand : IRequest<Guid>, ICommand
     {
-        public CreateQuarterlyCommand(int quarter,
+        public CreateQuarterlyCommand(int year,
+            ReportQuarter quarter,
             Guid companyId,
             List<CreateQuarterlyPartnersDto> partners,
-            List<CreateQuarterlyReportsDto> reports,
-            EntityState state)
+            List<CreateQuarterlyReportsDto> reports)
         {
+            Year = year;
             Quarter = quarter;
             CompanyId = companyId;
             Partners = partners;
             Reports = reports;
-            State = state;
         }
 
-        public int Quarter { get; set; }
+        public int Year { get; set; }
+
+        public ReportQuarter Quarter { get; set; }
         public Guid CompanyId { get; set; }
         public List<CreateQuarterlyPartnersDto> Partners { get; set; }
         public List<CreateQuarterlyReportsDto> Reports { get; set; }
-        public EntityState State { get; set; }
     }
 }
