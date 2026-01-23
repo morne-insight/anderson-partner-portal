@@ -14,13 +14,15 @@ namespace AndersonAPI.Application.Quarterlies.CreateQuarterly
             ReportQuarter quarter,
             Guid companyId,
             List<CreateQuarterlyPartnersDto> partners,
-            List<CreateQuarterlyReportsDto> reports)
+            List<CreateQuarterlyReportsDto> reports,
+            bool isSubmitted)
         {
             Year = year;
             Quarter = quarter;
             CompanyId = companyId;
             Partners = partners;
             Reports = reports;
+            IsSubmitted = isSubmitted;
         }
 
         public int Year { get; set; }
@@ -29,5 +31,6 @@ namespace AndersonAPI.Application.Quarterlies.CreateQuarterly
         public Guid CompanyId { get; set; }
         public List<CreateQuarterlyPartnersDto> Partners { get; set; }
         public List<CreateQuarterlyReportsDto> Reports { get; set; }
+        public bool IsSubmitted { get; set; }
     }
 }

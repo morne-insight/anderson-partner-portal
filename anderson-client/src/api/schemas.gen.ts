@@ -691,7 +691,8 @@ export const CreateQuarterlyCommandSchema = {
         'quarter',
         'companyId',
         'partners',
-        'reports'
+        'reports',
+        'isSubmitted'
     ],
     type: 'object',
     properties: {
@@ -717,6 +718,9 @@ export const CreateQuarterlyCommandSchema = {
             items: {
                 $ref: '#/components/schemas/CreateQuarterlyReportsDto'
             }
+        },
+        isSubmitted: {
+            type: 'boolean'
         }
     }
 } as const;
@@ -1527,6 +1531,99 @@ export const QuarterlyDtoSchema = {
         submittedDate: {
             type: 'string',
             format: 'date-time'
+        }
+    }
+} as const;
+
+export const QuarterlyReportDtoSchema = {
+    title: 'QuarterlyReportDto',
+    type: 'object',
+    properties: {
+        year: {
+            type: 'integer',
+            format: 'int32'
+        },
+        quarter: {
+            $ref: '#/components/schemas/ReportQuarter'
+        },
+        createdDate: {
+            type: 'string',
+            format: 'date-time'
+        },
+        isSubmitted: {
+            type: 'boolean'
+        },
+        submittedDate: {
+            type: 'string',
+            format: 'date-time'
+        },
+        partners: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/QuarterlyReportPartnerDto'
+            }
+        },
+        reportLines: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/QuarterlyReportLineDto'
+            }
+        }
+    }
+} as const;
+
+export const QuarterlyReportLineDtoSchema = {
+    title: 'QuarterlyReportLineDto',
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string',
+            format: 'uuid'
+        },
+        partnerCount: {
+            type: 'integer',
+            format: 'int32'
+        },
+        headcount: {
+            type: 'integer',
+            format: 'int32'
+        },
+        clientCount: {
+            type: 'integer',
+            format: 'int32'
+        },
+        officeCount: {
+            type: 'integer',
+            format: 'int32'
+        },
+        lawyerCount: {
+            type: 'integer',
+            format: 'int32'
+        },
+        estimatedRevenue: {
+            type: 'number',
+            format: 'double'
+        },
+        countryId: {
+            type: 'string',
+            format: 'uuid'
+        }
+    }
+} as const;
+
+export const QuarterlyReportPartnerDtoSchema = {
+    title: 'QuarterlyReportPartnerDto',
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string',
+            format: 'uuid'
+        },
+        status: {
+            $ref: '#/components/schemas/PartnerStatus'
+        },
+        name: {
+            type: 'string'
         }
     }
 } as const;
@@ -2408,7 +2505,8 @@ export const UpdateQuarterlyCommandSchema = {
     required: [
         'id',
         'year',
-        'quarter'
+        'quarter',
+        'isSubmitted'
     ],
     type: 'object',
     properties: {
@@ -2422,6 +2520,9 @@ export const UpdateQuarterlyCommandSchema = {
         },
         quarter: {
             $ref: '#/components/schemas/ReportQuarter'
+        },
+        isSubmitted: {
+            type: 'boolean'
         }
     }
 } as const;

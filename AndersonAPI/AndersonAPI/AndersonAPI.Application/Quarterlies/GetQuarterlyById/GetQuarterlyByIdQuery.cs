@@ -7,7 +7,7 @@ using MediatR;
 
 namespace AndersonAPI.Application.Quarterlies.GetQuarterlyById
 {
-    public class GetQuarterlyByIdQuery : IRequest<QuarterlyDto>, IQuery
+    public class GetQuarterlyByIdQuery : IRequest<QuarterlyReportDto>, IQuery
     {
         public GetQuarterlyByIdQuery(Guid id)
         {

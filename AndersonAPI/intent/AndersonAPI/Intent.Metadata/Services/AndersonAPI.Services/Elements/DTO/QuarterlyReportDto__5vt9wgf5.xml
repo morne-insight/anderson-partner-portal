@@ -1,51 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<class id="9f7542cd-b101-4d60-8c0c-4ff2a8269cef" type="Command" typeId="ccf14eb6-3a55-4d81-b5b9-d27311c70cb9">
-  <name>CreateQuarterlyCommand</name>
-  <display>CreateQuarterlyCommand: guid</display>
+<class id="bdc2dc54-ee10-41e7-bd7c-f2e1566de06b" type="DTO" typeId="fee0edca-4aa0-4f77-a524-6bbd84e78734">
+  <name>QuarterlyReportDto</name>
+  <display>QuarterlyReportDto</display>
   <isAbstract>false</isAbstract>
   <sort-children>by-type-then-manually</sort-children>
   <genericTypes />
-  <typeReference id="efe27e4f-8b91-4793-87d7-f004a2f56f79">
-    <typeId>6b649125-18ea-48fd-a6ba-0bfff0d8f488</typeId>
-    <isNavigable>true</isNavigable>
-    <isNullable>false</isNullable>
-    <isCollection>false</isCollection>
-    <isRequired>true</isRequired>
-    <typePackageName>Intent.Common.Types</typePackageName>
-    <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
-    <stereotypes />
-    <genericTypeParameters />
-  </typeReference>
-  <isMapped>false</isMapped>
+  <isMapped>true</isMapped>
+  <mappedClass isRoot="true">
+    <applicationId>e87261ce-2b9f-4042-8562-a503e4cf2759</applicationId>
+    <metadataId>6ab29b31-27af-4f56-a67c-986d82097d63</metadataId>
+    <mappingSettingsId>1f747d14-681c-4a20-8c68-34223f41b825</mappingSettingsId>
+    <autoSyncTypeReference>true</autoSyncTypeReference>
+    <mappedPath>
+      <target id="666e0055-bc9c-4fd6-acd8-975f4719ee0b" name="Quarterly" type="element" specialization="Class" specializationId="04e12b51-ed12-42a3-9667-a6aa81bb6d10" />
+    </mappedPath>
+  </mappedClass>
   <parentFolderId>a91166c1-ecbf-4cc0-9aed-b507192c5531</parentFolderId>
   <packageId>c8555d38-5afc-4ea2-9a61-c7a505212753</packageId>
   <packageName>AndersonAPI.Services</packageName>
-  <traits>
-    <trait id="9e587d4d-f317-4ab8-9bbb-9394234d2a88" name="[Allow Comment]" />
-    <trait id="0a932465-ea1f-42e7-b1eb-9f90aa8961fd" name="[Invokable]" />
-    <trait id="2b6729eb-e2ae-4b5f-86fe-4f611d1f912e" name="[Processing Handler]" />
-  </traits>
-  <stereotypes>
-    <stereotype stereotypeDefinitionId="b4581ed2-42ec-4ae2-83dd-dcdd5f0837b6" name="Http Settings">
-      <addedByDefault>false</addedByDefault>
-      <definitionPackageName>Intent.Metadata.WebApi</definitionPackageName>
-      <definitionPackageId>0011387a-b122-45d7-9cdb-8e21b315ab9f</definitionPackageId>
-      <properties>
-        <property name="801c3e61-4431-4d81-93fa-7e57d33cb3fa" display="Verb" value="POST" isActive="true" />
-        <property name="5dd3e07d-76eb-45d4-9956-4325fb068acc" display="Route" value="api/quarterlies" isActive="true" />
-        <property name="4490e212-1e99-43ce-b3dd-048ed2a6bae8" display="Return Type Mediatype" value="application/json" isActive="true" />
-        <property name="e3870725-34b3-4684-85f2-ec4a667207fb" display="Success Response Code" isActive="true" />
-      </properties>
-    </stereotype>
-  </stereotypes>
+  <stereotypes />
   <metadata />
   <childElements>
-    <childElement id="6aa67afe-9b6e-4542-9d79-0a7a7d4dab01" type="DTO-Field" typeId="7baed1fd-469b-4980-8fd9-4cefb8331eb2">
+    <childElement id="436af079-eb39-4b97-85e5-0479293d1969" type="DTO-Field" typeId="7baed1fd-469b-4980-8fd9-4cefb8331eb2">
       <name>Year</name>
       <display>Year: int</display>
       <isAbstract>false</isAbstract>
       <genericTypes />
-      <typeReference id="8c733c70-2af4-4a54-9c18-d0c38711044e">
+      <typeReference id="ca2b8b9d-9206-4179-bb3f-c58bbc807195">
         <typeId>fb0a362d-e9e2-40de-b6ff-5ce8167cbe74</typeId>
         <isNavigable>true</isNavigable>
         <isNullable>false</isNullable>
@@ -56,8 +37,15 @@
         <stereotypes />
         <genericTypeParameters />
       </typeReference>
-      <isMapped>false</isMapped>
-      <parentFolderId>9f7542cd-b101-4d60-8c0c-4ff2a8269cef</parentFolderId>
+      <isMapped>true</isMapped>
+      <mappedClass>
+        <mappingSettingsId>1f747d14-681c-4a20-8c68-34223f41b825</mappingSettingsId>
+        <autoSyncTypeReference>true</autoSyncTypeReference>
+        <mappedPath>
+          <target id="a3742c5f-fe3a-4a9b-91aa-36aed7cd3e4e" name="Year" type="element" specialization="Attribute" specializationId="0090fb93-483e-41af-a11d-5ad2dc796adf" />
+        </mappedPath>
+      </mappedClass>
+      <parentFolderId>bdc2dc54-ee10-41e7-bd7c-f2e1566de06b</parentFolderId>
       <packageId>c8555d38-5afc-4ea2-9a61-c7a505212753</packageId>
       <packageName>AndersonAPI.Services</packageName>
       <stereotypes>
@@ -90,12 +78,12 @@
       <metadata />
       <childElements />
     </childElement>
-    <childElement id="8813b6bb-34ca-40b4-9c50-5b3a93ad9899" type="DTO-Field" typeId="7baed1fd-469b-4980-8fd9-4cefb8331eb2">
+    <childElement id="7302b647-01ad-4f97-ae91-23b0eb6d678e" type="DTO-Field" typeId="7baed1fd-469b-4980-8fd9-4cefb8331eb2">
       <name>Quarter</name>
       <display>Quarter: ReportQuarter</display>
       <isAbstract>false</isAbstract>
       <genericTypes />
-      <typeReference id="2053d648-50c0-4c3e-ae32-59dded4bd46d">
+      <typeReference id="c1eb5d91-fdb3-4357-a02f-acd68c9e7ce3">
         <typeId>990e904a-9e52-4f20-8517-d3dff8833a44</typeId>
         <isNavigable>true</isNavigable>
         <isNullable>false</isNullable>
@@ -106,8 +94,15 @@
         <stereotypes />
         <genericTypeParameters />
       </typeReference>
-      <isMapped>false</isMapped>
-      <parentFolderId>9f7542cd-b101-4d60-8c0c-4ff2a8269cef</parentFolderId>
+      <isMapped>true</isMapped>
+      <mappedClass>
+        <mappingSettingsId>1f747d14-681c-4a20-8c68-34223f41b825</mappingSettingsId>
+        <autoSyncTypeReference>true</autoSyncTypeReference>
+        <mappedPath>
+          <target id="3ac9895a-e7e1-486f-9f3a-cb4776158449" name="Quarter" type="element" specialization="Attribute" specializationId="0090fb93-483e-41af-a11d-5ad2dc796adf" />
+        </mappedPath>
+      </mappedClass>
+      <parentFolderId>bdc2dc54-ee10-41e7-bd7c-f2e1566de06b</parentFolderId>
       <packageId>c8555d38-5afc-4ea2-9a61-c7a505212753</packageId>
       <packageName>AndersonAPI.Services</packageName>
       <stereotypes>
@@ -140,13 +135,13 @@
       <metadata />
       <childElements />
     </childElement>
-    <childElement id="7f7899bb-2d61-4cc9-ab56-54dd4c5d445b" type="DTO-Field" typeId="7baed1fd-469b-4980-8fd9-4cefb8331eb2">
-      <name>CompanyId</name>
-      <display>CompanyId: guid</display>
+    <childElement id="fde969b1-5a29-4b2f-8fd5-56abd012e758" type="DTO-Field" typeId="7baed1fd-469b-4980-8fd9-4cefb8331eb2">
+      <name>CreatedDate</name>
+      <display>CreatedDate: datetimeoffset</display>
       <isAbstract>false</isAbstract>
       <genericTypes />
-      <typeReference id="bc10697c-1252-4efb-b7d7-ca67e591dd2b">
-        <typeId>6b649125-18ea-48fd-a6ba-0bfff0d8f488</typeId>
+      <typeReference id="817a63ce-36d8-415a-9685-7220f35f8f59">
+        <typeId>f1ba4df3-a5bc-427e-a591-4f6029f89bd7</typeId>
         <isNavigable>true</isNavigable>
         <isNullable>false</isNullable>
         <isCollection>false</isCollection>
@@ -156,8 +151,15 @@
         <stereotypes />
         <genericTypeParameters />
       </typeReference>
-      <isMapped>false</isMapped>
-      <parentFolderId>9f7542cd-b101-4d60-8c0c-4ff2a8269cef</parentFolderId>
+      <isMapped>true</isMapped>
+      <mappedClass>
+        <mappingSettingsId>1f747d14-681c-4a20-8c68-34223f41b825</mappingSettingsId>
+        <autoSyncTypeReference>true</autoSyncTypeReference>
+        <mappedPath>
+          <target id="c393ebf9-8a1c-48cc-a075-05737bca7e21" name="CreatedDate" type="element" specialization="Attribute" specializationId="0090fb93-483e-41af-a11d-5ad2dc796adf" />
+        </mappedPath>
+      </mappedClass>
+      <parentFolderId>bdc2dc54-ee10-41e7-bd7c-f2e1566de06b</parentFolderId>
       <packageId>c8555d38-5afc-4ea2-9a61-c7a505212753</packageId>
       <packageName>AndersonAPI.Services</packageName>
       <stereotypes>
@@ -190,112 +192,12 @@
       <metadata />
       <childElements />
     </childElement>
-    <childElement id="932dd388-eb89-413b-ad8d-85d7d14ce757" type="DTO-Field" typeId="7baed1fd-469b-4980-8fd9-4cefb8331eb2">
-      <name>Partners</name>
-      <display>Partners: CreateQuarterlyPartnersDto[*]</display>
-      <isAbstract>false</isAbstract>
-      <genericTypes />
-      <typeReference id="884f610c-8a67-4469-995a-c6adabf56781">
-        <typeId>2277da19-e9f7-4a94-843f-8dd5da2c83db</typeId>
-        <isNavigable>true</isNavigable>
-        <isNullable>false</isNullable>
-        <isCollection>true</isCollection>
-        <isRequired>true</isRequired>
-        <typePackageName>AndersonAPI.Services</typePackageName>
-        <typePackageId>c8555d38-5afc-4ea2-9a61-c7a505212753</typePackageId>
-        <stereotypes />
-        <genericTypeParameters />
-      </typeReference>
-      <isMapped>false</isMapped>
-      <parentFolderId>9f7542cd-b101-4d60-8c0c-4ff2a8269cef</parentFolderId>
-      <packageId>c8555d38-5afc-4ea2-9a61-c7a505212753</packageId>
-      <packageName>AndersonAPI.Services</packageName>
-      <stereotypes>
-        <stereotype stereotypeDefinitionId="4b54a612-2664-4493-a1f7-dc0623aa03da" name="Validations">
-          <addedByDefault>true</addedByDefault>
-          <definitionPackageName>Intent.Application.FluentValidation</definitionPackageName>
-          <definitionPackageId>55856e5d-8217-4c17-8fbb-082ac75baaf5</definitionPackageId>
-          <properties>
-            <property name="d144e1aa-b506-407a-b60b-716ce38b70bb" display="Not Empty" value="false" isActive="true" />
-            <property name="8d844d65-bf88-4023-85e1-4d3d7f8784cd" display="Equal" isActive="true" />
-            <property name="490e08cd-5fb4-4bfd-80cf-fda3b88f745e" display="Not Equal" isActive="true" />
-            <property name="c94dc001-4ec7-42a0-a1e0-5b75502e7bec" display="Min Length" isActive="false" />
-            <property name="cbd52384-0f1e-4f41-9e98-314231b731e1" display="Max Length" isActive="false" />
-            <property name="f9802e6b-b033-4280-ad83-e4b064943d87" display="Min" isActive="false" />
-            <property name="aca206a8-cb7e-4537-b3f5-c5c301863c14" display="Max" isActive="false" />
-            <property name="ad0c1113-ee22-4275-8177-576494ecfa45" display="Regular Expression" isActive="true" />
-            <property name="a4fdee2f-36d9-463c-bb2e-54579a16083e" display="Regular Expression Message" isActive="false" />
-            <property name="25d15e9b-7dbd-403e-837d-2fcfc786d3f2" display="Regular Expression Timeout" value="1" isActive="false" />
-            <property name="9023c463-1cce-4f11-baa5-96561697fc7f" display="Predicate" isActive="true" />
-            <property name="13d364d0-975e-47e9-ae0c-a3137326ee60" display="Predicate Message" isActive="false" />
-            <property name="85282cb5-5e12-4eb0-9568-7ccee0685e12" display="Email Address" value="false" isActive="false" />
-            <property name="e441d802-9aea-4d74-b5f9-1cd2527f3719" display="Has Custom Validation" value="false" isActive="false" />
-            <property name="e94008f2-3d5b-4157-ba72-69b3d6812617" display="Custom" value="false" isActive="true" />
-            <property name="60e7953f-29b8-4e56-a2c9-c02fae7de91e" display="Must" value="false" isActive="true" />
-            <property name="f43fcab6-5f8f-42e4-96d2-83d79cedfab9" display="Must Message" isActive="false" />
-            <property name="9ce77ae5-9ad5-4436-8ae0-c6c296de8492" display="CascadeMode" isActive="true" />
-          </properties>
-        </stereotype>
-      </stereotypes>
-      <metadata />
-      <childElements />
-    </childElement>
-    <childElement id="89873144-f91f-470b-bf10-f937c935b69f" type="DTO-Field" typeId="7baed1fd-469b-4980-8fd9-4cefb8331eb2">
-      <name>Reports</name>
-      <display>Reports: CreateQuarterlyReportsDto[*]</display>
-      <isAbstract>false</isAbstract>
-      <genericTypes />
-      <typeReference id="426612d9-a6cd-4c17-9c6c-04d0ff8577af">
-        <typeId>2a96790e-b381-420f-8bbf-5e9942280055</typeId>
-        <isNavigable>true</isNavigable>
-        <isNullable>false</isNullable>
-        <isCollection>true</isCollection>
-        <isRequired>true</isRequired>
-        <typePackageName>AndersonAPI.Services</typePackageName>
-        <typePackageId>c8555d38-5afc-4ea2-9a61-c7a505212753</typePackageId>
-        <stereotypes />
-        <genericTypeParameters />
-      </typeReference>
-      <isMapped>false</isMapped>
-      <parentFolderId>9f7542cd-b101-4d60-8c0c-4ff2a8269cef</parentFolderId>
-      <packageId>c8555d38-5afc-4ea2-9a61-c7a505212753</packageId>
-      <packageName>AndersonAPI.Services</packageName>
-      <stereotypes>
-        <stereotype stereotypeDefinitionId="4b54a612-2664-4493-a1f7-dc0623aa03da" name="Validations">
-          <addedByDefault>true</addedByDefault>
-          <definitionPackageName>Intent.Application.FluentValidation</definitionPackageName>
-          <definitionPackageId>55856e5d-8217-4c17-8fbb-082ac75baaf5</definitionPackageId>
-          <properties>
-            <property name="d144e1aa-b506-407a-b60b-716ce38b70bb" display="Not Empty" value="false" isActive="true" />
-            <property name="8d844d65-bf88-4023-85e1-4d3d7f8784cd" display="Equal" isActive="true" />
-            <property name="490e08cd-5fb4-4bfd-80cf-fda3b88f745e" display="Not Equal" isActive="true" />
-            <property name="c94dc001-4ec7-42a0-a1e0-5b75502e7bec" display="Min Length" isActive="false" />
-            <property name="cbd52384-0f1e-4f41-9e98-314231b731e1" display="Max Length" isActive="false" />
-            <property name="f9802e6b-b033-4280-ad83-e4b064943d87" display="Min" isActive="false" />
-            <property name="aca206a8-cb7e-4537-b3f5-c5c301863c14" display="Max" isActive="false" />
-            <property name="ad0c1113-ee22-4275-8177-576494ecfa45" display="Regular Expression" isActive="true" />
-            <property name="a4fdee2f-36d9-463c-bb2e-54579a16083e" display="Regular Expression Message" isActive="false" />
-            <property name="25d15e9b-7dbd-403e-837d-2fcfc786d3f2" display="Regular Expression Timeout" value="1" isActive="false" />
-            <property name="9023c463-1cce-4f11-baa5-96561697fc7f" display="Predicate" isActive="true" />
-            <property name="13d364d0-975e-47e9-ae0c-a3137326ee60" display="Predicate Message" isActive="false" />
-            <property name="85282cb5-5e12-4eb0-9568-7ccee0685e12" display="Email Address" value="false" isActive="false" />
-            <property name="e441d802-9aea-4d74-b5f9-1cd2527f3719" display="Has Custom Validation" value="false" isActive="false" />
-            <property name="e94008f2-3d5b-4157-ba72-69b3d6812617" display="Custom" value="false" isActive="true" />
-            <property name="60e7953f-29b8-4e56-a2c9-c02fae7de91e" display="Must" value="false" isActive="true" />
-            <property name="f43fcab6-5f8f-42e4-96d2-83d79cedfab9" display="Must Message" isActive="false" />
-            <property name="9ce77ae5-9ad5-4436-8ae0-c6c296de8492" display="CascadeMode" isActive="true" />
-          </properties>
-        </stereotype>
-      </stereotypes>
-      <metadata />
-      <childElements />
-    </childElement>
-    <childElement id="38c84ae8-1359-4dd9-bf4f-27ce5989260f" type="DTO-Field" typeId="7baed1fd-469b-4980-8fd9-4cefb8331eb2">
+    <childElement id="0ba95aa5-4fc9-47a4-9292-3baf3fadf8a9" type="DTO-Field" typeId="7baed1fd-469b-4980-8fd9-4cefb8331eb2">
       <name>IsSubmitted</name>
       <display>IsSubmitted: bool</display>
       <isAbstract>false</isAbstract>
       <genericTypes />
-      <typeReference id="551906fc-0f93-4465-8f3f-7a9d1644f973">
+      <typeReference id="ac7a7ba6-c17e-4bb2-87fe-d668f894f0e5">
         <typeId>e6f92b09-b2c5-4536-8270-a4d9e5bbd930</typeId>
         <isNavigable>true</isNavigable>
         <isNullable>false</isNullable>
@@ -306,8 +208,186 @@
         <stereotypes />
         <genericTypeParameters />
       </typeReference>
-      <isMapped>false</isMapped>
-      <parentFolderId>9f7542cd-b101-4d60-8c0c-4ff2a8269cef</parentFolderId>
+      <isMapped>true</isMapped>
+      <mappedClass>
+        <mappingSettingsId>1f747d14-681c-4a20-8c68-34223f41b825</mappingSettingsId>
+        <autoSyncTypeReference>true</autoSyncTypeReference>
+        <mappedPath>
+          <target id="7fa4991f-e9ea-4928-8a11-a8489d7939dd" name="IsSubmitted" type="element" specialization="Attribute" specializationId="0090fb93-483e-41af-a11d-5ad2dc796adf" />
+        </mappedPath>
+      </mappedClass>
+      <parentFolderId>bdc2dc54-ee10-41e7-bd7c-f2e1566de06b</parentFolderId>
+      <packageId>c8555d38-5afc-4ea2-9a61-c7a505212753</packageId>
+      <packageName>AndersonAPI.Services</packageName>
+      <stereotypes>
+        <stereotype stereotypeDefinitionId="4b54a612-2664-4493-a1f7-dc0623aa03da" name="Validations">
+          <addedByDefault>true</addedByDefault>
+          <definitionPackageName>Intent.Application.FluentValidation</definitionPackageName>
+          <definitionPackageId>55856e5d-8217-4c17-8fbb-082ac75baaf5</definitionPackageId>
+          <properties>
+            <property name="d144e1aa-b506-407a-b60b-716ce38b70bb" display="Not Empty" value="false" isActive="true" />
+            <property name="8d844d65-bf88-4023-85e1-4d3d7f8784cd" display="Equal" isActive="true" />
+            <property name="490e08cd-5fb4-4bfd-80cf-fda3b88f745e" display="Not Equal" isActive="true" />
+            <property name="c94dc001-4ec7-42a0-a1e0-5b75502e7bec" display="Min Length" isActive="false" />
+            <property name="cbd52384-0f1e-4f41-9e98-314231b731e1" display="Max Length" isActive="false" />
+            <property name="f9802e6b-b033-4280-ad83-e4b064943d87" display="Min" isActive="false" />
+            <property name="aca206a8-cb7e-4537-b3f5-c5c301863c14" display="Max" isActive="false" />
+            <property name="ad0c1113-ee22-4275-8177-576494ecfa45" display="Regular Expression" isActive="true" />
+            <property name="a4fdee2f-36d9-463c-bb2e-54579a16083e" display="Regular Expression Message" isActive="false" />
+            <property name="25d15e9b-7dbd-403e-837d-2fcfc786d3f2" display="Regular Expression Timeout" value="1" isActive="false" />
+            <property name="9023c463-1cce-4f11-baa5-96561697fc7f" display="Predicate" isActive="true" />
+            <property name="13d364d0-975e-47e9-ae0c-a3137326ee60" display="Predicate Message" isActive="false" />
+            <property name="85282cb5-5e12-4eb0-9568-7ccee0685e12" display="Email Address" value="false" isActive="false" />
+            <property name="e441d802-9aea-4d74-b5f9-1cd2527f3719" display="Has Custom Validation" value="false" isActive="false" />
+            <property name="e94008f2-3d5b-4157-ba72-69b3d6812617" display="Custom" value="false" isActive="true" />
+            <property name="60e7953f-29b8-4e56-a2c9-c02fae7de91e" display="Must" value="false" isActive="true" />
+            <property name="f43fcab6-5f8f-42e4-96d2-83d79cedfab9" display="Must Message" isActive="false" />
+            <property name="9ce77ae5-9ad5-4436-8ae0-c6c296de8492" display="CascadeMode" isActive="true" />
+          </properties>
+        </stereotype>
+      </stereotypes>
+      <metadata />
+      <childElements />
+    </childElement>
+    <childElement id="13ecbf3a-40da-4fb0-b289-aaaa5e63ba94" type="DTO-Field" typeId="7baed1fd-469b-4980-8fd9-4cefb8331eb2">
+      <name>SubmittedDate</name>
+      <display>SubmittedDate: datetimeoffset</display>
+      <isAbstract>false</isAbstract>
+      <genericTypes />
+      <typeReference id="45a7d42c-14c8-40f8-84a9-5da97a65e2c0">
+        <typeId>f1ba4df3-a5bc-427e-a591-4f6029f89bd7</typeId>
+        <isNavigable>true</isNavigable>
+        <isNullable>false</isNullable>
+        <isCollection>false</isCollection>
+        <isRequired>true</isRequired>
+        <typePackageName>Intent.Common.Types</typePackageName>
+        <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
+        <stereotypes />
+        <genericTypeParameters />
+      </typeReference>
+      <isMapped>true</isMapped>
+      <mappedClass>
+        <mappingSettingsId>1f747d14-681c-4a20-8c68-34223f41b825</mappingSettingsId>
+        <autoSyncTypeReference>true</autoSyncTypeReference>
+        <mappedPath>
+          <target id="e0241e15-c760-4b19-a013-9368e1fd35e1" name="SubmittedDate" type="element" specialization="Attribute" specializationId="0090fb93-483e-41af-a11d-5ad2dc796adf" />
+        </mappedPath>
+      </mappedClass>
+      <parentFolderId>bdc2dc54-ee10-41e7-bd7c-f2e1566de06b</parentFolderId>
+      <packageId>c8555d38-5afc-4ea2-9a61-c7a505212753</packageId>
+      <packageName>AndersonAPI.Services</packageName>
+      <stereotypes>
+        <stereotype stereotypeDefinitionId="4b54a612-2664-4493-a1f7-dc0623aa03da" name="Validations">
+          <addedByDefault>true</addedByDefault>
+          <definitionPackageName>Intent.Application.FluentValidation</definitionPackageName>
+          <definitionPackageId>55856e5d-8217-4c17-8fbb-082ac75baaf5</definitionPackageId>
+          <properties>
+            <property name="d144e1aa-b506-407a-b60b-716ce38b70bb" display="Not Empty" value="false" isActive="true" />
+            <property name="8d844d65-bf88-4023-85e1-4d3d7f8784cd" display="Equal" isActive="true" />
+            <property name="490e08cd-5fb4-4bfd-80cf-fda3b88f745e" display="Not Equal" isActive="true" />
+            <property name="c94dc001-4ec7-42a0-a1e0-5b75502e7bec" display="Min Length" isActive="false" />
+            <property name="cbd52384-0f1e-4f41-9e98-314231b731e1" display="Max Length" isActive="false" />
+            <property name="f9802e6b-b033-4280-ad83-e4b064943d87" display="Min" isActive="false" />
+            <property name="aca206a8-cb7e-4537-b3f5-c5c301863c14" display="Max" isActive="false" />
+            <property name="ad0c1113-ee22-4275-8177-576494ecfa45" display="Regular Expression" isActive="true" />
+            <property name="a4fdee2f-36d9-463c-bb2e-54579a16083e" display="Regular Expression Message" isActive="false" />
+            <property name="25d15e9b-7dbd-403e-837d-2fcfc786d3f2" display="Regular Expression Timeout" value="1" isActive="false" />
+            <property name="9023c463-1cce-4f11-baa5-96561697fc7f" display="Predicate" isActive="true" />
+            <property name="13d364d0-975e-47e9-ae0c-a3137326ee60" display="Predicate Message" isActive="false" />
+            <property name="85282cb5-5e12-4eb0-9568-7ccee0685e12" display="Email Address" value="false" isActive="false" />
+            <property name="e441d802-9aea-4d74-b5f9-1cd2527f3719" display="Has Custom Validation" value="false" isActive="false" />
+            <property name="e94008f2-3d5b-4157-ba72-69b3d6812617" display="Custom" value="false" isActive="true" />
+            <property name="60e7953f-29b8-4e56-a2c9-c02fae7de91e" display="Must" value="false" isActive="true" />
+            <property name="f43fcab6-5f8f-42e4-96d2-83d79cedfab9" display="Must Message" isActive="false" />
+            <property name="9ce77ae5-9ad5-4436-8ae0-c6c296de8492" display="CascadeMode" isActive="true" />
+          </properties>
+        </stereotype>
+      </stereotypes>
+      <metadata />
+      <childElements />
+    </childElement>
+    <childElement id="766ddfef-bf99-4420-9d8d-724e50a31b96" type="DTO-Field" typeId="7baed1fd-469b-4980-8fd9-4cefb8331eb2">
+      <name>Partners</name>
+      <display>Partners: QuarterlyReportPartnerDto[*]</display>
+      <isAbstract>false</isAbstract>
+      <genericTypes />
+      <typeReference id="d600a500-c04b-4872-8cea-45978d3758aa">
+        <typeId>082a16da-17bf-4a44-8b37-e989050c85b3</typeId>
+        <isNavigable>true</isNavigable>
+        <isNullable>false</isNullable>
+        <isCollection>true</isCollection>
+        <isRequired>true</isRequired>
+        <typePackageName>AndersonAPI.Services</typePackageName>
+        <typePackageId>c8555d38-5afc-4ea2-9a61-c7a505212753</typePackageId>
+        <stereotypes />
+        <genericTypeParameters />
+      </typeReference>
+      <isMapped>true</isMapped>
+      <mappedClass>
+        <mappingSettingsId>1f747d14-681c-4a20-8c68-34223f41b825</mappingSettingsId>
+        <autoSyncTypeReference>false</autoSyncTypeReference>
+        <mappedPath>
+          <target id="67067817-3b2d-4d6b-be4d-6c5725a946b8" name="Partners" type="association" specialization="Association Target End" specializationId="0a66489f-30aa-417b-a75d-b945863366fd" />
+        </mappedPath>
+      </mappedClass>
+      <parentFolderId>bdc2dc54-ee10-41e7-bd7c-f2e1566de06b</parentFolderId>
+      <packageId>c8555d38-5afc-4ea2-9a61-c7a505212753</packageId>
+      <packageName>AndersonAPI.Services</packageName>
+      <stereotypes>
+        <stereotype stereotypeDefinitionId="4b54a612-2664-4493-a1f7-dc0623aa03da" name="Validations">
+          <addedByDefault>true</addedByDefault>
+          <definitionPackageName>Intent.Application.FluentValidation</definitionPackageName>
+          <definitionPackageId>55856e5d-8217-4c17-8fbb-082ac75baaf5</definitionPackageId>
+          <properties>
+            <property name="d144e1aa-b506-407a-b60b-716ce38b70bb" display="Not Empty" value="false" isActive="true" />
+            <property name="8d844d65-bf88-4023-85e1-4d3d7f8784cd" display="Equal" isActive="true" />
+            <property name="490e08cd-5fb4-4bfd-80cf-fda3b88f745e" display="Not Equal" isActive="true" />
+            <property name="c94dc001-4ec7-42a0-a1e0-5b75502e7bec" display="Min Length" isActive="false" />
+            <property name="cbd52384-0f1e-4f41-9e98-314231b731e1" display="Max Length" isActive="false" />
+            <property name="f9802e6b-b033-4280-ad83-e4b064943d87" display="Min" isActive="false" />
+            <property name="aca206a8-cb7e-4537-b3f5-c5c301863c14" display="Max" isActive="false" />
+            <property name="ad0c1113-ee22-4275-8177-576494ecfa45" display="Regular Expression" isActive="true" />
+            <property name="a4fdee2f-36d9-463c-bb2e-54579a16083e" display="Regular Expression Message" isActive="false" />
+            <property name="25d15e9b-7dbd-403e-837d-2fcfc786d3f2" display="Regular Expression Timeout" value="1" isActive="false" />
+            <property name="9023c463-1cce-4f11-baa5-96561697fc7f" display="Predicate" isActive="true" />
+            <property name="13d364d0-975e-47e9-ae0c-a3137326ee60" display="Predicate Message" isActive="false" />
+            <property name="85282cb5-5e12-4eb0-9568-7ccee0685e12" display="Email Address" value="false" isActive="false" />
+            <property name="e441d802-9aea-4d74-b5f9-1cd2527f3719" display="Has Custom Validation" value="false" isActive="false" />
+            <property name="e94008f2-3d5b-4157-ba72-69b3d6812617" display="Custom" value="false" isActive="true" />
+            <property name="60e7953f-29b8-4e56-a2c9-c02fae7de91e" display="Must" value="false" isActive="true" />
+            <property name="f43fcab6-5f8f-42e4-96d2-83d79cedfab9" display="Must Message" isActive="false" />
+            <property name="9ce77ae5-9ad5-4436-8ae0-c6c296de8492" display="CascadeMode" isActive="true" />
+          </properties>
+        </stereotype>
+      </stereotypes>
+      <metadata />
+      <childElements />
+    </childElement>
+    <childElement id="efe7fee7-c141-472a-8ae7-afa5b137ecbf" type="DTO-Field" typeId="7baed1fd-469b-4980-8fd9-4cefb8331eb2">
+      <name>ReportLines</name>
+      <display>ReportLines: QuarterlyReportLineDto[*]</display>
+      <isAbstract>false</isAbstract>
+      <genericTypes />
+      <typeReference id="149c54fb-3f88-420d-b1cb-be68f0e5a4aa">
+        <typeId>d28f0c3a-5565-464d-a9be-d3e6c011ba35</typeId>
+        <isNavigable>true</isNavigable>
+        <isNullable>false</isNullable>
+        <isCollection>true</isCollection>
+        <isRequired>true</isRequired>
+        <typePackageName>AndersonAPI.Services</typePackageName>
+        <typePackageId>c8555d38-5afc-4ea2-9a61-c7a505212753</typePackageId>
+        <stereotypes />
+        <genericTypeParameters />
+      </typeReference>
+      <isMapped>true</isMapped>
+      <mappedClass>
+        <mappingSettingsId>1f747d14-681c-4a20-8c68-34223f41b825</mappingSettingsId>
+        <autoSyncTypeReference>false</autoSyncTypeReference>
+        <mappedPath>
+          <target id="8e8b21ef-d696-46e6-bed7-810668e106d5" name="ReportLines" type="association" specialization="Association Target End" specializationId="0a66489f-30aa-417b-a75d-b945863366fd" />
+        </mappedPath>
+      </mappedClass>
+      <parentFolderId>bdc2dc54-ee10-41e7-bd7c-f2e1566de06b</parentFolderId>
       <packageId>c8555d38-5afc-4ea2-9a61-c7a505212753</packageId>
       <packageName>AndersonAPI.Services</packageName>
       <stereotypes>

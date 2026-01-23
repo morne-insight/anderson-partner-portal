@@ -2,72 +2,39 @@ import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import {
     ArrowLeft,
-    DollarSign,
+    Building2,
     Users,
-    Target,
-    TrendingUp,
     CheckCircle,
     Calendar,
-    FileText
+    FileText,
+    Loader2
 } from "lucide-react";
-import { QuarterlyReport } from "@/types/reports";
+import { QuarterlyReportDto, CountryDto, QuarterlyReportLineDto, QuarterlyReportPartnerDto } from "@/api/types.gen";
+import { callApi } from "@/server/proxy";
+import { usePrefetchReferenceData } from "@/hooks/useReferenceData";
+import { PartnerStatus } from "@/types/reports";
+
 
 export const Route = createFileRoute("/_app/profile/$companyId/reports/$reportId/")({
     component: ViewReportPage,
     loader: async ({ params }) => {
-        // TODO: Replace with actual API call when backend is implemented
-        // const report = await callApi({ data: { fn: 'getApiCompaniesByIdReportsById', args: { path: { id: params.companyId, reportId: params.reportId } } } });
-
-        // Mock data for now
-        const mockReport: QuarterlyReport = {
-            id: params.reportId,
-            companyId: params.companyId,
-            year: 2024,
-            quarter: 3,
-            isSubmitted: true,
-            createdDate: new Date('2024-09-01'),
-            submittedDate: new Date('2024-10-15'),
-            lastModifiedDate: new Date('2024-10-15'),
-            revenue: 2200000,
-            expenses: 1820000,
-            netIncome: 380000,
-            employeeCount: 42,
-            newClients: 6,
-            projectsCompleted: 15,
-            keyAchievements: 'Successfully completed major digital transformation project for Fortune 500 client, expanded our AI consulting capabilities, and achieved 15% revenue growth compared to Q2.',
-            challenges: 'Faced increased competition in the market and some delays in project deliveries due to client resource constraints. Also experienced challenges in recruiting senior talent.',
-            nextQuarterGoals: 'Focus on expanding our market presence in the financial services sector, launch new AI-powered analytics products, and strengthen our partnership network.',
-            marketConditions: 'The consulting market showed strong demand for digital transformation services, particularly in AI and data analytics. However, economic uncertainty led to longer sales cycles.',
-            competitivePosition: 'We maintain a strong competitive position in data analytics but need to accelerate our AI capabilities development to stay ahead of emerging competitors.',
-            additionalNotes: 'Considering strategic acquisition opportunities to enhance our AI expertise and expand geographical reach.',
-            reports: [
-                {
-                    id: 'report-1',
-                    partnerCount: 8,
-                    headcount: 42,
-                    clientCount: 25,
-                    officeCount: 2,
-                    lawyerCount: 15,
-                    estimatedRevenue: 2200000
+        try {
+            const response = await callApi({
+                data: {
+                    fn: 'getApiQuarterliesById',
+                    args: {
+                        path: {
+                            id: params.reportId
+                        }
+                    }
                 }
-            ],
-            partners: [
-                {
-                    id: 'partner-1',
-                    name: 'John Smith',
-                    status: 1
-                },
-                {
-                    id: 'partner-2',
-                    name: 'Sarah Johnson',
-                    status: 1
-                }
-            ]
-        };
+            });
 
-        return {
-            report: mockReport,
-        };
+            return { report: response };
+        } catch (error) {
+            console.error('Failed to fetch report:', error);
+            throw new Error('Failed to load report');
+        }
     },
 });
 
@@ -76,13 +43,20 @@ function ViewReportPage() {
     const { report } = Route.useLoaderData();
     const router = useRouter();
 
-    const formatCurrency = (amount: number) => {
-        return new Intl.NumberFormat('en-US', {
-            style: 'currency',
-            currency: 'USD',
-            minimumFractionDigits: 0,
-            maximumFractionDigits: 0,
-        }).format(amount);
+    // Fetch country reference data
+    const { countries, isLoading, isError } = usePrefetchReferenceData();
+
+    const getPartnerStatusLabel = (status: number) => {
+        switch (status) {
+            case PartnerStatus.Hired:
+                return 'Hired';
+            case PartnerStatus.Promoted:
+                return 'Promoted';
+            case PartnerStatus.Terminated:
+                return 'Terminated';
+            default:
+                return 'Unknown';
+        }
     };
 
     const formatDate = (date: Date) => {
@@ -93,6 +67,27 @@ function ViewReportPage() {
         }).format(new Date(date));
     };
 
+    // Show loading state while reference data is loading
+    if (isLoading) {
+        return (
+            <div className="flex min-h-screen items-center justify-center">
+                <Loader2 className="h-8 w-8 animate-spin text-gray-300" />
+            </div>
+        );
+    }
+
+    // Ensure we have the data before proceeding
+    if (isError) {
+        return (
+            <div className="flex min-h-screen items-center justify-center">
+                <div className="text-center">
+                    <p className="mb-4 text-red-600">Failed to load reference data</p>
+                    <Button onClick={() => window.location.reload()}>Retry</Button>
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div className="space-y-8 animate-fade-in pb-20">
             {/* Header */}
@@ -101,15 +96,20 @@ function ViewReportPage() {
                     <div>
                         <div className="flex items-center gap-3 mb-3">
                             <h2 className="text-4xl font-serif text-black">
-                                {report.quarter} {report.year} Report
+                                Q{report.quarter} {report.year} Report
                             </h2>
-                            <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
-                                <CheckCircle className="w-4 h-4 mr-1" />
-                                Submitted
-                            </span>
+                            {report.isSubmitted && (
+                                <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
+                                    <CheckCircle className="w-4 h-4 mr-1" />
+                                    Submitted
+                                </span>
+                            )}
                         </div>
                         <p className="text-gray-500 font-light text-lg">
-                            Submitted on {formatDate(report.submittedDate!)} • Created {formatDate(report.createdDate)}
+                            {report.isSubmitted && report.submittedDate
+                                ? `Submitted on ${formatDate(report.submittedDate)} • `
+                                : ''}
+                            Created {formatDate(report.createdDate!)}
                         </p>
                     </div>
                     <Button
@@ -122,120 +122,86 @@ function ViewReportPage() {
                 </div>
             </header>
 
-            {/* Report Content */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                {/* Left Column: Financial Data */}
-                <div className="space-y-8">
-                    <section className="space-y-6">
-                        <h3 className="text-lg font-bold uppercase tracking-widest border-b border-gray-100 pb-2 flex items-center gap-2">
-                            <DollarSign className="w-4 h-4" /> Financial Performance
+            {/* Report Lines Section */}
+            {report.reportLines && report.reportLines.length > 0 && (
+                <div className="bg-white border border-gray-200 shadow-sm">
+                    <div className="p-6 border-b border-gray-200">
+                        <h3 className="text-lg font-bold uppercase tracking-widest flex items-center gap-2">
+                            <Building2 className="w-5 h-5" />
+                            Report Lines ({report.reportLines.length})
                         </h3>
+                    </div>
 
-                        <div className="bg-white p-6 border border-gray-200 shadow-sm space-y-6">
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                                <div className="text-center">
-                                    <div className="text-2xl font-bold text-green-600 mb-1">
-                                        {formatCurrency(report.revenue)}
-                                    </div>
-                                    <div className="text-xs text-gray-500 uppercase tracking-wide">Total Revenue</div>
-                                </div>
-                                <div className="text-center">
-                                    <div className="text-2xl font-bold text-red-600 mb-1">
-                                        {formatCurrency(report.expenses)}
-                                    </div>
-                                    <div className="text-xs text-gray-500 uppercase tracking-wide">Total Expenses</div>
-                                </div>
-                                <div className="text-center">
-                                    <div className={`text-2xl font-bold mb-1 ${report.netIncome >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                                        {formatCurrency(report.netIncome)}
-                                    </div>
-                                    <div className="text-xs text-gray-500 uppercase tracking-wide">Net Income</div>
-                                </div>
-                            </div>
+                    <div className="p-6">
+                        <div className="border border-gray-200 overflow-hidden">
+                            <table className="w-full">
+                                <thead className="bg-gray-100">
+                                    <tr>
+                                        <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Country</th>
+                                        <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Partners</th>
+                                        <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Headcount</th>
+                                        <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Clients</th>
+                                        <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Offices</th>
+                                        <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Lawyers</th>
+                                        <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Est. Revenue</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="divide-y divide-gray-200">
+                                    {report.reportLines.map((reportLine: QuarterlyReportLineDto, index: number) => {
+                                        const country = countries?.data?.find((c: CountryDto) => c.id === reportLine.countryId);
+                                        return (
+                                            <tr key={index} className="bg-white hover:bg-gray-50">
+                                                <td className="px-4 py-3 text-sm font-medium">{country?.name || 'Not specified'}</td>
+                                                <td className="px-4 py-3 text-sm">{reportLine.partnerCount}</td>
+                                                <td className="px-4 py-3 text-sm">{reportLine.headcount}</td>
+                                                <td className="px-4 py-3 text-sm">{reportLine.clientCount}</td>
+                                                <td className="px-4 py-3 text-sm">{reportLine.officeCount}</td>
+                                                <td className="px-4 py-3 text-sm">{reportLine.lawyerCount}</td>
+                                                <td className="px-4 py-3 text-sm">${reportLine.estimatedRevenue?.toLocaleString()}</td>
+                                            </tr>
+                                        );
+                                    })}
+                                </tbody>
+                            </table>
                         </div>
-                    </section>
-
-                    <section className="space-y-6">
-                        <h3 className="text-lg font-bold uppercase tracking-widest border-b border-gray-100 pb-2 flex items-center gap-2">
-                            <Users className="w-4 h-4" /> Operational Metrics
-                        </h3>
-
-                        <div className="bg-white p-6 border border-gray-200 shadow-sm space-y-6">
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                                <div className="text-center">
-                                    <div className="text-2xl font-bold text-blue-600 mb-1">
-                                        {report.employeeCount}
-                                    </div>
-                                    <div className="text-xs text-gray-500 uppercase tracking-wide">Total Employees</div>
-                                </div>
-                                <div className="text-center">
-                                    <div className="text-2xl font-bold text-purple-600 mb-1">
-                                        {report.newClients}
-                                    </div>
-                                    <div className="text-xs text-gray-500 uppercase tracking-wide">New Clients</div>
-                                </div>
-                                <div className="text-center">
-                                    <div className="text-2xl font-bold text-orange-600 mb-1">
-                                        {report.projectsCompleted}
-                                    </div>
-                                    <div className="text-xs text-gray-500 uppercase tracking-wide">Projects Completed</div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
+                    </div>
                 </div>
+            )}
 
-                {/* Right Column: Strategic Information */}
-                <div className="space-y-8">
-                    <section className="space-y-6">
-                        <h3 className="text-lg font-bold uppercase tracking-widest border-b border-gray-100 pb-2 flex items-center gap-2">
-                            <Target className="w-4 h-4" /> Strategic Information
+            {/* Partners Section */}
+            {report.partners && report.partners.length > 0 && (
+                <div className="bg-white border border-gray-200 shadow-sm">
+                    <div className="p-6 border-b border-gray-200">
+                        <h3 className="text-lg font-bold uppercase tracking-widest flex items-center gap-2">
+                            <Users className="w-5 h-5" />
+                            Partners ({report.partners.length})
                         </h3>
+                    </div>
 
-                        <div className="space-y-6">
-                            <div className="bg-white p-6 border border-gray-200 shadow-sm">
-                                <h4 className="font-bold text-sm text-gray-900 mb-3 uppercase tracking-wide">Key Achievements</h4>
-                                <p className="text-gray-700 text-sm leading-relaxed">{report.keyAchievements}</p>
-                            </div>
-
-                            <div className="bg-white p-6 border border-gray-200 shadow-sm">
-                                <h4 className="font-bold text-sm text-gray-900 mb-3 uppercase tracking-wide">Challenges Faced</h4>
-                                <p className="text-gray-700 text-sm leading-relaxed">{report.challenges}</p>
-                            </div>
-
-                            <div className="bg-white p-6 border border-gray-200 shadow-sm">
-                                <h4 className="font-bold text-sm text-gray-900 mb-3 uppercase tracking-wide">Next Quarter Goals</h4>
-                                <p className="text-gray-700 text-sm leading-relaxed">{report.nextQuarterGoals}</p>
-                            </div>
-                        </div>
-                    </section>
-
-                    <section className="space-y-6">
-                        <h3 className="text-lg font-bold uppercase tracking-widest border-b border-gray-100 pb-2 flex items-center gap-2">
-                            <TrendingUp className="w-4 h-4" /> Market Analysis
-                        </h3>
-
-                        <div className="space-y-6">
-                            <div className="bg-white p-6 border border-gray-200 shadow-sm">
-                                <h4 className="font-bold text-sm text-gray-900 mb-3 uppercase tracking-wide">Market Conditions</h4>
-                                <p className="text-gray-700 text-sm leading-relaxed">{report.marketConditions}</p>
-                            </div>
-
-                            <div className="bg-white p-6 border border-gray-200 shadow-sm">
-                                <h4 className="font-bold text-sm text-gray-900 mb-3 uppercase tracking-wide">Competitive Position</h4>
-                                <p className="text-gray-700 text-sm leading-relaxed">{report.competitivePosition}</p>
-                            </div>
-
-                            {report.additionalNotes && (
-                                <div className="bg-white p-6 border border-gray-200 shadow-sm">
-                                    <h4 className="font-bold text-sm text-gray-900 mb-3 uppercase tracking-wide">Additional Notes</h4>
-                                    <p className="text-gray-700 text-sm leading-relaxed">{report.additionalNotes}</p>
-                                </div>
-                            )}
-                        </div>
-                    </section>
+                    <div className="p-6">
+                        <table className="w-full border border-gray-200">
+                            <thead className="bg-gray-100">
+                                <tr>
+                                    <th className="text-left p-4 text-xs font-medium text-gray-500 uppercase tracking-wider">Partner Name</th>
+                                    <th className="text-left p-4 text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {report.partners.map((partner: QuarterlyReportPartnerDto, index: number) => (
+                                    <tr key={index} className="border-t border-gray-200 bg-gray-50">
+                                        <td className="p-4">
+                                            <p className="text-sm font-medium">{partner.name}</p>
+                                        </td>
+                                        <td className="p-4">
+                                            <p className="text-sm font-medium">{getPartnerStatusLabel(partner.status || 1)}</p>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            </div>
+            )}
 
             {/* Report Metadata */}
             <div className="bg-gray-50 p-6 border border-gray-200">
@@ -243,15 +209,17 @@ function ViewReportPage() {
                     <div className="flex items-center gap-6 text-sm text-gray-500">
                         <div className="flex items-center gap-2">
                             <Calendar className="w-4 h-4" />
-                            <span>Created: {formatDate(report.createdDate)}</span>
+                            <span>Created: {formatDate(report.createdDate!)}</span>
                         </div>
-                        <div className="flex items-center gap-2">
-                            <CheckCircle className="w-4 h-4" />
-                            <span>Submitted: {formatDate(report.submittedDate!)}</span>
-                        </div>
+                        {report.isSubmitted && report.submittedDate && (
+                            <div className="flex items-center gap-2">
+                                <CheckCircle className="w-4 h-4" />
+                                <span>Submitted: {formatDate(report.submittedDate)}</span>
+                            </div>
+                        )}
                         <div className="flex items-center gap-2">
                             <FileText className="w-4 h-4" />
-                            <span>Report ID: {report.id}</span>
+                            <span>Q{report.quarter} {report.year} Report</span>
                         </div>
                     </div>
                 </div>

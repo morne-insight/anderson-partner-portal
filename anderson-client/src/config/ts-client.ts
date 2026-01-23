@@ -116,6 +116,7 @@ export const configureApiClient = () => {
           
           if (refreshToken) {
             console.log(`Attempting token refresh (attempt ${currentRetries + 1}/${MAX_RETRY_ATTEMPTS})`);
+            console.log('Refresh token:', refreshToken);
             const newAccessToken = await refreshAccessToken(refreshToken);
             
             if (newAccessToken) {

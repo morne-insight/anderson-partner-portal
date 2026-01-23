@@ -258,7 +258,7 @@
     </childElement>
     <childElement id="055bc13f-961d-4929-add7-4e4fb393e610" type="Class Constructor" typeId="dec2bd12-4699-4f45-8ec9-3b62dc692d2b">
       <name>Constructor</name>
-      <display>Quarterly(year: int, quarter: ReportQuarter, companyId: guid, partners: ReportPartner[*], reports: ReportLine[*], state: EntityState = EntityState.Enabled)</display>
+      <display>Quarterly(year: int, quarter: ReportQuarter, companyId: guid, partners: ReportPartner[*], reports: ReportLine[*], isSubmitted: bool, state: EntityState = EntityState.Enabled)</display>
       <isAbstract>false</isAbstract>
       <sort-children>by-type-then-manually</sort-children>
       <genericTypes />
@@ -433,6 +433,30 @@
           <metadata />
           <childElements />
         </childElement>
+        <childElement id="f041646d-843d-4d67-baf5-92fab6b9bce5" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
+          <name>isSubmitted</name>
+          <display>in : isSubmitted: bool</display>
+          <isAbstract>false</isAbstract>
+          <genericTypes />
+          <typeReference id="1ca9fe30-f44e-4ab2-ad1a-abee9d4b60db">
+            <typeId>e6f92b09-b2c5-4536-8270-a4d9e5bbd930</typeId>
+            <isNavigable>true</isNavigable>
+            <isNullable>false</isNullable>
+            <isCollection>false</isCollection>
+            <isRequired>true</isRequired>
+            <typePackageName>Intent.Common.Types</typePackageName>
+            <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
+            <stereotypes />
+            <genericTypeParameters />
+          </typeReference>
+          <isMapped>false</isMapped>
+          <parentFolderId>055bc13f-961d-4929-add7-4e4fb393e610</parentFolderId>
+          <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+          <packageName>AndersonAPI.Domain</packageName>
+          <stereotypes />
+          <metadata />
+          <childElements />
+        </childElement>
         <childElement id="fcecb611-8ebd-45fa-ab9b-65710c04fab6" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
           <name>state</name>
           <display>in : state: EntityState = EntityState.Enabled</display>
@@ -470,7 +494,7 @@
     </childElement>
     <childElement id="ad80eb0f-bcc8-4ef2-8cf2-593d1456a2e3" type="Operation" typeId="e042bb67-a1df-480c-9935-b26210f78591">
       <name>Update</name>
-      <display>Update(year: int, quarter: ReportQuarter): void</display>
+      <display>Update(year: int, quarter: ReportQuarter, isSubmitted: bool): void</display>
       <isAbstract>false</isAbstract>
       <sort-children>by-type-then-manually</sort-children>
       <genericTypes />
@@ -551,6 +575,37 @@
             <autoSyncTypeReference>true</autoSyncTypeReference>
             <mappedPath>
               <target id="3ac9895a-e7e1-486f-9f3a-cb4776158449" name="Quarter" type="element" specialization="Attribute" specializationId="0090fb93-483e-41af-a11d-5ad2dc796adf" />
+            </mappedPath>
+          </mappedClass>
+          <parentFolderId>ad80eb0f-bcc8-4ef2-8cf2-593d1456a2e3</parentFolderId>
+          <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+          <packageName>AndersonAPI.Domain</packageName>
+          <stereotypes />
+          <metadata />
+          <childElements />
+        </childElement>
+        <childElement id="c396450f-c021-4e93-92f3-e5331f47dcc0" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
+          <name>isSubmitted</name>
+          <display>in : isSubmitted: bool</display>
+          <isAbstract>false</isAbstract>
+          <genericTypes />
+          <typeReference id="c135580e-2d0c-432c-8351-828510a89a43">
+            <typeId>e6f92b09-b2c5-4536-8270-a4d9e5bbd930</typeId>
+            <isNavigable>true</isNavigable>
+            <isNullable>false</isNullable>
+            <isCollection>false</isCollection>
+            <isRequired>true</isRequired>
+            <typePackageName>Intent.Common.Types</typePackageName>
+            <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
+            <stereotypes />
+            <genericTypeParameters />
+          </typeReference>
+          <isMapped>true</isMapped>
+          <mappedClass>
+            <mappingSettingsId>7590bd83-04bc-40fe-8b5c-118277c049d4</mappingSettingsId>
+            <autoSyncTypeReference>true</autoSyncTypeReference>
+            <mappedPath>
+              <target id="7fa4991f-e9ea-4928-8a11-a8489d7939dd" name="IsSubmitted" type="element" specialization="Attribute" specializationId="0090fb93-483e-41af-a11d-5ad2dc796adf" />
             </mappedPath>
           </mappedClass>
           <parentFolderId>ad80eb0f-bcc8-4ef2-8cf2-593d1456a2e3</parentFolderId>

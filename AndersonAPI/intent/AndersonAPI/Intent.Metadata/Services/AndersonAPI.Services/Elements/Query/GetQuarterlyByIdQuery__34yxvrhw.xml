@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <class id="6c9eb92d-968b-4f6e-9aab-7f7f486b3e7e" type="Query" typeId="e71b0662-e29d-4db2-868b-8a12464b25d0">
   <name>GetQuarterlyByIdQuery</name>
-  <display>GetQuarterlyByIdQuery: QuarterlyDto</display>
+  <display>GetQuarterlyByIdQuery: QuarterlyReportDto</display>
   <isAbstract>false</isAbstract>
   <sort-children>by-type-then-manually</sort-children>
   <genericTypes />
   <typeReference id="ecc8ac14-74c4-44dc-a65e-10ce2e7bb793">
-    <typeId>60ef20a1-180b-4343-b8d1-94a089005e06</typeId>
+    <typeId>bdc2dc54-ee10-41e7-bd7c-f2e1566de06b</typeId>
     <isNavigable>true</isNavigable>
     <isNullable>false</isNullable>
     <isCollection>false</isCollection>

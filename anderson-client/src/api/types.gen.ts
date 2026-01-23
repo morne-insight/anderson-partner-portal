@@ -270,6 +270,7 @@ export type CreateQuarterlyCommand = {
     companyId: string;
     partners: Array<CreateQuarterlyPartnersDto>;
     reports: Array<CreateQuarterlyReportsDto>;
+    isSubmitted: boolean;
 };
 
 /**
@@ -603,6 +604,42 @@ export type QuarterlyDto = {
     revenue?: number;
     headcount?: number;
     submittedDate?: Date;
+};
+
+/**
+ * QuarterlyReportDto
+ */
+export type QuarterlyReportDto = {
+    year?: number;
+    quarter?: ReportQuarter;
+    createdDate?: Date;
+    isSubmitted?: boolean;
+    submittedDate?: Date;
+    partners?: Array<QuarterlyReportPartnerDto>;
+    reportLines?: Array<QuarterlyReportLineDto>;
+};
+
+/**
+ * QuarterlyReportLineDto
+ */
+export type QuarterlyReportLineDto = {
+    id?: string;
+    partnerCount?: number;
+    headcount?: number;
+    clientCount?: number;
+    officeCount?: number;
+    lawyerCount?: number;
+    estimatedRevenue?: number;
+    countryId?: string;
+};
+
+/**
+ * QuarterlyReportPartnerDto
+ */
+export type QuarterlyReportPartnerDto = {
+    id?: string;
+    status?: PartnerStatus;
+    name?: string;
 };
 
 /**
@@ -955,6 +992,7 @@ export type UpdateQuarterlyCommand = {
     id: string;
     year: number;
     quarter: ReportQuarter;
+    isSubmitted: boolean;
 };
 
 /**
@@ -4237,7 +4275,7 @@ export type GetApiQuarterliesByIdResponses = {
     /**
      * OK
      */
-    200: QuarterlyDto;
+    200: QuarterlyReportDto;
 };
 
 export type GetApiQuarterliesByIdResponse = GetApiQuarterliesByIdResponses[keyof GetApiQuarterliesByIdResponses];
@@ -4385,6 +4423,14 @@ export type GetApiQuarterliesByIdMeErrors = {
      * Bad Request
      */
     400: ProblemDetails;
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
     /**
      * Not Found
      */

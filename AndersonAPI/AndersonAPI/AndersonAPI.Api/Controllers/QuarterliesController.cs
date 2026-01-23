@@ -326,11 +326,14 @@ namespace AndersonAPI.Api.Controllers
         /// </summary>
         /// <response code="200">Returns the specified List&lt;QuarterlyDto&gt;.</response>
         /// <response code="400">One or more validation errors have occurred.</response>
+        /// <response code="401">Unauthorized request.</response>
+        /// <response code="403">Forbidden request.</response>
         /// <response code="404">No List&lt;QuarterlyDto&gt; could be found with the provided parameters.</response>
         [HttpGet("api/quarterlies/{id}/me")]
-        [AllowAnonymous]
         [ProducesResponseType(typeof(List<QuarterlyDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<List<QuarterlyDto>>> GetQuarterliesByCompanyId(
@@ -359,19 +362,19 @@ namespace AndersonAPI.Api.Controllers
 
         /// <summary>
         /// </summary>
-        /// <response code="200">Returns the specified QuarterlyDto.</response>
+        /// <response code="200">Returns the specified QuarterlyReportDto.</response>
         /// <response code="400">One or more validation errors have occurred.</response>
         /// <response code="401">Unauthorized request.</response>
         /// <response code="403">Forbidden request.</response>
-        /// <response code="404">No QuarterlyDto could be found with the provided parameters.</response>
+        /// <response code="404">No QuarterlyReportDto could be found with the provided parameters.</response>
         [HttpGet("api/quarterlies/{id}")]
-        [ProducesResponseType(typeof(QuarterlyDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(QuarterlyReportDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<QuarterlyDto>> GetQuarterlyById(
+        public async Task<ActionResult<QuarterlyReportDto>> GetQuarterlyById(
             [FromRoute] Guid id,
             CancellationToken cancellationToken = default)
         {

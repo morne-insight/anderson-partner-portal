@@ -21,7 +21,7 @@
   <targetEnd id="14c086e7-c550-444f-bfdd-11d5320bd697" type="Update Entity Action Target End" typeId="516069f6-09cc-4de8-8e31-3c71ca823452">
     <name>quarterly</name>
     <display>[update] quarterly: Update</display>
-    <order>3</order>
+    <order>4</order>
     <traits>
       <trait id="d00a2ab0-9a23-4192-b8bb-166798fc7dba" name="[Processing Action]" />
     </traits>
@@ -106,6 +106,22 @@
                 <path>
                   <target id="5a02540d-770a-4b46-852b-2560511df657" name="UpdateQuarterlyCommand" type="element" specialization="Command" specializationId="ccf14eb6-3a55-4d81-b5b9-d27311c70cb9" />
                   <target id="f9e3f5d1-6632-4aa7-abb9-e47344ca8b49" name="Quarter" type="element" specialization="DTO-Field" specializationId="7baed1fd-469b-4980-8fd9-4cefb8331eb2" />
+                </path>
+              </source>
+            </sources>
+          </mappedEnd>
+          <mappedEnd>
+            <expression>{IsSubmitted}</expression>
+            <path>
+              <target id="666e0055-bc9c-4fd6-acd8-975f4719ee0b" name="Quarterly" type="element" specialization="Class" specializationId="04e12b51-ed12-42a3-9667-a6aa81bb6d10" />
+              <target id="ad80eb0f-bcc8-4ef2-8cf2-593d1456a2e3" name="Update" type="element" specialization="Operation" specializationId="e042bb67-a1df-480c-9935-b26210f78591" />
+              <target id="c396450f-c021-4e93-92f3-e5331f47dcc0" name="isSubmitted" type="element" specialization="Parameter" specializationId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b" />
+            </path>
+            <sources>
+              <source identifier="IsSubmitted" mappingType="Data Mapping" mappingTypeId="ca88649b-f20b-44db-a9c0-017c26155ba8">
+                <path>
+                  <target id="5a02540d-770a-4b46-852b-2560511df657" name="UpdateQuarterlyCommand" type="element" specialization="Command" specializationId="ccf14eb6-3a55-4d81-b5b9-d27311c70cb9" />
+                  <target id="da51128b-d1a2-4f30-ae0d-ebcbfbb2bd88" name="IsSubmitted" type="element" specialization="DTO-Field" specializationId="7baed1fd-469b-4980-8fd9-4cefb8331eb2" />
                 </path>
               </source>
             </sources>

@@ -22,16 +22,34 @@ namespace AndersonAPI.Application.Quarterlies.CreateQuarterly
         [IntentManaged(Mode.Fully, Body = Mode.Merge)]
         public async Task<Guid> Handle(CreateQuarterlyCommand request, CancellationToken cancellationToken)
         {
-            var quarterly = new Quarterly(request.Year, request.Quarter, request.CompanyId, new List<ReportPartner>(), new List<ReportLine>());
+            var quarterly = new Quarterly(
+                request.Year, 
+                request.Quarter, 
+                request.CompanyId, 
+                new List<ReportPartner>(), 
+                new List<ReportLine>(),
+                request.IsSubmitted);
 
             foreach (var report in request.Reports)
             {
-                quarterly.AddReportLine(report.PartnerCount, report.Headcount, report.ClientCount, report.OfficeCount, report.LawyerCount, report.EstimatedRevenue, report.CountryId);
+                quarterly.AddReportLine(
+                    report.PartnerCount, 
+                    report.Headcount, 
+                    report.ClientCount, 
+                    report.OfficeCount, 
+                    report.LawyerCount, 
+                    report.EstimatedRevenue, 
+                    report.CountryId);
             }
 
             foreach (var partner in request.Partners)
             {
                 quarterly.AddReportPartner(partner.Name, partner.Status);
+            }
+
+            if (request.IsSubmitted)
+            {
+                quarterly.SetSubmitted(request.IsSubmitted);
             }
 
             _quarterlyRepository.Add(quarterly);

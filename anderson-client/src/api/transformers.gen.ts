@@ -76,8 +76,18 @@ export const getApiQuarterliesResponseTransformer = async (data: any): Promise<G
     return data;
 };
 
+const quarterlyReportDtoSchemaResponseTransformer = (data: any) => {
+    if (data.createdDate) {
+        data.createdDate = new Date(data.createdDate);
+    }
+    if (data.submittedDate) {
+        data.submittedDate = new Date(data.submittedDate);
+    }
+    return data;
+};
+
 export const getApiQuarterliesByIdResponseTransformer = async (data: any): Promise<GetApiQuarterliesByIdResponse> => {
-    data = quarterlyDtoSchemaResponseTransformer(data);
+    data = quarterlyReportDtoSchemaResponseTransformer(data);
     return data;
 };
 

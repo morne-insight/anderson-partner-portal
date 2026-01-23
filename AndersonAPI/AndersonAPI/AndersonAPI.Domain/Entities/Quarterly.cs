@@ -15,6 +15,7 @@ namespace AndersonAPI.Domain.Entities
             Guid companyId,
             IEnumerable<ReportPartner> partners,
             IEnumerable<ReportLine> reports,
+            bool isSubmitted,
             EntityState state = EntityState.Enabled)
         {
             Year = year;
@@ -65,16 +66,26 @@ namespace AndersonAPI.Domain.Entities
             private set => _reportLines = new List<ReportLine>(value);
         }
 
-        public void Update(int year, ReportQuarter quarter)
+        public void Update(int year, ReportQuarter quarter, bool isSubmitted)
         {
+            if (!IsSubmitted && isSubmitted)
+            {
+                SubmittedDate = DateTimeOffset.UtcNow;
+            }
+
             Year = year;
             Quarter = quarter;
+            IsSubmitted = isSubmitted;
         }
 
         public void SetSubmitted(bool isSubmitted)
         {
-            IsSubmitted = isSubmitted;
+            if (!IsSubmitted && isSubmitted)
+            {
+                SubmittedDate = DateTimeOffset.UtcNow;
+            }
 
+            IsSubmitted = isSubmitted;
         }
 
         public void AddReportLine(
@@ -86,6 +97,7 @@ namespace AndersonAPI.Domain.Entities
             double estimatedRevenue,
             Guid countryId)
         {
+            CheckSubmitted();
             var line = new ReportLine(partnerCount, headcount, clientCount, officeCount, lawyerCount, estimatedRevenue, countryId);
             _reportLines.Add(line);
         }
@@ -100,6 +112,7 @@ namespace AndersonAPI.Domain.Entities
             double estimatedRevenue,
             Guid countryId)
         {
+            CheckSubmitted();
             var line = _reportLines.FirstOrDefault(x => x.Id == reprotLineId);
             if (line == null)
             {
@@ -110,6 +123,7 @@ namespace AndersonAPI.Domain.Entities
 
         public void RemoveReportLine(Guid reportLineId)
         {
+            CheckSubmitted();
             var line = _reportLines.FirstOrDefault(x => x.Id == reportLineId);
             if (line == null)
             {
@@ -120,12 +134,14 @@ namespace AndersonAPI.Domain.Entities
 
         public void AddReportPartner(string name, PartnerStatus status)
         {
+            CheckSubmitted();
             var partner = new ReportPartner(name, status);
             _partners.Add(partner);
         }
 
         public void UpdateReporPartner(Guid reportPartnerId, string name, PartnerStatus status)
         {
+            CheckSubmitted();
             var partner = _partners.FirstOrDefault(x => x.Id == reportPartnerId);
             if (partner == null)
             {
@@ -136,12 +152,21 @@ namespace AndersonAPI.Domain.Entities
 
         public void RemoveReportPartner(Guid reportPartnerId)
         {
+            CheckSubmitted();
             var partner = _partners.FirstOrDefault(x => x.Id == reportPartnerId);
             if (partner == null)
             {
                 throw new InvalidOperationException($"Report Partner with ID {reportPartnerId} not found.");
             }
             _partners.Remove(partner);
+        }
+
+        private void CheckSubmitted()
+        {
+            if (IsSubmitted)
+            {
+                throw new InvalidOperationException("Cannot add report line to a submitted quarterly report.");
+            }
         }
 
         void IAuditable.SetCreated(Guid createdBy, DateTimeOffset createdDate) => (CreatedBy, CreatedDate) = (createdBy, createdDate);

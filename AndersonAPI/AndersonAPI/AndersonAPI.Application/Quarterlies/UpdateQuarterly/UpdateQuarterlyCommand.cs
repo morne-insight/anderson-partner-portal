@@ -10,15 +10,17 @@ namespace AndersonAPI.Application.Quarterlies.UpdateQuarterly
 {
     public class UpdateQuarterlyCommand : IRequest, ICommand
     {
-        public UpdateQuarterlyCommand(Guid id, int year, ReportQuarter quarter)
+        public UpdateQuarterlyCommand(Guid id, int year, ReportQuarter quarter, bool isSubmitted)
         {
             Id = id;
             Year = year;
             Quarter = quarter;
+            IsSubmitted = isSubmitted;
         }
 
         public Guid Id { get; set; }
         public int Year { get; set; }
         public ReportQuarter Quarter { get; set; }
+        public bool IsSubmitted { get; set; }
     }
 }

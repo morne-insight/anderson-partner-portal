@@ -1,55 +1,50 @@
 import { createFileRoute, useRouter } from "@tanstack/react-router";
-import { useForm } from "@tanstack/react-form";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import {
   Save,
   ArrowLeft,
-  DollarSign,
+  Plus,
+  X,
   Users,
-  Target,
-  TrendingUp,
-  FileText,
-  Send
+  Building2,
+  Loader2
 } from "lucide-react";
-import { QuarterlyReport, UpdateQuarterlyReportCommand } from "@/types/reports";
-import z from "zod";
+import {
+  type UpdateQuarterlyCommand,
+  type CreateQuarterlyReportsDto,
+  type CreateQuarterlyPartnersDto,
+  type ReportQuarter,
+  type CountryDto
+} from "@/api";
+import { usePrefetchReferenceData } from "@/hooks/useReferenceData";
+import { PartnerStatus } from "@/types/reports";
+import { callApi } from "@/server/proxy";
+import { Switch } from "@/components/ui/switch";
 
 export const Route = createFileRoute("/_app/profile/$companyId/reports/$reportId/edit")({
   component: EditReportPage,
   loader: async ({ params }) => {
-    // TODO: Replace with actual API call when backend is implemented
-    // const report = await callApi({ data: { fn: 'getApiCompaniesByIdReportsById', args: { path: { id: params.companyId, reportId: params.reportId } } } });
+    try {
+      const response = await callApi({
+        data: {
+          fn: 'getApiQuarterliesById',
+          args: {
+            path: {
+              id: params.reportId
+            }
+          }
+        }
+      });
 
-    // Mock data for now
-    const mockReport: QuarterlyReport = {
-      id: params.reportId,
-      companyId: params.companyId,
-      year: 2024,
-      quarter: 'Q4',
-      isSubmitted: false,
-      createdDate: new Date('2024-12-01'),
-      lastModifiedDate: new Date('2024-12-15'),
-      revenue: 2500000,
-      expenses: 2050000,
-      netIncome: 450000,
-      employeeCount: 45,
-      newClients: 8,
-      projectsCompleted: 12,
-      keyAchievements: 'Successfully launched new AI consulting practice, secured three major enterprise clients, and expanded team by 15%.',
-      challenges: 'Market volatility affected client decision-making timelines, and we faced increased competition in the data analytics space.',
-      nextQuarterGoals: 'Focus on expanding AI practice, target 10 new clients, and launch new training programs for existing team members.',
-      marketConditions: 'The consulting market showed signs of recovery with increased demand for digital transformation services.',
-      competitivePosition: 'We maintain a strong position in the data analytics space but need to strengthen our AI capabilities to compete effectively.',
-      additionalNotes: 'Considering strategic partnerships to enhance our AI offerings.'
-    };
-
-    return {
-      report: mockReport,
-    };
+      return { report: response };
+    } catch (error) {
+      console.error('Failed to fetch report:', error);
+      throw new Error('Failed to load report');
+    }
   },
 });
 
@@ -57,131 +52,137 @@ function EditReportPage() {
   const { companyId, reportId } = Route.useParams();
   const { report } = Route.useLoaderData();
   const router = useRouter();
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmittingFinal, setIsSubmittingFinal] = useState(false);
 
-  const form = useForm({
-    defaultValues: {
-      revenue: report.revenue,
-      expenses: report.expenses,
-      netIncome: report.netIncome,
-      employeeCount: report.employeeCount,
-      newClients: report.newClients,
-      projectsCompleted: report.projectsCompleted,
-      keyAchievements: report.keyAchievements,
-      challenges: report.challenges,
-      nextQuarterGoals: report.nextQuarterGoals,
-      marketConditions: report.marketConditions,
-      competitivePosition: report.competitivePosition,
-      additionalNotes: report.additionalNotes || '',
-    },
-    validators: {
-      onSubmit: ({ value }: { value: any }) => {
-        const schema = z.object({
-          revenue: z.number().min(0, "Revenue must be non-negative"),
-          expenses: z.number().min(0, "Expenses must be non-negative"),
-          netIncome: z.number(),
-          employeeCount: z.number().min(0, "Employee count must be non-negative"),
-          newClients: z.number().min(0, "New clients must be non-negative"),
-          projectsCompleted: z.number().min(0, "Projects completed must be non-negative"),
-          keyAchievements: z.string().min(1, "Key achievements are required"),
-          challenges: z.string().min(1, "Challenges are required"),
-          nextQuarterGoals: z.string().min(1, "Next quarter goals are required"),
-          marketConditions: z.string().min(1, "Market conditions are required"),
-          competitivePosition: z.string().min(1, "Competitive position is required"),
-          additionalNotes: z.string().optional(),
-        });
+  // State for submission status
+  const [isSubmitted, setIsSubmitted] = useState(report.isSubmitted || false);
 
-        const result = schema.safeParse(value);
-        if (!result.success) {
-          const errors: Record<string, string> = {};
-          result.error.issues.forEach((issue) => {
-            if (issue.path[0]) {
-              errors[issue.path[0] as string] = issue.message;
-            }
-          });
-          return errors;
-        }
-        return undefined;
-      }
-    },
-    onSubmit: async ({ value }) => {
-      setIsSubmitting(true);
-      try {
-        // TODO: Replace with actual API call when backend is implemented
-        // const reportData: UpdateQuarterlyReportCommand = {
-        //   id: reportId,
-        //   companyId,
-        //   year: report.year,
-        //   quarter: report.quarter,
-        //   ...value
-        // };
-        // await callApi({ data: { fn: 'putApiCompaniesByIdReportsById', args: { path: { id: companyId, reportId }, body: reportData } } });
-
-        // Mock success for now
-        await new Promise(resolve => setTimeout(resolve, 1000));
-
-        alert("Report saved successfully!");
-        router.navigate({ to: `/profile/${companyId}/reports` });
-      } catch (error) {
-        console.error(error);
-        alert("Failed to save report.");
-      } finally {
-        setIsSubmitting(false);
-      }
-    },
+  // State for report lines management
+  const [reportLines, setReportLines] = useState<CreateQuarterlyReportsDto[]>(report.reportLines || []);
+  const [isAddingReportLine, setIsAddingReportLine] = useState(false);
+  const [newReportLine, setNewReportLine] = useState<CreateQuarterlyReportsDto>({
+    partnerCount: 0,
+    headcount: 0,
+    clientCount: 0,
+    officeCount: 0,
+    lawyerCount: 0,
+    estimatedRevenue: 0,
+    countryId: '',
   });
 
-  const handleSubmitFinal = async () => {
-    if (!form.state.canSubmit) {
-      alert("Please fix all validation errors before submitting.");
+  // State for partners management
+  const [partners, setPartners] = useState<CreateQuarterlyPartnersDto[]>(report.partners || []);
+  const [isAddingPartner, setIsAddingPartner] = useState(false);
+  const [newPartner, setNewPartner] = useState<CreateQuarterlyPartnersDto>({
+    name: '',
+    status: 1, // Default status
+  });
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { countries, isLoading, isError } = usePrefetchReferenceData();
+
+  // Helper function to get status label
+  const getPartnerStatusLabel = (status: number): string => {
+    switch (status) {
+      case PartnerStatus.Hired:
+        return 'Hired';
+      case PartnerStatus.Promoted:
+        return 'Promoted';
+      case PartnerStatus.Terminated:
+        return 'Terminated';
+      default:
+        return 'Unknown';
+    }
+  };
+
+  // Show loading state while reference data is loading  
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <Loader2 className="w-8 h-8 animate-spin text-gray-300" />
+      </div>
+    );
+  }
+
+  // Ensure we have the data before proceeding
+  if (isError) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="text-center">
+          <p className="text-red-600 mb-4">Failed to load reference data</p>
+          <Button onClick={() => window.location.reload()}>Retry</Button>
+        </div>
+      </div>
+    );
+  }
+
+  const handleAddReportLine = () => {
+    if (newReportLine.partnerCount && newReportLine.headcount && newReportLine.estimatedRevenue) {
+      setReportLines([...reportLines, { ...newReportLine }]);
+      setNewReportLine({
+        partnerCount: 0,
+        headcount: 0,
+        clientCount: 0,
+        officeCount: 0,
+        lawyerCount: 0,
+        estimatedRevenue: 0,
+        countryId: '',
+      });
+      setIsAddingReportLine(false);
+    }
+  };
+
+  const handleRemoveReportLine = (index: number) => {
+    setReportLines(reportLines.filter((_, i) => i !== index));
+  };
+
+  const handleAddPartner = () => {
+    if (newPartner.name?.trim()) {
+      setPartners([...partners, { ...newPartner }]);
+      setNewPartner({
+        name: '',
+        status: 1, // Default status
+      });
+      setIsAddingPartner(false);
+    }
+  };
+
+  const handleRemovePartner = (index: number) => {
+    setPartners(partners.filter((_, i) => i !== index));
+  };
+
+  const handleSubmit = async () => {
+    if (reportLines.length === 0) {
+      alert('Please add at least one report line.');
       return;
     }
 
-    if (!confirm("Are you sure you want to submit this report? Once submitted, it cannot be edited.")) {
-      return;
-    }
-
-    setIsSubmittingFinal(true);
+    setIsSubmitting(true);
     try {
-      // First save the current changes
-      const formValues = form.state.values;
+      const updateCommand: UpdateQuarterlyCommand = {
+        id: reportId,
+        year: report.year,
+        quarter: report.quarter,
+        isSubmitted: isSubmitted,
+      };
 
-      // TODO: Replace with actual API calls when backend is implemented
-      // const reportData: UpdateQuarterlyReportCommand = {
-      //   id: reportId,
-      //   companyId,
-      //   year: report.year,
-      //   quarter: report.quarter,
-      //   ...formValues
-      // };
-      // await callApi({ data: { fn: 'putApiCompaniesByIdReportsById', args: { path: { id: companyId, reportId }, body: reportData } } });
-      // await callApi({ data: { fn: 'postApiCompaniesByIdReportsByIdSubmit', args: { path: { id: companyId, reportId }, body: { id: reportId } } } });
+      await callApi({
+        data: {
+          fn: "putApiQuarterliesById",
+          args: {
+            path: { id: reportId },
+            body: updateCommand,
+          },
+        },
+      });
 
-      // Mock success for now
-      await new Promise(resolve => setTimeout(resolve, 1500));
-
-      alert("Report submitted successfully!");
+      alert("Report updated successfully!");
       router.navigate({ to: `/profile/${companyId}/reports` });
     } catch (error) {
       console.error(error);
-      alert("Failed to submit report.");
+      alert("Failed to update report.");
     } finally {
-      setIsSubmittingFinal(false);
+      setIsSubmitting(false);
     }
-  };
-
-  // Auto-calculate net income when revenue or expenses change
-  const handleRevenueChange = (value: number) => {
-    form.setFieldValue('revenue', value);
-    const expenses = form.getFieldValue('expenses') || 0;
-    form.setFieldValue('netIncome', value - expenses);
-  };
-
-  const handleExpensesChange = (value: number) => {
-    form.setFieldValue('expenses', value);
-    const revenue = form.getFieldValue('revenue') || 0;
-    form.setFieldValue('netIncome', revenue - value);
   };
 
   return (
@@ -191,10 +192,10 @@ function EditReportPage() {
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-4xl font-serif text-black mb-3">
-              Edit {report.quarter} {report.year} Report
+              Edit Q{report.quarter} {report.year} Report
             </h2>
             <p className="text-gray-500 font-light text-lg">
-              Update your quarterly business report. Save as draft or submit for final review.
+              Update your quarterly business report with report lines and partners.
             </p>
           </div>
           <Button
@@ -207,295 +208,275 @@ function EditReportPage() {
         </div>
       </header>
 
-      {/* Form */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-        {/* Left Column: Financial Data */}
-        <div className="space-y-8">
-          <section className="space-y-6">
-            <h3 className="text-lg font-bold uppercase tracking-widest border-b border-gray-100 pb-2 flex items-center gap-2">
-              <DollarSign className="w-4 h-4" /> Financial Performance
-            </h3>
-
-            <div className="space-y-6">
-              <form.Field
-                name="revenue"
-                children={(field) => (
-                  <div className="space-y-2">
-                    <Label htmlFor={field.name}>Total Revenue ($)</Label>
-                    <Input
-                      id={field.name}
-                      name={field.name}
-                      type="number"
-                      step="0.01"
-                      value={field.state.value}
-                      onBlur={field.handleBlur}
-                      onChange={(e) => handleRevenueChange(parseFloat(e.target.value) || 0)}
-                    />
-                    {field.state.meta.errors && (
-                      <p className="text-red-500 text-xs">{field.state.meta.errors}</p>
-                    )}
-                  </div>
-                )}
-              />
-
-              <form.Field
-                name="expenses"
-                children={(field) => (
-                  <div className="space-y-2">
-                    <Label htmlFor={field.name}>Total Expenses ($)</Label>
-                    <Input
-                      id={field.name}
-                      name={field.name}
-                      type="number"
-                      step="0.01"
-                      value={field.state.value}
-                      onBlur={field.handleBlur}
-                      onChange={(e) => handleExpensesChange(parseFloat(e.target.value) || 0)}
-                    />
-                    {field.state.meta.errors && (
-                      <p className="text-red-500 text-xs">{field.state.meta.errors}</p>
-                    )}
-                  </div>
-                )}
-              />
-
-              <form.Field
-                name="netIncome"
-                children={(field) => (
-                  <div className="space-y-2">
-                    <Label htmlFor={field.name}>Net Income ($)</Label>
-                    <Input
-                      id={field.name}
-                      name={field.name}
-                      type="number"
-                      step="0.01"
-                      value={field.state.value}
-                      readOnly
-                      className="bg-gray-50"
-                    />
-                    <p className="text-xs text-gray-500">Automatically calculated as Revenue - Expenses</p>
-                  </div>
-                )}
-              />
-            </div>
-          </section>
-
-          <section className="space-y-6">
-            <h3 className="text-lg font-bold uppercase tracking-widest border-b border-gray-100 pb-2 flex items-center gap-2">
-              <Users className="w-4 h-4" /> Operational Metrics
-            </h3>
-
-            <div className="space-y-6">
-              <form.Field
-                name="employeeCount"
-                children={(field) => (
-                  <div className="space-y-2">
-                    <Label htmlFor={field.name}>Total Employee Count</Label>
-                    <Input
-                      id={field.name}
-                      name={field.name}
-                      type="number"
-                      value={field.state.value}
-                      onBlur={field.handleBlur}
-                      onChange={(e) => field.handleChange(parseInt(e.target.value) || 0)}
-                    />
-                    {field.state.meta.errors && (
-                      <p className="text-red-500 text-xs">{field.state.meta.errors}</p>
-                    )}
-                  </div>
-                )}
-              />
-
-              <form.Field
-                name="newClients"
-                children={(field) => (
-                  <div className="space-y-2">
-                    <Label htmlFor={field.name}>New Clients Acquired</Label>
-                    <Input
-                      id={field.name}
-                      name={field.name}
-                      type="number"
-                      value={field.state.value}
-                      onBlur={field.handleBlur}
-                      onChange={(e) => field.handleChange(parseInt(e.target.value) || 0)}
-                    />
-                    {field.state.meta.errors && (
-                      <p className="text-red-500 text-xs">{field.state.meta.errors}</p>
-                    )}
-                  </div>
-                )}
-              />
-
-              <form.Field
-                name="projectsCompleted"
-                children={(field) => (
-                  <div className="space-y-2">
-                    <Label htmlFor={field.name}>Projects Completed</Label>
-                    <Input
-                      id={field.name}
-                      name={field.name}
-                      type="number"
-                      value={field.state.value}
-                      onBlur={field.handleBlur}
-                      onChange={(e) => field.handleChange(parseInt(e.target.value) || 0)}
-                    />
-                    {field.state.meta.errors && (
-                      <p className="text-red-500 text-xs">{field.state.meta.errors}</p>
-                    )}
-                  </div>
-                )}
-              />
-            </div>
-          </section>
+      {/* Report Lines Section */}
+      <div className="bg-white border border-gray-200 shadow-sm">
+        <div className="p-6 border-b border-gray-200">
+          <h3 className="text-lg font-bold uppercase tracking-widest flex items-center gap-2">
+            <Building2 className="w-5 h-5" />
+            Report Lines ({reportLines.length})
+          </h3>
         </div>
 
-        {/* Right Column: Strategic Information */}
-        <div className="space-y-8">
-          <section className="space-y-6">
-            <h3 className="text-lg font-bold uppercase tracking-widest border-b border-gray-100 pb-2 flex items-center gap-2">
-              <Target className="w-4 h-4" /> Strategic Information
-            </h3>
-
-            <div className="space-y-6">
-              <form.Field
-                name="keyAchievements"
-                children={(field) => (
-                  <div className="space-y-2">
-                    <Label htmlFor={field.name}>Key Achievements</Label>
-                    <Textarea
-                      id={field.name}
-                      name={field.name}
-                      value={field.state.value}
-                      onBlur={field.handleBlur}
-                      onChange={(e) => field.handleChange(e.target.value)}
-                      className="min-h-[100px]"
-                      placeholder="Describe the major accomplishments and milestones achieved this quarter..."
-                    />
-                    {field.state.meta.errors && (
-                      <p className="text-red-500 text-xs">{field.state.meta.errors}</p>
-                    )}
-                  </div>
-                )}
-              />
-
-              <form.Field
-                name="challenges"
-                children={(field) => (
-                  <div className="space-y-2">
-                    <Label htmlFor={field.name}>Challenges Faced</Label>
-                    <Textarea
-                      id={field.name}
-                      name={field.name}
-                      value={field.state.value}
-                      onBlur={field.handleBlur}
-                      onChange={(e) => field.handleChange(e.target.value)}
-                      className="min-h-[100px]"
-                      placeholder="Outline the main challenges and obstacles encountered this quarter..."
-                    />
-                    {field.state.meta.errors && (
-                      <p className="text-red-500 text-xs">{field.state.meta.errors}</p>
-                    )}
-                  </div>
-                )}
-              />
-
-              <form.Field
-                name="nextQuarterGoals"
-                children={(field) => (
-                  <div className="space-y-2">
-                    <Label htmlFor={field.name}>Next Quarter Goals</Label>
-                    <Textarea
-                      id={field.name}
-                      name={field.name}
-                      value={field.state.value}
-                      onBlur={field.handleBlur}
-                      onChange={(e) => field.handleChange(e.target.value)}
-                      className="min-h-[100px]"
-                      placeholder="Define the key objectives and targets for the upcoming quarter..."
-                    />
-                    {field.state.meta.errors && (
-                      <p className="text-red-500 text-xs">{field.state.meta.errors}</p>
-                    )}
-                  </div>
-                )}
-              />
+        <div className="p-6 space-y-4">
+          {reportLines.length > 0 && (
+            <div className="border border-gray-200 overflow-hidden">
+              <table className="w-full">
+                <thead className="bg-gray-100">
+                  <tr>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Country</th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Partners</th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Headcount</th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Clients</th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Offices</th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Lawyers</th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Est. Revenue</th>
+                    <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-200">
+                  {reportLines.map((reportLine, index) => {
+                    const country = countries?.data?.find(c => c.id === reportLine.countryId);
+                    return (
+                      <tr key={index} className="bg-white hover:bg-gray-50">
+                        <td className="px-4 py-3 text-sm font-medium">{country?.name || 'Not specified'}</td>
+                        <td className="px-4 py-3 text-sm">{reportLine.partnerCount}</td>
+                        <td className="px-4 py-3 text-sm">{reportLine.headcount}</td>
+                        <td className="px-4 py-3 text-sm">{reportLine.clientCount}</td>
+                        <td className="px-4 py-3 text-sm">{reportLine.officeCount}</td>
+                        <td className="px-4 py-3 text-sm">{reportLine.lawyerCount}</td>
+                        <td className="px-4 py-3 text-sm">${reportLine.estimatedRevenue?.toLocaleString()}</td>
+                        <td className="px-4 py-3 text-right">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => handleRemoveReportLine(index)}
+                            className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                          >
+                            <X className="w-4 h-4" />
+                          </Button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
             </div>
-          </section>
+          )}
 
-          <section className="space-y-6">
-            <h3 className="text-lg font-bold uppercase tracking-widest border-b border-gray-100 pb-2 flex items-center gap-2">
-              <TrendingUp className="w-4 h-4" /> Market Analysis
-            </h3>
-
-            <div className="space-y-6">
-              <form.Field
-                name="marketConditions"
-                children={(field) => (
-                  <div className="space-y-2">
-                    <Label htmlFor={field.name}>Market Conditions</Label>
-                    <Textarea
-                      id={field.name}
-                      name={field.name}
-                      value={field.state.value}
-                      onBlur={field.handleBlur}
-                      onChange={(e) => field.handleChange(e.target.value)}
-                      className="min-h-[100px]"
-                      placeholder="Analyze the current market conditions and trends affecting your business..."
-                    />
-                    {field.state.meta.errors && (
-                      <p className="text-red-500 text-xs">{field.state.meta.errors}</p>
-                    )}
-                  </div>
-                )}
-              />
-
-              <form.Field
-                name="competitivePosition"
-                children={(field) => (
-                  <div className="space-y-2">
-                    <Label htmlFor={field.name}>Competitive Position</Label>
-                    <Textarea
-                      id={field.name}
-                      name={field.name}
-                      value={field.state.value}
-                      onBlur={field.handleBlur}
-                      onChange={(e) => field.handleChange(e.target.value)}
-                      className="min-h-[100px]"
-                      placeholder="Assess your firm's position relative to competitors and market dynamics..."
-                    />
-                    {field.state.meta.errors && (
-                      <p className="text-red-500 text-xs">{field.state.meta.errors}</p>
-                    )}
-                  </div>
-                )}
-              />
-
-              <form.Field
-                name="additionalNotes"
-                children={(field) => (
-                  <div className="space-y-2">
-                    <Label htmlFor={field.name}>Additional Notes (Optional)</Label>
-                    <Textarea
-                      id={field.name}
-                      name={field.name}
-                      value={field.state.value}
-                      onBlur={field.handleBlur}
-                      onChange={(e) => field.handleChange(e.target.value)}
-                      className="min-h-[80px]"
-                      placeholder="Any additional information or context for this quarter..."
-                    />
-                  </div>
-                )}
-              />
+          {isAddingReportLine ? (
+            <div className="space-y-4 border border-gray-200 bg-gray-50 p-6">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label>Country</Label>
+                  <Select
+                    value={newReportLine.countryId || ''}
+                    onValueChange={(value) => setNewReportLine({ ...newReportLine, countryId: value })}
+                  >
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Select Country" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {countries?.data?.map((country: CountryDto) => (
+                        <SelectItem key={country.id} value={country.id || ''}>
+                          {country.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label>Partner Count</Label>
+                  <Input
+                    type="number"
+                    value={newReportLine.partnerCount || ''}
+                    onChange={(e) => setNewReportLine({ ...newReportLine, partnerCount: parseInt(e.target.value) || 0 })}
+                    placeholder="0"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label>Client Count</Label>
+                  <Input
+                    type="number"
+                    value={newReportLine.clientCount || ''}
+                    onChange={(e) => setNewReportLine({ ...newReportLine, clientCount: parseInt(e.target.value) || 0 })}
+                    placeholder="0"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label>Office Count</Label>
+                  <Input
+                    type="number"
+                    value={newReportLine.officeCount || ''}
+                    onChange={(e) => setNewReportLine({ ...newReportLine, officeCount: parseInt(e.target.value) || 0 })}
+                    placeholder="0"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label>Headcount</Label>
+                  <Input
+                    type="number"
+                    value={newReportLine.headcount || ''}
+                    onChange={(e) => setNewReportLine({ ...newReportLine, headcount: parseInt(e.target.value) || 0 })}
+                    placeholder="0"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label>Lawyer Count</Label>
+                  <Input
+                    type="number"
+                    value={newReportLine.lawyerCount || ''}
+                    onChange={(e) => setNewReportLine({ ...newReportLine, lawyerCount: parseInt(e.target.value) || 0 })}
+                    placeholder="0"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label>Estimated Revenue ($)</Label>
+                  <Input
+                    type="number"
+                    value={newReportLine.estimatedRevenue || ''}
+                    onChange={(e) => setNewReportLine({ ...newReportLine, estimatedRevenue: parseInt(e.target.value) || 0 })}
+                    placeholder="0"
+                  />
+                </div>
+              </div>
+              <div className="flex justify-end gap-2 pt-2">
+                <Button
+                  onClick={() => setIsAddingReportLine(false)}
+                  size="sm"
+                  variant="outline"
+                >
+                  Cancel
+                </Button>
+                <Button
+                  className="bg-black hover:bg-gray-800"
+                  disabled={!newReportLine.partnerCount || !newReportLine.headcount || !newReportLine.estimatedRevenue}
+                  onClick={handleAddReportLine}
+                  size="sm"
+                >
+                  Add Report Line
+                </Button>
+              </div>
             </div>
-          </section>
+          ) : (
+            <Button
+              className="w-full border-gray-300 border-dashed text-gray-500 hover:border-gray-900 hover:text-gray-900"
+              onClick={() => setIsAddingReportLine(true)}
+              variant="outline"
+            >
+              <Plus className="w-4 h-4 mr-2" />
+              Add Report Line
+            </Button>
+          )}
+        </div>
+      </div>
+
+      {/* Partners Section */}
+      <div className="bg-white border border-gray-200 shadow-sm">
+        <div className="p-6 border-b border-gray-200">
+          <h3 className="text-lg font-bold uppercase tracking-widest flex items-center gap-2">
+            <Users className="w-5 h-5" />
+            Partners ({partners.length})
+          </h3>
+        </div>
+
+        <div className="p-6 space-y-4">
+          {partners.length > 0 && (
+            <table className="w-full border border-gray-200">
+              <thead className="bg-gray-100">
+                <tr>
+                  <th className="text-left p-4 text-xs font-medium text-gray-500 uppercase tracking-wider">Partner Name</th>
+                  <th className="text-left p-4 text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                  <th className="w-16"></th>
+                </tr>
+              </thead>
+              <tbody>
+                {partners.map((partner, index) => (
+                  <tr key={index} className="border-t border-gray-200 bg-gray-50">
+                    <td className="p-4">
+                      <p className="text-sm font-medium">{partner.name}</p>
+                    </td>
+                    <td className="p-4">
+                      <p className="text-sm font-medium">{getPartnerStatusLabel(partner.status || 1)}</p>
+                    </td>
+                    <td className="p-4">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => handleRemovePartner(index)}
+                        className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                      >
+                        <X className="w-4 h-4" />
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+
+          {isAddingPartner ? (
+            <div className="space-y-4 border border-gray-200 bg-gray-50 p-6">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label>Partner Name</Label>
+                  <Input
+                    value={newPartner.name || ''}
+                    onChange={(e) => setNewPartner({ ...newPartner, name: e.target.value })}
+                    placeholder="e.g. John Smith"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label>Status</Label>
+                  <Select
+                    value={newPartner.status?.toString() || ''}
+                    onValueChange={(value) => setNewPartner({ ...newPartner, status: parseInt(value) })}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select Status" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value={PartnerStatus.Hired.toString()}>Hired</SelectItem>
+                      <SelectItem value={PartnerStatus.Promoted.toString()}>Promoted</SelectItem>
+                      <SelectItem value={PartnerStatus.Terminated.toString()}>Terminated</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+              <div className="flex justify-end gap-2 pt-2">
+                <Button
+                  onClick={() => setIsAddingPartner(false)}
+                  size="sm"
+                  variant="outline"
+                >
+                  Cancel
+                </Button>
+                <Button
+                  className="bg-black hover:bg-gray-800"
+                  disabled={!newPartner.name?.trim()}
+                  onClick={handleAddPartner}
+                  size="sm"
+                >
+                  Add Partner
+                </Button>
+              </div>
+            </div>
+          ) : (
+            <Button
+              className="w-full border-gray-300 border-dashed text-gray-500 hover:border-gray-900 hover:text-gray-900"
+              onClick={() => setIsAddingPartner(true)}
+              variant="outline"
+            >
+              <Plus className="w-4 h-4 mr-2" />
+              Add Partner
+            </Button>
+          )}
         </div>
       </div>
 
       {/* Footer Actions */}
       <div className="fixed bottom-0 left-0 md:left-72 right-0 p-6 bg-white border-t border-gray-200 flex justify-between items-center z-40 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]">
         <span className="text-xs text-gray-400 font-medium uppercase tracking-widest hidden md:inline-block">
-          {report.quarter} {report.year} Report • Draft
+          Q{report.quarter} {report.year} Report
         </span>
         <div className="flex items-center gap-4 w-full md:w-auto justify-end">
           <Button
@@ -504,42 +485,28 @@ function EditReportPage() {
           >
             Cancel
           </Button>
-          <form.Subscribe
-            selector={(state) => [state.canSubmit, state.isSubmitting]}
-            children={([canSubmit, isSubmitting]) => (
+          <Button
+            onClick={handleSubmit}
+            disabled={isSubmitting || reportLines.length === 0}
+            className="bg-red-600 hover:bg-red-700 min-w-[160px] uppercase font-bold tracking-widest text-xs"
+          >
+            {isSubmitting ? (
+              <>Updating...</>
+            ) : (
               <>
-                <Button
-                  onClick={form.handleSubmit}
-                  disabled={!canSubmit || isSubmitting}
-                  variant="outline"
-                  className="min-w-[120px] uppercase font-bold tracking-widest text-xs"
-                >
-                  {isSubmitting ? (
-                    <>Saving...</>
-                  ) : (
-                    <>
-                      <Save className="w-3 h-3 mr-2" />
-                      Save Draft
-                    </>
-                  )}
-                </Button>
-                <Button
-                  onClick={handleSubmitFinal}
-                  disabled={!canSubmit || isSubmittingFinal}
-                  className="bg-green-600 hover:bg-green-700 min-w-[140px] uppercase font-bold tracking-widest text-xs"
-                >
-                  {isSubmittingFinal ? (
-                    <>Submitting...</>
-                  ) : (
-                    <>
-                      <Send className="w-3 h-3 mr-2" />
-                      Submit Final
-                    </>
-                  )}
-                </Button>
+                <Save className="w-3 h-3 mr-2" />
+                Update Report
               </>
             )}
-          />
+          </Button>
+          <div className="flex items-center space-x-2">
+            <Switch
+              id="submit-report"
+              checked={isSubmitted}
+              onCheckedChange={(checked) => setIsSubmitted(checked)}
+            />
+            <Label htmlFor="submit-report">Submit Report</Label>
+          </div>
         </div>
       </div>
     </div>

@@ -18,11 +18,13 @@ import {
   type CreateQuarterlyReportsDto,
   type CreateQuarterlyPartnersDto,
   type ReportQuarter,
-  type CountryDto
+  type CountryDto,
+  SetSubmittedQuarterlyCommand
 } from "@/api";
 import { usePrefetchReferenceData } from "@/hooks/useReferenceData";
 import { PartnerStatus } from "@/types/reports";
 import { callApi } from "@/server/proxy";
+import { Switch } from "@/components/ui/switch";
 
 interface CreateReportSearch {
   year: string;
@@ -41,6 +43,9 @@ function CreateReportPage() {
   const { companyId } = Route.useParams();
   const { year, quarter } = Route.useSearch();
   const router = useRouter();
+
+  // State for report submitted State 
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   // State for report lines management
   const [reportLines, setReportLines] = useState<CreateQuarterlyReportsDto[]>([]);
@@ -142,11 +147,6 @@ function CreateReportPage() {
       return;
     }
 
-    if (partners.length === 0) {
-      alert('Please add at least one partner.');
-      return;
-    }
-
     setIsSubmitting(true);
     try {
       const createCommand: CreateQuarterlyCommand = {
@@ -155,6 +155,7 @@ function CreateReportPage() {
         companyId,
         partners,
         reports: reportLines,
+        isSubmitted,
       };
 
       await callApi({
@@ -478,7 +479,7 @@ function CreateReportPage() {
           </Button>
           <Button
             onClick={handleSubmit}
-            disabled={isSubmitting || reportLines.length === 0 || partners.length === 0}
+            disabled={isSubmitting || reportLines.length === 0}
             className="bg-red-600 hover:bg-red-700 min-w-[160px] uppercase font-bold tracking-widest text-xs"
           >
             {isSubmitting ? (
@@ -490,6 +491,14 @@ function CreateReportPage() {
               </>
             )}
           </Button>
+          <div className="flex items-center space-x-2">
+            <Switch
+              id="submit-report"
+              checked={isSubmitted}
+              onCheckedChange={(checked) => setIsSubmitted(checked)}
+            />
+            <Label htmlFor="submit-report">Submit Report</Label>
+          </div>
         </div>
       </div>
     </div>

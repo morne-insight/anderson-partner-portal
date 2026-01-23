@@ -9,7 +9,7 @@ using MediatR;
 namespace AndersonAPI.Application.Quarterlies.GetQuarterlyById
 {
     [IntentManaged(Mode.Merge, Signature = Mode.Fully)]
-    public class GetQuarterlyByIdQueryHandler : IRequestHandler<GetQuarterlyByIdQuery, QuarterlyDto>
+    public class GetQuarterlyByIdQueryHandler : IRequestHandler<GetQuarterlyByIdQuery, QuarterlyReportDto>
     {
         private readonly IQuarterlyRepository _quarterlyRepository;
 
@@ -20,9 +20,9 @@ namespace AndersonAPI.Application.Quarterlies.GetQuarterlyById
         }
 
         [IntentManaged(Mode.Fully, Body = Mode.Fully)]
-        public async Task<QuarterlyDto> Handle(GetQuarterlyByIdQuery request, CancellationToken cancellationToken)
+        public async Task<QuarterlyReportDto> Handle(GetQuarterlyByIdQuery request, CancellationToken cancellationToken)
         {
-            var quarterly = await _quarterlyRepository.FindByIdProjectToAsync<QuarterlyDto>(request.Id, cancellationToken);
+            var quarterly = await _quarterlyRepository.FindByIdProjectToAsync<QuarterlyReportDto>(request.Id, cancellationToken);
             if (quarterly is null)
             {
                 throw new NotFoundException($"Could not find Quarterly '{request.Id}'");

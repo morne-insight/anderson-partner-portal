@@ -28,7 +28,7 @@ namespace AndersonAPI.Application.Quarterlies.UpdateQuarterly
                 throw new NotFoundException($"Could not find Quarterly '{request.Id}'");
             }
 
-            quarterly.Update(request.Year, request.Quarter);
+            quarterly.Update(request.Year, request.Quarter, request.IsSubmitted);
         }
     }
 }
