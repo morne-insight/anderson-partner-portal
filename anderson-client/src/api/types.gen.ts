@@ -16,6 +16,14 @@ export type AddContactCompanyCommand = {
 };
 
 /**
+ * AddInterestedPartnerOpportunityCommand
+ */
+export type AddInterestedPartnerOpportunityCommand = {
+    id: string;
+    partnerId: string;
+};
+
+/**
  * AddLocationCompanyCommand
  */
 export type AddLocationCompanyCommand = {
@@ -505,7 +513,16 @@ export type OpportunityViewDto = {
     industries?: Array<OpportunityIndustryDto>;
     serviceTypes?: Array<OpportunityServiceTypeDto>;
     status?: OpportunityStatus;
+    interestedPartners?: Array<OpportunityViewPartnerDto>;
     companyId?: string;
+};
+
+/**
+ * OpportunityViewPartnerDto
+ */
+export type OpportunityViewPartnerDto = {
+    id?: string;
+    name?: string;
 };
 
 /**
@@ -705,6 +722,14 @@ export type RegisterDto = {
     userName?: string | null;
 };
 
+/**
+ * RemoveInterestedPartnerOpportunityCommand
+ */
+export type RemoveInterestedPartnerOpportunityCommand = {
+    id: string;
+    partnerId: string;
+};
+
 export type ReportQuarter = number;
 
 /**
@@ -785,14 +810,6 @@ export type SetIndustriesCompanyCommand = {
 export type SetIndustriesOpportunityCommand = {
     id: string;
     industryIds: Array<string>;
-};
-
-/**
- * SetInterestedPartnersOpportunityCommand
- */
-export type SetInterestedPartnersOpportunityCommand = {
-    id: string;
-    companyIds: Array<string>;
 };
 
 /**
@@ -3048,6 +3065,49 @@ export type GetApiInvitesMeResponses = {
 
 export type GetApiInvitesMeResponse = GetApiInvitesMeResponses[keyof GetApiInvitesMeResponses];
 
+export type PutApiOpportunitiesByIdAddInterestedPartnersData = {
+    body: AddInterestedPartnerOpportunityCommand;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/opportunities/{id}/add-interested-partners';
+};
+
+export type PutApiOpportunitiesByIdAddInterestedPartnersErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type PutApiOpportunitiesByIdAddInterestedPartnersError = PutApiOpportunitiesByIdAddInterestedPartnersErrors[keyof PutApiOpportunitiesByIdAddInterestedPartnersErrors];
+
+export type PutApiOpportunitiesByIdAddInterestedPartnersResponses = {
+    /**
+     * No Content
+     */
+    204: void;
+};
+
+export type PutApiOpportunitiesByIdAddInterestedPartnersResponse = PutApiOpportunitiesByIdAddInterestedPartnersResponses[keyof PutApiOpportunitiesByIdAddInterestedPartnersResponses];
+
 export type PostApiOpportunitiesMessageData = {
     body: AddMessageOpportunityCommand;
     path?: never;
@@ -3280,6 +3340,49 @@ export type PutApiOpportunitiesByIdResponses = {
 
 export type PutApiOpportunitiesByIdResponse = PutApiOpportunitiesByIdResponses[keyof PutApiOpportunitiesByIdResponses];
 
+export type PutApiOpportunitiesByIdRemoveInterestedPartnersData = {
+    body: RemoveInterestedPartnerOpportunityCommand;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/opportunities/{id}/remove-interested-partners';
+};
+
+export type PutApiOpportunitiesByIdRemoveInterestedPartnersErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type PutApiOpportunitiesByIdRemoveInterestedPartnersError = PutApiOpportunitiesByIdRemoveInterestedPartnersErrors[keyof PutApiOpportunitiesByIdRemoveInterestedPartnersErrors];
+
+export type PutApiOpportunitiesByIdRemoveInterestedPartnersResponses = {
+    /**
+     * No Content
+     */
+    204: void;
+};
+
+export type PutApiOpportunitiesByIdRemoveInterestedPartnersResponse = PutApiOpportunitiesByIdRemoveInterestedPartnersResponses[keyof PutApiOpportunitiesByIdRemoveInterestedPartnersResponses];
+
 export type DeleteApiOpportunitiesByIdMessageData = {
     body?: never;
     path: {
@@ -3451,49 +3554,6 @@ export type PutApiOpportunitiesByIdIndustriesResponses = {
 };
 
 export type PutApiOpportunitiesByIdIndustriesResponse = PutApiOpportunitiesByIdIndustriesResponses[keyof PutApiOpportunitiesByIdIndustriesResponses];
-
-export type PutApiOpportunitiesByIdInterestedPartnersData = {
-    body: SetInterestedPartnersOpportunityCommand;
-    path: {
-        id: string;
-    };
-    query?: never;
-    url: '/api/opportunities/{id}/interested-partners';
-};
-
-export type PutApiOpportunitiesByIdInterestedPartnersErrors = {
-    /**
-     * Bad Request
-     */
-    400: ProblemDetails;
-    /**
-     * Unauthorized
-     */
-    401: ProblemDetails;
-    /**
-     * Forbidden
-     */
-    403: ProblemDetails;
-    /**
-     * Not Found
-     */
-    404: ProblemDetails;
-    /**
-     * Internal Server Error
-     */
-    500: ProblemDetails;
-};
-
-export type PutApiOpportunitiesByIdInterestedPartnersError = PutApiOpportunitiesByIdInterestedPartnersErrors[keyof PutApiOpportunitiesByIdInterestedPartnersErrors];
-
-export type PutApiOpportunitiesByIdInterestedPartnersResponses = {
-    /**
-     * No Content
-     */
-    204: void;
-};
-
-export type PutApiOpportunitiesByIdInterestedPartnersResponse = PutApiOpportunitiesByIdInterestedPartnersResponses[keyof PutApiOpportunitiesByIdInterestedPartnersResponses];
 
 export type PutApiOpportunitiesByIdServiceTypesData = {
     body: SetServiceTypesOpportunityCommand;

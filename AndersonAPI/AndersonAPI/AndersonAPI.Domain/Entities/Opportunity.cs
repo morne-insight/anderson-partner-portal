@@ -152,6 +152,20 @@ namespace AndersonAPI.Domain.Entities
             CountryId = countryId;
         }
 
+        public void AddInterestedPartner(Company partner)
+        {
+            _interestedPartners.Add(partner);
+        }
+
+        public void RemoveInterestedPartner(Guid partnerId)
+        {
+            var partner = _interestedPartners.FirstOrDefault(p => p.Id == partnerId);
+            if (partner != null)
+            {
+                _interestedPartners.Remove(partner);
+            }
+        }
+
         public virtual IReadOnlyCollection<Company> InterestedPartners
         {
             get => _interestedPartners.AsReadOnly();
@@ -164,23 +178,6 @@ namespace AndersonAPI.Domain.Entities
         {
             get => _messages.AsReadOnly();
             private set => _messages = new List<Message>(value);
-        }
-
-        public void SetInterestedPartners(IEnumerable<Company> companies)
-        {
-            if (companies == null) throw new ArgumentNullException(nameof(companies));
-
-            var targetList = companies.DistinctBy(cp => cp.Id).ToList();
-            var targetIds = targetList.Select(cp => cp.Id).ToHashSet();
-
-            // Remove any partners that are no longer in the new collection
-            _interestedPartners.RemoveAll(p => !targetIds.Contains(p.Id));
-
-            // Add any new partners that are not already in the collection
-            var currentIds = _interestedPartners.Select(p => p.Id).ToHashSet();
-            var newPartners = targetList.Where(partner => !currentIds.Contains(partner.Id));
-
-            _interestedPartners.AddRange(newPartners);
         }
 
         public void SetIndustries(IEnumerable<Industry> industries)

@@ -14,7 +14,7 @@ import {
   clearAllDirectoryFilters
 } from "@/stores/directoryFilterStore";
 import { CountryDto, DirectoryProfileListItem } from "@/api";
-import { usePrefetchReferenceData } from "@/hooks/useReferenceData";  
+import { usePrefetchReferenceData } from "@/hooks/useReferenceData";
 
 interface DirectoryLoaderData {
   companies: DirectoryProfileListItem[];
@@ -37,7 +37,9 @@ function NetworkDirectory() {
   const navigate = useNavigate();
   const { companies } = Route.useLoaderData();
   const { countries, regions, capabilities, industries, serviceTypes } = usePrefetchReferenceData();
-  
+
+  console.log(companies);
+
   // Get filter state from store
   const filterState = useStore(directoryFilterStore);
   const {
@@ -56,7 +58,7 @@ function NetworkDirectory() {
         id: company.id,
         name: company.name || 'Unknown Company',
         description: company.shortDescription || company.fullDescription || 'No description available.',
-        serviceType: company.serviceTypes?.[0]?.name || 'Professional Services',
+        serviceType: company.serviceTypeName || 'Professional Services',
         skills: company.capabilities?.map((c: any) => c.name) || [],
         industries: company.industries?.map((i: any) => i.name) || [],
         verified: true,
@@ -103,7 +105,7 @@ function NetworkDirectory() {
     clearAllDirectoryFilters();
   };
 
-  const activeFiltersCount = 
+  const activeFiltersCount =
     (selectedRegion !== 'All' ? 1 : 0) +
     (selectedCountry !== 'All' ? 1 : 0) +
     (selectedService !== 'All' ? 1 : 0) +
@@ -132,7 +134,7 @@ function NetworkDirectory() {
                 <Filter className="w-3.5 h-3.5 mr-2" /> Filters
               </h3>
               {activeFiltersCount > 0 && (
-                <button 
+                <button
                   onClick={clearAllFilters}
                   className="text-[10px] font-bold uppercase tracking-widest text-red-600 hover:underline"
                 >
@@ -146,8 +148,8 @@ function NetworkDirectory() {
               <div>
                 <label className="block text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-2">Search Firm Name</label>
                 <div className="relative">
-                  <input 
-                    type="text" 
+                  <input
+                    type="text"
                     value={nameFilter}
                     onChange={(e) => setNameFilter(e.target.value)}
                     placeholder="Enter keywords..."
@@ -160,8 +162,8 @@ function NetworkDirectory() {
               {/* Region */}
               <div>
                 <label className="block text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-2">Region</label>
-                <select 
-                  value={selectedRegion} 
+                <select
+                  value={selectedRegion}
                   onChange={(e) => setSelectedRegion(e.target.value)}
                   className="w-full bg-gray-50 border border-gray-200 px-3 py-2 text-xs outline-none focus:border-black appearance-none"
                 >
@@ -173,8 +175,8 @@ function NetworkDirectory() {
               {/* Country */}
               <div>
                 <label className="block text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-2">Country</label>
-                <select 
-                  value={selectedCountry} 
+                <select
+                  value={selectedCountry}
                   onChange={(e) => setSelectedCountry(e.target.value)}
                   className="w-full bg-gray-50 border border-gray-200 px-3 py-2 text-xs outline-none focus:border-black appearance-none"
                 >
@@ -187,8 +189,8 @@ function NetworkDirectory() {
               {/* Service Line */}
               <div>
                 <label className="block text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-2">Service Line</label>
-                <select 
-                  value={selectedService} 
+                <select
+                  value={selectedService}
                   onChange={(e) => setSelectedService(e.target.value)}
                   className="w-full bg-gray-50 border border-gray-200 px-3 py-2 text-xs outline-none focus:border-black appearance-none"
                 >
@@ -200,8 +202,8 @@ function NetworkDirectory() {
               {/* Industry */}
               <div>
                 <label className="block text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-2">Industry Focus</label>
-                <select 
-                  value={selectedIndustry} 
+                <select
+                  value={selectedIndustry}
                   onChange={(e) => setSelectedIndustry(e.target.value)}
                   className="w-full bg-gray-50 border border-gray-200 px-3 py-2 text-xs outline-none focus:border-black appearance-none"
                 >
@@ -213,8 +215,8 @@ function NetworkDirectory() {
               {/* Capabilities */}
               <div>
                 <label className="block text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-2">Key Capabilities</label>
-                <select 
-                  value={selectedCapability} 
+                <select
+                  value={selectedCapability}
                   onChange={(e) => setSelectedCapability(e.target.value)}
                   className="w-full bg-gray-50 border border-gray-200 px-3 py-2 text-xs outline-none focus:border-black appearance-none"
                 >
@@ -245,7 +247,7 @@ function NetworkDirectory() {
                         <h4 className="text-xl font-serif text-black font-bold group-hover:text-red-600 transition-colors">{partner.name}</h4>
                         {partner.verified && <CheckCircle className="w-4 h-4 text-gray-400" />}
                       </div>
-                      
+
                       <div className="flex flex-wrap gap-4 items-center text-[10px] font-bold uppercase tracking-widest text-gray-500">
                         <span className="flex items-center gap-1.5"><MapPin className="w-3 h-3 text-red-600" /> {headOffice?.country}, {headOffice?.region}</span>
                         <span className="flex items-center gap-1.5"><Briefcase className="w-3 h-3 text-red-600" /> {partner.serviceType}</span>
@@ -263,14 +265,14 @@ function NetworkDirectory() {
                     </div>
 
                     <div className="flex gap-4 w-full md:w-auto">
-                      <button 
+                      <button
                         onClick={() => navigate({ to: `/partners/${partner.id}`, search: { from: 'directory' } })}
                         className="flex-1 md:flex-none px-6 py-2 border border-black text-black hover:bg-black hover:text-white transition-all text-[10px] font-bold uppercase tracking-widest flex items-center justify-center"
                       >
                         Profile
                       </button>
-                      <button 
-                        onClick={() => {}}
+                      <button
+                        onClick={() => { }}
                         className="flex-1 md:flex-none px-6 py-2 bg-red-600 text-white border border-red-600 hover:bg-white hover:text-red-600 transition-all text-[10px] font-bold uppercase tracking-widest flex items-center justify-center"
                       >
                         Connect
@@ -287,7 +289,7 @@ function NetworkDirectory() {
               </div>
               <h3 className="text-xl font-serif text-black mb-2">No Matching Firms</h3>
               <p className="text-gray-500 font-light max-w-sm mx-auto mb-8">Try adjusting your filters to broaden your search within the network directory.</p>
-              <button 
+              <button
                 onClick={clearAllFilters}
                 className="text-red-600 font-bold uppercase tracking-widest text-xs hover:underline"
               >

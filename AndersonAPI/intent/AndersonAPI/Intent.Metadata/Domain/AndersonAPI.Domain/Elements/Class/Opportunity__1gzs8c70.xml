@@ -1581,8 +1581,8 @@
       </childElements>
     </childElement>
     <childElement id="df28a3b6-5082-4da5-91b1-bed37b0719c2" type="Operation" typeId="e042bb67-a1df-480c-9935-b26210f78591">
-      <name>SetInterestedPartners</name>
-      <display>SetInterestedPartners(Companies: Company[*]): void</display>
+      <name>AddInterestedPartner</name>
+      <display>AddInterestedPartner(partner: Company): void</display>
       <isAbstract>false</isAbstract>
       <sort-children>by-type-then-manually</sort-children>
       <genericTypes />
@@ -1602,15 +1602,15 @@
       <metadata />
       <childElements>
         <childElement id="2f3e3c58-1f9e-4c14-ba19-ca8afd1a1421" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
-          <name>Companies</name>
-          <display>in : Companies: Company[*]</display>
+          <name>partner</name>
+          <display>in : partner: Company</display>
           <isAbstract>false</isAbstract>
           <genericTypes />
           <typeReference id="d68bf479-37bc-4d3a-beca-f72bc912b7ba">
             <typeId>3259289c-5d51-46cb-8c99-78751b456c44</typeId>
             <isNavigable>true</isNavigable>
             <isNullable>false</isNullable>
-            <isCollection>true</isCollection>
+            <isCollection>false</isCollection>
             <isRequired>true</isRequired>
             <typePackageName>AndersonAPI.Domain</typePackageName>
             <typePackageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</typePackageId>
@@ -1619,6 +1619,53 @@
           </typeReference>
           <isMapped>false</isMapped>
           <parentFolderId>df28a3b6-5082-4da5-91b1-bed37b0719c2</parentFolderId>
+          <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+          <packageName>AndersonAPI.Domain</packageName>
+          <stereotypes />
+          <metadata />
+          <childElements />
+        </childElement>
+      </childElements>
+    </childElement>
+    <childElement id="b263841b-b5fe-41af-8276-47402b69acbe" type="Operation" typeId="e042bb67-a1df-480c-9935-b26210f78591">
+      <name>RemoveInterestedPartner</name>
+      <display>RemoveInterestedPartner(partnerId: guid): void</display>
+      <isAbstract>false</isAbstract>
+      <sort-children>by-type-then-manually</sort-children>
+      <genericTypes />
+      <typeReference id="0e8ca82a-8bac-4d50-a15f-2f4e32f389cd">
+        <isNavigable>true</isNavigable>
+        <isNullable>false</isNullable>
+        <isCollection>false</isCollection>
+        <isRequired>true</isRequired>
+        <stereotypes />
+        <genericTypeParameters />
+      </typeReference>
+      <isMapped>false</isMapped>
+      <parentFolderId>3e927715-656c-4eef-b1ca-01b028627764</parentFolderId>
+      <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+      <packageName>AndersonAPI.Domain</packageName>
+      <stereotypes />
+      <metadata />
+      <childElements>
+        <childElement id="e715a9c9-b565-41d4-ba43-a1d415fad7fe" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
+          <name>partnerId</name>
+          <display>in : partnerId: guid</display>
+          <isAbstract>false</isAbstract>
+          <genericTypes />
+          <typeReference id="49cf3899-ed2e-48fa-bd64-2d3e531bfe44">
+            <typeId>6b649125-18ea-48fd-a6ba-0bfff0d8f488</typeId>
+            <isNavigable>true</isNavigable>
+            <isNullable>false</isNullable>
+            <isCollection>false</isCollection>
+            <isRequired>true</isRequired>
+            <typePackageName>Intent.Common.Types</typePackageName>
+            <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
+            <stereotypes />
+            <genericTypeParameters />
+          </typeReference>
+          <isMapped>false</isMapped>
+          <parentFolderId>b263841b-b5fe-41af-8276-47402b69acbe</parentFolderId>
           <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
           <packageName>AndersonAPI.Domain</packageName>
           <stereotypes />

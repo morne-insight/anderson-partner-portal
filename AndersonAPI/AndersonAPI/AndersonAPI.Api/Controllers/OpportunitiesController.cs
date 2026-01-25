@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Net.Mime;
 using AndersonAPI.Api.Controllers.ResponseTypes;
 using AndersonAPI.Application.Opportunities;
+using AndersonAPI.Application.Opportunities.AddInterestedPartnerOpportunity;
 using AndersonAPI.Application.Opportunities.AddMessageOpportunity;
 using AndersonAPI.Application.Opportunities.CreateOpportunity;
 using AndersonAPI.Application.Opportunities.DeleteOpportunity;
@@ -11,10 +12,10 @@ using AndersonAPI.Application.Opportunities.GetOpportunityById;
 using AndersonAPI.Application.Opportunities.GetOpportunityMessagesById;
 using AndersonAPI.Application.Opportunities.GetOpportunityViewById;
 using AndersonAPI.Application.Opportunities.GetSavedOpportunities;
+using AndersonAPI.Application.Opportunities.RemoveInterestedPartnerOpportunity;
 using AndersonAPI.Application.Opportunities.RemoveMessageOpportunity;
 using AndersonAPI.Application.Opportunities.SetCapabilitiesOpportunity;
 using AndersonAPI.Application.Opportunities.SetIndustriesOpportunity;
-using AndersonAPI.Application.Opportunities.SetInterestedPartnersOpportunity;
 using AndersonAPI.Application.Opportunities.SetServiceTypesOpportunity;
 using AndersonAPI.Application.Opportunities.SetStateOpportunity;
 using AndersonAPI.Application.Opportunities.SetStatusOpportunity;
@@ -41,6 +42,39 @@ namespace AndersonAPI.Api.Controllers
         public OpportunitiesController(ISender mediator)
         {
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <response code="204">Successfully updated.</response>
+        /// <response code="400">One or more validation errors have occurred.</response>
+        /// <response code="401">Unauthorized request.</response>
+        /// <response code="403">Forbidden request.</response>
+        /// <response code="404">One or more entities could not be found with the provided parameters.</response>
+        [HttpPut("api/opportunities/{id}/add-interested-partners")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> AddInterestedPartnerOpportunity(
+            [FromRoute] Guid id,
+            [FromBody] AddInterestedPartnerOpportunityCommand command,
+            CancellationToken cancellationToken = default)
+        {
+            if (command.Id == Guid.Empty)
+            {
+                command.Id = id;
+            }
+
+            if (id != command.Id)
+            {
+                return BadRequest();
+            }
+
+            await _mediator.Send(command, cancellationToken);
+            return NoContent();
         }
 
         /// <summary>
@@ -104,6 +138,39 @@ namespace AndersonAPI.Api.Controllers
         {
             await _mediator.Send(new DeleteOpportunityCommand(id: id), cancellationToken);
             return Ok();
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <response code="204">Successfully updated.</response>
+        /// <response code="400">One or more validation errors have occurred.</response>
+        /// <response code="401">Unauthorized request.</response>
+        /// <response code="403">Forbidden request.</response>
+        /// <response code="404">One or more entities could not be found with the provided parameters.</response>
+        [HttpPut("api/opportunities/{id}/remove-interested-partners")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> RemoveInterestedPartnerOpportunity(
+            [FromRoute] Guid id,
+            [FromBody] RemoveInterestedPartnerOpportunityCommand command,
+            CancellationToken cancellationToken = default)
+        {
+            if (command.Id == Guid.Empty)
+            {
+                command.Id = id;
+            }
+
+            if (id != command.Id)
+            {
+                return BadRequest();
+            }
+
+            await _mediator.Send(command, cancellationToken);
+            return NoContent();
         }
 
         /// <summary>
@@ -179,39 +246,6 @@ namespace AndersonAPI.Api.Controllers
         public async Task<ActionResult> SetIndustriesOpportunity(
             [FromRoute] Guid id,
             [FromBody] SetIndustriesOpportunityCommand command,
-            CancellationToken cancellationToken = default)
-        {
-            if (command.Id == Guid.Empty)
-            {
-                command.Id = id;
-            }
-
-            if (id != command.Id)
-            {
-                return BadRequest();
-            }
-
-            await _mediator.Send(command, cancellationToken);
-            return NoContent();
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <response code="204">Successfully updated.</response>
-        /// <response code="400">One or more validation errors have occurred.</response>
-        /// <response code="401">Unauthorized request.</response>
-        /// <response code="403">Forbidden request.</response>
-        /// <response code="404">One or more entities could not be found with the provided parameters.</response>
-        [HttpPut("api/opportunities/{id}/interested-partners")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult> SetInterestedPartnersOpportunity(
-            [FromRoute] Guid id,
-            [FromBody] SetInterestedPartnersOpportunityCommand command,
             CancellationToken cancellationToken = default)
         {
             if (command.Id == Guid.Empty)

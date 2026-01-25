@@ -1,8 +1,8 @@
+using System.ComponentModel.DataAnnotations;
 using AndersonAPI.Domain.Repositories;
 using AutoMapper;
 using Intent.RoslynWeaver.Attributes;
 using MediatR;
-using System.ComponentModel.DataAnnotations;
 
 [assembly: DefaultIntentManaged(Mode.Fully)]
 [assembly: IntentTemplate("Intent.Application.MediatR.QueryHandler", Version = "1.0")]
@@ -22,13 +22,13 @@ namespace AndersonAPI.Application.Opportunities.GetOpportunityMessagesById
             _mapper = mapper;
         }
 
-        [IntentManaged(Mode.Fully, Body = Mode.Fully)]
+        [IntentManaged(Mode.Fully, Body = Mode.Merge)]
         public async Task<List<OpportunityMessageDto>> Handle(
             GetOpportunityMessagesByIdQuery request,
             CancellationToken cancellationToken)
         {
             var opportunity = await _opportunityRepository.FindByIdAsync(request.Id, cancellationToken);
-            if(opportunity is null)
+            if (opportunity is null)
             {
                 throw new ValidationException($"Opportunity with Id '{request.Id}' could not be found.");
             }

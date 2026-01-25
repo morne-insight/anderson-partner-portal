@@ -19,6 +19,7 @@ namespace AndersonAPI.Application.Opportunities
             Capabilities = null!;
             Industries = null!;
             ServiceTypes = null!;
+            InterestedPartners = null!;
         }
 
         public Guid Id { get; set; }
@@ -34,6 +35,7 @@ namespace AndersonAPI.Application.Opportunities
         public List<OpportunityIndustryDto> Industries { get; set; }
         public List<OpportunityServiceTypeDto> ServiceTypes { get; set; }
         public OpportunityStatus Status { get; set; }
+        public List<OpportunityViewPartnerDto> InterestedPartners { get; set; }
         public Guid CompanyId { get; set; }
 
         public static OpportunityViewDto Create(
@@ -50,7 +52,8 @@ namespace AndersonAPI.Application.Opportunities
             List<OpportunityCapabilityDto> capabilities,
             List<OpportunityIndustryDto> industries,
             List<OpportunityServiceTypeDto> serviceTypes,
-            OpportunityStatus status)
+            OpportunityStatus status,
+            List<OpportunityViewPartnerDto> interestedPartners)
         {
             return new OpportunityViewDto
             {
@@ -68,7 +71,8 @@ namespace AndersonAPI.Application.Opportunities
                 Capabilities = capabilities,
                 Industries = industries,
                 ServiceTypes = serviceTypes,
-                Status = status
+                Status = status,
+                InterestedPartners = interestedPartners
             };
         }
     }

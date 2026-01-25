@@ -32,6 +32,25 @@ export const AddContactCompanyCommandSchema = {
     }
 } as const;
 
+export const AddInterestedPartnerOpportunityCommandSchema = {
+    title: 'AddInterestedPartnerOpportunityCommand',
+    required: [
+        'id',
+        'partnerId'
+    ],
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string',
+            format: 'uuid'
+        },
+        partnerId: {
+            type: 'string',
+            format: 'uuid'
+        }
+    }
+} as const;
+
 export const AddLocationCompanyCommandSchema = {
     title: 'AddLocationCompanyCommand',
     required: [
@@ -1293,9 +1312,29 @@ export const OpportunityViewDtoSchema = {
         status: {
             $ref: '#/components/schemas/OpportunityStatus'
         },
+        interestedPartners: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/OpportunityViewPartnerDto'
+            }
+        },
         companyId: {
             type: 'string',
             format: 'uuid'
+        }
+    }
+} as const;
+
+export const OpportunityViewPartnerDtoSchema = {
+    title: 'OpportunityViewPartnerDto',
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string',
+            format: 'uuid'
+        },
+        name: {
+            type: 'string'
         }
     }
 } as const;
@@ -1790,6 +1829,25 @@ export const RegisterDtoSchema = {
     }
 } as const;
 
+export const RemoveInterestedPartnerOpportunityCommandSchema = {
+    title: 'RemoveInterestedPartnerOpportunityCommand',
+    required: [
+        'id',
+        'partnerId'
+    ],
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string',
+            format: 'uuid'
+        },
+        partnerId: {
+            type: 'string',
+            format: 'uuid'
+        }
+    }
+} as const;
+
 export const ReportQuarterSchema = {
     type: 'integer'
 } as const;
@@ -1980,28 +2038,6 @@ export const SetIndustriesOpportunityCommandSchema = {
             format: 'uuid'
         },
         industryIds: {
-            type: 'array',
-            items: {
-                type: 'string',
-                format: 'uuid'
-            }
-        }
-    }
-} as const;
-
-export const SetInterestedPartnersOpportunityCommandSchema = {
-    title: 'SetInterestedPartnersOpportunityCommand',
-    required: [
-        'id',
-        'companyIds'
-    ],
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string',
-            format: 'uuid'
-        },
-        companyIds: {
             type: 'array',
             items: {
                 type: 'string',

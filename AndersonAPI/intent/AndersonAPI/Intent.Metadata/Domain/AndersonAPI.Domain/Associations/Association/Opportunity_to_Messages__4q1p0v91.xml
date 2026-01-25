@@ -22,7 +22,7 @@
   <targetEnd id="16972b44-222f-4f27-9e69-85fca7507909" type="Association Target End" typeId="0a66489f-30aa-417b-a75d-b945863366fd">
     <name>Messages</name>
     <display>Messages: Message[*]</display>
-    <order>28</order>
+    <order>29</order>
     <typeReference id="23a69b0b-b5bb-4beb-961f-b236db6304e1">
       <typeId>b68ed1f3-fac6-45f1-9b56-046fd04c6524</typeId>
       <isNavigable>true</isNavigable>

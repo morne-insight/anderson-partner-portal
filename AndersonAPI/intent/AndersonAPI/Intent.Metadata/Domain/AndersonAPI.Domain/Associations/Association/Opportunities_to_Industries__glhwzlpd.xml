@@ -22,7 +22,7 @@
   <targetEnd id="db7a35d3-a6a8-4284-a704-55d895fcfe18" type="Association Target End" typeId="0a66489f-30aa-417b-a75d-b945863366fd">
     <name>Industries</name>
     <display>Industries: Industry[*]</display>
-    <order>31</order>
+    <order>32</order>
     <typeReference id="37c776bd-f2af-4554-8224-af0347a1fc42">
       <typeId>6c47b169-df9b-47ae-a098-8463d7d86ad2</typeId>
       <isNavigable>true</isNavigable>

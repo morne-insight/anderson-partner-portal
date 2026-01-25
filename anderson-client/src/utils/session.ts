@@ -7,7 +7,7 @@ export interface SessionData {
   userName?: string;
   companyId?: string;
   companyName?: string;
-  companies?: UserCompanyDto[];
+  companies?: Array<UserCompanyDto>;
   email?: string;
   roles?: string[];
   accessToken?: string; // store JWT here (server-only cookie session)
