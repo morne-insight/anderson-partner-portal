@@ -45,6 +45,7 @@ namespace AndersonAPI.Api.Controllers
 
         [HttpPost]
         [AllowAnonymous]
+        [IntentManaged(Mode.Merge, Body = Mode.Ignore)]
         public async Task<IActionResult> Register(RegisterDto input)
         {
             if (string.IsNullOrWhiteSpace(input.Email))
@@ -57,12 +58,18 @@ namespace AndersonAPI.Api.Controllers
                 ModelState.AddModelError<RegisterDto>(x => x.Password, "Mandatory");
             }
 
+            if (string.IsNullOrWhiteSpace(input.UserName))
+            {
+                ModelState.AddModelError<RegisterDto>(x => x.UserName, "Mandatory");
+            }
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
             var user = new ApplicationIdentityUser { Id = Guid.NewGuid().ToString() };
+            user.SetName(input.UserName);
 
             await _userStore.SetUserNameAsync(user, input.Email, CancellationToken.None);
             await _userManager.SetEmailAsync(user, input.Email);
@@ -140,7 +147,9 @@ namespace AndersonAPI.Api.Controllers
             {
                 AuthenticationToken = token,
                 ExpiresIn = (int)(expiry - DateTime.UtcNow).TotalSeconds,
-                RefreshToken = refreshToken
+                RefreshToken = refreshToken,
+                UserName = user.Name,
+                UserId = user.Id
             });
         }
 
@@ -395,18 +404,23 @@ namespace AndersonAPI.Api.Controllers
         }
     }
 
+    [IntentManaged(Mode.Merge)]
     public class TokenResultDto
     {
         public string TokenType => "Bearer";
         public string? AuthenticationToken { get; set; }
         public int ExpiresIn { get; set; }
         public string? RefreshToken { get; set; }
+        public string? UserId { get; set; }
+        public string? UserName { get; set; }
     }
 
+    [IntentManaged(Mode.Merge)]
     public class RegisterDto
     {
         public string? Email { get; set; }
         public string? Password { get; set; }
+        public string? UserName { get; set; }
     }
 
     public class LoginDto

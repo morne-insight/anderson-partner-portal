@@ -29,11 +29,13 @@ namespace AndersonAPI.Application.Opportunities.AddMessageOpportunity
             }
 
             opportunity.AddMessage(
-                default,
+                request.OpportunityId,
                 request.Content,
                 request.CreatedDate,
+                request.CreatedByUserId,
                 request.CreatedByUser,
-                request.CreatedByPartner);
+                request.CreatedByPartner,
+                request.IsOwnMessage);
         }
     }
 }

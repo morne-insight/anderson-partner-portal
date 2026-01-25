@@ -109,6 +109,30 @@
       <metadata />
       <childElements />
     </childElement>
+    <childElement id="c2b02f40-d4dc-483a-a71b-c5e4b00118d9" type="Attribute" typeId="0090fb93-483e-41af-a11d-5ad2dc796adf">
+      <name>CreatedByUserId</name>
+      <display>CreatedByUserId: guid</display>
+      <isAbstract>false</isAbstract>
+      <genericTypes />
+      <typeReference id="7756646a-489e-4ced-9f4d-e167f82af9fd">
+        <typeId>6b649125-18ea-48fd-a6ba-0bfff0d8f488</typeId>
+        <isNavigable>true</isNavigable>
+        <isNullable>false</isNullable>
+        <isCollection>false</isCollection>
+        <isRequired>true</isRequired>
+        <typePackageName>Intent.Common.Types</typePackageName>
+        <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
+        <stereotypes />
+        <genericTypeParameters />
+      </typeReference>
+      <isMapped>false</isMapped>
+      <parentFolderId>b68ed1f3-fac6-45f1-9b56-046fd04c6524</parentFolderId>
+      <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+      <packageName>AndersonAPI.Domain</packageName>
+      <stereotypes />
+      <metadata />
+      <childElements />
+    </childElement>
     <childElement id="2885bf23-79a3-4d7d-86a8-47e00f34ece1" type="Attribute" typeId="0090fb93-483e-41af-a11d-5ad2dc796adf">
       <name>CreatedByUser</name>
       <display>CreatedByUser: string</display>
@@ -179,9 +203,33 @@
       <metadata />
       <childElements />
     </childElement>
+    <childElement id="27a7735a-6092-49d1-9a6c-35834ef4ccaf" type="Attribute" typeId="0090fb93-483e-41af-a11d-5ad2dc796adf">
+      <name>IsOwnMessage</name>
+      <display>IsOwnMessage: bool</display>
+      <isAbstract>false</isAbstract>
+      <genericTypes />
+      <typeReference id="2c837566-25e2-44c1-927e-349c7b7d9d5f">
+        <typeId>e6f92b09-b2c5-4536-8270-a4d9e5bbd930</typeId>
+        <isNavigable>true</isNavigable>
+        <isNullable>false</isNullable>
+        <isCollection>false</isCollection>
+        <isRequired>true</isRequired>
+        <typePackageName>Intent.Common.Types</typePackageName>
+        <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
+        <stereotypes />
+        <genericTypeParameters />
+      </typeReference>
+      <isMapped>false</isMapped>
+      <parentFolderId>b68ed1f3-fac6-45f1-9b56-046fd04c6524</parentFolderId>
+      <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+      <packageName>AndersonAPI.Domain</packageName>
+      <stereotypes />
+      <metadata />
+      <childElements />
+    </childElement>
     <childElement id="c69e50bb-7a78-4b76-ae3e-468ee6b095d3" type="Class Constructor" typeId="dec2bd12-4699-4f45-8ec9-3b62dc692d2b">
       <name>Constructor</name>
-      <display>Message(opportunityId: guid, content: string, createdDate: datetimeoffset, createdByUser: string, createdByPartner: string?)</display>
+      <display>Message(opportunityId: guid, content: string, createdDate: datetimeoffset, createdByUserId: guid, createdByUser: string, createdByPartner: string?, isOwnMessage: bool)</display>
       <isAbstract>false</isAbstract>
       <sort-children>by-type-then-manually</sort-children>
       <genericTypes />
@@ -294,6 +342,37 @@
           <metadata />
           <childElements />
         </childElement>
+        <childElement id="87bcc3f3-76ce-422c-b430-8ef3b921cbf9" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
+          <name>createdByUserId</name>
+          <display>in : createdByUserId: guid</display>
+          <isAbstract>false</isAbstract>
+          <genericTypes />
+          <typeReference id="28a584bc-ab95-435e-97a8-92a8c21270b9">
+            <typeId>6b649125-18ea-48fd-a6ba-0bfff0d8f488</typeId>
+            <isNavigable>true</isNavigable>
+            <isNullable>false</isNullable>
+            <isCollection>false</isCollection>
+            <isRequired>true</isRequired>
+            <typePackageName>Intent.Common.Types</typePackageName>
+            <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
+            <stereotypes />
+            <genericTypeParameters />
+          </typeReference>
+          <isMapped>true</isMapped>
+          <mappedClass>
+            <mappingSettingsId>d6d0abfd-893c-4bec-92cb-419934ba5ba8</mappingSettingsId>
+            <autoSyncTypeReference>true</autoSyncTypeReference>
+            <mappedPath>
+              <target id="c2b02f40-d4dc-483a-a71b-c5e4b00118d9" name="CreatedByUserId" type="element" specialization="Attribute" specializationId="0090fb93-483e-41af-a11d-5ad2dc796adf" />
+            </mappedPath>
+          </mappedClass>
+          <parentFolderId>c69e50bb-7a78-4b76-ae3e-468ee6b095d3</parentFolderId>
+          <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+          <packageName>AndersonAPI.Domain</packageName>
+          <stereotypes />
+          <metadata />
+          <childElements />
+        </childElement>
         <childElement id="10baa9fa-e031-456a-8e5f-a202e1e40daf" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
           <name>createdByUser</name>
           <display>in : createdByUser: string</display>
@@ -347,6 +426,37 @@
             <autoSyncTypeReference>true</autoSyncTypeReference>
             <mappedPath>
               <target id="dba0c2b3-b3f5-44ff-a56e-9296e6a87c3b" name="CreatedByPartner" type="element" specialization="Attribute" specializationId="0090fb93-483e-41af-a11d-5ad2dc796adf" />
+            </mappedPath>
+          </mappedClass>
+          <parentFolderId>c69e50bb-7a78-4b76-ae3e-468ee6b095d3</parentFolderId>
+          <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+          <packageName>AndersonAPI.Domain</packageName>
+          <stereotypes />
+          <metadata />
+          <childElements />
+        </childElement>
+        <childElement id="de480ef1-18ce-44b8-88a9-6a4b1c95675d" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
+          <name>isOwnMessage</name>
+          <display>in : isOwnMessage: bool</display>
+          <isAbstract>false</isAbstract>
+          <genericTypes />
+          <typeReference id="f2f899b7-672d-4823-ad97-d00b688c17da">
+            <typeId>e6f92b09-b2c5-4536-8270-a4d9e5bbd930</typeId>
+            <isNavigable>true</isNavigable>
+            <isNullable>false</isNullable>
+            <isCollection>false</isCollection>
+            <isRequired>true</isRequired>
+            <typePackageName>Intent.Common.Types</typePackageName>
+            <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
+            <stereotypes />
+            <genericTypeParameters />
+          </typeReference>
+          <isMapped>true</isMapped>
+          <mappedClass>
+            <mappingSettingsId>d6d0abfd-893c-4bec-92cb-419934ba5ba8</mappingSettingsId>
+            <autoSyncTypeReference>true</autoSyncTypeReference>
+            <mappedPath>
+              <target id="27a7735a-6092-49d1-9a6c-35834ef4ccaf" name="IsOwnMessage" type="element" specialization="Attribute" specializationId="0090fb93-483e-41af-a11d-5ad2dc796adf" />
             </mappedPath>
           </mappedClass>
           <parentFolderId>c69e50bb-7a78-4b76-ae3e-468ee6b095d3</parentFolderId>

@@ -35,6 +35,8 @@ export type AddMessageOpportunityCommand = {
     createdDate: Date;
     createdByUser: string;
     createdByPartner: string | null;
+    createdByUserId: string;
+    isOwnMessage: boolean;
 };
 
 /**
@@ -452,6 +454,20 @@ export type OpportunityListItemDto = {
 };
 
 /**
+ * OpportunityMessageDto
+ */
+export type OpportunityMessageDto = {
+    id?: string;
+    content?: string;
+    createdDate?: Date;
+    createdByUser?: string;
+    createdByPartner?: string | null;
+    order?: number;
+    isOwnMessage?: boolean;
+    createdByUserId?: string;
+};
+
+/**
  * OpportunityServiceTypeDto
  */
 export type OpportunityServiceTypeDto = {
@@ -470,6 +486,26 @@ export type OpportunityTypeDto = {
     id?: string;
     order?: number;
     state?: EntityState;
+};
+
+/**
+ * OpportunityViewDto
+ */
+export type OpportunityViewDto = {
+    id?: string;
+    companyName?: string;
+    companyServiceType?: string;
+    title?: string;
+    fullDescription?: string;
+    createdDate?: Date;
+    deadline?: Date | null;
+    country?: string;
+    opportunityType?: string;
+    capabilities?: Array<OpportunityCapabilityDto>;
+    industries?: Array<OpportunityIndustryDto>;
+    serviceTypes?: Array<OpportunityServiceTypeDto>;
+    status?: OpportunityStatus;
+    companyId?: string;
 };
 
 /**
@@ -666,6 +702,7 @@ export type RegionDto = {
 export type RegisterDto = {
     email?: string | null;
     password?: string | null;
+    userName?: string | null;
 };
 
 export type ReportQuarter = number;
@@ -854,6 +891,8 @@ export type TokenResultDto = {
     authenticationToken?: string | null;
     expiresIn?: number;
     refreshToken?: string | null;
+    userId?: string | null;
+    userName?: string | null;
 };
 
 /**
@@ -1045,6 +1084,25 @@ export type UpdateServiceTypeCommand = {
     id: string;
     name: string;
     description: string;
+};
+
+/**
+ * UserCompanyDto
+ */
+export type UserCompanyDto = {
+    id?: string;
+    name?: string;
+    websiteUrl?: string;
+};
+
+/**
+ * UserDetailDto
+ */
+export type UserDetailDto = {
+    name?: string;
+    companyId?: string | null;
+    companyName?: string | null;
+    companies?: Array<UserCompanyDto>;
 };
 
 export type PostApiAccountRegisterData = {
@@ -3642,6 +3700,92 @@ export type GetApiOpportunitiesMeResponses = {
 
 export type GetApiOpportunitiesMeResponse = GetApiOpportunitiesMeResponses[keyof GetApiOpportunitiesMeResponses];
 
+export type GetApiOpportunitiesByIdMessagesData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/opportunities/{id}/messages';
+};
+
+export type GetApiOpportunitiesByIdMessagesErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type GetApiOpportunitiesByIdMessagesError = GetApiOpportunitiesByIdMessagesErrors[keyof GetApiOpportunitiesByIdMessagesErrors];
+
+export type GetApiOpportunitiesByIdMessagesResponses = {
+    /**
+     * OK
+     */
+    200: Array<OpportunityMessageDto>;
+};
+
+export type GetApiOpportunitiesByIdMessagesResponse = GetApiOpportunitiesByIdMessagesResponses[keyof GetApiOpportunitiesByIdMessagesResponses];
+
+export type GetApiOpportunitiesByIdViewData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/opportunities/{id}/view';
+};
+
+export type GetApiOpportunitiesByIdViewErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type GetApiOpportunitiesByIdViewError = GetApiOpportunitiesByIdViewErrors[keyof GetApiOpportunitiesByIdViewErrors];
+
+export type GetApiOpportunitiesByIdViewResponses = {
+    /**
+     * OK
+     */
+    200: OpportunityViewDto;
+};
+
+export type GetApiOpportunitiesByIdViewResponse = GetApiOpportunitiesByIdViewResponses[keyof GetApiOpportunitiesByIdViewResponses];
+
 export type GetApiOpportunitiesSavedData = {
     body?: never;
     path?: never;
@@ -5128,3 +5272,36 @@ export type PutApiServiceTypesByIdSetStateResponses = {
 };
 
 export type PutApiServiceTypesByIdSetStateResponse = PutApiServiceTypesByIdSetStateResponses[keyof PutApiServiceTypesByIdSetStateResponses];
+
+export type GetApiUserDetailData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/user/detail';
+};
+
+export type GetApiUserDetailErrors = {
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type GetApiUserDetailError = GetApiUserDetailErrors[keyof GetApiUserDetailErrors];
+
+export type GetApiUserDetailResponses = {
+    /**
+     * OK
+     */
+    200: UserDetailDto;
+};
+
+export type GetApiUserDetailResponse = GetApiUserDetailResponses[keyof GetApiUserDetailResponses];

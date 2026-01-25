@@ -773,6 +773,10 @@ namespace AndersonAPI.Infrastructure.Migrations
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser<string>");
 
+                    b.Property<string>("Name")
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar(120)");
+
                     b.Property<string>("RefreshToken")
                         .HasColumnType("nvarchar(max)");
 
@@ -972,8 +976,14 @@ namespace AndersonAPI.Infrastructure.Migrations
                                 .HasMaxLength(200)
                                 .HasColumnType("nvarchar(200)");
 
+                            b1.Property<Guid>("CreatedByUserId")
+                                .HasColumnType("uniqueidentifier");
+
                             b1.Property<DateTimeOffset>("CreatedDate")
                                 .HasColumnType("datetimeoffset");
+
+                            b1.Property<bool>("IsOwnMessage")
+                                .HasColumnType("bit");
 
                             b1.Property<Guid>("OpportunityId")
                                 .HasColumnType("uniqueidentifier");

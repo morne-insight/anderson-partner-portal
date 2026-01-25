@@ -22,9 +22,10 @@ import { Route as AppOpportunitiesIndexRouteImport } from './routes/_app/opportu
 import { Route as AppFooIndexRouteImport } from './routes/_app/foo/index'
 import { Route as AppPartnersIdRouteImport } from './routes/_app/partners.$id'
 import { Route as AppOpportunitiesNewRouteImport } from './routes/_app/opportunities/new'
-import { Route as AppOpportunitiesOpportunityIdRouteImport } from './routes/_app/opportunities/$opportunityId'
 import { Route as AppProfileCompanyIdIndexRouteImport } from './routes/_app/profile/$companyId/index'
+import { Route as AppOpportunitiesOpportunityIdIndexRouteImport } from './routes/_app/opportunities/$opportunityId/index'
 import { Route as AppFooFooIdIndexRouteImport } from './routes/_app/foo/$fooId/index'
+import { Route as AppOpportunitiesOpportunityIdEditRouteImport } from './routes/_app/opportunities/$opportunityId/edit'
 import { Route as AppProfileCompanyIdReportsIndexRouteImport } from './routes/_app/profile/$companyId/reports/index'
 import { Route as AppFooFooIdBarIndexRouteImport } from './routes/_app/foo/$fooId/bar/index'
 import { Route as AppProfileCompanyIdReportsCreateRouteImport } from './routes/_app/profile/$companyId/reports/create'
@@ -96,16 +97,16 @@ const AppOpportunitiesNewRoute = AppOpportunitiesNewRouteImport.update({
   path: '/opportunities/new',
   getParentRoute: () => AppRoute,
 } as any)
-const AppOpportunitiesOpportunityIdRoute =
-  AppOpportunitiesOpportunityIdRouteImport.update({
-    id: '/opportunities/$opportunityId',
-    path: '/opportunities/$opportunityId',
-    getParentRoute: () => AppRoute,
-  } as any)
 const AppProfileCompanyIdIndexRoute =
   AppProfileCompanyIdIndexRouteImport.update({
     id: '/profile/$companyId/',
     path: '/profile/$companyId/',
+    getParentRoute: () => AppRoute,
+  } as any)
+const AppOpportunitiesOpportunityIdIndexRoute =
+  AppOpportunitiesOpportunityIdIndexRouteImport.update({
+    id: '/opportunities/$opportunityId/',
+    path: '/opportunities/$opportunityId/',
     getParentRoute: () => AppRoute,
   } as any)
 const AppFooFooIdIndexRoute = AppFooFooIdIndexRouteImport.update({
@@ -113,6 +114,12 @@ const AppFooFooIdIndexRoute = AppFooFooIdIndexRouteImport.update({
   path: '/foo/$fooId/',
   getParentRoute: () => AppRoute,
 } as any)
+const AppOpportunitiesOpportunityIdEditRoute =
+  AppOpportunitiesOpportunityIdEditRouteImport.update({
+    id: '/opportunities/$opportunityId/edit',
+    path: '/opportunities/$opportunityId/edit',
+    getParentRoute: () => AppRoute,
+  } as any)
 const AppProfileCompanyIdReportsIndexRoute =
   AppProfileCompanyIdReportsIndexRouteImport.update({
     id: '/profile/$companyId/reports/',
@@ -156,14 +163,15 @@ export interface FileRoutesByFullPath {
   '/register': typeof RegisterRoute
   '/dashboard': typeof AppDashboardRoute
   '/directory': typeof AppDirectoryRoute
-  '/opportunities/$opportunityId': typeof AppOpportunitiesOpportunityIdRoute
   '/opportunities/new': typeof AppOpportunitiesNewRoute
   '/partners/$id': typeof AppPartnersIdRoute
   '/foo': typeof AppFooIndexRoute
   '/opportunities': typeof AppOpportunitiesIndexRoute
   '/partners': typeof AppPartnersIndexRoute
   '/profile': typeof AppProfileIndexRoute
+  '/opportunities/$opportunityId/edit': typeof AppOpportunitiesOpportunityIdEditRoute
   '/foo/$fooId': typeof AppFooFooIdIndexRoute
+  '/opportunities/$opportunityId': typeof AppOpportunitiesOpportunityIdIndexRoute
   '/profile/$companyId': typeof AppProfileCompanyIdIndexRoute
   '/profile/$companyId/reports/create': typeof AppProfileCompanyIdReportsCreateRoute
   '/foo/$fooId/bar': typeof AppFooFooIdBarIndexRoute
@@ -179,14 +187,15 @@ export interface FileRoutesByTo {
   '/register': typeof RegisterRoute
   '/dashboard': typeof AppDashboardRoute
   '/directory': typeof AppDirectoryRoute
-  '/opportunities/$opportunityId': typeof AppOpportunitiesOpportunityIdRoute
   '/opportunities/new': typeof AppOpportunitiesNewRoute
   '/partners/$id': typeof AppPartnersIdRoute
   '/foo': typeof AppFooIndexRoute
   '/opportunities': typeof AppOpportunitiesIndexRoute
   '/partners': typeof AppPartnersIndexRoute
   '/profile': typeof AppProfileIndexRoute
+  '/opportunities/$opportunityId/edit': typeof AppOpportunitiesOpportunityIdEditRoute
   '/foo/$fooId': typeof AppFooFooIdIndexRoute
+  '/opportunities/$opportunityId': typeof AppOpportunitiesOpportunityIdIndexRoute
   '/profile/$companyId': typeof AppProfileCompanyIdIndexRoute
   '/profile/$companyId/reports/create': typeof AppProfileCompanyIdReportsCreateRoute
   '/foo/$fooId/bar': typeof AppFooFooIdBarIndexRoute
@@ -204,14 +213,15 @@ export interface FileRoutesById {
   '/register': typeof RegisterRoute
   '/_app/dashboard': typeof AppDashboardRoute
   '/_app/directory': typeof AppDirectoryRoute
-  '/_app/opportunities/$opportunityId': typeof AppOpportunitiesOpportunityIdRoute
   '/_app/opportunities/new': typeof AppOpportunitiesNewRoute
   '/_app/partners/$id': typeof AppPartnersIdRoute
   '/_app/foo/': typeof AppFooIndexRoute
   '/_app/opportunities/': typeof AppOpportunitiesIndexRoute
   '/_app/partners/': typeof AppPartnersIndexRoute
   '/_app/profile/': typeof AppProfileIndexRoute
+  '/_app/opportunities/$opportunityId/edit': typeof AppOpportunitiesOpportunityIdEditRoute
   '/_app/foo/$fooId/': typeof AppFooFooIdIndexRoute
+  '/_app/opportunities/$opportunityId/': typeof AppOpportunitiesOpportunityIdIndexRoute
   '/_app/profile/$companyId/': typeof AppProfileCompanyIdIndexRoute
   '/_app/profile/$companyId/reports/create': typeof AppProfileCompanyIdReportsCreateRoute
   '/_app/foo/$fooId/bar/': typeof AppFooFooIdBarIndexRoute
@@ -229,14 +239,15 @@ export interface FileRouteTypes {
     | '/register'
     | '/dashboard'
     | '/directory'
-    | '/opportunities/$opportunityId'
     | '/opportunities/new'
     | '/partners/$id'
     | '/foo'
     | '/opportunities'
     | '/partners'
     | '/profile'
+    | '/opportunities/$opportunityId/edit'
     | '/foo/$fooId'
+    | '/opportunities/$opportunityId'
     | '/profile/$companyId'
     | '/profile/$companyId/reports/create'
     | '/foo/$fooId/bar'
@@ -252,14 +263,15 @@ export interface FileRouteTypes {
     | '/register'
     | '/dashboard'
     | '/directory'
-    | '/opportunities/$opportunityId'
     | '/opportunities/new'
     | '/partners/$id'
     | '/foo'
     | '/opportunities'
     | '/partners'
     | '/profile'
+    | '/opportunities/$opportunityId/edit'
     | '/foo/$fooId'
+    | '/opportunities/$opportunityId'
     | '/profile/$companyId'
     | '/profile/$companyId/reports/create'
     | '/foo/$fooId/bar'
@@ -276,14 +288,15 @@ export interface FileRouteTypes {
     | '/register'
     | '/_app/dashboard'
     | '/_app/directory'
-    | '/_app/opportunities/$opportunityId'
     | '/_app/opportunities/new'
     | '/_app/partners/$id'
     | '/_app/foo/'
     | '/_app/opportunities/'
     | '/_app/partners/'
     | '/_app/profile/'
+    | '/_app/opportunities/$opportunityId/edit'
     | '/_app/foo/$fooId/'
+    | '/_app/opportunities/$opportunityId/'
     | '/_app/profile/$companyId/'
     | '/_app/profile/$companyId/reports/create'
     | '/_app/foo/$fooId/bar/'
@@ -394,13 +407,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppOpportunitiesNewRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/opportunities/$opportunityId': {
-      id: '/_app/opportunities/$opportunityId'
-      path: '/opportunities/$opportunityId'
-      fullPath: '/opportunities/$opportunityId'
-      preLoaderRoute: typeof AppOpportunitiesOpportunityIdRouteImport
-      parentRoute: typeof AppRoute
-    }
     '/_app/profile/$companyId/': {
       id: '/_app/profile/$companyId/'
       path: '/profile/$companyId'
@@ -408,11 +414,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppProfileCompanyIdIndexRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/opportunities/$opportunityId/': {
+      id: '/_app/opportunities/$opportunityId/'
+      path: '/opportunities/$opportunityId'
+      fullPath: '/opportunities/$opportunityId'
+      preLoaderRoute: typeof AppOpportunitiesOpportunityIdIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/foo/$fooId/': {
       id: '/_app/foo/$fooId/'
       path: '/foo/$fooId'
       fullPath: '/foo/$fooId'
       preLoaderRoute: typeof AppFooFooIdIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/opportunities/$opportunityId/edit': {
+      id: '/_app/opportunities/$opportunityId/edit'
+      path: '/opportunities/$opportunityId/edit'
+      fullPath: '/opportunities/$opportunityId/edit'
+      preLoaderRoute: typeof AppOpportunitiesOpportunityIdEditRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/profile/$companyId/reports/': {
@@ -463,14 +483,15 @@ declare module '@tanstack/react-router' {
 interface AppRouteChildren {
   AppDashboardRoute: typeof AppDashboardRoute
   AppDirectoryRoute: typeof AppDirectoryRoute
-  AppOpportunitiesOpportunityIdRoute: typeof AppOpportunitiesOpportunityIdRoute
   AppOpportunitiesNewRoute: typeof AppOpportunitiesNewRoute
   AppPartnersIdRoute: typeof AppPartnersIdRoute
   AppFooIndexRoute: typeof AppFooIndexRoute
   AppOpportunitiesIndexRoute: typeof AppOpportunitiesIndexRoute
   AppPartnersIndexRoute: typeof AppPartnersIndexRoute
   AppProfileIndexRoute: typeof AppProfileIndexRoute
+  AppOpportunitiesOpportunityIdEditRoute: typeof AppOpportunitiesOpportunityIdEditRoute
   AppFooFooIdIndexRoute: typeof AppFooFooIdIndexRoute
+  AppOpportunitiesOpportunityIdIndexRoute: typeof AppOpportunitiesOpportunityIdIndexRoute
   AppProfileCompanyIdIndexRoute: typeof AppProfileCompanyIdIndexRoute
   AppProfileCompanyIdReportsCreateRoute: typeof AppProfileCompanyIdReportsCreateRoute
   AppFooFooIdBarIndexRoute: typeof AppFooFooIdBarIndexRoute
@@ -483,14 +504,17 @@ interface AppRouteChildren {
 const AppRouteChildren: AppRouteChildren = {
   AppDashboardRoute: AppDashboardRoute,
   AppDirectoryRoute: AppDirectoryRoute,
-  AppOpportunitiesOpportunityIdRoute: AppOpportunitiesOpportunityIdRoute,
   AppOpportunitiesNewRoute: AppOpportunitiesNewRoute,
   AppPartnersIdRoute: AppPartnersIdRoute,
   AppFooIndexRoute: AppFooIndexRoute,
   AppOpportunitiesIndexRoute: AppOpportunitiesIndexRoute,
   AppPartnersIndexRoute: AppPartnersIndexRoute,
   AppProfileIndexRoute: AppProfileIndexRoute,
+  AppOpportunitiesOpportunityIdEditRoute:
+    AppOpportunitiesOpportunityIdEditRoute,
   AppFooFooIdIndexRoute: AppFooFooIdIndexRoute,
+  AppOpportunitiesOpportunityIdIndexRoute:
+    AppOpportunitiesOpportunityIdIndexRoute,
   AppProfileCompanyIdIndexRoute: AppProfileCompanyIdIndexRoute,
   AppProfileCompanyIdReportsCreateRoute: AppProfileCompanyIdReportsCreateRoute,
   AppFooFooIdBarIndexRoute: AppFooFooIdBarIndexRoute,

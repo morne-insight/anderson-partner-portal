@@ -1833,7 +1833,7 @@
     </childElement>
     <childElement id="a0db12d0-b6a0-42a8-8a16-2e1eb2b55727" type="Operation" typeId="e042bb67-a1df-480c-9935-b26210f78591">
       <name>AddMessage</name>
-      <display>AddMessage(in : opportunityId: guid: guid, content: string, createdDate: datetimeoffset, createdByUser: string, createdByPartner: string?): void</display>
+      <display>AddMessage(opportunityId: guid, content: string, createdDate: datetimeoffset, createdByUserId: guid, createdByUser: string, createdByPartner: string?, isOwnMessage: bool): void</display>
       <isAbstract>false</isAbstract>
       <sort-children>by-type-then-manually</sort-children>
       <genericTypes />
@@ -1862,8 +1862,8 @@
       <metadata />
       <childElements>
         <childElement id="7fdebf42-01d4-4d08-b0fa-d31c0c2ed796" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
-          <name>in : opportunityId: guid</name>
-          <display>in : in : opportunityId: guid: guid</display>
+          <name>opportunityId</name>
+          <display>in : opportunityId: guid</display>
           <isAbstract>false</isAbstract>
           <genericTypes />
           <typeReference id="faeb3e33-2658-4e81-b195-3b0947c49a0d">
@@ -1933,6 +1933,30 @@
           <metadata />
           <childElements />
         </childElement>
+        <childElement id="b0626624-2e06-4ecb-af36-f4d63c34f545" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
+          <name>createdByUserId</name>
+          <display>in : createdByUserId: guid</display>
+          <isAbstract>false</isAbstract>
+          <genericTypes />
+          <typeReference id="d474e076-a1f8-4af3-9a2a-68ff95e76c28">
+            <typeId>6b649125-18ea-48fd-a6ba-0bfff0d8f488</typeId>
+            <isNavigable>true</isNavigable>
+            <isNullable>false</isNullable>
+            <isCollection>false</isCollection>
+            <isRequired>true</isRequired>
+            <typePackageName>Intent.Common.Types</typePackageName>
+            <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
+            <stereotypes />
+            <genericTypeParameters />
+          </typeReference>
+          <isMapped>false</isMapped>
+          <parentFolderId>a0db12d0-b6a0-42a8-8a16-2e1eb2b55727</parentFolderId>
+          <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+          <packageName>AndersonAPI.Domain</packageName>
+          <stereotypes />
+          <metadata />
+          <childElements />
+        </childElement>
         <childElement id="af1854e4-990f-4a65-b474-af7430bdf3b9" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
           <name>createdByUser</name>
           <display>in : createdByUser: string</display>
@@ -1966,6 +1990,30 @@
             <typeId>d384db9c-a279-45e1-801e-e4e8099625f2</typeId>
             <isNavigable>true</isNavigable>
             <isNullable>true</isNullable>
+            <isCollection>false</isCollection>
+            <isRequired>true</isRequired>
+            <typePackageName>Intent.Common.Types</typePackageName>
+            <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
+            <stereotypes />
+            <genericTypeParameters />
+          </typeReference>
+          <isMapped>false</isMapped>
+          <parentFolderId>a0db12d0-b6a0-42a8-8a16-2e1eb2b55727</parentFolderId>
+          <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+          <packageName>AndersonAPI.Domain</packageName>
+          <stereotypes />
+          <metadata />
+          <childElements />
+        </childElement>
+        <childElement id="ee0c922c-c777-437c-b384-605e24f62f03" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
+          <name>isOwnMessage</name>
+          <display>in : isOwnMessage: bool</display>
+          <isAbstract>false</isAbstract>
+          <genericTypes />
+          <typeReference id="a791e751-e9b6-4b5d-95f2-64af353fdb3c">
+            <typeId>e6f92b09-b2c5-4536-8270-a4d9e5bbd930</typeId>
+            <isNavigable>true</isNavigable>
+            <isNullable>false</isNullable>
             <isCollection>false</isCollection>
             <isRequired>true</isRequired>
             <typePackageName>Intent.Common.Types</typePackageName>

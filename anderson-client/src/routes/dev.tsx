@@ -21,7 +21,7 @@ function RouteComponent() {
       </div>
       <br />
       <button
-        onClick={() => callApi({ data: { fn: "getApiOpportunitiesMe" } })}
+        onClick={() => callApi({ data: { fn: "getApiUserDetail" } })}
         type="button"
       >
         Test API

@@ -1500,7 +1500,9 @@ function ProfileEdit() {
             CANCEL
           </Button>
           <form.Subscribe
-            children={([canSubmit, isSubmitting]) => (
+            selector={(state) => [state.canSubmit, state.isSubmitting]}
+          >
+            {([canSubmit, isSubmitting]) => (
               <Button
                 className="min-w-[160px] bg-red-600 font-bold text-xs uppercase tracking-widest hover:bg-red-700"
                 disabled={!canSubmit}
@@ -1517,8 +1519,7 @@ function ProfileEdit() {
                 )}
               </Button>
             )}
-            selector={(state) => [state.canSubmit, state.isSubmitting]}
-          />
+          </form.Subscribe>
         </div>
       </div>
     </div>

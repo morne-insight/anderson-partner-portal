@@ -18,11 +18,13 @@ export const loginFn = createServerFn({ method: "POST" })
       if (!response.data) {
         return { error: "Invalid credentials" };
       }
+      console.log("login result", response.data);
 
       // Create session with user data and tokens
       const session = await useAppSession();
       await session.update({
-        userId: response.data.authenticationToken ?? undefined, // or extract user ID from JWT
+        userId: response.data.userId?.toString() ?? undefined, // or extract user ID from JWT
+        userName: response.data.userName ?? undefined,
         email: data.email,
         accessToken: response.data.authenticationToken ?? undefined,
         accessTokenExpiresAt: response.data.expiresIn ? Date.now() + (response.data.expiresIn * 1000) : undefined,
@@ -38,13 +40,12 @@ export const loginFn = createServerFn({ method: "POST" })
 
 // Register server function
 export const registerFn = createServerFn({ method: "POST" })
-  .inputValidator((data: { email: string; password: string }) => data)
+  .inputValidator((data: { userName: string, email: string; password: string }) => data)
   .handler(async ({ data }) => {
     try {
       await postApiAccountRegister({
         body: data,
       });
-
       return { success: true };
     } catch (error) {
       console.log(String(error));
@@ -79,7 +80,11 @@ export const getCurrentUserFn = createServerFn({ method: "GET" }).handler(
 
     // Return user data from session or fetch from API
     return {
-      id: userId,
+      userId: session.data.userId,
+      userName: session.data.userName,
+      companyId: session.data.companyId,
+      companyName: session.data.companyName,
+      companies: session.data.companies,
       email: session.data.email!,
     };
   }

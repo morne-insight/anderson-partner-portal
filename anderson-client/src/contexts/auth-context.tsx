@@ -2,9 +2,14 @@ import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "@tanstack/react-router";
 import { createContext, type ReactNode, useContext } from "react";
 import { getCurrentUserFn, logoutFn } from "../server/auth";
+import { UserCompanyDto } from "@/api";
 
 type User = {
-  id: string;
+  userId?: string;
+  userName?: string;
+  companyId?: string;
+  companyName?: string;
+  companies?: Array<UserCompanyDto>;
   email: string;
 };
 

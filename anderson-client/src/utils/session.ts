@@ -1,8 +1,13 @@
 // src/utils/session.ts
+import { UserCompanyDto } from "@/api";
 import { useSession } from "@tanstack/react-start/server";
 
 export interface SessionData {
   userId?: string;
+  userName?: string;
+  companyId?: string;
+  companyName?: string;
+  companies?: UserCompanyDto[];
   email?: string;
   roles?: string[];
   accessToken?: string; // store JWT here (server-only cookie session)

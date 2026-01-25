@@ -249,14 +249,16 @@ namespace AndersonAPI.Domain.Entities
         }
 
         public void AddMessage(
-            Guid inOpportunityIdGuid,
+            Guid opportunityId,
             string content,
             DateTimeOffset createdDate,
+            Guid createdByUserId,
             string createdByUser,
-            string? createdByPartner)
+            string? createdByPartner,
+            bool isOwnMessage)
         {
-            // TODO: Implement AddMessage (Opportunity) functionality
-            throw new NotImplementedException("Replace with your implementation...");
+            var message = new Message(opportunityId, content, createdDate, createdByUserId, createdByUser, createdByPartner, isOwnMessage);
+            _messages.Add(message);
         }
 
         public void UpdateMessage(Guid messageId, string content)

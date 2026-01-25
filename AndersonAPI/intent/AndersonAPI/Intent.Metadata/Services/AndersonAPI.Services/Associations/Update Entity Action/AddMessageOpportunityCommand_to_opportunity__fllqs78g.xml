@@ -21,7 +21,7 @@
   <targetEnd id="7c4bc8c4-f43d-4034-8f45-2e1020618b1f" type="Update Entity Action Target End" typeId="516069f6-09cc-4de8-8e31-3c71ca823452">
     <name>opportunity</name>
     <display>[update] opportunity: AddMessage</display>
-    <order>5</order>
+    <order>7</order>
     <traits>
       <trait id="d00a2ab0-9a23-4192-b8bb-166798fc7dba" name="[Processing Action]" />
     </traits>
@@ -68,7 +68,7 @@
             <expression>{AddMessageOpportunityCommand}</expression>
             <path>
               <target id="3e927715-656c-4eef-b1ca-01b028627764" name="Opportunity" type="element" specialization="Class" specializationId="04e12b51-ed12-42a3-9667-a6aa81bb6d10" />
-              <target id="a0db12d0-b6a0-42a8-8a16-2e1eb2b55727" name="AddMessageOpportunityIdGuidContentStringCreatedDateDatetimeoffsetCreatedByUserStringCreatedByPartnerStringVoid" type="element" specialization="Operation" specializationId="e042bb67-a1df-480c-9935-b26210f78591" />
+              <target id="a0db12d0-b6a0-42a8-8a16-2e1eb2b55727" name="AddMessage" type="element" specialization="Operation" specializationId="e042bb67-a1df-480c-9935-b26210f78591" />
             </path>
             <sources>
               <source identifier="AddMessageOpportunityCommand" mappingType="Invocation Mapping" mappingTypeId="d30bdba1-9c47-4917-b81d-29230fed5d6a">
@@ -82,8 +82,8 @@
             <expression>{OpportunityId}</expression>
             <path>
               <target id="3e927715-656c-4eef-b1ca-01b028627764" name="Opportunity" type="element" specialization="Class" specializationId="04e12b51-ed12-42a3-9667-a6aa81bb6d10" />
-              <target id="a0db12d0-b6a0-42a8-8a16-2e1eb2b55727" name="AddMessageOpportunityIdGuidContentStringCreatedDateDatetimeoffsetCreatedByUserStringCreatedByPartnerStringVoid" type="element" specialization="Operation" specializationId="e042bb67-a1df-480c-9935-b26210f78591" />
-              <target id="7fdebf42-01d4-4d08-b0fa-d31c0c2ed796" name="in : opportunityId: guid" type="element" specialization="Parameter" specializationId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b" />
+              <target id="a0db12d0-b6a0-42a8-8a16-2e1eb2b55727" name="AddMessage" type="element" specialization="Operation" specializationId="e042bb67-a1df-480c-9935-b26210f78591" />
+              <target id="7fdebf42-01d4-4d08-b0fa-d31c0c2ed796" name="opportunityId" type="element" specialization="Parameter" specializationId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b" />
             </path>
             <sources>
               <source identifier="OpportunityId" mappingType="Data Mapping" mappingTypeId="ca88649b-f20b-44db-a9c0-017c26155ba8">
@@ -98,7 +98,7 @@
             <expression>{Content}</expression>
             <path>
               <target id="3e927715-656c-4eef-b1ca-01b028627764" name="Opportunity" type="element" specialization="Class" specializationId="04e12b51-ed12-42a3-9667-a6aa81bb6d10" />
-              <target id="a0db12d0-b6a0-42a8-8a16-2e1eb2b55727" name="AddMessageOpportunityIdGuidContentStringCreatedDateDatetimeoffsetCreatedByUserStringCreatedByPartnerStringVoid" type="element" specialization="Operation" specializationId="e042bb67-a1df-480c-9935-b26210f78591" />
+              <target id="a0db12d0-b6a0-42a8-8a16-2e1eb2b55727" name="AddMessage" type="element" specialization="Operation" specializationId="e042bb67-a1df-480c-9935-b26210f78591" />
               <target id="8d2c6e29-836a-43b1-88fa-8a9c79f30c36" name="content" type="element" specialization="Parameter" specializationId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b" />
             </path>
             <sources>
@@ -114,7 +114,7 @@
             <expression>{CreatedDate}</expression>
             <path>
               <target id="3e927715-656c-4eef-b1ca-01b028627764" name="Opportunity" type="element" specialization="Class" specializationId="04e12b51-ed12-42a3-9667-a6aa81bb6d10" />
-              <target id="a0db12d0-b6a0-42a8-8a16-2e1eb2b55727" name="AddMessageOpportunityIdGuidContentStringCreatedDateDatetimeoffsetCreatedByUserStringCreatedByPartnerStringVoid" type="element" specialization="Operation" specializationId="e042bb67-a1df-480c-9935-b26210f78591" />
+              <target id="a0db12d0-b6a0-42a8-8a16-2e1eb2b55727" name="AddMessage" type="element" specialization="Operation" specializationId="e042bb67-a1df-480c-9935-b26210f78591" />
               <target id="e5d7c341-51b4-4612-85c8-7dc4d73a4bf8" name="createdDate" type="element" specialization="Parameter" specializationId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b" />
             </path>
             <sources>
@@ -127,10 +127,26 @@
             </sources>
           </mappedEnd>
           <mappedEnd>
+            <expression>{CreatedByUserId}</expression>
+            <path>
+              <target id="3e927715-656c-4eef-b1ca-01b028627764" name="Opportunity" type="element" specialization="Class" specializationId="04e12b51-ed12-42a3-9667-a6aa81bb6d10" />
+              <target id="a0db12d0-b6a0-42a8-8a16-2e1eb2b55727" name="AddMessage" type="element" specialization="Operation" specializationId="e042bb67-a1df-480c-9935-b26210f78591" />
+              <target id="b0626624-2e06-4ecb-af36-f4d63c34f545" name="createdByUserId" type="element" specialization="Parameter" specializationId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b" />
+            </path>
+            <sources>
+              <source identifier="CreatedByUserId" mappingType="Data Mapping" mappingTypeId="ca88649b-f20b-44db-a9c0-017c26155ba8">
+                <path>
+                  <target id="08f5b824-711e-4424-be87-2891bb565753" name="AddMessageOpportunityCommand" type="element" specialization="Command" specializationId="ccf14eb6-3a55-4d81-b5b9-d27311c70cb9" />
+                  <target id="da68125c-4249-4101-94d1-8949cfb7a251" name="CreatedByUserId" type="element" specialization="DTO-Field" specializationId="7baed1fd-469b-4980-8fd9-4cefb8331eb2" />
+                </path>
+              </source>
+            </sources>
+          </mappedEnd>
+          <mappedEnd>
             <expression>{CreatedByUser}</expression>
             <path>
               <target id="3e927715-656c-4eef-b1ca-01b028627764" name="Opportunity" type="element" specialization="Class" specializationId="04e12b51-ed12-42a3-9667-a6aa81bb6d10" />
-              <target id="a0db12d0-b6a0-42a8-8a16-2e1eb2b55727" name="AddMessageOpportunityIdGuidContentStringCreatedDateDatetimeoffsetCreatedByUserStringCreatedByPartnerStringVoid" type="element" specialization="Operation" specializationId="e042bb67-a1df-480c-9935-b26210f78591" />
+              <target id="a0db12d0-b6a0-42a8-8a16-2e1eb2b55727" name="AddMessage" type="element" specialization="Operation" specializationId="e042bb67-a1df-480c-9935-b26210f78591" />
               <target id="af1854e4-990f-4a65-b474-af7430bdf3b9" name="createdByUser" type="element" specialization="Parameter" specializationId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b" />
             </path>
             <sources>
@@ -146,7 +162,7 @@
             <expression>{CreatedByPartner}</expression>
             <path>
               <target id="3e927715-656c-4eef-b1ca-01b028627764" name="Opportunity" type="element" specialization="Class" specializationId="04e12b51-ed12-42a3-9667-a6aa81bb6d10" />
-              <target id="a0db12d0-b6a0-42a8-8a16-2e1eb2b55727" name="AddMessageOpportunityIdGuidContentStringCreatedDateDatetimeoffsetCreatedByUserStringCreatedByPartnerStringVoid" type="element" specialization="Operation" specializationId="e042bb67-a1df-480c-9935-b26210f78591" />
+              <target id="a0db12d0-b6a0-42a8-8a16-2e1eb2b55727" name="AddMessage" type="element" specialization="Operation" specializationId="e042bb67-a1df-480c-9935-b26210f78591" />
               <target id="77206a66-1b03-4442-a180-b763b28af2f3" name="createdByPartner" type="element" specialization="Parameter" specializationId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b" />
             </path>
             <sources>
@@ -154,6 +170,22 @@
                 <path>
                   <target id="08f5b824-711e-4424-be87-2891bb565753" name="AddMessageOpportunityCommand" type="element" specialization="Command" specializationId="ccf14eb6-3a55-4d81-b5b9-d27311c70cb9" />
                   <target id="ac8ff2fb-ecfc-484a-846f-c5c749824952" name="CreatedByPartner" type="element" specialization="DTO-Field" specializationId="7baed1fd-469b-4980-8fd9-4cefb8331eb2" />
+                </path>
+              </source>
+            </sources>
+          </mappedEnd>
+          <mappedEnd>
+            <expression>{IsOwnMessage}</expression>
+            <path>
+              <target id="3e927715-656c-4eef-b1ca-01b028627764" name="Opportunity" type="element" specialization="Class" specializationId="04e12b51-ed12-42a3-9667-a6aa81bb6d10" />
+              <target id="a0db12d0-b6a0-42a8-8a16-2e1eb2b55727" name="AddMessage" type="element" specialization="Operation" specializationId="e042bb67-a1df-480c-9935-b26210f78591" />
+              <target id="ee0c922c-c777-437c-b384-605e24f62f03" name="isOwnMessage" type="element" specialization="Parameter" specializationId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b" />
+            </path>
+            <sources>
+              <source identifier="IsOwnMessage" mappingType="Data Mapping" mappingTypeId="ca88649b-f20b-44db-a9c0-017c26155ba8">
+                <path>
+                  <target id="08f5b824-711e-4424-be87-2891bb565753" name="AddMessageOpportunityCommand" type="element" specialization="Command" specializationId="ccf14eb6-3a55-4d81-b5b9-d27311c70cb9" />
+                  <target id="f2bbea5a-281f-4b3a-8980-6bc77ac4315a" name="IsOwnMessage" type="element" specialization="DTO-Field" specializationId="7baed1fd-469b-4980-8fd9-4cefb8331eb2" />
                 </path>
               </source>
             </sources>

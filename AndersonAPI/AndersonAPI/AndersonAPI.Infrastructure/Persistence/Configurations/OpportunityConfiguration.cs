@@ -115,6 +115,9 @@ namespace AndersonAPI.Infrastructure.Persistence.Configurations
             builder.Property(x => x.CreatedDate)
                 .IsRequired();
 
+            builder.Property(x => x.CreatedByUserId)
+                .IsRequired();
+
             builder.Property(x => x.CreatedByUser)
                 .IsRequired()
                 .HasMaxLength(200);
@@ -122,6 +125,10 @@ namespace AndersonAPI.Infrastructure.Persistence.Configurations
             builder.Property(x => x.CreatedByPartner)
                 .HasMaxLength(200);
 
+            builder.Property(x => x.IsOwnMessage)
+                .IsRequired();
+
+            // IntentIgnore
             builder.Ignore(e => e.DomainEvents);
         }
     }

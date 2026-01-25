@@ -10,6 +10,7 @@ import { Label } from "../ui/label";
 
 const registerSchema = z
   .object({
+    userName: z.string().min(1, "Name is required"),
     email: z.string().email("Invalid email address"),
     password: z.string().min(6, "Password must be at least 6 characters"),
     confirmPassword: z.string(),
@@ -27,6 +28,7 @@ export function RegisterForm() {
 
   const form = useForm({
     defaultValues: {
+      userName: "Morne",
       email: "mvanzyl@insight.com",
       password: "Password$123",
       confirmPassword: "Password$123",
@@ -42,6 +44,7 @@ export function RegisterForm() {
         // Call server function
         const result = await register({
           data: {
+            userName: validatedData.userName,
             email: validatedData.email,
             password: validatedData.password,
           },
@@ -96,6 +99,36 @@ export function RegisterForm() {
           form.handleSubmit();
         }}
       >
+        <form.Field
+          name="userName"
+          validators={{
+            onChange: ({ value }) => {
+              const result = z.string().min(1).safeParse(value);
+              return result.success ? undefined : "Username is required";
+            },
+          }}
+        >
+          {(field) => (
+            <div className="space-y-2">
+              <Label htmlFor="userName">Username</Label>
+              <Input
+                id="userName"
+                onBlur={field.handleBlur}
+                onChange={(e) => field.handleChange(e.target.value)}
+                placeholder="Enter your username"
+                type="text"
+                value={field.state.value}
+              />
+              {field.state.meta.errors &&
+                field.state.meta.errors.length > 0 && (
+                  <p className="text-red-600 text-sm">
+                    {field.state.meta.errors[0]}
+                  </p>
+                )}
+            </div>
+          )}
+        </form.Field>
+
         <form.Field
           name="email"
           validators={{

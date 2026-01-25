@@ -9,14 +9,18 @@ namespace AndersonAPI.Domain.Entities
         public Message(Guid opportunityId,
     string content,
     DateTimeOffset createdDate,
+    Guid createdByUserId,
     string createdByUser,
-    string? createdByPartner)
+    string? createdByPartner,
+    bool isOwnMessage)
         {
             OpportunityId = opportunityId;
             Content = content;
             CreatedDate = createdDate;
+            CreatedByUserId = createdByUserId;
             CreatedByUser = createdByUser;
             CreatedByPartner = createdByPartner;
+            IsOwnMessage = isOwnMessage;
         }
 
         /// <summary>
@@ -34,9 +38,13 @@ namespace AndersonAPI.Domain.Entities
 
         public DateTimeOffset CreatedDate { get; private set; }
 
+        public Guid CreatedByUserId { get; private set; }
+
         public string CreatedByUser { get; private set; }
 
         public string? CreatedByPartner { get; private set; }
+
+        public bool IsOwnMessage { get; private set; }
 
         public void UpdateContent(string content)
         {

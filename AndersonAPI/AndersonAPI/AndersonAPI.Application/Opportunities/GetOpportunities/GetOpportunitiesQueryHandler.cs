@@ -37,10 +37,11 @@ namespace AndersonAPI.Application.Opportunities.GetOpportunities
             var companies = await _companyRepository
                 .FindAllAsync(c => c.ApplicationIdentityUsers.Any(u => u.Id == userId.ToString()), cancellationToken);
 
-            // If no companies found, return empty list
+            // If no companies found, return all opportunities
             if (companies == null || !companies.Any())
             {
-                return new List<OpportunityListItemDto>();
+                return await _opportunityRepository
+                    .FindAllProjectToAsync<OpportunityListItemDto>(cancellationToken);
             }
 
             // Get the company IDs

@@ -8,6 +8,8 @@ using AndersonAPI.Application.Opportunities.DeleteOpportunity;
 using AndersonAPI.Application.Opportunities.GetMyOpportunities;
 using AndersonAPI.Application.Opportunities.GetOpportunities;
 using AndersonAPI.Application.Opportunities.GetOpportunityById;
+using AndersonAPI.Application.Opportunities.GetOpportunityMessagesById;
+using AndersonAPI.Application.Opportunities.GetOpportunityViewById;
 using AndersonAPI.Application.Opportunities.GetSavedOpportunities;
 using AndersonAPI.Application.Opportunities.RemoveMessageOpportunity;
 using AndersonAPI.Application.Opportunities.SetCapabilitiesOpportunity;
@@ -475,6 +477,50 @@ namespace AndersonAPI.Api.Controllers
             CancellationToken cancellationToken = default)
         {
             var result = await _mediator.Send(new GetOpportunityByIdQuery(id: id), cancellationToken);
+            return result == null ? NotFound() : Ok(result);
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <response code="200">Returns the specified List&lt;OpportunityMessageDto&gt;.</response>
+        /// <response code="400">One or more validation errors have occurred.</response>
+        /// <response code="401">Unauthorized request.</response>
+        /// <response code="403">Forbidden request.</response>
+        /// <response code="404">No List&lt;OpportunityMessageDto&gt; could be found with the provided parameters.</response>
+        [HttpGet("api/opportunities/{id}/messages")]
+        [ProducesResponseType(typeof(List<OpportunityMessageDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<List<OpportunityMessageDto>>> GetOpportunityMessagesById(
+            [FromRoute] Guid id,
+            CancellationToken cancellationToken = default)
+        {
+            var result = await _mediator.Send(new GetOpportunityMessagesByIdQuery(id: id), cancellationToken);
+            return result == null ? NotFound() : Ok(result);
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <response code="200">Returns the specified OpportunityViewDto.</response>
+        /// <response code="400">One or more validation errors have occurred.</response>
+        /// <response code="401">Unauthorized request.</response>
+        /// <response code="403">Forbidden request.</response>
+        /// <response code="404">No OpportunityViewDto could be found with the provided parameters.</response>
+        [HttpGet("api/opportunities/{id}/view")]
+        [ProducesResponseType(typeof(OpportunityViewDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<OpportunityViewDto>> GetOpportunityViewById(
+            [FromRoute] Guid id,
+            CancellationToken cancellationToken = default)
+        {
+            var result = await _mediator.Send(new GetOpportunityViewByIdQuery(id: id), cancellationToken);
             return result == null ? NotFound() : Ok(result);
         }
 

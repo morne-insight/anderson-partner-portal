@@ -71,7 +71,9 @@ export const AddMessageOpportunityCommandSchema = {
         'content',
         'createdDate',
         'createdByUser',
-        'createdByPartner'
+        'createdByPartner',
+        'createdByUserId',
+        'isOwnMessage'
     ],
     type: 'object',
     properties: {
@@ -92,6 +94,13 @@ export const AddMessageOpportunityCommandSchema = {
         createdByPartner: {
             type: 'string',
             nullable: true
+        },
+        createdByUserId: {
+            type: 'string',
+            format: 'uuid'
+        },
+        isOwnMessage: {
+            type: 'boolean'
         }
     }
 } as const;
@@ -1150,6 +1159,42 @@ export const OpportunityListItemDtoSchema = {
     }
 } as const;
 
+export const OpportunityMessageDtoSchema = {
+    title: 'OpportunityMessageDto',
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string',
+            format: 'uuid'
+        },
+        content: {
+            type: 'string'
+        },
+        createdDate: {
+            type: 'string',
+            format: 'date-time'
+        },
+        createdByUser: {
+            type: 'string'
+        },
+        createdByPartner: {
+            type: 'string',
+            nullable: true
+        },
+        order: {
+            type: 'integer',
+            format: 'int32'
+        },
+        isOwnMessage: {
+            type: 'boolean'
+        },
+        createdByUserId: {
+            type: 'string',
+            format: 'uuid'
+        }
+    }
+} as const;
+
 export const OpportunityServiceTypeDtoSchema = {
     title: 'OpportunityServiceTypeDto',
     type: 'object',
@@ -1188,6 +1233,69 @@ export const OpportunityTypeDtoSchema = {
         },
         state: {
             $ref: '#/components/schemas/EntityState'
+        }
+    }
+} as const;
+
+export const OpportunityViewDtoSchema = {
+    title: 'OpportunityViewDto',
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string',
+            format: 'uuid'
+        },
+        companyName: {
+            type: 'string'
+        },
+        companyServiceType: {
+            type: 'string'
+        },
+        title: {
+            type: 'string'
+        },
+        fullDescription: {
+            type: 'string'
+        },
+        createdDate: {
+            type: 'string',
+            format: 'date-time'
+        },
+        deadline: {
+            type: 'string',
+            format: 'date',
+            nullable: true
+        },
+        country: {
+            type: 'string'
+        },
+        opportunityType: {
+            type: 'string'
+        },
+        capabilities: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/OpportunityCapabilityDto'
+            }
+        },
+        industries: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/OpportunityIndustryDto'
+            }
+        },
+        serviceTypes: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/OpportunityServiceTypeDto'
+            }
+        },
+        status: {
+            $ref: '#/components/schemas/OpportunityStatus'
+        },
+        companyId: {
+            type: 'string',
+            format: 'uuid'
         }
     }
 } as const;
@@ -1674,6 +1782,10 @@ export const RegisterDtoSchema = {
         password: {
             type: 'string',
             nullable: true
+        },
+        userName: {
+            type: 'string',
+            nullable: true
         }
     }
 } as const;
@@ -2118,6 +2230,14 @@ export const TokenResultDtoSchema = {
             format: 'int32'
         },
         refreshToken: {
+            type: 'string',
+            nullable: true
+        },
+        userId: {
+            type: 'string',
+            nullable: true
+        },
+        userName: {
             type: 'string',
             nullable: true
         }
@@ -2671,6 +2791,48 @@ export const UpdateServiceTypeCommandSchema = {
         },
         description: {
             type: 'string'
+        }
+    }
+} as const;
+
+export const UserCompanyDtoSchema = {
+    title: 'UserCompanyDto',
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string',
+            format: 'uuid'
+        },
+        name: {
+            type: 'string'
+        },
+        websiteUrl: {
+            type: 'string'
+        }
+    }
+} as const;
+
+export const UserDetailDtoSchema = {
+    title: 'UserDetailDto',
+    type: 'object',
+    properties: {
+        name: {
+            type: 'string'
+        },
+        companyId: {
+            type: 'string',
+            format: 'uuid',
+            nullable: true
+        },
+        companyName: {
+            type: 'string',
+            nullable: true
+        },
+        companies: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/UserCompanyDto'
+            }
         }
     }
 } as const;

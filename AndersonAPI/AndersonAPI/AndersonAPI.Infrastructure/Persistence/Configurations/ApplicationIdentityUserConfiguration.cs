@@ -18,6 +18,9 @@ namespace AndersonAPI.Infrastructure.Persistence.Configurations
             builder.Property(x => x.RefreshToken);
 
             builder.Property(x => x.RefreshTokenExpired);
+
+            builder.Property(x => x.Name)
+                .HasMaxLength(120);
         }
     }
 }

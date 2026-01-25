@@ -1,17 +1,14 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { 
-  LayoutDashboard, 
-  Globe, 
-  Users, 
-  FileText, 
-  Settings as SettingsIcon, 
-  Search, 
-  Menu, 
-  X, 
+import {
+  LayoutDashboard,
+  Globe,
+  Users,
+  FileText,
+  Search,
   ShieldCheck,
   LogOut
 } from "lucide-react";
-import React, { useState } from "react";
+import React from "react";
 import { useAuth } from "../../contexts/auth-context";
 
 interface SidebarProps {
@@ -56,25 +53,22 @@ export const Sidebar: React.FC<SidebarProps> = ({ isAdmin }) => {
             <li key={item.to}>
               <Link
                 to={item.to}
-                className={`group w-full flex items-center px-8 py-4 text-sm font-medium transition-all duration-200 border-l-2 ${
-                  isActive(item.to, item.exact)
-                    ? "border-red-600 bg-white/5 text-white"
-                    : "border-transparent text-gray-400 hover:text-white hover:bg-white/5 hover:border-gray-700"
-                }`}
+                className={`group w-full flex items-center px-8 py-4 text-sm font-medium transition-all duration-200 border-l-2 ${isActive(item.to, item.exact)
+                  ? "border-red-600 bg-white/5 text-white"
+                  : "border-transparent text-gray-400 hover:text-white hover:bg-white/5 hover:border-gray-700"
+                  }`}
               >
                 <item.icon
-                  className={`w-4 h-4 mr-4 transition-colors ${
-                    isActive(item.to, item.exact)
-                      ? item.to === "/admin"
-                        ? "text-yellow-400"
-                        : "text-red-600"
-                      : "group-hover:text-white"
-                  }`}
+                  className={`w-4 h-4 mr-4 transition-colors ${isActive(item.to, item.exact)
+                    ? item.to === "/admin"
+                      ? "text-yellow-400"
+                      : "text-red-600"
+                    : "group-hover:text-white"
+                    }`}
                 />
                 <span
-                  className={`uppercase tracking-widest text-xs ${
-                    item.to === "/admin" && isActive(item.to) ? "text-yellow-400" : ""
-                  }`}
+                  className={`uppercase tracking-widest text-xs ${item.to === "/admin" && isActive(item.to) ? "text-yellow-400" : ""
+                    }`}
                 >
                   {item.label}
                 </span>

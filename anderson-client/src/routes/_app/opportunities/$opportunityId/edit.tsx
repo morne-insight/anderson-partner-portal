@@ -10,8 +10,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { 
-  Loader2, 
+import {
+  Loader2,
   ArrowLeft,
   Building,
   ChevronDown,
@@ -19,7 +19,7 @@ import {
 } from "lucide-react";
 import { usePrefetchReferenceData } from "@/hooks/useReferenceData";
 
-export const Route = createFileRoute("/_app/opportunities/$opportunityId")({
+export const Route = createFileRoute("/_app/opportunities/$opportunityId/edit")({
   component: EditOpportunity,
   loader: async ({ params }) => {
     const [opportunity, companies] = await Promise.all([
@@ -36,16 +36,16 @@ export const Route = createFileRoute("/_app/opportunities/$opportunityId")({
 
 function EditOpportunity() {
   const router = useRouter();
-  const { 
+  const {
     opportunity,
-    companies 
+    companies
   } = Route.useLoaderData();
-  
-  const { 
-    opportunityTypes, 
-    countries, 
-    serviceTypes, 
-    capabilities, 
+
+  const {
+    opportunityTypes,
+    countries,
+    serviceTypes,
+    capabilities,
     industries,
     isLoading,
     isError,
@@ -80,20 +80,20 @@ function EditOpportunity() {
 
   const deleteMutation = useMutation({
     mutationFn: async () => {
-        const response = await callApi({
-          data: { fn: 'deleteApiOpportunitiesById', args: { path: { id: opportunity.id } } }
-        });
-        if (response.error) {
-            throw response.error;
-        }
-        return response;
+      const response = await callApi({
+        data: { fn: 'deleteApiOpportunitiesById', args: { path: { id: opportunity.id } } }
+      });
+      if (response.error) {
+        throw response.error;
+      }
+      return response;
     },
     onSuccess: () => {
-        router.navigate({ to: "/opportunities" });
+      router.navigate({ to: "/opportunities" });
     },
     onError: (err) => {
-        console.error("Failed to delete", err);
-        alert("Could not delete opportunity.");
+      console.error("Failed to delete", err);
+      alert("Could not delete opportunity.");
     }
   });
 
@@ -118,7 +118,7 @@ function EditOpportunity() {
         if (!value.opportunityTypeId) errors.opportunityTypeId = "Type is required";
         if (!value.countryId) errors.countryId = "Country is required";
         if (!value.companyId) errors.companyId = "Company is required";
-        
+
         return Object.keys(errors).length > 0 ? errors : undefined;
       }
     },
@@ -136,7 +136,7 @@ function EditOpportunity() {
           countryId: value.countryId,
           companyId: value.companyId
         };
-        
+
         await updateMutation.mutateAsync(payload);
       } catch (error) {
         console.error('Failed to save opportunity:', error);
@@ -146,32 +146,32 @@ function EditOpportunity() {
   });
 
   // Show loading state while reference data is loading  
-    if (isLoading) {
-      return (
-        <div className="flex justify-center items-center min-h-screen">
-          <Loader2 className="w-8 h-8 animate-spin text-gray-300" />
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <Loader2 className="w-8 h-8 animate-spin text-gray-300" />
+      </div>
+    );
+  }
+
+  // Ensure we have the data before proceeding
+  if (isError) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="text-center">
+          <p className="text-red-600 mb-4">Failed to load reference data</p>
+          <Button onClick={() => window.location.reload()}>Retry</Button>
         </div>
-      );
-    }
-  
-    // Ensure we have the data before proceeding
-    if (isError) {
-      return (
-        <div className="flex justify-center items-center min-h-screen">
-          <div className="text-center">
-            <p className="text-red-600 mb-4">Failed to load reference data</p>
-            <Button onClick={() => window.location.reload()}>Retry</Button>
-          </div>
-        </div>
-      );
-    }
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-8 animate-fade-in pb-20">
       {/* Header */}
       <header className="border-b border-gray-200 pb-6 flex justify-between items-start">
         <div>
-          <button 
+          <button
             onClick={() => router.history.back()}
             className="flex items-center gap-2 text-gray-500 hover:text-black text-xs uppercase tracking-widest font-bold mb-4 transition-colors"
           >
@@ -179,20 +179,20 @@ function EditOpportunity() {
           </button>
           <h2 className="text-4xl font-serif text-black mb-3">Edit Opportunity</h2>
         </div>
-        <Button 
-            variant="ghost" 
-            onClick={() => {
-                if(confirm("Are you sure you want to delete this opportunity?")) {
-                    deleteMutation.mutate();
-                }
-            }}
-            className="text-red-600 hover:text-red-700 hover:bg-red-50"
+        <Button
+          variant="ghost"
+          onClick={() => {
+            if (confirm("Are you sure you want to delete this opportunity?")) {
+              deleteMutation.mutate();
+            }
+          }}
+          className="text-red-600 hover:text-red-700 hover:bg-red-50"
         >
-            <Trash2 className="w-4 h-4 mr-2" /> Delete
+          <Trash2 className="w-4 h-4 mr-2" /> Delete
         </Button>
       </header>
 
-      <form 
+      <form
         onSubmit={(e) => {
           e.preventDefault();
           e.stopPropagation();
@@ -202,13 +202,13 @@ function EditOpportunity() {
       >
         {/* Left Column: Main Form */}
         <div className="lg:col-span-2 space-y-8">
-          
+
           {/* Company Selection */}
           <section className="space-y-4">
             <h3 className="text-lg font-bold uppercase tracking-widest border-b border-gray-100 pb-2 flex items-center gap-2">
               <Building className="w-4 h-4" /> Posting Company
             </h3>
-            
+
             {companies.length === 0 ? (
               <div className="p-6 bg-red-50 border border-red-200 text-red-700 text-sm">
                 You are not linked to any companies.
@@ -221,7 +221,7 @@ function EditOpportunity() {
                 </p>
               </div>
             ) : (
-             <form.Field
+              <form.Field
                 name="companyId"
                 children={(field) => (
                   <div className="space-y-2">
@@ -240,7 +240,7 @@ function EditOpportunity() {
                     </Select>
                   </div>
                 )}
-             />
+              />
             )}
           </section>
 
@@ -249,13 +249,13 @@ function EditOpportunity() {
             <h3 className="text-lg font-bold uppercase tracking-widest border-b border-gray-100 pb-2">
               Opportunity Details
             </h3>
-            
+
             <form.Field
               name="title"
               children={(field) => (
                 <div className="space-y-2">
                   <Label htmlFor="title">Title *</Label>
-                  <Input 
+                  <Input
                     id="title"
                     value={field.state.value}
                     onBlur={field.handleBlur}
@@ -346,7 +346,7 @@ function EditOpportunity() {
               children={(field) => (
                 <div className="space-y-2">
                   <Label htmlFor="shortDescription">Short Description *</Label>
-                  <Textarea 
+                  <Textarea
                     id="shortDescription"
                     value={field.state.value}
                     onBlur={field.handleBlur}
@@ -363,7 +363,7 @@ function EditOpportunity() {
               children={(field) => (
                 <div className="space-y-2">
                   <Label htmlFor="fullDescription">Full Description</Label>
-                  <Textarea 
+                  <Textarea
                     id="fullDescription"
                     value={field.state.value}
                     onBlur={field.handleBlur}
@@ -385,33 +385,32 @@ function EditOpportunity() {
               Service Types
             </h3>
             <div className="p-4 bg-white border border-gray-200 shadow-sm">
-                <form.Field
-                    name="serviceTypes"
-                    children={(field) => (
-                        <div className="flex flex-wrap gap-2">
-                            {serviceTypes.data?.map((st: any) => {
-                            const isSelected = field.state.value.includes(st.id!);
-                            return (
-                                <button
-                                type="button"
-                                key={st.id}
-                                onClick={() => {
-                                    if(isSelected) field.handleChange(field.state.value.filter((id: string) => id !== st.id));
-                                    else field.handleChange([...field.state.value, st.id!]);
-                                }}
-                                className={`px-3 py-1.5 text-[10px] uppercase font-bold tracking-wider border transition-all ${
-                                    isSelected 
-                                    ? "bg-black text-white border-black" 
-                                    : "bg-gray-50 text-gray-400 border-gray-200 hover:border-gray-400 hover:text-gray-600"
-                                }`}
-                                >
-                                {st.name}
-                                </button>
-                            );
-                            })}
-                        </div>
-                    )}
-                />
+              <form.Field
+                name="serviceTypes"
+                children={(field) => (
+                  <div className="flex flex-wrap gap-2">
+                    {serviceTypes.data?.map((st: any) => {
+                      const isSelected = field.state.value.includes(st.id!);
+                      return (
+                        <button
+                          type="button"
+                          key={st.id}
+                          onClick={() => {
+                            if (isSelected) field.handleChange(field.state.value.filter((id: string) => id !== st.id));
+                            else field.handleChange([...field.state.value, st.id!]);
+                          }}
+                          className={`px-3 py-1.5 text-[10px] uppercase font-bold tracking-wider border transition-all ${isSelected
+                              ? "bg-black text-white border-black"
+                              : "bg-gray-50 text-gray-400 border-gray-200 hover:border-gray-400 hover:text-gray-600"
+                            }`}
+                        >
+                          {st.name}
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
+              />
             </div>
           </section>
 
@@ -421,33 +420,32 @@ function EditOpportunity() {
               Required Capabilities
             </h3>
             <div className="p-4 bg-white border border-gray-200 shadow-sm">
-                <form.Field
-                    name="capabilities"
-                    children={(field) => (
-                        <div className="flex flex-wrap gap-2">
-                            {capabilities.data?.map((cap: any) => {
-                            const isSelected = field.state.value.includes(cap.id!);
-                            return (
-                                <button
-                                type="button"
-                                key={cap.id}
-                                onClick={() => {
-                                    if(isSelected) field.handleChange(field.state.value.filter((id: string) => id !== cap.id));
-                                    else field.handleChange([...field.state.value, cap.id!]);
-                                }}
-                                className={`px-3 py-1.5 text-[10px] uppercase font-bold tracking-wider border transition-all ${
-                                    isSelected 
-                                    ? "bg-red-600 text-white border-red-600" 
-                                    : "bg-gray-50 text-gray-400 border-gray-200 hover:border-gray-400 hover:text-gray-600"
-                                }`}
-                                >
-                                {cap.name}
-                                </button>
-                            );
-                            })}
-                        </div>
-                    )}
-                />
+              <form.Field
+                name="capabilities"
+                children={(field) => (
+                  <div className="flex flex-wrap gap-2">
+                    {capabilities.data?.map((cap: any) => {
+                      const isSelected = field.state.value.includes(cap.id!);
+                      return (
+                        <button
+                          type="button"
+                          key={cap.id}
+                          onClick={() => {
+                            if (isSelected) field.handleChange(field.state.value.filter((id: string) => id !== cap.id));
+                            else field.handleChange([...field.state.value, cap.id!]);
+                          }}
+                          className={`px-3 py-1.5 text-[10px] uppercase font-bold tracking-wider border transition-all ${isSelected
+                              ? "bg-red-600 text-white border-red-600"
+                              : "bg-gray-50 text-gray-400 border-gray-200 hover:border-gray-400 hover:text-gray-600"
+                            }`}
+                        >
+                          {cap.name}
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
+              />
             </div>
           </section>
 
@@ -457,33 +455,32 @@ function EditOpportunity() {
               Target Industries
             </h3>
             <div className="p-4 bg-white border border-gray-200 shadow-sm">
-                <form.Field
-                    name="industries"
-                    children={(field) => (
-                        <div className="flex flex-wrap gap-2">
-                            {industries.data?.map((ind: any) => {
-                            const isSelected = field.state.value.includes(ind.id!);
-                            return (
-                                <button
-                                type="button"
-                                key={ind.id}
-                                onClick={() => {
-                                    if(isSelected) field.handleChange(field.state.value.filter((id: string) => id !== ind.id));
-                                    else field.handleChange([...field.state.value, ind.id!]);
-                                }}
-                                className={`px-3 py-1.5 text-[10px] uppercase font-bold tracking-wider border transition-all ${
-                                    isSelected 
-                                    ? "bg-blue-600 text-white border-blue-600" 
-                                    : "bg-gray-50 text-gray-400 border-gray-200 hover:border-gray-400 hover:text-gray-600"
-                                }`}
-                                >
-                                {ind.name}
-                                </button>
-                            );
-                            })}
-                        </div>
-                    )}
-                />
+              <form.Field
+                name="industries"
+                children={(field) => (
+                  <div className="flex flex-wrap gap-2">
+                    {industries.data?.map((ind: any) => {
+                      const isSelected = field.state.value.includes(ind.id!);
+                      return (
+                        <button
+                          type="button"
+                          key={ind.id}
+                          onClick={() => {
+                            if (isSelected) field.handleChange(field.state.value.filter((id: string) => id !== ind.id));
+                            else field.handleChange([...field.state.value, ind.id!]);
+                          }}
+                          className={`px-3 py-1.5 text-[10px] uppercase font-bold tracking-wider border transition-all ${isSelected
+                              ? "bg-blue-600 text-white border-blue-600"
+                              : "bg-gray-50 text-gray-400 border-gray-200 hover:border-gray-400 hover:text-gray-600"
+                            }`}
+                        >
+                          {ind.name}
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
+              />
             </div>
           </section>
         </div>
@@ -495,20 +492,20 @@ function EditOpportunity() {
           CANCEL
         </Button>
         <form.Subscribe
-             selector={(state) => [state.canSubmit, state.isSubmitting]}
-             children={([canSubmit, isSubmitting]) => (
-                <Button 
-                    onClick={form.handleSubmit}
-                    disabled={!canSubmit || isSubmitting || updateMutation.isPending}
-                    className="bg-black hover:bg-gray-800 min-w-[160px] uppercase font-bold tracking-widest text-xs"
-                >
-                    {isSubmitting || updateMutation.isPending ? (
-                        <><Loader2 className="w-3 h-3 mr-2 animate-spin" /> Saving...</>
-                    ) : (
-                        "Save Changes"
-                    )}
-                </Button>
-             )}
+          selector={(state) => [state.canSubmit, state.isSubmitting]}
+          children={([canSubmit, isSubmitting]) => (
+            <Button
+              onClick={form.handleSubmit}
+              disabled={!canSubmit || isSubmitting || updateMutation.isPending}
+              className="bg-black hover:bg-gray-800 min-w-[160px] uppercase font-bold tracking-widest text-xs"
+            >
+              {isSubmitting || updateMutation.isPending ? (
+                <><Loader2 className="w-3 h-3 mr-2 animate-spin" /> Saving...</>
+              ) : (
+                "Save Changes"
+              )}
+            </Button>
+          )}
         />
       </div>
     </div>
