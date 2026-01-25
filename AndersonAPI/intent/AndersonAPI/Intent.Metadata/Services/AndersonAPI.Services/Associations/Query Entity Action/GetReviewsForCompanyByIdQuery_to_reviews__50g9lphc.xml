@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<association id="52a98f48-a4ba-4bb8-bc85-261820ad2906">
+  <sourceEnd id="b2caf269-720a-467f-bee3-0b6938705447" type="Query Entity Action Source End" typeId="32a65f26-2555-4616-8a2c-6a90805600bb">
+    <display>: GetReviewsForCompanyByIdQuery</display>
+    <order>0</order>
+    <typeReference id="e528337d-bec6-4a82-b176-7344c63d2302">
+      <typeId>a898d7a2-5fb6-4de8-8509-e609732b6e1b</typeId>
+      <isNavigable>false</isNavigable>
+      <isNullable>false</isNullable>
+      <isCollection>false</isCollection>
+      <isRequired>true</isRequired>
+      <typePackageName>AndersonAPI.Services</typePackageName>
+      <typePackageId>c8555d38-5afc-4ea2-9a61-c7a505212753</typePackageId>
+      <stereotypes />
+      <genericTypeParameters />
+    </typeReference>
+    <stereotypes />
+    <metadata />
+    <childElements />
+  </sourceEnd>
+  <targetEnd id="52a98f48-a4ba-4bb8-bc85-261820ad2906" type="Query Entity Action Target End" typeId="93ef6675-cba4-4998-adff-cb22d5343ed4">
+    <name>reviews</name>
+    <display>[query] reviews: Review[*]</display>
+    <order>1</order>
+    <traits>
+      <trait id="d00a2ab0-9a23-4192-b8bb-166798fc7dba" name="[Processing Action]" />
+    </traits>
+    <typeReference id="7f156df3-8823-4cdf-a9ae-19feb5fc2a07">
+      <typeId>a66e248c-b5ab-49ee-a926-9930d073a5bf</typeId>
+      <isNavigable>true</isNavigable>
+      <isNullable>false</isNullable>
+      <isCollection>true</isCollection>
+      <isRequired>true</isRequired>
+      <typePackageName>AndersonAPI.Domain</typePackageName>
+      <typePackageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</typePackageId>
+      <stereotypes />
+      <genericTypeParameters />
+    </typeReference>
+    <stereotypes />
+    <mappings>
+      <mapping type="Query Entity Mapping" typeId="25f25af9-c38b-4053-9474-b0fabe9d7ea7">
+        <source applicationId="e87261ce-2b9f-4042-8562-a503e4cf2759" designerId="81104ae6-2bc5-4bae-b05a-f987b0372d81" elementId="a898d7a2-5fb6-4de8-8509-e609732b6e1b" location="[AndersonAPI].[Services].[GetReviewsForCompanyByIdQuery]" />
+        <target applicationId="e87261ce-2b9f-4042-8562-a503e4cf2759" designerId="6ab29b31-27af-4f56-a67c-986d82097d63" elementId="a66e248c-b5ab-49ee-a926-9930d073a5bf" location="[AndersonAPI].[Services].[Review]" />
+        <mappedEnds />
+      </mapping>
+    </mappings>
+    <metadata />
+    <childElements />
+  </targetEnd>
+  <associationType>Query Entity Action</associationType>
+  <associationTypeId>47ab5888-a258-4bec-a9fc-a83de69eb79d</associationTypeId>
+  <stereotypes />
+</association>

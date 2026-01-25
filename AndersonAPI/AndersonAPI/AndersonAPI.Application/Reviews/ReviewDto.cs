@@ -1,4 +1,3 @@
-using AndersonAPI.Domain;
 using Intent.RoslynWeaver.Attributes;
 
 [assembly: DefaultIntentManaged(Mode.Fully)]
@@ -11,35 +10,40 @@ namespace AndersonAPI.Application.Reviews
         public ReviewDto()
         {
             Comment = null!;
-            ApplicationIdentityUserId = null!;
+            UserId = null!;
+            ReviewerCompanyName = null!;
         }
 
         public string Comment { get; set; }
         public int Rating { get; set; }
-        public string ApplicationIdentityUserId { get; set; }
+        public string UserId { get; set; }
+        public string? CreatedByUserName { get; set; }
+        public DateTimeOffset CreatedDate { get; set; }
         public Guid ReviewerCompanyId { get; set; }
+        public string ReviewerCompanyName { get; set; }
         public Guid Id { get; set; }
-        public int Order { get; set; }
-        public EntityState State { get; set; }
 
         public static ReviewDto Create(
+            Guid id,
             string comment,
             int rating,
-            string applicationIdentityUserId,
+            string userId,
+            string? createdByUserName,
+            DateTimeOffset createdDate,
             Guid reviewerCompanyId,
-            Guid id,
-            int order,
-            EntityState state)
+            string reviewerCompanyName)
         {
             return new ReviewDto
             {
+                Id = id
+,
                 Comment = comment,
                 Rating = rating,
-                ApplicationIdentityUserId = applicationIdentityUserId,
+                UserId = userId,
+                CreatedByUserName = createdByUserName,
+                CreatedDate = createdDate,
                 ReviewerCompanyId = reviewerCompanyId,
-                Id = id,
-                Order = order,
-                State = state
+                ReviewerCompanyName = reviewerCompanyName
             };
         }
     }

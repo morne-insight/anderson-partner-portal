@@ -829,7 +829,7 @@ export const CreateReviewCommandSchema = {
         'rating',
         'applicationIdentityUserId',
         'reviewerCompanyId',
-        'state'
+        'companyId'
     ],
     type: 'object',
     properties: {
@@ -847,8 +847,9 @@ export const CreateReviewCommandSchema = {
             type: 'string',
             format: 'uuid'
         },
-        state: {
-            $ref: '#/components/schemas/EntityState'
+        companyId: {
+            type: 'string',
+            format: 'uuid'
         }
     }
 } as const;
@@ -1511,12 +1512,6 @@ export const PartnerProfileSchema = {
                 $ref: '#/components/schemas/PartnerOpportunityDto'
             }
         },
-        reviews: {
-            type: 'array',
-            items: {
-                $ref: '#/components/schemas/PartnerReviewDto'
-            }
-        },
         serviceTypeId: {
             type: 'string',
             format: 'uuid',
@@ -1563,38 +1558,6 @@ export const PartnerProfileListItemSchema = {
         matchScore: {
             type: 'number',
             format: 'double'
-        }
-    }
-} as const;
-
-export const PartnerReviewDtoSchema = {
-    title: 'PartnerReviewDto',
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string',
-            format: 'uuid'
-        },
-        comment: {
-            type: 'string'
-        },
-        rating: {
-            type: 'integer',
-            format: 'int32'
-        },
-        applicationIdentityUserId: {
-            type: 'string'
-        },
-        reviewerCompanyId: {
-            type: 'string',
-            format: 'uuid'
-        },
-        order: {
-            type: 'integer',
-            format: 'int32'
-        },
-        state: {
-            $ref: '#/components/schemas/EntityState'
         }
     }
 } as const;
@@ -1882,23 +1845,27 @@ export const ReviewDtoSchema = {
             type: 'integer',
             format: 'int32'
         },
-        applicationIdentityUserId: {
+        userId: {
             type: 'string'
+        },
+        createdByUserName: {
+            type: 'string',
+            nullable: true
+        },
+        createdDate: {
+            type: 'string',
+            format: 'date-time'
         },
         reviewerCompanyId: {
             type: 'string',
             format: 'uuid'
         },
+        reviewerCompanyName: {
+            type: 'string'
+        },
         id: {
             type: 'string',
             format: 'uuid'
-        },
-        order: {
-            type: 'integer',
-            format: 'int32'
-        },
-        state: {
-            $ref: '#/components/schemas/EntityState'
         }
     }
 } as const;

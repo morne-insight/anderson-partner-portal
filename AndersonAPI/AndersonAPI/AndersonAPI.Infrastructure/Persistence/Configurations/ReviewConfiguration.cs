@@ -42,9 +42,8 @@ namespace AndersonAPI.Infrastructure.Persistence.Configurations
             builder.Property(x => x.ReviewerCompanyId)
                 .IsRequired();
 
-            builder.HasMany(x => x.Companies)
-                .WithMany(x => x.Reviews)
-                .UsingEntity(x => x.ToTable("ReviewCompanies"));
+            builder.Property(x => x.CompanyId)
+                .IsRequired();
 
             builder.HasOne(x => x.ReviewerCompany)
                 .WithMany()
@@ -54,6 +53,11 @@ namespace AndersonAPI.Infrastructure.Persistence.Configurations
             builder.HasOne(x => x.ApplicationIdentityUser)
                 .WithMany()
                 .HasForeignKey(x => x.ApplicationIdentityUserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasOne(x => x.Company)
+                .WithMany(x => x.Reviews)
+                .HasForeignKey(x => x.CompanyId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.Ignore(e => e.DomainEvents);

@@ -1,5 +1,4 @@
 using AndersonAPI.Application.Common.Interfaces;
-using AndersonAPI.Domain;
 using Intent.RoslynWeaver.Attributes;
 using MediatR;
 
@@ -14,19 +13,19 @@ namespace AndersonAPI.Application.Reviews.CreateReview
             int rating,
             string applicationIdentityUserId,
             Guid reviewerCompanyId,
-            EntityState state)
+            Guid companyId)
         {
             Comment = comment;
             Rating = rating;
             ApplicationIdentityUserId = applicationIdentityUserId;
             ReviewerCompanyId = reviewerCompanyId;
-            State = state;
+            CompanyId = companyId;
         }
 
         public string Comment { get; set; }
         public int Rating { get; set; }
         public string ApplicationIdentityUserId { get; set; }
         public Guid ReviewerCompanyId { get; set; }
-        public EntityState State { get; set; }
+        public Guid CompanyId { get; set; }
     }
 }

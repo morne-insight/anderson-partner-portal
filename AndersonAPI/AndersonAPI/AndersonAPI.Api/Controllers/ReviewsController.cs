@@ -5,6 +5,7 @@ using AndersonAPI.Application.Reviews.CreateReview;
 using AndersonAPI.Application.Reviews.DeleteReview;
 using AndersonAPI.Application.Reviews.GetReviewById;
 using AndersonAPI.Application.Reviews.GetReviews;
+using AndersonAPI.Application.Reviews.GetReviewsForCompanyById;
 using AndersonAPI.Application.Reviews.UpdateReview;
 using Intent.RoslynWeaver.Attributes;
 using MediatR;
@@ -121,6 +122,28 @@ namespace AndersonAPI.Api.Controllers
             CancellationToken cancellationToken = default)
         {
             var result = await _mediator.Send(new GetReviewByIdQuery(id: id), cancellationToken);
+            return result == null ? NotFound() : Ok(result);
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <response code="200">Returns the specified List&lt;ReviewDto&gt;.</response>
+        /// <response code="400">One or more validation errors have occurred.</response>
+        /// <response code="401">Unauthorized request.</response>
+        /// <response code="403">Forbidden request.</response>
+        /// <response code="404">No List&lt;ReviewDto&gt; could be found with the provided parameters.</response>
+        [HttpGet("api/reviews/company/{id}")]
+        [ProducesResponseType(typeof(List<ReviewDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<List<ReviewDto>>> GetReviewsForCompanyById(
+            [FromRoute] Guid id,
+            CancellationToken cancellationToken = default)
+        {
+            var result = await _mediator.Send(new GetReviewsForCompanyByIdQuery(id: id), cancellationToken);
             return result == null ? NotFound() : Ok(result);
         }
 

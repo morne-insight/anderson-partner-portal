@@ -240,19 +240,19 @@
       <metadata />
       <childElements />
     </childElement>
-    <childElement id="81458994-4ed0-47c3-bdfa-b2082a7809a2" type="DTO-Field" typeId="7baed1fd-469b-4980-8fd9-4cefb8331eb2">
-      <name>State</name>
-      <display>State: EntityState</display>
+    <childElement id="b6ada54c-f46d-4e75-a1cb-1f61d5117650" type="DTO-Field" typeId="7baed1fd-469b-4980-8fd9-4cefb8331eb2">
+      <name>CompanyId</name>
+      <display>CompanyId: guid</display>
       <isAbstract>false</isAbstract>
       <genericTypes />
-      <typeReference id="67be38e5-956e-4002-adca-e787aa5badc5">
-        <typeId>0b91d0c5-4aa0-4fd0-854a-7a10a9808b4d</typeId>
+      <typeReference id="c92573df-d3eb-422b-bd87-db4ea3a0c943">
+        <typeId>6b649125-18ea-48fd-a6ba-0bfff0d8f488</typeId>
         <isNavigable>true</isNavigable>
         <isNullable>false</isNullable>
         <isCollection>false</isCollection>
         <isRequired>true</isRequired>
-        <typePackageName>AndersonAPI.Domain</typePackageName>
-        <typePackageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</typePackageId>
+        <typePackageName>Intent.Common.Types</typePackageName>
+        <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
         <stereotypes />
         <genericTypeParameters />
       </typeReference>

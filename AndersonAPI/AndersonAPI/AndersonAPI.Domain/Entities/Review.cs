@@ -7,18 +7,19 @@ namespace AndersonAPI.Domain.Entities
 {
     public class Review : BaseEntity, IAuditable
     {
-        private List<Company> _companies = [];
 
         public Review(string comment,
             int rating,
             string applicationIdentityUserId,
             Guid reviewerCompanyId,
+            Guid companyId,
             EntityState state = EntityState.Enabled)
         {
             Comment = comment;
             Rating = rating;
             ApplicationIdentityUserId = applicationIdentityUserId;
             ReviewerCompanyId = reviewerCompanyId;
+            CompanyId = companyId;
             State = state;
         }
         /// <summary>
@@ -30,6 +31,7 @@ namespace AndersonAPI.Domain.Entities
             ApplicationIdentityUserId = null!;
             ReviewerCompany = null!;
             ApplicationIdentityUser = null!;
+            Company = null!;
         }
 
         public string Comment { get; private set; }
@@ -48,15 +50,13 @@ namespace AndersonAPI.Domain.Entities
 
         public Guid ReviewerCompanyId { get; private set; }
 
-        public virtual IReadOnlyCollection<Company> Companies
-        {
-            get => _companies.AsReadOnly();
-            private set => _companies = new List<Company>(value);
-        }
+        public Guid CompanyId { get; private set; }
 
         public virtual Company ReviewerCompany { get; private set; }
 
         public virtual ApplicationIdentityUser ApplicationIdentityUser { get; private set; }
+
+        public virtual Company Company { get; private set; }
 
         public void Update(string comment, int rating)
         {

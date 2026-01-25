@@ -17,7 +17,6 @@ namespace AndersonAPI.Application.Companies
             Industries = null!;
             Locations = null!;
             Opportunities = null!;
-            Reviews = null!;
             ServiceTypeName = null!;
         }
 
@@ -30,7 +29,6 @@ namespace AndersonAPI.Application.Companies
         public List<PartnerIndustryDto> Industries { get; set; }
         public List<PartnerLocationDto> Locations { get; set; }
         public List<PartnerOpportunityDto> Opportunities { get; set; }
-        public List<PartnerReviewDto> Reviews { get; set; }
         public Guid? ServiceTypeId { get; set; }
         public string ServiceTypeName { get; set; }
 
@@ -44,7 +42,6 @@ namespace AndersonAPI.Application.Companies
             List<PartnerIndustryDto> industries,
             List<PartnerLocationDto> locations,
             List<PartnerOpportunityDto> opportunities,
-            List<PartnerReviewDto> reviews,
             Guid? serviceTypeId,
             string serviceTypeName)
         {
@@ -59,8 +56,6 @@ namespace AndersonAPI.Application.Companies
                 Industries = industries,
                 Locations = locations,
                 Opportunities = opportunities,
-                Reviews = reviews
-,
                 ServiceTypeId = serviceTypeId,
                 ServiceTypeName = serviceTypeName
             };

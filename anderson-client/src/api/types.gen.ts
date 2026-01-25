@@ -321,7 +321,7 @@ export type CreateReviewCommand = {
     rating: number;
     applicationIdentityUserId: string;
     reviewerCompanyId: string;
-    state: EntityState;
+    companyId: string;
 };
 
 /**
@@ -593,7 +593,6 @@ export type PartnerProfile = {
     industries?: Array<PartnerIndustryDto>;
     locations?: Array<PartnerLocationDto>;
     opportunities?: Array<PartnerOpportunityDto>;
-    reviews?: Array<PartnerReviewDto>;
     serviceTypeId?: string | null;
     serviceTypeName?: string;
 };
@@ -609,19 +608,6 @@ export type PartnerProfileListItem = {
     locations?: Array<PartnerLocationDto>;
     contacts?: Array<PartnerContactDto>;
     matchScore?: number;
-};
-
-/**
- * PartnerReviewDto
- */
-export type PartnerReviewDto = {
-    id?: string;
-    comment?: string;
-    rating?: number;
-    applicationIdentityUserId?: string;
-    reviewerCompanyId?: string;
-    order?: number;
-    state?: EntityState;
 };
 
 /**
@@ -747,11 +733,12 @@ export type ResetPasswordDto = {
 export type ReviewDto = {
     comment?: string;
     rating?: number;
-    applicationIdentityUserId?: string;
+    userId?: string;
+    createdByUserName?: string | null;
+    createdDate?: Date;
     reviewerCompanyId?: string;
+    reviewerCompanyName?: string;
     id?: string;
-    order?: number;
-    state?: EntityState;
 };
 
 /**
@@ -5092,6 +5079,49 @@ export type PutApiReviewsByIdResponses = {
 };
 
 export type PutApiReviewsByIdResponse = PutApiReviewsByIdResponses[keyof PutApiReviewsByIdResponses];
+
+export type GetApiReviewsCompanyByIdData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/reviews/company/{id}';
+};
+
+export type GetApiReviewsCompanyByIdErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type GetApiReviewsCompanyByIdError = GetApiReviewsCompanyByIdErrors[keyof GetApiReviewsCompanyByIdErrors];
+
+export type GetApiReviewsCompanyByIdResponses = {
+    /**
+     * OK
+     */
+    200: Array<ReviewDto>;
+};
+
+export type GetApiReviewsCompanyByIdResponse = GetApiReviewsCompanyByIdResponses[keyof GetApiReviewsCompanyByIdResponses];
 
 export type GetApiServiceTypesData = {
     body?: never;

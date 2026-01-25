@@ -22,10 +22,6 @@ namespace AndersonAPI.Application.Reviews.CreateReview
 
             RuleFor(v => v.ApplicationIdentityUserId)
                 .NotNull();
-
-            RuleFor(v => v.State)
-                .NotNull()
-                .IsInEnum();
         }
     }
 }

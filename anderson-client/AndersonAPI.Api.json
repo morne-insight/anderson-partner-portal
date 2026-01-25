@@ -12198,6 +12198,155 @@
         }
       }
     },
+    "/api/reviews/company/{id}": {
+      "get": {
+        "tags": [
+          "Reviews"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ReviewDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ReviewDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ReviewDto"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/service-types": {
       "post": {
         "tags": [
@@ -13810,7 +13959,7 @@
           "rating",
           "applicationIdentityUserId",
           "reviewerCompanyId",
-          "state"
+          "companyId"
         ],
         "type": "object",
         "properties": {
@@ -13828,8 +13977,9 @@
             "type": "string",
             "format": "uuid"
           },
-          "state": {
-            "$ref": "#/components/schemas/EntityState"
+          "companyId": {
+            "type": "string",
+            "format": "uuid"
           }
         }
       },
@@ -14466,12 +14616,6 @@
               "$ref": "#/components/schemas/PartnerOpportunityDto"
             }
           },
-          "reviews": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/PartnerReviewDto"
-            }
-          },
           "serviceTypeId": {
             "type": "string",
             "format": "uuid",
@@ -14517,37 +14661,6 @@
           "matchScore": {
             "type": "number",
             "format": "double"
-          }
-        }
-      },
-      "PartnerReviewDto": {
-        "title": "PartnerReviewDto",
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "comment": {
-            "type": "string"
-          },
-          "rating": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "applicationIdentityUserId": {
-            "type": "string"
-          },
-          "reviewerCompanyId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "order": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "state": {
-            "$ref": "#/components/schemas/EntityState"
           }
         }
       },
@@ -14821,23 +14934,27 @@
             "type": "integer",
             "format": "int32"
           },
-          "applicationIdentityUserId": {
+          "userId": {
             "type": "string"
+          },
+          "createdByUserName": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time"
           },
           "reviewerCompanyId": {
             "type": "string",
             "format": "uuid"
           },
+          "reviewerCompanyName": {
+            "type": "string"
+          },
           "id": {
             "type": "string",
             "format": "uuid"
-          },
-          "order": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "state": {
-            "$ref": "#/components/schemas/EntityState"
           }
         }
       },

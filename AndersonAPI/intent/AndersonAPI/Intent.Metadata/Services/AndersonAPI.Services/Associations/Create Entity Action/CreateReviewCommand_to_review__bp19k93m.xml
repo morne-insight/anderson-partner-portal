@@ -121,17 +121,17 @@
             </sources>
           </mappedEnd>
           <mappedEnd>
-            <expression>{State}</expression>
+            <expression>{CompanyId}</expression>
             <path>
               <target id="a66e248c-b5ab-49ee-a926-9930d073a5bf" name="Review" type="element" specialization="Class" specializationId="04e12b51-ed12-42a3-9667-a6aa81bb6d10" />
               <target id="4fb57e32-abf4-45c1-8b93-8ef8bacbb61c" name="Constructor" type="element" specialization="Class Constructor" specializationId="dec2bd12-4699-4f45-8ec9-3b62dc692d2b" />
-              <target id="ff1a41a9-f563-4506-96e8-32982f863ebd" name="state" type="element" specialization="Parameter" specializationId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b" />
+              <target id="9e94c2bd-c749-4a7c-ba95-54bd41f12679" name="companyId" type="element" specialization="Parameter" specializationId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b" />
             </path>
             <sources>
-              <source identifier="State" mappingType="Data Mapping" mappingTypeId="50dccfb2-bd24-4135-adf6-ed31f28f8fe0">
+              <source identifier="CompanyId" mappingType="Data Mapping" mappingTypeId="50dccfb2-bd24-4135-adf6-ed31f28f8fe0">
                 <path>
                   <target id="34896883-4651-40b2-ae20-58cc71d3375f" name="CreateReviewCommand" type="element" specialization="Command" specializationId="ccf14eb6-3a55-4d81-b5b9-d27311c70cb9" />
-                  <target id="81458994-4ed0-47c3-bdfa-b2082a7809a2" name="State" type="element" specialization="DTO-Field" specializationId="7baed1fd-469b-4980-8fd9-4cefb8331eb2" />
+                  <target id="b6ada54c-f46d-4e75-a1cb-1f61d5117650" name="CompanyId" type="element" specialization="DTO-Field" specializationId="7baed1fd-469b-4980-8fd9-4cefb8331eb2" />
                 </path>
               </source>
             </sources>

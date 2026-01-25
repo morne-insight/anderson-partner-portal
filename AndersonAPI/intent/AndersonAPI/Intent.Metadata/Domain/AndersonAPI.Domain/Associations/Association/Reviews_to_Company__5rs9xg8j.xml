@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<association id="af972ccd-1e62-433a-afb0-d26a00b15791">
-  <sourceEnd id="b5a95611-4952-4a31-bcc1-5711abec3848" type="Association Source End" typeId="8d9d2e5b-bd55-4f36-9ae4-2b9e84fd4e58">
+<association id="e9727253-d80e-4d26-89b7-abb788e7bb78">
+  <sourceEnd id="10745b95-5d01-4c58-8c14-450ab8f96860" type="Association Source End" typeId="8d9d2e5b-bd55-4f36-9ae4-2b9e84fd4e58">
     <name>Reviews</name>
     <display>Reviews: Review[*]</display>
-    <order>36</order>
-    <typeReference id="69c93f96-ac61-4761-9e79-aaa2d6cbba23">
+    <order>40</order>
+    <typeReference id="76e9186a-0614-43e9-8e41-56a2fc5797f3">
       <typeId>a66e248c-b5ab-49ee-a926-9930d073a5bf</typeId>
       <isNavigable>true</isNavigable>
       <isNullable>false</isNullable>
@@ -19,15 +19,15 @@
     <metadata />
     <childElements />
   </sourceEnd>
-  <targetEnd id="af972ccd-1e62-433a-afb0-d26a00b15791" type="Association Target End" typeId="0a66489f-30aa-417b-a75d-b945863366fd">
-    <name>Companies</name>
-    <display>Companies: Company[*]</display>
-    <order>11</order>
-    <typeReference id="4d3542a0-b09b-458a-9a20-59970f0a4de2">
+  <targetEnd id="e9727253-d80e-4d26-89b7-abb788e7bb78" type="Association Target End" typeId="0a66489f-30aa-417b-a75d-b945863366fd">
+    <name>Company</name>
+    <display>Company: Company</display>
+    <order>14</order>
+    <typeReference id="f773e308-205d-44a9-93f3-824e4d160f9d">
       <typeId>3259289c-5d51-46cb-8c99-78751b456c44</typeId>
       <isNavigable>true</isNavigable>
       <isNullable>false</isNullable>
-      <isCollection>true</isCollection>
+      <isCollection>false</isCollection>
       <isRequired>true</isRequired>
       <typePackageName>AndersonAPI.Domain</typePackageName>
       <typePackageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</typePackageId>

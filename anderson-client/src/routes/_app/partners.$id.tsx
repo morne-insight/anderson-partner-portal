@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowLeft, MapPin, Globe, CheckCircle, Building, Briefcase, Star, Users } from "lucide-react";
+import { ArrowLeft, MapPin, Globe, CheckCircle, Building, Briefcase, Users } from "lucide-react";
 import { callApi } from "@/server/proxy";
+import { ReviewComponent } from "@/components/Reviews/ReviewComponent";
 
 export const Route = createFileRoute("/_app/partners/$id")({
   component: PartnerProfile,
@@ -64,10 +65,10 @@ function PartnerProfile() {
 
   if (!partner) {
     return (
-        <div className="p-12 text-center">
-            <h2 className="text-2xl font-serif text-black">Partner not found</h2>
-            <Link to="/partners" className="text-red-600 hover:underline mt-4 block">Return to Directory</Link>
-        </div>
+      <div className="p-12 text-center">
+        <h2 className="text-2xl font-serif text-black">Partner not found</h2>
+        <Link to="/partners" className="text-red-600 hover:underline mt-4 block">Return to Directory</Link>
+      </div>
     )
   }
 
@@ -76,8 +77,8 @@ function PartnerProfile() {
   return (
     <div className="space-y-8 animate-fade-in">
       <nav className="flex items-center text-xs text-gray-500 mb-8 uppercase tracking-wider font-medium">
-        <Link 
-          to={fromDirectory ? "/directory" : "/partners"} 
+        <Link
+          to={fromDirectory ? "/directory" : "/partners"}
           className="flex items-center hover:text-red-600 transition-colors"
         >
           <ArrowLeft className="w-3 h-3 mr-2" />
@@ -117,7 +118,7 @@ function PartnerProfile() {
 
             <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
               <button
-                onClick={() => {}}
+                onClick={() => { }}
                 className="px-10 py-3 bg-red-600 text-white text-xs font-bold uppercase tracking-[0.15em] hover:bg-white hover:text-red-600 border border-red-600 transition-colors min-w-[160px]"
               >
                 Connect
@@ -222,9 +223,8 @@ function PartnerProfile() {
                 .map((loc: any, i: number) => (
                   <div
                     key={i}
-                    className={`p-4 border ${
-                      loc.isHeadOffice ? "border-red-600 bg-red-50/20" : "border-gray-100"
-                    }`}
+                    className={`p-4 border ${loc.isHeadOffice ? "border-red-600 bg-red-50/20" : "border-gray-100"
+                      }`}
                   >
                     <div className="flex justify-between items-start">
                       <p className="text-sm font-bold text-black">{loc.country}</p>
@@ -243,40 +243,7 @@ function PartnerProfile() {
           </div>
 
           {/* Reviews */}
-          <div className="bg-white p-8 border border-gray-200 shadow-sm">
-            <h3 className="text-xl font-serif text-black mb-8 flex items-center border-b border-gray-100 pb-4">
-              <Star className="w-5 h-5 mr-3 text-red-600" />
-              Client Reviews
-            </h3>
-            <div className="space-y-8">
-              {partner.reviews.length > 0 ? (
-                partner.reviews.map((rev: any, i: number) => (
-                  <div
-                    key={i}
-                    className="border-l-4 border-gray-100 pl-6 pb-6 border-b last:border-b-0"
-                  >
-                    <div className="flex items-center gap-1 mb-3">
-                      {[...Array(5)].map((_, idx) => (
-                        <Star
-                          key={idx}
-                          className={`w-3 h-3 ${
-                            idx < rev.rating ? "text-yellow-400 fill-yellow-400" : "text-gray-200"
-                          }`}
-                        />
-                      ))}
-                    </div>
-                    <p className="text-gray-600 font-light italic mb-4 leading-relaxed">"{rev.comment}"</p>
-                    <div className="flex justify-between items-center text-[10px] font-bold uppercase tracking-widest text-gray-400">
-                      <span>{rev.reviewerName}</span>
-                      <span>{rev.date}</span>
-                    </div>
-                  </div>
-                ))
-              ) : (
-                <p className="text-gray-400 italic text-center py-10">No reviews yet.</p>
-              )}
-            </div>
-          </div>
+          <ReviewComponent partnerId={partner.id} />
         </div>
 
         {/* Sidebar Info */}

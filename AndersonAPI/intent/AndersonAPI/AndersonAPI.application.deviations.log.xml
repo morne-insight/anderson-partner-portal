@@ -212,6 +212,16 @@
       <fileHash>D53D97522336988C8525EF8B46BE920D83BAF8E54E6C18E4FFF0E1BAB06560C3</fileHash>
     </file>
     <file>
+      <correlationId>Intent.Application.MediatR.QueryHandler#a898d7a2-5fb6-4de8-8509-e609732b6e1b</correlationId>
+      <path>AndersonAPI.Application/Reviews/GetReviewsForCompanyById/GetReviewsForCompanyByIdQueryHandler.cs</path>
+      <count>1</count>
+      <updatedByAccountName>mvanzyl@insightconsulting.co.za</updatedByAccountName>
+      <updatedByDisplayName>Morne</updatedByDisplayName>
+      <updatedAt>2026-01-25T19:30:24.7979784Z</updatedAt>
+      <deviationsHash>965F1647EC21AA6D4976E7DA2AC30FB31B38FDEB4ED9174D5E2D722533F7F4D9</deviationsHash>
+      <fileHash>19D78D74DFD4C8C6CFEA0DF8CB3158045A4541E7AB7495469597E067D31DB7B2</fileHash>
+    </file>
+    <file>
       <correlationId>Intent.Entities.DomainEntity#0cc17a59-dc32-4408-b0fc-d0814cb75815</correlationId>
       <path>AndersonAPI.Domain/Entities/ApplicationIdentityUser.cs</path>
       <count>2</count>

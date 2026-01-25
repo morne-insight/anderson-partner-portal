@@ -11,7 +11,10 @@ namespace AndersonAPI.Application.Reviews
     {
         public ReviewDtoProfile()
         {
-            CreateMap<Review, ReviewDto>();
+            CreateMap<Review, ReviewDto>()
+                .ForMember(d => d.UserId, opt => opt.MapFrom(src => src.ApplicationIdentityUserId))
+                .ForMember(d => d.CreatedByUserName, opt => opt.MapFrom(src => src.ApplicationIdentityUser.Name))
+                .ForMember(d => d.ReviewerCompanyName, opt => opt.MapFrom(src => src.ReviewerCompany.Name));
         }
     }
 

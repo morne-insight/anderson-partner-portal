@@ -1,5 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import {
+  getApiUserDetail,
   postApiAccountLogin,
   postApiAccountLogout,
   postApiAccountRegister,
@@ -18,7 +19,18 @@ export const loginFn = createServerFn({ method: "POST" })
       if (!response.data) {
         return { error: "Invalid credentials" };
       }
+
       console.log("login result", response.data);
+
+      const userDetailResponse = await getApiUserDetail({
+        headers: {
+          Authorization: `Bearer ${response.data.authenticationToken }`,
+        },
+      });
+
+      if (!userDetailResponse.data) {
+        return { error: "Failed to get user details" };
+      }
 
       // Create session with user data and tokens
       const session = await useAppSession();
@@ -26,6 +38,10 @@ export const loginFn = createServerFn({ method: "POST" })
         userId: response.data.userId?.toString() ?? undefined, // or extract user ID from JWT
         userName: response.data.userName ?? undefined,
         email: data.email,
+        companyId:userDetailResponse.data.companyId?.toString() ?? undefined,
+        companyName:userDetailResponse.data.companyName ?? undefined,
+        companies:userDetailResponse.data.companies ?? undefined,
+
         accessToken: response.data.authenticationToken ?? undefined,
         accessTokenExpiresAt: response.data.expiresIn ? Date.now() + (response.data.expiresIn * 1000) : undefined,
         refreshToken: response.data.refreshToken ?? undefined,

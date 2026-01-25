@@ -27,7 +27,7 @@ namespace AndersonAPI.Application.Reviews.CreateReview
                 rating: request.Rating,
                 applicationIdentityUserId: request.ApplicationIdentityUserId,
                 reviewerCompanyId: request.ReviewerCompanyId,
-                state: request.State);
+                companyId: request.CompanyId);
 
             _reviewRepository.Add(review);
             await _reviewRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
