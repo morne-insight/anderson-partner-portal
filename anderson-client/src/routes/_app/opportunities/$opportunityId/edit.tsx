@@ -1,6 +1,7 @@
 import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
+import { toast } from "sonner";
 import { useForm } from "@tanstack/react-form";
 import { callApi } from "@/server/proxy";
 import { Button } from "@/components/ui/button";
@@ -17,6 +18,17 @@ import {
   ChevronDown,
   Trash2
 } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { usePrefetchReferenceData } from "@/hooks/useReferenceData";
 
 export const Route = createFileRoute("/_app/opportunities/$opportunityId/edit")({
@@ -74,7 +86,7 @@ function EditOpportunity() {
     },
     onError: (err) => {
       console.error("Failed to update opportunity", err);
-      alert("Failed to update opportunity. Please try again.");
+      toast.error("Failed to update opportunity. Please try again.");
     }
   });
 
@@ -93,7 +105,7 @@ function EditOpportunity() {
     },
     onError: (err) => {
       console.error("Failed to delete", err);
-      alert("Could not delete opportunity.");
+      toast.error("Could not delete opportunity.");
     }
   });
 
@@ -140,7 +152,7 @@ function EditOpportunity() {
         await updateMutation.mutateAsync(payload);
       } catch (error) {
         console.error('Failed to save opportunity:', error);
-        alert('Failed to save opportunity. Please try again.');
+        toast.error('Failed to save opportunity. Please try again.');
       }
     },
   });
@@ -179,17 +191,33 @@ function EditOpportunity() {
           </button>
           <h2 className="text-4xl font-serif text-black mb-3">Edit Opportunity</h2>
         </div>
-        <Button
-          variant="ghost"
-          onClick={() => {
-            if (confirm("Are you sure you want to delete this opportunity?")) {
-              deleteMutation.mutate();
-            }
-          }}
-          className="text-red-600 hover:text-red-700 hover:bg-red-50"
-        >
-          <Trash2 className="w-4 h-4 mr-2" /> Delete
-        </Button>
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <Button
+              variant="ghost"
+              className="text-red-600 hover:text-red-700 hover:bg-red-50"
+            >
+              <Trash2 className="w-4 h-4 mr-2" /> Delete
+            </Button>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Delete Opportunity</AlertDialogTitle>
+              <AlertDialogDescription>
+                Are you sure you want to delete this opportunity? This action cannot be undone.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction
+                className="bg-red-600 hover:bg-red-700 font-bold"
+                onClick={() => deleteMutation.mutate()}
+              >
+                Delete
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </header>
 
       <form
@@ -400,8 +428,8 @@ function EditOpportunity() {
                             else field.handleChange([...field.state.value, st.id!]);
                           }}
                           className={`px-3 py-1.5 text-[10px] uppercase font-bold tracking-wider border transition-all ${isSelected
-                              ? "bg-black text-white border-black"
-                              : "bg-gray-50 text-gray-400 border-gray-200 hover:border-gray-400 hover:text-gray-600"
+                            ? "bg-black text-white border-black"
+                            : "bg-gray-50 text-gray-400 border-gray-200 hover:border-gray-400 hover:text-gray-600"
                             }`}
                         >
                           {st.name}
@@ -435,8 +463,8 @@ function EditOpportunity() {
                             else field.handleChange([...field.state.value, cap.id!]);
                           }}
                           className={`px-3 py-1.5 text-[10px] uppercase font-bold tracking-wider border transition-all ${isSelected
-                              ? "bg-red-600 text-white border-red-600"
-                              : "bg-gray-50 text-gray-400 border-gray-200 hover:border-gray-400 hover:text-gray-600"
+                            ? "bg-red-600 text-white border-red-600"
+                            : "bg-gray-50 text-gray-400 border-gray-200 hover:border-gray-400 hover:text-gray-600"
                             }`}
                         >
                           {cap.name}
@@ -470,8 +498,8 @@ function EditOpportunity() {
                             else field.handleChange([...field.state.value, ind.id!]);
                           }}
                           className={`px-3 py-1.5 text-[10px] uppercase font-bold tracking-wider border transition-all ${isSelected
-                              ? "bg-blue-600 text-white border-blue-600"
-                              : "bg-gray-50 text-gray-400 border-gray-200 hover:border-gray-400 hover:text-gray-600"
+                            ? "bg-blue-600 text-white border-blue-600"
+                            : "bg-gray-50 text-gray-400 border-gray-200 hover:border-gray-400 hover:text-gray-600"
                             }`}
                         >
                           {ind.name}

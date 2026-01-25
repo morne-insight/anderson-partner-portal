@@ -1,5 +1,6 @@
 import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { useState } from "react";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -19,7 +20,6 @@ import {
   type CreateQuarterlyPartnersDto,
   type ReportQuarter,
   type CountryDto,
-  SetSubmittedQuarterlyCommand
 } from "@/api";
 import { usePrefetchReferenceData } from "@/hooks/useReferenceData";
 import { PartnerStatus } from "@/types/reports";
@@ -143,7 +143,7 @@ function CreateReportPage() {
 
   const handleSubmit = async () => {
     if (reportLines.length === 0) {
-      alert('Please add at least one report line.');
+      toast.error('Please add at least one report line.');
       return;
     }
 
@@ -167,11 +167,11 @@ function CreateReportPage() {
         },
       });
 
-      alert("Report created successfully!");
+      toast.success("Report created successfully!");
       router.navigate({ to: `/profile/${companyId}/reports` });
     } catch (error) {
       console.error(error);
-      alert("Failed to create report.");
+      toast.error("Failed to create report.");
     } finally {
       setIsSubmitting(false);
     }

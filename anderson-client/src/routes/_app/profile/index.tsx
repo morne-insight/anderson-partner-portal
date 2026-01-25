@@ -2,6 +2,7 @@ import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import { useMutation } from "@tanstack/react-query";
 import { Building2, ChevronRight, Globe, Users, Plus, Loader2, FileText } from "lucide-react";
 import { useState } from "react";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { callApi } from "@/server/proxy";
@@ -46,7 +47,7 @@ function ProfileIndex() {
     },
     onError: (err) => {
       console.error("Scrape failed", err);
-      alert("Failed to sync website. Please try creating manually.");
+      toast.error("Failed to sync website. Please try creating manually.");
     }
   });
 
@@ -77,7 +78,7 @@ function ProfileIndex() {
     },
     onError: (err) => {
       console.error("Create failed", err);
-      alert("Failed to create profile.");
+      toast.error("Failed to create profile.");
     }
   });
 

@@ -1,5 +1,6 @@
 import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { useState } from "react";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import {
@@ -58,7 +59,7 @@ function ReportsPage() {
 
   const handleCreateReport = () => {
     if (selectedYear === 'all' || selectedQuarter === 'all') {
-      alert('Please select both year and quarter to create a new report.');
+      toast.error('Please select both year and quarter to create a new report.');
       return;
     }
 
@@ -68,7 +69,7 @@ function ReportsPage() {
     );
 
     if (existingReport) {
-      alert('A report already exists for this year and quarter. Please select a different period.');
+      toast.error('A report already exists for this year and quarter. Please select a different period.');
       return;
     }
 

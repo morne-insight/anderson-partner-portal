@@ -16,6 +16,7 @@ import {
   User,
 } from "lucide-react";
 import { useState } from "react";
+import { toast } from "sonner";
 import z from "zod";
 import type {
   CapabilityDto,
@@ -36,6 +37,17 @@ import {
   ComboboxList,
   ComboboxValue,
 } from "@/components/ui/base-combobox";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -110,11 +122,11 @@ function ProfileEdit() {
     },
     onSuccess: () => {
       refreshData();
-      alert("AI Sync started! Your data will be updated shortly.");
+      toast.success("AI Sync started! Your data will be updated shortly.");
     },
     onError: (err) => {
       console.error(err);
-      alert("Failed to start AI Sync.");
+      toast.error("Failed to start AI Sync.");
     },
   });
 
@@ -198,11 +210,11 @@ function ProfileEdit() {
           },
         });
 
-        alert("Profile saved successfully!");
+        toast.success("Profile saved successfully!");
         refreshData();
       } catch (error) {
         console.error(error);
-        alert("Failed to save changes.");
+        toast.error("Failed to save changes.");
       }
     },
     // validatorAdapter: zodValidator(),
@@ -780,20 +792,33 @@ function ProfileEdit() {
                         >
                           <Pencil className="h-4 w-4" />
                         </button>
-                        <button
-                          className="text-gray-400 transition-colors hover:text-red-600"
-                          onClick={() => {
-                            if (
-                              confirm(
-                                "Are you sure you want to delete this location?"
-                              )
-                            ) {
-                              deleteLocationMutation.mutate(loc.id!);
-                            }
-                          }}
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </button>
+                        <AlertDialog>
+                          <AlertDialogTrigger asChild>
+                            <button className="text-gray-400 transition-colors hover:text-red-600">
+                              <Trash2 className="h-4 w-4" />
+                            </button>
+                          </AlertDialogTrigger>
+                          <AlertDialogContent>
+                            <AlertDialogHeader>
+                              <AlertDialogTitle>Delete Location</AlertDialogTitle>
+                              <AlertDialogDescription>
+                                Are you sure you want to delete this location? This
+                                action cannot be undone.
+                              </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                              <AlertDialogCancel>Cancel</AlertDialogCancel>
+                              <AlertDialogAction
+                                className="bg-red-600 hover:bg-red-700 font-bold"
+                                onClick={() =>
+                                  deleteLocationMutation.mutate(loc.id!)
+                                }
+                              >
+                                Delete
+                              </AlertDialogAction>
+                            </AlertDialogFooter>
+                          </AlertDialogContent>
+                        </AlertDialog>
                       </div>
                     </div>
                   )}
@@ -1015,20 +1040,33 @@ function ProfileEdit() {
                         >
                           <Pencil className="h-4 w-4" />
                         </button>
-                        <button
-                          className="text-gray-400 transition-colors hover:text-red-600"
-                          onClick={() => {
-                            if (
-                              confirm(
-                                "Are you sure you want to delete this contact?"
-                              )
-                            ) {
-                              deleteContactMutation.mutate(contact.id!);
-                            }
-                          }}
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </button>
+                        <AlertDialog>
+                          <AlertDialogTrigger asChild>
+                            <button className="text-gray-400 transition-colors hover:text-red-600">
+                              <Trash2 className="h-4 w-4" />
+                            </button>
+                          </AlertDialogTrigger>
+                          <AlertDialogContent>
+                            <AlertDialogHeader>
+                              <AlertDialogTitle>Delete Contact</AlertDialogTitle>
+                              <AlertDialogDescription>
+                                Are you sure you want to delete this contact? This
+                                action cannot be undone.
+                              </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                              <AlertDialogCancel>Cancel</AlertDialogCancel>
+                              <AlertDialogAction
+                                className="bg-red-600 hover:bg-red-700 font-bold"
+                                onClick={() =>
+                                  deleteContactMutation.mutate(contact.id!)
+                                }
+                              >
+                                Delete
+                              </AlertDialogAction>
+                            </AlertDialogFooter>
+                          </AlertDialogContent>
+                        </AlertDialog>
                       </div>
                     </div>
                   )}
@@ -1147,21 +1185,34 @@ function ProfileEdit() {
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
-                      <button
-                        className="text-gray-400 transition-colors hover:text-red-600"
-                        disabled={deleteUserMutation.isPending}
-                        onClick={() => {
-                          if (
-                            confirm(
-                              "Are you sure you want to remove this user from the company?"
-                            )
-                          ) {
-                            deleteUserMutation.mutate(user.id!);
-                          }
-                        }}
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </button>
+                      <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                          <button
+                            className="text-gray-400 transition-colors hover:text-red-600"
+                            disabled={deleteUserMutation.isPending}
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                          <AlertDialogHeader>
+                            <AlertDialogTitle>Remove User</AlertDialogTitle>
+                            <AlertDialogDescription>
+                              Are you sure you want to remove this user from the
+                              company? This action cannot be undone.
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogAction
+                              className="bg-red-600 hover:bg-red-700 font-bold"
+                              onClick={() => deleteUserMutation.mutate(user.id!)}
+                            >
+                              Remove
+                            </AlertDialogAction>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
                     </div>
                   </div>
                 )
@@ -1206,21 +1257,33 @@ function ProfileEdit() {
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
-                    <button
-                      className="text-gray-400 transition-colors hover:text-red-600"
-                      disabled={deleteInviteMutation.isPending}
-                      onClick={() => {
-                        if (
-                          confirm(
-                            "Are you sure you want to cancel this invite?"
-                          )
-                        ) {
-                          deleteInviteMutation.mutate(invite.id!);
-                        }
-                      }}
-                    >
-                      <Trash2 className="h-4 w-4" />
-                    </button>
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <button
+                          className="text-gray-400 transition-colors hover:text-red-600"
+                          disabled={deleteInviteMutation.isPending}
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </button>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>Cancel Invite</AlertDialogTitle>
+                          <AlertDialogDescription>
+                            Are you sure you want to cancel this invite?
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel>Cancel</AlertDialogCancel>
+                          <AlertDialogAction
+                            className="bg-red-600 hover:bg-red-700 font-bold"
+                            onClick={() => deleteInviteMutation.mutate(invite.id!)}
+                          >
+                            Cancel Invite
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
                   </div>
                 </div>
               ))}

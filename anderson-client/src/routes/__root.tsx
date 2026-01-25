@@ -11,6 +11,7 @@ import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import NotFound from "@/components/NotFound";
 import { AuthProvider } from "../contexts/auth-context";
 import appCss from "../styles.css?url";
+import { Toaster } from "@/components/ui/sonner";
 import "@/config/ts-client"; // Import global API configuration
 
 interface MyRouterContext {
@@ -52,6 +53,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <body>
         <AuthProvider>
           {children}
+          <Toaster position="top-right" />
         </AuthProvider>
         <TanStackDevtools
           config={{

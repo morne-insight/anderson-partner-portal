@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { callApi } from "@/server/proxy";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/dev")({
   component: RouteComponent,
@@ -18,14 +19,16 @@ function RouteComponent() {
         <Link params={{ fooId: "123" }} to="/foo/$fooId">
           Go to Foo with id
         </Link>
+        <button
+          onClick={() => callApi({ data: { fn: "getApiUserDetail" } })}
+          type="button"
+        >
+          Test API
+        </button>
+        <button onClick={() => toast("Hello World")} type="button">
+          Toast
+        </button>
       </div>
-      <br />
-      <button
-        onClick={() => callApi({ data: { fn: "getApiUserDetail" } })}
-        type="button"
-      >
-        Test API
-      </button>
       {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
     </div>
   );

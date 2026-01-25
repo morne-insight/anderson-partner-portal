@@ -1,4 +1,5 @@
 import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
+import { toast } from "sonner";
 import { callApi } from "@/server/proxy";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -91,7 +92,7 @@ function ViewOpportunity() {
     },
     onError: (err) => {
       console.error("Failed to add interested partner", err);
-      alert("Failed to add interested partner. Please try again.");
+      toast.error("Failed to add interested partner. Please try again.");
     }
   });
 
@@ -114,7 +115,7 @@ function ViewOpportunity() {
     },
     onError: (err) => {
       console.error("Failed to add interested partner", err);
-      alert("Failed to add interested partner. Please try again.");
+      toast.error("Failed to add interested partner. Please try again.");
     }
   });
 

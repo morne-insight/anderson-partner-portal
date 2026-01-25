@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { toast } from "sonner";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -7,6 +8,17 @@ import { MessageCircle, Send, Edit, Trash2, Loader2 } from "lucide-react";
 import { callApi } from "@/server/proxy";
 import { OpportunityMessageDto, AddMessageOpportunityCommand, UpdateMessageOpportunityCommand } from "@/api";
 import { useAuth } from "@/contexts/auth-context";
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 interface OpportunityMessagesProps {
     opportunityId: string;
@@ -63,7 +75,7 @@ export function OpportunityMessages({
         },
         onError: (error) => {
             console.error('Failed to add message:', error);
-            alert('Failed to send message. Please try again.');
+            toast.error('Failed to send message. Please try again.');
         }
     });
 
@@ -85,7 +97,7 @@ export function OpportunityMessages({
         },
         onError: (error) => {
             console.error('Failed to update message:', error);
-            alert('Failed to update message. Please try again.');
+            toast.error('Failed to update message. Please try again.');
         }
     });
 
@@ -106,7 +118,7 @@ export function OpportunityMessages({
         },
         onError: (error) => {
             console.error('Failed to delete message:', error);
-            alert('Failed to delete message. Please try again.');
+            toast.error('Failed to delete message. Please try again.');
         }
     });
 
@@ -130,11 +142,7 @@ export function OpportunityMessages({
         }
     };
 
-    const handleDeleteMessage = (messageId: string) => {
-        if (confirm('Are you sure you want to delete this message?')) {
-            deleteMessageMutation.mutate(messageId);
-        }
-    };
+
 
     const formatTimeAgo = (date: Date | string | undefined) => {
         if (!date) return '';
@@ -266,14 +274,34 @@ export function OpportunityMessages({
                                                 >
                                                     <Edit className="w-3 h-3" />
                                                 </Button>
-                                                <Button
-                                                    variant="ghost"
-                                                    size="sm"
-                                                    onClick={() => handleDeleteMessage(message.id!)}
-                                                    className="h-6 w-6 p-0 text-gray-600 hover:text-red-600 hover:bg-red-50"
-                                                >
-                                                    <Trash2 className="w-3 h-3" />
-                                                </Button>
+                                                <AlertDialog>
+                                                    <AlertDialogTrigger asChild>
+                                                        <Button
+                                                            variant="ghost"
+                                                            size="sm"
+                                                            className="h-6 w-6 p-0 text-gray-600 hover:text-red-600 hover:bg-red-50"
+                                                        >
+                                                            <Trash2 className="w-3 h-3" />
+                                                        </Button>
+                                                    </AlertDialogTrigger>
+                                                    <AlertDialogContent>
+                                                        <AlertDialogHeader>
+                                                            <AlertDialogTitle>Delete Message</AlertDialogTitle>
+                                                            <AlertDialogDescription>
+                                                                Are you sure you want to delete this message? This action cannot be undone.
+                                                            </AlertDialogDescription>
+                                                        </AlertDialogHeader>
+                                                        <AlertDialogFooter>
+                                                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                                            <AlertDialogAction
+                                                                onClick={() => deleteMessageMutation.mutate(message.id!)}
+                                                                className="bg-red-600 hover:bg-red-700 text-white"
+                                                            >
+                                                                Delete
+                                                            </AlertDialogAction>
+                                                        </AlertDialogFooter>
+                                                    </AlertDialogContent>
+                                                </AlertDialog>
                                             </div>
                                         )}
                                     </div>

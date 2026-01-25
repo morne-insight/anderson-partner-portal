@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { toast } from "sonner";
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Star, Edit2, Trash2, Plus, X, Check, Loader2 } from 'lucide-react';
 import { useAuth } from '@/contexts/auth-context';
@@ -7,6 +8,17 @@ import {
     type CreateReviewCommand,
     type UpdateReviewCommand,
 } from '@/api';
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { callApi } from '@/server/proxy';
 
 interface ReviewComponentProps {
@@ -77,7 +89,7 @@ export function ReviewComponent({ partnerId }: ReviewComponentProps) {
         },
         onError: (error) => {
             console.error('Failed to create review:', error);
-            alert('Failed to submit review. Please try again.');
+            toast.error('Failed to submit review. Please try again.');
         }
     });
 
@@ -104,7 +116,7 @@ export function ReviewComponent({ partnerId }: ReviewComponentProps) {
         },
         onError: (error) => {
             console.error('Failed to update review:', error);
-            alert('Failed to update review. Please try again.');
+            toast.error('Failed to update review. Please try again.');
         }
     });
 
@@ -123,7 +135,7 @@ export function ReviewComponent({ partnerId }: ReviewComponentProps) {
         },
         onError: (error) => {
             console.error('Failed to delete review:', error);
-            alert('Failed to delete review. Please try again.');
+            toast.error('Failed to delete review. Please try again.');
         }
     });
 
@@ -147,12 +159,7 @@ export function ReviewComponent({ partnerId }: ReviewComponentProps) {
         });
     };
 
-    const handleDeleteReview = (reviewId: string) => {
-        if (!confirm('Are you sure you want to delete this review?')) {
-            return;
-        }
-        deleteReviewMutation.mutate(reviewId);
-    };
+
 
     const startEditing = (review: ReviewDto) => {
         // Check if review can be edited (within 5 days)
@@ -162,7 +169,7 @@ export function ReviewComponent({ partnerId }: ReviewComponentProps) {
             fiveDaysAgo.setDate(fiveDaysAgo.getDate() - 5);
 
             if (reviewDate < fiveDaysAgo) {
-                alert('Reviews can only be edited within 5 days of posting.');
+                toast.warning('Reviews can only be edited within 5 days of posting.');
                 return;
             }
         }
@@ -361,13 +368,33 @@ export function ReviewComponent({ partnerId }: ReviewComponentProps) {
                                         >
                                             <Edit2 className="w-4 h-4" />
                                         </button>
-                                        <button
-                                            onClick={() => handleDeleteReview(review.id!)}
-                                            className="p-1 text-gray-400 hover:text-red-600 transition-colors"
-                                            title="Delete review"
-                                        >
-                                            <Trash2 className="w-4 h-4" />
-                                        </button>
+                                        <AlertDialog>
+                                            <AlertDialogTrigger asChild>
+                                                <button
+                                                    className="p-1 text-gray-400 hover:text-red-600 transition-colors"
+                                                    title="Delete review"
+                                                >
+                                                    <Trash2 className="w-4 h-4" />
+                                                </button>
+                                            </AlertDialogTrigger>
+                                            <AlertDialogContent>
+                                                <AlertDialogHeader>
+                                                    <AlertDialogTitle>Delete Review</AlertDialogTitle>
+                                                    <AlertDialogDescription>
+                                                        Are you sure you want to delete this review? This action cannot be undone.
+                                                    </AlertDialogDescription>
+                                                </AlertDialogHeader>
+                                                <AlertDialogFooter>
+                                                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                                    <AlertDialogAction
+                                                        className="bg-red-600 hover:bg-red-700 font-bold"
+                                                        onClick={() => deleteReviewMutation.mutate(review.id!)}
+                                                    >
+                                                        Delete
+                                                    </AlertDialogAction>
+                                                </AlertDialogFooter>
+                                            </AlertDialogContent>
+                                        </AlertDialog>
                                     </div>
                                 )}
                             </div>

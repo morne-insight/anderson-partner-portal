@@ -1,5 +1,6 @@
 import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { useState } from "react";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -152,7 +153,7 @@ function EditReportPage() {
 
   const handleSubmit = async () => {
     if (reportLines.length === 0) {
-      alert('Please add at least one report line.');
+      toast.error('Please add at least one report line.');
       return;
     }
 
@@ -175,11 +176,11 @@ function EditReportPage() {
         },
       });
 
-      alert("Report updated successfully!");
+      toast.success("Report updated successfully!");
       router.navigate({ to: `/profile/${companyId}/reports` });
     } catch (error) {
       console.error(error);
-      alert("Failed to update report.");
+      toast.error("Failed to update report.");
     } finally {
       setIsSubmitting(false);
     }

@@ -1,6 +1,7 @@
 import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
+import { toast } from "sonner";
 import { useForm } from "@tanstack/react-form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,8 +10,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { 
-  Loader2, 
+import {
+  Loader2,
   ArrowLeft,
   Building,
   ChevronDown
@@ -21,8 +22,8 @@ import { usePrefetchReferenceData } from "@/hooks/useReferenceData";
 export const Route = createFileRoute("/_app/opportunities/new")({
   component: CreateOpportunity,
   loader: async () => {
-    const [companies, ] = await Promise.all([
-      callApi({data:{fn: 'getApiCompaniesMe'}}),
+    const [companies,] = await Promise.all([
+      callApi({ data: { fn: 'getApiCompaniesMe' } }),
     ]);
 
     return {
@@ -35,11 +36,11 @@ function CreateOpportunity() {
   const router = useRouter();
   const { companies } = Route.useLoaderData();
 
-  const { 
-    opportunityTypes, 
-    countries, 
-    serviceTypes, 
-    capabilities, 
+  const {
+    opportunityTypes,
+    countries,
+    serviceTypes,
+    capabilities,
     industries,
     isLoading: isLoadingReferenceData,
     isError: isErrorReferenceData
@@ -49,7 +50,7 @@ function CreateOpportunity() {
 
   const createMutation = useMutation({
     mutationFn: async (values: any) => {
-      const response = await callApi({data:{fn: 'postApiOpportunities', args: {body: values}}} ); 
+      const response = await callApi({ data: { fn: 'postApiOpportunities', args: { body: values } } });
       if (response.error) {
         throw response.error;
       }
@@ -60,7 +61,7 @@ function CreateOpportunity() {
     },
     onError: (err) => {
       console.error("Failed to create opportunity", err);
-      alert("Failed to create opportunity. Please try again.");
+      toast.error("Failed to create opportunity. Please try again.");
     }
   });
 
@@ -120,7 +121,7 @@ function CreateOpportunity() {
         if (!value.opportunityTypeId) errors.opportunityTypeId = "Type is required";
         if (!value.countryId) errors.countryId = "Country is required";
         if (!value.companyId) errors.companyId = "Company is required";
-        
+
         console.log('Validation errors:', errors);
         return Object.keys(errors).length > 0 ? errors : undefined;
       }
@@ -138,7 +139,7 @@ function CreateOpportunity() {
     <div className="space-y-8 animate-fade-in pb-20">
       {/* Header */}
       <header className="border-b border-gray-200 pb-6">
-        <button 
+        <button
           onClick={() => router.history.back()}
           className="flex items-center gap-2 text-gray-500 hover:text-black text-xs uppercase tracking-widest font-bold mb-4 transition-colors"
         >
@@ -150,7 +151,7 @@ function CreateOpportunity() {
         </p>
       </header>
 
-      <form 
+      <form
         onSubmit={(e) => {
           e.preventDefault();
           e.stopPropagation();
@@ -160,13 +161,13 @@ function CreateOpportunity() {
       >
         {/* Left Column: Main Form */}
         <div className="lg:col-span-2 space-y-8">
-          
+
           {/* Company Selection */}
           <section className="space-y-4">
             <h3 className="text-lg font-bold uppercase tracking-widest border-b border-gray-100 pb-2 flex items-center gap-2">
               <Building className="w-4 h-4" /> Posting Company
             </h3>
-            
+
             {companies.length === 0 ? (
               <div className="p-6 bg-red-50 border border-red-200 text-red-700 text-sm">
                 You are not linked to any companies. Please create a company profile first.
@@ -179,7 +180,7 @@ function CreateOpportunity() {
                 </p>
               </div>
             ) : (
-             <form.Field
+              <form.Field
                 name="companyId"
                 children={(field) => (
                   <div className="space-y-2">
@@ -198,7 +199,7 @@ function CreateOpportunity() {
                     </Select>
                   </div>
                 )}
-             />
+              />
             )}
           </section>
 
@@ -207,19 +208,19 @@ function CreateOpportunity() {
             <h3 className="text-lg font-bold uppercase tracking-widest border-b border-gray-100 pb-2">
               Opportunity Details
             </h3>
-            
+
             <form.Field
               name="title"
               children={(field) => (
                 <div className="space-y-2">
-                    <Label htmlFor="title">Title *</Label>
-                    <Input 
+                  <Label htmlFor="title">Title *</Label>
+                  <Input
                     id="title"
                     value={field.state.value}
                     onBlur={field.handleBlur}
                     onChange={(e) => field.handleChange(e.target.value)}
                     placeholder="e.g. Strategic Partnership for EMEA Market Entry"
-                    />
+                  />
                 </div>
               )}
             />
@@ -228,115 +229,115 @@ function CreateOpportunity() {
               <form.Field
                 name="opportunityTypeId"
                 children={(field) => (
-                    <div className="space-y-2">
-                        <Label>Opportunity Type *</Label>
-                        <Select value={field.state.value} onValueChange={field.handleChange}>
-                        <SelectTrigger>
-                            <SelectValue placeholder="Select type" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            {opportunityTypesData.map((type: any) => (
-                            <SelectItem key={type.id} value={type.id!}>
-                                {type.name}
-                            </SelectItem>
-                            ))}
-                        </SelectContent>
-                        </Select>
-                    </div>
+                  <div className="space-y-2">
+                    <Label>Opportunity Type *</Label>
+                    <Select value={field.state.value} onValueChange={field.handleChange}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select type" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {opportunityTypesData.map((type: any) => (
+                          <SelectItem key={type.id} value={type.id!}>
+                            {type.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
                 )}
-             />
+              />
 
               <form.Field
                 name="countryId"
                 children={(field) => (
-                    <div className="space-y-2">
-                        <Label>Country *</Label>
-                        <Select value={field.state.value} onValueChange={field.handleChange}>
-                        <SelectTrigger>
-                            <SelectValue placeholder="Select country" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            {countriesData.map((country: any) => (
-                            <SelectItem key={country.id} value={country.id!}>
-                                {country.name}
-                            </SelectItem>
-                            ))}
-                        </SelectContent>
-                        </Select>
-                    </div>
+                  <div className="space-y-2">
+                    <Label>Country *</Label>
+                    <Select value={field.state.value} onValueChange={field.handleChange}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select country" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {countriesData.map((country: any) => (
+                          <SelectItem key={country.id} value={country.id!}>
+                            {country.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
                 )}
-             />
+              />
             </div>
 
             <form.Field
-                name="deadline"
-                mode="value"
-                children={(field) => {
-                    console.log('Deadline field state:', field.state.value);
-                    return (
-                        <div className="space-y-2">
-                            <Label>Deadline</Label>
-                            <Popover open={datePickerOpen} onOpenChange={setDatePickerOpen}>
-                            <PopoverTrigger asChild>
-                                <Button
-                                variant="outline"
-                                className="w-full md:w-64 justify-between font-normal"
-                                >
-                                {field.state.value ? field.state.value.toLocaleDateString() : "Select deadline"}
-                                <ChevronDown className="w-4 h-4" />
-                                </Button>
-                            </PopoverTrigger>
-                            <PopoverContent className="w-auto overflow-hidden p-0" align="start">
-                                <Calendar
-                                mode="single"
-                                selected={field.state.value ?? undefined}
-                                captionLayout="dropdown"
-                                onSelect={(date) => {
-                                    console.log('Deadline selected:', date, 'Field before change:', field.state.value);
-                                    field.setValue(date || null);
-                                    console.log('Using field.setValue method');
-                                    setDatePickerOpen(false);
-                                }}
-                                />
-                            </PopoverContent>
-                            </Popover>
-                        </div>
-                    );
-                }}
+              name="deadline"
+              mode="value"
+              children={(field) => {
+                console.log('Deadline field state:', field.state.value);
+                return (
+                  <div className="space-y-2">
+                    <Label>Deadline</Label>
+                    <Popover open={datePickerOpen} onOpenChange={setDatePickerOpen}>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="outline"
+                          className="w-full md:w-64 justify-between font-normal"
+                        >
+                          {field.state.value ? field.state.value.toLocaleDateString() : "Select deadline"}
+                          <ChevronDown className="w-4 h-4" />
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto overflow-hidden p-0" align="start">
+                        <Calendar
+                          mode="single"
+                          selected={field.state.value ?? undefined}
+                          captionLayout="dropdown"
+                          onSelect={(date) => {
+                            console.log('Deadline selected:', date, 'Field before change:', field.state.value);
+                            field.setValue(date || null);
+                            console.log('Using field.setValue method');
+                            setDatePickerOpen(false);
+                          }}
+                        />
+                      </PopoverContent>
+                    </Popover>
+                  </div>
+                );
+              }}
             />
 
             <form.Field
-                name="shortDescription"
-                children={(field) => (
-                    <div className="space-y-2">
-                        <Label htmlFor="shortDescription">Short Description *</Label>
-                        <Textarea 
-                        id="shortDescription"
-                        value={field.state.value}
-                        onBlur={field.handleBlur}
-                        onChange={(e) => field.handleChange(e.target.value)}
-                        placeholder="Brief summary of the opportunity (displayed in listings)"
-                        />
-                        <p className="text-[10px] text-gray-500 uppercase tracking-wide">Max 500 characters</p>
-                    </div>
-                )}
+              name="shortDescription"
+              children={(field) => (
+                <div className="space-y-2">
+                  <Label htmlFor="shortDescription">Short Description *</Label>
+                  <Textarea
+                    id="shortDescription"
+                    value={field.state.value}
+                    onBlur={field.handleBlur}
+                    onChange={(e) => field.handleChange(e.target.value)}
+                    placeholder="Brief summary of the opportunity (displayed in listings)"
+                  />
+                  <p className="text-[10px] text-gray-500 uppercase tracking-wide">Max 500 characters</p>
+                </div>
+              )}
             />
 
             <form.Field
-                name="fullDescription"
-                children={(field) => (
-                    <div className="space-y-2">
-                        <Label htmlFor="fullDescription">Full Description</Label>
-                        <Textarea 
-                        id="fullDescription"
-                        value={field.state.value}
-                        onBlur={field.handleBlur}
-                        onChange={(e) => field.handleChange(e.target.value)}
-                        placeholder="Detailed description of the opportunity, requirements, and expectations"
-                        className="min-h-[150px]"
-                        />
-                    </div>
-                )}
+              name="fullDescription"
+              children={(field) => (
+                <div className="space-y-2">
+                  <Label htmlFor="fullDescription">Full Description</Label>
+                  <Textarea
+                    id="fullDescription"
+                    value={field.state.value}
+                    onBlur={field.handleBlur}
+                    onChange={(e) => field.handleChange(e.target.value)}
+                    placeholder="Detailed description of the opportunity, requirements, and expectations"
+                    className="min-h-[150px]"
+                  />
+                </div>
+              )}
             />
           </section>
         </div>
@@ -349,33 +350,32 @@ function CreateOpportunity() {
               Service Types
             </h3>
             <div className="p-4 bg-white border border-gray-200 shadow-sm">
-                <form.Field
-                    name="serviceTypes"
-                    children={(field) => (
-                        <div className="flex flex-wrap gap-2">
-                            {serviceTypesData.map((st: any) => {
-                            const isSelected = field.state.value.includes(st.id!);
-                            return (
-                                <button
-                                type="button"
-                                key={st.id}
-                                onClick={() => {
-                                    if(isSelected) field.handleChange(field.state.value.filter((id: string) => id !== st.id));
-                                    else field.handleChange([...field.state.value, st.id!]);
-                                }}
-                                className={`px-3 py-1.5 text-[10px] uppercase font-bold tracking-wider border transition-all ${
-                                    isSelected 
-                                    ? "bg-black text-white border-black" 
-                                    : "bg-gray-50 text-gray-400 border-gray-200 hover:border-gray-400 hover:text-gray-600"
-                                }`}
-                                >
-                                {st.name}
-                                </button>
-                            );
-                            })}
-                        </div>
-                    )}
-                />
+              <form.Field
+                name="serviceTypes"
+                children={(field) => (
+                  <div className="flex flex-wrap gap-2">
+                    {serviceTypesData.map((st: any) => {
+                      const isSelected = field.state.value.includes(st.id!);
+                      return (
+                        <button
+                          type="button"
+                          key={st.id}
+                          onClick={() => {
+                            if (isSelected) field.handleChange(field.state.value.filter((id: string) => id !== st.id));
+                            else field.handleChange([...field.state.value, st.id!]);
+                          }}
+                          className={`px-3 py-1.5 text-[10px] uppercase font-bold tracking-wider border transition-all ${isSelected
+                            ? "bg-black text-white border-black"
+                            : "bg-gray-50 text-gray-400 border-gray-200 hover:border-gray-400 hover:text-gray-600"
+                            }`}
+                        >
+                          {st.name}
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
+              />
             </div>
           </section>
 
@@ -385,33 +385,32 @@ function CreateOpportunity() {
               Required Capabilities
             </h3>
             <div className="p-4 bg-white border border-gray-200 shadow-sm">
-                <form.Field
-                    name="capabilities"
-                    children={(field) => (
-                        <div className="flex flex-wrap gap-2">
-                            {capabilitiesData.map((cap: any) => {
-                            const isSelected = field.state.value.includes(cap.id!);
-                            return (
-                                <button
-                                type="button"
-                                key={cap.id}
-                                onClick={() => {
-                                    if(isSelected) field.handleChange(field.state.value.filter((id: string) => id !== cap.id));
-                                    else field.handleChange([...field.state.value, cap.id!]);
-                                }}
-                                className={`px-3 py-1.5 text-[10px] uppercase font-bold tracking-wider border transition-all ${
-                                    isSelected 
-                                    ? "bg-red-600 text-white border-red-600" 
-                                    : "bg-gray-50 text-gray-400 border-gray-200 hover:border-gray-400 hover:text-gray-600"
-                                }`}
-                                >
-                                {cap.name}
-                                </button>
-                            );
-                            })}
-                        </div>
-                    )}
-                />
+              <form.Field
+                name="capabilities"
+                children={(field) => (
+                  <div className="flex flex-wrap gap-2">
+                    {capabilitiesData.map((cap: any) => {
+                      const isSelected = field.state.value.includes(cap.id!);
+                      return (
+                        <button
+                          type="button"
+                          key={cap.id}
+                          onClick={() => {
+                            if (isSelected) field.handleChange(field.state.value.filter((id: string) => id !== cap.id));
+                            else field.handleChange([...field.state.value, cap.id!]);
+                          }}
+                          className={`px-3 py-1.5 text-[10px] uppercase font-bold tracking-wider border transition-all ${isSelected
+                            ? "bg-red-600 text-white border-red-600"
+                            : "bg-gray-50 text-gray-400 border-gray-200 hover:border-gray-400 hover:text-gray-600"
+                            }`}
+                        >
+                          {cap.name}
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
+              />
             </div>
           </section>
 
@@ -421,33 +420,32 @@ function CreateOpportunity() {
               Target Industries
             </h3>
             <div className="p-4 bg-white border border-gray-200 shadow-sm">
-                <form.Field
-                    name="industries"
-                    children={(field) => (
-                        <div className="flex flex-wrap gap-2">
-                            {industriesData.map((ind: any) => {
-                            const isSelected = field.state.value.includes(ind.id!);
-                            return (
-                                <button
-                                type="button"
-                                key={ind.id}
-                                onClick={() => {
-                                    if(isSelected) field.handleChange(field.state.value.filter((id: string) => id !== ind.id));
-                                    else field.handleChange([...field.state.value, ind.id!]);
-                                }}
-                                className={`px-3 py-1.5 text-[10px] uppercase font-bold tracking-wider border transition-all ${
-                                    isSelected 
-                                    ? "bg-blue-600 text-white border-blue-600" 
-                                    : "bg-gray-50 text-gray-400 border-gray-200 hover:border-gray-400 hover:text-gray-600"
-                                }`}
-                                >
-                                {ind.name}
-                                </button>
-                            );
-                            })}
-                        </div>
-                    )}
-                />
+              <form.Field
+                name="industries"
+                children={(field) => (
+                  <div className="flex flex-wrap gap-2">
+                    {industriesData.map((ind: any) => {
+                      const isSelected = field.state.value.includes(ind.id!);
+                      return (
+                        <button
+                          type="button"
+                          key={ind.id}
+                          onClick={() => {
+                            if (isSelected) field.handleChange(field.state.value.filter((id: string) => id !== ind.id));
+                            else field.handleChange([...field.state.value, ind.id!]);
+                          }}
+                          className={`px-3 py-1.5 text-[10px] uppercase font-bold tracking-wider border transition-all ${isSelected
+                            ? "bg-blue-600 text-white border-blue-600"
+                            : "bg-gray-50 text-gray-400 border-gray-200 hover:border-gray-400 hover:text-gray-600"
+                            }`}
+                        >
+                          {ind.name}
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
+              />
             </div>
           </section>
         </div>
@@ -459,20 +457,20 @@ function CreateOpportunity() {
           CANCEL
         </Button>
         <form.Subscribe
-            selector={(state) => [state.canSubmit, state.isSubmitting]}
-            children={([canSubmit, isSubmitting]) => (
-                <Button 
-                onClick={form.handleSubmit}
-                disabled={!canSubmit || isSubmitting || createMutation.isPending}
-                className="bg-red-600 hover:bg-red-700 min-w-[160px] uppercase font-bold tracking-widest text-xs"
-                >
-                {createMutation.isPending || isSubmitting ? (
-                    <><Loader2 className="w-3 h-3 mr-2 animate-spin" /> Posting...</>
-                ) : (
-                    "Post Opportunity"
-                )}
-                </Button>
-            )}
+          selector={(state) => [state.canSubmit, state.isSubmitting]}
+          children={([canSubmit, isSubmitting]) => (
+            <Button
+              onClick={form.handleSubmit}
+              disabled={!canSubmit || isSubmitting || createMutation.isPending}
+              className="bg-red-600 hover:bg-red-700 min-w-[160px] uppercase font-bold tracking-widest text-xs"
+            >
+              {createMutation.isPending || isSubmitting ? (
+                <><Loader2 className="w-3 h-3 mr-2 animate-spin" /> Posting...</>
+              ) : (
+                "Post Opportunity"
+              )}
+            </Button>
+          )}
         />
       </div>
     </div>
