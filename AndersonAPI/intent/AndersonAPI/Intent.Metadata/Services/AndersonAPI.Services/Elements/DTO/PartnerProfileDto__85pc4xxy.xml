@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <class id="27936876-f854-421f-824b-3155c5222a5c" type="DTO" typeId="fee0edca-4aa0-4f77-a524-6bbd84e78734">
-  <name>PartnerProfile</name>
-  <display>PartnerProfile</display>
+  <name>PartnerProfileDto</name>
+  <display>PartnerProfileDto</display>
   <isAbstract>false</isAbstract>
   <sort-children>by-type-then-manually</sort-children>
   <genericTypes />

@@ -1,6 +1,18 @@
+import {
+  BlockTypeSelect,
+  BoldItalicUnderlineToggles,
+  headingsPlugin,
+  ListsToggle,
+  listsPlugin,
+  MDXEditor,
+  type MDXEditorMethods,
+  Separator,
+  toolbarPlugin,
+  UndoRedo,
+} from "@mdxeditor/editor";
 import { useForm } from "@tanstack/react-form";
 import { useMutation } from "@tanstack/react-query";
-import { createFileRoute, useRouter } from "@tanstack/react-router";
+import { ClientOnly, createFileRoute, useRouter } from "@tanstack/react-router";
 import {
   Briefcase,
   Building,
@@ -15,7 +27,7 @@ import {
   Trash2,
   User,
 } from "lucide-react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { toast } from "sonner";
 import z from "zod";
 import type {
@@ -23,6 +35,17 @@ import type {
   CompanyProfileDto,
   UpdateCompanyCommand,
 } from "@/api/types.gen";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import {
   Combobox,
   ComboboxChip,
@@ -37,17 +60,6 @@ import {
   ComboboxList,
   ComboboxValue,
 } from "@/components/ui/base-combobox";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -110,13 +122,15 @@ function ProfileEdit() {
     router.invalidate();
   };
 
+  const mdxEditorRef = useRef<MDXEditorMethods>(null);
+
   // --- AI Scrape State ---
   const [scrapeUrl, setScrapeUrl] = useState(initialCompany?.websiteUrl || "");
   const scrapeMutation = useMutation({
     mutationFn: async (url: string) => {
       // Note: putApiCompaniesScrapeWebsite needs a body, checking signature...
       // Signature: (options) => ... options.body is ScrapeWebsiteCommand { url: string }
-      return callApi({
+      return await callApi({
         data: { fn: "putApiCompaniesScrapeWebsite", args: { body: { url } } },
       });
     },
@@ -218,7 +232,7 @@ function ProfileEdit() {
       }
     },
     // validatorAdapter: zodValidator(),
-  } as any); // Cast to any to avoid complex form typing issues for now
+  });
 
   // --- Capabilities & Industries State ---
   const [selectedCapabilityIds, setSelectedCapabilityIds] = useState<string[]>(
@@ -248,7 +262,7 @@ function ProfileEdit() {
 
   const addLocationMutation = useMutation({
     mutationFn: async () => {
-      return callApi({
+      return await callApi({
         data: {
           fn: "postApiCompaniesByIdLocation",
           args: {
@@ -278,7 +292,7 @@ function ProfileEdit() {
 
   const deleteLocationMutation = useMutation({
     mutationFn: async (locationId: string) => {
-      return callApi({
+      return await callApi({
         data: {
           fn: "deleteApiCompaniesByIdLocation",
           args: { path: { id: companyId }, query: { locationId } },
@@ -292,7 +306,7 @@ function ProfileEdit() {
 
   const updateLocationMutation = useMutation({
     mutationFn: async (locationId: string) => {
-      return callApi({
+      return await callApi({
         data: {
           fn: "putApiCompaniesByIdLocation",
           args: {
@@ -321,8 +335,8 @@ function ProfileEdit() {
     },
   });
 
-  const startEditLocation = (loc: any) => {
-    setEditingLocationId(loc.id!);
+  const startEditLocation = (loc) => {
+    setEditingLocationId(loc.id);
     setEditLocation({
       name: loc.name || "",
       regionId: loc.regionId || "",
@@ -347,7 +361,7 @@ function ProfileEdit() {
   const addContactMutation = useMutation({
     mutationFn: async () => {
       // PostApiCompaniesByIdContactData
-      return callApi({
+      return await callApi({
         data: {
           fn: "postApiCompaniesByIdContact",
           args: {
@@ -372,7 +386,7 @@ function ProfileEdit() {
 
   const deleteContactMutation = useMutation({
     mutationFn: async (contactId: string) => {
-      return callApi({
+      return await callApi({
         data: {
           fn: "deleteApiCompaniesByIdContact",
           args: { path: { id: companyId }, query: { contactId } },
@@ -387,7 +401,7 @@ function ProfileEdit() {
   // --- ApplicationUser Mutations ---
   const deleteUserMutation = useMutation({
     mutationFn: async (userId: string) => {
-      return callApi({
+      return await callApi({
         data: {
           fn: "deleteApiCompaniesByIdUser",
           args: { path: { id: companyId }, query: { userId } },
@@ -402,7 +416,7 @@ function ProfileEdit() {
   // --- Invite Mutations ---
   const addInviteMutation = useMutation({
     mutationFn: async () => {
-      return callApi({
+      return await callApi({
         data: {
           fn: "postApiInvites",
           args: {
@@ -423,7 +437,7 @@ function ProfileEdit() {
 
   const deleteInviteMutation = useMutation({
     mutationFn: async (inviteId: string) => {
-      return callApi({
+      return await callApi({
         data: {
           fn: "deleteApiInvitesById",
           args: {
@@ -447,7 +461,7 @@ function ProfileEdit() {
 
   const updateContactMutation = useMutation({
     mutationFn: async (contactId: string) => {
-      return callApi({
+      return await callApi({
         data: {
           fn: "putApiCompaniesByIdContact",
           args: {
@@ -492,8 +506,8 @@ function ProfileEdit() {
     );
   }
 
-  const startEditContact = (contact: any) => {
-    setEditingContactId(contact.id!);
+  const startEditContact = (contact) => {
+    setEditingContactId(contact.id);
     setEditContact({
       firstName: contact.firstName || "",
       lastName: contact.lastName || "",
@@ -540,6 +554,7 @@ function ProfileEdit() {
               className="whitespace-nowrap bg-red-600 px-8 py-3 font-bold text-white text-xs uppercase tracking-[0.2em] transition-colors hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-50"
               disabled={scrapeMutation.isPending || !scrapeUrl}
               onClick={() => scrapeMutation.mutate(scrapeUrl)}
+              type="button"
             >
               {scrapeMutation.isPending ? "Syncing..." : "Sync Firm Data"}
             </button>
@@ -565,7 +580,7 @@ function ProfileEdit() {
                     id={field.name}
                     name={field.name}
                     onBlur={field.handleBlur}
-                    onChange={(e: any) => field.handleChange(e.target.value)}
+                    onChange={(e) => field.handleChange(e.target.value)}
                     value={field.state.value as string}
                   />
                 </div>
@@ -582,7 +597,7 @@ function ProfileEdit() {
                       id={field.name}
                       name={field.name}
                       onBlur={field.handleBlur}
-                      onChange={(e: any) => field.handleChange(e.target.value)}
+                      onChange={(e) => field.handleChange(e.target.value)}
                       value={field.state.value as string}
                     />
                   </div>
@@ -597,7 +612,7 @@ function ProfileEdit() {
                       id={field.name}
                       name={field.name}
                       onBlur={field.handleBlur}
-                      onChange={(e: any) =>
+                      onChange={(e) =>
                         field.handleChange(Number(e.target.value))
                       }
                       type="number"
@@ -617,7 +632,7 @@ function ProfileEdit() {
                     id={field.name}
                     name={field.name}
                     onBlur={field.handleBlur}
-                    onChange={(e: any) => field.handleChange(e.target.value)}
+                    onChange={(e) => field.handleChange(e.target.value)}
                     value={field.state.value as string}
                   />
                   <p className="text-[10px] text-gray-500 uppercase tracking-wide">
@@ -628,7 +643,31 @@ function ProfileEdit() {
               name="shortDescription"
             />
 
-            <form.Field
+            <ClientOnly>
+              <MDXEditor
+                markdown={initialCompany.fullDescription || ""}
+                plugins={[
+                  headingsPlugin(),
+                  listsPlugin(),
+                  toolbarPlugin({
+                    toolbarContents: () => (
+                      <>
+                        <UndoRedo />
+                        <Separator />
+                        <BoldItalicUnderlineToggles />
+                        <Separator />
+                        <ListsToggle />
+                        <Separator />
+                        <BlockTypeSelect />
+                      </>
+                    ),
+                  }),
+                ]}
+                ref={mdxEditorRef}
+              />
+            </ClientOnly>
+
+            {/* <form.Field
               children={(field) => (
                 <div className="space-y-2">
                   <Label htmlFor={field.name}>Firm Description</Label>
@@ -637,13 +676,13 @@ function ProfileEdit() {
                     id={field.name}
                     name={field.name}
                     onBlur={field.handleBlur}
-                    onChange={(e: any) => field.handleChange(e.target.value)}
+                    onChange={(e) => field.handleChange(e.target.value)}
                     value={field.state.value as string}
                   />
                 </div>
               )}
               name="fullDescription"
-            />
+            /> */}
           </section>
 
           {/* Detailed Lists (Locations & Contacts) */}
@@ -664,7 +703,7 @@ function ProfileEdit() {
                       <div className="space-y-2">
                         <Label>Office Name</Label>
                         <Input
-                          onChange={(e: any) =>
+                          onChange={(e) =>
                             setEditLocation({
                               ...editLocation,
                               name: e.target.value,
@@ -687,8 +726,8 @@ function ProfileEdit() {
                               <SelectValue placeholder="Select Region" />
                             </SelectTrigger>
                             <SelectContent>
-                              {regions?.map((r: any) => (
-                                <SelectItem key={r.id} value={r.id!}>
+                              {regions?.map((r) => (
+                                <SelectItem key={r.id} value={r.id as string}>
                                   {r.name}
                                 </SelectItem>
                               ))}
@@ -709,12 +748,12 @@ function ProfileEdit() {
                             <SelectContent>
                               {countries
                                 ?.filter(
-                                  (c: any) =>
+                                  (c) =>
                                     !editLocation.regionId ||
                                     c.regionId === editLocation.regionId
                                 )
-                                .map((c: any) => (
-                                  <SelectItem key={c.id} value={c.id!}>
+                                .map((c) => (
+                                  <SelectItem key={c.id} value={c.id as string}>
                                     {c.name}
                                   </SelectItem>
                                 ))}
@@ -751,7 +790,7 @@ function ProfileEdit() {
                             updateLocationMutation.isPending ||
                             !editLocation.name
                           }
-                          onClick={() => updateLocationMutation.mutate(loc.id!)}
+                          onClick={() => updateLocationMutation.mutate(loc.id)}
                           size="sm"
                         >
                           {updateLocationMutation.isPending
@@ -789,29 +828,35 @@ function ProfileEdit() {
                         <button
                           className="text-gray-400 transition-colors hover:text-blue-600"
                           onClick={() => startEditLocation(loc)}
+                          type="button"
                         >
                           <Pencil className="h-4 w-4" />
                         </button>
                         <AlertDialog>
                           <AlertDialogTrigger asChild>
-                            <button className="text-gray-400 transition-colors hover:text-red-600">
+                            <button
+                              className="text-gray-400 transition-colors hover:text-red-600"
+                              type="button"
+                            >
                               <Trash2 className="h-4 w-4" />
                             </button>
                           </AlertDialogTrigger>
                           <AlertDialogContent>
                             <AlertDialogHeader>
-                              <AlertDialogTitle>Delete Location</AlertDialogTitle>
+                              <AlertDialogTitle>
+                                Delete Location
+                              </AlertDialogTitle>
                               <AlertDialogDescription>
-                                Are you sure you want to delete this location? This
-                                action cannot be undone.
+                                Are you sure you want to delete this location?
+                                This action cannot be undone.
                               </AlertDialogDescription>
                             </AlertDialogHeader>
                             <AlertDialogFooter>
                               <AlertDialogCancel>Cancel</AlertDialogCancel>
                               <AlertDialogAction
-                                className="bg-red-600 hover:bg-red-700 font-bold"
+                                className="bg-red-600 font-bold hover:bg-red-700"
                                 onClick={() =>
-                                  deleteLocationMutation.mutate(loc.id!)
+                                  deleteLocationMutation.mutate(loc.id)
                                 }
                               >
                                 Delete
@@ -830,7 +875,7 @@ function ProfileEdit() {
                   <div className="space-y-2">
                     <Label>Office Name</Label>
                     <Input
-                      onChange={(e: any) =>
+                      onChange={(e) =>
                         setNewLocation({ ...newLocation, name: e.target.value })
                       }
                       placeholder="e.g. London HQ"
@@ -850,8 +895,8 @@ function ProfileEdit() {
                           <SelectValue placeholder="Select Region" />
                         </SelectTrigger>
                         <SelectContent>
-                          {regions?.map((r: any) => (
-                            <SelectItem key={r.id} value={r.id!}>
+                          {regions?.map((r) => (
+                            <SelectItem key={r.id} value={r.id}>
                               {r.name}
                             </SelectItem>
                           ))}
@@ -872,12 +917,12 @@ function ProfileEdit() {
                         <SelectContent>
                           {countries
                             ?.filter(
-                              (c: any) =>
+                              (c) =>
                                 !newLocation.regionId ||
                                 c.regionId === newLocation.regionId
                             )
-                            .map((c: any) => (
-                              <SelectItem key={c.id} value={c.id!}>
+                            .map((c) => (
+                              <SelectItem key={c.id} value={c.id as string}>
                                 {c.name}
                               </SelectItem>
                             ))}
@@ -946,7 +991,7 @@ function ProfileEdit() {
                         <div className="space-y-2">
                           <Label>First Name</Label>
                           <Input
-                            onChange={(e: any) =>
+                            onChange={(e) =>
                               setEditContact({
                                 ...editContact,
                                 firstName: e.target.value,
@@ -958,7 +1003,7 @@ function ProfileEdit() {
                         <div className="space-y-2">
                           <Label>Last Name</Label>
                           <Input
-                            onChange={(e: any) =>
+                            onChange={(e) =>
                               setEditContact({
                                 ...editContact,
                                 lastName: e.target.value,
@@ -971,7 +1016,7 @@ function ProfileEdit() {
                       <div className="space-y-2">
                         <Label>Job Title</Label>
                         <Input
-                          onChange={(e: any) =>
+                          onChange={(e) =>
                             setEditContact({
                               ...editContact,
                               position: e.target.value,
@@ -983,7 +1028,7 @@ function ProfileEdit() {
                       <div className="space-y-2">
                         <Label>Email Address</Label>
                         <Input
-                          onChange={(e: any) =>
+                          onChange={(e) =>
                             setEditContact({
                               ...editContact,
                               email: e.target.value,
@@ -1007,7 +1052,7 @@ function ProfileEdit() {
                             !editContact.firstName
                           }
                           onClick={() =>
-                            updateContactMutation.mutate(contact.id!)
+                            updateContactMutation.mutate(contact.id as string)
                           }
                           size="sm"
                         >
@@ -1037,29 +1082,37 @@ function ProfileEdit() {
                         <button
                           className="text-gray-400 transition-colors hover:text-blue-600"
                           onClick={() => startEditContact(contact)}
+                          type="button"
                         >
                           <Pencil className="h-4 w-4" />
                         </button>
                         <AlertDialog>
                           <AlertDialogTrigger asChild>
-                            <button className="text-gray-400 transition-colors hover:text-red-600">
+                            <button
+                              className="text-gray-400 transition-colors hover:text-red-600"
+                              type="button"
+                            >
                               <Trash2 className="h-4 w-4" />
                             </button>
                           </AlertDialogTrigger>
                           <AlertDialogContent>
                             <AlertDialogHeader>
-                              <AlertDialogTitle>Delete Contact</AlertDialogTitle>
+                              <AlertDialogTitle>
+                                Delete Contact
+                              </AlertDialogTitle>
                               <AlertDialogDescription>
-                                Are you sure you want to delete this contact? This
-                                action cannot be undone.
+                                Are you sure you want to delete this contact?
+                                This action cannot be undone.
                               </AlertDialogDescription>
                             </AlertDialogHeader>
                             <AlertDialogFooter>
                               <AlertDialogCancel>Cancel</AlertDialogCancel>
                               <AlertDialogAction
-                                className="bg-red-600 hover:bg-red-700 font-bold"
+                                className="bg-red-600 font-bold hover:bg-red-700"
                                 onClick={() =>
-                                  deleteContactMutation.mutate(contact.id!)
+                                  deleteContactMutation.mutate(
+                                    contact.id as string
+                                  )
                                 }
                               >
                                 Delete
@@ -1079,7 +1132,7 @@ function ProfileEdit() {
                     <div className="space-y-2">
                       <Label>First Name</Label>
                       <Input
-                        onChange={(e: any) =>
+                        onChange={(e) =>
                           setNewContact({
                             ...newContact,
                             firstName: e.target.value,
@@ -1091,7 +1144,7 @@ function ProfileEdit() {
                     <div className="space-y-2">
                       <Label>Last Name</Label>
                       <Input
-                        onChange={(e: any) =>
+                        onChange={(e) =>
                           setNewContact({
                             ...newContact,
                             lastName: e.target.value,
@@ -1104,7 +1157,7 @@ function ProfileEdit() {
                   <div className="space-y-2">
                     <Label>Job Title</Label>
                     <Input
-                      onChange={(e: any) =>
+                      onChange={(e) =>
                         setNewContact({
                           ...newContact,
                           position: e.target.value,
@@ -1116,7 +1169,7 @@ function ProfileEdit() {
                   <div className="space-y-2">
                     <Label>Email Address</Label>
                     <Input
-                      onChange={(e: any) =>
+                      onChange={(e) =>
                         setNewContact({ ...newContact, email: e.target.value })
                       }
                       value={newContact.email}
@@ -1190,6 +1243,7 @@ function ProfileEdit() {
                           <button
                             className="text-gray-400 transition-colors hover:text-red-600"
                             disabled={deleteUserMutation.isPending}
+                            type="button"
                           >
                             <Trash2 className="h-4 w-4" />
                           </button>
@@ -1205,8 +1259,10 @@ function ProfileEdit() {
                           <AlertDialogFooter>
                             <AlertDialogCancel>Cancel</AlertDialogCancel>
                             <AlertDialogAction
-                              className="bg-red-600 hover:bg-red-700 font-bold"
-                              onClick={() => deleteUserMutation.mutate(user.id!)}
+                              className="bg-red-600 font-bold hover:bg-red-700"
+                              onClick={() =>
+                                deleteUserMutation.mutate(user.id as string)
+                              }
                             >
                               Remove
                             </AlertDialogAction>
@@ -1262,6 +1318,7 @@ function ProfileEdit() {
                         <button
                           className="text-gray-400 transition-colors hover:text-red-600"
                           disabled={deleteInviteMutation.isPending}
+                          type="button"
                         >
                           <Trash2 className="h-4 w-4" />
                         </button>
@@ -1276,8 +1333,10 @@ function ProfileEdit() {
                         <AlertDialogFooter>
                           <AlertDialogCancel>Cancel</AlertDialogCancel>
                           <AlertDialogAction
-                            className="bg-red-600 hover:bg-red-700 font-bold"
-                            onClick={() => deleteInviteMutation.mutate(invite.id!)}
+                            className="bg-red-600 font-bold hover:bg-red-700"
+                            onClick={() =>
+                              deleteInviteMutation.mutate(invite.id as string)
+                            }
                           >
                             Cancel Invite
                           </AlertDialogAction>
@@ -1293,7 +1352,7 @@ function ProfileEdit() {
                   <div className="space-y-2">
                     <Label>Full Name</Label>
                     <Input
-                      onChange={(e: any) =>
+                      onChange={(e) =>
                         setNewInvite({ ...newInvite, name: e.target.value })
                       }
                       placeholder="Enter full name"
@@ -1303,7 +1362,7 @@ function ProfileEdit() {
                   <div className="space-y-2">
                     <Label>Email Address</Label>
                     <Input
-                      onChange={(e: any) =>
+                      onChange={(e) =>
                         setNewInvite({ ...newInvite, email: e.target.value })
                       }
                       placeholder="Enter email address"
@@ -1373,7 +1432,7 @@ function ProfileEdit() {
                         {serviceTypes?.map((serviceType) => (
                           <SelectItem
                             key={serviceType.id}
-                            value={serviceType.id!}
+                            value={serviceType.id as string}
                           >
                             {serviceType.name}
                           </SelectItem>
@@ -1388,6 +1447,12 @@ function ProfileEdit() {
                   </div>
                 )}
                 name="serviceTypeId"
+                validators={{
+                  onChange: ({ value }) =>
+                    value ? undefined : "Service type is required",
+                  onSubmit: ({ value }) =>
+                    value ? undefined : "Service type is required",
+                }}
               />
             </div>
           </section>
@@ -1425,12 +1490,12 @@ function ProfileEdit() {
                 onValueChange={(value: unknown) => {
                   const selectedCapabilities = value as CapabilityDto[];
                   setSelectedCapabilityIds(
-                    selectedCapabilities.map((cap) => cap.id!)
+                    selectedCapabilities.map((cap) => cap.id)
                   );
                 }}
                 value={
                   capabilities?.filter((cap) =>
-                    selectedCapabilityIds.includes(cap.id!)
+                    selectedCapabilityIds.includes(cap.id)
                   ) || []
                 }
               >
@@ -1492,20 +1557,20 @@ function ProfileEdit() {
                 items={industries || []}
                 multiple
                 onValueChange={(value: unknown) => {
-                  const selectedIndustries = value as any[];
+                  const selectedIndustries = value;
                   setSelectedIndustryIds(
-                    selectedIndustries.map((ind) => ind.id!)
+                    selectedIndustries.map((ind) => ind.id as string)
                   );
                 }}
                 value={
                   industries?.filter((ind) =>
-                    selectedIndustryIds.includes(ind.id!)
+                    selectedIndustryIds.includes(ind.id as string)
                   ) || []
                 }
               >
                 <ComboboxChips className="mb-4 border-0 p-0 shadow-none">
                   <ComboboxValue>
-                    {(value: any[]) => (
+                    {(value) => (
                       <>
                         {value.length === 0 && (
                           <p className="my-2 text-gray-400 text-xs italic">
@@ -1539,7 +1604,7 @@ function ProfileEdit() {
                 <ComboboxContent>
                   <ComboboxEmpty>No industries found.</ComboboxEmpty>
                   <ComboboxList>
-                    {(industry: any) => (
+                    {(industry) => (
                       <ComboboxItem key={industry.id} value={industry}>
                         <ComboboxItemIndicator />
                         <div className="col-start-2">{industry.name}</div>
@@ -1569,7 +1634,11 @@ function ProfileEdit() {
               <Button
                 className="min-w-[160px] bg-red-600 font-bold text-xs uppercase tracking-widest hover:bg-red-700"
                 disabled={!canSubmit}
-                onClick={form.handleSubmit}
+                onClick={() => {
+                  const md = mdxEditorRef.current?.getMarkdown();
+                  form.setFieldValue("fullDescription", md || "");
+                  form.handleSubmit();
+                }}
               >
                 {isSubmitting ? (
                   <>

@@ -58,12 +58,7 @@ export function LoginForm() {
 
   return (
     <div className="mx-auto max-w-md space-y-6">
-      <div className="space-y-2 text-center">
-        <h1 className="font-bold text-3xl">Sign In</h1>
-        <p className="text-gray-500">
-          Enter your credentials to access your account
-        </p>
-      </div>
+      {/* Header removed as it is now handled by AuthLayout */}
 
       {error && (
         <div className="rounded-md bg-red-50 p-4 text-red-700">{error}</div>
@@ -139,14 +134,14 @@ export function LoginForm() {
           )}
         </form.Field>
 
-        <Button className="w-full" disabled={isLoading} type="submit">
+        <Button className="w-full bg-[#DB0A20] hover:bg-[#b0081a] text-white" disabled={isLoading} type="submit">
           {isLoading ? "Signing In..." : "Sign In"}
         </Button>
       </form>
 
       <p className="text-center text-sm">
         Don't have an account?{" "}
-        <Link className="text-blue-600 hover:underline" to="/register">
+        <Link className="text-[#DB0A20] hover:underline font-medium" to="/register">
           Sign up
         </Link>
       </p>

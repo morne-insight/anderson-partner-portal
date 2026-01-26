@@ -1,4 +1,5 @@
 using AndersonAPI.Application.Common.Interfaces;
+using AndersonAPI.Application.Companies.CreateCompany;
 using Intent.RoslynWeaver.Attributes;
 using MediatR;
 
@@ -8,22 +9,71 @@ using MediatR;
 namespace AndersonAPI.Application.Companies.ScrapeWebsite
 {
     [IntentManaged(Mode.Merge, Signature = Mode.Fully)]
-    public class ScrapeWebsiteCommandHandler : IRequestHandler<ScrapeWebsiteCommand>
+    public class ScrapeWebsiteCommandHandler : IRequestHandler<ScrapeWebsiteCommand, Guid>
     {
         private readonly IAgentService _agentService;
+        private readonly IWebsiteScrapingService _websiteScrapingService;
+        private readonly IMediator _mediator;
 
         [IntentManaged(Mode.Merge)]
-        public ScrapeWebsiteCommandHandler(IAgentService agentService)
+        public ScrapeWebsiteCommandHandler(IAgentService agentService, IWebsiteScrapingService websiteScrapingService, IMediator mediator)
         {
             _agentService = agentService;
+            _websiteScrapingService = websiteScrapingService;
+            _mediator = mediator;
         }
 
         [IntentManaged(Mode.Fully, Body = Mode.Merge)]
-        public async Task Handle(ScrapeWebsiteCommand request, CancellationToken cancellationToken)
+        public async Task<Guid> Handle(ScrapeWebsiteCommand request, CancellationToken cancellationToken)
         {
-            // TODO: Implement Handle (ScrapeWebsiteCommandHandler) functionality
-            var response = await _agentService.RunAsync("Can you please browse this website https://insightconsulting.co.za/ and give me a summary on what they do.");
+            var websiteContent = await _websiteScrapingService.ScrapeWebsiteAsync(request.Url);
+            var response = await _agentService.RunAsync("I have included a website's content, please give me a summary of who they are and what they do: " + websiteContent);
 
+            var companyName = ExtractCompanyNameFromUrl(request.Url);
+
+            var command = new CreateCompanyCommand(
+                name: companyName,
+                shortDescription: "",
+                fullDescription: response,
+                websiteUrl: request.Url,
+                employeeCount: 0,
+                capabilities: new List<Guid>(),
+                industries: new List<Guid>(),
+                serviceTypeId: null
+            );
+
+            // Here you would typically send the command to create the company
+            return await _mediator.Send(command, cancellationToken);
+        }
+
+        private static string ExtractCompanyNameFromUrl(string url)
+        {
+            try
+            {
+                var uri = new Uri(url);
+                var host = uri.Host;
+
+                // Remove www. prefix if present
+                if (host.StartsWith("www.", StringComparison.OrdinalIgnoreCase))
+                {
+                    host = host.Substring(4);
+                }
+
+                // Split by dots and take the first part (domain name without TLD)
+                var parts = host.Split('.');
+                if (parts.Length > 0)
+                {
+                    var companyName = parts[0];
+                    // Capitalize first letter
+                    return char.ToUpper(companyName[0]) + companyName.Substring(1);
+                }
+
+                return host;
+            }
+            catch
+            {
+                return "Unknown Company";
+            }
         }
     }
 }

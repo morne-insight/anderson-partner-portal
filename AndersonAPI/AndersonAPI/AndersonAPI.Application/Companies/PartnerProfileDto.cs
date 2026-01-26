@@ -5,9 +5,9 @@ using Intent.RoslynWeaver.Attributes;
 
 namespace AndersonAPI.Application.Companies
 {
-    public record PartnerProfile
+    public record PartnerProfileDto
     {
-        public PartnerProfile()
+        public PartnerProfileDto()
         {
             Name = null!;
             FullDescription = null!;
@@ -32,7 +32,7 @@ namespace AndersonAPI.Application.Companies
         public Guid? ServiceTypeId { get; set; }
         public string ServiceTypeName { get; set; }
 
-        public static PartnerProfile Create(
+        public static PartnerProfileDto Create(
             Guid id,
             string name,
             string fullDescription,
@@ -45,7 +45,7 @@ namespace AndersonAPI.Application.Companies
             Guid? serviceTypeId,
             string serviceTypeName)
         {
-            return new PartnerProfile
+            return new PartnerProfileDto
             {
                 Id = id,
                 Name = name,

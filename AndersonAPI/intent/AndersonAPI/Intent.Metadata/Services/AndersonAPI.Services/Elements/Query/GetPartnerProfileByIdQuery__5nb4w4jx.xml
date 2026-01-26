@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <class id="0a66d551-7e09-46f8-aadb-90f1bfc01f6b" type="Query" typeId="e71b0662-e29d-4db2-868b-8a12464b25d0">
   <name>GetPartnerProfileByIdQuery</name>
-  <display>GetPartnerProfileByIdQuery: PartnerProfile</display>
+  <display>GetPartnerProfileByIdQuery: PartnerProfileDto</display>
   <isAbstract>false</isAbstract>
   <sort-children>by-type-then-manually</sort-children>
   <genericTypes />

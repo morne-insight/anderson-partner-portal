@@ -408,7 +408,7 @@ export type {
   PartnerIndustryDto,
   PartnerLocationDto,
   PartnerOpportunityDto,
-  PartnerProfile,
+  PartnerProfileDto,
   PartnerProfileListItem,
   PartnerServiceTypeDto,
   PartnerStatus,

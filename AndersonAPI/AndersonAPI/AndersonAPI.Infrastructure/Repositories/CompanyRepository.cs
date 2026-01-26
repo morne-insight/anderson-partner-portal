@@ -2,6 +2,7 @@ using AndersonAPI.Domain.Entities;
 using AndersonAPI.Domain.Repositories;
 using AndersonAPI.Infrastructure.Persistence;
 using AutoMapper;
+using Castle.Components.DictionaryAdapter;
 using Intent.RoslynWeaver.Attributes;
 using Microsoft.EntityFrameworkCore;
 
@@ -67,5 +68,6 @@ namespace AndersonAPI.Infrastructure.Repositories
                 .Where(s => serviceTypeIds.Contains(s.Id))
                 .ToListAsync(cancellationToken);
         }
+
     }
 }

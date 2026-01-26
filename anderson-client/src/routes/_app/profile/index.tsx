@@ -1,25 +1,29 @@
-import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import { useMutation } from "@tanstack/react-query";
-import { Building2, ChevronRight, Globe, Users, Plus, Loader2, FileText } from "lucide-react";
+import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
+import {
+  Building2,
+  ChevronRight,
+  Globe,
+  Loader2,
+  Plus,
+  Users,
+} from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
+import type { CompanyDto } from "@/api";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { callApi } from "@/server/proxy";
 
-type Company = {
-  id?: string;
-  name?: string;
-  shortDescription?: string;
-  websiteUrl?: string;
-  employeeCount?: number;
-};
+// const urlRegex = /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z]{2,}(?:[-a-zA-Z0-9()@:%_+.~#?&/=]*)$/;
+const urlRegex =
+  /^(https?:\/\/)?([\w\d-_]+)\.([\w\d-_.]+)\/?\??([^#\n\r]*)?#?([^\n\r]*)/;
 
 export const Route = createFileRoute("/_app/profile/")({
   component: ProfileIndex,
   loader: async () => {
-    const response = await callApi({ data: { fn: 'getApiCompaniesMe' } });
-    return { companies: (response || []) };
+    const response = await callApi({ data: { fn: "getApiCompaniesMe" } });
+    return { companies: response || [] };
   },
 });
 
@@ -30,8 +34,9 @@ function ProfileIndex() {
   const [newFirmName, setNewFirmName] = useState("");
 
   const isValidUrl = (url: string): boolean => {
-    const urlRegex = /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z]{2,}(?:[-a-zA-Z0-9()@:%_+.~#?&/=]*)$/;
-    return urlRegex.test(url);
+    const isValid = urlRegex.test(url);
+    console.log(`is valid url (${url}):`, isValid);
+    return isValid;
   };
 
   const refreshData = () => {
@@ -40,22 +45,31 @@ function ProfileIndex() {
 
   const scrapeMutation = useMutation({
     mutationFn: async (url: string) => {
-      return callApi({ data: { fn: 'putApiCompaniesScrapeWebsite', args: { body: { url } } } });
+      return await callApi({
+        data: { fn: "putApiCompaniesScrapeWebsite", args: { body: { url } } },
+      });
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
       refreshData();
+      if (data?.value) {
+        router.navigate({
+          to: "/profile/$companyId",
+          params: { companyId: data.value },
+        });
+      }
     },
     onError: (err) => {
       console.error("Scrape failed", err);
       toast.error("Failed to sync website. Please try creating manually.");
-    }
+    },
   });
 
   const createMutation = useMutation({
     mutationFn: async () => {
-      return callApi({
+      return await callApi({
         data: {
-          fn: 'postApiCompanies', args: {
+          fn: "postApiCompanies",
+          args: {
             body: {
               name: newFirmName || "New Firm",
               shortDescription: "",
@@ -64,22 +78,25 @@ function ProfileIndex() {
               employeeCount: 0,
               serviceTypes: [],
               capabilities: [],
-              industries: []
-            }
-          }
-        }
+              industries: [],
+            },
+          },
+        },
       });
     },
     onSuccess: (data) => {
       refreshData();
       if (data?.value) {
-        router.navigate({ to: "/profile/$companyId", params: { companyId: data.value } });
+        router.navigate({
+          to: "/profile/$companyId",
+          params: { companyId: data.value },
+        });
       }
     },
     onError: (err) => {
       console.error("Create failed", err);
       toast.error("Failed to create profile.");
-    }
+    },
   });
 
   const getHostname = (url: string) => {
@@ -92,107 +109,132 @@ function ProfileIndex() {
   };
 
   return (
-    <div className="space-y-8 animate-fade-in">
-      <header className="border-b border-gray-200 pb-6">
-        <h2 className="text-4xl font-serif text-black mb-3">My Profile</h2>
-        <p className="text-gray-500 font-light text-lg">
-          Manage your firm's profile, capabilities, and presence in the Anderson network.
+    <div className="animate-fade-in space-y-8">
+      <header className="border-gray-200 border-b pb-6">
+        <h2 className="mb-3 font-serif text-4xl text-black">My Profile</h2>
+        <p className="font-light text-gray-500 text-lg">
+          Manage your firm's profile, capabilities, and presence in the Anderson
+          network.
         </p>
       </header>
 
       <section>
-        <div className="flex items-center justify-between mb-6">
-          <h3 className="text-xl font-bold uppercase tracking-widest text-black flex items-center gap-2">
-            <Building2 className="w-5 h-5" /> Linked Companies
+        <div className="mb-6 flex items-center justify-between">
+          <h3 className="flex items-center gap-2 font-bold text-black text-xl uppercase tracking-widest">
+            <Building2 className="h-5 w-5" /> Linked Companies
           </h3>
         </div>
 
         {companies.length === 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
             {/* AI Auto-Create */}
-            <div className="bg-black text-white p-8 rounded-lg relative overflow-hidden flex flex-col justify-center">
-              <div className="absolute top-0 right-0 p-32 bg-red-600/10 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
+            <div className="relative flex flex-col justify-center overflow-hidden rounded-lg bg-black p-8 text-white">
+              <div className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 transform rounded-full bg-red-600/10 p-32 blur-3xl" />
               <div className="relative z-10 space-y-4">
-                <div className="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center mb-2">
-                  <Globe className="w-6 h-6 text-white" />
+                <div className="mb-2 flex h-12 w-12 items-center justify-center rounded-full bg-red-600">
+                  <Globe className="h-6 w-6 text-white" />
                 </div>
-                <h3 className="text-2xl font-serif">Auto-Sync from Website</h3>
+                <h3 className="font-serif text-2xl">Auto-Sync from Website</h3>
                 <p className="text-gray-400 text-sm leading-relaxed">
-                  Enter your website URL. Our AI will analyze your public presence to create your profile and suggest relevant tags.
+                  Enter your website URL. Our AI will analyze your public
+                  presence to create your profile and suggest relevant tags.
                 </p>
 
                 <div className="space-y-3 pt-4">
                   <Input
-                    value={scrapeUrl}
+                    className="border-white/20 bg-white/10 text-white placeholder-gray-500 focus:border-red-600"
                     onChange={(e) => setScrapeUrl(e.target.value)}
                     placeholder="https://www.yourcompany.com"
-                    className="bg-white/10 border-white/20 text-white placeholder-gray-500 focus:border-red-600"
+                    value={scrapeUrl}
                   />
                   <Button
+                    className="w-full bg-red-600 py-6 font-bold uppercase tracking-wider hover:bg-red-700"
+                    disabled={
+                      scrapeMutation.isPending || !isValidUrl(scrapeUrl)
+                    }
                     onClick={() => scrapeMutation.mutate(scrapeUrl)}
-                    disabled={scrapeMutation.isPending || !isValidUrl(scrapeUrl)}
-                    className="w-full bg-red-600 hover:bg-red-700 font-bold uppercase tracking-wider py-6"
                   >
-                    {scrapeMutation.isPending ? (<><Loader2 className="w-4 h-4 animate-spin mr-2" /> Syncing...</>) : "Sync & Create Profile"}
+                    {scrapeMutation.isPending ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />{" "}
+                        Syncing...
+                      </>
+                    ) : (
+                      "Sync & Create Profile"
+                    )}
                   </Button>
                 </div>
               </div>
             </div>
 
             {/* Manual Create */}
-            <div className="bg-gray-50 border border-gray-200 p-8 rounded-lg flex flex-col justify-center items-center text-center space-y-6">
-              <div className="w-16 h-16 bg-white border border-gray-200 rounded-full flex items-center justify-center shadow-sm">
-                <Plus className="w-8 h-8 text-gray-400" />
+            <div className="flex flex-col items-center justify-center space-y-6 rounded-lg border border-gray-200 bg-gray-50 p-8 text-center">
+              <div className="flex h-16 w-16 items-center justify-center rounded-full border border-gray-200 bg-white shadow-sm">
+                <Plus className="h-8 w-8 text-gray-400" />
               </div>
               <div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">Create Manually</h3>
-                <p className="text-gray-500 text-sm max-w-sm mx-auto mb-4">
-                  Start from scratch. Manually enter your firm's details, locations, and personnel to get listed in the directory.
+                <h3 className="mb-2 font-bold text-gray-900 text-xl">
+                  Create Manually
+                </h3>
+                <p className="mx-auto mb-4 max-w-sm text-gray-500 text-sm">
+                  Start from scratch. Manually enter your firm's details,
+                  locations, and personnel to get listed in the directory.
                 </p>
                 <Input
+                  className="mx-auto mt-4 mb-4 max-w-xs"
+                  onChange={(e) => setNewFirmName(e.target.value)}
                   placeholder="Enter Firm Name"
                   value={newFirmName}
-                  onChange={(e: any) => setNewFirmName(e.target.value)}
-                  className="max-w-xs mx-auto mb-4 mt-4"
                 />
               </div>
               <Button
-                onClick={() => createMutation.mutate()}
+                className="border-black px-8 py-6 text-black uppercase tracking-wider hover:bg-black hover:text-white"
                 disabled={createMutation.isPending || !newFirmName}
+                onClick={() => createMutation.mutate()}
                 variant="outline"
-                className="border-black text-black hover:bg-black hover:text-white uppercase tracking-wider px-8 py-6"
               >
-                {createMutation.isPending ? "Creating..." : "Create New Profile"}
+                {createMutation.isPending
+                  ? "Creating..."
+                  : "Create New Profile"}
               </Button>
             </div>
           </div>
         ) : (
           <div className="grid grid-cols-1 gap-6">
-            {companies.map((company: Company) => (
+            {companies.map((company: CompanyDto) => (
               <div
+                className="group flex flex-col items-center gap-8 border border-gray-200 bg-white p-8 transition-all duration-300 hover:shadow-lg md:flex-row"
                 key={company.id}
-                className="bg-white border border-gray-200 p-8 flex flex-col md:flex-row items-center gap-8 hover:shadow-lg transition-all duration-300 group"
               >
                 <div className="flex-1">
-                  <h3 className="text-2xl font-serif text-black mb-2 flex items-center gap-3">
+                  <h3 className="mb-2 flex items-center gap-3 font-serif text-2xl text-black">
                     {company.name}
                   </h3>
-                  <p className="text-gray-500 text-sm mb-4 line-clamp-2">
+                  <p className="mb-4 line-clamp-2 text-gray-500 text-sm">
                     {company.shortDescription || "No description provided."}
                   </p>
 
-                  <div className="flex flex-wrap gap-6 text-xs text-gray-400 font-medium uppercase tracking-wider">
+                  <div className="flex flex-wrap gap-6 font-medium text-gray-400 text-xs uppercase tracking-wider">
                     {company.websiteUrl && (
                       <div className="flex items-center gap-2">
-                        <Globe className="w-4 h-4" />
-                        <a href={company.websiteUrl.startsWith("http") ? company.websiteUrl : `https://${company.websiteUrl}`} target="_blank" rel="noopener noreferrer" className="hover:text-red-600 transition-colors">
+                        <Globe className="h-4 w-4" />
+                        <a
+                          className="transition-colors hover:text-red-600"
+                          href={
+                            company.websiteUrl.startsWith("http")
+                              ? company.websiteUrl
+                              : `https://${company.websiteUrl}`
+                          }
+                          rel="noopener noreferrer"
+                          target="_blank"
+                        >
                           {getHostname(company.websiteUrl)}
                         </a>
                       </div>
                     )}
                     {company.employeeCount !== undefined && (
                       <div className="flex items-center gap-2">
-                        <Users className="w-4 h-4" />
+                        <Users className="h-4 w-4" />
                         <span>{company.employeeCount} Employees</span>
                       </div>
                     )}
@@ -201,33 +243,33 @@ function ProfileIndex() {
 
                 <div className="flex flex-col gap-2">
                   <Link
+                    className="flex items-center gap-2 border border-black bg-white px-6 py-3 font-bold text-[10px] text-black uppercase tracking-[0.2em] transition-all hover:bg-black hover:text-white group-hover:border-red-600 group-hover:bg-red-600 group-hover:text-white"
+                    params={{ companyId: company.id as string }}
                     to="/profile/$companyId"
-                    params={{ companyId: company.id! }}
-                    className="flex items-center gap-2 px-6 py-3 bg-white border border-black text-black text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-black hover:text-white transition-all group-hover:border-red-600 group-hover:bg-red-600 group-hover:text-white"
                   >
-                    Manage Firm <ChevronRight className="w-3 h-3" />
+                    Manage Firm <ChevronRight className="h-3 w-3" />
                   </Link>
                   <Link
+                    className="flex items-center gap-2 border border-black bg-white px-6 py-3 font-bold text-[10px] text-black uppercase tracking-[0.2em] transition-all hover:bg-black hover:text-white group-hover:border-blue-600 group-hover:bg-blue-600 group-hover:text-white"
+                    params={{ companyId: company.id as string }}
                     to="/profile/$companyId/reports"
-                    params={{ companyId: company.id! }}
-                    className="flex items-center gap-2 px-6 py-3 bg-white border border-black text-black text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-black hover:text-white transition-all group-hover:border-blue-600 group-hover:bg-blue-600 group-hover:text-white"
                   >
-                    Manage Reports <ChevronRight className="w-3 h-3" />
+                    Manage Reports <ChevronRight className="h-3 w-3" />
                   </Link>
                 </div>
               </div>
             ))}
 
             {/* Add another company button - small version for when list exists */}
-            <div className="flex justify-center mt-8">
+            {/* <div className="mt-8 flex justify-center">
               <Button
+                className="gap-2 text-gray-400 text-xs uppercase tracking-widest hover:text-black"
                 onClick={() => createMutation.mutate()}
                 variant="ghost"
-                className="text-gray-400 hover:text-black uppercase text-xs tracking-widest gap-2"
               >
-                <Plus className="w-4 h-4" /> Add Another Firm
+                <Plus className="h-4 w-4" /> Add Another Firm
               </Button>
-            </div>
+            </div> */}
           </div>
         )}
       </section>

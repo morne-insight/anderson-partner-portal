@@ -9,7 +9,7 @@ using MediatR;
 namespace AndersonAPI.Application.Companies.GetPartnerProfileById
 {
     [IntentManaged(Mode.Merge, Signature = Mode.Fully)]
-    public class GetPartnerProfileByIdQueryHandler : IRequestHandler<GetPartnerProfileByIdQuery, PartnerProfile>
+    public class GetPartnerProfileByIdQueryHandler : IRequestHandler<GetPartnerProfileByIdQuery, PartnerProfileDto>
     {
         private readonly ICompanyRepository _companyRepository;
 
@@ -20,9 +20,11 @@ namespace AndersonAPI.Application.Companies.GetPartnerProfileById
         }
 
         [IntentManaged(Mode.Fully, Body = Mode.Fully)]
-        public async Task<PartnerProfile> Handle(GetPartnerProfileByIdQuery request, CancellationToken cancellationToken)
+        public async Task<PartnerProfileDto> Handle(
+            GetPartnerProfileByIdQuery request,
+            CancellationToken cancellationToken)
         {
-            var company = await _companyRepository.FindByIdProjectToAsync<PartnerProfile>(request.Id, cancellationToken);
+            var company = await _companyRepository.FindByIdProjectToAsync<PartnerProfileDto>(request.Id, cancellationToken);
             if (company is null)
             {
                 throw new NotFoundException($"Could not find Company '{request.Id}'");

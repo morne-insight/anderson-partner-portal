@@ -9,10 +9,11 @@ import {
 } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import NotFound from "@/components/NotFound";
+import { Toaster } from "@/components/ui/sonner";
 import { AuthProvider } from "../contexts/auth-context";
 import appCss from "../styles.css?url";
-import { Toaster } from "@/components/ui/sonner";
 import "@/config/ts-client"; // Import global API configuration
+import "@mdxeditor/editor/style.css";
 
 interface MyRouterContext {
   queryClient: QueryClient;

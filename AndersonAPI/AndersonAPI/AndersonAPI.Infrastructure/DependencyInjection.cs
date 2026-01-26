@@ -65,6 +65,7 @@ namespace AndersonAPI.Infrastructure
         private static void ConfigureCustomServices(IServiceCollection services)
         {
             services.AddSingleton<IAgentService, AgentService>();
+            services.AddSingleton<IWebsiteScrapingService, WebsiteScrapingService>();
             services.AddHttpClient<IEmbeddingService, EmbeddingService>((servieProvider, http) =>
             {
                 var options = servieProvider.GetRequiredService<Microsoft.Extensions.Options.IOptions<AzureAIOptions>>().Value;

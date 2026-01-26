@@ -73,7 +73,7 @@ export function RegisterForm() {
         <div className="rounded-md bg-green-50 p-4 text-green-700">
           Registration successful! You can now sign in with your credentials.
         </div>
-        <Link className="text-blue-600 hover:underline" to="/login">
+        <Link className="text-[#DB0A20] hover:underline font-medium" to="/login">
           Go to Sign In
         </Link>
       </div>
@@ -82,10 +82,7 @@ export function RegisterForm() {
 
   return (
     <div className="mx-auto max-w-md space-y-6">
-      <div className="space-y-2 text-center">
-        <h1 className="font-bold text-3xl">Sign Up</h1>
-        <p className="text-gray-500">Create a new account to get started</p>
-      </div>
+      {/* Header removed as it is now handled by AuthLayout */}
 
       {error && (
         <div className="rounded-md bg-red-50 p-4 text-red-700">{error}</div>
@@ -221,14 +218,14 @@ export function RegisterForm() {
           )}
         </form.Field>
 
-        <Button className="w-full" disabled={isLoading} type="submit">
+        <Button className="w-full bg-[#DB0A20] hover:bg-[#b0081a] text-white" disabled={isLoading} type="submit">
           {isLoading ? "Creating Account..." : "Sign Up"}
         </Button>
       </form>
 
       <p className="text-center text-sm">
         Already have an account?{" "}
-        <Link className="text-blue-600 hover:underline" to="/login">
+        <Link className="text-[#DB0A20] hover:underline font-medium" to="/login">
           Sign in
         </Link>
       </p>

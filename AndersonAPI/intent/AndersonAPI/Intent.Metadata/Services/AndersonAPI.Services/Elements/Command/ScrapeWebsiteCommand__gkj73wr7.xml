@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <class id="ee5ccc06-4454-4850-a631-d0fbfbf3eba7" type="Command" typeId="ccf14eb6-3a55-4d81-b5b9-d27311c70cb9">
   <name>ScrapeWebsiteCommand</name>
-  <display>ScrapeWebsiteCommand: void</display>
+  <display>ScrapeWebsiteCommand: guid</display>
   <isAbstract>false</isAbstract>
   <sort-children>by-type-then-manually</sort-children>
   <genericTypes />
   <typeReference id="974167c6-d95e-445e-8e59-1600d773a528">
+    <typeId>6b649125-18ea-48fd-a6ba-0bfff0d8f488</typeId>
     <isNavigable>true</isNavigable>
     <isNullable>false</isNullable>
     <isCollection>false</isCollection>
     <isRequired>true</isRequired>
+    <typePackageName>Intent.Common.Types</typePackageName>
+    <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
     <stereotypes />
     <genericTypeParameters />
   </typeReference>

@@ -1465,8 +1465,8 @@ export const PartnerOpportunityDtoSchema = {
     }
 } as const;
 
-export const PartnerProfileSchema = {
-    title: 'PartnerProfile',
+export const PartnerProfileDtoSchema = {
+    title: 'PartnerProfileDto',
     type: 'object',
     properties: {
         id: {

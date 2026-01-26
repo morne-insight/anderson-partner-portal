@@ -7,7 +7,7 @@ using MediatR;
 
 namespace AndersonAPI.Application.Companies.ScrapeWebsite
 {
-    public class ScrapeWebsiteCommand : IRequest, ICommand
+    public class ScrapeWebsiteCommand : IRequest<Guid>, ICommand
     {
         public ScrapeWebsiteCommand(string url)
         {

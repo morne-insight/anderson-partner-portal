@@ -7,7 +7,7 @@ using MediatR;
 
 namespace AndersonAPI.Application.Companies.GetPartnerProfileById
 {
-    public class GetPartnerProfileByIdQuery : IRequest<PartnerProfile>, IQuery
+    public class GetPartnerProfileByIdQuery : IRequest<PartnerProfileDto>, IQuery
     {
         public GetPartnerProfileByIdQuery(Guid id)
         {

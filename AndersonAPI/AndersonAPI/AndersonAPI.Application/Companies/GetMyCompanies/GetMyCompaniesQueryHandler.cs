@@ -13,12 +13,14 @@ namespace AndersonAPI.Application.Companies.GetMyCompanies
     {
         private readonly ICompanyRepository _companyRepository;
         private readonly ICurrentUserService _currentUserService;
+        private readonly IApplicationIdentityUserRepository _applicationIdentityUserRepository;
 
         [IntentManaged(Mode.Merge)]
-        public GetMyCompaniesQueryHandler(ICompanyRepository companyRepository, ICurrentUserService currentUserService)
+        public GetMyCompaniesQueryHandler(ICompanyRepository companyRepository, ICurrentUserService currentUserService, IApplicationIdentityUserRepository applicationIdentityUserRepository)
         {
             _companyRepository = companyRepository;
             _currentUserService = currentUserService;
+            _applicationIdentityUserRepository = applicationIdentityUserRepository;
         }
 
         [IntentManaged(Mode.Fully, Body = Mode.Ignore)]
@@ -27,7 +29,10 @@ namespace AndersonAPI.Application.Companies.GetMyCompanies
             var currentUser = await _currentUserService.GetAsync();
             if (currentUser == null) throw new UnauthorizedAccessException("Current user is not authenticated.");
 
-            var companies = await _companyRepository.FindAllProjectToAsync<CompanyProfileDto>(x => x.CreatedBy == currentUser.Id, cancellationToken);
+            var companies = await _companyRepository
+                .FindAllProjectToAsync<CompanyProfileDto>(x => x.ApplicationIdentityUsers.Any(u => u.Id == currentUser.Id.ToString()), cancellationToken);
+
+            
             return companies;
         }
     }

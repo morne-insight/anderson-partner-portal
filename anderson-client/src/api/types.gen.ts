@@ -581,9 +581,9 @@ export type PartnerOpportunityDto = {
 };
 
 /**
- * PartnerProfile
+ * PartnerProfileDto
  */
-export type PartnerProfile = {
+export type PartnerProfileDto = {
     id?: string;
     name?: string;
     fullDescription?: string;
@@ -2007,9 +2007,9 @@ export type PutApiCompaniesScrapeWebsiteError = PutApiCompaniesScrapeWebsiteErro
 
 export type PutApiCompaniesScrapeWebsiteResponses = {
     /**
-     * No Content
+     * OK
      */
-    204: void;
+    200: string;
 };
 
 export type PutApiCompaniesScrapeWebsiteResponse = PutApiCompaniesScrapeWebsiteResponses[keyof PutApiCompaniesScrapeWebsiteResponses];
@@ -2300,7 +2300,7 @@ export type GetApiCompaniesByIdPartnerResponses = {
     /**
      * OK
      */
-    200: PartnerProfile;
+    200: PartnerProfileDto;
 };
 
 export type GetApiCompaniesByIdPartnerResponse = GetApiCompaniesByIdPartnerResponses[keyof GetApiCompaniesByIdPartnerResponses];

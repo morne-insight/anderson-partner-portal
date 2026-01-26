@@ -223,22 +223,22 @@ namespace AndersonAPI.Api.Controllers
 
         /// <summary>
         /// </summary>
-        /// <response code="204">Successfully updated.</response>
+        /// <response code="200">Successfully updated.</response>
         /// <response code="400">One or more validation errors have occurred.</response>
         /// <response code="401">Unauthorized request.</response>
         /// <response code="403">Forbidden request.</response>
         [HttpPut("api/companies/scrape-website")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(Guid), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult> ScrapeWebsite(
+        public async Task<ActionResult<Guid>> ScrapeWebsite(
             [FromBody] ScrapeWebsiteCommand command,
             CancellationToken cancellationToken = default)
         {
-            await _mediator.Send(command, cancellationToken);
-            return NoContent();
+            var result = await _mediator.Send(command, cancellationToken);
+            return Ok(result);
         }
 
         /// <summary>
@@ -550,19 +550,19 @@ namespace AndersonAPI.Api.Controllers
 
         /// <summary>
         /// </summary>
-        /// <response code="200">Returns the specified PartnerProfile.</response>
+        /// <response code="200">Returns the specified PartnerProfileDto.</response>
         /// <response code="400">One or more validation errors have occurred.</response>
         /// <response code="401">Unauthorized request.</response>
         /// <response code="403">Forbidden request.</response>
-        /// <response code="404">No PartnerProfile could be found with the provided parameters.</response>
+        /// <response code="404">No PartnerProfileDto could be found with the provided parameters.</response>
         [HttpGet("api/companies/{id}/partner")]
-        [ProducesResponseType(typeof(PartnerProfile), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(PartnerProfileDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<PartnerProfile>> GetPartnerProfileById(
+        public async Task<ActionResult<PartnerProfileDto>> GetPartnerProfileById(
             [FromRoute] Guid id,
             CancellationToken cancellationToken = default)
         {

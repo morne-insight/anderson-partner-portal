@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { AuthLayout } from "../components/auth/AuthLayout";
 import { RegisterForm } from "../components/auth/RegisterForm";
 
 export const Route = createFileRoute("/register")({
@@ -7,8 +8,11 @@ export const Route = createFileRoute("/register")({
 
 function RegisterPage() {
   return (
-    <div>
+    <AuthLayout
+      title="Create an Account"
+      subtitle="Join Anderson to start your journey."
+    >
       <RegisterForm />
-    </div>
+    </AuthLayout>
   );
 }

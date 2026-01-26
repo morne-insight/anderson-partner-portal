@@ -9,7 +9,7 @@ const partnerOpportunityDtoSchemaResponseTransformer = (data: any) => {
     return data;
 };
 
-const partnerProfileSchemaResponseTransformer = (data: any) => {
+const partnerProfileDtoSchemaResponseTransformer = (data: any) => {
     if (data.opportunities) {
         data.opportunities = data.opportunities.map((item: any) => partnerOpportunityDtoSchemaResponseTransformer(item));
     }
@@ -17,7 +17,7 @@ const partnerProfileSchemaResponseTransformer = (data: any) => {
 };
 
 export const getApiCompaniesByIdPartnerResponseTransformer = async (data: any): Promise<GetApiCompaniesByIdPartnerResponse> => {
-    data = partnerProfileSchemaResponseTransformer(data);
+    data = partnerProfileDtoSchemaResponseTransformer(data);
     return data;
 };
 
