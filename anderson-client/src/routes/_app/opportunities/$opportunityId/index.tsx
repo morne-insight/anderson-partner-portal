@@ -245,7 +245,7 @@ function ViewOpportunity() {
                 {Math.floor(
                   (new Date().getTime() -
                     new Date(opportunity.createdDate || "").getTime()) /
-                  (1000 * 60 * 60 * 24)
+                    (1000 * 60 * 60 * 24)
                 )}{" "}
                 DAYS AGO
               </span>

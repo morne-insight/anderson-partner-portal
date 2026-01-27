@@ -1,6 +1,7 @@
 // src/utils/session.ts
-import { UserCompanyDto } from "@/api";
+
 import { useSession } from "@tanstack/react-start/server";
+import type { UserCompanyDto } from "@/api";
 
 export interface SessionData {
   userId?: string;
@@ -16,10 +17,10 @@ export interface SessionData {
 }
 
 export function useAppSession() {
-
   return useSession<SessionData>({
     name: "app-session",
-    password: process.env.SESSION_SECRET || "anderson-partner-portal-secret-key",
+    password:
+      process.env.SESSION_SECRET || "anderson-partner-portal-secret-key",
     cookie: {
       httpOnly: true,
       sameSite: "lax",

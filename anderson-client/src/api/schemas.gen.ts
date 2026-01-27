@@ -1883,6 +1883,34 @@ export const ScrapeWebsiteCommandSchema = {
     }
 } as const;
 
+export const SendConnectionRequestCommandSchema = {
+    title: 'SendConnectionRequestCommand',
+    required: [
+        'contactId',
+        'companyId',
+        'partnerId',
+        'message'
+    ],
+    type: 'object',
+    properties: {
+        contactId: {
+            type: 'string',
+            format: 'uuid'
+        },
+        companyId: {
+            type: 'string',
+            format: 'uuid'
+        },
+        partnerId: {
+            type: 'string',
+            format: 'uuid'
+        },
+        message: {
+            type: 'string'
+        }
+    }
+} as const;
+
 export const ServiceTypeDtoSchema = {
     title: 'ServiceTypeDto',
     type: 'object',

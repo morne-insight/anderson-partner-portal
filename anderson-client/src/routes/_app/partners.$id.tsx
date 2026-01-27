@@ -270,10 +270,11 @@ function PartnerProfile() {
                 ?.sort((a) => (a.isHeadOffice ? -1 : 1))
                 .map((loc, i: number) => (
                   <div
-                    className={`border p-4 ${loc.isHeadOffice
-                      ? "border-red-600 bg-red-50/20"
-                      : "border-gray-100"
-                      }`}
+                    className={`border p-4 ${
+                      loc.isHeadOffice
+                        ? "border-red-600 bg-red-50/20"
+                        : "border-gray-100"
+                    }`}
                     key={i}
                   >
                     <div className="flex items-start justify-between">

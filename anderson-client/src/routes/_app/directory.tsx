@@ -1,20 +1,28 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { Users, Filter, MapPin, Briefcase, Building, CheckCircle, Search } from "lucide-react";
-import { useMemo } from "react";
 import { useStore } from "@tanstack/react-store";
+import {
+  Briefcase,
+  Building,
+  CheckCircle,
+  Filter,
+  MapPin,
+  Search,
+  Users,
+} from "lucide-react";
+import { useMemo } from "react";
+import type { DirectoryProfileListItem } from "@/api";
+import { usePrefetchReferenceData } from "@/hooks/useReferenceData";
 import { callApi } from "@/server/proxy";
 import {
+  clearAllDirectoryFilters,
   directoryFilterStore,
-  setSelectedRegion,
-  setSelectedCountry,
-  setSelectedService,
-  setSelectedIndustry,
-  setSelectedCapability,
   setNameFilter,
-  clearAllDirectoryFilters
+  setSelectedCapability,
+  setSelectedCountry,
+  setSelectedIndustry,
+  setSelectedRegion,
+  setSelectedService,
 } from "@/stores/directoryFilterStore";
-import { CountryDto, DirectoryProfileListItem } from "@/api";
-import { usePrefetchReferenceData } from "@/hooks/useReferenceData";
 
 interface DirectoryLoaderData {
   companies: DirectoryProfileListItem[];
@@ -24,19 +32,20 @@ export const Route = createFileRoute("/_app/directory")({
   component: NetworkDirectory,
   loader: async () => {
     const [companies] = await Promise.all([
-      callApi({ data: { fn: 'getApiCompanies' } }),
+      callApi({ data: { fn: "getApiCompanies" } }),
     ]);
 
     return {
       companies: companies || [],
     } as DirectoryLoaderData;
-  }
+  },
 });
 
 function NetworkDirectory() {
   const navigate = useNavigate();
   const { companies } = Route.useLoaderData();
-  const { countries, regions, capabilities, industries, serviceTypes } = usePrefetchReferenceData();
+  const { countries, regions, capabilities, industries, serviceTypes } =
+    usePrefetchReferenceData();
 
   console.log(companies);
 
@@ -48,7 +57,7 @@ function NetworkDirectory() {
     selectedService,
     selectedIndustry,
     selectedCapability,
-    nameFilter
+    nameFilter,
   } = filterState;
 
   // Transform companies data to match expected format
@@ -56,61 +65,100 @@ function NetworkDirectory() {
     return (companies || []).map((company: any) => {
       return {
         id: company.id,
-        name: company.name || 'Unknown Company',
-        description: company.shortDescription || company.fullDescription || 'No description available.',
-        serviceType: company.serviceTypeName || 'Professional Services',
+        name: company.name || "Unknown Company",
+        description:
+          company.shortDescription ||
+          company.fullDescription ||
+          "No description available.",
+        serviceType: company.serviceTypeName || "Professional Services",
         skills: company.capabilities?.map((c: any) => c.name) || [],
         industries: company.industries?.map((i: any) => i.name) || [],
         verified: true,
-        locations: company.locations?.map((l: any) => ({
-          country: countries.data?.find((c: any) => c.id === l.countryId)?.name || 'Unknown',
-          region: regions.data?.find((r: any) => r.id === l.regionId)?.name || 'Unknown',
-          isHeadOffice: l.isHeadOffice
-        })) || [],
-        contacts: company.contacts?.map((c: any) => ({
-          name: `${c.firstName || ''} ${c.lastName || ''}`.trim() || 'Contact',
-          email: c.emailAddress,
-          isDefault: true
-        })) || []
+        locations:
+          company.locations?.map((l: any) => ({
+            country:
+              countries.data?.find((c: any) => c.id === l.countryId)?.name ||
+              "Unknown",
+            region:
+              regions.data?.find((r: any) => r.id === l.regionId)?.name ||
+              "Unknown",
+            isHeadOffice: l.isHeadOffice,
+          })) || [],
+        contacts:
+          company.contacts?.map((c: any) => ({
+            name:
+              `${c.firstName || ""} ${c.lastName || ""}`.trim() || "Contact",
+            email: c.emailAddress,
+            isDefault: true,
+          })) || [],
       };
     });
   }, [companies, countries, regions]);
 
   // Derived filtered results
   const filteredPartners = useMemo(() => {
-    return transformedCompanies.filter((partner: any) => {
-      // Name Search
-      if (nameFilter && !partner.name.toLowerCase().includes(nameFilter.toLowerCase())) return false;
+    return transformedCompanies
+      .filter((partner: any) => {
+        // Name Search
+        if (
+          nameFilter &&
+          !partner.name.toLowerCase().includes(nameFilter.toLowerCase())
+        )
+          return false;
 
-      // Region/Country Filter
-      const hasRegion = selectedRegion === 'All' || partner.locations.some((l: any) => l.region === selectedRegion);
-      const hasCountry = selectedCountry === 'All' || partner.locations.some((l: any) => l.country === selectedCountry);
-      if (!hasRegion || !hasCountry) return false;
+        // Region/Country Filter
+        const hasRegion =
+          selectedRegion === "All" ||
+          partner.locations.some((l: any) => l.region === selectedRegion);
+        const hasCountry =
+          selectedCountry === "All" ||
+          partner.locations.some((l: any) => l.country === selectedCountry);
+        if (!(hasRegion && hasCountry)) return false;
 
-      // Service Filter
-      if (selectedService !== 'All' && partner.serviceType !== selectedService) return false;
+        // Service Filter
+        if (
+          selectedService !== "All" &&
+          partner.serviceType !== selectedService
+        )
+          return false;
 
-      // Industry Filter
-      if (selectedIndustry !== 'All' && !partner.industries.includes(selectedIndustry)) return false;
+        // Industry Filter
+        if (
+          selectedIndustry !== "All" &&
+          !partner.industries.includes(selectedIndustry)
+        )
+          return false;
 
-      // Capability Filter
-      if (selectedCapability !== 'All' && !partner.skills.includes(selectedCapability)) return false;
+        // Capability Filter
+        if (
+          selectedCapability !== "All" &&
+          !partner.skills.includes(selectedCapability)
+        )
+          return false;
 
-      return true;
-    }).sort((a: any, b: any) => a.name.localeCompare(b.name));
-  }, [transformedCompanies, nameFilter, selectedRegion, selectedCountry, selectedService, selectedIndustry, selectedCapability]);
-
+        return true;
+      })
+      .sort((a: any, b: any) => a.name.localeCompare(b.name));
+  }, [
+    transformedCompanies,
+    nameFilter,
+    selectedRegion,
+    selectedCountry,
+    selectedService,
+    selectedIndustry,
+    selectedCapability,
+  ]);
 
   const clearAllFilters = () => {
     clearAllDirectoryFilters();
   };
 
   const activeFiltersCount =
-    (selectedRegion !== 'All' ? 1 : 0) +
-    (selectedCountry !== 'All' ? 1 : 0) +
-    (selectedService !== 'All' ? 1 : 0) +
-    (selectedIndustry !== 'All' ? 1 : 0) +
-    (selectedCapability !== 'All' ? 1 : 0) +
+    (selectedRegion !== "All" ? 1 : 0) +
+    (selectedCountry !== "All" ? 1 : 0) +
+    (selectedService !== "All" ? 1 : 0) +
+    (selectedIndustry !== "All" ? 1 : 0) +
+    (selectedCapability !== "All" ? 1 : 0) +
     (nameFilter ? 1 : 0);
 
   const allRegions = regions?.data?.map((r) => r.name).sort();
@@ -119,24 +167,29 @@ function NetworkDirectory() {
   const allCapabilities = capabilities?.data?.map((c) => c.name).sort();
 
   return (
-    <div className="space-y-10 animate-fade-in">
-      <header className="border-b border-gray-200 pb-8">
-        <h2 className="text-4xl font-serif text-black mb-3">Network Directory</h2>
-        <p className="text-gray-500 font-light text-lg">Browse the complete global index of Andersen member firms and partners.</p>
+    <div className="animate-fade-in space-y-10">
+      <header className="border-gray-200 border-b pb-8">
+        <h2 className="mb-3 font-serif text-4xl text-black">
+          Network Directory
+        </h2>
+        <p className="font-light text-gray-500 text-lg">
+          Browse the complete global index of Andersen member firms and
+          partners.
+        </p>
       </header>
 
-      <div className="flex flex-col lg:flex-row gap-10">
+      <div className="flex flex-col gap-10 lg:flex-row">
         {/* Sidebar Filters */}
-        <aside className="w-full lg:w-80 space-y-8">
-          <div className="bg-white border border-gray-200 p-6 shadow-sm">
-            <div className="flex justify-between items-center mb-6 border-b border-gray-100 pb-4">
-              <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-black flex items-center">
-                <Filter className="w-3.5 h-3.5 mr-2" /> Filters
+        <aside className="w-full space-y-8 lg:w-80">
+          <div className="border border-gray-200 bg-white p-6 shadow-sm">
+            <div className="mb-6 flex items-center justify-between border-gray-100 border-b pb-4">
+              <h3 className="flex items-center font-bold text-black text-xs uppercase tracking-[0.2em]">
+                <Filter className="mr-2 h-3.5 w-3.5" /> Filters
               </h3>
               {activeFiltersCount > 0 && (
                 <button
+                  className="font-bold text-[10px] text-red-600 uppercase tracking-widest hover:underline"
                   onClick={clearAllFilters}
-                  className="text-[10px] font-bold uppercase tracking-widest text-red-600 hover:underline"
                 >
                   Clear All
                 </button>
@@ -146,82 +199,120 @@ function NetworkDirectory() {
             <div className="space-y-6">
               {/* Name Search */}
               <div>
-                <label className="block text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-2">Search Firm Name</label>
+                <label className="mb-2 block font-bold text-[9px] text-gray-400 uppercase tracking-widest">
+                  Search Firm Name
+                </label>
                 <div className="relative">
                   <input
-                    type="text"
-                    value={nameFilter}
+                    className="w-full border border-gray-200 bg-gray-50 px-3 py-2 text-xs outline-none focus:border-black"
                     onChange={(e) => setNameFilter(e.target.value)}
                     placeholder="Enter keywords..."
-                    className="w-full bg-gray-50 border border-gray-200 px-3 py-2 text-xs outline-none focus:border-black"
+                    type="text"
+                    value={nameFilter}
                   />
-                  <Search className="absolute right-3 top-2.5 w-3 h-3 text-gray-300" />
+                  <Search className="absolute top-2.5 right-3 h-3 w-3 text-gray-300" />
                 </div>
               </div>
 
               {/* Region */}
               <div>
-                <label className="block text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-2">Region</label>
+                <label className="mb-2 block font-bold text-[9px] text-gray-400 uppercase tracking-widest">
+                  Region
+                </label>
                 <select
-                  value={selectedRegion}
+                  className="w-full appearance-none border border-gray-200 bg-gray-50 px-3 py-2 text-xs outline-none focus:border-black"
                   onChange={(e) => setSelectedRegion(e.target.value)}
-                  className="w-full bg-gray-50 border border-gray-200 px-3 py-2 text-xs outline-none focus:border-black appearance-none"
+                  value={selectedRegion}
                 >
                   <option value="All">All Regions</option>
-                  {allRegions?.map(r => <option key={r} value={r}>{r}</option>)}
+                  {allRegions?.map((r) => (
+                    <option key={r} value={r}>
+                      {r}
+                    </option>
+                  ))}
                 </select>
               </div>
 
               {/* Country */}
               <div>
-                <label className="block text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-2">Country</label>
+                <label className="mb-2 block font-bold text-[9px] text-gray-400 uppercase tracking-widest">
+                  Country
+                </label>
                 <select
-                  value={selectedCountry}
+                  className="w-full appearance-none border border-gray-200 bg-gray-50 px-3 py-2 text-xs outline-none focus:border-black"
                   onChange={(e) => setSelectedCountry(e.target.value)}
-                  className="w-full bg-gray-50 border border-gray-200 px-3 py-2 text-xs outline-none focus:border-black appearance-none"
+                  value={selectedCountry}
                 >
                   <option value="All">All Countries</option>
-                  {countries.data?.filter((c: any) => selectedRegion === 'All' || regions.data?.find((r: any) => r.id === c.regionId)?.name === selectedRegion)
-                    .map((c: any) => <option key={c.name} value={c.name}>{c.name}</option>)}
+                  {countries.data
+                    ?.filter(
+                      (c: any) =>
+                        selectedRegion === "All" ||
+                        regions.data?.find((r: any) => r.id === c.regionId)
+                          ?.name === selectedRegion
+                    )
+                    .map((c: any) => (
+                      <option key={c.name} value={c.name}>
+                        {c.name}
+                      </option>
+                    ))}
                 </select>
               </div>
 
               {/* Service Line */}
               <div>
-                <label className="block text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-2">Service Line</label>
+                <label className="mb-2 block font-bold text-[9px] text-gray-400 uppercase tracking-widest">
+                  Service Line
+                </label>
                 <select
-                  value={selectedService}
+                  className="w-full appearance-none border border-gray-200 bg-gray-50 px-3 py-2 text-xs outline-none focus:border-black"
                   onChange={(e) => setSelectedService(e.target.value)}
-                  className="w-full bg-gray-50 border border-gray-200 px-3 py-2 text-xs outline-none focus:border-black appearance-none"
+                  value={selectedService}
                 >
                   <option value="All">All Services</option>
-                  {allServiceTypes?.map(s => <option key={s} value={s}>{s}</option>)}
+                  {allServiceTypes?.map((s) => (
+                    <option key={s} value={s}>
+                      {s}
+                    </option>
+                  ))}
                 </select>
               </div>
 
               {/* Industry */}
               <div>
-                <label className="block text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-2">Industry Focus</label>
+                <label className="mb-2 block font-bold text-[9px] text-gray-400 uppercase tracking-widest">
+                  Industry Focus
+                </label>
                 <select
-                  value={selectedIndustry}
+                  className="w-full appearance-none border border-gray-200 bg-gray-50 px-3 py-2 text-xs outline-none focus:border-black"
                   onChange={(e) => setSelectedIndustry(e.target.value)}
-                  className="w-full bg-gray-50 border border-gray-200 px-3 py-2 text-xs outline-none focus:border-black appearance-none"
+                  value={selectedIndustry}
                 >
                   <option value="All">All Industries</option>
-                  {allIndustries?.map(i => <option key={i} value={i}>{i}</option>)}
+                  {allIndustries?.map((i) => (
+                    <option key={i} value={i}>
+                      {i}
+                    </option>
+                  ))}
                 </select>
               </div>
 
               {/* Capabilities */}
               <div>
-                <label className="block text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-2">Key Capabilities</label>
+                <label className="mb-2 block font-bold text-[9px] text-gray-400 uppercase tracking-widest">
+                  Key Capabilities
+                </label>
                 <select
-                  value={selectedCapability}
+                  className="w-full appearance-none border border-gray-200 bg-gray-50 px-3 py-2 text-xs outline-none focus:border-black"
                   onChange={(e) => setSelectedCapability(e.target.value)}
-                  className="w-full bg-gray-50 border border-gray-200 px-3 py-2 text-xs outline-none focus:border-black appearance-none"
+                  value={selectedCapability}
                 >
                   <option value="All">All Capabilities</option>
-                  {allCapabilities?.map((capability) => <option key={capability} value={capability}>{capability}</option>)}
+                  {allCapabilities?.map((capability) => (
+                    <option key={capability} value={capability}>
+                      {capability}
+                    </option>
+                  ))}
                 </select>
               </div>
             </div>
@@ -230,50 +321,81 @@ function NetworkDirectory() {
 
         {/* Directory List */}
         <div className="flex-1 space-y-6">
-          <div className="flex justify-between items-center mb-4">
-            <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
-              Showing {filteredPartners.length} {filteredPartners.length === 1 ? 'Firm' : 'Firms'}
+          <div className="mb-4 flex items-center justify-between">
+            <span className="font-bold text-[10px] text-gray-400 uppercase tracking-widest">
+              Showing {filteredPartners.length}{" "}
+              {filteredPartners.length === 1 ? "Firm" : "Firms"}
             </span>
           </div>
 
           {filteredPartners.length > 0 ? (
             <div className="grid grid-cols-1 gap-4">
               {filteredPartners.map((partner: any) => {
-                const headOffice = partner.locations.find((l: any) => l.isHeadOffice) || partner.locations[0];
+                const headOffice =
+                  partner.locations.find((l: any) => l.isHeadOffice) ||
+                  partner.locations[0];
                 return (
-                  <div key={partner.id} className="bg-white border border-gray-200 p-6 hover:border-red-600 transition-all group shadow-sm flex flex-col md:flex-row gap-6 items-start md:items-center">
+                  <div
+                    className="group flex flex-col items-start gap-6 border border-gray-200 bg-white p-6 shadow-sm transition-all hover:border-red-600 md:flex-row md:items-center"
+                    key={partner.id}
+                  >
                     <div className="flex-1">
-                      <div className="flex items-center gap-3 mb-2">
-                        <h4 className="text-xl font-serif text-black font-bold group-hover:text-red-600 transition-colors">{partner.name}</h4>
-                        {partner.verified && <CheckCircle className="w-4 h-4 text-gray-400" />}
+                      <div className="mb-2 flex items-center gap-3">
+                        <h4 className="font-bold font-serif text-black text-xl transition-colors group-hover:text-red-600">
+                          {partner.name}
+                        </h4>
+                        {partner.verified && (
+                          <CheckCircle className="h-4 w-4 text-gray-400" />
+                        )}
                       </div>
 
-                      <div className="flex flex-wrap gap-4 items-center text-[10px] font-bold uppercase tracking-widest text-gray-500">
-                        <span className="flex items-center gap-1.5"><MapPin className="w-3 h-3 text-red-600" /> {headOffice?.country}, {headOffice?.region}</span>
-                        <span className="flex items-center gap-1.5"><Briefcase className="w-3 h-3 text-red-600" /> {partner.serviceType}</span>
-                        <span className="flex items-center gap-1.5 text-black bg-gray-50 px-2 py-0.5 border border-gray-100"><Building className="w-3 h-3" /> {partner.locations.length} Locations</span>
+                      <div className="flex flex-wrap items-center gap-4 font-bold text-[10px] text-gray-500 uppercase tracking-widest">
+                        <span className="flex items-center gap-1.5">
+                          <MapPin className="h-3 w-3 text-red-600" />{" "}
+                          {headOffice?.country}, {headOffice?.region}
+                        </span>
+                        <span className="flex items-center gap-1.5">
+                          <Briefcase className="h-3 w-3 text-red-600" />{" "}
+                          {partner.serviceType}
+                        </span>
+                        <span className="flex items-center gap-1.5 border border-gray-100 bg-gray-50 px-2 py-0.5 text-black">
+                          <Building className="h-3 w-3" />{" "}
+                          {partner.locations.length} Locations
+                        </span>
                       </div>
 
                       <div className="mt-4 flex flex-wrap gap-1.5">
                         {partner.industries.slice(0, 3).map((ind: string) => (
-                          <span key={ind} className="px-2 py-0.5 border border-gray-100 text-[8px] font-bold uppercase tracking-tighter text-gray-400">
+                          <span
+                            className="border border-gray-100 px-2 py-0.5 font-bold text-[8px] text-gray-400 uppercase tracking-tighter"
+                            key={ind}
+                          >
                             {ind}
                           </span>
                         ))}
-                        {partner.industries.length > 3 && <span className="text-[8px] text-gray-300 self-center">+{partner.industries.length - 3}</span>}
+                        {partner.industries.length > 3 && (
+                          <span className="self-center text-[8px] text-gray-300">
+                            +{partner.industries.length - 3}
+                          </span>
+                        )}
                       </div>
                     </div>
 
-                    <div className="flex gap-4 w-full md:w-auto">
+                    <div className="flex w-full gap-4 md:w-auto">
                       <button
-                        onClick={() => navigate({ to: `/partners/${partner.id}`, search: { from: 'directory' } })}
-                        className="flex-1 md:flex-none px-6 py-2 border border-black text-black hover:bg-black hover:text-white transition-all text-[10px] font-bold uppercase tracking-widest flex items-center justify-center"
+                        className="flex flex-1 items-center justify-center border border-black px-6 py-2 font-bold text-[10px] text-black uppercase tracking-widest transition-all hover:bg-black hover:text-white md:flex-none"
+                        onClick={() =>
+                          navigate({
+                            to: `/partners/${partner.id}`,
+                            search: { from: "directory" },
+                          })
+                        }
                       >
                         Profile
                       </button>
                       <button
-                        onClick={() => { }}
-                        className="flex-1 md:flex-none px-6 py-2 bg-red-600 text-white border border-red-600 hover:bg-white hover:text-red-600 transition-all text-[10px] font-bold uppercase tracking-widest flex items-center justify-center"
+                        className="flex flex-1 items-center justify-center border border-red-600 bg-red-600 px-6 py-2 font-bold text-[10px] text-white uppercase tracking-widest transition-all hover:bg-white hover:text-red-600 md:flex-none"
+                        onClick={() => {}}
                       >
                         Connect
                       </button>
@@ -283,15 +405,20 @@ function NetworkDirectory() {
               })}
             </div>
           ) : (
-            <div className="bg-white border border-dashed border-gray-200 p-20 text-center">
-              <div className="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Users className="text-gray-300 w-8 h-8" />
+            <div className="border border-gray-200 border-dashed bg-white p-20 text-center">
+              <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-gray-50">
+                <Users className="h-8 w-8 text-gray-300" />
               </div>
-              <h3 className="text-xl font-serif text-black mb-2">No Matching Firms</h3>
-              <p className="text-gray-500 font-light max-w-sm mx-auto mb-8">Try adjusting your filters to broaden your search within the network directory.</p>
+              <h3 className="mb-2 font-serif text-black text-xl">
+                No Matching Firms
+              </h3>
+              <p className="mx-auto mb-8 max-w-sm font-light text-gray-500">
+                Try adjusting your filters to broaden your search within the
+                network directory.
+              </p>
               <button
+                className="font-bold text-red-600 text-xs uppercase tracking-widest hover:underline"
                 onClick={clearAllFilters}
-                className="text-red-600 font-bold uppercase tracking-widest text-xs hover:underline"
               >
                 Reset All Filters
               </button>

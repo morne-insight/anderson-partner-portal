@@ -15,7 +15,10 @@ function RouteComponent() {
         <Link params={{ fooId: "123" }} to="/foo/$fooId">
           Go to Foo with id
         </Link>
-        <Link params={{ fooId: "123", barId: "456" }} to="/foo/$fooId/bar/$barId">
+        <Link
+          params={{ fooId: "123", barId: "456" }}
+          to="/foo/$fooId/bar/$barId"
+        >
           Go to Foo with id and bar with id
         </Link>
       </div>

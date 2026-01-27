@@ -1,17 +1,24 @@
 import { useQuery } from "@tanstack/react-query";
+import type {
+  CapabilityDto,
+  CountryDto,
+  IndustryDto,
+  OpportunityTypeDto,
+  RegionDto,
+  ServiceTypeDto,
+} from "@/api";
 import { callApi } from "@/server/proxy";
-import { CapabilityDto, CountryDto, IndustryDto, OpportunityTypeDto, RegionDto, ServiceTypeDto } from "@/api";
 
 // Cache duration for reference data (30 minutes)
 const REFERENCE_DATA_STALE_TIME = 30 * 60 * 1000;
 
 export function useRegions() {
   return useQuery({
-    queryKey: ['reference', 'regions'],
+    queryKey: ["reference", "regions"],
     queryFn: async () => {
-      const response = await callApi({ data: { fn: 'getApiRegions' } });
+      const response = await callApi({ data: { fn: "getApiRegions" } });
       if (response.error) throw response.error;
-      return response as RegionDto[] || [];
+      return (response as RegionDto[]) || [];
     },
     staleTime: REFERENCE_DATA_STALE_TIME,
     gcTime: REFERENCE_DATA_STALE_TIME * 2, // Keep in cache for 1 hour
@@ -20,11 +27,11 @@ export function useRegions() {
 
 export function useCountries() {
   return useQuery({
-    queryKey: ['reference', 'countries'],
+    queryKey: ["reference", "countries"],
     queryFn: async () => {
-      const response = await callApi({ data: { fn: 'getApiCountries' } });
+      const response = await callApi({ data: { fn: "getApiCountries" } });
       if (response.error) throw response.error;
-      return response as CountryDto[] || [];
+      return (response as CountryDto[]) || [];
     },
     staleTime: REFERENCE_DATA_STALE_TIME,
     gcTime: REFERENCE_DATA_STALE_TIME * 2, // Keep in cache for 1 hour
@@ -33,11 +40,13 @@ export function useCountries() {
 
 export function useOpportunityTypes() {
   return useQuery({
-    queryKey: ['reference', 'opportunityTypes'],
+    queryKey: ["reference", "opportunityTypes"],
     queryFn: async () => {
-      const response = await callApi({ data: { fn: 'getApiOpportunityTypes' } });
+      const response = await callApi({
+        data: { fn: "getApiOpportunityTypes" },
+      });
       if (response.error) throw response.error;
-      return response as OpportunityTypeDto[] || [];
+      return (response as OpportunityTypeDto[]) || [];
     },
     staleTime: REFERENCE_DATA_STALE_TIME,
     gcTime: REFERENCE_DATA_STALE_TIME * 2,
@@ -46,11 +55,11 @@ export function useOpportunityTypes() {
 
 export function useServiceTypes() {
   return useQuery({
-    queryKey: ['reference', 'serviceTypes'],
+    queryKey: ["reference", "serviceTypes"],
     queryFn: async () => {
-      const response = await callApi({ data: { fn: 'getApiServiceTypes' } });
+      const response = await callApi({ data: { fn: "getApiServiceTypes" } });
       if (response.error) throw response.error;
-      return response as ServiceTypeDto[] || [];
+      return (response as ServiceTypeDto[]) || [];
     },
     staleTime: REFERENCE_DATA_STALE_TIME,
     gcTime: REFERENCE_DATA_STALE_TIME * 2,
@@ -59,11 +68,11 @@ export function useServiceTypes() {
 
 export function useCapabilities() {
   return useQuery({
-    queryKey: ['reference', 'capabilities'],
+    queryKey: ["reference", "capabilities"],
     queryFn: async () => {
-      const response = await callApi({ data: { fn: 'getApiCapabilities' } });
+      const response = await callApi({ data: { fn: "getApiCapabilities" } });
       if (response.error) throw response.error;
-      return response as CapabilityDto[] || [];
+      return (response as CapabilityDto[]) || [];
     },
     staleTime: REFERENCE_DATA_STALE_TIME,
     gcTime: REFERENCE_DATA_STALE_TIME * 2,
@@ -72,11 +81,11 @@ export function useCapabilities() {
 
 export function useIndustries() {
   return useQuery({
-    queryKey: ['reference', 'industries'],
+    queryKey: ["reference", "industries"],
     queryFn: async () => {
-      const response = await callApi({ data: { fn: 'getApiIndustries' } });
+      const response = await callApi({ data: { fn: "getApiIndustries" } });
       if (response.error) throw response.error;
-      return response as IndustryDto[] || [];
+      return (response as IndustryDto[]) || [];
     },
     staleTime: REFERENCE_DATA_STALE_TIME,
     gcTime: REFERENCE_DATA_STALE_TIME * 2,
@@ -85,9 +94,9 @@ export function useIndustries() {
 
 export function useCompaniesMe() {
   return useQuery({
-    queryKey: ['reference', 'companiesMe'],
+    queryKey: ["reference", "companiesMe"],
     queryFn: async () => {
-      const response = await callApi({ data: { fn: 'getApiCompaniesMe' } });
+      const response = await callApi({ data: { fn: "getApiCompaniesMe" } });
       if (response.error) throw response.error;
       return response || [];
     },
@@ -114,19 +123,21 @@ export function usePrefetchReferenceData() {
     capabilities,
     industries,
     companiesMe,
-    isLoading: regions.isLoading || 
-        countries.isLoading || 
-        opportunityTypes.isLoading || 
-        serviceTypes.isLoading ||
-        capabilities.isLoading || 
-        industries.isLoading || 
-        companiesMe.isLoading,
-    isError: regions.isError || 
-        countries.isError || 
-        opportunityTypes.isError || 
-        serviceTypes.isError ||
-        capabilities.isError || 
-        industries.isError || 
-        companiesMe.isError,
+    isLoading:
+      regions.isLoading ||
+      countries.isLoading ||
+      opportunityTypes.isLoading ||
+      serviceTypes.isLoading ||
+      capabilities.isLoading ||
+      industries.isLoading ||
+      companiesMe.isLoading,
+    isError:
+      regions.isError ||
+      countries.isError ||
+      opportunityTypes.isError ||
+      serviceTypes.isError ||
+      capabilities.isError ||
+      industries.isError ||
+      companiesMe.isError,
   };
 }

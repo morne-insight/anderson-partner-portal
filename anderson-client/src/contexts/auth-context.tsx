@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "@tanstack/react-router";
 import { createContext, type ReactNode, useContext } from "react";
+import type { UserCompanyDto } from "@/api";
 import { getCurrentUserFn, logoutFn } from "../server/auth";
-import { UserCompanyDto } from "@/api";
 
 type User = {
   userId?: string;

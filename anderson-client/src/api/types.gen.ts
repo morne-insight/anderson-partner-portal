@@ -749,6 +749,16 @@ export type ScrapeWebsiteCommand = {
 };
 
 /**
+ * SendConnectionRequestCommand
+ */
+export type SendConnectionRequestCommand = {
+    contactId: string;
+    companyId: string;
+    partnerId: string;
+    message: string;
+};
+
+/**
  * ServiceTypeDto
  */
 export type ServiceTypeDto = {
@@ -2013,6 +2023,35 @@ export type PutApiCompaniesScrapeWebsiteResponses = {
 };
 
 export type PutApiCompaniesScrapeWebsiteResponse = PutApiCompaniesScrapeWebsiteResponses[keyof PutApiCompaniesScrapeWebsiteResponses];
+
+export type PutApiCompaniesConnectionRequestData = {
+    body: SendConnectionRequestCommand;
+    path?: never;
+    query?: never;
+    url: '/api/companies/connection-request';
+};
+
+export type PutApiCompaniesConnectionRequestErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type PutApiCompaniesConnectionRequestError = PutApiCompaniesConnectionRequestErrors[keyof PutApiCompaniesConnectionRequestErrors];
+
+export type PutApiCompaniesConnectionRequestResponses = {
+    /**
+     * No Content
+     */
+    204: void;
+};
+
+export type PutApiCompaniesConnectionRequestResponse = PutApiCompaniesConnectionRequestResponses[keyof PutApiCompaniesConnectionRequestResponses];
 
 export type PutApiCompaniesByIdCapabilitiesData = {
     body: SetCapabilitiesCompanyCommand;

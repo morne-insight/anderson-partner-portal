@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import * as React from 'react';
+import * as React from "react";
 import {
   Combobox,
   ComboboxChip,
@@ -16,8 +16,8 @@ import {
   ComboboxItemIndicator,
   ComboboxList,
   ComboboxValue,
-} from '@/components/ui/base-combobox';
-import { Label } from '@/components/ui/base-label';
+} from "@/components/ui/base-combobox";
+import { Label } from "@/components/ui/base-label";
 
 export default function MultiSelectComboboxExample() {
   const containerRef = React.useRef<HTMLDivElement | null>(null);
@@ -25,22 +25,22 @@ export default function MultiSelectComboboxExample() {
 
   return (
     <Combobox items={langs} multiple>
-      <div className="w-full max-w-xs flex flex-col gap-3">
+      <div className="flex w-full max-w-xs flex-col gap-3">
         <Label htmlFor={id}>Programming languages</Label>
         <ComboboxControl ref={containerRef}>
           <ComboboxValue>
-            <ComboboxInput placeholder="e.g. Apple" id={id} />
+            <ComboboxInput id={id} placeholder="e.g. Apple" />
           </ComboboxValue>
           <ComboboxClear />
           <ComboboxIcon />
         </ComboboxControl>
 
-        <ComboboxChips className="p-0! border-0 shadow-none">
+        <ComboboxChips className="border-0 p-0! shadow-none">
           <ComboboxValue>
             {(value: ProgrammingLanguage[]) => (
               <React.Fragment>
                 {value.map((language) => (
-                  <ComboboxChip key={language.id} aria-label={language.value}>
+                  <ComboboxChip aria-label={language.value} key={language.id}>
                     {language.value}
                     <ComboboxChipRemove />
                   </ComboboxChip>
@@ -72,15 +72,15 @@ interface ProgrammingLanguage {
 }
 
 const langs: ProgrammingLanguage[] = [
-  { id: 'js', value: 'JavaScript' },
-  { id: 'ts', value: 'TypeScript' },
-  { id: 'py', value: 'Python' },
-  { id: 'java', value: 'Java' },
-  { id: 'cpp', value: 'C++' },
-  { id: 'cs', value: 'C#' },
-  { id: 'php', value: 'PHP' },
-  { id: 'ruby', value: 'Ruby' },
-  { id: 'go', value: 'Go' },
-  { id: 'rust', value: 'Rust' },
-  { id: 'swift', value: 'Swift' },
+  { id: "js", value: "JavaScript" },
+  { id: "ts", value: "TypeScript" },
+  { id: "py", value: "Python" },
+  { id: "java", value: "Java" },
+  { id: "cpp", value: "C++" },
+  { id: "cs", value: "C#" },
+  { id: "php", value: "PHP" },
+  { id: "ruby", value: "Ruby" },
+  { id: "go", value: "Go" },
+  { id: "rust", value: "Rust" },
+  { id: "swift", value: "Swift" },
 ];

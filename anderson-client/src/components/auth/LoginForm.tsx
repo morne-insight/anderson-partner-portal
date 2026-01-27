@@ -134,14 +134,21 @@ export function LoginForm() {
           )}
         </form.Field>
 
-        <Button className="w-full bg-[#DB0A20] hover:bg-[#b0081a] text-white" disabled={isLoading} type="submit">
+        <Button
+          className="w-full bg-[#DB0A20] text-white hover:bg-[#b0081a]"
+          disabled={isLoading}
+          type="submit"
+        >
           {isLoading ? "Signing In..." : "Sign In"}
         </Button>
       </form>
 
       <p className="text-center text-sm">
         Don't have an account?{" "}
-        <Link className="text-[#DB0A20] hover:underline font-medium" to="/register">
+        <Link
+          className="font-medium text-[#DB0A20] hover:underline"
+          to="/register"
+        >
           Sign up
         </Link>
       </p>

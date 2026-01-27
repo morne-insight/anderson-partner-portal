@@ -24,7 +24,7 @@ export const loginFn = createServerFn({ method: "POST" })
 
       const userDetailResponse = await getApiUserDetail({
         headers: {
-          Authorization: `Bearer ${response.data.authenticationToken }`,
+          Authorization: `Bearer ${response.data.authenticationToken}`,
         },
       });
 
@@ -38,12 +38,14 @@ export const loginFn = createServerFn({ method: "POST" })
         userId: response.data.userId?.toString() ?? undefined, // or extract user ID from JWT
         userName: response.data.userName ?? undefined,
         email: data.email,
-        companyId:userDetailResponse.data.companyId?.toString() ?? undefined,
-        companyName:userDetailResponse.data.companyName ?? undefined,
-        companies:userDetailResponse.data.companies ?? undefined,
+        companyId: userDetailResponse.data.companyId?.toString() ?? undefined,
+        companyName: userDetailResponse.data.companyName ?? undefined,
+        companies: userDetailResponse.data.companies ?? undefined,
 
         accessToken: response.data.authenticationToken ?? undefined,
-        accessTokenExpiresAt: response.data.expiresIn ? Date.now() + (response.data.expiresIn * 1000) : undefined,
+        accessTokenExpiresAt: response.data.expiresIn
+          ? Date.now() + response.data.expiresIn * 1000
+          : undefined,
         refreshToken: response.data.refreshToken ?? undefined,
       });
 
@@ -56,7 +58,9 @@ export const loginFn = createServerFn({ method: "POST" })
 
 // Register server function
 export const registerFn = createServerFn({ method: "POST" })
-  .inputValidator((data: { userName: string, email: string; password: string }) => data)
+  .inputValidator(
+    (data: { userName: string; email: string; password: string }) => data
+  )
   .handler(async ({ data }) => {
     try {
       await postApiAccountRegister({

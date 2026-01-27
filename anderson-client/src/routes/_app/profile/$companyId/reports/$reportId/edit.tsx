@@ -1,50 +1,57 @@
 import { createFileRoute, useRouter } from "@tanstack/react-router";
+import {
+  ArrowLeft,
+  Building2,
+  Loader2,
+  Plus,
+  Save,
+  Users,
+  X,
+} from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
+import type {
+  CountryDto,
+  CreateQuarterlyPartnersDto,
+  CreateQuarterlyReportsDto,
+  UpdateQuarterlyCommand,
+} from "@/api";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import {
-  Save,
-  ArrowLeft,
-  Plus,
-  X,
-  Users,
-  Building2,
-  Loader2
-} from "lucide-react";
-import {
-  type UpdateQuarterlyCommand,
-  type CreateQuarterlyReportsDto,
-  type CreateQuarterlyPartnersDto,
-  type ReportQuarter,
-  type CountryDto
-} from "@/api";
-import { usePrefetchReferenceData } from "@/hooks/useReferenceData";
-import { PartnerStatus } from "@/types/reports";
-import { callApi } from "@/server/proxy";
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
+import { usePrefetchReferenceData } from "@/hooks/useReferenceData";
+import { callApi } from "@/server/proxy";
+import { PartnerStatus } from "@/types/reports";
 
-export const Route = createFileRoute("/_app/profile/$companyId/reports/$reportId/edit")({
+export const Route = createFileRoute(
+  "/_app/profile/$companyId/reports/$reportId/edit"
+)({
   component: EditReportPage,
   loader: async ({ params }) => {
     try {
       const response = await callApi({
         data: {
-          fn: 'getApiQuarterliesById',
+          fn: "getApiQuarterliesById",
           args: {
             path: {
-              id: params.reportId
-            }
-          }
-        }
+              id: params.reportId,
+            },
+          },
+        },
       });
 
       return { report: response };
     } catch (error) {
-      console.error('Failed to fetch report:', error);
-      throw new Error('Failed to load report');
+      console.error("Failed to fetch report:", error);
+      throw new Error("Failed to load report");
     }
   },
 });
@@ -55,26 +62,32 @@ function EditReportPage() {
   const router = useRouter();
 
   // State for submission status
-  const [isSubmitted, setIsSubmitted] = useState(report.isSubmitted || false);
+  const [isSubmitted, setIsSubmitted] = useState(report.isSubmitted);
 
   // State for report lines management
-  const [reportLines, setReportLines] = useState<CreateQuarterlyReportsDto[]>(report.reportLines || []);
+  const [reportLines, setReportLines] = useState<CreateQuarterlyReportsDto[]>(
+    report.reportLines || []
+  );
   const [isAddingReportLine, setIsAddingReportLine] = useState(false);
-  const [newReportLine, setNewReportLine] = useState<CreateQuarterlyReportsDto>({
-    partnerCount: 0,
-    headcount: 0,
-    clientCount: 0,
-    officeCount: 0,
-    lawyerCount: 0,
-    estimatedRevenue: 0,
-    countryId: '',
-  });
+  const [newReportLine, setNewReportLine] = useState<CreateQuarterlyReportsDto>(
+    {
+      partnerCount: 0,
+      headcount: 0,
+      clientCount: 0,
+      officeCount: 0,
+      lawyerCount: 0,
+      estimatedRevenue: 0,
+      countryId: "",
+    }
+  );
 
   // State for partners management
-  const [partners, setPartners] = useState<CreateQuarterlyPartnersDto[]>(report.partners || []);
+  const [partners, setPartners] = useState<CreateQuarterlyPartnersDto[]>(
+    report.partners || []
+  );
   const [isAddingPartner, setIsAddingPartner] = useState(false);
   const [newPartner, setNewPartner] = useState<CreateQuarterlyPartnersDto>({
-    name: '',
+    name: "",
     status: 1, // Default status
   });
 
@@ -85,21 +98,21 @@ function EditReportPage() {
   const getPartnerStatusLabel = (status: number): string => {
     switch (status) {
       case PartnerStatus.Hired:
-        return 'Hired';
+        return "Hired";
       case PartnerStatus.Promoted:
-        return 'Promoted';
+        return "Promoted";
       case PartnerStatus.Terminated:
-        return 'Terminated';
+        return "Terminated";
       default:
-        return 'Unknown';
+        return "Unknown";
     }
   };
 
-  // Show loading state while reference data is loading  
+  // Show loading state while reference data is loading
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center min-h-screen">
-        <Loader2 className="w-8 h-8 animate-spin text-gray-300" />
+      <div className="flex min-h-screen items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin text-gray-300" />
       </div>
     );
   }
@@ -107,9 +120,9 @@ function EditReportPage() {
   // Ensure we have the data before proceeding
   if (isError) {
     return (
-      <div className="flex justify-center items-center min-h-screen">
+      <div className="flex min-h-screen items-center justify-center">
         <div className="text-center">
-          <p className="text-red-600 mb-4">Failed to load reference data</p>
+          <p className="mb-4 text-red-600">Failed to load reference data</p>
           <Button onClick={() => window.location.reload()}>Retry</Button>
         </div>
       </div>
@@ -117,7 +130,11 @@ function EditReportPage() {
   }
 
   const handleAddReportLine = () => {
-    if (newReportLine.partnerCount && newReportLine.headcount && newReportLine.estimatedRevenue) {
+    if (
+      newReportLine.partnerCount &&
+      newReportLine.headcount &&
+      newReportLine.estimatedRevenue
+    ) {
       setReportLines([...reportLines, { ...newReportLine }]);
       setNewReportLine({
         partnerCount: 0,
@@ -126,7 +143,7 @@ function EditReportPage() {
         officeCount: 0,
         lawyerCount: 0,
         estimatedRevenue: 0,
-        countryId: '',
+        countryId: "",
       });
       setIsAddingReportLine(false);
     }
@@ -140,7 +157,7 @@ function EditReportPage() {
     if (newPartner.name?.trim()) {
       setPartners([...partners, { ...newPartner }]);
       setNewPartner({
-        name: '',
+        name: "",
         status: 1, // Default status
       });
       setIsAddingPartner(false);
@@ -153,7 +170,7 @@ function EditReportPage() {
 
   const handleSubmit = async () => {
     if (reportLines.length === 0) {
-      toast.error('Please add at least one report line.');
+      toast.error("Please add at least one report line.");
       return;
     }
 
@@ -163,7 +180,7 @@ function EditReportPage() {
         id: reportId,
         year: report.year,
         quarter: report.quarter,
-        isSubmitted: isSubmitted,
+        isSubmitted,
       };
 
       await callApi({
@@ -187,73 +204,108 @@ function EditReportPage() {
   };
 
   return (
-    <div className="space-y-8 animate-fade-in pb-20">
+    <div className="animate-fade-in space-y-8 pb-20">
       {/* Header */}
-      <header className="border-b border-gray-200 pb-6">
+      <header className="border-gray-200 border-b pb-6">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-4xl font-serif text-black mb-3">
+            <h2 className="mb-3 font-serif text-4xl text-black">
               Edit Q{report.quarter} {report.year} Report
             </h2>
-            <p className="text-gray-500 font-light text-lg">
-              Update your quarterly business report with report lines and partners.
+            <p className="font-light text-gray-500 text-lg">
+              Update your quarterly business report with report lines and
+              partners.
             </p>
           </div>
           <Button
+            onClick={() =>
+              router.navigate({ to: `/profile/${companyId}/reports` })
+            }
             variant="outline"
-            onClick={() => router.navigate({ to: `/profile/${companyId}/reports` })}
           >
-            <ArrowLeft className="w-4 h-4 mr-2" />
+            <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Reports
           </Button>
         </div>
       </header>
 
       {/* Report Lines Section */}
-      <div className="bg-white border border-gray-200 shadow-sm">
-        <div className="p-6 border-b border-gray-200">
-          <h3 className="text-lg font-bold uppercase tracking-widest flex items-center gap-2">
-            <Building2 className="w-5 h-5" />
+      <div className="border border-gray-200 bg-white shadow-sm">
+        <div className="border-gray-200 border-b p-6">
+          <h3 className="flex items-center gap-2 font-bold text-lg uppercase tracking-widest">
+            <Building2 className="h-5 w-5" />
             Report Lines ({reportLines.length})
           </h3>
         </div>
 
-        <div className="p-6 space-y-4">
+        <div className="space-y-4 p-6">
           {reportLines.length > 0 && (
-            <div className="border border-gray-200 overflow-hidden">
+            <div className="overflow-hidden border border-gray-200">
               <table className="w-full">
                 <thead className="bg-gray-100">
                   <tr>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Country</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Partners</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Headcount</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Clients</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Offices</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Lawyers</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Est. Revenue</th>
-                    <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                    <th className="px-4 py-3 text-left font-medium text-gray-500 text-xs uppercase tracking-wider">
+                      Country
+                    </th>
+                    <th className="px-4 py-3 text-left font-medium text-gray-500 text-xs uppercase tracking-wider">
+                      Partners
+                    </th>
+                    <th className="px-4 py-3 text-left font-medium text-gray-500 text-xs uppercase tracking-wider">
+                      Headcount
+                    </th>
+                    <th className="px-4 py-3 text-left font-medium text-gray-500 text-xs uppercase tracking-wider">
+                      Clients
+                    </th>
+                    <th className="px-4 py-3 text-left font-medium text-gray-500 text-xs uppercase tracking-wider">
+                      Offices
+                    </th>
+                    <th className="px-4 py-3 text-left font-medium text-gray-500 text-xs uppercase tracking-wider">
+                      Lawyers
+                    </th>
+                    <th className="px-4 py-3 text-left font-medium text-gray-500 text-xs uppercase tracking-wider">
+                      Est. Revenue
+                    </th>
+                    <th className="px-4 py-3 text-right font-medium text-gray-500 text-xs uppercase tracking-wider">
+                      Actions
+                    </th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200">
                   {reportLines.map((reportLine, index) => {
-                    const country = countries?.data?.find(c => c.id === reportLine.countryId);
+                    const country = countries?.data?.find(
+                      (c) => c.id === reportLine.countryId
+                    );
                     return (
-                      <tr key={index} className="bg-white hover:bg-gray-50">
-                        <td className="px-4 py-3 text-sm font-medium">{country?.name || 'Not specified'}</td>
-                        <td className="px-4 py-3 text-sm">{reportLine.partnerCount}</td>
-                        <td className="px-4 py-3 text-sm">{reportLine.headcount}</td>
-                        <td className="px-4 py-3 text-sm">{reportLine.clientCount}</td>
-                        <td className="px-4 py-3 text-sm">{reportLine.officeCount}</td>
-                        <td className="px-4 py-3 text-sm">{reportLine.lawyerCount}</td>
-                        <td className="px-4 py-3 text-sm">${reportLine.estimatedRevenue?.toLocaleString()}</td>
+                      <tr className="bg-white hover:bg-gray-50" key={index}>
+                        <td className="px-4 py-3 font-medium text-sm">
+                          {country?.name || "Not specified"}
+                        </td>
+                        <td className="px-4 py-3 text-sm">
+                          {reportLine.partnerCount}
+                        </td>
+                        <td className="px-4 py-3 text-sm">
+                          {reportLine.headcount}
+                        </td>
+                        <td className="px-4 py-3 text-sm">
+                          {reportLine.clientCount}
+                        </td>
+                        <td className="px-4 py-3 text-sm">
+                          {reportLine.officeCount}
+                        </td>
+                        <td className="px-4 py-3 text-sm">
+                          {reportLine.lawyerCount}
+                        </td>
+                        <td className="px-4 py-3 text-sm">
+                          ${reportLine.estimatedRevenue?.toLocaleString()}
+                        </td>
                         <td className="px-4 py-3 text-right">
                           <Button
-                            variant="outline"
-                            size="sm"
+                            className="text-red-600 hover:bg-red-50 hover:text-red-700"
                             onClick={() => handleRemoveReportLine(index)}
-                            className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                            size="sm"
+                            variant="outline"
                           >
-                            <X className="w-4 h-4" />
+                            <X className="h-4 w-4" />
                           </Button>
                         </td>
                       </tr>
@@ -270,15 +322,17 @@ function EditReportPage() {
                 <div className="space-y-2">
                   <Label>Country</Label>
                   <Select
-                    value={newReportLine.countryId || ''}
-                    onValueChange={(value) => setNewReportLine({ ...newReportLine, countryId: value })}
+                    onValueChange={(value) =>
+                      setNewReportLine({ ...newReportLine, countryId: value })
+                    }
+                    value={newReportLine.countryId || ""}
                   >
                     <SelectTrigger className="w-full">
                       <SelectValue placeholder="Select Country" />
                     </SelectTrigger>
                     <SelectContent>
                       {countries?.data?.map((country: CountryDto) => (
-                        <SelectItem key={country.id} value={country.id || ''}>
+                        <SelectItem key={country.id} value={country.id || ""}>
                           {country.name}
                         </SelectItem>
                       ))}
@@ -288,55 +342,85 @@ function EditReportPage() {
                 <div className="space-y-2">
                   <Label>Partner Count</Label>
                   <Input
-                    type="number"
-                    value={newReportLine.partnerCount || ''}
-                    onChange={(e) => setNewReportLine({ ...newReportLine, partnerCount: parseInt(e.target.value) || 0 })}
+                    onChange={(e) =>
+                      setNewReportLine({
+                        ...newReportLine,
+                        partnerCount: Number.parseInt(e.target.value) || 0,
+                      })
+                    }
                     placeholder="0"
+                    type="number"
+                    value={newReportLine.partnerCount || ""}
                   />
                 </div>
                 <div className="space-y-2">
                   <Label>Client Count</Label>
                   <Input
-                    type="number"
-                    value={newReportLine.clientCount || ''}
-                    onChange={(e) => setNewReportLine({ ...newReportLine, clientCount: parseInt(e.target.value) || 0 })}
+                    onChange={(e) =>
+                      setNewReportLine({
+                        ...newReportLine,
+                        clientCount: Number.parseInt(e.target.value) || 0,
+                      })
+                    }
                     placeholder="0"
+                    type="number"
+                    value={newReportLine.clientCount || ""}
                   />
                 </div>
                 <div className="space-y-2">
                   <Label>Office Count</Label>
                   <Input
-                    type="number"
-                    value={newReportLine.officeCount || ''}
-                    onChange={(e) => setNewReportLine({ ...newReportLine, officeCount: parseInt(e.target.value) || 0 })}
+                    onChange={(e) =>
+                      setNewReportLine({
+                        ...newReportLine,
+                        officeCount: Number.parseInt(e.target.value) || 0,
+                      })
+                    }
                     placeholder="0"
+                    type="number"
+                    value={newReportLine.officeCount || ""}
                   />
                 </div>
                 <div className="space-y-2">
                   <Label>Headcount</Label>
                   <Input
-                    type="number"
-                    value={newReportLine.headcount || ''}
-                    onChange={(e) => setNewReportLine({ ...newReportLine, headcount: parseInt(e.target.value) || 0 })}
+                    onChange={(e) =>
+                      setNewReportLine({
+                        ...newReportLine,
+                        headcount: Number.parseInt(e.target.value) || 0,
+                      })
+                    }
                     placeholder="0"
+                    type="number"
+                    value={newReportLine.headcount || ""}
                   />
                 </div>
                 <div className="space-y-2">
                   <Label>Lawyer Count</Label>
                   <Input
-                    type="number"
-                    value={newReportLine.lawyerCount || ''}
-                    onChange={(e) => setNewReportLine({ ...newReportLine, lawyerCount: parseInt(e.target.value) || 0 })}
+                    onChange={(e) =>
+                      setNewReportLine({
+                        ...newReportLine,
+                        lawyerCount: Number.parseInt(e.target.value) || 0,
+                      })
+                    }
                     placeholder="0"
+                    type="number"
+                    value={newReportLine.lawyerCount || ""}
                   />
                 </div>
                 <div className="space-y-2">
                   <Label>Estimated Revenue ($)</Label>
                   <Input
-                    type="number"
-                    value={newReportLine.estimatedRevenue || ''}
-                    onChange={(e) => setNewReportLine({ ...newReportLine, estimatedRevenue: parseInt(e.target.value) || 0 })}
+                    onChange={(e) =>
+                      setNewReportLine({
+                        ...newReportLine,
+                        estimatedRevenue: Number.parseInt(e.target.value) || 0,
+                      })
+                    }
                     placeholder="0"
+                    type="number"
+                    value={newReportLine.estimatedRevenue || ""}
                   />
                 </div>
               </div>
@@ -350,7 +434,13 @@ function EditReportPage() {
                 </Button>
                 <Button
                   className="bg-black hover:bg-gray-800"
-                  disabled={!newReportLine.partnerCount || !newReportLine.headcount || !newReportLine.estimatedRevenue}
+                  disabled={
+                    !(
+                      newReportLine.partnerCount &&
+                      newReportLine.headcount &&
+                      newReportLine.estimatedRevenue
+                    )
+                  }
                   onClick={handleAddReportLine}
                   size="sm"
                 >
@@ -364,7 +454,7 @@ function EditReportPage() {
               onClick={() => setIsAddingReportLine(true)}
               variant="outline"
             >
-              <Plus className="w-4 h-4 mr-2" />
+              <Plus className="mr-2 h-4 w-4" />
               Add Report Line
             </Button>
           )}
@@ -372,41 +462,50 @@ function EditReportPage() {
       </div>
 
       {/* Partners Section */}
-      <div className="bg-white border border-gray-200 shadow-sm">
-        <div className="p-6 border-b border-gray-200">
-          <h3 className="text-lg font-bold uppercase tracking-widest flex items-center gap-2">
-            <Users className="w-5 h-5" />
+      <div className="border border-gray-200 bg-white shadow-sm">
+        <div className="border-gray-200 border-b p-6">
+          <h3 className="flex items-center gap-2 font-bold text-lg uppercase tracking-widest">
+            <Users className="h-5 w-5" />
             Partners ({partners.length})
           </h3>
         </div>
 
-        <div className="p-6 space-y-4">
+        <div className="space-y-4 p-6">
           {partners.length > 0 && (
             <table className="w-full border border-gray-200">
               <thead className="bg-gray-100">
                 <tr>
-                  <th className="text-left p-4 text-xs font-medium text-gray-500 uppercase tracking-wider">Partner Name</th>
-                  <th className="text-left p-4 text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                  <th className="w-16"></th>
+                  <th className="p-4 text-left font-medium text-gray-500 text-xs uppercase tracking-wider">
+                    Partner Name
+                  </th>
+                  <th className="p-4 text-left font-medium text-gray-500 text-xs uppercase tracking-wider">
+                    Status
+                  </th>
+                  <th className="w-16" />
                 </tr>
               </thead>
               <tbody>
                 {partners.map((partner, index) => (
-                  <tr key={index} className="border-t border-gray-200 bg-gray-50">
+                  <tr
+                    className="border-gray-200 border-t bg-gray-50"
+                    key={index}
+                  >
                     <td className="p-4">
-                      <p className="text-sm font-medium">{partner.name}</p>
+                      <p className="font-medium text-sm">{partner.name}</p>
                     </td>
                     <td className="p-4">
-                      <p className="text-sm font-medium">{getPartnerStatusLabel(partner.status || 1)}</p>
+                      <p className="font-medium text-sm">
+                        {getPartnerStatusLabel(partner.status || 1)}
+                      </p>
                     </td>
                     <td className="p-4">
                       <Button
-                        variant="outline"
-                        size="sm"
+                        className="text-red-600 hover:bg-red-50 hover:text-red-700"
                         onClick={() => handleRemovePartner(index)}
-                        className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                        size="sm"
+                        variant="outline"
                       >
-                        <X className="w-4 h-4" />
+                        <X className="h-4 w-4" />
                       </Button>
                     </td>
                   </tr>
@@ -421,24 +520,37 @@ function EditReportPage() {
                 <div className="space-y-2">
                   <Label>Partner Name</Label>
                   <Input
-                    value={newPartner.name || ''}
-                    onChange={(e) => setNewPartner({ ...newPartner, name: e.target.value })}
+                    onChange={(e) =>
+                      setNewPartner({ ...newPartner, name: e.target.value })
+                    }
                     placeholder="e.g. John Smith"
+                    value={newPartner.name || ""}
                   />
                 </div>
                 <div className="space-y-2">
                   <Label>Status</Label>
                   <Select
-                    value={newPartner.status?.toString() || ''}
-                    onValueChange={(value) => setNewPartner({ ...newPartner, status: parseInt(value) })}
+                    onValueChange={(value) =>
+                      setNewPartner({
+                        ...newPartner,
+                        status: Number.parseInt(value),
+                      })
+                    }
+                    value={newPartner.status?.toString() || ""}
                   >
                     <SelectTrigger>
                       <SelectValue placeholder="Select Status" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value={PartnerStatus.Hired.toString()}>Hired</SelectItem>
-                      <SelectItem value={PartnerStatus.Promoted.toString()}>Promoted</SelectItem>
-                      <SelectItem value={PartnerStatus.Terminated.toString()}>Terminated</SelectItem>
+                      <SelectItem value={PartnerStatus.Hired.toString()}>
+                        Hired
+                      </SelectItem>
+                      <SelectItem value={PartnerStatus.Promoted.toString()}>
+                        Promoted
+                      </SelectItem>
+                      <SelectItem value={PartnerStatus.Terminated.toString()}>
+                        Terminated
+                      </SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -467,7 +579,7 @@ function EditReportPage() {
               onClick={() => setIsAddingPartner(true)}
               variant="outline"
             >
-              <Plus className="w-4 h-4 mr-2" />
+              <Plus className="mr-2 h-4 w-4" />
               Add Partner
             </Button>
           )}
@@ -475,35 +587,37 @@ function EditReportPage() {
       </div>
 
       {/* Footer Actions */}
-      <div className="fixed bottom-0 left-0 md:left-72 right-0 p-6 bg-white border-t border-gray-200 flex justify-between items-center z-40 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]">
-        <span className="text-xs text-gray-400 font-medium uppercase tracking-widest hidden md:inline-block">
+      <div className="fixed right-0 bottom-0 left-0 z-40 flex items-center justify-between border-gray-200 border-t bg-white p-6 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] md:left-72">
+        <span className="hidden font-medium text-gray-400 text-xs uppercase tracking-widest md:inline-block">
           Q{report.quarter} {report.year} Report
         </span>
-        <div className="flex items-center gap-4 w-full md:w-auto justify-end">
+        <div className="flex w-full items-center justify-end gap-4 md:w-auto">
           <Button
+            onClick={() =>
+              router.navigate({ to: `/profile/${companyId}/reports` })
+            }
             variant="outline"
-            onClick={() => router.navigate({ to: `/profile/${companyId}/reports` })}
           >
             Cancel
           </Button>
           <Button
-            onClick={handleSubmit}
+            className="min-w-[160px] bg-red-600 font-bold text-xs uppercase tracking-widest hover:bg-red-700"
             disabled={isSubmitting || reportLines.length === 0}
-            className="bg-red-600 hover:bg-red-700 min-w-[160px] uppercase font-bold tracking-widest text-xs"
+            onClick={handleSubmit}
           >
             {isSubmitting ? (
               <>Updating...</>
             ) : (
               <>
-                <Save className="w-3 h-3 mr-2" />
+                <Save className="mr-2 h-3 w-3" />
                 Update Report
               </>
             )}
           </Button>
           <div className="flex items-center space-x-2">
             <Switch
-              id="submit-report"
               checked={isSubmitted}
+              id="submit-report"
               onCheckedChange={(checked) => setIsSubmitted(checked)}
             />
             <Label htmlFor="submit-report">Submit Report</Label>

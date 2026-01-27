@@ -1276,12 +1276,12 @@ function ProfileEdit() {
 
               {(!initialCompany?.applicationIdentityUsers ||
                 initialCompany.applicationIdentityUsers.length === 0) && (
-                  <div className="border border-gray-200 bg-gray-50 p-6 text-center">
-                    <p className="text-gray-500 text-sm">
-                      No application users found.
-                    </p>
-                  </div>
-                )}
+                <div className="border border-gray-200 bg-gray-50 p-6 text-center">
+                  <p className="text-gray-500 text-sm">
+                    No application users found.
+                  </p>
+                </div>
+              )}
             </div>
           </section>
 

@@ -9,8 +9,8 @@ export const Route = createFileRoute("/register")({
 function RegisterPage() {
   return (
     <AuthLayout
-      title="Create an Account"
       subtitle="Join Anderson to start your journey."
+      title="Create an Account"
     >
       <RegisterForm />
     </AuthLayout>

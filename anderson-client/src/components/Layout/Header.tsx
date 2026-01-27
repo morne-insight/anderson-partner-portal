@@ -1,17 +1,19 @@
 import { Menu, X } from "lucide-react";
-import React from "react";
-import { Link } from "@tanstack/react-router";
+import type React from "react";
 
 interface HeaderProps {
   isMobileMenuOpen: boolean;
   setIsMobileMenuOpen: (open: boolean) => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({ isMobileMenuOpen, setIsMobileMenuOpen }) => {
+export const Header: React.FC<HeaderProps> = ({
+  isMobileMenuOpen,
+  setIsMobileMenuOpen,
+}) => {
   return (
-    <div className="md:hidden fixed top-0 w-full bg-black text-white z-30 flex items-center justify-between p-4 shadow-md">
+    <div className="fixed top-0 z-30 flex w-full items-center justify-between bg-black p-4 text-white shadow-md md:hidden">
       <div>
-        <h1 className="text-xl font-serif font-bold tracking-wider">
+        <h1 className="font-bold font-serif text-xl tracking-wider">
           ANDERSEN<span className="text-red-600">.</span>
         </h1>
       </div>
