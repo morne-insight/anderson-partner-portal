@@ -41,6 +41,7 @@ namespace AndersonAPI.Infrastructure
             });
 
             services.Configure<AzureAIOptions>(configuration.GetSection("AzureOpenAI"));
+            services.Configure<SmtpOptions>(configuration.GetSection("Smtp"));
 
             services.AddScoped<IUnitOfWork>(provider => provider.GetRequiredService<ApplicationDbContext>());
             services.AddTransient<IApplicationIdentityUserRepository, ApplicationIdentityUserRepository>();
@@ -65,6 +66,7 @@ namespace AndersonAPI.Infrastructure
         private static void ConfigureCustomServices(IServiceCollection services)
         {
             services.AddSingleton<IAgentService, AgentService>();
+            services.AddSingleton<IEmailService, EmailService>();
             services.AddSingleton<IWebsiteScrapingService, WebsiteScrapingService>();
             services.AddHttpClient<IEmbeddingService, EmbeddingService>((servieProvider, http) =>
             {

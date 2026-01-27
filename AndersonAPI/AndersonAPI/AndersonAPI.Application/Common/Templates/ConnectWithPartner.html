@@ -1,0 +1,116 @@
+﻿<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="x-apple-disable-message-reformatting" />
+    <meta name="format-detection" content="telephone=no,address=no,email=no,date=no,url=no" />
+    <meta name="color-scheme" content="light" />
+    <meta name="supported-color-schemes" content="light" />
+    <title>Confirm your email</title>
+
+    <!--[if mso]>
+      <xml>
+        <o:OfficeDocumentSettings>
+          <o:AllowPNG/>
+          <o:PixelsPerInch>96</o:PixelsPerInch>
+        </o:OfficeDocumentSettings>
+      </xml>
+    <![endif]-->
+
+    <style>
+      html, body { margin: 0 !important; padding: 0 !important; height: 100% !important; width: 100% !important; }
+      a { text-decoration: none; }
+      img { border: 0; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; }
+      table { border-collapse: collapse !important; }
+      .container { width: 100%; max-width: 600px; }
+      .preheader { display:none !important; visibility:hidden; opacity:0; color:transparent; height:0; width:0; overflow:hidden; mso-hide:all; }
+      @media screen and (max-width: 600px) {
+        .container { width: 100% !important; }
+        .px-24 { padding-left: 16px !important; padding-right: 16px !important; }
+        .py-24 { padding-top: 16px !important; padding-bottom: 16px !important; }
+        .btn { width: 100% !important; }
+      }
+    </style>
+  </head>
+
+  <body style="margin:0; padding:0; background-color:#F9FAFB;">
+    <div class="preheader">
+      Request to reset your password.
+    </div>
+
+    <center role="presentation" style="width:100%; background-color:#F9FAFB;">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#F9FAFB;">
+        <tr>
+          <td align="center" style="padding: 32px 12px;">
+            <!-- Card -->
+            <table role="presentation" class="container" width="600" cellpadding="0" cellspacing="0" style="width:600px; max-width:600px; background-color:#ffffff; border:1px solid #E5E7EB; border-radius:12px;">
+              <!-- Header -->
+              <tr>
+                <td class="px-24" style="padding: 24px 24px 12px 24px;">
+                  <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                    <tr>
+                      <td align="left" valign="middle">
+                        <!-- Optional: replace with your hosted logo -->
+                        <!-- <img src="{{logo_url}}" width="140" alt="Anderson" style="display:block; height:auto;" /> -->
+                        <div style="font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; color:#111111; font-size:14px; font-weight:600; letter-spacing:0.2px;">
+                          {{product_or_company_name}}
+                        </div>
+                      </td>
+                      <td align="right" valign="middle">
+                          <div style="font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; color:#9CA3AF; font-size:12px;">
+                              Partner Connect
+                          </div>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+              <!-- Accent rule -->
+              <tr>
+                <td style="padding: 0 24px;">
+                  <div style="height:4px; background-color:#DB0A20; border-radius:999px; line-height:4px;"></div>
+                </td>
+              </tr>
+
+              <!-- Body -->
+              <tr>
+                  <td class="px-24 py-24" style="padding: 24px;">
+                      <h1 style="margin:0 0 12px 0; font-family: 'Playfair Display', Georgia, 'Times New Roman', serif; font-size:28px; line-height:34px; color:#111111; font-weight:700;">
+                          Partner Connect
+                      </h1>
+
+                      <p style="margin:0 0 14px 0; font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; font-size:16px; line-height:24px; color:#111111;">
+                          Hi {{user_name}}, this is a partner connection request from {{partner_company_name}}.
+                      </p>
+
+                      {{connection_message}}
+
+                      <p style="margin:0 0 10px 0; font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; font-size:14px; line-height:20px; color:#6B7280;">
+                          Parnter contact detais: <br/>
+                            {{partner_name}} <br />
+                            {{partner_email}}.
+                      </p>
+                  </td>
+              </tr>
+
+              <!-- Footer -->
+              <tr>
+                <td class="px-24" style="padding: 16px 24px 24px 24px; border-top:1px solid #E5E7EB;">
+                  <p style="margin:0 0 8px 0; font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; font-size:12px; line-height:18px; color:#9CA3AF;">
+                    Connecting you with the Anderson Consulting Group.
+                  </p>
+                  <p style="margin:0; font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; font-size:12px; line-height:18px; color:#9CA3AF;">
+                    © {{year}} {{product_or_company_name}}. All rights reserved.
+                  </p>
+                </td>
+              </tr>
+            </table>
+            <!-- /Card -->
+          </td>
+        </tr>
+      </table>
+    </center>
+  </body>
+</html>
