@@ -13,6 +13,7 @@ import {
   X,
 } from "lucide-react";
 import React from "react";
+import { ConnectRequestDialog } from "@/components/ConnectRequestDialog";
 import { Button } from "@/components/ui/button";
 import { usePrefetchReferenceData } from "@/hooks/useReferenceData";
 import { callApi } from "@/server/proxy";
@@ -214,9 +215,8 @@ function PartnerSearch() {
               Shift + Enter to run search
             </span>
             <button
-              className={`flex items-center gap-3 bg-black px-8 py-3 font-bold text-[10px] text-white uppercase tracking-[0.2em] shadow-md transition-all hover:bg-red-600 ${
-                isSearching ? "cursor-wait opacity-70" : ""
-              }`}
+              className={`flex items-center gap-3 bg-black px-8 py-3 font-bold text-[10px] text-white uppercase tracking-[0.2em] shadow-md transition-all hover:bg-red-600 ${isSearching ? "cursor-wait opacity-70" : ""
+                }`}
               disabled={isSearching}
               type="submit"
             >
@@ -242,12 +242,12 @@ function PartnerSearch() {
           </span>
           <div className="relative">
             <button
-              className={`flex items-center gap-2 border px-4 py-2 font-bold text-[10px] uppercase tracking-wider transition-colors ${
-                selectedServiceType !== "All"
-                  ? "border-black bg-black text-white"
-                  : "border-gray-300 bg-white text-gray-900 hover:border-gray-900"
-              }`}
+              className={`flex items-center gap-2 border px-4 py-2 font-bold text-[10px] uppercase tracking-wider transition-colors ${selectedServiceType !== "All"
+                ? "border-black bg-black text-white"
+                : "border-gray-300 bg-white text-gray-900 hover:border-gray-900"
+                }`}
               onClick={() => setShowServiceDropdown(!showServiceDropdown)}
+              type="button"
             >
               Service: {selectedServiceType} <ChevronDown className="h-3 w-3" />
             </button>
@@ -259,6 +259,7 @@ function PartnerSearch() {
                     setSelectedServiceType("All");
                     setShowServiceDropdown(false);
                   }}
+                  type="button"
                 >
                   All Services
                 </button>
@@ -270,6 +271,7 @@ function PartnerSearch() {
                       setSelectedServiceType(type);
                       setShowServiceDropdown(false);
                     }}
+                    type="button"
                   >
                     {type}
                   </button>
@@ -279,12 +281,12 @@ function PartnerSearch() {
           </div>
           <div className="relative">
             <button
-              className={`flex items-center gap-2 border px-4 py-2 font-bold text-[10px] uppercase tracking-wider transition-colors ${
-                activeRegionFilter !== "All"
-                  ? "border-black bg-black text-white"
-                  : "border-gray-300 bg-white text-gray-900 hover:border-gray-900"
-              }`}
+              className={`flex items-center gap-2 border px-4 py-2 font-bold text-[10px] uppercase tracking-wider transition-colors ${activeRegionFilter !== "All"
+                ? "border-black bg-black text-white"
+                : "border-gray-300 bg-white text-gray-900 hover:border-gray-900"
+                }`}
               onClick={() => setShowRegionDropdown(!showRegionDropdown)}
+              type="button"
             >
               Region: {activeRegionFilter} <ChevronDown className="h-3 w-3" />
             </button>
@@ -296,6 +298,7 @@ function PartnerSearch() {
                     setActiveRegionFilter("All");
                     setShowRegionDropdown(false);
                   }}
+                  type="button"
                 >
                   All Regions
                 </button>
@@ -307,6 +310,7 @@ function PartnerSearch() {
                       setActiveRegionFilter(region);
                       setShowRegionDropdown(false);
                     }}
+                    type="button"
                   >
                     {region}
                   </button>
@@ -316,12 +320,12 @@ function PartnerSearch() {
           </div>
           <div className="relative">
             <button
-              className={`flex items-center gap-2 border px-4 py-2 font-bold text-[10px] uppercase tracking-wider transition-colors ${
-                selectedCountry !== "All"
-                  ? "border-black bg-black text-white"
-                  : "border-gray-300 bg-white text-gray-900 hover:border-gray-900"
-              }`}
+              className={`flex items-center gap-2 border px-4 py-2 font-bold text-[10px] uppercase tracking-wider transition-colors ${selectedCountry !== "All"
+                ? "border-black bg-black text-white"
+                : "border-gray-300 bg-white text-gray-900 hover:border-gray-900"
+                }`}
               onClick={() => setShowCountryDropdown(!showCountryDropdown)}
+              type="button"
             >
               Country: {selectedCountry} <ChevronDown className="h-3 w-3" />
             </button>
@@ -330,6 +334,7 @@ function PartnerSearch() {
                 <button
                   className="w-full border-b px-4 py-3 text-left text-xs hover:bg-gray-50"
                   onClick={() => handleCountrySelect("All")}
+                  type="button"
                 >
                   All Countries
                 </button>
@@ -338,6 +343,7 @@ function PartnerSearch() {
                     className="w-full border-b px-4 py-3 text-left text-xs last:border-0 hover:bg-gray-50"
                     key={country}
                     onClick={() => handleCountrySelect(country)}
+                    type="button"
                   >
                     {country}
                   </button>
@@ -354,13 +360,14 @@ function PartnerSearch() {
             selectedServiceType !== "All" ||
             selectedCapabilities.length > 0 ||
             selectedCountry !== "All") && (
-            <button
-              className="flex items-center font-bold text-[10px] text-red-600 uppercase tracking-widest transition-colors hover:text-black"
-              onClick={handleClearFilters}
-            >
-              <X className="mr-1 h-3 w-3" /> Clear All
-            </button>
-          )}
+              <button
+                className="flex items-center font-bold text-[10px] text-red-600 uppercase tracking-widest transition-colors hover:text-black"
+                onClick={handleClearFilters}
+                type="button"
+              >
+                <X className="mr-1 h-3 w-3" /> Clear All
+              </button>
+            )}
         </div>
       </div>
 
@@ -368,13 +375,13 @@ function PartnerSearch() {
       <div className="no-scrollbar flex gap-8 overflow-x-auto border-gray-200 border-b pb-0">
         {["All", ...(allRegions || [])].map((region) => (
           <button
-            className={`whitespace-nowrap border-b-2 pb-4 font-bold text-xs uppercase tracking-widest transition-colors ${
-              activeRegionFilter === region
-                ? "border-red-600 text-red-600"
-                : "border-transparent text-gray-400 hover:text-gray-900"
-            }`}
+            className={`whitespace-nowrap border-b-2 pb-4 font-bold text-xs uppercase tracking-widest transition-colors ${activeRegionFilter === region
+              ? "border-red-600 text-red-600"
+              : "border-transparent text-gray-400 hover:text-gray-900"
+              }`}
             key={region}
             onClick={() => setActiveRegionFilter(region)}
+            type="button"
           >
             {region}
           </button>
@@ -456,15 +463,21 @@ function PartnerSearch() {
                 <button
                   className="w-full border border-black bg-white py-3 font-bold text-black text-xs uppercase tracking-[0.15em] transition-colors hover:bg-black hover:text-white"
                   onClick={() => navigate({ to: `/partners/${partner.id}` })}
+                  type="button"
                 >
                   View Profile
                 </button>
-                <button
-                  className="w-full border border-red-600 bg-red-600 py-3 font-bold text-white text-xs uppercase tracking-[0.15em] transition-colors hover:bg-white hover:text-red-600"
-                  onClick={() => {}}
+                <ConnectRequestDialog
+                  partnerId={partner.id}
+                  partnerName={partner.name}
                 >
-                  Connect
-                </button>
+                  <button
+                    className="w-full border border-red-600 bg-red-600 py-3 font-bold text-white text-xs uppercase tracking-[0.15em] transition-colors hover:bg-white hover:text-red-600"
+                    type="button"
+                  >
+                    Connect
+                  </button>
+                </ConnectRequestDialog>
               </div>
             </div>
           );

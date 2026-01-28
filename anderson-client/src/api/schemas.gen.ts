@@ -265,10 +265,6 @@ export const CompanyContactDtoSchema = {
         companyPosition: {
             type: 'string',
             nullable: true
-        },
-        order: {
-            type: 'integer',
-            format: 'int32'
         }
     }
 } as const;

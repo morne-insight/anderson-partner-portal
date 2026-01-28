@@ -104,7 +104,6 @@ export type CompanyContactDto = {
     lastName?: string;
     emailAddress?: string | null;
     companyPosition?: string | null;
-    order?: number;
 };
 
 /**
@@ -2224,6 +2223,49 @@ export type PutApiCompaniesByIdSetStateResponses = {
 };
 
 export type PutApiCompaniesByIdSetStateResponse = PutApiCompaniesByIdSetStateResponses[keyof PutApiCompaniesByIdSetStateResponses];
+
+export type GetApiCompaniesByIdContactsData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/companies/{id}/contacts';
+};
+
+export type GetApiCompaniesByIdContactsErrors = {
+    /**
+     * Bad Request
+     */
+    400: ProblemDetails;
+    /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type GetApiCompaniesByIdContactsError = GetApiCompaniesByIdContactsErrors[keyof GetApiCompaniesByIdContactsErrors];
+
+export type GetApiCompaniesByIdContactsResponses = {
+    /**
+     * OK
+     */
+    200: Array<CompanyContactDto>;
+};
+
+export type GetApiCompaniesByIdContactsResponse = GetApiCompaniesByIdContactsResponses[keyof GetApiCompaniesByIdContactsResponses];
 
 export type GetApiCompaniesByIdProfileData = {
     body?: never;

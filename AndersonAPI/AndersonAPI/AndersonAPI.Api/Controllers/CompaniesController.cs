@@ -8,6 +8,7 @@ using AndersonAPI.Application.Companies.CreateCompany;
 using AndersonAPI.Application.Companies.DeleteCompany;
 using AndersonAPI.Application.Companies.GetCompanies;
 using AndersonAPI.Application.Companies.GetCompanyById;
+using AndersonAPI.Application.Companies.GetCompanyContactsById;
 using AndersonAPI.Application.Companies.GetCompanyProfileById;
 using AndersonAPI.Application.Companies.GetMyCompanies;
 using AndersonAPI.Application.Companies.GetPartnerProfileById;
@@ -525,6 +526,28 @@ namespace AndersonAPI.Api.Controllers
             CancellationToken cancellationToken = default)
         {
             var result = await _mediator.Send(new GetCompanyByIdQuery(id: id), cancellationToken);
+            return result == null ? NotFound() : Ok(result);
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <response code="200">Returns the specified List&lt;CompanyContactDto&gt;.</response>
+        /// <response code="400">One or more validation errors have occurred.</response>
+        /// <response code="401">Unauthorized request.</response>
+        /// <response code="403">Forbidden request.</response>
+        /// <response code="404">No List&lt;CompanyContactDto&gt; could be found with the provided parameters.</response>
+        [HttpGet("api/companies/{id}/contacts")]
+        [ProducesResponseType(typeof(List<CompanyContactDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<List<CompanyContactDto>>> GetCompanyContactsById(
+            [FromRoute] Guid id,
+            CancellationToken cancellationToken = default)
+        {
+            var result = await _mediator.Send(new GetCompanyContactsByIdQuery(id: id), cancellationToken);
             return result == null ? NotFound() : Ok(result);
         }
 

@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { useMemo } from "react";
 import type { DirectoryProfileListItem } from "@/api";
+import { ConnectRequestDialog } from "@/components/ConnectRequestDialog";
 import { usePrefetchReferenceData } from "@/hooks/useReferenceData";
 import { callApi } from "@/server/proxy";
 import {
@@ -190,6 +191,7 @@ function NetworkDirectory() {
                 <button
                   className="font-bold text-[10px] text-red-600 uppercase tracking-widest hover:underline"
                   onClick={clearAllFilters}
+                  type="button"
                 >
                   Clear All
                 </button>
@@ -390,15 +392,21 @@ function NetworkDirectory() {
                             search: { from: "directory" },
                           })
                         }
+                        type="button"
                       >
                         Profile
                       </button>
-                      <button
-                        className="flex flex-1 items-center justify-center border border-red-600 bg-red-600 px-6 py-2 font-bold text-[10px] text-white uppercase tracking-widest transition-all hover:bg-white hover:text-red-600 md:flex-none"
-                        onClick={() => {}}
+                      <ConnectRequestDialog
+                        partnerId={partner.id}
+                        partnerName={partner.name}
                       >
-                        Connect
-                      </button>
+                        <button
+                          className="flex flex-1 items-center justify-center border border-red-600 bg-red-600 px-6 py-2 font-bold text-[10px] text-white uppercase tracking-widest transition-all hover:bg-white hover:text-red-600 md:flex-none"
+                          type="button"
+                        >
+                          Connect
+                        </button>
+                      </ConnectRequestDialog>
                     </div>
                   </div>
                 );
@@ -419,6 +427,7 @@ function NetworkDirectory() {
               <button
                 className="font-bold text-red-600 text-xs uppercase tracking-widest hover:underline"
                 onClick={clearAllFilters}
+                type="button"
               >
                 Reset All Filters
               </button>

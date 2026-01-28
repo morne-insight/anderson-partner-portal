@@ -18,15 +18,13 @@ namespace AndersonAPI.Application.Companies
         public string LastName { get; set; }
         public string? EmailAddress { get; set; }
         public string? CompanyPosition { get; set; }
-        public int Order { get; set; }
 
         public static CompanyContactDto Create(
             Guid id,
             string firstName,
             string lastName,
             string? emailAddress,
-            string? companyPosition,
-            int order)
+            string? companyPosition)
         {
             return new CompanyContactDto
             {
@@ -34,8 +32,7 @@ namespace AndersonAPI.Application.Companies
                 FirstName = firstName,
                 LastName = lastName,
                 EmailAddress = emailAddress,
-                CompanyPosition = companyPosition,
-                Order = order
+                CompanyPosition = companyPosition
             };
         }
     }

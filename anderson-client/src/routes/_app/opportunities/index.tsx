@@ -10,6 +10,7 @@ import {
   MapPin,
 } from "lucide-react";
 import { useState } from "react";
+import { ConnectRequestDialog } from "@/components/ConnectRequestDialog";
 import { OpportunityMessages } from "@/components/OpportunityMessages";
 import { Button } from "@/components/ui/button";
 import {
@@ -33,7 +34,9 @@ function Opportunities() {
     queryKey: ["opportunities", "all"],
     queryFn: async () => {
       const res = await callApi({ data: { fn: "getApiOpportunities" } });
-      if (res.error) throw res.error;
+      if (res.error) {
+        throw res.error;
+      }
       return res || [];
     },
   });
@@ -42,7 +45,9 @@ function Opportunities() {
     queryKey: ["opportunities", "me"],
     queryFn: async () => {
       const res = await callApi({ data: { fn: "getApiOpportunitiesMe" } });
-      if (res.error) throw res.error;
+      if (res.error) {
+        throw res.error;
+      }
       return res || [];
     },
   });
@@ -51,7 +56,9 @@ function Opportunities() {
     queryKey: ["opportunities", "saved"],
     queryFn: async () => {
       const res = await callApi({ data: { fn: "getApiOpportunitiesSaved" } });
-      if (res.error) throw res.error;
+      if (res.error) {
+        throw res.error;
+      }
       return res || [];
     },
   });
@@ -105,32 +112,32 @@ function Opportunities() {
       {/* Tabs */}
       <div className="flex gap-8 border-gray-200 border-b">
         <button
-          className={`pb-4 font-bold text-sm uppercase tracking-widest transition-all ${
-            activeTab === "all"
-              ? "border-black border-b-2 text-black"
-              : "border-transparent text-gray-400 hover:border-gray-200 hover:text-gray-600"
-          }`}
+          className={`pb-4 font-bold text-sm uppercase tracking-widest transition-all ${activeTab === "all"
+            ? "border-black border-b-2 text-black"
+            : "border-transparent text-gray-400 hover:border-gray-200 hover:text-gray-600"
+            }`}
           onClick={() => setActiveTab("all")}
+          type="button"
         >
           Opportunities
         </button>
         <button
-          className={`pb-4 font-bold text-sm uppercase tracking-widest transition-all ${
-            activeTab === "me"
-              ? "border-black border-b-2 text-black"
-              : "border-transparent text-gray-400 hover:border-gray-200 hover:text-gray-600"
-          }`}
+          className={`pb-4 font-bold text-sm uppercase tracking-widest transition-all ${activeTab === "me"
+            ? "border-black border-b-2 text-black"
+            : "border-transparent text-gray-400 hover:border-gray-200 hover:text-gray-600"
+            }`}
           onClick={() => setActiveTab("me")}
+          type="button"
         >
           My Opportunities
         </button>
         <button
-          className={`pb-4 font-bold text-sm uppercase tracking-widest transition-all ${
-            activeTab === "saved"
-              ? "border-black border-b-2 text-black"
-              : "border-transparent text-gray-400 hover:border-gray-200 hover:text-gray-600"
-          }`}
+          className={`pb-4 font-bold text-sm uppercase tracking-widest transition-all ${activeTab === "saved"
+            ? "border-black border-b-2 text-black"
+            : "border-transparent text-gray-400 hover:border-gray-200 hover:text-gray-600"
+            }`}
           onClick={() => setActiveTab("saved")}
+          type="button"
         >
           Saved Opportunities
         </button>
@@ -157,13 +164,12 @@ function Opportunities() {
                   <div className="mb-6 flex flex-col justify-between gap-4 md:flex-row md:items-center">
                     <div className="flex items-center gap-4">
                       <span
-                        className={`border px-3 py-1 font-bold text-[10px] uppercase tracking-widest ${
-                          opp.opportunityTypeString === "Tender"
-                            ? "border-gray-900 text-gray-900"
-                            : opp.opportunityTypeString === "Joint Venture"
-                              ? "border-red-600 text-red-600"
-                              : "border-gray-500 text-gray-500"
-                        }`}
+                        className={`border px-3 py-1 font-bold text-[10px] uppercase tracking-widest ${opp.opportunityTypeString === "Tender"
+                          ? "border-gray-900 text-gray-900"
+                          : opp.opportunityTypeString === "Joint Venture"
+                            ? "border-red-600 text-red-600"
+                            : "border-gray-500 text-gray-500"
+                          }`}
                       >
                         {opp.opportunityTypeString || "Opportunity"}
                       </span>
@@ -261,14 +267,32 @@ function Opportunities() {
                         </div>
                       ) : (
                         <div className="flex items-center gap-6">
-                          <button
-                            className="font-bold text-black text-xs uppercase tracking-[0.15em] transition-colors hover:text-red-600"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                            }}
-                          >
-                            Connect
-                          </button>
+                          {opp.companyId ? (
+                            <ConnectRequestDialog
+                              partnerId={String(opp.companyId)}
+                              partnerName={opp.companyName}
+                            >
+                              <button
+                                className="font-bold text-black text-xs uppercase tracking-[0.15em] transition-colors hover:text-red-600"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                }}
+                                type="button"
+                              >
+                                Connect
+                              </button>
+                            </ConnectRequestDialog>
+                          ) : (
+                            <button
+                              className="font-bold text-black text-xs uppercase tracking-[0.15em] transition-colors hover:text-red-600"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                              }}
+                              type="button"
+                            >
+                              Connect
+                            </button>
+                          )}
                           <Link
                             className="flex items-center font-bold text-red-600 text-xs uppercase tracking-[0.15em] transition-colors hover:text-red-800"
                             params={{ opportunityId: opp.id! }}
