@@ -26,7 +26,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isAdmin }) => {
     { to: "/opportunities", label: "Opportunities", icon: Globe },
     { to: "/profile", label: "My Profile", icon: FileText },
     { to: "/directory", label: "Network Directory", icon: Users },
-    { to: "/dev", label: "Dev", icon: Users },
+    // { to: "/dev", label: "Dev", icon: Users },
   ];
 
   if (isAdmin) {
@@ -54,28 +54,25 @@ export const Sidebar: React.FC<SidebarProps> = ({ isAdmin }) => {
           {navItems.map((item) => (
             <li key={item.to}>
               <Link
-                className={`group flex w-full items-center border-l-2 px-8 py-4 font-medium text-sm transition-all duration-200 ${
-                  isActive(item.to, item.exact)
+                className={`group flex w-full items-center border-l-2 px-8 py-4 font-medium text-sm transition-all duration-200 ${isActive(item.to, item.exact)
                     ? "border-red-600 bg-white/5 text-white"
                     : "border-transparent text-gray-400 hover:border-gray-700 hover:bg-white/5 hover:text-white"
-                }`}
+                  }`}
                 to={item.to}
               >
                 <item.icon
-                  className={`mr-4 h-4 w-4 transition-colors ${
-                    isActive(item.to, item.exact)
+                  className={`mr-4 h-4 w-4 transition-colors ${isActive(item.to, item.exact)
                       ? item.to === "/admin"
                         ? "text-yellow-400"
                         : "text-red-600"
                       : "group-hover:text-white"
-                  }`}
+                    }`}
                 />
                 <span
-                  className={`text-xs uppercase tracking-widest ${
-                    item.to === "/admin" && isActive(item.to)
+                  className={`text-xs uppercase tracking-widest ${item.to === "/admin" && isActive(item.to)
                       ? "text-yellow-400"
                       : ""
-                  }`}
+                    }`}
                 >
                   {item.label}
                 </span>

@@ -1,5 +1,4 @@
 import { createRouter } from "@tanstack/react-router";
-import { setupRouterSsrQueryIntegration } from "@tanstack/react-router-ssr-query";
 // biome-ignore lint/performance/noNamespaceImport: from official documentation>
 import * as TanstackQuery from "./integrations/tanstack-query/root-provider";
 
@@ -20,10 +19,16 @@ export const getRouter = () => {
     scrollRestoration: true,
   });
 
-  setupRouterSsrQueryIntegration({
-    router,
-    queryClient: rqContext.queryClient,
-  });
+  if (import.meta.env.SSR) {
+    void import("@tanstack/react-router-ssr-query").then(
+      ({ setupRouterSsrQueryIntegration }) => {
+        setupRouterSsrQueryIntegration({
+          router,
+          queryClient: rqContext.queryClient,
+        });
+      },
+    );
+  }
 
   return router;
 };

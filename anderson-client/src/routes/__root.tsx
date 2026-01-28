@@ -6,10 +6,12 @@ import {
   createRootRouteWithContext,
   HeadContent,
   Scripts,
+  useRouter,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import NotFound from "@/components/NotFound";
 import { Toaster } from "@/components/ui/sonner";
+import { Provider as TanstackQueryProvider } from "../integrations/tanstack-query/root-provider";
 import { AuthProvider } from "../contexts/auth-context";
 import appCss from "../styles.css?url";
 import "@/config/ts-client"; // Import global API configuration
@@ -46,33 +48,37 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 });
 
 function RootDocument({ children }: { children: React.ReactNode }) {
+  const { queryClient } = useRouter().options.context as MyRouterContext;
+
   return (
     <html lang="en">
       <head>
         <HeadContent />
       </head>
       <body>
-        <AuthProvider>
-          {children}
-          <Toaster position="top-right" />
-        </AuthProvider>
-        <TanStackDevtools
-          config={{
-            position: "bottom-right",
-          }}
-          plugins={[
-            {
-              name: "TanStack Query",
-              render: <ReactQueryDevtoolsPanel />,
-              defaultOpen: true,
-            },
-            {
-              name: "Tanstack Router",
-              render: <TanStackRouterDevtoolsPanel />,
-            },
-            formDevtoolsPlugin(),
-          ]}
-        />
+        <TanstackQueryProvider queryClient={queryClient}>
+          <AuthProvider>
+            {children}
+            <Toaster position="top-right" />
+          </AuthProvider>
+          <TanStackDevtools
+            config={{
+              position: "bottom-right",
+            }}
+            plugins={[
+              {
+                name: "TanStack Query",
+                render: <ReactQueryDevtoolsPanel />,
+                defaultOpen: true,
+              },
+              {
+                name: "Tanstack Router",
+                render: <TanStackRouterDevtoolsPanel />,
+              },
+              formDevtoolsPlugin(),
+            ]}
+          />
+        </TanstackQueryProvider>
         <Scripts />
       </body>
     </html>

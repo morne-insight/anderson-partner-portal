@@ -15,7 +15,7 @@ const terminateSession = async () => {
 
     // Redirect to login page
     window.location.href = "/login";
-  } else {
+  } else if (import.meta.env.SSR) {
     // Server-side session termination
     try {
       const { useAppSession } = await import("../utils/session");
@@ -38,7 +38,7 @@ const refreshAccessToken = async (
 
     if (response.data?.authenticationToken) {
       // Update session with new tokens
-      if (typeof window === "undefined") {
+      if (import.meta.env.SSR) {
         const { useAppSession } = await import("../utils/session");
         const session = await useAppSession();
         await session.update({
@@ -62,7 +62,7 @@ const refreshAccessToken = async (
 // Global API client configuration
 export const configureApiClient = () => {
   // Server-side SSL certificate handling for development
-  if (typeof process !== "undefined" && process.env.NODE_ENV !== "production") {
+  if (import.meta.env.SSR && process.env.NODE_ENV !== "production") {
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
   }
 
@@ -77,7 +77,7 @@ export const configureApiClient = () => {
   // Global Request Interceptor for Authentication
   client.interceptors.request.use(async (request) => {
     // Only run this on the server
-    if (typeof window === "undefined") {
+    if (import.meta.env.SSR) {
       try {
         // Dynamic import to avoid bringing server-only code to the browser
         const { useAppSession } = await import("../utils/session");
@@ -94,7 +94,7 @@ export const configureApiClient = () => {
   });
 
   // Add response interceptor for handling authentication errors and retries
-  client.interceptors.response.use(async (response, request, options) => {
+  client.interceptors.response.use(async (response, request, _options) => {
     const requestKey = `${request.method || "unknown"}-${response.url}`;
 
     // Handle 401 Unauthorized errors with token refresh
@@ -108,7 +108,7 @@ export const configureApiClient = () => {
           let refreshToken: string | null = null;
 
           // Get refresh token from appropriate storage
-          if (typeof window === "undefined") {
+          if (import.meta.env.SSR) {
             // Server-side
             const { useAppSession } = await import("../utils/session");
             const session = await useAppSession();
