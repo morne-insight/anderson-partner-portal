@@ -11,6 +11,7 @@ import {
   Users,
 } from "lucide-react";
 import type { PartnerProfileDto } from "@/api";
+import { ConnectRequestDialog } from "@/components/ConnectRequestDialog";
 import { ReviewComponent } from "@/components/Reviews/ReviewComponent";
 import { callApi } from "@/server/proxy";
 
@@ -157,12 +158,17 @@ function PartnerProfile() {
             </div>
 
             <div className="flex w-full flex-col gap-4 sm:flex-row md:w-auto">
-              <button
-                className="min-w-[160px] border border-red-600 bg-red-600 px-10 py-3 font-bold text-white text-xs uppercase tracking-[0.15em] transition-colors hover:bg-white hover:text-red-600"
-                type="button"
+              <ConnectRequestDialog
+                partnerId={partner.id as string}
+                partnerName={partner.name}
               >
-                Connect
-              </button>
+                <button
+                  className="min-w-[160px] border border-red-600 bg-red-600 px-10 py-3 font-bold text-white text-xs uppercase tracking-[0.15em] transition-colors hover:bg-white hover:text-red-600"
+                  type="button"
+                >
+                  Connect
+                </button>
+              </ConnectRequestDialog>
             </div>
           </div>
 
@@ -270,11 +276,10 @@ function PartnerProfile() {
                 ?.sort((a) => (a.isHeadOffice ? -1 : 1))
                 .map((loc, i: number) => (
                   <div
-                    className={`border p-4 ${
-                      loc.isHeadOffice
+                    className={`border p-4 ${loc.isHeadOffice
                         ? "border-red-600 bg-red-50/20"
                         : "border-gray-100"
-                    }`}
+                      }`}
                     key={i}
                   >
                     <div className="flex items-start justify-between">
