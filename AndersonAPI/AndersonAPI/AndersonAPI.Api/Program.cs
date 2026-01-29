@@ -96,6 +96,7 @@ namespace AndersonAPI.Api
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.ToString());
                 logger.Write(LogEventLevel.Fatal, ex, "Unhandled exception");
             }
         }
