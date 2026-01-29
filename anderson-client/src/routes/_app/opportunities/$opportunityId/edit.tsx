@@ -3,12 +3,28 @@ import { useMutation } from "@tanstack/react-query";
 import { createFileRoute, useRouter } from "@tanstack/react-router";
 import {
   ArrowLeft,
+  Briefcase,
   Building,
   ChevronDown,
   Loader2,
   Trash2,
 } from "lucide-react";
 import { useState } from "react";
+import type { CapabilityDto, IndustryDto } from "@/api/types.gen";
+import {
+  Combobox,
+  ComboboxChip,
+  ComboboxChipRemove,
+  ComboboxChips,
+  ComboboxContent,
+  ComboboxControl,
+  ComboboxEmpty,
+  ComboboxInput,
+  ComboboxItem,
+  ComboboxItemIndicator,
+  ComboboxList,
+  ComboboxValue,
+} from "@/components/ui/base-combobox";
 import { toast } from "sonner";
 import {
   AlertDialog,
@@ -83,6 +99,14 @@ function EditOpportunity() {
     [];
 
   const [datePickerOpen, setDatePickerOpen] = useState(false);
+
+  // State for capabilities and industries (similar to profile edit)
+  const [selectedCapabilityIds, setSelectedCapabilityIds] = useState<string[]>(
+    getIds(opportunity.capabilities)
+  );
+  const [selectedIndustryIds, setSelectedIndustryIds] = useState<string[]>(
+    getIds(opportunity.industries)
+  );
 
   const updateMutation = useMutation({
     mutationFn: async (values: any) => {
@@ -174,17 +198,20 @@ function EditOpportunity() {
           fullDescription: value.fullDescription,
           deadline: value.deadline
             ? new Date(
-                value.deadline.getTime() -
-                  value.deadline.getTimezoneOffset() * 60_000
-              )
-                .toISOString()
-                .split("T")[0]
+              value.deadline.getTime() -
+              value.deadline.getTimezoneOffset() * 60_000
+            )
+              .toISOString()
+              .split("T")[0]
             : null,
           opportunityTypeId: value.opportunityTypeId,
           countryId: value.countryId,
           companyId: value.companyId,
+          serviceTypes: value.serviceTypes,
+          capabilities: selectedCapabilityIds,
+          industries: selectedIndustryIds,
         };
-
+        console.log("Payload:", payload);
         await updateMutation.mutateAsync(payload);
       } catch (error) {
         console.error("Failed to save opportunity:", error);
@@ -477,11 +504,10 @@ function EditOpportunity() {
                       const isSelected = field.state.value.includes(st.id!);
                       return (
                         <button
-                          className={`border px-3 py-1.5 font-bold text-[10px] uppercase tracking-wider transition-all ${
-                            isSelected
-                              ? "border-black bg-black text-white"
-                              : "border-gray-200 bg-gray-50 text-gray-400 hover:border-gray-400 hover:text-gray-600"
-                          }`}
+                          className={`border px-3 py-1.5 font-bold text-[10px] uppercase tracking-wider transition-all ${isSelected
+                            ? "border-black bg-black text-white"
+                            : "border-gray-200 bg-gray-50 text-gray-400 hover:border-gray-400 hover:text-gray-600"
+                            }`}
                           key={st.id}
                           onClick={() => {
                             if (isSelected)
@@ -511,91 +537,139 @@ function EditOpportunity() {
 
           {/* Capabilities */}
           <section className="space-y-4">
-            <h3 className="border-gray-100 border-b pb-2 font-bold text-lg uppercase tracking-widest">
-              Required Capabilities
+            <h3 className="flex items-center gap-2 border-gray-100 border-b pb-2 font-bold text-lg uppercase tracking-widest">
+              <Briefcase className="h-4 w-4" /> Required Capabilities
             </h3>
             <div className="border border-gray-200 bg-white p-4 shadow-sm">
-              <form.Field
-                children={(field) => (
-                  <div className="flex flex-wrap gap-2">
-                    {capabilities.data?.map((cap: any) => {
-                      const isSelected = field.state.value.includes(cap.id!);
-                      return (
-                        <button
-                          className={`border px-3 py-1.5 font-bold text-[10px] uppercase tracking-wider transition-all ${
-                            isSelected
-                              ? "border-red-600 bg-red-600 text-white"
-                              : "border-gray-200 bg-gray-50 text-gray-400 hover:border-gray-400 hover:text-gray-600"
-                          }`}
-                          key={cap.id}
-                          onClick={() => {
-                            if (isSelected)
-                              field.handleChange(
-                                field.state.value.filter(
-                                  (id: string) => id !== cap.id
-                                )
-                              );
-                            else
-                              field.handleChange([
-                                ...field.state.value,
-                                cap.id!,
-                              ]);
-                          }}
-                          type="button"
-                        >
-                          {cap.name}
-                        </button>
-                      );
-                    })}
-                  </div>
-                )}
-                name="capabilities"
-              />
+              <Combobox
+                items={capabilities.data || []}
+                multiple
+                onValueChange={(value: unknown) => {
+                  const selectedCapabilities = value as CapabilityDto[];
+                  setSelectedCapabilityIds(
+                    selectedCapabilities.map((cap) => cap.id as string)
+                  );
+                }}
+                value={
+                  capabilities.data?.filter((cap: CapabilityDto) =>
+                    selectedCapabilityIds.includes(cap.id as string)
+                  ) || []
+                }
+              >
+                <ComboboxChips className="mb-4 border-0 p-0 shadow-none">
+                  <ComboboxValue>
+                    {(value: CapabilityDto[]) => (
+                      <>
+                        {value.length === 0 && (
+                          <p className="my-2 text-gray-400 text-xs italic">
+                            No capabilities selected.
+                          </p>
+                        )}
+                        {value.map((capability) => (
+                          <ComboboxChip
+                            aria-label={capability.name}
+                            className="rounded-none border border-red-600 bg-red-600 px-3 py-1.5 font-bold text-[10px] text-white uppercase tracking-wider transition-all"
+                            key={capability.id}
+                          >
+                            {capability.name}
+                            <ComboboxChipRemove />
+                          </ComboboxChip>
+                        ))}
+                      </>
+                    )}
+                  </ComboboxValue>
+                </ComboboxChips>
+
+                <p className="my-2 text-gray-400 text-xs italic">
+                  Select all capabilities required for this opportunity.
+                </p>
+                <ComboboxControl>
+                  <ComboboxValue>
+                    <ComboboxInput placeholder="Search and select capabilities..." />
+                  </ComboboxValue>
+                </ComboboxControl>
+
+                <ComboboxContent>
+                  <ComboboxEmpty>No capabilities found.</ComboboxEmpty>
+                  <ComboboxList>
+                    {(capability: CapabilityDto) => (
+                      <ComboboxItem key={capability.id} value={capability}>
+                        <ComboboxItemIndicator />
+                        <div className="col-start-2">{capability.name}</div>
+                      </ComboboxItem>
+                    )}
+                  </ComboboxList>
+                </ComboboxContent>
+              </Combobox>
             </div>
           </section>
 
           {/* Industries */}
           <section className="space-y-4">
-            <h3 className="border-gray-100 border-b pb-2 font-bold text-lg uppercase tracking-widest">
-              Target Industries
+            <h3 className="flex items-center gap-2 border-gray-100 border-b pb-2 font-bold text-lg uppercase tracking-widest">
+              <Building className="h-4 w-4" /> Target Industries
             </h3>
             <div className="border border-gray-200 bg-white p-4 shadow-sm">
-              <form.Field
-                children={(field) => (
-                  <div className="flex flex-wrap gap-2">
-                    {industries.data?.map((ind: any) => {
-                      const isSelected = field.state.value.includes(ind.id!);
-                      return (
-                        <button
-                          className={`border px-3 py-1.5 font-bold text-[10px] uppercase tracking-wider transition-all ${
-                            isSelected
-                              ? "border-blue-600 bg-blue-600 text-white"
-                              : "border-gray-200 bg-gray-50 text-gray-400 hover:border-gray-400 hover:text-gray-600"
-                          }`}
-                          key={ind.id}
-                          onClick={() => {
-                            if (isSelected)
-                              field.handleChange(
-                                field.state.value.filter(
-                                  (id: string) => id !== ind.id
-                                )
-                              );
-                            else
-                              field.handleChange([
-                                ...field.state.value,
-                                ind.id!,
-                              ]);
-                          }}
-                          type="button"
-                        >
-                          {ind.name}
-                        </button>
-                      );
-                    })}
-                  </div>
-                )}
-                name="industries"
-              />
+              <Combobox
+                items={industries.data || []}
+                multiple
+                onValueChange={(value: unknown) => {
+                  const selectedIndustries = value as IndustryDto[];
+                  setSelectedIndustryIds(
+                    selectedIndustries.map((ind) => ind.id as string)
+                  );
+                }}
+                value={
+                  industries.data?.filter((ind: IndustryDto) =>
+                    selectedIndustryIds.includes(ind.id as string)
+                  ) || []
+                }
+              >
+                <ComboboxChips className="mb-4 border-0 p-0 shadow-none">
+                  <ComboboxValue>
+                    {(value: IndustryDto[]) => (
+                      <>
+                        {value.length === 0 && (
+                          <p className="my-2 text-gray-400 text-xs italic">
+                            No industries selected.
+                          </p>
+                        )}
+                        {value.map((industry) => (
+                          <ComboboxChip
+                            aria-label={industry.name}
+                            className="rounded-none border border-blue-600 bg-blue-600 px-3 py-1.5 font-bold text-[10px] text-white uppercase tracking-wider transition-all"
+                            key={industry.id}
+                          >
+                            {industry.name}
+                            <ComboboxChipRemove />
+                          </ComboboxChip>
+                        ))}
+                      </>
+                    )}
+                  </ComboboxValue>
+                </ComboboxChips>
+
+                <p className="my-2 text-gray-400 text-xs italic">
+                  Select the target industries for this opportunity.
+                </p>
+                <ComboboxControl>
+                  <ComboboxValue>
+                    <ComboboxInput placeholder="Search and select industries..." />
+                  </ComboboxValue>
+                </ComboboxControl>
+
+                <ComboboxContent>
+                  <ComboboxEmpty>No industries found.</ComboboxEmpty>
+                  <ComboboxList>
+                    {(industry: IndustryDto) => (
+                      <ComboboxItem key={industry.id} value={industry}>
+                        <ComboboxItemIndicator />
+                        <div className="col-start-2">{industry.name}</div>
+                      </ComboboxItem>
+                    )}
+                  </ComboboxList>
+                </ComboboxContent>
+              </Combobox>
             </div>
           </section>
         </div>
