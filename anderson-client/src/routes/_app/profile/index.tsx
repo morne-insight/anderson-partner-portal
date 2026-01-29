@@ -46,7 +46,7 @@ function ProfileIndex() {
   const scrapeMutation = useMutation({
     mutationFn: async (url: string) => {
       return await callApi({
-        data: { fn: "putApiCompaniesScrapeWebsite", args: { body: { url } } },
+        data: { fn: "putApiCompaniesScrapeWebsite", args: { body: { url, companyId: null } } },
       });
     },
     onSuccess: (data) => {

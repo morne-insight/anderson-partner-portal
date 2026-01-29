@@ -11,7 +11,7 @@ import {
   UndoRedo,
 } from "@mdxeditor/editor";
 import { useForm } from "@tanstack/react-form";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { ClientOnly, createFileRoute, useRouter } from "@tanstack/react-router";
 import {
   Briefcase,
@@ -27,11 +27,12 @@ import {
   Trash2,
   User,
 } from "lucide-react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import z from "zod";
 import type {
   CapabilityDto,
+  CompanyContactDto,
   CompanyProfileDto,
   UpdateCompanyCommand,
 } from "@/api/types.gen";
@@ -77,24 +78,22 @@ import { callApi } from "@/server/proxy";
 
 export const Route = createFileRoute("/_app/profile/$companyId/")({
   component: ProfileEdit,
-  loader: async ({ params }) => {
-    // Only fetch company profile, reference data will be cached via hooks
-    const company = await callApi({
-      data: {
-        fn: "getApiCompaniesByIdProfile",
-        args: { path: { id: params.companyId } },
-      },
-    });
-
-    return {
-      company: company || {},
-    };
-  },
 });
 
 function ProfileEdit() {
+  const router = useRouter();
+  const queryClient = useQueryClient();
   const { companyId } = Route.useParams();
-  const { company } = Route.useLoaderData();
+
+  const { data: initialCompany, isLoading: companyLoading, isError: companyError } = useQuery<CompanyProfileDto>(({
+    queryKey: ["company", companyId],
+    queryFn: () => callApi({
+      data: {
+        fn: "getApiCompaniesByIdProfile",
+        args: { path: { id: companyId } },
+      },
+    })
+  }))
 
   // Use cached reference data hooks
   const {
@@ -107,9 +106,6 @@ function ProfileEdit() {
     isError,
   } = usePrefetchReferenceData();
 
-  const initialCompany = company as CompanyProfileDto;
-  const router = useRouter();
-
   // Type assertions after null checks - TypeScript now knows these are defined
   const capabilities = capabilitiesQuery.data;
   const industries = industriesQuery.data;
@@ -119,34 +115,39 @@ function ProfileEdit() {
 
   // Refetch handler to update view after mutations
   const refreshData = () => {
-    router.invalidate();
+    // router.invalidate();
+    queryClient.invalidateQueries({ queryKey: ["company", companyId] });
   };
 
   const mdxEditorRef = useRef<MDXEditorMethods>(null);
+
+  useEffect(() => {
+    if (initialCompany) {
+      mdxEditorRef.current?.setMarkdown(initialCompany.fullDescription || "");
+    }
+  }, [initialCompany])
 
   // --- AI Scrape State ---
   const [scrapeUrl, setScrapeUrl] = useState(initialCompany?.websiteUrl || "");
   const scrapeMutation = useMutation({
     mutationFn: async (url: string) => {
-      // Note: putApiCompaniesScrapeWebsite needs a body, checking signature...
-      // Signature: (options) => ... options.body is ScrapeWebsiteCommand { url: string }
       return await callApi({
-        data: { fn: "putApiCompaniesScrapeWebsite", args: { body: { url } } },
+        data: { fn: "putApiCompaniesScrapeWebsite", args: { body: { url, companyId } } },
       });
     },
     onSuccess: () => {
       refreshData();
-      toast.success("AI Sync started! Your data will be updated shortly.");
     },
     onError: (err) => {
-      console.error(err);
-      toast.error("Failed to start AI Sync.");
+      console.error("Scrape failed", err);
+      toast.error("Failed to sync website. Please try creating manually.");
     },
   });
 
   // --- Main Form (General Info) ---
   const form = useForm({
     defaultValues: {
+      id: initialCompany?.id || "",
       name: initialCompany?.name || "",
       shortDescription: initialCompany?.shortDescription || "",
       fullDescription: initialCompany?.fullDescription || "",
@@ -486,7 +487,7 @@ function ProfileEdit() {
   });
 
   // Show loading state while reference data is loading
-  if (isLoading) {
+  if (isLoading || companyLoading) {
     return (
       <div className="flex min-h-screen items-center justify-center">
         <Loader2 className="h-8 w-8 animate-spin text-gray-300" />
@@ -495,7 +496,7 @@ function ProfileEdit() {
   }
 
   // Ensure we have the data before proceeding
-  if (isError) {
+  if (isError || companyError) {
     return (
       <div className="flex min-h-screen items-center justify-center">
         <div className="text-center">
@@ -506,8 +507,8 @@ function ProfileEdit() {
     );
   }
 
-  const startEditContact = (contact) => {
-    setEditingContactId(contact.id);
+  const startEditContact = (contact: CompanyContactDto) => {
+    setEditingContactId(contact.id!);
     setEditContact({
       firstName: contact.firstName || "",
       lastName: contact.lastName || "",
@@ -645,7 +646,7 @@ function ProfileEdit() {
 
             <ClientOnly>
               <MDXEditor
-                markdown={initialCompany.fullDescription || ""}
+                markdown={initialCompany?.fullDescription || ""}
                 plugins={[
                   headingsPlugin(),
                   listsPlugin(),
@@ -1276,12 +1277,12 @@ function ProfileEdit() {
 
               {(!initialCompany?.applicationIdentityUsers ||
                 initialCompany.applicationIdentityUsers.length === 0) && (
-                <div className="border border-gray-200 bg-gray-50 p-6 text-center">
-                  <p className="text-gray-500 text-sm">
-                    No application users found.
-                  </p>
-                </div>
-              )}
+                  <div className="border border-gray-200 bg-gray-50 p-6 text-center">
+                    <p className="text-gray-500 text-sm">
+                      No application users found.
+                    </p>
+                  </div>
+                )}
             </div>
           </section>
 
@@ -1490,7 +1491,7 @@ function ProfileEdit() {
                 onValueChange={(value: unknown) => {
                   const selectedCapabilities = value as CapabilityDto[];
                   setSelectedCapabilityIds(
-                    selectedCapabilities.map((cap) => cap.id)
+                    selectedCapabilities.map((cap) => cap.id as string)
                   );
                 }}
                 value={
