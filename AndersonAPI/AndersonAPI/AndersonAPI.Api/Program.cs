@@ -74,7 +74,7 @@ namespace AndersonAPI.Api
                 // Configure the HTTP request pipeline.
                 app.UseSerilogRequestLogging();
                 app.UseExceptionHandler();
-                app.UseHttpsRedirection();
+                //app.UseHttpsRedirection();
                 app.UseRouting();
                 app.UseAuthentication();
                 app.UseAuthorization();
