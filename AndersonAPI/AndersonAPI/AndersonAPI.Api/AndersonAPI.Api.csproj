@@ -38,7 +38,11 @@
     </PackageReference>
   </ItemGroup>
 
-  <Target Name="GenerateOpenApiClient" AfterTargets="Build">
+	<PropertyGroup>
+		<GenerateOpenApiClient Condition="'$(GenerateOpenApiClient)'==''">false</GenerateOpenApiClient>
+	</PropertyGroup>
+	
+  <Target Name="GenerateOpenApiClient" AfterTargets="Build" Condition="'$(GenerateOpenApiClient)'=='true'">
     <Message Importance="high" Text="Generating OpenAPI client code..." />
     <Exec Command="pnpm run openapi-ts" WorkingDirectory="..\..\..\anderson-client" />
   </Target>

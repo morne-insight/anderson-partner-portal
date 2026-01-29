@@ -8,11 +8,12 @@ WORKDIR /src
 COPY . .
 
 # Restore & publish ONLY the API project
-RUN dotnet restore AndersonAPI/AndersonAPI.Api/AndersonAPI.Api.csproj
+RUN dotnet restore AndersonAPI/AndersonAPI/AndersonAPI.Api/AndersonAPI.Api.csproj
 
-RUN dotnet publish AndersonAPI/AndersonAPI.Api/AndersonAPI.Api.csproj \
+RUN dotnet publish AndersonAPI/AndersonAPI/AndersonAPI.Api/AndersonAPI.Api.csproj \
     -c Release \
-    -o /app/publish
+    -o /app/publish \
+    -p:GenerateOpenApiClient=false
 
 # -------------------------------
 # RUNTIME STAGE
