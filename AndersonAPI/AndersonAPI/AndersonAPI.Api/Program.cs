@@ -26,6 +26,8 @@ namespace AndersonAPI.Api
                 .WriteTo.Console()
                 .CreateBootstrapLogger();
 
+            logger.Information("ASPNETCORE_URLS: {Urls}", Environment.GetEnvironmentVariable("ASPNETCORE_URLS"));
+
             try
             {
                 var builder = WebApplication.CreateBuilder(args);
