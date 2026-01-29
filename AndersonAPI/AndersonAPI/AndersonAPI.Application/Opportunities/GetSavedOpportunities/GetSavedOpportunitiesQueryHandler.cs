@@ -12,12 +12,14 @@ namespace AndersonAPI.Application.Opportunities.GetSavedOpportunities
     public class GetSavedOpportunitiesQueryHandler : IRequestHandler<GetSavedOpportunitiesQuery, List<OpportunityListItemDto>>
     {
         private readonly IOpportunityRepository _opportunityRepository;
+        private readonly ICompanyRepository _companyRepository;
         private readonly ICurrentUserService _currentUserService;
 
         [IntentManaged(Mode.Merge)]
-        public GetSavedOpportunitiesQueryHandler(IOpportunityRepository opportunityRepository, ICurrentUserService currentUserService)
+        public GetSavedOpportunitiesQueryHandler(IOpportunityRepository opportunityRepository, ICompanyRepository companyRepository, ICurrentUserService currentUserService)
         {
             _opportunityRepository = opportunityRepository;
+            _companyRepository = companyRepository;
             _currentUserService = currentUserService;
         }
 
@@ -29,10 +31,20 @@ namespace AndersonAPI.Application.Opportunities.GetSavedOpportunities
             var user = await _currentUserService.GetAsync();
             if (user == null) throw new UnauthorizedAccessException("The user is not authenticated");
 
-            var userId = user.Id;
+            // Get all my companies
+            var myCompanies = await _companyRepository
+                .FindAllAsync(x =>
+                    x.ApplicationIdentityUsers.Any(a => a.Id == user.Id.ToString()),
+                    cancellationToken);
 
-            return new List<OpportunityListItemDto>();
-            var opportunities = await _opportunityRepository.FindAllProjectToAsync<OpportunityListItemDto>(cancellationToken);
+            var myCompanyIds = myCompanies.Select(c => c.Id).ToList();
+
+            // Get all opportunities where any of my companies is an interested partner
+            var opportunities = await _opportunityRepository
+                .FindAllProjectToAsync<OpportunityListItemDto>(
+                    x => x.InterestedPartners.Any(p => myCompanyIds.Contains(p.Id)), 
+                    cancellationToken);
+
             return opportunities;
         }
     }
