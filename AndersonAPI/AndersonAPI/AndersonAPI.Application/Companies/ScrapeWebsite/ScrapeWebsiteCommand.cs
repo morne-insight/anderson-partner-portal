@@ -9,10 +9,13 @@ namespace AndersonAPI.Application.Companies.ScrapeWebsite
 {
     public class ScrapeWebsiteCommand : IRequest<Guid>, ICommand
     {
-        public ScrapeWebsiteCommand(string url)
+        public ScrapeWebsiteCommand(Guid? companyId, string url)
         {
+            CompanyId = companyId;
             Url = url;
         }
+
+        public Guid? CompanyId { get; set; }
 
         public string Url { get; set; }
     }
