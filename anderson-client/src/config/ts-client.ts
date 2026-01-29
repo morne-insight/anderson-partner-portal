@@ -66,16 +66,44 @@ export const configureApiClient = () => {
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
   }
 
+  let baseUrl = "";
+
+  if(typeof process !== "undefined")
+  {
+    if(process.env.API_BASE_URL){
+      console.log('On server: API_BASE_URL is set')
+      baseUrl = process.env.API_BASE_URL!;
+    } else {
+      console.error('On server: API_BASE_URL is not set')
+      baseUrl = "https://andersen-api.insightconsulting.co.za"
+    }
+  } else {
+    if(import.meta.env.VITE_API_BASE_URL){
+      console.log('On client: VITE_API_BASE_URL is set')
+      baseUrl = import.meta.env.VITE_API_BASE_URL;
+    } else {
+      console.error('On client: VITE_API_BASE_URL is not set')
+      baseUrl = "https://localhost:44395"
+    }
+  }
+
+  
+
   // Configure the client with base URL
   client.setConfig({
-    baseUrl:
-      typeof process !== "undefined"
-        ? process.env.VITE_API_BASE_URL || "https://localhost:44395"
-        : import.meta.env.VITE_API_BASE_URL || "https://localhost:44395",
+    baseUrl: baseUrl
   });
+
+  // client.setConfig({
+  //   baseUrl:
+  //     typeof process !== "undefined"
+  //       ? process.env.VITE_API_BASE_URL || "https://andersen-api.insightconsulting.co.za"
+  //       : import.meta.env.VITE_API_BASE_URL || "https://localhost:44395",
+  // });
 
   // Global Request Interceptor for Authentication
   client.interceptors.request.use(async (request) => {
+    console.log("Request Interceptor", request);
     // Only run this on the server
     if (import.meta.env.SSR) {
       try {

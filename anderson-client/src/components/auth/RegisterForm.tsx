@@ -28,10 +28,10 @@ export function RegisterForm() {
 
   const form = useForm({
     defaultValues: {
-      userName: "Morne",
-      email: "mvanzyl@insight.com",
-      password: "Password$123",
-      confirmPassword: "Password$123",
+      userName: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
     },
     onSubmit: async ({ value }) => {
       setError(null);

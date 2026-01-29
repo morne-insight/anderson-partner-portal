@@ -21,8 +21,8 @@ export function LoginForm() {
 
   const form = useForm({
     defaultValues: {
-      email: "mvanzyl@insight.com",
-      password: "Password$123",
+      email: "",
+      password: "",
     },
     onSubmit: async ({ value }) => {
       setError(null);
