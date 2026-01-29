@@ -22,7 +22,7 @@ namespace AndersonAPI.Application.Companies.GetCompanyContactsById
             _mapper = mapper;
         }
 
-        [IntentManaged(Mode.Fully, Body = Mode.Merge)]
+        [IntentManaged(Mode.Fully, Body = Mode.Ignore)]
         public async Task<List<CompanyContactDto>> Handle(
             GetCompanyContactsByIdQuery request,
             CancellationToken cancellationToken)
