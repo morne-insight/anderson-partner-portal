@@ -77,19 +77,22 @@ namespace AndersonAPI.Api
                 });
 
                 // Configure the HTTP request pipeline.
-                app.UseSerilogRequestLogging();
                 app.Use(async (ctx, next) =>
                 {
+                    Console.WriteLine($">>> REQ {ctx.Request.Method} {ctx.Request.Path}");
                     try
                     {
                         await next();
+                        Console.WriteLine($">>> RES {ctx.Response.StatusCode} {ctx.Request.Method} {ctx.Request.Path}");
                     }
                     catch (Exception ex)
                     {
-                        Log.Error(ex, "Unhandled exception for {Method} {Path}", ctx.Request.Method, ctx.Request.Path);
+                        Console.WriteLine($">>> EX for {ctx.Request.Method} {ctx.Request.Path}\n{ex}");
                         throw;
                     }
                 });
+
+                app.UseSerilogRequestLogging();
                 app.UseExceptionHandler();
                 //app.UseHttpsRedirection();
                 app.UseRouting();

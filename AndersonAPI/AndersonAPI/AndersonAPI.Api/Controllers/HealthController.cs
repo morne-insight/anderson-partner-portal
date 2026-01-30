@@ -38,5 +38,18 @@ namespace AndersonAPI.Api.Controllers
             //return Ok(new JsonResponse<string>(result));
             return Ok(new JsonResponse<string>("Healty"));
         }
+
+        [HttpGet("/")]
+        [AllowAnonymous]
+        [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(JsonResponse<string>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+        [IntentManaged(Mode.Fully, Body = Mode.Ignore)]
+        public async Task<ActionResult<JsonResponse<string>>> GetRoot(CancellationToken cancellationToken = default)
+        {
+            //var result = await _mediator.Send(new GetHealth(), cancellationToken);
+            //return Ok(new JsonResponse<string>(result));
+            return Ok(new JsonResponse<string>("Alive"));
+        }
     }
 }
