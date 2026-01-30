@@ -2206,5 +2206,52 @@
         </childElement>
       </childElements>
     </childElement>
+    <childElement id="c4f1545b-50e9-4483-b96b-868bc14b20c5" type="Operation" typeId="e042bb67-a1df-480c-9935-b26210f78591">
+      <name>SetFullDescription</name>
+      <display>SetFullDescription(content: string): void</display>
+      <isAbstract>false</isAbstract>
+      <sort-children>by-type-then-manually</sort-children>
+      <genericTypes />
+      <typeReference id="81331ee1-29ed-499b-be65-73f585656e79">
+        <isNavigable>true</isNavigable>
+        <isNullable>false</isNullable>
+        <isCollection>false</isCollection>
+        <isRequired>true</isRequired>
+        <stereotypes />
+        <genericTypeParameters />
+      </typeReference>
+      <isMapped>false</isMapped>
+      <parentFolderId>3259289c-5d51-46cb-8c99-78751b456c44</parentFolderId>
+      <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+      <packageName>AndersonAPI.Domain</packageName>
+      <stereotypes />
+      <metadata />
+      <childElements>
+        <childElement id="a266abef-ef88-43d0-8624-5948cd8ce2ba" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
+          <name>content</name>
+          <display>in : content: string</display>
+          <isAbstract>false</isAbstract>
+          <genericTypes />
+          <typeReference id="88458e38-1c57-416b-b4db-712fc386170d">
+            <typeId>d384db9c-a279-45e1-801e-e4e8099625f2</typeId>
+            <isNavigable>true</isNavigable>
+            <isNullable>false</isNullable>
+            <isCollection>false</isCollection>
+            <isRequired>true</isRequired>
+            <typePackageName>Intent.Common.Types</typePackageName>
+            <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
+            <stereotypes />
+            <genericTypeParameters />
+          </typeReference>
+          <isMapped>false</isMapped>
+          <parentFolderId>c4f1545b-50e9-4483-b96b-868bc14b20c5</parentFolderId>
+          <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+          <packageName>AndersonAPI.Domain</packageName>
+          <stereotypes />
+          <metadata />
+          <childElements />
+        </childElement>
+      </childElements>
+    </childElement>
   </childElements>
 </class>

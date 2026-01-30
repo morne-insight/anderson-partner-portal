@@ -209,6 +209,20 @@ export const AndersonAPI_Api_Controllers_ResponseTypes_JsonResponse_Of_GuidSchem
     }
 } as const;
 
+export const AndersonAPI_Api_Controllers_ResponseTypes_JsonResponse_Of_StringSchema = {
+    title: 'AndersonAPI.Api.Controllers.ResponseTypes.JsonResponse_Of_String',
+    required: [
+        'value'
+    ],
+    type: 'object',
+    properties: {
+        value: {
+            type: 'string',
+            nullable: true
+        }
+    }
+} as const;
+
 export const CapabilityDtoSchema = {
     title: 'CapabilityDto',
     type: 'object',
@@ -1869,10 +1883,16 @@ export const ReviewDtoSchema = {
 export const ScrapeWebsiteCommandSchema = {
     title: 'ScrapeWebsiteCommand',
     required: [
+        'companyId',
         'url'
     ],
     type: 'object',
     properties: {
+        companyId: {
+            type: 'string',
+            format: 'uuid',
+            nullable: true
+        },
         url: {
             type: 'string'
         }

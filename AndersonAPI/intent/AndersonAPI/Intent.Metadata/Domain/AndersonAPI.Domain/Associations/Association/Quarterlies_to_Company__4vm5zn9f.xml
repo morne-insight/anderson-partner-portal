@@ -3,7 +3,7 @@
   <sourceEnd id="8dddfcd0-4049-4346-8dd7-eaca9ef73338" type="Association Source End" typeId="8d9d2e5b-bd55-4f36-9ae4-2b9e84fd4e58">
     <name>Quarterlies</name>
     <display>Quarterlies: Quarterly[*]</display>
-    <order>39</order>
+    <order>40</order>
     <typeReference id="a1584054-41d9-4285-90e2-9bf2af872651">
       <typeId>666e0055-bc9c-4fd6-acd8-975f4719ee0b</typeId>
       <isNavigable>true</isNavigable>

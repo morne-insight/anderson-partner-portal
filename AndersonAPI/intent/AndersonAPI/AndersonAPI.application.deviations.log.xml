@@ -22,6 +22,16 @@
       <fileHash>6DDBA6FE01E1DEFF010487F1ED0ED2DF56D79B7C6498F227ED53004A21806359</fileHash>
     </file>
     <file>
+      <correlationId>Intent.AspNetCore.Controllers.Controller#ece70b3a-0c7e-4f50-80e2-b00c3d541e46</correlationId>
+      <path>AndersonAPI.Api/Controllers/HealthController.cs</path>
+      <count>1</count>
+      <updatedByAccountName>mvanzyl@insightconsulting.co.za</updatedByAccountName>
+      <updatedByDisplayName>Morne</updatedByDisplayName>
+      <updatedAt>2026-01-29T13:12:18.88199Z</updatedAt>
+      <deviationsHash>9F2A3291F9886B319F3BC7E0DC5686FAF0984F9C003CB16A24BC8E820472CD60</deviationsHash>
+      <fileHash>F68B88086EF1A01280794111864B80B60429BF7AEE4881FCE5CEFC19144080BF</fileHash>
+    </file>
+    <file>
       <correlationId>Intent.AspNetCore.Program#ad457389-55ed-4603-9832-83f59fee22c9</correlationId>
       <path>AndersonAPI.Api/Program.cs</path>
       <count>1</count>
@@ -29,7 +39,7 @@
       <updatedByDisplayName>Morne</updatedByDisplayName>
       <updatedAt>2026-01-12T11:51:01.6875522Z</updatedAt>
       <deviationsHash>0244571007F30608A80A366537EAEF4D158E4B558B88728B05259E2C42AFFC99</deviationsHash>
-      <fileHash>A52FE51F26B5A9EB6D1BD36BC40D57FD1480CCE8E4F117772717B5F47D037FE4</fileHash>
+      <fileHash>BBE2A063CFC905E8BB47275A2FB023696634FAF208EDDF32792FAB67563BF984</fileHash>
     </file>
     <file>
       <correlationId>Intent.Application.MediatR.CommandHandler#2400c0e2-b244-4543-b021-0a36b496cc5e</correlationId>
@@ -179,7 +189,7 @@
       <updatedByDisplayName>Morne</updatedByDisplayName>
       <updatedAt>2026-01-19T09:36:42.7022761Z</updatedAt>
       <deviationsHash>397E0A6F2CD97DE39DBE944D868C4A174AD4F988D3022A14527422313CB4002F</deviationsHash>
-      <fileHash>2ABF3821881B8B8138EECB8887ACAD526C764925B791B159E9F322A32FDE63A3</fileHash>
+      <fileHash>1D36C9E70D37C12905AD01607733EEDCB2FDD7154B9C63E6A9BD620EB0FFB777</fileHash>
     </file>
     <file>
       <correlationId>Intent.Application.MediatR.CommandHandler#af4eb9b3-d69f-4bfa-878d-55264a166b2d</correlationId>

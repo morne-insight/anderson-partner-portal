@@ -75,7 +75,7 @@ export const configureApiClient = () => {
       baseUrl = process.env.API_BASE_URL!;
     } else {
       console.error('On server: API_BASE_URL is not set')
-      baseUrl = "https://andersen-api.insightconsulting.co.za"
+      baseUrl = "https://localhost:44395"
     }
   } else {
     if(import.meta.env.VITE_API_BASE_URL){

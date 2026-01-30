@@ -15280,10 +15280,16 @@
       "ScrapeWebsiteCommand": {
         "title": "ScrapeWebsiteCommand",
         "required": [
+          "companyId",
           "url"
         ],
         "type": "object",
         "properties": {
+          "companyId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
           "url": {
             "type": "string"
           }

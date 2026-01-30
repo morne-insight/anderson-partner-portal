@@ -78,6 +78,13 @@ export type AndersonApiApiControllersResponseTypesJsonResponseOfGuid = {
 };
 
 /**
+ * AndersonAPI.Api.Controllers.ResponseTypes.JsonResponse_Of_String
+ */
+export type AndersonApiApiControllersResponseTypesJsonResponseOfString = {
+    value: string | null;
+};
+
+/**
  * CapabilityDto
  */
 export type CapabilityDto = {
@@ -744,6 +751,7 @@ export type ReviewDto = {
  * ScrapeWebsiteCommand
  */
 export type ScrapeWebsiteCommand = {
+    companyId: string | null;
     url: string;
 };
 
@@ -2036,6 +2044,14 @@ export type PutApiCompaniesConnectionRequestErrors = {
      */
     400: ProblemDetails;
     /**
+     * Unauthorized
+     */
+    401: ProblemDetails;
+    /**
+     * Forbidden
+     */
+    403: ProblemDetails;
+    /**
      * Internal Server Error
      */
     500: ProblemDetails;
@@ -2662,6 +2678,31 @@ export type PutApiCountriesByIdSetStateResponses = {
 };
 
 export type PutApiCountriesByIdSetStateResponse = PutApiCountriesByIdSetStateResponses[keyof PutApiCountriesByIdSetStateResponses];
+
+export type GetApiHealthData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/health';
+};
+
+export type GetApiHealthErrors = {
+    /**
+     * Internal Server Error
+     */
+    500: ProblemDetails;
+};
+
+export type GetApiHealthError = GetApiHealthErrors[keyof GetApiHealthErrors];
+
+export type GetApiHealthResponses = {
+    /**
+     * OK
+     */
+    200: AndersonApiApiControllersResponseTypesJsonResponseOfString;
+};
+
+export type GetApiHealthResponse = GetApiHealthResponses[keyof GetApiHealthResponses];
 
 export type GetApiIndustriesData = {
     body?: never;
