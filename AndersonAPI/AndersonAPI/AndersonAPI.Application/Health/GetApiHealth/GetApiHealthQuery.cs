@@ -5,11 +5,14 @@ using MediatR;
 [assembly: DefaultIntentManaged(Mode.Fully)]
 [assembly: IntentTemplate("Intent.Application.MediatR.QueryModels", Version = "1.0")]
 
-namespace AndersonAPI.Application.Health.GetHealth
+namespace AndersonAPI.Application.Health.GetApiHealth
 {
-    public class GetHealthQuery : IRequest<string>, IQuery
+    /// <summary>
+    /// Hits the database via CQRS pipeline without authentication
+    /// </summary>
+    public class GetApiHealthQuery : IRequest<string>, IQuery
     {
-        public GetHealthQuery()
+        public GetApiHealthQuery()
         {
         }
     }

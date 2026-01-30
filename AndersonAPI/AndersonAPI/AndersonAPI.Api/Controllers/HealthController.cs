@@ -1,6 +1,7 @@
 using System.Net.Mime;
 using AndersonAPI.Api.Controllers.ResponseTypes;
-using AndersonAPI.Application.Health.GetHealth;
+using AndersonAPI.Application.Health.GetApiHealth;
+using AndersonAPI.Application.Health.GetAuthHealth;
 using Intent.RoslynWeaver.Attributes;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -24,31 +25,46 @@ namespace AndersonAPI.Api.Controllers
         }
 
         /// <summary>
+        /// Hits the database via CQRS pipeline without authentication
         /// </summary>
         /// <response code="200">Returns the specified string.</response>
+        [HttpGet("api/health/api")]
+        [AllowAnonymous]
+        [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(JsonResponse<string>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<JsonResponse<string>>> GetApiHealth(CancellationToken cancellationToken = default)
+        {
+            var result = await _mediator.Send(new GetApiHealthQuery(), cancellationToken);
+            return Ok(new JsonResponse<string>(result));
+        }
+
+        /// <summary>
+        /// Hits the database via CQRS pipeline with authentication
+        /// </summary>
+        /// <response code="200">Returns the specified string.</response>
+        /// <response code="401">Unauthorized request.</response>
+        /// <response code="403">Forbidden request.</response>
+        [HttpGet("api/health/auth")]
+        [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(JsonResponse<string>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<JsonResponse<string>>> GetAuthHealth(CancellationToken cancellationToken = default)
+        {
+            var result = await _mediator.Send(new GetAuthHealthQuery(), cancellationToken);
+            return Ok(new JsonResponse<string>(result));
+        }
+
         [HttpGet("api/health")]
         [AllowAnonymous]
         [Produces(MediaTypeNames.Application.Json)]
         [ProducesResponseType(typeof(JsonResponse<string>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-        [IntentManaged(Mode.Fully, Body = Mode.Ignore)]
-        public async Task<ActionResult<JsonResponse<string>>> GetHealth(CancellationToken cancellationToken = default)
-        {
-            //var result = await _mediator.Send(new GetHealth(), cancellationToken);
-            //return Ok(new JsonResponse<string>(result));
-            return Ok(new JsonResponse<string>("Healty"));
-        }
-
-        [HttpGet("/")]
-        [AllowAnonymous]
-        [Produces(MediaTypeNames.Application.Json)]
-        [ProducesResponseType(typeof(JsonResponse<string>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-        [IntentManaged(Mode.Fully, Body = Mode.Ignore)]
+        [IntentManaged(Mode.Ignore)]
         public async Task<ActionResult<JsonResponse<string>>> GetRoot(CancellationToken cancellationToken = default)
         {
-            //var result = await _mediator.Send(new GetHealth(), cancellationToken);
-            //return Ok(new JsonResponse<string>(result));
             return Ok(new JsonResponse<string>("Alive"));
         }
     }

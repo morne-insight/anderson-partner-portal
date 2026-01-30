@@ -26,7 +26,7 @@ namespace AndersonAPI.Api
                 .WriteTo.Console()
                 .CreateBootstrapLogger();
 
-            logger.Information("ASPNETCORE_URLS: {Urls}", Environment.GetEnvironmentVariable("ASPNETCORE_URLS"));
+            //logger.Information("ASPNETCORE_URLS: {Urls}", Environment.GetEnvironmentVariable("ASPNETCORE_URLS"));
 
             try
             {
@@ -71,48 +71,46 @@ namespace AndersonAPI.Api
 
                 var app = builder.Build();
 
-                if(app.Environment.IsDevelopment())
+                if (app.Environment.IsDevelopment())
                 {
                     app.UseDeveloperExceptionPage();
                 }
 
-                app.Lifetime.ApplicationStarted.Register(() =>
-                {
-                    Console.WriteLine(">>> ApplicationStarted fired");
-                });
+                //app.Lifetime.ApplicationStarted.Register(() =>
+                //{
+                //    Console.WriteLine(">>> ApplicationStarted fired");
+                //});
 
-                // Configure the HTTP request pipeline.
-                app.Use(async (ctx, next) =>
-                {
-                    Console.WriteLine($">>> REQ {ctx.Request.Method} {ctx.Request.Path}");
-                    try
-                    {
-                        await next();
-                        Console.WriteLine($">>> RES {ctx.Response.StatusCode} {ctx.Request.Method} {ctx.Request.Path}");
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine($">>> EX for {ctx.Request.Method} {ctx.Request.Path}\n{ex}");
-                        throw;
-                    }
-                });
+                //// Configure the HTTP request pipeline.
+                //app.Use(async (ctx, next) =>
+                //{
+                //    Console.WriteLine($">>> REQ {ctx.Request.Method} {ctx.Request.Path}");
+                //    try
+                //    {
+                //        await next();
+                //        Console.WriteLine($">>> RES {ctx.Response.StatusCode} {ctx.Request.Method} {ctx.Request.Path}");
+                //    }
+                //    catch (Exception ex)
+                //    {
+                //        Console.WriteLine($">>> EX for {ctx.Request.Method} {ctx.Request.Path}\n{ex}");
+                //        throw;
+                //    }
+                //});
+
 
                 app.UseSerilogRequestLogging();
                 app.UseExceptionHandler();
-                //app.UseHttpsRedirection();
+                app.UseHttpsRedirection();
                 app.UseRouting();
+                app.UseCors();
                 app.UseAuthentication();
                 app.UseAuthorization();
                 app.MapScalarApiReference();
                 app.MapOpenApi();
                 app.MapDefaultHealthChecks();
                 app.MapControllers();
-                app.UseCors();
 
                 logger.Write(LogEventLevel.Information, "Starting web host");
-
-                Console.WriteLine(">>> Reached app.Run()");
-                Console.WriteLine($">>> ASPNETCORE_URLS={Environment.GetEnvironmentVariable("ASPNETCORE_URLS")}");
 
                 app.Run();
             }

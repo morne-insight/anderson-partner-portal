@@ -4,13 +4,13 @@ using Intent.RoslynWeaver.Attributes;
 [assembly: DefaultIntentManaged(Mode.Fully)]
 [assembly: IntentTemplate("Intent.Application.MediatR.FluentValidation.QueryValidator", Version = "2.0")]
 
-namespace AndersonAPI.Application.Health.GetHealth
+namespace AndersonAPI.Application.Health.GetAuthHealth
 {
     [IntentManaged(Mode.Fully, Body = Mode.Merge)]
-    public class GetHealthQueryValidator : AbstractValidator<GetHealthQuery>
+    public class GetAuthHealthQueryValidator : AbstractValidator<GetAuthHealthQuery>
     {
         [IntentManaged(Mode.Merge)]
-        public GetHealthQueryValidator()
+        public GetAuthHealthQueryValidator()
         {
             ConfigureValidationRules();
         }

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <class id="c841dcb8-9847-4f3e-aa7e-6e42d85cfc56" type="Query" typeId="e71b0662-e29d-4db2-868b-8a12464b25d0">
-  <name>GetHealthQuery</name>
-  <display>GetHealthQuery: string</display>
+  <comment>Hits the database via CQRS pipeline without authentication</comment>
+  <name>GetApiHealthQuery</name>
+  <display>GetApiHealthQuery: string</display>
   <isAbstract>false</isAbstract>
   <genericTypes />
   <typeReference id="2c5a7ace-19c7-497a-beb0-81259512e652">
@@ -31,7 +32,7 @@
       <definitionPackageId>0011387a-b122-45d7-9cdb-8e21b315ab9f</definitionPackageId>
       <properties>
         <property name="801c3e61-4431-4d81-93fa-7e57d33cb3fa" display="Verb" value="GET" isActive="true" />
-        <property name="5dd3e07d-76eb-45d4-9956-4325fb068acc" display="Route" value="api/health" isActive="true" />
+        <property name="5dd3e07d-76eb-45d4-9956-4325fb068acc" display="Route" value="api/health/api" isActive="true" />
         <property name="4490e212-1e99-43ce-b3dd-048ed2a6bae8" display="Return Type Mediatype" value="application/json" isActive="true" />
         <property name="e3870725-34b3-4684-85f2-ec4a667207fb" display="Success Response Code" isActive="true" />
       </properties>
