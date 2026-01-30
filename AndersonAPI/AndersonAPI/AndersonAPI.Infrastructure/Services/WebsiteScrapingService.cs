@@ -31,7 +31,17 @@ namespace AndersonAPI.Infrastructure.Services
             //return content;
             await new BrowserFetcher().DownloadAsync();
 
-            using var browser = await Puppeteer.LaunchAsync(new LaunchOptions { Headless = true });
+            using var browser = await Puppeteer
+                .LaunchAsync(new LaunchOptions 
+                { 
+                    Headless = true ,
+                    Args = new[] 
+                    { 
+                        "--no-sandbox",
+                        "--disable-setuid-sandbox",
+                        "--disable-dev-shm-usage"
+                    }
+                });
             using var page = await browser.NewPageAsync();
 
             await page.GoToAsync(url, WaitUntilNavigation.Networkidle0);
