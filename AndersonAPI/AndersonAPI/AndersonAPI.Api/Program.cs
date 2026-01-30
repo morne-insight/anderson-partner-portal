@@ -78,6 +78,18 @@ namespace AndersonAPI.Api
 
                 // Configure the HTTP request pipeline.
                 app.UseSerilogRequestLogging();
+                app.Use(async (ctx, next) =>
+                {
+                    try
+                    {
+                        await next();
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Error(ex, "Unhandled exception for {Method} {Path}", ctx.Request.Method, ctx.Request.Path);
+                        throw;
+                    }
+                });
                 app.UseExceptionHandler();
                 app.UseHttpsRedirection();
                 app.UseRouting();
