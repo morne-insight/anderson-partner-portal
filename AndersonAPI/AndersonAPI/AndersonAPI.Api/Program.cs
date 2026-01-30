@@ -71,10 +71,15 @@ namespace AndersonAPI.Api
 
                 var app = builder.Build();
 
+                app.Lifetime.ApplicationStarted.Register(() =>
+                {
+                    Console.WriteLine(">>> ApplicationStarted fired");
+                });
+
                 // Configure the HTTP request pipeline.
                 app.UseSerilogRequestLogging();
                 app.UseExceptionHandler();
-                //app.UseHttpsRedirection();
+                app.UseHttpsRedirection();
                 app.UseRouting();
                 app.UseAuthentication();
                 app.UseAuthorization();
@@ -85,6 +90,9 @@ namespace AndersonAPI.Api
                 app.UseCors();
 
                 logger.Write(LogEventLevel.Information, "Starting web host");
+
+                Console.WriteLine(">>> Reached app.Run()");
+                Console.WriteLine($">>> ASPNETCORE_URLS={Environment.GetEnvironmentVariable("ASPNETCORE_URLS")}");
 
                 app.Run();
             }
