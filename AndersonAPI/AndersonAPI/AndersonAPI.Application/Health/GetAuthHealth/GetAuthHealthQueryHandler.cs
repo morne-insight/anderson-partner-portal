@@ -1,3 +1,4 @@
+using AndersonAPI.Domain.Repositories;
 using Intent.RoslynWeaver.Attributes;
 using MediatR;
 
@@ -9,9 +10,12 @@ namespace AndersonAPI.Application.Health.GetAuthHealth
     [IntentManaged(Mode.Merge, Signature = Mode.Fully)]
     public class GetAuthHealthQueryHandler : IRequestHandler<GetAuthHealthQuery, string>
     {
+        private readonly ICountryRepository _countryRepository;
+
         [IntentManaged(Mode.Merge)]
-        public GetAuthHealthQueryHandler()
+        public GetAuthHealthQueryHandler(ICountryRepository countryRepository)
         {
+            _countryRepository = countryRepository;
         }
 
         /// <summary>
@@ -20,8 +24,8 @@ namespace AndersonAPI.Application.Health.GetAuthHealth
         [IntentManaged(Mode.Fully, Body = Mode.Merge)]
         public async Task<string> Handle(GetAuthHealthQuery request, CancellationToken cancellationToken)
         {
-            // TODO: Implement Handle (GetAuthHealthQueryHandler) functionality
-            throw new NotImplementedException("Your implementation here...");
+            var count = await _countryRepository.CountAsync();
+            return $"API Auth is healthy. Country count: {count}";
         }
     }
 }
