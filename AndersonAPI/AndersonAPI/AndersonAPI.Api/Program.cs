@@ -71,6 +71,11 @@ namespace AndersonAPI.Api
 
                 var app = builder.Build();
 
+                if(app.Environment.IsDevelopment())
+                {
+                    app.UseDeveloperExceptionPage();
+                }
+
                 app.Lifetime.ApplicationStarted.Register(() =>
                 {
                     Console.WriteLine(">>> ApplicationStarted fired");
