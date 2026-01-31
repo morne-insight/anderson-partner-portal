@@ -89,6 +89,11 @@ namespace AndersonAPI.Api
                     {
                         await next();
                         Console.WriteLine($">>> RES {ctx.Response.StatusCode} {ctx.Request.Method} {ctx.Request.Path}");
+                        if(ctx.Response.StatusCode >= 400)
+                        {
+                            // You can add more detailed logging here for error responses if needed
+                            Console.WriteLine($"Response Body: {ctx.Response.Body}");
+                        }
                     }
                     catch (Exception ex)
                     {
