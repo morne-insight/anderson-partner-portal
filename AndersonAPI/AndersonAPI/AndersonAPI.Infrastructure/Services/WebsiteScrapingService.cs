@@ -25,10 +25,6 @@ namespace AndersonAPI.Infrastructure.Services
         {
             if (string.IsNullOrWhiteSpace(url)) throw new ArgumentException("URL must not be empty", nameof(url));
 
-            //using var response = await _httpClient.GetAsync(url, cancellationToken);
-            //response.EnsureSuccessStatusCode();
-            //var content = await response.Content.ReadAsStringAsync(cancellationToken);
-            //return content;
             await new BrowserFetcher().DownloadAsync();
 
             using var browser = await Puppeteer

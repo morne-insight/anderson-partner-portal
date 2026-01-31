@@ -1,7 +1,7 @@
 import { useForm } from "@tanstack/react-form";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, useRouter } from "@tanstack/react-router";
-import { ArrowLeft, Briefcase, Building, ChevronDown, Loader2 } from "lucide-react";
+import { ArrowLeft, Briefcase, Building, ChevronDown, Loader2, Plus } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import type { CapabilityDto, IndustryDto } from "@/api/types.gen";
@@ -54,6 +54,7 @@ export const Route = createFileRoute("/_app/opportunities/new")({
 
 function CreateOpportunity() {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const { companies } = Route.useLoaderData();
 
   const {
@@ -71,6 +72,66 @@ function CreateOpportunity() {
   // State for capabilities and industries (similar to profile edit)
   const [selectedCapabilityIds, setSelectedCapabilityIds] = useState<string[]>([]);
   const [selectedIndustryIds, setSelectedIndustryIds] = useState<string[]>([]);
+
+  // Input tracking for "create new" functionality
+  const [capabilityInput, setCapabilityInput] = useState("");
+  const [industryInput, setIndustryInput] = useState("");
+
+  // Create capability mutation
+  const createCapabilityMutation = useMutation({
+    mutationFn: async (name: string) => {
+      const response = await callApi({
+        data: {
+          fn: "postApiCapabilities",
+          args: { body: { name, description: "" } },
+        },
+      });
+      if (response.error) throw response.error;
+      return response;
+    },
+    onSuccess: async (response: { data?: string }) => {
+      // Invalidate and refetch capabilities
+      await queryClient.invalidateQueries({ queryKey: ["reference", "capabilities"] });
+      // Add the new capability to selection
+      if (response.data) {
+        setSelectedCapabilityIds((prev) => [...prev, response.data!]);
+      }
+      setCapabilityInput("");
+      toast.success("Capability created successfully");
+    },
+    onError: (err) => {
+      console.error("Failed to create capability", err);
+      toast.error("Failed to create capability");
+    },
+  });
+
+  // Create industry mutation
+  const createIndustryMutation = useMutation({
+    mutationFn: async (name: string) => {
+      const response = await callApi({
+        data: {
+          fn: "postApiIndustries",
+          args: { body: { name, description: "" } },
+        },
+      });
+      if (response.error) throw response.error;
+      return response;
+    },
+    onSuccess: async (response: { data?: string }) => {
+      // Invalidate and refetch industries
+      await queryClient.invalidateQueries({ queryKey: ["reference", "industries"] });
+      // Add the new industry to selection
+      if (response.data) {
+        setSelectedIndustryIds((prev) => [...prev, response.data!]);
+      }
+      setIndustryInput("");
+      toast.success("Industry created successfully");
+    },
+    onError: (err) => {
+      console.error("Failed to create industry", err);
+      toast.error("Failed to create industry");
+    },
+  });
 
   const createMutation = useMutation({
     mutationFn: async (values: any) => {
@@ -463,6 +524,7 @@ function CreateOpportunity() {
               <Combobox
                 items={capabilitiesData || []}
                 multiple
+                onInputValueChange={(value) => setCapabilityInput(value)}
                 onValueChange={(value: unknown) => {
                   const selectedCapabilities = value as CapabilityDto[];
                   setSelectedCapabilityIds(
@@ -518,6 +580,23 @@ function CreateOpportunity() {
                       </ComboboxItem>
                     )}
                   </ComboboxList>
+                  {capabilityInput.trim() &&
+                    !capabilitiesData?.some(
+                      (cap: CapabilityDto) =>
+                        cap.name?.toLowerCase() === capabilityInput.toLowerCase()
+                    ) && (
+                      <button
+                        className="flex w-full items-center gap-2 px-2 py-2 text-left text-sm text-red-600 hover:bg-red-50"
+                        disabled={createCapabilityMutation.isPending}
+                        onClick={() => createCapabilityMutation.mutate(capabilityInput.trim())}
+                        type="button"
+                      >
+                        <Plus className="h-4 w-4" />
+                        {createCapabilityMutation.isPending
+                          ? "Creating..."
+                          : `Create "${capabilityInput.trim()}"`}
+                      </button>
+                    )}
                 </ComboboxContent>
               </Combobox>
             </div>
@@ -532,6 +611,7 @@ function CreateOpportunity() {
               <Combobox
                 items={industriesData || []}
                 multiple
+                onInputValueChange={(value) => setIndustryInput(value)}
                 onValueChange={(value: unknown) => {
                   const selectedIndustries = value as IndustryDto[];
                   setSelectedIndustryIds(
@@ -587,6 +667,23 @@ function CreateOpportunity() {
                       </ComboboxItem>
                     )}
                   </ComboboxList>
+                  {industryInput.trim() &&
+                    !industriesData?.some(
+                      (ind: IndustryDto) =>
+                        ind.name?.toLowerCase() === industryInput.toLowerCase()
+                    ) && (
+                      <button
+                        className="flex w-full items-center gap-2 px-2 py-2 text-left text-sm text-blue-600 hover:bg-blue-50"
+                        disabled={createIndustryMutation.isPending}
+                        onClick={() => createIndustryMutation.mutate(industryInput.trim())}
+                        type="button"
+                      >
+                        <Plus className="h-4 w-4" />
+                        {createIndustryMutation.isPending
+                          ? "Creating..."
+                          : `Create "${industryInput.trim()}"`}
+                      </button>
+                    )}
                 </ComboboxContent>
               </Combobox>
             </div>

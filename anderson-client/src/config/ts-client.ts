@@ -66,32 +66,20 @@ export const configureApiClient = () => {
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
   }
 
-  let baseUrl = "";
+  // Use import.meta.env for both client and server (Vite handles SSR)
+  const baseUrl =
+    import.meta.env.VITE_API_BASE_URL ||
+    "https://andersen-server-fzcxfbabeccdd5bw.southafricanorth-01.azurewebsites.net";
 
-  if(typeof process !== "undefined")
-  {
-    if(process.env.API_BASE_URL){
-      console.log('On server: API_BASE_URL is set')
-      baseUrl = process.env.API_BASE_URL!;
-    } else {
-      console.error('On server: API_BASE_URL is not set')
-      baseUrl = "https://localhost:44395"
-    }
+  if (import.meta.env.VITE_API_BASE_URL) {
+    console.log("API_BASE_URL is set:", baseUrl);
   } else {
-    if(import.meta.env.VITE_API_BASE_URL){
-      console.log('On client: VITE_API_BASE_URL is set')
-      baseUrl = import.meta.env.VITE_API_BASE_URL;
-    } else {
-      console.error('On client: VITE_API_BASE_URL is not set')
-      baseUrl = "https://localhost:44395"
-    }
+    console.warn("VITE_API_BASE_URL is not set, using fallback:", baseUrl);
   }
-
-  
 
   // Configure the client with base URL
   client.setConfig({
-    baseUrl: baseUrl
+    baseUrl,
   });
 
   // client.setConfig({

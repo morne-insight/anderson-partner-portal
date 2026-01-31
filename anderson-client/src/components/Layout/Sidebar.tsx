@@ -45,7 +45,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isAdmin }) => {
           ANDERSEN<span className="text-red-600">.</span>
         </h1>
         <p className="mt-2 text-[10px] text-gray-400 uppercase tracking-[0.2em]">
-          Partner Portal
+          Partner Portal .v1
         </p>
       </div>
 
@@ -55,23 +55,23 @@ export const Sidebar: React.FC<SidebarProps> = ({ isAdmin }) => {
             <li key={item.to}>
               <Link
                 className={`group flex w-full items-center border-l-2 px-8 py-4 font-medium text-sm transition-all duration-200 ${isActive(item.to, item.exact)
-                    ? "border-red-600 bg-white/5 text-white"
-                    : "border-transparent text-gray-400 hover:border-gray-700 hover:bg-white/5 hover:text-white"
+                  ? "border-red-600 bg-white/5 text-white"
+                  : "border-transparent text-gray-400 hover:border-gray-700 hover:bg-white/5 hover:text-white"
                   }`}
                 to={item.to}
               >
                 <item.icon
                   className={`mr-4 h-4 w-4 transition-colors ${isActive(item.to, item.exact)
-                      ? item.to === "/admin"
-                        ? "text-yellow-400"
-                        : "text-red-600"
-                      : "group-hover:text-white"
+                    ? item.to === "/admin"
+                      ? "text-yellow-400"
+                      : "text-red-600"
+                    : "group-hover:text-white"
                     }`}
                 />
                 <span
                   className={`text-xs uppercase tracking-widest ${item.to === "/admin" && isActive(item.to)
-                      ? "text-yellow-400"
-                      : ""
+                    ? "text-yellow-400"
+                    : ""
                     }`}
                 >
                   {item.label}

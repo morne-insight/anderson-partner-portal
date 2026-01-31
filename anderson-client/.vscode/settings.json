@@ -64,5 +64,6 @@
     ".vscode{,/**}"
   ],
   "appService.defaultWebAppToDeploy": "",
-  "appService.deploySubpath": ""
+  "appService.deploySubpath": "",
+  "appService.showBuildDuringDeployPrompt": false
 }

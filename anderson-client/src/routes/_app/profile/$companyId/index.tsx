@@ -243,6 +243,66 @@ function ProfileEdit() {
     initialCompany?.industries?.map((c) => c.id!).filter(Boolean) || []
   );
 
+  // Input tracking for "create new" functionality
+  const [capabilityInput, setCapabilityInput] = useState("");
+  const [industryInput, setIndustryInput] = useState("");
+
+  // Create capability mutation
+  const createCapabilityMutation = useMutation({
+    mutationFn: async (name: string) => {
+      const response = await callApi({
+        data: {
+          fn: "postApiCapabilities",
+          args: { body: { name, description: "" } },
+        },
+      });
+      if (response.error) throw response.error;
+      return response;
+    },
+    onSuccess: async (response: { data?: string }) => {
+      // Invalidate and refetch capabilities
+      await queryClient.invalidateQueries({ queryKey: ["reference", "capabilities"] });
+      // Add the new capability to selection
+      if (response.data) {
+        setSelectedCapabilityIds((prev) => [...prev, response.data!]);
+      }
+      setCapabilityInput("");
+      toast.success("Capability created successfully");
+    },
+    onError: (err) => {
+      console.error("Failed to create capability", err);
+      toast.error("Failed to create capability");
+    },
+  });
+
+  // Create industry mutation
+  const createIndustryMutation = useMutation({
+    mutationFn: async (name: string) => {
+      const response = await callApi({
+        data: {
+          fn: "postApiIndustries",
+          args: { body: { name, description: "" } },
+        },
+      });
+      if (response.error) throw response.error;
+      return response;
+    },
+    onSuccess: async (response: { data?: string }) => {
+      // Invalidate and refetch industries
+      await queryClient.invalidateQueries({ queryKey: ["reference", "industries"] });
+      // Add the new industry to selection
+      if (response.data) {
+        setSelectedIndustryIds((prev) => [...prev, response.data!]);
+      }
+      setIndustryInput("");
+      toast.success("Industry created successfully");
+    },
+    onError: (err) => {
+      console.error("Failed to create industry", err);
+      toast.error("Failed to create industry");
+    },
+  });
+
   // --- Locations State ---
   const [isAddingLocation, setIsAddingLocation] = useState(false);
   const [newLocation, setNewLocation] = useState({
@@ -1488,6 +1548,7 @@ function ProfileEdit() {
               <Combobox
                 items={capabilities || []}
                 multiple
+                onInputValueChange={(value) => setCapabilityInput(value)}
                 onValueChange={(value: unknown) => {
                   const selectedCapabilities = value as CapabilityDto[];
                   setSelectedCapabilityIds(
@@ -1543,6 +1604,23 @@ function ProfileEdit() {
                       </ComboboxItem>
                     )}
                   </ComboboxList>
+                  {capabilityInput.trim() &&
+                    !capabilities?.some(
+                      (cap: CapabilityDto) =>
+                        cap.name?.toLowerCase() === capabilityInput.toLowerCase()
+                    ) && (
+                      <button
+                        className="flex w-full items-center gap-2 px-2 py-2 text-left text-sm text-black hover:bg-gray-100"
+                        disabled={createCapabilityMutation.isPending}
+                        onClick={() => createCapabilityMutation.mutate(capabilityInput.trim())}
+                        type="button"
+                      >
+                        <Plus className="h-4 w-4" />
+                        {createCapabilityMutation.isPending
+                          ? "Creating..."
+                          : `Create "${capabilityInput.trim()}"`}
+                      </button>
+                    )}
                 </ComboboxContent>
               </Combobox>
             </div>
@@ -1557,6 +1635,7 @@ function ProfileEdit() {
               <Combobox
                 items={industries || []}
                 multiple
+                onInputValueChange={(value) => setIndustryInput(value)}
                 onValueChange={(value: unknown) => {
                   const selectedIndustries = value;
                   setSelectedIndustryIds(
@@ -1612,6 +1691,23 @@ function ProfileEdit() {
                       </ComboboxItem>
                     )}
                   </ComboboxList>
+                  {industryInput.trim() &&
+                    !industries?.some(
+                      (ind) =>
+                        ind.name?.toLowerCase() === industryInput.toLowerCase()
+                    ) && (
+                      <button
+                        className="flex w-full items-center gap-2 px-2 py-2 text-left text-sm text-red-600 hover:bg-red-50"
+                        disabled={createIndustryMutation.isPending}
+                        onClick={() => createIndustryMutation.mutate(industryInput.trim())}
+                        type="button"
+                      >
+                        <Plus className="h-4 w-4" />
+                        {createIndustryMutation.isPending
+                          ? "Creating..."
+                          : `Create "${industryInput.trim()}"`}
+                      </button>
+                    )}
                 </ComboboxContent>
               </Combobox>
             </div>
