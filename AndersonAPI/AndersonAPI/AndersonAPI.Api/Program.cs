@@ -81,21 +81,21 @@ namespace AndersonAPI.Api
                 //    Console.WriteLine(">>> ApplicationStarted fired");
                 //});
 
-                //// Configure the HTTP request pipeline.
-                //app.Use(async (ctx, next) =>
-                //{
-                //    Console.WriteLine($">>> REQ {ctx.Request.Method} {ctx.Request.Path}");
-                //    try
-                //    {
-                //        await next();
-                //        Console.WriteLine($">>> RES {ctx.Response.StatusCode} {ctx.Request.Method} {ctx.Request.Path}");
-                //    }
-                //    catch (Exception ex)
-                //    {
-                //        Console.WriteLine($">>> EX for {ctx.Request.Method} {ctx.Request.Path}\n{ex}");
-                //        throw;
-                //    }
-                //});
+                // Configure the HTTP request pipeline.
+                app.Use(async (ctx, next) =>
+                {
+                    Console.WriteLine($">>> REQ {ctx.Request.Method} {ctx.Request.Path}");
+                    try
+                    {
+                        await next();
+                        Console.WriteLine($">>> RES {ctx.Response.StatusCode} {ctx.Request.Method} {ctx.Request.Path}");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($">>> EX for {ctx.Request.Method} {ctx.Request.Path}\n{ex}");
+                        throw;
+                    }
+                });
 
 
                 app.UseSerilogRequestLogging();
