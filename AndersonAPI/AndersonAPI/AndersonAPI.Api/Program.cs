@@ -86,25 +86,47 @@ namespace AndersonAPI.Api
                     {
                         Console.WriteLine($">>> REQ {ctx.Request.Method} {ctx.Request.Path}");
                     }
+                    
+                    // Capture response body for error logging
+                    var originalBodyStream = ctx.Response.Body;
+                    using var responseBody = new MemoryStream();
+                    ctx.Response.Body = responseBody;
+                    
                     try
                     {
                         await next();
+                        
+                        // Copy the response body to the original stream
+                        responseBody.Seek(0, SeekOrigin.Begin);
+                        await responseBody.CopyToAsync(originalBodyStream);
+                        
                         if (ctx.Request.Path.Value != "/openapi/v1.json")
                         {
-
                             Console.WriteLine($">>> RES {ctx.Response.StatusCode} {ctx.Request.Method} {ctx.Request.Path}");
+                            
                             if (ctx.Response.StatusCode >= 400)
                             {
                                 Console.WriteLine($"TraceIdentifier: {ctx.TraceIdentifier}");
-                                // write out the body stream to console for error responses
-                                Console.WriteLine($"{ctx.Response.Body.ToString()}");
+                                
+                                // Read the response body
+                                responseBody.Seek(0, SeekOrigin.Begin);
+                                using var reader = new StreamReader(responseBody);
+                                var body = await reader.ReadToEndAsync();
+                                Console.WriteLine($"Response Body: {body}");
                             }
                         }
                     }
                     catch (Exception ex)
                     {
                         Console.WriteLine($">>> EX for {ctx.Request.Method} {ctx.Request.Path}\n{ex}");
+                        
+                        // Make sure to restore the original stream on exception
+                        ctx.Response.Body = originalBodyStream;
                         throw;
+                    }
+                    finally
+                    {
+                        ctx.Response.Body = originalBodyStream;
                     }
                 });
 
