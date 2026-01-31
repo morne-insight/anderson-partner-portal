@@ -26,8 +26,6 @@ namespace AndersonAPI.Api
                 .WriteTo.Console()
                 .CreateBootstrapLogger();
 
-            //logger.Information("ASPNETCORE_URLS: {Urls}", Environment.GetEnvironmentVariable("ASPNETCORE_URLS"));
-
             try
             {
                 var builder = WebApplication.CreateBuilder(args);
@@ -84,15 +82,23 @@ namespace AndersonAPI.Api
                 // Configure the HTTP request pipeline.
                 app.Use(async (ctx, next) =>
                 {
-                    Console.WriteLine($">>> REQ {ctx.Request.Method} {ctx.Request.Path}");
+                    if (ctx.Request.Path.Value != "/openapi/v1.json")
+                    {
+                        Console.WriteLine($">>> REQ {ctx.Request.Method} {ctx.Request.Path}");
+                    }
                     try
                     {
                         await next();
-                        Console.WriteLine($">>> RES {ctx.Response.StatusCode} {ctx.Request.Method} {ctx.Request.Path}");
-                        if(ctx.Response.StatusCode >= 400)
+                        if (ctx.Request.Path.Value != "/openapi/v1.json")
                         {
-                            // You can add more detailed logging here for error responses if needed
-                            Console.WriteLine($"Response Body: {ctx.Response.Body}");
+
+                            Console.WriteLine($">>> RES {ctx.Response.StatusCode} {ctx.Request.Method} {ctx.Request.Path}");
+                            if (ctx.Response.StatusCode >= 400)
+                            {
+                                Console.WriteLine($"TraceIdentifier: {ctx.TraceIdentifier}");
+                                // write out the body stream to console for error responses
+                                Console.WriteLine($"{ctx.Response.Body.ToString()}");
+                            }
                         }
                     }
                     catch (Exception ex)
