@@ -91,7 +91,7 @@ export const configureApiClient = () => {
 
   // Global Request Interceptor for Authentication
   client.interceptors.request.use(async (request) => {
-    console.log("Request Interceptor", request);
+    //console.log("Request Interceptor", request);
     // Only run this on the server
     if (import.meta.env.SSR) {
       try {
@@ -111,6 +111,7 @@ export const configureApiClient = () => {
 
   // Add response interceptor for handling authentication errors and retries
   client.interceptors.response.use(async (response, request, _options) => {
+    //console.log("Response Interceptor", response);
     const requestKey = `${request.method || "unknown"}-${response.url}`;
 
     // Handle 401 Unauthorized errors with token refresh

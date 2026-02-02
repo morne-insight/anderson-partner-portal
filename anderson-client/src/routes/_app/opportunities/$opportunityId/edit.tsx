@@ -1,6 +1,6 @@
 import { useForm } from "@tanstack/react-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createFileRoute, useRouter } from "@tanstack/react-router";
+import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import {
   ArrowLeft,
   Briefcase,
@@ -187,7 +187,7 @@ function EditOpportunity() {
     },
     onSuccess: () => {
       console.log("Update successful, navigating to opportunities");
-      router.navigate({ to: "/opportunities" });
+      router.navigate({ to: "/opportunities", search: { tab: "me" } });
     },
     onError: (err) => {
       console.error("Failed to update opportunity", err);
@@ -209,7 +209,7 @@ function EditOpportunity() {
       return response;
     },
     onSuccess: () => {
-      router.navigate({ to: "/opportunities" });
+      router.navigate({ to: "/opportunities", search: { tab: "me" } });
     },
     onError: (err) => {
       console.error("Failed to delete", err);
@@ -305,15 +305,22 @@ function EditOpportunity() {
 
   return (
     <div className="animate-fade-in space-y-8 pb-20">
+      {/* Back Link */}
+      <div className="mx-auto max-w-7xl px-6 pt-6">
+        <nav className="mb-4 flex items-center font-medium text-gray-500 text-xs uppercase tracking-wider">
+          <Link
+            className="flex items-center transition-colors hover:text-red-600"
+            search={{ tab: 'me' }}
+            to="/opportunities"
+          >
+            <ArrowLeft className="mr-2 h-3 w-3" />
+            Back to My Opportunities
+          </Link>
+        </nav>
+      </div>
       {/* Header */}
       <header className="flex items-start justify-between border-gray-200 border-b pb-6">
         <div>
-          <button
-            className="mb-4 flex items-center gap-2 font-bold text-gray-500 text-xs uppercase tracking-widest transition-colors hover:text-black"
-            onClick={() => router.history.back()}
-          >
-            <ArrowLeft className="h-4 w-4" /> Back to Opportunities
-          </button>
           <h2 className="mb-3 font-serif text-4xl text-black">
             Edit Opportunity
           </h2>

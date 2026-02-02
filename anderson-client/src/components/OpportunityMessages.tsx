@@ -425,13 +425,13 @@ export function OpportunityMessages({
         {canAddMessage && (
           <div className="border-gray-100 border-t pt-4">
             <div className="mb-3 text-gray-500 text-xs uppercase tracking-wide">
-              ASK A QUESTION ABOUT THIS OPPORTUNITY
+              {isOwnOpportunity ? "ADD YOUR COMMENT" : "ASK A QUESTION ABOUT THIS OPPORTUNITY"}
             </div>
             <div className="space-y-3">
               <Textarea
                 className="resize-none rounded-none border-gray-200 text-sm"
                 onChange={(e) => setNewMessage(e.target.value)}
-                placeholder="Type your question here..."
+                placeholder={`Type your ${isOwnOpportunity ? "comment" : "question"} here...`}
                 rows={3}
                 value={newMessage}
               />

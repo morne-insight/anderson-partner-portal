@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
+  ArrowLeft,
   Bookmark,
   BookmarkMinus,
   Briefcase,
@@ -20,6 +21,9 @@ import { callApi } from "@/server/proxy";
 
 export const Route = createFileRoute("/_app/opportunities/$opportunityId/")({
   component: ViewOpportunity,
+  validateSearch: (search: Record<string, unknown>) => ({
+    tab: (search.tab as "all" | "me" | "saved") || "all",
+  }),
   loader: async () => {
     const companies = await callApi({ data: { fn: "getApiCompaniesMe" } });
 
@@ -31,8 +35,14 @@ export const Route = createFileRoute("/_app/opportunities/$opportunityId/")({
 
 function ViewOpportunity() {
   const { companies } = Route.useLoaderData();
-
+  const search = Route.useSearch();
   const { opportunityId } = Route.useParams();
+
+  const tabLabels = {
+    all: "Opportunities",
+    me: "My Opportunities",
+    saved: "Saved Opportunities",
+  };
   const queryClient = useQueryClient();
 
   const { data, isLoading, isError } = useQuery({
@@ -156,6 +166,20 @@ function ViewOpportunity() {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* Back Link */}
+      <div className="mx-auto max-w-7xl px-6 pt-6">
+        <nav className="mb-4 flex items-center font-medium text-gray-500 text-xs uppercase tracking-wider">
+          <Link
+            className="flex items-center transition-colors hover:text-red-600"
+            search={{ tab: search.tab }}
+            to="/opportunities"
+          >
+            <ArrowLeft className="mr-2 h-3 w-3" />
+            Back to {tabLabels[search.tab]}
+          </Link>
+        </nav>
+      </div>
+
       {/* Header */}
       <div className="border-gray-200 border-b bg-white">
         <div className="mx-auto max-w-7xl px-6 py-8">
@@ -245,7 +269,7 @@ function ViewOpportunity() {
                 {Math.floor(
                   (new Date().getTime() -
                     new Date(opportunity.createdDate || "").getTime()) /
-                    (1000 * 60 * 60 * 24)
+                  (1000 * 60 * 60 * 24)
                 )}{" "}
                 DAYS AGO
               </span>

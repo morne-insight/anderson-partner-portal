@@ -144,7 +144,7 @@ function CreateOpportunity() {
       return response;
     },
     onSuccess: () => {
-      router.navigate({ to: "/opportunities" });
+      router.navigate({ to: "/opportunities", search: { tab: "me" } });
     },
     onError: (err) => {
       console.error("Failed to create opportunity", err);

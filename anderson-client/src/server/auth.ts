@@ -1,9 +1,12 @@
 import { createServerFn } from "@tanstack/react-start";
 import {
   getApiUserDetail,
+  postApiAccountConfirmEmail,
+  postApiAccountForgotPassword,
   postApiAccountLogin,
   postApiAccountLogout,
   postApiAccountRegister,
+  postApiAccountResetPassword,
 } from "../api";
 import { useAppSession } from "../utils/session";
 
@@ -63,13 +66,18 @@ export const registerFn = createServerFn({ method: "POST" })
   )
   .handler(async ({ data }) => {
     try {
-      await postApiAccountRegister({
+      const response = await postApiAccountRegister({
         body: data,
       });
+
+      if(response.error){
+        return { success: false, error: response.error.errors?.[0] || "Registration failed" };
+      }
+
       return { success: true };
     } catch (error) {
       console.log(String(error));
-      return { error: "Registration failed" };
+      return { success: false, error: "Registration failed" };
     }
   });
 
@@ -109,3 +117,59 @@ export const getCurrentUserFn = createServerFn({ method: "GET" }).handler(
     };
   }
 );
+
+// Confirm user email
+export const confirmEmailfn = createServerFn({method: "POST"})
+.inputValidator(
+    (data: { userId: string; code: string; }) => data
+  )
+.handler(async ({data}) => {
+  try {
+    await postApiAccountConfirmEmail({
+      body: data,
+    });
+    return { success: true };
+  } catch (error) {
+    return { success: false, error: "Email confirmation failed" };
+  }
+});
+
+// Request a password reset
+export const forgotPasswordFn = createServerFn({method: "POST"})
+.inputValidator(
+  (data: { email: string; }) => data
+)
+.handler(async ({data}) => {
+try {
+  await postApiAccountForgotPassword({
+    body: data,
+  }); 
+
+  return { success: true };
+} catch (error) {
+    console.log(String(error));
+      return { success: false, error: "Password reset request failed" };
+}
+});
+
+// Reset the password
+export const resetPasswordFn = createServerFn({method: "POST"})
+.inputValidator(
+  (data: { email: string; newPassword: string; resetCode: string; }) => data
+)
+.handler(async ({data}) => {
+try {
+  const response = await postApiAccountResetPassword({
+    body: data,
+  }); 
+
+  if(response.error){
+    return { success: false, error: response.error.errors?.[0] || "Password reset failed" };
+  }
+
+  return { success: true };
+} catch (error) {
+    console.log(String(error));
+      return { success: false, error: "Password reset failed" };
+}
+});

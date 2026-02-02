@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import type React from "react";
 import { useAuth } from "../../contexts/auth-context";
+import insightLogo from "../../insight-mark-white.svg";
 
 interface SidebarProps {
   isAdmin?: boolean;
@@ -45,7 +46,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isAdmin }) => {
           ANDERSEN<span className="text-red-600">.</span>
         </h1>
         <p className="mt-2 text-[10px] text-gray-400 uppercase tracking-[0.2em]">
-          Partner Portal .v1
+          Partner Portal .v3
         </p>
       </div>
 
@@ -82,7 +83,17 @@ export const Sidebar: React.FC<SidebarProps> = ({ isAdmin }) => {
         </ul>
       </nav>
 
-      <div className="border-gray-800 border-t p-8">
+      <div className="flex justify-center p-4">
+        <span className="text-xs text-gray-400 mr-2">
+          Created by Insight Consulting
+        </span>
+        <img
+          alt="Insight Consutling Logo"
+          className="h-4 w-auto"
+          src={insightLogo}
+        />
+      </div>
+      <div className="border-gray-800 border-t p-6">
         {user && (
           <div className="flex flex-col gap-6">
             <div className="flex items-center gap-3">

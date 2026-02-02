@@ -30,6 +30,7 @@ import {
   setShowRegionDropdown,
   setShowServiceDropdown,
 } from "@/stores/partnersSearchStore";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/_app/partners/")({
   component: PartnerSearch,
@@ -120,6 +121,7 @@ function PartnerSearch() {
       setResults(transformed);
     } catch (error) {
       console.error("AI Search failed", error);
+      toast.error("AI Search failed");
     } finally {
       setIsSearching(false);
     }
@@ -249,7 +251,7 @@ function PartnerSearch() {
               onClick={() => setShowServiceDropdown(!showServiceDropdown)}
               type="button"
             >
-              Service: {selectedServiceType} <ChevronDown className="h-3 w-3" />
+              Service Type: {selectedServiceType} <ChevronDown className="h-3 w-3" />
             </button>
             {showServiceDropdown && (
               <div className="absolute top-full left-0 z-20 mt-1 w-56 overflow-hidden border border-gray-200 bg-white shadow-xl">

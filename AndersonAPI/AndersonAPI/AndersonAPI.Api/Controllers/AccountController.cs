@@ -26,18 +26,21 @@ namespace AndersonAPI.Api.Controllers
         private static readonly EmailAddressAttribute EmailAddressAttribute = new EmailAddressAttribute();
         private readonly IUserStore<ApplicationIdentityUser> _userStore;
         private readonly UserManager<ApplicationIdentityUser> _userManager;
+        private readonly RoleManager<IdentityRole<string>> _roleManager;
         private readonly ILogger<AccountController> _logger;
         private readonly IAccountEmailSender _accountEmailSender;
         private readonly ITokenService _tokenService;
 
         public AccountController(IUserStore<ApplicationIdentityUser> userStore,
             UserManager<ApplicationIdentityUser> userManager,
+            RoleManager<IdentityRole<string>> roleManager,  
             ILogger<AccountController> logger,
             IAccountEmailSender accountEmailSender,
             ITokenService tokenService)
         {
             _userStore = userStore;
             _userManager = userManager;
+            _roleManager = roleManager;
             _logger = logger;
             _accountEmailSender = accountEmailSender;
             _tokenService = tokenService;
@@ -68,6 +71,73 @@ namespace AndersonAPI.Api.Controllers
                 return BadRequest(ModelState);
             }
 
+            var user = new ApplicationIdentityUser { 
+                Id = Guid.NewGuid().ToString()
+            };
+
+            user.SetName(input.UserName);
+
+            await _userStore.SetUserNameAsync(user, input.Email, CancellationToken.None);
+            await _userManager.SetEmailAsync(user, input.Email);
+            var result = await _userManager.CreateAsync(user, input.Password!);
+
+            if (!result.Succeeded)
+            {
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("errors", error.Description);
+                }
+
+                return BadRequest(ModelState);
+            }
+
+            _logger.LogInformation("User created a new account with password.");
+
+            if (_userManager.Options.SignIn.RequireConfirmedAccount)
+            {
+                await SendConfirmationEmail(user);
+            }
+
+            return Ok();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [IntentManaged(Mode.Merge, Body = Mode.Ignore)]
+        public async Task<IActionResult> RegisterWithRole(RegisterWithRoleDto input)
+        {
+            if (string.IsNullOrWhiteSpace(input.Email))
+            {
+                ModelState.AddModelError<RegisterWithRoleDto>(x => x.Email, "Mandatory");
+            }
+
+            if (string.IsNullOrWhiteSpace(input.Password))
+            {
+                ModelState.AddModelError<RegisterWithRoleDto>(x => x.Password, "Mandatory");
+            }
+
+            if (string.IsNullOrWhiteSpace(input.UserName))
+            {
+                ModelState.AddModelError<RegisterWithRoleDto>(x => x.UserName, "Mandatory");
+            }
+            
+            if (string.IsNullOrWhiteSpace(input.Role))
+            {
+                ModelState.AddModelError<RegisterWithRoleDto>(x => x.Role, "Mandatory");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var roleExists = await _roleManager.RoleExistsAsync(input.Role!);
+            if (!roleExists)
+            {
+                ModelState.AddModelError<RegisterWithRoleDto>(x => x.Role, "Role does not exist.");
+                return BadRequest(ModelState);
+            }
+
             var user = new ApplicationIdentityUser { Id = Guid.NewGuid().ToString() };
             user.SetName(input.UserName);
 
@@ -84,6 +154,8 @@ namespace AndersonAPI.Api.Controllers
 
                 return BadRequest(ModelState);
             }
+            
+            await _userManager.AddToRoleAsync(user, input.Role!);
 
             _logger.LogInformation("User created a new account with password.");
 
@@ -93,6 +165,38 @@ namespace AndersonAPI.Api.Controllers
             }
 
             return Ok();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [IntentManaged(Mode.Merge, Body = Mode.Ignore)]
+        public async Task<ActionResult> CreateRole(RoleDto role)
+        {
+            if (string.IsNullOrEmpty(role.Name))
+            { 
+                return BadRequest("Role is required.");
+            }
+
+            if (_roleManager == null)
+            {
+                return StatusCode(500, "RoleManager service not available.");
+            }
+
+            if (await _roleManager.RoleExistsAsync(role.Name))
+            {
+                return Conflict($"Role '{role.Name}' already exists.");
+            }
+
+            // Create the role
+            var newRole = new IdentityRole<string>(role.Name);
+            newRole.Id = Guid.NewGuid().ToString();
+            var result = await _roleManager.CreateAsync(newRole);
+            if (!result.Succeeded)
+            {
+                return BadRequest(result.Errors.Select(e => e.Description));
+            }
+
+            return Ok($"Role '{newRole.Name}' created successfully.");
         }
 
         [HttpPost]
@@ -421,6 +525,19 @@ namespace AndersonAPI.Api.Controllers
         public string? Email { get; set; }
         public string? Password { get; set; }
         public string? UserName { get; set; }
+    }
+
+    public class RegisterWithRoleDto
+    {
+        public string? Email { get; set; }
+        public string? Password { get; set; }
+        public string? UserName { get; set; }
+        public string? Role { get; set; }
+    }
+    
+    public class RoleDto
+    {
+        public string? Name { get; set; }
     }
 
     public class LoginDto

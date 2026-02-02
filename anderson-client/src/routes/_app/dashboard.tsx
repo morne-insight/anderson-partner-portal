@@ -74,7 +74,7 @@ function Dashboard() {
           </div>
           <div className="mt-6 flex items-center font-medium text-green-700 text-xs uppercase tracking-wide">
             <ArrowUpRight className="mr-1 h-3 w-3" />
-            <span>12% growth this quarter</span>
+            {/* <span>12% growth this quarter</span> */}
           </div>
         </div>
 

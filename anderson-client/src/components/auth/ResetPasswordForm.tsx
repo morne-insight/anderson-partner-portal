@@ -1,28 +1,32 @@
 import { useForm } from "@tanstack/react-form";
-import { Link, useRouter } from "@tanstack/react-router";
+import { Link, useParams } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
 import { useState } from "react";
 import { z } from "zod";
-import { useAuth } from "../../contexts/auth-context";
-import { loginFn } from "../../server/auth";
+import { resetPasswordFn } from "../../server/auth";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 
-const loginSchema = z.object({
-  email: z.string().email("Invalid email address"),
-  password: z.string().min(6, "Password must be at least 6 characters"),
-});
+const resetPasswordSchema = z
+  .object({
+    email: z.string().email("Invalid email address"),
+    newPassword: z.string().min(6, "Password must be at least 6 characters"),
+    resetCode: z.string(),
+  });
 
-export function LoginForm() {
+export function ResetPasswordForm() {
+  const params = useParams({ from: "/reset-password/$email/$resetCode" });
   const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
-  const { refetch } = useAuth();
+  const resetPassword = useServerFn(resetPasswordFn);
 
   const form = useForm({
     defaultValues: {
-      email: "",
-      password: "",
+      email: params.email,
+      resetCode: params.resetCode,
+      newPassword: "",
     },
     onSubmit: async ({ value }) => {
       setError(null);
@@ -30,19 +34,21 @@ export function LoginForm() {
 
       try {
         // Validate with Zod before submitting
-        const validatedData = loginSchema.parse(value);
+        const validatedData = resetPasswordSchema.parse(value);
 
         // Call server function
-        const result = await loginFn({ data: validatedData });
+        const result = await resetPassword({
+          data: {
+            resetCode: validatedData.resetCode,
+            email: validatedData.email,
+            newPassword: validatedData.newPassword,
+          },
+        });
 
-        // Handle the response
         if (result?.error) {
           setError(result.error);
-        } else if (result?.success) {
-          // Refetch auth context to update Header
-          await refetch();
-          // Navigate to dashboard on successful login
-          router.navigate({ to: "/dashboard" });
+        } else {
+          setSuccess(true);
         }
       } catch (validationError) {
         if (validationError instanceof z.ZodError) {
@@ -55,6 +61,22 @@ export function LoginForm() {
       }
     },
   });
+
+  if (success) {
+    return (
+      <div className="mx-auto max-w-md space-y-6 text-center">
+        <div className="rounded-md bg-green-50 p-4 text-green-700">
+          Password reset successful! You can sign in with your credentials.
+        </div>
+        <Link
+          className="font-medium text-[#DB0A20] hover:underline"
+          to="/login"
+        >
+          Go to Sign In
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <div className="mx-auto max-w-md space-y-6">
@@ -73,37 +95,7 @@ export function LoginForm() {
         }}
       >
         <form.Field
-          name="email"
-          validators={{
-            onChange: ({ value }) => {
-              const result = z.string().email().safeParse(value);
-              return result.success ? undefined : "Invalid email address";
-            },
-          }}
-        >
-          {(field) => (
-            <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                onBlur={field.handleBlur}
-                onChange={(e) => field.handleChange(e.target.value)}
-                placeholder="Enter your email"
-                type="email"
-                value={field.state.value}
-              />
-              {field.state.meta.errors &&
-                field.state.meta.errors.length > 0 && (
-                  <p className="text-red-600 text-sm">
-                    {field.state.meta.errors[0]}
-                  </p>
-                )}
-            </div>
-          )}
-        </form.Field>
-
-        <form.Field
-          name="password"
+          name="newPassword"
           validators={{
             onChange: ({ value }) => {
               const result = z.string().min(6).safeParse(value);
@@ -115,12 +107,12 @@ export function LoginForm() {
         >
           {(field) => (
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password">New Password</Label>
               <Input
                 id="password"
                 onBlur={field.handleBlur}
                 onChange={(e) => field.handleChange(e.target.value)}
-                placeholder="Enter your password"
+                placeholder="Enter your new password"
                 type="password"
                 value={field.state.value}
               />
@@ -139,26 +131,17 @@ export function LoginForm() {
           disabled={isLoading}
           type="submit"
         >
-          {isLoading ? "Signing In..." : "Sign In"}
+          {isLoading ? "Resetting Password..." : "Reset Password"}
         </Button>
       </form>
 
       <p className="text-center text-sm">
-        Forgot your password?{" "}
-        <Link
-          className="font-medium text-gray-600 hover:underline"
-          to="/forgot-password"
-        >
-          Reset Password
-        </Link>
-      </p>
-      <p className="text-center text-sm">
-        Don't have an account?{" "}
+        Already have an account?{" "}
         <Link
           className="font-medium text-[#DB0A20] hover:underline"
-          to="/register"
+          to="/login"
         >
-          Sign up
+          Sign in
         </Link>
       </p>
     </div>

@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as DevRouteImport } from './routes/dev'
 import { Route as AppRouteImport } from './routes/_app'
 import { Route as IndexRouteImport } from './routes/index'
@@ -20,6 +21,8 @@ import { Route as AppProfileIndexRouteImport } from './routes/_app/profile/index
 import { Route as AppPartnersIndexRouteImport } from './routes/_app/partners.index'
 import { Route as AppOpportunitiesIndexRouteImport } from './routes/_app/opportunities/index'
 import { Route as AppFooIndexRouteImport } from './routes/_app/foo/index'
+import { Route as ResetPasswordEmailResetCodeRouteImport } from './routes/reset-password.$email.$resetCode'
+import { Route as ConfirmEmailUserIdCodeRouteImport } from './routes/confirm-email.$userId.$code'
 import { Route as AppPartnersIdRouteImport } from './routes/_app/partners.$id'
 import { Route as AppOpportunitiesNewRouteImport } from './routes/_app/opportunities/new'
 import { Route as AppProfileCompanyIdIndexRouteImport } from './routes/_app/profile/$companyId/index'
@@ -41,6 +44,11 @@ const RegisterRoute = RegisterRouteImport.update({
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
+  id: '/forgot-password',
+  path: '/forgot-password',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DevRoute = DevRouteImport.update({
@@ -86,6 +94,17 @@ const AppFooIndexRoute = AppFooIndexRouteImport.update({
   id: '/foo/',
   path: '/foo/',
   getParentRoute: () => AppRoute,
+} as any)
+const ResetPasswordEmailResetCodeRoute =
+  ResetPasswordEmailResetCodeRouteImport.update({
+    id: '/reset-password/$email/$resetCode',
+    path: '/reset-password/$email/$resetCode',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ConfirmEmailUserIdCodeRoute = ConfirmEmailUserIdCodeRouteImport.update({
+  id: '/confirm-email/$userId/$code',
+  path: '/confirm-email/$userId/$code',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AppPartnersIdRoute = AppPartnersIdRouteImport.update({
   id: '/partners/$id',
@@ -159,12 +178,15 @@ const AppProfileCompanyIdReportsReportIdEditRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/dev': typeof DevRoute
+  '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/dashboard': typeof AppDashboardRoute
   '/directory': typeof AppDirectoryRoute
   '/opportunities/new': typeof AppOpportunitiesNewRoute
   '/partners/$id': typeof AppPartnersIdRoute
+  '/confirm-email/$userId/$code': typeof ConfirmEmailUserIdCodeRoute
+  '/reset-password/$email/$resetCode': typeof ResetPasswordEmailResetCodeRoute
   '/foo': typeof AppFooIndexRoute
   '/opportunities': typeof AppOpportunitiesIndexRoute
   '/partners': typeof AppPartnersIndexRoute
@@ -183,12 +205,15 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/dev': typeof DevRoute
+  '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/dashboard': typeof AppDashboardRoute
   '/directory': typeof AppDirectoryRoute
   '/opportunities/new': typeof AppOpportunitiesNewRoute
   '/partners/$id': typeof AppPartnersIdRoute
+  '/confirm-email/$userId/$code': typeof ConfirmEmailUserIdCodeRoute
+  '/reset-password/$email/$resetCode': typeof ResetPasswordEmailResetCodeRoute
   '/foo': typeof AppFooIndexRoute
   '/opportunities': typeof AppOpportunitiesIndexRoute
   '/partners': typeof AppPartnersIndexRoute
@@ -209,12 +234,15 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_app': typeof AppRouteWithChildren
   '/dev': typeof DevRoute
+  '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/_app/dashboard': typeof AppDashboardRoute
   '/_app/directory': typeof AppDirectoryRoute
   '/_app/opportunities/new': typeof AppOpportunitiesNewRoute
   '/_app/partners/$id': typeof AppPartnersIdRoute
+  '/confirm-email/$userId/$code': typeof ConfirmEmailUserIdCodeRoute
+  '/reset-password/$email/$resetCode': typeof ResetPasswordEmailResetCodeRoute
   '/_app/foo/': typeof AppFooIndexRoute
   '/_app/opportunities/': typeof AppOpportunitiesIndexRoute
   '/_app/partners/': typeof AppPartnersIndexRoute
@@ -235,12 +263,15 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/dev'
+    | '/forgot-password'
     | '/login'
     | '/register'
     | '/dashboard'
     | '/directory'
     | '/opportunities/new'
     | '/partners/$id'
+    | '/confirm-email/$userId/$code'
+    | '/reset-password/$email/$resetCode'
     | '/foo'
     | '/opportunities'
     | '/partners'
@@ -259,12 +290,15 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/dev'
+    | '/forgot-password'
     | '/login'
     | '/register'
     | '/dashboard'
     | '/directory'
     | '/opportunities/new'
     | '/partners/$id'
+    | '/confirm-email/$userId/$code'
+    | '/reset-password/$email/$resetCode'
     | '/foo'
     | '/opportunities'
     | '/partners'
@@ -284,12 +318,15 @@ export interface FileRouteTypes {
     | '/'
     | '/_app'
     | '/dev'
+    | '/forgot-password'
     | '/login'
     | '/register'
     | '/_app/dashboard'
     | '/_app/directory'
     | '/_app/opportunities/new'
     | '/_app/partners/$id'
+    | '/confirm-email/$userId/$code'
+    | '/reset-password/$email/$resetCode'
     | '/_app/foo/'
     | '/_app/opportunities/'
     | '/_app/partners/'
@@ -310,8 +347,11 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AppRoute: typeof AppRouteWithChildren
   DevRoute: typeof DevRoute
+  ForgotPasswordRoute: typeof ForgotPasswordRoute
   LoginRoute: typeof LoginRoute
   RegisterRoute: typeof RegisterRoute
+  ConfirmEmailUserIdCodeRoute: typeof ConfirmEmailUserIdCodeRoute
+  ResetPasswordEmailResetCodeRoute: typeof ResetPasswordEmailResetCodeRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -328,6 +368,13 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/forgot-password': {
+      id: '/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/forgot-password'
+      preLoaderRoute: typeof ForgotPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/dev': {
@@ -392,6 +439,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/foo'
       preLoaderRoute: typeof AppFooIndexRouteImport
       parentRoute: typeof AppRoute
+    }
+    '/reset-password/$email/$resetCode': {
+      id: '/reset-password/$email/$resetCode'
+      path: '/reset-password/$email/$resetCode'
+      fullPath: '/reset-password/$email/$resetCode'
+      preLoaderRoute: typeof ResetPasswordEmailResetCodeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/confirm-email/$userId/$code': {
+      id: '/confirm-email/$userId/$code'
+      path: '/confirm-email/$userId/$code'
+      fullPath: '/confirm-email/$userId/$code'
+      preLoaderRoute: typeof ConfirmEmailUserIdCodeRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/_app/partners/$id': {
       id: '/_app/partners/$id'
@@ -532,8 +593,11 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AppRoute: AppRouteWithChildren,
   DevRoute: DevRoute,
+  ForgotPasswordRoute: ForgotPasswordRoute,
   LoginRoute: LoginRoute,
   RegisterRoute: RegisterRoute,
+  ConfirmEmailUserIdCodeRoute: ConfirmEmailUserIdCodeRoute,
+  ResetPasswordEmailResetCodeRoute: ResetPasswordEmailResetCodeRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

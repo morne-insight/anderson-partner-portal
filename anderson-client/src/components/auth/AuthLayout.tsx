@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import logo from "../../logo.svg";
+import logo from "../../logo.png";
 
 interface AuthLayoutProps {
   children: ReactNode;
@@ -30,22 +30,27 @@ export function AuthLayout({ children, title, subtitle }: AuthLayoutProps) {
             className="mb-6 font-medium text-5xl text-white leading-tight"
             style={{ fontFamily: '"Playfair Display", serif' }}
           >
-            Experience the Future of Business Insight
+            Connecting Andersen Firms. Enabling Better Outcomes.
           </h1>
-          <p className="font-light text-[#9CA3AF] text-lg leading-relaxed">
-            Anderson provides the tools you need to analyze, understand, and
-            grow your business with confidence.
+          <p className="font-light text-[#9CA3AF] text-md leading-relaxed">
+            The Andersen Partner Portal is your gateway to collaboration across the Andersen network.
+          </p>
+          <p className="font-light text-[#9CA3AF] text-md leading-relaxed">
+            &nbsp;
+          </p>
+          <p className="font-light text-[#9CA3AF] text-md leading-relaxed">
+            Search for firms by capability and industry expertise, explore and respond to opportunities, keep your firm profile up to date, and submit required reports, all through a single, secure platform designed to support how Andersen firms work together.
           </p>
         </div>
 
         <div className="relative z-10 flex items-center gap-6 text-[#6B7280] text-sm">
-          <span>© {new Date().getFullYear()} Anderson Inc.</span>
-          <a className="transition-colors hover:text-white" href="#">
+          <span>© {new Date().getFullYear()} Insight Consulting.</span>
+          {/* <a className="transition-colors hover:text-white" href="#">
             Privacy Policy
           </a>
           <a className="transition-colors hover:text-white" href="#">
             Terms of Service
-          </a>
+          </a> */}
         </div>
       </div>
 

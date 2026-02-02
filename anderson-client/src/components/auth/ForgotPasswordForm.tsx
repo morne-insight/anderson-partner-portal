@@ -2,27 +2,23 @@ import { useForm } from "@tanstack/react-form";
 import { Link, useRouter } from "@tanstack/react-router";
 import { useState } from "react";
 import { z } from "zod";
-import { useAuth } from "../../contexts/auth-context";
-import { loginFn } from "../../server/auth";
+import { forgotPasswordFn } from "../../server/auth";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 
 const loginSchema = z.object({
   email: z.string().email("Invalid email address"),
-  password: z.string().min(6, "Password must be at least 6 characters"),
 });
 
-export function LoginForm() {
+export function ForgotPasswordForm() {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
-  const { refetch } = useAuth();
+  const [success, setSuccess] = useState(false);
 
   const form = useForm({
     defaultValues: {
       email: "",
-      password: "",
     },
     onSubmit: async ({ value }) => {
       setError(null);
@@ -33,16 +29,13 @@ export function LoginForm() {
         const validatedData = loginSchema.parse(value);
 
         // Call server function
-        const result = await loginFn({ data: validatedData });
+        const result = await forgotPasswordFn({ data: validatedData });
 
         // Handle the response
         if (result?.error) {
           setError(result.error);
         } else if (result?.success) {
-          // Refetch auth context to update Header
-          await refetch();
-          // Navigate to dashboard on successful login
-          router.navigate({ to: "/dashboard" });
+          setSuccess(true);
         }
       } catch (validationError) {
         if (validationError instanceof z.ZodError) {
@@ -55,6 +48,22 @@ export function LoginForm() {
       }
     },
   });
+
+  if (success) {
+    return (
+      <div className="mx-auto max-w-md space-y-6 text-center">
+        <div className="rounded-md bg-green-50 p-4 text-green-700">
+          Password reset request successful! Check your email for a reset link
+        </div>
+        <Link
+          className="font-medium text-[#DB0A20] hover:underline"
+          to="/login"
+        >
+          Go to Sign In
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <div className="mx-auto max-w-md space-y-6">
@@ -102,56 +111,15 @@ export function LoginForm() {
           )}
         </form.Field>
 
-        <form.Field
-          name="password"
-          validators={{
-            onChange: ({ value }) => {
-              const result = z.string().min(6).safeParse(value);
-              return result.success
-                ? undefined
-                : "Password must be at least 6 characters";
-            },
-          }}
-        >
-          {(field) => (
-            <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
-              <Input
-                id="password"
-                onBlur={field.handleBlur}
-                onChange={(e) => field.handleChange(e.target.value)}
-                placeholder="Enter your password"
-                type="password"
-                value={field.state.value}
-              />
-              {field.state.meta.errors &&
-                field.state.meta.errors.length > 0 && (
-                  <p className="text-red-600 text-sm">
-                    {field.state.meta.errors[0]}
-                  </p>
-                )}
-            </div>
-          )}
-        </form.Field>
-
         <Button
           className="w-full bg-[#DB0A20] text-white hover:bg-[#b0081a]"
           disabled={isLoading}
           type="submit"
         >
-          {isLoading ? "Signing In..." : "Sign In"}
+          {isLoading ? "Requesting..." : "Request"}
         </Button>
       </form>
 
-      <p className="text-center text-sm">
-        Forgot your password?{" "}
-        <Link
-          className="font-medium text-gray-600 hover:underline"
-          to="/forgot-password"
-        >
-          Reset Password
-        </Link>
-      </p>
       <p className="text-center text-sm">
         Don't have an account?{" "}
         <Link

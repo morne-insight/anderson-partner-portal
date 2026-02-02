@@ -9,7 +9,7 @@ import {
   Loader2,
   MapPin,
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ConnectRequestDialog } from "@/components/ConnectRequestDialog";
 import { OpportunityMessages } from "@/components/OpportunityMessages";
 import { Button } from "@/components/ui/button";
@@ -22,10 +22,22 @@ import { callApi } from "@/server/proxy";
 
 export const Route = createFileRoute("/_app/opportunities/")({
   component: Opportunities,
+  validateSearch: (search: Record<string, unknown>) => ({
+    tab: (search.tab as "all" | "me" | "saved") || undefined,
+  }),
 });
 
 function Opportunities() {
-  const [activeTab, setActiveTab] = useState<"all" | "me" | "saved">("all");
+  const search = Route.useSearch();
+  const [activeTab, setActiveTab] = useState<"all" | "me" | "saved">(
+    search.tab || "all"
+  );
+
+  useEffect(() => {
+    if (search.tab && search.tab !== activeTab) {
+      setActiveTab(search.tab);
+    }
+  }, [search.tab]);
   const [expandedOpportunities, setExpandedOpportunities] = useState<
     Set<string>
   >(new Set());
@@ -194,6 +206,7 @@ function Opportunities() {
                   <Link
                     className="group block"
                     params={{ opportunityId: opp.id! }}
+                    search={{ tab: activeTab }}
                     to="/opportunities/$opportunityId"
                   >
                     <h3 className="mb-4 cursor-pointer text-left font-serif text-3xl text-black transition-colors group-hover:text-red-600">
@@ -237,14 +250,6 @@ function Opportunities() {
                     <div>
                       {activeTab === "me" ? (
                         <div className="flex items-center gap-4">
-                          <Link
-                            className="flex items-center font-bold text-red-600 text-xs uppercase tracking-[0.15em] transition-colors hover:text-red-800"
-                            params={{ opportunityId: opp.id! }}
-                            to="/opportunities/$opportunityId/edit"
-                          >
-                            Edit Opportunity{" "}
-                            <ArrowRight className="ml-2 h-4 w-4" />
-                          </Link>
                           <CollapsibleTrigger asChild>
                             <Button
                               className="border-gray-300 font-bold text-xs uppercase tracking-[0.15em] hover:border-gray-400"
@@ -264,6 +269,14 @@ function Opportunities() {
                               )}
                             </Button>
                           </CollapsibleTrigger>
+                          <Link
+                            className="flex items-center font-bold text-red-600 text-xs uppercase tracking-[0.15em] transition-colors hover:text-red-800"
+                            params={{ opportunityId: opp.id! }}
+                            to="/opportunities/$opportunityId/edit"
+                          >
+                            Edit Opportunity{" "}
+                            <ArrowRight className="ml-2 h-4 w-4" />
+                          </Link>
                         </div>
                       ) : (
                         <div className="flex items-center gap-6">
@@ -296,6 +309,7 @@ function Opportunities() {
                           <Link
                             className="flex items-center font-bold text-red-600 text-xs uppercase tracking-[0.15em] transition-colors hover:text-red-800"
                             params={{ opportunityId: opp.id! }}
+                            search={{ tab: activeTab }}
                             to="/opportunities/$opportunityId"
                           >
                             View Details <ArrowRight className="ml-2 h-4 w-4" />
