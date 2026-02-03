@@ -120,7 +120,7 @@ function Dashboard() {
         {/* Service Type Distribution */}
         <div className="border border-gray-200 bg-white p-8 shadow-sm">
           <h3 className="mb-8 border-gray-100 border-b pb-4 font-serif text-black text-xl">
-            Partners by Service Type
+            Partners by Service Line
           </h3>
           <div className="h-72 w-full">
             <ResponsiveContainer height="100%" width="100%">

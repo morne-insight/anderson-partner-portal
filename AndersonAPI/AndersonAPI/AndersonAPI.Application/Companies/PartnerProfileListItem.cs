@@ -14,6 +14,7 @@ namespace AndersonAPI.Application.Companies
             Capabilities = null!;
             Locations = null!;
             Contacts = null!;
+            ServiceTypeName = null!;
         }
 
         public Guid Id { get; set; }
@@ -23,6 +24,8 @@ namespace AndersonAPI.Application.Companies
         public List<PartnerLocationDto> Locations { get; set; }
         public List<PartnerContactDto> Contacts { get; set; }
         public double MatchScore { get; set; }
+        public Guid? ServiceTypeId { get; set; }
+        public string ServiceTypeName { get; set; }
 
         public static PartnerProfileListItem Create(
             Guid id,
@@ -31,7 +34,9 @@ namespace AndersonAPI.Application.Companies
             List<PartnerCapabilityDto> capabilities,
             List<PartnerLocationDto> locations,
             List<PartnerContactDto> contacts,
-            double matchScore)
+            double matchScore,
+            Guid? serviceTypeId,
+            string serviceTypeName)
         {
             return new PartnerProfileListItem
             {
@@ -41,7 +46,9 @@ namespace AndersonAPI.Application.Companies
                 Capabilities = capabilities,
                 Locations = locations,
                 Contacts = contacts,
-                MatchScore = matchScore
+                MatchScore = matchScore,
+                ServiceTypeId = serviceTypeId,
+                ServiceTypeName = serviceTypeName
             };
         }
     }

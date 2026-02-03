@@ -78,7 +78,7 @@ export const MOCK_PARTNERS: Partner[] = [
     website: "https://www.insightconsulting.co.za",
     description:
       "Leading data analytics and business intelligence firm specializing in Qlik and Snowflake implementations.",
-    serviceType: "Advisory",
+    serviceType: "Consulting",
     skills: ["Qlik", "Snowflake", "Data Engineering", "Azure", "PowerBI"],
     industries: ["Retail", "Financial Services", "Manufacturing"],
     certifications: ["Qlik Elite Partner", "Microsoft Gold Data Analytics"],
@@ -134,7 +134,7 @@ export const MOCK_PARTNERS: Partner[] = [
     website: "https://nordictech.example.com",
     description:
       "Specialists in cloud infrastructure migration and sustainable IT solutions.",
-    serviceType: "IT Consulting",
+    serviceType: "Consulting",
     skills: ["AWS", "GCP", "Green IT", "Kubernetes", "DevOps"],
     industries: ["Energy", "Public Sector"],
     certifications: ["AWS Premier Partner", "ISO 14001"],
@@ -179,7 +179,7 @@ export const MOCK_PARTNERS: Partner[] = [
     website: "https://latamfin.example.com",
     description:
       "Digital transformation experts focused on banking modernization and blockchain.",
-    serviceType: "Financial Law",
+    serviceType: "Tax",
     skills: ["Blockchain", "Java", "React", "Cybersecurity", "FinTech"],
     industries: ["Banking", "Insurance"],
     certifications: ["PCI DSS Compliant"],
@@ -218,7 +218,7 @@ export const MOCK_PARTNERS: Partner[] = [
     website: "https://apaclogistics.example.com",
     description:
       "AI-driven supply chain optimization and predictive maintenance.",
-    serviceType: "Supply Chain Advisory",
+    serviceType: "Valuation",
     skills: ["Python", "TensorFlow", "Supply Chain", "IoT"],
     industries: ["Logistics", "Automotive"],
     certifications: ["Google AI Partner"],
@@ -256,7 +256,7 @@ export const MOCK_PARTNERS: Partner[] = [
     website: "https://eurostrat.example.com",
     description:
       "Strategic management consulting with a focus on digital change management.",
-    serviceType: "Tax Consulting",
+    serviceType: "Legal",
     skills: ["Change Management", "Strategy", "SAP", "Project Management"],
     industries: ["Automotive", "Pharmaceuticals"],
     certifications: ["SAP Gold Partner"],

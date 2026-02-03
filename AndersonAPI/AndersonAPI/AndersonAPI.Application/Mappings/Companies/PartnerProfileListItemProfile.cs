@@ -14,7 +14,8 @@ namespace AndersonAPI.Application.Companies
             CreateMap<Company, PartnerProfileListItem>()
                 .ForMember(d => d.Capabilities, opt => opt.MapFrom(src => src.Capabilities))
                 .ForMember(d => d.Locations, opt => opt.MapFrom(src => src.Locations.Where(l => l.IsHeadOffice)))
-                .ForMember(d => d.Contacts, opt => opt.MapFrom(src => src.Contacts));
+                .ForMember(d => d.Contacts, opt => opt.MapFrom(src => src.Contacts))
+                .ForMember(d => d.ServiceTypeName, opt => opt.MapFrom(src => src.ServiceType != null ? src.ServiceType!.Name : null));
         }
     }
 

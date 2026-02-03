@@ -14,12 +14,12 @@
     <file>
       <correlationId>Intent.AspNetCore.Identity.AccountController.AccountController#0d6d45f7-7869-4975-9dad-9730556c530f</correlationId>
       <path>AndersonAPI.Api/Controllers/AccountController.cs</path>
-      <count>6</count>
+      <count>8</count>
       <updatedByAccountName>mvanzyl@insightconsulting.co.za</updatedByAccountName>
       <updatedByDisplayName>Morne</updatedByDisplayName>
-      <updatedAt>2026-01-24T14:12:22.2006014Z</updatedAt>
-      <deviationsHash>ADCE3060A09A958C5F6EC75450CA997AB59699B7AEA3B7D13E8D8ECADFDA4474</deviationsHash>
-      <fileHash>6DDBA6FE01E1DEFF010487F1ED0ED2DF56D79B7C6498F227ED53004A21806359</fileHash>
+      <updatedAt>2026-02-03T10:17:08.8780432Z</updatedAt>
+      <deviationsHash>338AB258FAF76FD586E455E668681B15AC2F75FB79076B849987AB3DE2D0ECB8</deviationsHash>
+      <fileHash>F6F7AADC73BD724ABC1292560312EABC5DCB5C6C2171C9145CF3361FC964A641</fileHash>
     </file>
     <file>
       <correlationId>Intent.AspNetCore.Controllers.Controller#ece70b3a-0c7e-4f50-80e2-b00c3d541e46</correlationId>
@@ -39,7 +39,7 @@
       <updatedByDisplayName>Morne</updatedByDisplayName>
       <updatedAt>2026-01-12T11:51:01.6875522Z</updatedAt>
       <deviationsHash>0244571007F30608A80A366537EAEF4D158E4B558B88728B05259E2C42AFFC99</deviationsHash>
-      <fileHash>0A341DD0C6FC707113A57B7440727C9B442CE7D5634E0A526220FC10855FB85E</fileHash>
+      <fileHash>6B450561C566958A1F51385E2D7871DD1CC17BF594514FC2B8074FC2B072FE85</fileHash>
     </file>
     <file>
       <correlationId>Intent.Application.MediatR.CommandHandler#2400c0e2-b244-4543-b021-0a36b496cc5e</correlationId>

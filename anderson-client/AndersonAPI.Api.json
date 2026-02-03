@@ -15122,6 +15122,14 @@
           "matchScore": {
             "type": "number",
             "format": "double"
+          },
+          "serviceTypeId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "serviceTypeName": {
+            "type": "string"
           }
         }
       },

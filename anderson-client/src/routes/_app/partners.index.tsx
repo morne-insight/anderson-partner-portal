@@ -38,7 +38,7 @@ export const Route = createFileRoute("/_app/partners/")({
 
 function PartnerSearch() {
   const navigate = useNavigate();
-  const { countries, regions, isLoading, isError } = usePrefetchReferenceData();
+  const { serviceTypes, countries, regions, isLoading, isError } = usePrefetchReferenceData();
 
   const searchState = useStore(partnersSearchStore);
   const {
@@ -56,24 +56,18 @@ function PartnerSearch() {
     showCountryDropdown,
   } = searchState;
 
-  const allServiceTypes = [
-    "Advisory",
-    "Tax Consulting",
-    "IT Consulting",
-    "Financial Law",
-    "Supply Chain Advisory",
-  ];
-  const allRegions = regions.data?.map((r: any) => r.name).sort();
+  const allServiceTypes = serviceTypes.data?.map((s) => s.name).sort();
+  const allRegions = regions.data?.map((r) => r.name).sort();
 
   const availableCountries = React.useMemo(() => {
     if (activeRegionFilter === "All")
-      return countries.data?.map((c: any) => c.name).sort();
+      return countries.data?.map((c) => c.name).sort();
     const regionId = regions.data?.find(
-      (r: any) => r.name === activeRegionFilter
+      (r) => r.name === activeRegionFilter
     )?.id;
     return countries.data
-      ?.filter((c: any) => c.regionId === regionId)
-      .map((c: any) => c.name)
+      ?.filter((c) => c.regionId === regionId)
+      .map((c) => c.name)
       .sort();
   }, [activeRegionFilter, countries, regions]);
 
@@ -98,11 +92,11 @@ function PartnerSearch() {
           matchScore: partner.matchScore ? Math.round(partner.matchScore) : 85,
           skills: partner.capabilities?.map((c: any) => c.name) || [],
           verified: true, // Default to true for AI results in this UI
-          serviceType: "Partner", // Generic since list view doesnt have it
+          serviceType: partner.serviceTypeName || "Unknown",
           locations:
             partner.locations?.map((l: any) => ({
               country:
-                countries?.data?.find((c: any) => c.id === l.countryId)?.name ||
+                countries?.data?.find((c) => c.id === l.countryId)?.name ||
                 "Unknown",
               region:
                 regions?.data?.find((r: any) => r.id === l.regionId)?.name ||
@@ -251,7 +245,7 @@ function PartnerSearch() {
               onClick={() => setShowServiceDropdown(!showServiceDropdown)}
               type="button"
             >
-              Service Type: {selectedServiceType} <ChevronDown className="h-3 w-3" />
+              Service Line: {selectedServiceType} <ChevronDown className="h-3 w-3" />
             </button>
             {showServiceDropdown && (
               <div className="absolute top-full left-0 z-20 mt-1 w-56 overflow-hidden border border-gray-200 bg-white shadow-xl">
@@ -265,7 +259,7 @@ function PartnerSearch() {
                 >
                   All Services
                 </button>
-                {allServiceTypes.map((type) => (
+                {allServiceTypes?.map((type: any) => (
                   <button
                     className="w-full border-b px-4 py-3 text-left text-xs last:border-0 hover:bg-gray-50"
                     key={type}
@@ -375,7 +369,7 @@ function PartnerSearch() {
 
       {/* Region Tabs */}
       <div className="no-scrollbar flex gap-8 overflow-x-auto border-gray-200 border-b pb-0">
-        {["All", ...(allRegions || [])].map((region) => (
+        {["All", ...(allRegions || [])].map((region: any) => (
           <button
             className={`whitespace-nowrap border-b-2 pb-4 font-bold text-xs uppercase tracking-widest transition-colors ${activeRegionFilter === region
               ? "border-red-600 text-red-600"
