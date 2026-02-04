@@ -31,7 +31,6 @@ import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import z from "zod";
 import type {
-  CapabilityDto,
   CompanyContactDto,
   CompanyProfileDto,
   UpdateCompanyCommand,
@@ -47,20 +46,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import {
-  Combobox,
-  ComboboxChip,
-  ComboboxChipRemove,
-  ComboboxChips,
-  ComboboxContent,
-  ComboboxControl,
-  ComboboxEmpty,
-  ComboboxInput,
-  ComboboxItem,
-  ComboboxItemIndicator,
-  ComboboxList,
-  ComboboxValue,
-} from "@/components/ui/base-combobox";
+import { MultiSelectCombobox } from "@/components/ui/multi-select-combobox";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -243,10 +229,6 @@ function ProfileEdit() {
     initialCompany?.industries?.map((c) => c.id!).filter(Boolean) || []
   );
 
-  // Input tracking for "create new" functionality
-  const [capabilityInput, setCapabilityInput] = useState("");
-  const [industryInput, setIndustryInput] = useState("");
-
   // Create capability mutation
   const createCapabilityMutation = useMutation({
     mutationFn: async (name: string) => {
@@ -266,7 +248,6 @@ function ProfileEdit() {
       if (response.data) {
         setSelectedCapabilityIds((prev) => [...prev, response.data!]);
       }
-      setCapabilityInput("");
       toast.success("Capability created successfully");
     },
     onError: (err) => {
@@ -294,7 +275,6 @@ function ProfileEdit() {
       if (response.data) {
         setSelectedIndustryIds((prev) => [...prev, response.data!]);
       }
-      setIndustryInput("");
       toast.success("Industry created successfully");
     },
     onError: (err) => {
@@ -1545,84 +1525,20 @@ function ProfileEdit() {
               <Briefcase className="h-4 w-4" /> Core Skills
             </h3>
             <div className="border border-gray-200 bg-white p-6 pt-4 shadow-sm">
-              <Combobox
+              <MultiSelectCombobox
+                chipClassName="rounded-none border border-black bg-black px-3 py-1.5 font-bold text-[10px] text-white uppercase tracking-wider transition-all"
+                createButtonClassName="flex w-full items-center gap-2 px-2 py-2 text-left text-sm text-black hover:bg-gray-100"
+                emptyMessage="No capabilities found."
+                getItemLabel={(cap) => cap.name || ""}
+                helperText="Select all that apply to your firm."
+                isCreating={createCapabilityMutation.isPending}
                 items={capabilities || []}
-                multiple
-                onInputValueChange={(value) => setCapabilityInput(value)}
-                onValueChange={(value: unknown) => {
-                  const selectedCapabilities = value as CapabilityDto[];
-                  setSelectedCapabilityIds(
-                    selectedCapabilities.map((cap) => cap.id as string)
-                  );
-                }}
-                value={
-                  capabilities?.filter((cap) =>
-                    selectedCapabilityIds.includes(cap.id)
-                  ) || []
-                }
-              >
-                <ComboboxChips className="mb-4 border-0 p-0 shadow-none">
-                  <ComboboxValue>
-                    {(value: CapabilityDto[]) => (
-                      <>
-                        {value.length === 0 && (
-                          <p className="my-2 text-gray-400 text-xs italic">
-                            No capabilities selected.
-                          </p>
-                        )}
-                        {value.map((capability) => (
-                          <ComboboxChip
-                            aria-label={capability.name}
-                            className="rounded-none border border-black bg-black px-3 py-1.5 font-bold text-[10px] text-white uppercase tracking-wider transition-all"
-                            key={capability.id}
-                          >
-                            {capability.name}
-                            <ComboboxChipRemove />
-                          </ComboboxChip>
-                        ))}
-                      </>
-                    )}
-                  </ComboboxValue>
-                </ComboboxChips>
-
-                <p className="my-2 text-gray-400 text-xs italic">
-                  Select all that apply to your firm.
-                </p>
-                <ComboboxControl>
-                  <ComboboxValue>
-                    <ComboboxInput placeholder="Search and select capabilities..." />
-                  </ComboboxValue>
-                </ComboboxControl>
-
-                <ComboboxContent>
-                  <ComboboxEmpty>No capabilities found.</ComboboxEmpty>
-                  <ComboboxList>
-                    {(capability: CapabilityDto) => (
-                      <ComboboxItem key={capability.id} value={capability}>
-                        <ComboboxItemIndicator />
-                        <div className="col-start-2">{capability.name}</div>
-                      </ComboboxItem>
-                    )}
-                  </ComboboxList>
-                  {capabilityInput.trim() &&
-                    !capabilities?.some(
-                      (cap: CapabilityDto) =>
-                        cap.name?.toLowerCase() === capabilityInput.toLowerCase()
-                    ) && (
-                      <button
-                        className="flex w-full items-center gap-2 px-2 py-2 text-left text-sm text-black hover:bg-gray-100"
-                        disabled={createCapabilityMutation.isPending}
-                        onClick={() => createCapabilityMutation.mutate(capabilityInput.trim())}
-                        type="button"
-                      >
-                        <Plus className="h-4 w-4" />
-                        {createCapabilityMutation.isPending
-                          ? "Creating..."
-                          : `Create "${capabilityInput.trim()}"`}
-                      </button>
-                    )}
-                </ComboboxContent>
-              </Combobox>
+                noSelectionMessage="No capabilities selected."
+                onCreateNew={(name) => createCapabilityMutation.mutate(name)}
+                onSelectionChange={setSelectedCapabilityIds}
+                placeholder="Search and select capabilities..."
+                selectedIds={selectedCapabilityIds}
+              />
             </div>
           </section>
 
@@ -1632,84 +1548,20 @@ function ProfileEdit() {
               <Building className="h-4 w-4" /> Primary Industries
             </h3>
             <div className="border border-gray-200 bg-white p-6 shadow-sm">
-              <Combobox
+              <MultiSelectCombobox
+                chipClassName="rounded-none border border-red-600 bg-red-600 px-3 py-1.5 font-bold text-[10px] text-white uppercase tracking-wider transition-all"
+                createButtonClassName="flex w-full items-center gap-2 px-2 py-2 text-left text-sm text-red-600 hover:bg-red-50"
+                emptyMessage="No industries found."
+                getItemLabel={(ind) => ind.name || ""}
+                helperText="Select the primary industries your firm serves."
+                isCreating={createIndustryMutation.isPending}
                 items={industries || []}
-                multiple
-                onInputValueChange={(value) => setIndustryInput(value)}
-                onValueChange={(value: unknown) => {
-                  const selectedIndustries = value;
-                  setSelectedIndustryIds(
-                    selectedIndustries.map((ind) => ind.id as string)
-                  );
-                }}
-                value={
-                  industries?.filter((ind) =>
-                    selectedIndustryIds.includes(ind.id as string)
-                  ) || []
-                }
-              >
-                <ComboboxChips className="mb-4 border-0 p-0 shadow-none">
-                  <ComboboxValue>
-                    {(value) => (
-                      <>
-                        {value.length === 0 && (
-                          <p className="my-2 text-gray-400 text-xs italic">
-                            No industries selected.
-                          </p>
-                        )}
-                        {value.map((industry) => (
-                          <ComboboxChip
-                            aria-label={industry.name}
-                            className="rounded-none border border-red-600 bg-red-600 px-3 py-1.5 font-bold text-[10px] text-white uppercase tracking-wider transition-all"
-                            key={industry.id}
-                          >
-                            {industry.name}
-                            <ComboboxChipRemove />
-                          </ComboboxChip>
-                        ))}
-                      </>
-                    )}
-                  </ComboboxValue>
-                </ComboboxChips>
-
-                <p className="my-2 text-gray-400 text-xs italic">
-                  Select the primary industries your firm serves.
-                </p>
-                <ComboboxControl>
-                  <ComboboxValue>
-                    <ComboboxInput placeholder="Search and select industries..." />
-                  </ComboboxValue>
-                </ComboboxControl>
-
-                <ComboboxContent>
-                  <ComboboxEmpty>No industries found.</ComboboxEmpty>
-                  <ComboboxList>
-                    {(industry) => (
-                      <ComboboxItem key={industry.id} value={industry}>
-                        <ComboboxItemIndicator />
-                        <div className="col-start-2">{industry.name}</div>
-                      </ComboboxItem>
-                    )}
-                  </ComboboxList>
-                  {industryInput.trim() &&
-                    !industries?.some(
-                      (ind) =>
-                        ind.name?.toLowerCase() === industryInput.toLowerCase()
-                    ) && (
-                      <button
-                        className="flex w-full items-center gap-2 px-2 py-2 text-left text-sm text-red-600 hover:bg-red-50"
-                        disabled={createIndustryMutation.isPending}
-                        onClick={() => createIndustryMutation.mutate(industryInput.trim())}
-                        type="button"
-                      >
-                        <Plus className="h-4 w-4" />
-                        {createIndustryMutation.isPending
-                          ? "Creating..."
-                          : `Create "${industryInput.trim()}"`}
-                      </button>
-                    )}
-                </ComboboxContent>
-              </Combobox>
+                noSelectionMessage="No industries selected."
+                onCreateNew={(name) => createIndustryMutation.mutate(name)}
+                onSelectionChange={setSelectedIndustryIds}
+                placeholder="Search and select industries..."
+                selectedIds={selectedIndustryIds}
+              />
             </div>
           </section>
         </div>

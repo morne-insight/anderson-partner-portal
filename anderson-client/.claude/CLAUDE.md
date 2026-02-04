@@ -1,14 +1,14 @@
-# Ultracite Code Standards
+# Biome Code Standards
 
-This project uses **Ultracite**, a zero-config preset that enforces strict code quality standards through automated formatting and linting.
+This project uses **Biome** for code formatting and linting.
 
 ## Quick Reference
 
-- **Format code**: `pnpm dlx ultracite fix`
-- **Check for issues**: `pnpm dlx ultracite check`
-- **Diagnose setup**: `pnpm dlx ultracite doctor`
+- **Format & lint code**: `pnpm biome check --write`
+- **Check for issues**: `pnpm biome check`
+- **Format only**: `pnpm biome format --write`
 
-Biome (the underlying engine) provides robust linting and formatting. Most issues are automatically fixable.
+Biome provides robust linting and formatting. Most issues are automatically fixable.
 
 ---
 
@@ -120,4 +120,4 @@ Biome's linter will catch most issues automatically. Focus your attention on:
 
 ---
 
-Most formatting and common issues are automatically fixed by Biome. Run `pnpm dlx ultracite fix` before committing to ensure compliance.
+Most formatting and common issues are automatically fixed by Biome. Run `pnpm biome check --write` before committing to ensure compliance.
