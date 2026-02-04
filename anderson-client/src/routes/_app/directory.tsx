@@ -74,6 +74,7 @@ function NetworkDirectory() {
         serviceType: company.serviceTypeName || "Professional Services",
         skills: company.capabilities?.map((c: any) => c.name) || [],
         industries: company.industries?.map((i: any) => i.name) || [],
+        serviceSubTypes: company.serviceSubTypes?.map((s: any) => s.name) || [],
         verified: true,
         locations:
           company.locations?.map((l: any) => ({
@@ -381,6 +382,23 @@ function NetworkDirectory() {
                           </span>
                         )}
                       </div>
+                      {partner.serviceSubTypes?.length > 0 && (
+                        <div className="mt-2 flex flex-wrap gap-1.5">
+                          {partner.serviceSubTypes.slice(0, 3).map((sst: string) => (
+                            <span
+                              className="border border-red-600/30 bg-red-50 px-2 py-0.5 font-bold text-[8px] text-red-600 uppercase tracking-tighter"
+                              key={sst}
+                            >
+                              {sst}
+                            </span>
+                          ))}
+                          {partner.serviceSubTypes.length > 3 && (
+                            <span className="self-center text-[8px] text-red-300">
+                              +{partner.serviceSubTypes.length - 3}
+                            </span>
+                          )}
+                        </div>
+                      )}
                     </div>
 
                     <div className="flex w-full gap-4 md:w-auto">

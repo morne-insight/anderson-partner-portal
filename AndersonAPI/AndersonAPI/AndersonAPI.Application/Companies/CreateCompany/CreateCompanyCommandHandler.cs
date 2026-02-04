@@ -15,7 +15,7 @@ namespace AndersonAPI.Application.Companies.CreateCompany
     public class CreateCompanyCommandHandler : IRequestHandler<CreateCompanyCommand, Guid>
     {
         private readonly ICompanyRepository _companyRepository;
-        private readonly IServiceTypeRepository _serviceTypeRepository;
+        private readonly IServiceSubTypeRepository _serviceSubTypeRepository;
         private readonly ICapabilityRepository _capabilityRepository;
         private readonly IIndustryRepository _industryRepository;
         private readonly ICurrentUserService _currentUserService;
@@ -24,14 +24,14 @@ namespace AndersonAPI.Application.Companies.CreateCompany
         [IntentManaged(Mode.Merge)]
         public CreateCompanyCommandHandler(
             ICompanyRepository companyRepository,
-            IServiceTypeRepository serviceTypeRepository,
+            IServiceSubTypeRepository serviceSubTypeRepository,
             ICapabilityRepository capabilityRepository,
             IIndustryRepository industryRepository,
             ICurrentUserService currentUserService,
             IApplicationIdentityUserRepository applicationIdentityUserRepository)
         {
             _companyRepository = companyRepository;
-            _serviceTypeRepository = serviceTypeRepository;
+            _serviceSubTypeRepository = serviceSubTypeRepository;
             _capabilityRepository = capabilityRepository;
             _industryRepository = industryRepository;
             _currentUserService = currentUserService;
@@ -60,9 +60,11 @@ namespace AndersonAPI.Application.Companies.CreateCompany
 
             var capabilities = request.Capabilities == null ? new List<Capability>() : await _capabilityRepository.FindByIdsAsync(request.Capabilities.ToArray(), cancellationToken);
             var industries = request.Industries == null ? new List<Industry>() : await _industryRepository.FindByIdsAsync(request.Industries.ToArray(), cancellationToken);
-
+            var serviceSubTypes = request.ServiceSubTypes == null ? new List<ServiceSubType>() : await _serviceSubTypeRepository.FindByIdsAsync(request.ServiceSubTypes.ToArray(), cancellationToken);
+                
             company.SetCapabilities(capabilities);
             company.SetIndustries(industries);
+            company.SetServiceSubTypes(serviceSubTypes);
             company.AddUser(applicationUser);
 
             _companyRepository.Add(company);

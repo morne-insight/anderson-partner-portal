@@ -79,6 +79,10 @@ namespace AndersonAPI.Infrastructure.Persistence.Configurations
                 .HasForeignKey(x => x.ServiceTypeId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            builder.HasMany(x => x.ServiceSubTypes)
+                .WithMany("Companies")
+                .UsingEntity(x => x.ToTable("CompanyServiceSubTypes"));
+
             builder.Ignore(e => e.DomainEvents);
         }
 

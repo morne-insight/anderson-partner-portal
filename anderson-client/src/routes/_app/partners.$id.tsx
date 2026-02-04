@@ -232,6 +232,25 @@ function PartnerProfile() {
             </div>
           </div>
 
+          {/* Service Specializations */}
+          {partner.serviceSubTypes && partner.serviceSubTypes.length > 0 && (
+            <div className="border border-gray-200 bg-white p-8 shadow-sm">
+              <h3 className="mb-6 border-gray-100 border-b pb-4 font-serif text-black text-xl">
+                Service Specializations
+              </h3>
+              <div className="flex flex-wrap gap-2">
+                {partner.serviceSubTypes.map((sst) => (
+                  <span
+                    className="border border-red-600/30 bg-red-50 px-3 py-1 font-bold text-[10px] text-red-600 uppercase tracking-widest"
+                    key={sst.id}
+                  >
+                    {sst.name}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+
           {/* Skills & Industries */}
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
             <div className="border border-gray-200 bg-white p-8 shadow-sm">
@@ -266,6 +285,7 @@ function PartnerProfile() {
             </div>
           </div>
 
+
           {/* Locations */}
           <div className="border border-gray-200 bg-white p-8 shadow-sm">
             <h3 className="mb-6 border-gray-100 border-b pb-4 font-serif text-black text-xl">
@@ -277,8 +297,8 @@ function PartnerProfile() {
                 .map((loc, i: number) => (
                   <div
                     className={`border p-4 ${loc.isHeadOffice
-                        ? "border-red-600 bg-red-50/20"
-                        : "border-gray-100"
+                      ? "border-red-600 bg-red-50/20"
+                      : "border-gray-100"
                       }`}
                     key={i}
                   >

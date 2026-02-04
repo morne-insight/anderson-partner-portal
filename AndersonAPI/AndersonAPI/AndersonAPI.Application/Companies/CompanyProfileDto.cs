@@ -14,8 +14,9 @@ namespace AndersonAPI.Application.Companies
             ShortDescription = null!;
             FullDescription = null!;
             WebsiteUrl = null!;
-            ServiceTypeName = null!;
             ApplicationIdentityUsers = null!;
+            ServiceTypeName = null!;
+            ServiceSubTypes = null!;
             Capabilities = null!;
             Industries = null!;
             Contacts = null!;
@@ -31,6 +32,7 @@ namespace AndersonAPI.Application.Companies
         public int EmployeeCount { get; set; }
         public Guid? ServiceTypeId { get; set; }
         public string ServiceTypeName { get; set; }
+        public List<CompanyServiceSubTypeDto> ServiceSubTypes { get; set; }
         public List<CompanyIdentityUserDto> ApplicationIdentityUsers { get; set; }
         public List<CompanyCapabilityDto> Capabilities { get; set; }
         public List<CompanyIndustryDto> Industries { get; set; }
@@ -46,9 +48,10 @@ namespace AndersonAPI.Application.Companies
             string fullDescription,
             string websiteUrl,
             int employeeCount,
+            List<CompanyIdentityUserDto> applicationIdentityUsers,
             Guid? serviceTypeId,
             string serviceTypeName,
-            List<CompanyIdentityUserDto> applicationIdentityUsers,
+            List<CompanyServiceSubTypeDto> serviceSubTypes,
             List<CompanyCapabilityDto> capabilities,
             List<CompanyIndustryDto> industries,
             List<CompanyContactDto> contacts,
@@ -64,9 +67,10 @@ namespace AndersonAPI.Application.Companies
                 FullDescription = fullDescription,
                 WebsiteUrl = websiteUrl,
                 EmployeeCount = employeeCount,
+                ApplicationIdentityUsers = applicationIdentityUsers,
                 ServiceTypeId = serviceTypeId,
                 ServiceTypeName = serviceTypeName,
-                ApplicationIdentityUsers = applicationIdentityUsers,
+                ServiceSubTypes = serviceSubTypes,
                 Capabilities = capabilities,
                 Industries = industries,
                 Contacts = contacts,

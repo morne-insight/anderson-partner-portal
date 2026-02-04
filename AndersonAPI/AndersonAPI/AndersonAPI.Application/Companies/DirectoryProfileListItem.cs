@@ -16,6 +16,7 @@ namespace AndersonAPI.Application.Companies
             Contacts = null!;
             Industries = null!;
             ServiceTypeName = null!;
+            ServiceSubTypes = null!;
         }
 
         public Guid Id { get; set; }
@@ -26,6 +27,7 @@ namespace AndersonAPI.Application.Companies
         public List<PartnerContactDto> Contacts { get; set; }
         public List<PartnerIndustryDto> Industries { get; set; }
         public string ServiceTypeName { get; set; }
+        public List<PartnerServiceSubTypeDto> ServiceSubTypes { get; set; }
 
         public static DirectoryProfileListItem Create(
             Guid id,
@@ -35,7 +37,8 @@ namespace AndersonAPI.Application.Companies
             List<PartnerLocationDto> locations,
             List<PartnerContactDto> contacts,
             List<PartnerIndustryDto> industries,
-            string serviceTypeName)
+            string serviceTypeName,
+            List<PartnerServiceSubTypeDto> serviceSubTypes)
         {
             return new DirectoryProfileListItem
             {
@@ -46,7 +49,8 @@ namespace AndersonAPI.Application.Companies
                 Locations = locations,
                 Contacts = contacts,
                 Industries = industries,
-                ServiceTypeName = serviceTypeName
+                ServiceTypeName = serviceTypeName,
+                ServiceSubTypes = serviceSubTypes
             };
         }
     }

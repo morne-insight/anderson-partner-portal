@@ -41,6 +41,10 @@ namespace AndersonAPI.Application.User.GetUserDetail
                 .FindAllAsync(c => c.ApplicationIdentityUsers
                     .Any(u => u.Id == applicationUser.Id.ToString()), cancellationToken);
 
+            var invites = await _companyRepository
+                .FindAllAsync(c => c.Invites
+                    .Any(i => i.Email == applicationUser.Email), cancellationToken);
+
 
             if (companies.Count == 0)
             {
@@ -48,7 +52,8 @@ namespace AndersonAPI.Application.User.GetUserDetail
                     name: applicationUser.Name ?? string.Empty,
                     companyId: null,
                     companyName: null,
-                    companies: new List<UserCompanyDto>());
+                    companies: new List<UserCompanyDto>(),
+                    invites: new List<UserInviteDto>());
             }
 
             return UserDetailDto.Create(
@@ -58,7 +63,13 @@ namespace AndersonAPI.Application.User.GetUserDetail
                 companies: companies.Select(c => UserCompanyDto.Create(
                     id: c.Id,
                     name: c.Name,
-                    websiteUrl: c.WebsiteUrl)).ToList());
+                    websiteUrl: c.WebsiteUrl)).ToList(),
+                invites: invites.Select(i => UserInviteDto.Create(
+                    companyName: i.Name,
+                    companyShortDescription: i.ShortDescription,
+                    companyWebsiteUrl: i.WebsiteUrl,
+                    id: i.Id)).ToList()
+                );
         }
     }
 }

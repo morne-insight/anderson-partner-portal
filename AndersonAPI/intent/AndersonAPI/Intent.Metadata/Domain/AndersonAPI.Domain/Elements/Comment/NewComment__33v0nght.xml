@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<class id="d10f332d-44dd-4956-9652-3dada35d56c0" type="Comment" typeId="c4c0c77f-720b-4e91-9c48-b58d2164d30a">
+  <name>NewComment</name>
+  <display>NewComment</display>
+  <isAbstract>false</isAbstract>
+  <genericTypes />
+  <isMapped>false</isMapped>
+  <parentFolderId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</parentFolderId>
+  <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+  <packageName>AndersonAPI.Domain</packageName>
+  <stereotypes />
+  <metadata />
+  <childElements />
+</class>

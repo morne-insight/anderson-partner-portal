@@ -9,10 +9,10 @@ import {
   Separator,
   toolbarPlugin,
   UndoRedo,
-} from "@mdxeditor/editor";
-import { useForm } from "@tanstack/react-form";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { ClientOnly, createFileRoute, useRouter } from "@tanstack/react-router";
+} from '@mdxeditor/editor'
+import { useForm } from '@tanstack/react-form'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { ClientOnly, createFileRoute, useRouter } from '@tanstack/react-router'
 import {
   Briefcase,
   Building,
@@ -26,15 +26,11 @@ import {
   Save,
   Trash2,
   User,
-} from "lucide-react";
-import { useEffect, useRef, useState } from "react";
-import { toast } from "sonner";
-import z from "zod";
-import type {
-  CompanyContactDto,
-  CompanyProfileDto,
-  UpdateCompanyCommand,
-} from "@/api/types.gen";
+} from 'lucide-react'
+import { useEffect, useRef, useState } from 'react'
+import { toast } from 'sonner'
+import z from 'zod'
+import type { CompanyContactDto, CompanyProfileDto, UpdateCompanyCommand } from '@/api/types.gen'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -45,41 +41,46 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import { MultiSelectCombobox } from "@/components/ui/multi-select-combobox";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+} from '@/components/ui/alert-dialog'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { MultiSelectCombobox } from '@/components/ui/multi-select-combobox'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Switch } from "@/components/ui/switch";
-import { Textarea } from "@/components/ui/textarea";
-import { usePrefetchReferenceData } from "@/hooks/useReferenceData";
-import { callApi } from "@/server/proxy";
+} from '@/components/ui/select'
+import { Switch } from '@/components/ui/switch'
+import { Textarea } from '@/components/ui/textarea'
+import { usePrefetchReferenceData } from '@/hooks/useReferenceData'
+import { callApi } from '@/server/proxy'
 
-export const Route = createFileRoute("/_app/profile/$companyId/")({
+export const Route = createFileRoute('/_app/profile/$companyId/')({
   component: ProfileEdit,
-});
+})
 
 function ProfileEdit() {
-  const router = useRouter();
-  const queryClient = useQueryClient();
-  const { companyId } = Route.useParams();
+  const router = useRouter()
+  const queryClient = useQueryClient()
+  const { companyId } = Route.useParams()
 
-  const { data: initialCompany, isLoading: companyLoading, isError: companyError } = useQuery<CompanyProfileDto>(({
-    queryKey: ["company", companyId],
-    queryFn: () => callApi({
-      data: {
-        fn: "getApiCompaniesByIdProfile",
-        args: { path: { id: companyId } },
-      },
-    })
-  }))
+  const {
+    data: initialCompany,
+    isLoading: companyLoading,
+    isError: companyError,
+  } = useQuery<CompanyProfileDto>({
+    queryKey: ['company', companyId],
+    queryFn: () =>
+      callApi({
+        data: {
+          fn: 'getApiCompaniesByIdProfile',
+          args: { path: { id: companyId } },
+        },
+      }),
+  })
 
   // Use cached reference data hooks
   const {
@@ -88,85 +89,83 @@ function ProfileEdit() {
     countries: countriesQuery,
     regions: regionsQuery,
     serviceTypes: serviceTypesQuery,
+    serviceSubTypes: serviceSubTypesQuery,
     isLoading,
     isError,
-  } = usePrefetchReferenceData();
+  } = usePrefetchReferenceData()
 
   // Type assertions after null checks - TypeScript now knows these are defined
-  const capabilities = capabilitiesQuery.data;
-  const industries = industriesQuery.data;
-  const countries = countriesQuery.data;
-  const regions = regionsQuery.data;
-  const serviceTypes = serviceTypesQuery.data;
+  const capabilities = capabilitiesQuery.data
+  const industries = industriesQuery.data
+  const countries = countriesQuery.data
+  const regions = regionsQuery.data
+  const serviceTypes = serviceTypesQuery.data
+  const serviceSubTypes = serviceSubTypesQuery.data
 
   // Refetch handler to update view after mutations
   const refreshData = () => {
     // router.invalidate();
-    queryClient.invalidateQueries({ queryKey: ["company", companyId] });
-  };
+    queryClient.invalidateQueries({ queryKey: ['company', companyId] })
+  }
 
-  const mdxEditorRef = useRef<MDXEditorMethods>(null);
+  const mdxEditorRef = useRef<MDXEditorMethods>(null)
 
   useEffect(() => {
     if (initialCompany) {
-      mdxEditorRef.current?.setMarkdown(initialCompany.fullDescription || "");
+      mdxEditorRef.current?.setMarkdown(initialCompany.fullDescription || '')
     }
   }, [initialCompany])
 
   // --- AI Scrape State ---
-  const [scrapeUrl, setScrapeUrl] = useState(initialCompany?.websiteUrl || "");
+  const [scrapeUrl, setScrapeUrl] = useState(initialCompany?.websiteUrl || '')
   const scrapeMutation = useMutation({
     mutationFn: async (url: string) => {
       return await callApi({
-        data: { fn: "putApiCompaniesScrapeWebsite", args: { body: { url, companyId } } },
-      });
+        data: { fn: 'putApiCompaniesScrapeWebsite', args: { body: { url, companyId } } },
+      })
     },
     onSuccess: () => {
-      refreshData();
+      refreshData()
     },
     onError: (err) => {
-      console.error("Scrape failed", err);
-      toast.error("Failed to sync website. Please try creating manually.");
+      console.error('Scrape failed', err)
+      toast.error('Failed to sync website. Please try creating manually.')
     },
-  });
+  })
 
   // --- Main Form (General Info) ---
   const form = useForm({
     defaultValues: {
-      id: initialCompany?.id || "",
-      name: initialCompany?.name || "",
-      shortDescription: initialCompany?.shortDescription || "",
-      fullDescription: initialCompany?.fullDescription || "",
-      websiteUrl: initialCompany?.websiteUrl || "",
+      id: initialCompany?.id || '',
+      name: initialCompany?.name || '',
+      shortDescription: initialCompany?.shortDescription || '',
+      fullDescription: initialCompany?.fullDescription || '',
+      websiteUrl: initialCompany?.websiteUrl || '',
       employeeCount: initialCompany?.employeeCount || 0,
-      serviceTypeId: initialCompany?.serviceTypeId || "",
+      serviceTypeId: initialCompany?.serviceTypeId || '',
     },
     validators: {
       onSubmit: ({ value }: { value: UpdateCompanyCommand }) => {
         const schema = z.object({
-          name: z.string().min(1, "Name is required"),
+          name: z.string().min(1, 'Name is required'),
           shortDescription: z.string().optional(),
           fullDescription: z.string().optional(),
-          websiteUrl: z
-            .string()
-            .url("Invalid URL")
-            .optional()
-            .or(z.literal("")),
+          websiteUrl: z.string().url('Invalid URL').optional().or(z.literal('')),
           employeeCount: z.number().min(0).optional(),
           serviceTypeId: z.string().optional(),
-        });
+        })
 
-        const result = schema.safeParse(value);
+        const result = schema.safeParse(value)
         if (!result.success) {
-          const errors: Record<string, string> = {};
+          const errors: Record<string, string> = {}
           result.error.issues.forEach((issue) => {
             if (issue.path[0]) {
-              errors[issue.path[0] as string] = issue.message;
+              errors[issue.path[0] as string] = issue.message
             }
-          });
-          return errors;
+          })
+          return errors
         }
-        return undefined;
+        return undefined
       },
     },
     onSubmit: async ({ value }: { value: UpdateCompanyCommand }) => {
@@ -174,28 +173,38 @@ function ProfileEdit() {
         // Save Capabilities and Industries first, to ensure embedding are created with the latest data
         await callApi({
           data: {
-            fn: "putApiCompaniesByIdCapabilities",
+            fn: 'putApiCompaniesByIdCapabilities',
             args: {
               path: { id: companyId },
               body: { id: companyId, capabilityIds: selectedCapabilityIds },
             },
           },
-        });
+        })
 
         await callApi({
           data: {
-            fn: "putApiCompaniesByIdIndustries",
+            fn: 'putApiCompaniesByIdIndustries',
             args: {
               path: { id: companyId },
               body: { id: companyId, industryIds: selectedIndustryIds },
             },
           },
-        });
+        })
+
+        await callApi({
+          data: {
+            fn: 'putApiCompaniesByIdServiceSubTypes',
+            args: {
+              path: { id: companyId },
+              body: { id: companyId, serviceSubTypeIds: selectedServiceSubTypeIds },
+            },
+          },
+        })
 
         // Save Company
         await callApi({
           data: {
-            fn: "putApiCompaniesById",
+            fn: 'putApiCompaniesById',
             args: {
               path: { id: companyId },
               body: {
@@ -209,103 +218,133 @@ function ProfileEdit() {
               },
             },
           },
-        });
+        })
 
-        toast.success("Profile saved successfully!");
-        refreshData();
+        toast.success('Profile saved successfully!')
+        refreshData()
       } catch (error) {
-        console.error(error);
-        toast.error("Failed to save changes.");
+        console.error(error)
+        toast.error('Failed to save changes.')
       }
     },
     // validatorAdapter: zodValidator(),
-  });
+  })
 
-  // --- Capabilities & Industries State ---
+  // --- Capabilities, Industries & ServiceSubTypes State ---
   const [selectedCapabilityIds, setSelectedCapabilityIds] = useState<string[]>(
     initialCompany?.capabilities?.map((c) => c.id!).filter(Boolean) || []
-  );
+  )
   const [selectedIndustryIds, setSelectedIndustryIds] = useState<string[]>(
     initialCompany?.industries?.map((c) => c.id!).filter(Boolean) || []
-  );
+  )
+  const [selectedServiceSubTypeIds, setSelectedServiceSubTypeIds] = useState<string[]>(
+    initialCompany?.serviceSubTypes?.map((s) => s.id!).filter(Boolean) || []
+  )
 
   // Create capability mutation
   const createCapabilityMutation = useMutation({
     mutationFn: async (name: string) => {
       const response = await callApi({
         data: {
-          fn: "postApiCapabilities",
-          args: { body: { name, description: "" } },
+          fn: 'postApiCapabilities',
+          args: { body: { name, description: '' } },
         },
-      });
-      if (response.error) throw response.error;
-      return response;
+      })
+      if (response.error) throw response.error
+      return response
     },
     onSuccess: async (response: { data?: string }) => {
       // Invalidate and refetch capabilities
-      await queryClient.invalidateQueries({ queryKey: ["reference", "capabilities"] });
+      await queryClient.invalidateQueries({ queryKey: ['reference', 'capabilities'] })
       // Add the new capability to selection
       if (response.data) {
-        setSelectedCapabilityIds((prev) => [...prev, response.data!]);
+        setSelectedCapabilityIds((prev) => [...prev, response.data!])
       }
-      toast.success("Capability created successfully");
+      toast.success('Capability created successfully')
     },
     onError: (err) => {
-      console.error("Failed to create capability", err);
-      toast.error("Failed to create capability");
+      console.error('Failed to create capability', err)
+      toast.error('Failed to create capability')
     },
-  });
+  })
 
   // Create industry mutation
   const createIndustryMutation = useMutation({
     mutationFn: async (name: string) => {
       const response = await callApi({
         data: {
-          fn: "postApiIndustries",
-          args: { body: { name, description: "" } },
+          fn: 'postApiIndustries',
+          args: { body: { name, description: '' } },
         },
-      });
-      if (response.error) throw response.error;
-      return response;
+      })
+      if (response.error) throw response.error
+      return response
     },
     onSuccess: async (response: { data?: string }) => {
       // Invalidate and refetch industries
-      await queryClient.invalidateQueries({ queryKey: ["reference", "industries"] });
+      await queryClient.invalidateQueries({ queryKey: ['reference', 'industries'] })
       // Add the new industry to selection
       if (response.data) {
-        setSelectedIndustryIds((prev) => [...prev, response.data!]);
+        setSelectedIndustryIds((prev) => [...prev, response.data!])
       }
-      toast.success("Industry created successfully");
+      toast.success('Industry created successfully')
     },
     onError: (err) => {
-      console.error("Failed to create industry", err);
-      toast.error("Failed to create industry");
+      console.error('Failed to create industry', err)
+      toast.error('Failed to create industry')
     },
-  });
+  })
+
+  // Create service sub type mutation
+  const createServiceSubTypeMutation = useMutation({
+    mutationFn: async (name: string) => {
+      const currentServiceTypeId = form.getFieldValue('serviceTypeId')
+      if (!currentServiceTypeId) {
+        throw new Error('Please select a service type first')
+      }
+      const response = await callApi({
+        data: {
+          fn: 'postApiServiceSubTypes',
+          args: { body: { serviceTypeId: currentServiceTypeId, name, description: '', state: 0 } },
+        },
+      })
+      if (response.error) throw response.error
+      return response
+    },
+    onSuccess: async (response: { data?: string }) => {
+      await queryClient.invalidateQueries({ queryKey: ['reference', 'serviceSubTypes'] })
+      if (response.data) {
+        setSelectedServiceSubTypeIds((prev) => [...prev, response.data!])
+      }
+      toast.success('Service specialization created successfully')
+    },
+    onError: (err: Error) => {
+      console.error('Failed to create service specialization', err)
+      toast.error(err.message || 'Failed to create service specialization')
+    },
+  })
 
   // --- Locations State ---
-  const [isAddingLocation, setIsAddingLocation] = useState(false);
+  const [isAddingLocation, setIsAddingLocation] = useState(false)
   const [newLocation, setNewLocation] = useState({
-    name: "",
-    regionId: "",
-    countryId: "",
+    name: '',
+    regionId: '',
+    countryId: '',
     isHeadOffice: false,
-  });
-  const [editingLocationId, setEditingLocationId] = useState<string | null>(
-    null
-  );
+  })
+  const [editingLocationId, setEditingLocationId] = useState<string | null>(null)
   const [editLocation, setEditLocation] = useState({
-    name: "",
-    regionId: "",
-    countryId: "",
+    name: '',
+    regionId: '',
+    countryId: '',
     isHeadOffice: false,
-  });
+  })
 
   const addLocationMutation = useMutation({
     mutationFn: async () => {
       return await callApi({
         data: {
-          fn: "postApiCompaniesByIdLocation",
+          fn: 'postApiCompaniesByIdLocation',
           args: {
             path: { id: companyId },
             body: {
@@ -317,39 +356,39 @@ function ProfileEdit() {
             },
           },
         },
-      });
+      })
     },
     onSuccess: () => {
-      setIsAddingLocation(false);
+      setIsAddingLocation(false)
       setNewLocation({
-        name: "",
-        regionId: "",
-        countryId: "",
+        name: '',
+        regionId: '',
+        countryId: '',
         isHeadOffice: false,
-      });
-      refreshData();
+      })
+      refreshData()
     },
-  });
+  })
 
   const deleteLocationMutation = useMutation({
     mutationFn: async (locationId: string) => {
       return await callApi({
         data: {
-          fn: "deleteApiCompaniesByIdLocation",
+          fn: 'deleteApiCompaniesByIdLocation',
           args: { path: { id: companyId }, query: { locationId } },
         },
-      });
+      })
     },
     onSuccess: () => {
-      refreshData();
+      refreshData()
     },
-  });
+  })
 
   const updateLocationMutation = useMutation({
     mutationFn: async (locationId: string) => {
       return await callApi({
         data: {
-          fn: "putApiCompaniesByIdLocation",
+          fn: 'putApiCompaniesByIdLocation',
           args: {
             path: { id: companyId },
             body: {
@@ -362,49 +401,49 @@ function ProfileEdit() {
             },
           },
         },
-      });
+      })
     },
     onSuccess: () => {
-      setEditingLocationId(null);
+      setEditingLocationId(null)
       setEditLocation({
-        name: "",
-        regionId: "",
-        countryId: "",
+        name: '',
+        regionId: '',
+        countryId: '',
         isHeadOffice: false,
-      });
-      refreshData();
+      })
+      refreshData()
     },
-  });
+  })
 
   const startEditLocation = (loc) => {
-    setEditingLocationId(loc.id);
+    setEditingLocationId(loc.id)
     setEditLocation({
-      name: loc.name || "",
-      regionId: loc.regionId || "",
-      countryId: loc.countryId || "",
+      name: loc.name || '',
+      regionId: loc.regionId || '',
+      countryId: loc.countryId || '',
       isHeadOffice: loc.isHeadOffice,
-    });
-  };
+    })
+  }
 
   // --- Contacts State ---
-  const [isAddingContact, setIsAddingContact] = useState(false);
+  const [isAddingContact, setIsAddingContact] = useState(false)
   const [newContact, setNewContact] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    position: "",
-  });
+    firstName: '',
+    lastName: '',
+    email: '',
+    position: '',
+  })
 
   // --- Invites State ---
-  const [isAddingInvite, setIsAddingInvite] = useState(false);
-  const [newInvite, setNewInvite] = useState({ name: "", email: "" });
+  const [isAddingInvite, setIsAddingInvite] = useState(false)
+  const [newInvite, setNewInvite] = useState({ name: '', email: '' })
 
   const addContactMutation = useMutation({
     mutationFn: async () => {
       // PostApiCompaniesByIdContactData
       return await callApi({
         data: {
-          fn: "postApiCompaniesByIdContact",
+          fn: 'postApiCompaniesByIdContact',
           args: {
             path: { id: companyId },
             body: {
@@ -416,50 +455,50 @@ function ProfileEdit() {
             },
           },
         },
-      });
+      })
     },
     onSuccess: () => {
-      setIsAddingContact(false);
-      setNewContact({ firstName: "", lastName: "", email: "", position: "" });
-      refreshData();
+      setIsAddingContact(false)
+      setNewContact({ firstName: '', lastName: '', email: '', position: '' })
+      refreshData()
     },
-  });
+  })
 
   const deleteContactMutation = useMutation({
     mutationFn: async (contactId: string) => {
       return await callApi({
         data: {
-          fn: "deleteApiCompaniesByIdContact",
+          fn: 'deleteApiCompaniesByIdContact',
           args: { path: { id: companyId }, query: { contactId } },
         },
-      });
+      })
     },
     onSuccess: () => {
-      refreshData();
+      refreshData()
     },
-  });
+  })
 
   // --- ApplicationUser Mutations ---
   const deleteUserMutation = useMutation({
     mutationFn: async (userId: string) => {
       return await callApi({
         data: {
-          fn: "deleteApiCompaniesByIdUser",
+          fn: 'deleteApiCompaniesByIdUser',
           args: { path: { id: companyId }, query: { userId } },
         },
-      });
+      })
     },
     onSuccess: () => {
-      refreshData();
+      refreshData()
     },
-  });
+  })
 
   // --- Invite Mutations ---
   const addInviteMutation = useMutation({
     mutationFn: async () => {
       return await callApi({
         data: {
-          fn: "postApiInvites",
+          fn: 'postApiInvites',
           args: {
             body: {
               email: newInvite.email,
@@ -467,44 +506,44 @@ function ProfileEdit() {
             },
           },
         },
-      });
+      })
     },
     onSuccess: () => {
-      setIsAddingInvite(false);
-      setNewInvite({ name: "", email: "" });
-      refreshData();
+      setIsAddingInvite(false)
+      setNewInvite({ name: '', email: '' })
+      refreshData()
     },
-  });
+  })
 
   const deleteInviteMutation = useMutation({
     mutationFn: async (inviteId: string) => {
       return await callApi({
         data: {
-          fn: "deleteApiInvitesById",
+          fn: 'deleteApiInvitesById',
           args: {
             path: { id: inviteId },
           },
         },
-      });
+      })
     },
     onSuccess: () => {
-      refreshData();
+      refreshData()
     },
-  });
+  })
 
-  const [editingContactId, setEditingContactId] = useState<string | null>(null);
+  const [editingContactId, setEditingContactId] = useState<string | null>(null)
   const [editContact, setEditContact] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    position: "",
-  });
+    firstName: '',
+    lastName: '',
+    email: '',
+    position: '',
+  })
 
   const updateContactMutation = useMutation({
     mutationFn: async (contactId: string) => {
       return await callApi({
         data: {
-          fn: "putApiCompaniesByIdContact",
+          fn: 'putApiCompaniesByIdContact',
           args: {
             path: { id: companyId },
             body: {
@@ -517,14 +556,14 @@ function ProfileEdit() {
             },
           },
         },
-      });
+      })
     },
     onSuccess: () => {
-      setEditingContactId(null);
-      setEditContact({ firstName: "", lastName: "", email: "", position: "" });
-      refreshData();
+      setEditingContactId(null)
+      setEditContact({ firstName: '', lastName: '', email: '', position: '' })
+      refreshData()
     },
-  });
+  })
 
   // Show loading state while reference data is loading
   if (isLoading || companyLoading) {
@@ -532,7 +571,7 @@ function ProfileEdit() {
       <div className="flex min-h-screen items-center justify-center">
         <Loader2 className="h-8 w-8 animate-spin text-gray-300" />
       </div>
-    );
+    )
   }
 
   // Ensure we have the data before proceeding
@@ -544,26 +583,24 @@ function ProfileEdit() {
           <Button onClick={() => window.location.reload()}>Retry</Button>
         </div>
       </div>
-    );
+    )
   }
 
   const startEditContact = (contact: CompanyContactDto) => {
-    setEditingContactId(contact.id!);
+    setEditingContactId(contact.id!)
     setEditContact({
-      firstName: contact.firstName || "",
-      lastName: contact.lastName || "",
-      email: contact.emailAddress || "",
-      position: contact.companyPosition || "",
-    });
-  };
+      firstName: contact.firstName || '',
+      lastName: contact.lastName || '',
+      email: contact.emailAddress || '',
+      position: contact.companyPosition || '',
+    })
+  }
 
   return (
     <div className="animate-fade-in space-y-8 pb-20">
       {/* Header */}
       <header className="border-gray-200 border-b pb-6">
-        <h2 className="mb-3 font-serif text-4xl text-black">
-          Edit Firm Profile
-        </h2>
+        <h2 className="mb-3 font-serif text-4xl text-black">Edit Firm Profile</h2>
         <p className="font-light text-gray-500 text-lg">
           Update your firm's details, capabilities, and global presence.
         </p>
@@ -577,9 +614,8 @@ function ProfileEdit() {
             <Globe className="h-5 w-5 text-red-500" /> AI Auto-Sync
           </h3>
           <p className="mb-6 max-w-xl text-gray-400 text-sm leading-relaxed">
-            Enter your website URL to automatically update your service
-            description and capabilities using AI. We'll analyze your public
-            presence to suggest relevant tags and descriptions.
+            Enter your website URL to automatically update your service description and capabilities
+            using AI. We'll analyze your public presence to suggest relevant tags and descriptions.
           </p>
           <div className="flex max-w-2xl flex-col gap-4 md:flex-row">
             <div className="flex-1">
@@ -597,7 +633,7 @@ function ProfileEdit() {
               onClick={() => scrapeMutation.mutate(scrapeUrl)}
               type="button"
             >
-              {scrapeMutation.isPending ? "Syncing..." : "Sync Firm Data"}
+              {scrapeMutation.isPending ? 'Syncing...' : 'Sync Firm Data'}
             </button>
           </div>
         </div>
@@ -653,9 +689,7 @@ function ProfileEdit() {
                       id={field.name}
                       name={field.name}
                       onBlur={field.handleBlur}
-                      onChange={(e) =>
-                        field.handleChange(Number(e.target.value))
-                      }
+                      onChange={(e) => field.handleChange(Number(e.target.value))}
                       type="number"
                       value={field.state.value as string}
                     />
@@ -686,7 +720,7 @@ function ProfileEdit() {
 
             <ClientOnly>
               <MDXEditor
-                markdown={initialCompany?.fullDescription || ""}
+                markdown={initialCompany?.fullDescription || ''}
                 plugins={[
                   headingsPlugin(),
                   listsPlugin(),
@@ -731,9 +765,7 @@ function ProfileEdit() {
           {/* Locations */}
           <section className="space-y-6">
             <div className="flex items-center justify-between border-gray-100 border-b pb-2">
-              <h3 className="font-bold text-lg uppercase tracking-widest">
-                Office Locations
-              </h3>
+              <h3 className="font-bold text-lg uppercase tracking-widest">Office Locations</h3>
             </div>
 
             <div className="space-y-4">
@@ -790,8 +822,7 @@ function ProfileEdit() {
                               {countries
                                 ?.filter(
                                   (c) =>
-                                    !editLocation.regionId ||
-                                    c.regionId === editLocation.regionId
+                                    !editLocation.regionId || c.regionId === editLocation.regionId
                                 )
                                 .map((c) => (
                                   <SelectItem key={c.id} value={c.id as string}>
@@ -827,16 +858,11 @@ function ProfileEdit() {
                         </Button>
                         <Button
                           className="bg-blue-600 hover:bg-blue-700"
-                          disabled={
-                            updateLocationMutation.isPending ||
-                            !editLocation.name
-                          }
+                          disabled={updateLocationMutation.isPending || !editLocation.name}
                           onClick={() => updateLocationMutation.mutate(loc.id)}
                           size="sm"
                         >
-                          {updateLocationMutation.isPending
-                            ? "Saving..."
-                            : "Save Changes"}
+                          {updateLocationMutation.isPending ? 'Saving...' : 'Save Changes'}
                         </Button>
                       </div>
                     </div>
@@ -848,7 +874,7 @@ function ProfileEdit() {
                         </div>
                         <div>
                           <div className="font-bold text-gray-900 text-sm">
-                            {loc.name}{" "}
+                            {loc.name}{' '}
                             {loc.isHeadOffice && (
                               <span className="ml-2 bg-black px-2 py-0.5 text-[10px] text-white uppercase tracking-wide">
                                 Head Office
@@ -856,11 +882,7 @@ function ProfileEdit() {
                             )}
                           </div>
                           <div className="mt-1 text-gray-500 text-xs uppercase tracking-wide">
-                            {
-                              countries?.find((c) => c.id === loc.countryId)
-                                ?.name
-                            }
-                            ,{" "}
+                            {countries?.find((c) => c.id === loc.countryId)?.name},{' '}
                             {regions?.find((r) => r.id === loc.regionId)?.name}
                           </div>
                         </div>
@@ -884,21 +906,17 @@ function ProfileEdit() {
                           </AlertDialogTrigger>
                           <AlertDialogContent>
                             <AlertDialogHeader>
-                              <AlertDialogTitle>
-                                Delete Location
-                              </AlertDialogTitle>
+                              <AlertDialogTitle>Delete Location</AlertDialogTitle>
                               <AlertDialogDescription>
-                                Are you sure you want to delete this location?
-                                This action cannot be undone.
+                                Are you sure you want to delete this location? This action cannot be
+                                undone.
                               </AlertDialogDescription>
                             </AlertDialogHeader>
                             <AlertDialogFooter>
                               <AlertDialogCancel>Cancel</AlertDialogCancel>
                               <AlertDialogAction
                                 className="bg-red-600 font-bold hover:bg-red-700"
-                                onClick={() =>
-                                  deleteLocationMutation.mutate(loc.id)
-                                }
+                                onClick={() => deleteLocationMutation.mutate(loc.id)}
                               >
                                 Delete
                               </AlertDialogAction>
@@ -916,9 +934,7 @@ function ProfileEdit() {
                   <div className="space-y-2">
                     <Label>Office Name</Label>
                     <Input
-                      onChange={(e) =>
-                        setNewLocation({ ...newLocation, name: e.target.value })
-                      }
+                      onChange={(e) => setNewLocation({ ...newLocation, name: e.target.value })}
                       placeholder="e.g. London HQ"
                       value={newLocation.name}
                     />
@@ -958,9 +974,7 @@ function ProfileEdit() {
                         <SelectContent>
                           {countries
                             ?.filter(
-                              (c) =>
-                                !newLocation.regionId ||
-                                c.regionId === newLocation.regionId
+                              (c) => !newLocation.regionId || c.regionId === newLocation.regionId
                             )
                             .map((c) => (
                               <SelectItem key={c.id} value={c.id as string}>
@@ -975,31 +989,21 @@ function ProfileEdit() {
                     <Switch
                       checked={newLocation.isHeadOffice}
                       id="header-office"
-                      onCheckedChange={(c) =>
-                        setNewLocation({ ...newLocation, isHeadOffice: c })
-                      }
+                      onCheckedChange={(c) => setNewLocation({ ...newLocation, isHeadOffice: c })}
                     />
                     <Label htmlFor="head-office">This is the Head Office</Label>
                   </div>
                   <div className="flex justify-end gap-2 pt-2">
-                    <Button
-                      onClick={() => setIsAddingLocation(false)}
-                      size="sm"
-                      variant="outline"
-                    >
+                    <Button onClick={() => setIsAddingLocation(false)} size="sm" variant="outline">
                       Cancel
                     </Button>
                     <Button
                       className="bg-black hover:bg-gray-800"
-                      disabled={
-                        addLocationMutation.isPending || !newLocation.name
-                      }
+                      disabled={addLocationMutation.isPending || !newLocation.name}
                       onClick={() => addLocationMutation.mutate()}
                       size="sm"
                     >
-                      {addLocationMutation.isPending
-                        ? "Adding..."
-                        : "Add Location"}
+                      {addLocationMutation.isPending ? 'Adding...' : 'Add Location'}
                     </Button>
                   </div>
                 </div>
@@ -1018,9 +1022,7 @@ function ProfileEdit() {
           {/* Key Personnel */}
           <section className="space-y-6">
             <div className="flex items-center justify-between border-gray-100 border-b pb-2">
-              <h3 className="font-bold text-lg uppercase tracking-widest">
-                Key Personnel
-              </h3>
+              <h3 className="font-bold text-lg uppercase tracking-widest">Key Personnel</h3>
             </div>
 
             <div className="space-y-4">
@@ -1088,18 +1090,11 @@ function ProfileEdit() {
                         </Button>
                         <Button
                           className="bg-blue-600 hover:bg-blue-700"
-                          disabled={
-                            updateContactMutation.isPending ||
-                            !editContact.firstName
-                          }
-                          onClick={() =>
-                            updateContactMutation.mutate(contact.id as string)
-                          }
+                          disabled={updateContactMutation.isPending || !editContact.firstName}
+                          onClick={() => updateContactMutation.mutate(contact.id as string)}
                           size="sm"
                         >
-                          {updateContactMutation.isPending
-                            ? "Saving..."
-                            : "Save Changes"}
+                          {updateContactMutation.isPending ? 'Saving...' : 'Save Changes'}
                         </Button>
                       </div>
                     </div>
@@ -1114,8 +1109,7 @@ function ProfileEdit() {
                             {contact.firstName} {contact.lastName}
                           </div>
                           <div className="mt-1 text-gray-500 text-xs uppercase tracking-wide">
-                            {contact.companyPosition || "No Title"} •{" "}
-                            {contact.emailAddress}
+                            {contact.companyPosition || 'No Title'} • {contact.emailAddress}
                           </div>
                         </div>
                       </div>
@@ -1138,23 +1132,17 @@ function ProfileEdit() {
                           </AlertDialogTrigger>
                           <AlertDialogContent>
                             <AlertDialogHeader>
-                              <AlertDialogTitle>
-                                Delete Contact
-                              </AlertDialogTitle>
+                              <AlertDialogTitle>Delete Contact</AlertDialogTitle>
                               <AlertDialogDescription>
-                                Are you sure you want to delete this contact?
-                                This action cannot be undone.
+                                Are you sure you want to delete this contact? This action cannot be
+                                undone.
                               </AlertDialogDescription>
                             </AlertDialogHeader>
                             <AlertDialogFooter>
                               <AlertDialogCancel>Cancel</AlertDialogCancel>
                               <AlertDialogAction
                                 className="bg-red-600 font-bold hover:bg-red-700"
-                                onClick={() =>
-                                  deleteContactMutation.mutate(
-                                    contact.id as string
-                                  )
-                                }
+                                onClick={() => deleteContactMutation.mutate(contact.id as string)}
                               >
                                 Delete
                               </AlertDialogAction>
@@ -1210,31 +1198,21 @@ function ProfileEdit() {
                   <div className="space-y-2">
                     <Label>Email Address</Label>
                     <Input
-                      onChange={(e) =>
-                        setNewContact({ ...newContact, email: e.target.value })
-                      }
+                      onChange={(e) => setNewContact({ ...newContact, email: e.target.value })}
                       value={newContact.email}
                     />
                   </div>
                   <div className="flex justify-end gap-2 pt-2">
-                    <Button
-                      onClick={() => setIsAddingContact(false)}
-                      size="sm"
-                      variant="outline"
-                    >
+                    <Button onClick={() => setIsAddingContact(false)} size="sm" variant="outline">
                       Cancel
                     </Button>
                     <Button
                       className="bg-black hover:bg-gray-800"
-                      disabled={
-                        addContactMutation.isPending || !newContact.firstName
-                      }
+                      disabled={addContactMutation.isPending || !newContact.firstName}
                       onClick={() => addContactMutation.mutate()}
                       size="sm"
                     >
-                      {addContactMutation.isPending
-                        ? "Adding..."
-                        : "Add Person"}
+                      {addContactMutation.isPending ? 'Adding...' : 'Add Person'}
                     </Button>
                   </div>
                 </div>
@@ -1253,74 +1231,66 @@ function ProfileEdit() {
           {/* Application Users */}
           <section className="space-y-6">
             <div className="flex items-center justify-between border-gray-100 border-b pb-2">
-              <h3 className="font-bold text-lg uppercase tracking-widest">
-                Application Users
-              </h3>
+              <h3 className="font-bold text-lg uppercase tracking-widest">Application Users</h3>
             </div>
 
             <div className="space-y-4">
-              {initialCompany?.applicationIdentityUsers?.map(
-                (user, index: number) => (
-                  <div
-                    className="flex items-center justify-between rounded-sm border border-gray-100 bg-gray-50 p-4"
-                    key={user.id || index}
-                  >
-                    <div className="flex items-center gap-4">
-                      <div className="flex h-8 w-8 items-center justify-center rounded-full border border-gray-200 bg-white">
-                        <User className="h-4 w-4 text-gray-400" />
-                      </div>
-                      <div>
-                        <div className="font-bold text-gray-900 text-sm">
-                          {user.email || "Unknown User"}
-                        </div>
-                        <div className="mt-1 text-gray-500 text-xs uppercase tracking-wide">
-                          {user.userName || "Application User"}
-                        </div>
-                      </div>
+              {initialCompany?.applicationIdentityUsers?.map((user, index: number) => (
+                <div
+                  className="flex items-center justify-between rounded-sm border border-gray-100 bg-gray-50 p-4"
+                  key={user.id || index}
+                >
+                  <div className="flex items-center gap-4">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-full border border-gray-200 bg-white">
+                      <User className="h-4 w-4 text-gray-400" />
                     </div>
-                    <div className="flex items-center gap-2">
-                      <AlertDialog>
-                        <AlertDialogTrigger asChild>
-                          <button
-                            className="text-gray-400 transition-colors hover:text-red-600"
-                            disabled={deleteUserMutation.isPending}
-                            type="button"
-                          >
-                            <Trash2 className="h-4 w-4" />
-                          </button>
-                        </AlertDialogTrigger>
-                        <AlertDialogContent>
-                          <AlertDialogHeader>
-                            <AlertDialogTitle>Remove User</AlertDialogTitle>
-                            <AlertDialogDescription>
-                              Are you sure you want to remove this user from the
-                              company? This action cannot be undone.
-                            </AlertDialogDescription>
-                          </AlertDialogHeader>
-                          <AlertDialogFooter>
-                            <AlertDialogCancel>Cancel</AlertDialogCancel>
-                            <AlertDialogAction
-                              className="bg-red-600 font-bold hover:bg-red-700"
-                              onClick={() =>
-                                deleteUserMutation.mutate(user.id as string)
-                              }
-                            >
-                              Remove
-                            </AlertDialogAction>
-                          </AlertDialogFooter>
-                        </AlertDialogContent>
-                      </AlertDialog>
+                    <div>
+                      <div className="font-bold text-gray-900 text-sm">
+                        {user.email || 'Unknown User'}
+                      </div>
+                      <div className="mt-1 text-gray-500 text-xs uppercase tracking-wide">
+                        {user.userName || 'Application User'}
+                      </div>
                     </div>
                   </div>
-                )
-              )}
+                  <div className="flex items-center gap-2">
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <button
+                          className="text-gray-400 transition-colors hover:text-red-600"
+                          disabled={deleteUserMutation.isPending}
+                          type="button"
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </button>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>Remove User</AlertDialogTitle>
+                          <AlertDialogDescription>
+                            Are you sure you want to remove this user from the company? This action
+                            cannot be undone.
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel>Cancel</AlertDialogCancel>
+                          <AlertDialogAction
+                            className="bg-red-600 font-bold hover:bg-red-700"
+                            onClick={() => deleteUserMutation.mutate(user.id as string)}
+                          >
+                            Remove
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
+                  </div>
+                </div>
+              ))}
 
               {(!initialCompany?.applicationIdentityUsers ||
                 initialCompany.applicationIdentityUsers.length === 0) && (
                   <div className="border border-gray-200 bg-gray-50 p-6 text-center">
-                    <p className="text-gray-500 text-sm">
-                      No application users found.
-                    </p>
+                    <p className="text-gray-500 text-sm">No application users found.</p>
                   </div>
                 )}
             </div>
@@ -1329,9 +1299,7 @@ function ProfileEdit() {
           {/* Company Invites */}
           <section className="space-y-6">
             <div className="flex items-center justify-between border-gray-100 border-b pb-2">
-              <h3 className="font-bold text-lg uppercase tracking-widest">
-                Pending Invites
-              </h3>
+              <h3 className="font-bold text-lg uppercase tracking-widest">Pending Invites</h3>
             </div>
 
             <div className="space-y-4">
@@ -1345,9 +1313,7 @@ function ProfileEdit() {
                       <User className="h-4 w-4 text-gray-400" />
                     </div>
                     <div>
-                      <div className="font-bold text-gray-900 text-sm">
-                        {invite.name}
-                      </div>
+                      <div className="font-bold text-gray-900 text-sm">{invite.name}</div>
                       <div className="mt-1 text-gray-500 text-xs uppercase tracking-wide">
                         {invite.email} • Pending Invite
                       </div>
@@ -1375,9 +1341,7 @@ function ProfileEdit() {
                           <AlertDialogCancel>Cancel</AlertDialogCancel>
                           <AlertDialogAction
                             className="bg-red-600 font-bold hover:bg-red-700"
-                            onClick={() =>
-                              deleteInviteMutation.mutate(invite.id as string)
-                            }
+                            onClick={() => deleteInviteMutation.mutate(invite.id as string)}
                           >
                             Cancel Invite
                           </AlertDialogAction>
@@ -1393,9 +1357,7 @@ function ProfileEdit() {
                   <div className="space-y-2">
                     <Label>Full Name</Label>
                     <Input
-                      onChange={(e) =>
-                        setNewInvite({ ...newInvite, name: e.target.value })
-                      }
+                      onChange={(e) => setNewInvite({ ...newInvite, name: e.target.value })}
                       placeholder="Enter full name"
                       value={newInvite.name}
                     />
@@ -1403,35 +1365,23 @@ function ProfileEdit() {
                   <div className="space-y-2">
                     <Label>Email Address</Label>
                     <Input
-                      onChange={(e) =>
-                        setNewInvite({ ...newInvite, email: e.target.value })
-                      }
+                      onChange={(e) => setNewInvite({ ...newInvite, email: e.target.value })}
                       placeholder="Enter email address"
                       type="email"
                       value={newInvite.email}
                     />
                   </div>
                   <div className="flex justify-end gap-2 pt-2">
-                    <Button
-                      onClick={() => setIsAddingInvite(false)}
-                      size="sm"
-                      variant="outline"
-                    >
+                    <Button onClick={() => setIsAddingInvite(false)} size="sm" variant="outline">
                       Cancel
                     </Button>
                     <Button
                       className="bg-black hover:bg-gray-800"
-                      disabled={
-                        addInviteMutation.isPending ||
-                        !newInvite.name ||
-                        !newInvite.email
-                      }
+                      disabled={addInviteMutation.isPending || !newInvite.name || !newInvite.email}
                       onClick={() => addInviteMutation.mutate()}
                       size="sm"
                     >
-                      {addInviteMutation.isPending
-                        ? "Sending..."
-                        : "Send Invite"}
+                      {addInviteMutation.isPending ? 'Sending...' : 'Send Invite'}
                     </Button>
                   </div>
                 </div>
@@ -1462,39 +1412,58 @@ function ProfileEdit() {
               <form.Field
                 children={(field) => (
                   <div>
-                    <Select
-                      onValueChange={field.handleChange}
-                      value={field.state.value as string}
-                    >
+                    <Select onValueChange={field.handleChange} value={field.state.value as string}>
                       <SelectTrigger className="w-full">
                         <SelectValue placeholder="Select a service type" />
                       </SelectTrigger>
                       <SelectContent className="w-full">
                         {serviceTypes?.map((serviceType) => (
-                          <SelectItem
-                            key={serviceType.id}
-                            value={serviceType.id as string}
-                          >
+                          <SelectItem key={serviceType.id} value={serviceType.id as string}>
                             {serviceType.name}
                           </SelectItem>
                         ))}
                       </SelectContent>
                     </Select>
                     {field.state.meta.errors && (
-                      <p className="mt-1 text-red-500 text-xs">
-                        {field.state.meta.errors}
-                      </p>
+                      <p className="mt-1 text-red-500 text-xs">{field.state.meta.errors}</p>
                     )}
                   </div>
                 )}
                 name="serviceTypeId"
                 validators={{
-                  onChange: ({ value }) =>
-                    value ? undefined : "Service type is required",
-                  onSubmit: ({ value }) =>
-                    value ? undefined : "Service type is required",
+                  onChange: ({ value }) => (value ? undefined : 'Service type is required'),
+                  onSubmit: ({ value }) => (value ? undefined : 'Service type is required'),
                 }}
               />
+            </div>
+            {/* Service Sub Types - filtered by selected ServiceType */}
+            <div className="mt-4 border border-gray-200 bg-white p-6 pt-4 shadow-sm">
+              <p className="mb-2 text-gray-400 text-xs italic">
+                Select service specializations within your service type.
+              </p>
+              <form.Subscribe selector={(state) => state.values.serviceTypeId}>
+                {(serviceTypeId) => {
+                  const filteredServiceSubTypes = serviceSubTypes?.filter(
+                    (sst) => sst.serviceTypeId === serviceTypeId
+                  ) || []
+                  return (
+                    <MultiSelectCombobox
+                      chipClassName="rounded-none border border-gray-200 bg-gray-100 px-3 py-1.5 font-bold text-[10px] text-gray-600 uppercase tracking-wider transition-all"
+                      createButtonClassName="flex w-full items-center gap-2 px-2 py-2 text-left text-sm text-gray-600 hover:bg-gray-100"
+                      emptyMessage={serviceTypeId ? 'No specializations found for this service type.' : 'Please select a service type first.'}
+                      getItemLabel={(sst) => sst.name || ''}
+                      helperText=""
+                      isCreating={createServiceSubTypeMutation.isPending}
+                      items={filteredServiceSubTypes}
+                      noSelectionMessage="No specializations selected."
+                      onCreateNew={serviceTypeId ? (name) => createServiceSubTypeMutation.mutate(name) : undefined}
+                      onSelectionChange={setSelectedServiceSubTypeIds}
+                      placeholder="Search and select specializations..."
+                      selectedIds={selectedServiceSubTypeIds}
+                    />
+                  )
+                }}
+              </form.Subscribe>
             </div>
           </section>
 
@@ -1509,9 +1478,7 @@ function ProfileEdit() {
               </p>
               <Button
                 className="w-full bg-blue-600 font-bold text-white text-xs uppercase tracking-widest hover:bg-blue-700"
-                onClick={() =>
-                  router.navigate({ to: `/profile/${companyId}/reports` })
-                }
+                onClick={() => router.navigate({ to: `/profile/${companyId}/reports` })}
               >
                 <FileText className="mr-2 h-4 w-4" />
                 Manage Reports
@@ -1529,7 +1496,7 @@ function ProfileEdit() {
                 chipClassName="rounded-none border border-black bg-black px-3 py-1.5 font-bold text-[10px] text-white uppercase tracking-wider transition-all"
                 createButtonClassName="flex w-full items-center gap-2 px-2 py-2 text-left text-sm text-black hover:bg-gray-100"
                 emptyMessage="No capabilities found."
-                getItemLabel={(cap) => cap.name || ""}
+                getItemLabel={(cap) => cap.name || ''}
                 helperText="Select all that apply to your firm."
                 isCreating={createCapabilityMutation.isPending}
                 items={capabilities || []}
@@ -1552,7 +1519,7 @@ function ProfileEdit() {
                 chipClassName="rounded-none border border-red-600 bg-red-600 px-3 py-1.5 font-bold text-[10px] text-white uppercase tracking-wider transition-all"
                 createButtonClassName="flex w-full items-center gap-2 px-2 py-2 text-left text-sm text-red-600 hover:bg-red-50"
                 emptyMessage="No industries found."
-                getItemLabel={(ind) => ind.name || ""}
+                getItemLabel={(ind) => ind.name || ''}
                 helperText="Select the primary industries your firm serves."
                 isCreating={createIndustryMutation.isPending}
                 items={industries || []}
@@ -1576,17 +1543,15 @@ function ProfileEdit() {
           <Button onClick={() => router.history.back()} variant="outline">
             CANCEL
           </Button>
-          <form.Subscribe
-            selector={(state) => [state.canSubmit, state.isSubmitting]}
-          >
+          <form.Subscribe selector={(state) => [state.canSubmit, state.isSubmitting]}>
             {([canSubmit, isSubmitting]) => (
               <Button
                 className="min-w-[160px] bg-red-600 font-bold text-xs uppercase tracking-widest hover:bg-red-700"
                 disabled={!canSubmit}
                 onClick={() => {
-                  const md = mdxEditorRef.current?.getMarkdown();
-                  form.setFieldValue("fullDescription", md || "");
-                  form.handleSubmit();
+                  const md = mdxEditorRef.current?.getMarkdown()
+                  form.setFieldValue('fullDescription', md || '')
+                  form.handleSubmit()
                 }}
               >
                 {isSubmitting ? (
@@ -1604,5 +1569,5 @@ function ProfileEdit() {
         </div>
       </div>
     </div>
-  );
+  )
 }

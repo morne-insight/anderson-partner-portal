@@ -13,6 +13,7 @@ namespace AndersonAPI.Application.Companies
         {
             CreateMap<Company, CompanyProfileDto>()
                 .ForMember(d => d.ServiceTypeName, opt => opt.MapFrom(src => src.ServiceType != null ? src.ServiceType!.Name : null))
+                .ForMember(d => d.ServiceSubTypes, opt => opt.MapFrom(src => src.ServiceSubTypes))
                 .ForMember(d => d.ApplicationIdentityUsers, opt => opt.MapFrom(src => src.ApplicationIdentityUsers))
                 .ForMember(d => d.Capabilities, opt => opt.MapFrom(src => src.Capabilities))
                 .ForMember(d => d.Industries, opt => opt.MapFrom(src => src.Industries))

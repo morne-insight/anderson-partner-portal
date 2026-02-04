@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace AndersonAPI.Application.Account;
 
+[IntentManaged(Mode.Fully, Body = Mode.Merge)]
 public class AccountEmailSender : IAccountEmailSender
 {
     private readonly IEmailService _emailService;

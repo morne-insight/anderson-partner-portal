@@ -20,6 +20,7 @@ namespace AndersonAPI.Api.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
+    [IntentManaged(Mode.Merge)]
     public class AccountController : ControllerBase
     {
         // Validate the email address using DataAnnotations like the UserValidator does when RequireUniqueEmail = true.
@@ -31,12 +32,13 @@ namespace AndersonAPI.Api.Controllers
         private readonly IAccountEmailSender _accountEmailSender;
         private readonly ITokenService _tokenService;
 
+        [IntentManaged(Mode.Merge)]
         public AccountController(IUserStore<ApplicationIdentityUser> userStore,
-            UserManager<ApplicationIdentityUser> userManager,
-            RoleManager<IdentityRole<string>> roleManager,  
-            ILogger<AccountController> logger,
-            IAccountEmailSender accountEmailSender,
-            ITokenService tokenService)
+                    UserManager<ApplicationIdentityUser> userManager,
+                    RoleManager<IdentityRole<string>> roleManager,
+                    ILogger<AccountController> logger,
+                    IAccountEmailSender accountEmailSender,
+                    ITokenService tokenService)
         {
             _userStore = userStore;
             _userManager = userManager;
@@ -71,7 +73,8 @@ namespace AndersonAPI.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            var user = new ApplicationIdentityUser { 
+            var user = new ApplicationIdentityUser
+            {
                 Id = Guid.NewGuid().ToString()
             };
 
@@ -120,7 +123,7 @@ namespace AndersonAPI.Api.Controllers
             {
                 ModelState.AddModelError<RegisterWithRoleDto>(x => x.UserName, "Mandatory");
             }
-            
+
             if (string.IsNullOrWhiteSpace(input.Role))
             {
                 ModelState.AddModelError<RegisterWithRoleDto>(x => x.Role, "Mandatory");
@@ -154,7 +157,7 @@ namespace AndersonAPI.Api.Controllers
 
                 return BadRequest(ModelState);
             }
-            
+
             await _userManager.AddToRoleAsync(user, input.Role!);
 
             _logger.LogInformation("User created a new account with password.");
@@ -173,7 +176,7 @@ namespace AndersonAPI.Api.Controllers
         public async Task<ActionResult> CreateRole(RoleDto role)
         {
             if (string.IsNullOrEmpty(role.Name))
-            { 
+            {
                 return BadRequest("Role is required.");
             }
 
@@ -527,6 +530,7 @@ namespace AndersonAPI.Api.Controllers
         public string? UserName { get; set; }
     }
 
+    [IntentManaged(Mode.Ignore)]
     public class RegisterWithRoleDto
     {
         public string? Email { get; set; }
@@ -534,7 +538,8 @@ namespace AndersonAPI.Api.Controllers
         public string? UserName { get; set; }
         public string? Role { get; set; }
     }
-    
+
+    [IntentManaged(Mode.Ignore)]
     public class RoleDto
     {
         public string? Name { get; set; }

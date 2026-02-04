@@ -10,6 +10,7 @@ namespace AndersonAPI.Api.Configuration
 {
     public static class AspNetCoreIdentityConfiguration
     {
+        [IntentManaged(Mode.Fully, Body = Mode.Ignore)]
         public static void ConfigureIdentity(this IServiceCollection services)
         {
             services.AddIdentityWithoutCookieAuth<ApplicationIdentityUser, IdentityRole<string>>()

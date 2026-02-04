@@ -38,6 +38,7 @@ namespace AndersonAPI.Infrastructure.Persistence
         public DbSet<Quarterly> Quarterlies { get; set; }
         public DbSet<Region> Regions { get; set; }
         public DbSet<Review> Reviews { get; set; }
+        public DbSet<ServiceSubType> ServiceSubTypes { get; set; }
         public DbSet<ServiceType> ServiceTypes { get; set; }
 
         public override async Task<int> SaveChangesAsync(
@@ -72,6 +73,7 @@ namespace AndersonAPI.Infrastructure.Persistence
             modelBuilder.ApplyConfiguration(new QuarterlyConfiguration());
             modelBuilder.ApplyConfiguration(new RegionConfiguration());
             modelBuilder.ApplyConfiguration(new ReviewConfiguration());
+            modelBuilder.ApplyConfiguration(new ServiceSubTypeConfiguration());
             modelBuilder.ApplyConfiguration(new ServiceTypeConfiguration());
 
         }

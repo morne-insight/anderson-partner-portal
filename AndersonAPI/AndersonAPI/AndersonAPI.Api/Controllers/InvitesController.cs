@@ -1,6 +1,7 @@
 using System.Net.Mime;
 using AndersonAPI.Api.Controllers.ResponseTypes;
 using AndersonAPI.Application.Invites;
+using AndersonAPI.Application.Invites.AcceptInvite;
 using AndersonAPI.Application.Invites.CreateInvite;
 using AndersonAPI.Application.Invites.DeleteInvite;
 using AndersonAPI.Application.Invites.GetInviteById;
@@ -27,6 +28,26 @@ namespace AndersonAPI.Api.Controllers
         public InvitesController(ISender mediator)
         {
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <response code="204">Successfully updated.</response>
+        /// <response code="400">One or more validation errors have occurred.</response>
+        /// <response code="401">Unauthorized request.</response>
+        /// <response code="403">Forbidden request.</response>
+        /// <response code="404">One or more entities could not be found with the provided parameters.</response>
+        [HttpPut("api/invites/{id}/accept")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> AcceptInvite([FromRoute] Guid id, CancellationToken cancellationToken = default)
+        {
+            await _mediator.Send(new AcceptInviteCommand(id: id), cancellationToken);
+            return NoContent();
         }
 
         /// <summary>

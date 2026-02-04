@@ -11,10 +11,11 @@ namespace AndersonAPI.Application.Companies
         {
             Name = null!;
             ShortDescription = null!;
+            ServiceTypeName = null!;
+            ServiceSubTypes = null!;
             Capabilities = null!;
             Locations = null!;
             Contacts = null!;
-            ServiceTypeName = null!;
         }
 
         public Guid Id { get; set; }
@@ -26,29 +27,33 @@ namespace AndersonAPI.Application.Companies
         public double MatchScore { get; set; }
         public Guid? ServiceTypeId { get; set; }
         public string ServiceTypeName { get; set; }
+        public List<PartnerServiceSubTypeDto> ServiceSubTypes { get; set; }
 
         public static PartnerProfileListItem Create(
             Guid id,
             string name,
             string shortDescription,
+            string serviceTypeName,
+            List<PartnerServiceSubTypeDto> serviceSubTypes,
+            Guid? serviceTypeId,
             List<PartnerCapabilityDto> capabilities,
             List<PartnerLocationDto> locations,
             List<PartnerContactDto> contacts,
-            double matchScore,
-            Guid? serviceTypeId,
-            string serviceTypeName)
+            double matchScore)
         {
             return new PartnerProfileListItem
             {
                 Id = id,
                 Name = name,
                 ShortDescription = shortDescription,
+                ServiceTypeName = serviceTypeName,
+                ServiceSubTypes = serviceSubTypes
+,
+                ServiceTypeId = serviceTypeId,
                 Capabilities = capabilities,
                 Locations = locations,
                 Contacts = contacts,
-                MatchScore = matchScore,
-                ServiceTypeId = serviceTypeId,
-                ServiceTypeName = serviceTypeName
+                MatchScore = matchScore
             };
         }
     }

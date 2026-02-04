@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
@@ -39,7 +39,7 @@
   </ItemGroup>
 
 	<PropertyGroup>
-		<GenerateOpenApiClient Condition="'$(GenerateOpenApiClient)'==''">false</GenerateOpenApiClient>
+		<GenerateOpenApiClient Condition="'$(GenerateOpenApiClient)'==''">true</GenerateOpenApiClient>
 	</PropertyGroup>
 	
   <Target Name="GenerateOpenApiClient" AfterTargets="Build" Condition="'$(GenerateOpenApiClient)'=='true'">
