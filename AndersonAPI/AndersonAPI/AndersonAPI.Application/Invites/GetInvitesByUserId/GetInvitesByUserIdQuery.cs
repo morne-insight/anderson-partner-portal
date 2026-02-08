@@ -9,8 +9,11 @@ namespace AndersonAPI.Application.Invites.GetInvitesByUserId
 {
     public class GetInvitesByUserIdQuery : IRequest<List<InviteDto>>, IQuery
     {
-        public GetInvitesByUserIdQuery()
+        public GetInvitesByUserIdQuery(string? id)
         {
+            Id = id;
         }
+
+        public string? Id { get; set; }
     }
 }

@@ -4,8 +4,12 @@ using System.Text;
 using System.Text.Encodings.Web;
 using AndersonAPI.Api.Services;
 using AndersonAPI.Application.Account;
+using AndersonAPI.Application.Capabilities.DeleteCapability;
+using AndersonAPI.Application.Invites.AcceptInvite;
+using AndersonAPI.Application.Invites.GetInvitesByUserId;
 using AndersonAPI.Domain.Entities;
 using Intent.RoslynWeaver.Attributes;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -31,6 +35,7 @@ namespace AndersonAPI.Api.Controllers
         private readonly ILogger<AccountController> _logger;
         private readonly IAccountEmailSender _accountEmailSender;
         private readonly ITokenService _tokenService;
+        private readonly ISender _mediator;
 
         [IntentManaged(Mode.Merge)]
         public AccountController(IUserStore<ApplicationIdentityUser> userStore,
@@ -38,7 +43,8 @@ namespace AndersonAPI.Api.Controllers
                     RoleManager<IdentityRole<string>> roleManager,
                     ILogger<AccountController> logger,
                     IAccountEmailSender accountEmailSender,
-                    ITokenService tokenService)
+                    ITokenService tokenService,
+                    ISender mediator)
         {
             _userStore = userStore;
             _userManager = userManager;
@@ -46,6 +52,7 @@ namespace AndersonAPI.Api.Controllers
             _logger = logger;
             _accountEmailSender = accountEmailSender;
             _tokenService = tokenService;
+            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
 
         [HttpPost]
@@ -296,6 +303,7 @@ namespace AndersonAPI.Api.Controllers
 
         [HttpPost]
         [AllowAnonymous]
+        [IntentManaged(Mode.Fully, Body = Mode.Merge)]
         public async Task<IActionResult> ConfirmEmail(ConfirmEmailDto input)
         {
             if (string.IsNullOrWhiteSpace(input.UserId))
@@ -328,6 +336,13 @@ namespace AndersonAPI.Api.Controllers
             {
                 ModelState.AddModelError<ConfirmEmailDto>(x => x, "Error confirming your email.");
                 return BadRequest(ModelState);
+            }
+
+            var invites = await _mediator.Send(new GetInvitesByUserIdQuery(user.Id));
+
+            foreach (var invite in invites)
+            {
+                await _mediator.Send(new AcceptInviteCommand(invite.Id, user.Id));
             }
 
             return Ok();
@@ -528,6 +543,7 @@ namespace AndersonAPI.Api.Controllers
         public string? Email { get; set; }
         public string? Password { get; set; }
         public string? UserName { get; set; }
+
     }
 
     [IntentManaged(Mode.Ignore)]

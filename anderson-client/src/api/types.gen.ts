@@ -5,6 +5,14 @@ export type ClientOptions = {
 }
 
 /**
+ * AcceptInviteCommand
+ */
+export type AcceptInviteCommand = {
+	id: string
+	userId: string
+}
+
+/**
  * AddContactCompanyCommand
  */
 export type AddContactCompanyCommand = {
@@ -260,6 +268,7 @@ export type CreateIndustryCommand = {
  * CreateInviteCommand
  */
 export type CreateInviteCommand = {
+	name: string
 	email: string
 	companyId: string
 }
@@ -422,6 +431,9 @@ export type InviteDto = {
 	email?: string
 	companyId?: string
 	name?: string
+	companyName?: string
+	companyShortDescription?: string
+	companyWebsiteUrl?: string
 	id?: string
 }
 
@@ -1070,6 +1082,7 @@ export type UpdateInfoDto = {
  */
 export type UpdateInviteCommand = {
 	id: string
+	name: string
 	email: string
 }
 
@@ -1204,17 +1217,6 @@ export type UserDetailDto = {
 	companyId?: string | null
 	companyName?: string | null
 	companies?: Array<UserCompanyDto>
-	invites?: Array<UserInviteDto>
-}
-
-/**
- * UserInviteDto
- */
-export type UserInviteDto = {
-	companyName?: string
-	companyShortDescription?: string
-	companyWebsiteUrl?: string
-	id?: string
 }
 
 export type PostApiAccountRegisterData = {
@@ -3221,6 +3223,36 @@ export type PutApiIndustriesByIdSetStateResponses = {
 export type PutApiIndustriesByIdSetStateResponse =
 	PutApiIndustriesByIdSetStateResponses[keyof PutApiIndustriesByIdSetStateResponses]
 
+export type PutApiInvitesAcceptData = {
+	body: AcceptInviteCommand
+	path?: never
+	query?: never
+	url: '/api/invites/accept'
+}
+
+export type PutApiInvitesAcceptErrors = {
+	/**
+	 * Bad Request
+	 */
+	400: ProblemDetails
+	/**
+	 * Internal Server Error
+	 */
+	500: ProblemDetails
+}
+
+export type PutApiInvitesAcceptError = PutApiInvitesAcceptErrors[keyof PutApiInvitesAcceptErrors]
+
+export type PutApiInvitesAcceptResponses = {
+	/**
+	 * No Content
+	 */
+	204: void
+}
+
+export type PutApiInvitesAcceptResponse =
+	PutApiInvitesAcceptResponses[keyof PutApiInvitesAcceptResponses]
+
 export type GetApiInvitesData = {
 	body?: never
 	path?: never
@@ -3421,11 +3453,17 @@ export type PutApiInvitesByIdResponse = PutApiInvitesByIdResponses[keyof PutApiI
 export type GetApiInvitesMeData = {
 	body?: never
 	path?: never
-	query?: never
+	query?: {
+		id?: string
+	}
 	url: '/api/invites/me'
 }
 
 export type GetApiInvitesMeErrors = {
+	/**
+	 * Bad Request
+	 */
+	400: ProblemDetails
 	/**
 	 * Unauthorized
 	 */
@@ -3434,6 +3472,10 @@ export type GetApiInvitesMeErrors = {
 	 * Forbidden
 	 */
 	403: ProblemDetails
+	/**
+	 * Not Found
+	 */
+	404: ProblemDetails
 	/**
 	 * Internal Server Error
 	 */

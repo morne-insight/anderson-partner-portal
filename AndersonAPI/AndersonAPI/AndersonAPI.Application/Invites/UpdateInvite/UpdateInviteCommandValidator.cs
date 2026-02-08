@@ -17,6 +17,9 @@ namespace AndersonAPI.Application.Invites.UpdateInvite
 
         private void ConfigureValidationRules()
         {
+            RuleFor(v => v.Name)
+                .NotNull();
+
             RuleFor(v => v.Email)
                 .NotNull()
                 .MaximumLength(200);

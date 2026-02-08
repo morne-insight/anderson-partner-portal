@@ -11,29 +11,21 @@ namespace AndersonAPI.Application.User
         {
             Name = null!;
             Companies = null!;
-            Invites = null!;
         }
 
         public string Name { get; set; }
         public Guid? CompanyId { get; set; }
         public string? CompanyName { get; set; }
         public List<UserCompanyDto> Companies { get; set; }
-        public List<UserInviteDto> Invites { get; set; }
 
-        public static UserDetailDto Create(
-            string name,
-            Guid? companyId,
-            string? companyName,
-            List<UserCompanyDto> companies,
-            List<UserInviteDto> invites)
+        public static UserDetailDto Create(string name, Guid? companyId, string? companyName, List<UserCompanyDto> companies)
         {
             return new UserDetailDto
             {
                 Name = name,
                 CompanyId = companyId,
                 CompanyName = companyName,
-                Companies = companies,
-                Invites = invites
+                Companies = companies
             };
         }
     }

@@ -313,6 +313,9 @@ import type {
 	PutApiIndustriesByIdSetStateData,
 	PutApiIndustriesByIdSetStateErrors,
 	PutApiIndustriesByIdSetStateResponses,
+	PutApiInvitesAcceptData,
+	PutApiInvitesAcceptErrors,
+	PutApiInvitesAcceptResponses,
 	PutApiInvitesByIdData,
 	PutApiInvitesByIdErrors,
 	PutApiInvitesByIdResponses,
@@ -1074,6 +1077,22 @@ export const putApiIndustriesByIdSetState = <ThrowOnError extends boolean = fals
 		ThrowOnError
 	>({
 		url: '/api/industries/{id}/set-state',
+		...options,
+		headers: {
+			'Content-Type': 'application/json',
+			...options.headers,
+		},
+	})
+
+export const putApiInvitesAccept = <ThrowOnError extends boolean = false>(
+	options: Options<PutApiInvitesAcceptData, ThrowOnError>
+) =>
+	(options.client ?? client).put<
+		PutApiInvitesAcceptResponses,
+		PutApiInvitesAcceptErrors,
+		ThrowOnError
+	>({
+		url: '/api/invites/accept',
 		...options,
 		headers: {
 			'Content-Type': 'application/json',

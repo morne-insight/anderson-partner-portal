@@ -5811,6 +5811,78 @@
         }
       }
     },
+    "/api/invites/accept": {
+      "put": {
+        "tags": [
+          "Invites"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AcceptInviteCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AcceptInviteCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AcceptInviteCommand"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/invites": {
       "post": {
         "tags": [
@@ -6393,6 +6465,15 @@
         "tags": [
           "Invites"
         ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -6423,6 +6504,26 @@
               }
             }
           },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
           "401": {
             "description": "Unauthorized",
             "content": {
@@ -6445,6 +6546,26 @@
           },
           "403": {
             "description": "Forbidden",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
             "content": {
               "text/plain": {
                 "schema": {
@@ -14331,6 +14452,23 @@
   },
   "components": {
     "schemas": {
+      "AcceptInviteCommand": {
+        "title": "AcceptInviteCommand",
+        "required": [
+          "id",
+          "userId"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "userId": {
+            "type": "string"
+          }
+        }
+      },
       "AddContactCompanyCommand": {
         "title": "AddContactCompanyCommand",
         "required": [
@@ -14963,11 +15101,15 @@
       "CreateInviteCommand": {
         "title": "CreateInviteCommand",
         "required": [
+          "name",
           "email",
           "companyId"
         ],
         "type": "object",
         "properties": {
+          "name": {
+            "type": "string"
+          },
           "email": {
             "type": "string"
           },
@@ -15364,6 +15506,15 @@
             "format": "uuid"
           },
           "name": {
+            "type": "string"
+          },
+          "companyName": {
+            "type": "string"
+          },
+          "companyShortDescription": {
+            "type": "string"
+          },
+          "companyWebsiteUrl": {
             "type": "string"
           },
           "id": {
@@ -16936,6 +17087,7 @@
         "title": "UpdateInviteCommand",
         "required": [
           "id",
+          "name",
           "email"
         ],
         "type": "object",
@@ -16943,6 +17095,9 @@
           "id": {
             "type": "string",
             "format": "uuid"
+          },
+          "name": {
+            "type": "string"
           },
           "email": {
             "type": "string"
@@ -17296,31 +17451,6 @@
             "items": {
               "$ref": "#/components/schemas/UserCompanyDto"
             }
-          },
-          "invites": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/UserInviteDto"
-            }
-          }
-        }
-      },
-      "UserInviteDto": {
-        "title": "UserInviteDto",
-        "type": "object",
-        "properties": {
-          "companyName": {
-            "type": "string"
-          },
-          "companyShortDescription": {
-            "type": "string"
-          },
-          "companyWebsiteUrl": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string",
-            "format": "uuid"
           }
         }
       }

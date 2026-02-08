@@ -86,7 +86,7 @@
     </childElement>
     <childElement id="86c9f68c-c78c-4c38-8f93-da15448eeb8d" type="Class Constructor" typeId="dec2bd12-4699-4f45-8ec9-3b62dc692d2b">
       <name>Constructor</name>
-      <display>Invite(email: string, companyId: guid, description: string = "", name: string = "")</display>
+      <display>Invite(name: string, email: string, companyId: guid, description: string = "")</display>
       <isAbstract>false</isAbstract>
       <sort-children>by-type-then-manually</sort-children>
       <genericTypes />
@@ -106,6 +106,38 @@
       <stereotypes />
       <metadata />
       <childElements>
+        <childElement id="6975159c-8b12-473d-bcb5-e7fb56eef6c7" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
+          <name>name</name>
+          <display>in : name: string</display>
+          <isAbstract>false</isAbstract>
+          <genericTypes />
+          <typeReference id="57a299c4-1812-4fa8-b657-d108695e78ba">
+            <typeId>d384db9c-a279-45e1-801e-e4e8099625f2</typeId>
+            <isNavigable>true</isNavigable>
+            <isNullable>false</isNullable>
+            <isCollection>false</isCollection>
+            <isRequired>true</isRequired>
+            <typePackageName>Intent.Common.Types</typePackageName>
+            <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
+            <stereotypes />
+            <genericTypeParameters />
+          </typeReference>
+          <isMapped>true</isMapped>
+          <mappedClass>
+            <mappingSettingsId>d6d0abfd-893c-4bec-92cb-419934ba5ba8</mappingSettingsId>
+            <autoSyncTypeReference>true</autoSyncTypeReference>
+            <mappedPath>
+              <target id="7a9e975e-9e37-4ffa-b67e-5181562f0a66" name="base" type="association" specialization="Generalization Target End" specializationId="4686cc1d-b4d8-4b99-b45b-f77bd5496946" />
+              <target id="fd3e9d3a-952c-4ffa-8aff-d3fe5d4b774e" name="Name" type="element" specialization="Attribute" specializationId="0090fb93-483e-41af-a11d-5ad2dc796adf" />
+            </mappedPath>
+          </mappedClass>
+          <parentFolderId>86c9f68c-c78c-4c38-8f93-da15448eeb8d</parentFolderId>
+          <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+          <packageName>AndersonAPI.Domain</packageName>
+          <stereotypes />
+          <metadata />
+          <childElements />
+        </childElement>
         <childElement id="44591456-0d8c-4a79-898e-607fdcd04fd3" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
           <name>email</name>
           <display>in : email: string</display>
@@ -201,44 +233,11 @@
           <metadata />
           <childElements />
         </childElement>
-        <childElement id="6975159c-8b12-473d-bcb5-e7fb56eef6c7" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
-          <name>name</name>
-          <display>in : name: string = ""</display>
-          <isAbstract>false</isAbstract>
-          <value>""</value>
-          <genericTypes />
-          <typeReference id="57a299c4-1812-4fa8-b657-d108695e78ba">
-            <typeId>d384db9c-a279-45e1-801e-e4e8099625f2</typeId>
-            <isNavigable>true</isNavigable>
-            <isNullable>false</isNullable>
-            <isCollection>false</isCollection>
-            <isRequired>true</isRequired>
-            <typePackageName>Intent.Common.Types</typePackageName>
-            <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
-            <stereotypes />
-            <genericTypeParameters />
-          </typeReference>
-          <isMapped>true</isMapped>
-          <mappedClass>
-            <mappingSettingsId>d6d0abfd-893c-4bec-92cb-419934ba5ba8</mappingSettingsId>
-            <autoSyncTypeReference>true</autoSyncTypeReference>
-            <mappedPath>
-              <target id="7a9e975e-9e37-4ffa-b67e-5181562f0a66" name="base" type="association" specialization="Generalization Target End" specializationId="4686cc1d-b4d8-4b99-b45b-f77bd5496946" />
-              <target id="fd3e9d3a-952c-4ffa-8aff-d3fe5d4b774e" name="Name" type="element" specialization="Attribute" specializationId="0090fb93-483e-41af-a11d-5ad2dc796adf" />
-            </mappedPath>
-          </mappedClass>
-          <parentFolderId>86c9f68c-c78c-4c38-8f93-da15448eeb8d</parentFolderId>
-          <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
-          <packageName>AndersonAPI.Domain</packageName>
-          <stereotypes />
-          <metadata />
-          <childElements />
-        </childElement>
       </childElements>
     </childElement>
     <childElement id="6632ee07-13a0-4188-9ea4-8f1d5809403b" type="Operation" typeId="e042bb67-a1df-480c-9935-b26210f78591">
       <name>Update</name>
-      <display>Update(email: string): void</display>
+      <display>Update(name: string, email: string): void</display>
       <isAbstract>false</isAbstract>
       <sort-children>by-type-then-manually</sort-children>
       <genericTypes />
@@ -266,6 +265,38 @@
       <stereotypes />
       <metadata />
       <childElements>
+        <childElement id="63062332-106a-4b13-8ce8-c942b63c5edc" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
+          <name>name</name>
+          <display>in : name: string</display>
+          <isAbstract>false</isAbstract>
+          <genericTypes />
+          <typeReference id="d7388250-f6d8-417e-84dc-cf5245da745e">
+            <typeId>d384db9c-a279-45e1-801e-e4e8099625f2</typeId>
+            <isNavigable>true</isNavigable>
+            <isNullable>false</isNullable>
+            <isCollection>false</isCollection>
+            <isRequired>true</isRequired>
+            <typePackageName>Intent.Common.Types</typePackageName>
+            <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>
+            <stereotypes />
+            <genericTypeParameters />
+          </typeReference>
+          <isMapped>true</isMapped>
+          <mappedClass>
+            <mappingSettingsId>7590bd83-04bc-40fe-8b5c-118277c049d4</mappingSettingsId>
+            <autoSyncTypeReference>true</autoSyncTypeReference>
+            <mappedPath>
+              <target id="7a9e975e-9e37-4ffa-b67e-5181562f0a66" name="base" type="association" specialization="Generalization Target End" specializationId="4686cc1d-b4d8-4b99-b45b-f77bd5496946" />
+              <target id="fd3e9d3a-952c-4ffa-8aff-d3fe5d4b774e" name="Name" type="element" specialization="Attribute" specializationId="0090fb93-483e-41af-a11d-5ad2dc796adf" />
+            </mappedPath>
+          </mappedClass>
+          <parentFolderId>6632ee07-13a0-4188-9ea4-8f1d5809403b</parentFolderId>
+          <packageId>bd422e58-8c8c-486a-b9d0-640d2b8f0945</packageId>
+          <packageName>AndersonAPI.Domain</packageName>
+          <stereotypes />
+          <metadata />
+          <childElements />
+        </childElement>
         <childElement id="52b1cb59-42a0-4a8c-abd1-8415becf05a5" type="Parameter" typeId="c26d8d0a-a26b-4b5f-b449-e9bdb60b3a4b">
           <name>email</name>
           <display>in : email: string</display>

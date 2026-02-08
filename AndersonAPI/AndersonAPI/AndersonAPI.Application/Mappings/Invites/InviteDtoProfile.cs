@@ -11,7 +11,10 @@ namespace AndersonAPI.Application.Invites
     {
         public InviteDtoProfile()
         {
-            CreateMap<Invite, InviteDto>();
+            CreateMap<Invite, InviteDto>()
+                .ForMember(d => d.CompanyName, opt => opt.MapFrom(src => src.Company.Name))
+                .ForMember(d => d.CompanyShortDescription, opt => opt.MapFrom(src => src.Company.ShortDescription))
+                .ForMember(d => d.CompanyWebsiteUrl, opt => opt.MapFrom(src => src.Company.WebsiteUrl));
         }
     }
 

@@ -1,5 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { useQuery } from '@tanstack/react-query'
+import { createFileRoute, Link } from '@tanstack/react-router'
 import {
   ArrowRight,
   Building,
@@ -8,109 +8,94 @@ import {
   ChevronUp,
   Loader2,
   MapPin,
-} from "lucide-react";
-import { useEffect, useState } from "react";
-import { ConnectRequestDialog } from "@/components/ConnectRequestDialog";
-import { OpportunityMessages } from "@/components/OpportunityMessages";
-import { Button } from "@/components/ui/button";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import { callApi } from "@/server/proxy";
+} from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { OpportunityMessages } from '@/components/app/opportunity/OpportunityMessages'
+import { ConnectRequestDialog } from '@/components/ConnectRequestDialog'
+import { Button } from '@/components/ui/button'
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
+import { callApi } from '@/server/proxy'
 
-export const Route = createFileRoute("/_app/opportunities/")({
+export const Route = createFileRoute('/_app/opportunities/')({
   component: Opportunities,
   validateSearch: (search: Record<string, unknown>) => ({
-    tab: (search.tab as "all" | "me" | "saved") || undefined,
+    tab: (search.tab as 'all' | 'me' | 'saved') || undefined,
   }),
-});
+})
 
 function Opportunities() {
-  const search = Route.useSearch();
-  const [activeTab, setActiveTab] = useState<"all" | "me" | "saved">(
-    search.tab || "all"
-  );
+  const search = Route.useSearch()
+  const [activeTab, setActiveTab] = useState<'all' | 'me' | 'saved'>(search.tab || 'all')
 
   useEffect(() => {
     if (search.tab && search.tab !== activeTab) {
-      setActiveTab(search.tab);
+      setActiveTab(search.tab)
     }
-  }, [search.tab]);
-  const [expandedOpportunities, setExpandedOpportunities] = useState<
-    Set<string>
-  >(new Set());
+  }, [search.tab])
+  const [expandedOpportunities, setExpandedOpportunities] = useState<Set<string>>(new Set())
 
   const { data: allOpportunities, isLoading: isLoadingAll } = useQuery({
-    queryKey: ["opportunities", "all"],
+    queryKey: ['opportunities', 'all'],
     queryFn: async () => {
-      const res = await callApi({ data: { fn: "getApiOpportunities" } });
+      const res = await callApi({ data: { fn: 'getApiOpportunities' } })
       if (res.error) {
-        throw res.error;
+        throw res.error
       }
-      return res || [];
+      return res || []
     },
-  });
+  })
 
   const { data: myOpportunities, isLoading: isLoadingMe } = useQuery({
-    queryKey: ["opportunities", "me"],
+    queryKey: ['opportunities', 'me'],
     queryFn: async () => {
-      const res = await callApi({ data: { fn: "getApiOpportunitiesMe" } });
+      const res = await callApi({ data: { fn: 'getApiOpportunitiesMe' } })
       if (res.error) {
-        throw res.error;
+        throw res.error
       }
-      return res || [];
+      return res || []
     },
-  });
+  })
 
   const { data: savedOpportunities, isLoading: isLoadingSaved } = useQuery({
-    queryKey: ["opportunities", "saved"],
+    queryKey: ['opportunities', 'saved'],
     queryFn: async () => {
-      const res = await callApi({ data: { fn: "getApiOpportunitiesSaved" } });
+      const res = await callApi({ data: { fn: 'getApiOpportunitiesSaved' } })
       if (res.error) {
-        throw res.error;
+        throw res.error
       }
-      return res || [];
+      return res || []
     },
-  });
+  })
 
   const currentOpportunities =
-    activeTab === "all"
+    activeTab === 'all'
       ? allOpportunities
-      : activeTab === "me"
+      : activeTab === 'me'
         ? myOpportunities
-        : savedOpportunities;
+        : savedOpportunities
 
   const isLoading =
-    activeTab === "all"
-      ? isLoadingAll
-      : activeTab === "me"
-        ? isLoadingMe
-        : isLoadingSaved;
+    activeTab === 'all' ? isLoadingAll : activeTab === 'me' ? isLoadingMe : isLoadingSaved
 
   const toggleExpanded = (opportunityId: string) => {
     setExpandedOpportunities((prev) => {
-      const newSet = new Set(prev);
+      const newSet = new Set(prev)
       if (newSet.has(opportunityId)) {
-        newSet.delete(opportunityId);
+        newSet.delete(opportunityId)
       } else {
-        newSet.add(opportunityId);
+        newSet.add(opportunityId)
       }
-      return newSet;
-    });
-  };
+      return newSet
+    })
+  }
 
   return (
     <div className="animate-fade-in space-y-8 text-left">
       <header className="flex items-end justify-between border-gray-200 border-b pb-6">
         <div>
-          <h2 className="mb-3 text-left font-serif text-4xl text-black">
-            Collaboration Hub
-          </h2>
+          <h2 className="mb-3 text-left font-serif text-4xl text-black">Collaboration Hub</h2>
           <p className="text-left font-light text-gray-500 text-lg">
-            Active tenders, joint ventures, and resource requests across the
-            network.
+            Active tenders, joint ventures, and resource requests across the network.
           </p>
         </div>
         <Link
@@ -124,31 +109,31 @@ function Opportunities() {
       {/* Tabs */}
       <div className="flex gap-8 border-gray-200 border-b">
         <button
-          className={`pb-4 font-bold text-sm uppercase tracking-widest transition-all ${activeTab === "all"
-            ? "border-black border-b-2 text-black"
-            : "border-transparent text-gray-400 hover:border-gray-200 hover:text-gray-600"
+          className={`pb-4 font-bold text-sm uppercase tracking-widest transition-all ${activeTab === 'all'
+              ? 'border-black border-b-2 text-black'
+              : 'border-transparent text-gray-400 hover:border-gray-200 hover:text-gray-600'
             }`}
-          onClick={() => setActiveTab("all")}
+          onClick={() => setActiveTab('all')}
           type="button"
         >
           Opportunities
         </button>
         <button
-          className={`pb-4 font-bold text-sm uppercase tracking-widest transition-all ${activeTab === "me"
-            ? "border-black border-b-2 text-black"
-            : "border-transparent text-gray-400 hover:border-gray-200 hover:text-gray-600"
+          className={`pb-4 font-bold text-sm uppercase tracking-widest transition-all ${activeTab === 'me'
+              ? 'border-black border-b-2 text-black'
+              : 'border-transparent text-gray-400 hover:border-gray-200 hover:text-gray-600'
             }`}
-          onClick={() => setActiveTab("me")}
+          onClick={() => setActiveTab('me')}
           type="button"
         >
           My Opportunities
         </button>
         <button
-          className={`pb-4 font-bold text-sm uppercase tracking-widest transition-all ${activeTab === "saved"
-            ? "border-black border-b-2 text-black"
-            : "border-transparent text-gray-400 hover:border-gray-200 hover:text-gray-600"
+          className={`pb-4 font-bold text-sm uppercase tracking-widest transition-all ${activeTab === 'saved'
+              ? 'border-black border-b-2 text-black'
+              : 'border-transparent text-gray-400 hover:border-gray-200 hover:text-gray-600'
             }`}
-          onClick={() => setActiveTab("saved")}
+          onClick={() => setActiveTab('saved')}
           type="button"
         >
           Saved Opportunities
@@ -176,14 +161,14 @@ function Opportunities() {
                   <div className="mb-6 flex flex-col justify-between gap-4 md:flex-row md:items-center">
                     <div className="flex items-center gap-4">
                       <span
-                        className={`border px-3 py-1 font-bold text-[10px] uppercase tracking-widest ${opp.opportunityTypeString === "Tender"
-                          ? "border-gray-900 text-gray-900"
-                          : opp.opportunityTypeString === "Joint Venture"
-                            ? "border-red-600 text-red-600"
-                            : "border-gray-500 text-gray-500"
+                        className={`border px-3 py-1 font-bold text-[10px] uppercase tracking-widest ${opp.opportunityTypeString === 'Tender'
+                            ? 'border-gray-900 text-gray-900'
+                            : opp.opportunityTypeString === 'Joint Venture'
+                              ? 'border-red-600 text-red-600'
+                              : 'border-gray-500 text-gray-500'
                           }`}
                       >
-                        {opp.opportunityTypeString || "Opportunity"}
+                        {opp.opportunityTypeString || 'Opportunity'}
                       </span>
                       {opp.country && (
                         <span className="flex items-center font-medium text-gray-500 text-xs uppercase tracking-wide">
@@ -192,14 +177,14 @@ function Opportunities() {
                       )}
                       {opp.deadline && (
                         <span className="flex items-center font-medium text-gray-500 text-xs uppercase tracking-wide">
-                          <Calendar className="mr-1 h-3 w-3" /> Deadline:{" "}
+                          <Calendar className="mr-1 h-3 w-3" /> Deadline:{' '}
                           {new Date(opp.deadline).toLocaleDateString()}
                         </span>
                       )}
                     </div>
                     <span className="flex items-center gap-2 font-bold text-gray-400 text-xs uppercase tracking-widest">
                       <Building className="h-3 w-3" />
-                      {opp.companyName || opp.companyId || "Unknown Company"}
+                      {opp.companyName || opp.companyId || 'Unknown Company'}
                     </span>
                   </div>
 
@@ -228,7 +213,7 @@ function Opportunities() {
                           className="flex items-center border border-gray-200 bg-gray-50 px-3 py-1 font-medium text-gray-600 text-xs uppercase tracking-wide"
                           key={index}
                         >
-                          {typeof skill === "string" ? skill : skill.name}
+                          {typeof skill === 'string' ? skill : skill.name}
                         </span>
                       ))}
                     </div>
@@ -242,13 +227,12 @@ function Opportunities() {
                         </div>
                       </div>
                       <span className="ml-3 self-center font-bold text-[10px] text-gray-400 uppercase tracking-widest">
-                        {opp.interestedPartners?.length || 0} Partners
-                        interested
+                        {opp.interestedPartners?.length || 0} Partners interested
                       </span>
                     </div>
 
                     <div>
-                      {activeTab === "me" ? (
+                      {activeTab === 'me' ? (
                         <div className="flex items-center gap-4">
                           <CollapsibleTrigger asChild>
                             <Button
@@ -258,13 +242,11 @@ function Opportunities() {
                             >
                               {expandedOpportunities.has(opp.id) ? (
                                 <>
-                                  Hide Messages{" "}
-                                  <ChevronUp className="ml-2 h-4 w-4" />
+                                  Hide Messages <ChevronUp className="ml-2 h-4 w-4" />
                                 </>
                               ) : (
                                 <>
-                                  Show Messages{" "}
-                                  <ChevronDown className="ml-2 h-4 w-4" />
+                                  Show Messages <ChevronDown className="ml-2 h-4 w-4" />
                                 </>
                               )}
                             </Button>
@@ -274,8 +256,7 @@ function Opportunities() {
                             params={{ opportunityId: opp.id! }}
                             to="/opportunities/$opportunityId/edit"
                           >
-                            Edit Opportunity{" "}
-                            <ArrowRight className="ml-2 h-4 w-4" />
+                            Edit Opportunity <ArrowRight className="ml-2 h-4 w-4" />
                           </Link>
                         </div>
                       ) : (
@@ -288,7 +269,7 @@ function Opportunities() {
                               <button
                                 className="font-bold text-black text-xs uppercase tracking-[0.15em] transition-colors hover:text-red-600"
                                 onClick={(e) => {
-                                  e.stopPropagation();
+                                  e.stopPropagation()
                                 }}
                                 type="button"
                               >
@@ -299,7 +280,7 @@ function Opportunities() {
                             <button
                               className="font-bold text-black text-xs uppercase tracking-[0.15em] transition-colors hover:text-red-600"
                               onClick={(e) => {
-                                e.stopPropagation();
+                                e.stopPropagation()
                               }}
                               type="button"
                             >
@@ -321,7 +302,7 @@ function Opportunities() {
                 </div>
 
                 {/* Collapsible Messages Section - Only for 'me' tab */}
-                {activeTab === "me" && (
+                {activeTab === 'me' && (
                   <CollapsibleContent>
                     <div className="mt-0 border-gray-200 border-t">
                       <OpportunityMessages
@@ -338,5 +319,5 @@ function Opportunities() {
         )}
       </div>
     </div>
-  );
+  )
 }

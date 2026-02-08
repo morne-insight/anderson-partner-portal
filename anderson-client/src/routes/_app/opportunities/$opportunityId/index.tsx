@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import type { CompanyProfileDto, OpportunityViewDto } from "@/api";
-import { OpportunityMessages } from "@/components/OpportunityMessages";
+import { OpportunityMessages } from "@/components/app/opportunity/OpportunityMessages";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { callApi } from "@/server/proxy";

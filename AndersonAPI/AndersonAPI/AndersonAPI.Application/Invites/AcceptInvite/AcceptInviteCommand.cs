@@ -9,11 +9,13 @@ namespace AndersonAPI.Application.Invites.AcceptInvite
 {
     public class AcceptInviteCommand : IRequest, ICommand
     {
-        public AcceptInviteCommand(Guid id)
+        public AcceptInviteCommand(Guid id, string userId)
         {
             Id = id;
+            UserId = userId;
         }
 
         public Guid Id { get; set; }
+        public string UserId { get; set; }
     }
 }

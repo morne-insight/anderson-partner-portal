@@ -28,7 +28,7 @@ namespace AndersonAPI.Application.Invites.UpdateInvite
                 throw new NotFoundException($"Could not find Invite '{request.Id}'");
             }
 
-            invite.Update(request.Email);
+            invite.Update(request.Name, request.Email);
         }
     }
 }

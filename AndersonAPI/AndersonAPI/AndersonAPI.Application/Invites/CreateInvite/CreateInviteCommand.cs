@@ -9,11 +9,14 @@ namespace AndersonAPI.Application.Invites.CreateInvite
 {
     public class CreateInviteCommand : IRequest<Guid>, ICommand
     {
-        public CreateInviteCommand(string email, Guid companyId)
+        public CreateInviteCommand(string name, string email, Guid companyId)
         {
+            Name = name;
             Email = email;
             CompanyId = companyId;
         }
+
+        public string Name { get; set; }
 
         public string Email { get; set; }
         public Guid CompanyId { get; set; }

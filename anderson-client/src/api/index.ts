@@ -104,6 +104,7 @@ export {
 	putApiCountriesByIdSetState,
 	putApiIndustriesById,
 	putApiIndustriesByIdSetState,
+	putApiInvitesAccept,
 	putApiInvitesById,
 	putApiOpportunitiesById,
 	putApiOpportunitiesByIdAddInterestedPartners,
@@ -129,6 +130,7 @@ export {
 	putApiServiceTypesByIdSetState,
 } from './sdk.gen'
 export type {
+	AcceptInviteCommand,
 	AddContactCompanyCommand,
 	AddInterestedPartnerOpportunityCommand,
 	AddLocationCompanyCommand,
@@ -652,6 +654,11 @@ export type {
 	PutApiIndustriesByIdSetStateErrors,
 	PutApiIndustriesByIdSetStateResponse,
 	PutApiIndustriesByIdSetStateResponses,
+	PutApiInvitesAcceptData,
+	PutApiInvitesAcceptError,
+	PutApiInvitesAcceptErrors,
+	PutApiInvitesAcceptResponse,
+	PutApiInvitesAcceptResponses,
 	PutApiInvitesByIdData,
 	PutApiInvitesByIdError,
 	PutApiInvitesByIdErrors,
@@ -823,5 +830,4 @@ export type {
 	UpdateServiceTypeCommand,
 	UserCompanyDto,
 	UserDetailDto,
-	UserInviteDto,
 } from './types.gen'

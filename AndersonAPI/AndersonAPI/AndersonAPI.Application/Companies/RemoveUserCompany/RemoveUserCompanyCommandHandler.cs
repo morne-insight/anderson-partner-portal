@@ -5,6 +5,7 @@ using AndersonAPI.Domain.Entities;
 using AndersonAPI.Domain.Repositories;
 using Intent.RoslynWeaver.Attributes;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 [assembly: DefaultIntentManaged(Mode.Fully)]
 [assembly: IntentTemplate("Intent.Application.MediatR.CommandHandler", Version = "2.0")]
@@ -29,15 +30,22 @@ namespace AndersonAPI.Application.Companies.RemoveUserCompany
         [IntentManaged(Mode.Fully, Body = Mode.Merge)]
         public async Task Handle(RemoveUserCompanyCommand request, CancellationToken cancellationToken)
         {
-            var company = await _companyRepository.FindByIdAsync(request.Id, cancellationToken);
+            var company = await _companyRepository
+                .FindByIdAsync(
+                    request.Id, 
+                    queryOptions => queryOptions.Include(c => c.ApplicationIdentityUsers),
+                    cancellationToken);
+
             if (company == null) throw new NotFoundException($"Could not find Company '{request.Id}'.");
 
-            var currentUser = await _currentUserService.GetAsync();
-            if (currentUser == null) throw new UnauthorizedAccessException("Current user is not authenticated.");
+            //var currentUser = await _currentUserService.GetAsync();
+            //if (currentUser == null) throw new UnauthorizedAccessException("Current user is not authenticated.");
 
-            ApplicationIdentityUser? applicationUser = currentUser.Id != null
-                ? await _applicationIdentityUserRepository.FindByIdAsync(currentUser.Id.Value.ToString(), cancellationToken)
-                : null;
+            //ApplicationIdentityUser? applicationUser = currentUser.Id != null
+            //    ? await _applicationIdentityUserRepository.FindByIdAsync(currentUser.Id.Value.ToString(), cancellationToken)
+            //    : null;
+
+            var applicationUser = await _applicationIdentityUserRepository.FindByIdAsync(request.UserId.ToString(), cancellationToken);
 
             if (applicationUser == null) throw new NotFoundException("Application user is null.");
 

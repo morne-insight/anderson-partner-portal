@@ -501,6 +501,7 @@ function ProfileEdit() {
           fn: 'postApiInvites',
           args: {
             body: {
+              name: newInvite.name,
               email: newInvite.email,
               companyId,
             },

@@ -52,8 +52,7 @@ namespace AndersonAPI.Application.User.GetUserDetail
                     name: applicationUser.Name ?? string.Empty,
                     companyId: null,
                     companyName: null,
-                    companies: new List<UserCompanyDto>(),
-                    invites: new List<UserInviteDto>());
+                    companies: new List<UserCompanyDto>());
             }
 
             return UserDetailDto.Create(
@@ -63,12 +62,7 @@ namespace AndersonAPI.Application.User.GetUserDetail
                 companies: companies.Select(c => UserCompanyDto.Create(
                     id: c.Id,
                     name: c.Name,
-                    websiteUrl: c.WebsiteUrl)).ToList(),
-                invites: invites.Select(i => UserInviteDto.Create(
-                    companyName: i.Name,
-                    companyShortDescription: i.ShortDescription,
-                    companyWebsiteUrl: i.WebsiteUrl,
-                    id: i.Id)).ToList()
+                    websiteUrl: c.WebsiteUrl)).ToList()
                 );
         }
     }
