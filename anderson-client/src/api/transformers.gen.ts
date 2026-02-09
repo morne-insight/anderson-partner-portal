@@ -2,6 +2,7 @@
 
 import type {
 	GetApiCompaniesByIdPartnerResponse,
+	GetApiDashboardResponse,
 	GetApiOpportunitiesByIdMessagesResponse,
 	GetApiOpportunitiesByIdResponse,
 	GetApiOpportunitiesByIdViewResponse,
@@ -36,6 +37,29 @@ export const getApiCompaniesByIdPartnerResponseTransformer = async (
 	data: any
 ): Promise<GetApiCompaniesByIdPartnerResponse> => {
 	data = partnerProfileDtoSchemaResponseTransformer(data)
+	return data
+}
+
+const dashboardOpportunityDtoSchemaResponseTransformer = (data: any) => {
+	if (data.deadline) {
+		data.deadline = new Date(data.deadline)
+	}
+	return data
+}
+
+const dashboardDtoSchemaResponseTransformer = (data: any) => {
+	if (data.opportunities) {
+		data.opportunities = data.opportunities.map((item: any) =>
+			dashboardOpportunityDtoSchemaResponseTransformer(item)
+		)
+	}
+	return data
+}
+
+export const getApiDashboardResponseTransformer = async (
+	data: any
+): Promise<GetApiDashboardResponse> => {
+	data = dashboardDtoSchemaResponseTransformer(data)
 	return data
 }
 

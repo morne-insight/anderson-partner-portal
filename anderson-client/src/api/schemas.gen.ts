@@ -215,6 +215,36 @@ export const AndersonAPI_Api_Controllers_ResponseTypes_JsonResponse_Of_StringSch
 	},
 } as const
 
+export const AndersonAPI_Application_Common_Pagination_PagedResult_Of_PartnerProfileListItemSchema =
+	{
+		title: 'AndersonAPI.Application.Common.Pagination.PagedResult_Of_PartnerProfileListItem',
+		type: 'object',
+		properties: {
+			totalCount: {
+				type: 'integer',
+				format: 'int32',
+			},
+			pageCount: {
+				type: 'integer',
+				format: 'int32',
+			},
+			pageSize: {
+				type: 'integer',
+				format: 'int32',
+			},
+			pageNumber: {
+				type: 'integer',
+				format: 'int32',
+			},
+			data: {
+				type: 'array',
+				items: {
+					$ref: '#/components/schemas/PartnerProfileListItem',
+				},
+			},
+		},
+	} as const
+
 export const CapabilityDtoSchema = {
 	title: 'CapabilityDto',
 	type: 'object',
@@ -891,6 +921,72 @@ export const CreateServiceTypeCommandSchema = {
 	},
 } as const
 
+export const DashboardDtoSchema = {
+	title: 'DashboardDto',
+	type: 'object',
+	properties: {
+		opportunities: {
+			type: 'array',
+			items: {
+				$ref: '#/components/schemas/DashboardOpportunityDto',
+			},
+		},
+		partners: {
+			type: 'array',
+			items: {
+				$ref: '#/components/schemas/DashboardPartnerDto',
+			},
+		},
+	},
+} as const
+
+export const DashboardLocationDtoSchema = {
+	title: 'DashboardLocationDto',
+	type: 'object',
+	properties: {
+		country: {
+			type: 'string',
+		},
+		region: {
+			type: 'string',
+		},
+	},
+} as const
+
+export const DashboardOpportunityDtoSchema = {
+	title: 'DashboardOpportunityDto',
+	type: 'object',
+	properties: {
+		opportunityType: {
+			type: 'string',
+		},
+		status: {
+			type: 'string',
+		},
+		deadline: {
+			type: 'string',
+			format: 'date',
+			nullable: true,
+		},
+	},
+} as const
+
+export const DashboardPartnerDtoSchema = {
+	title: 'DashboardPartnerDto',
+	type: 'object',
+	properties: {
+		serviceType: {
+			type: 'string',
+		},
+		locations: {
+			type: 'array',
+			items: {
+				$ref: '#/components/schemas/DashboardLocationDto',
+			},
+		},
+	},
+} as const
+
 export const DirectoryProfileListItemSchema = {
 	title: 'DirectoryProfileListItem',
 	type: 'object',
@@ -963,6 +1059,73 @@ export const GetPartnersByAIQuerySchema = {
 	properties: {
 		query: {
 			type: 'string',
+		},
+	},
+} as const
+
+export const GetPartnersDirectoryQuerySchema = {
+	title: 'GetPartnersDirectoryQuery',
+	required: [
+		'pageNo',
+		'pageSize',
+		'orderBy',
+		'searchTerm',
+		'serviceType',
+		'regions',
+		'countries',
+		'capabilities',
+		'industries',
+	],
+	type: 'object',
+	properties: {
+		pageNo: {
+			type: 'integer',
+			format: 'int32',
+		},
+		pageSize: {
+			type: 'integer',
+			format: 'int32',
+		},
+		orderBy: {
+			type: 'string',
+			nullable: true,
+		},
+		searchTerm: {
+			type: 'string',
+			nullable: true,
+		},
+		serviceType: {
+			type: 'string',
+			format: 'uuid',
+			nullable: true,
+		},
+		regions: {
+			type: 'array',
+			items: {
+				type: 'string',
+				format: 'uuid',
+			},
+		},
+		countries: {
+			type: 'array',
+			items: {
+				type: 'string',
+				format: 'uuid',
+			},
+		},
+		capabilities: {
+			type: 'array',
+			items: {
+				type: 'string',
+				format: 'uuid',
+			},
+		},
+		industries: {
+			type: 'array',
+			items: {
+				type: 'string',
+				format: 'uuid',
+			},
 		},
 	},
 } as const

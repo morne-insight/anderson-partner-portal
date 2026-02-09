@@ -93,6 +93,17 @@ export type AndersonApiApiControllersResponseTypesJsonResponseOfString = {
 }
 
 /**
+ * AndersonAPI.Application.Common.Pagination.PagedResult_Of_PartnerProfileListItem
+ */
+export type AndersonApiApplicationCommonPaginationPagedResultOfPartnerProfileListItem = {
+	totalCount?: number
+	pageCount?: number
+	pageSize?: number
+	pageNumber?: number
+	data?: Array<PartnerProfileListItem>
+}
+
+/**
  * CapabilityDto
  */
 export type CapabilityDto = {
@@ -368,6 +379,39 @@ export type CreateServiceTypeCommand = {
 }
 
 /**
+ * DashboardDto
+ */
+export type DashboardDto = {
+	opportunities?: Array<DashboardOpportunityDto>
+	partners?: Array<DashboardPartnerDto>
+}
+
+/**
+ * DashboardLocationDto
+ */
+export type DashboardLocationDto = {
+	country?: string
+	region?: string
+}
+
+/**
+ * DashboardOpportunityDto
+ */
+export type DashboardOpportunityDto = {
+	opportunityType?: string
+	status?: string
+	deadline?: Date | null
+}
+
+/**
+ * DashboardPartnerDto
+ */
+export type DashboardPartnerDto = {
+	serviceType?: string
+	locations?: Array<DashboardLocationDto>
+}
+
+/**
  * DirectoryProfileListItem
  */
 export type DirectoryProfileListItem = {
@@ -396,6 +440,21 @@ export type ForgotPasswordDto = {
  */
 export type GetPartnersByAiQuery = {
 	query: string
+}
+
+/**
+ * GetPartnersDirectoryQuery
+ */
+export type GetPartnersDirectoryQuery = {
+	pageNo: number
+	pageSize: number
+	orderBy: string | null
+	searchTerm: string | null
+	serviceType: string | null
+	regions: Array<string>
+	countries: Array<string>
+	capabilities: Array<string>
+	industries: Array<string>
 }
 
 /**
@@ -2650,6 +2709,37 @@ export type PutApiCompaniesPartnersResponses = {
 export type PutApiCompaniesPartnersResponse =
 	PutApiCompaniesPartnersResponses[keyof PutApiCompaniesPartnersResponses]
 
+export type PutApiCompaniesPartnerDirectoryData = {
+	body: GetPartnersDirectoryQuery
+	path?: never
+	query?: never
+	url: '/api/companies/partner-directory'
+}
+
+export type PutApiCompaniesPartnerDirectoryErrors = {
+	/**
+	 * Bad Request
+	 */
+	400: ProblemDetails
+	/**
+	 * Internal Server Error
+	 */
+	500: ProblemDetails
+}
+
+export type PutApiCompaniesPartnerDirectoryError =
+	PutApiCompaniesPartnerDirectoryErrors[keyof PutApiCompaniesPartnerDirectoryErrors]
+
+export type PutApiCompaniesPartnerDirectoryResponses = {
+	/**
+	 * OK
+	 */
+	200: AndersonApiApplicationCommonPaginationPagedResultOfPartnerProfileListItem
+}
+
+export type PutApiCompaniesPartnerDirectoryResponse =
+	PutApiCompaniesPartnerDirectoryResponses[keyof PutApiCompaniesPartnerDirectoryResponses]
+
 export type GetApiCountriesData = {
 	body?: never
 	path?: never
@@ -2894,6 +2984,39 @@ export type PutApiCountriesByIdSetStateResponses = {
 
 export type PutApiCountriesByIdSetStateResponse =
 	PutApiCountriesByIdSetStateResponses[keyof PutApiCountriesByIdSetStateResponses]
+
+export type GetApiDashboardData = {
+	body?: never
+	path?: never
+	query?: never
+	url: '/api/dashboard'
+}
+
+export type GetApiDashboardErrors = {
+	/**
+	 * Unauthorized
+	 */
+	401: ProblemDetails
+	/**
+	 * Forbidden
+	 */
+	403: ProblemDetails
+	/**
+	 * Internal Server Error
+	 */
+	500: ProblemDetails
+}
+
+export type GetApiDashboardError = GetApiDashboardErrors[keyof GetApiDashboardErrors]
+
+export type GetApiDashboardResponses = {
+	/**
+	 * OK
+	 */
+	200: DashboardDto
+}
+
+export type GetApiDashboardResponse = GetApiDashboardResponses[keyof GetApiDashboardResponses]
 
 export type GetApiHealthApiData = {
 	body?: never

@@ -91,7 +91,7 @@ function PartnerSearch() {
           description: partner.shortDescription || "No description provided.",
           matchScore: partner.matchScore ? Math.round(partner.matchScore) : 85,
           skills: partner.capabilities?.map((c: any) => c.name) || [],
-          verified: true, // Default to true for AI results in this UI
+          verified: true,
           serviceType: partner.serviceTypeName || "Unknown",
           locations:
             partner.locations?.map((l: any) => ({

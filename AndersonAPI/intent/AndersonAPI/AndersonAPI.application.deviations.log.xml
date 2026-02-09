@@ -102,6 +102,16 @@
       <fileHash>4D550B1539A423479CE4BAD06E3D0EA7E2F497035B2605B24DF2EFE15130D52E</fileHash>
     </file>
     <file>
+      <correlationId>Intent.Application.MediatR.QueryHandler#a77a0db7-f14c-4b33-963e-7cbcddf0466c</correlationId>
+      <path>AndersonAPI.Application/Companies/GetPartnersDirectory/GetPartnersDirectoryQueryHandler.cs</path>
+      <count>1</count>
+      <updatedByAccountName>mvanzyl@insightconsulting.co.za</updatedByAccountName>
+      <updatedByDisplayName>Morne</updatedByDisplayName>
+      <updatedAt>2026-02-09T14:21:15.662379Z</updatedAt>
+      <deviationsHash>9BB74AD16535C157642B66E54976187EA2C0206C90E81834D258707D42B28D2E</deviationsHash>
+      <fileHash>F0242FF0D3133B9F6A0AE7D56B926FF0E189C48F074CA105730D3DCF9AD6EE1A</fileHash>
+    </file>
+    <file>
       <correlationId>Intent.Application.MediatR.CommandHandler#14841a6a-9393-4c60-b890-fb81707325c0</correlationId>
       <path>AndersonAPI.Application/Companies/SetCapabilitiesCompany/SetCapabilitiesCompanyCommandHandler.cs</path>
       <count>1</count>

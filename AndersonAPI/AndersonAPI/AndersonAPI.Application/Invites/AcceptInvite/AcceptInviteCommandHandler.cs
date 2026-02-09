@@ -46,7 +46,7 @@ namespace AndersonAPI.Application.Invites.AcceptInvite
                 throw new NotFoundException($"Could not find User with id '{request.UserId}'");
             }
 
-            if(applicationIdentityUser.Email != invite.Email)
+            if (applicationIdentityUser.Email != invite.Email)
             {
                 throw new UnauthorizedAccessException($"The user with id '{request.UserId}' does not have permission to accept this invite");
             }

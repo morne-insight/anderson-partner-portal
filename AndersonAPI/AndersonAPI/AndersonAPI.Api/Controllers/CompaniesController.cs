@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Net.Mime;
 using AndersonAPI.Api.Controllers.ResponseTypes;
+using AndersonAPI.Application.Common.Pagination;
 using AndersonAPI.Application.Companies;
 using AndersonAPI.Application.Companies.AddContactCompany;
 using AndersonAPI.Application.Companies.AddLocationCompany;
@@ -13,6 +14,7 @@ using AndersonAPI.Application.Companies.GetCompanyProfileById;
 using AndersonAPI.Application.Companies.GetMyCompanies;
 using AndersonAPI.Application.Companies.GetPartnerProfileById;
 using AndersonAPI.Application.Companies.GetPartnersByAI;
+using AndersonAPI.Application.Companies.GetPartnersDirectory;
 using AndersonAPI.Application.Companies.RemoveContactCompany;
 using AndersonAPI.Application.Companies.RemoveLocationCompany;
 using AndersonAPI.Application.Companies.RemoveUserCompany;
@@ -662,6 +664,23 @@ namespace AndersonAPI.Api.Controllers
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<List<PartnerProfileListItem>>> GetPartnersByAI(
             [FromBody] GetPartnersByAIQuery query,
+            CancellationToken cancellationToken = default)
+        {
+            var result = await _mediator.Send(query, cancellationToken);
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <response code="200">Successfully updated.</response>
+        /// <response code="400">One or more validation errors have occurred.</response>
+        [HttpPut("api/companies/partner-directory")]
+        [AllowAnonymous]
+        [ProducesResponseType(typeof(PagedResult<PartnerProfileListItem>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<PagedResult<PartnerProfileListItem>>> GetPartnersDirectory(
+            [FromBody] GetPartnersDirectoryQuery query,
             CancellationToken cancellationToken = default)
         {
             var result = await _mediator.Send(query, cancellationToken);

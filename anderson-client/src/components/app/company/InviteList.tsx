@@ -15,7 +15,6 @@ import {
     AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
-import { useAuth } from '@/contexts/auth-context'
 import { callApi } from '@/server/proxy'
 
 interface InviteListProps {
@@ -25,7 +24,6 @@ interface InviteListProps {
 export function InviteList({ invites }: InviteListProps) {
     const router = useRouter()
     const queryClient = useQueryClient()
-    const { user } = useAuth()
     const [declineDialogOpen, setDeclineDialogOpen] = useState(false)
     const [selectedInvite, setSelectedInvite] = useState<InviteDto | null>(null)
 

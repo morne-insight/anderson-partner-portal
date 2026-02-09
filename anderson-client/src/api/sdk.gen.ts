@@ -4,6 +4,7 @@ import type { Client, Options as Options2, TDataShape } from './client'
 import { client } from './client.gen'
 import {
 	getApiCompaniesByIdPartnerResponseTransformer,
+	getApiDashboardResponseTransformer,
 	getApiOpportunitiesByIdMessagesResponseTransformer,
 	getApiOpportunitiesByIdResponseTransformer,
 	getApiOpportunitiesByIdViewResponseTransformer,
@@ -104,6 +105,9 @@ import type {
 	GetApiCountriesData,
 	GetApiCountriesErrors,
 	GetApiCountriesResponses,
+	GetApiDashboardData,
+	GetApiDashboardErrors,
+	GetApiDashboardResponses,
 	GetApiHealthApiData,
 	GetApiHealthApiErrors,
 	GetApiHealthApiResponses,
@@ -295,6 +299,9 @@ import type {
 	PutApiCompaniesConnectionRequestData,
 	PutApiCompaniesConnectionRequestErrors,
 	PutApiCompaniesConnectionRequestResponses,
+	PutApiCompaniesPartnerDirectoryData,
+	PutApiCompaniesPartnerDirectoryErrors,
+	PutApiCompaniesPartnerDirectoryResponses,
 	PutApiCompaniesPartnersData,
 	PutApiCompaniesPartnersErrors,
 	PutApiCompaniesPartnersResponses,
@@ -916,6 +923,22 @@ export const putApiCompaniesPartners = <ThrowOnError extends boolean = false>(
 		},
 	})
 
+export const putApiCompaniesPartnerDirectory = <ThrowOnError extends boolean = false>(
+	options: Options<PutApiCompaniesPartnerDirectoryData, ThrowOnError>
+) =>
+	(options.client ?? client).put<
+		PutApiCompaniesPartnerDirectoryResponses,
+		PutApiCompaniesPartnerDirectoryErrors,
+		ThrowOnError
+	>({
+		url: '/api/companies/partner-directory',
+		...options,
+		headers: {
+			'Content-Type': 'application/json',
+			...options.headers,
+		},
+	})
+
 export const getApiCountries = <ThrowOnError extends boolean = false>(
 	options?: Options<GetApiCountriesData, ThrowOnError>
 ) =>
@@ -984,6 +1007,15 @@ export const putApiCountriesByIdSetState = <ThrowOnError extends boolean = false
 			'Content-Type': 'application/json',
 			...options.headers,
 		},
+	})
+
+export const getApiDashboard = <ThrowOnError extends boolean = false>(
+	options?: Options<GetApiDashboardData, ThrowOnError>
+) =>
+	(options?.client ?? client).get<GetApiDashboardResponses, GetApiDashboardErrors, ThrowOnError>({
+		responseTransformer: getApiDashboardResponseTransformer,
+		url: '/api/dashboard',
+		...options,
 	})
 
 export const getApiHealthApi = <ThrowOnError extends boolean = false>(
