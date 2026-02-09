@@ -12,17 +12,30 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { MOCK_OPPORTUNITIES, MOCK_PARTNERS } from "../../services/mock/data";
+import type { DashboardDto } from "../../api/types.gen";
+import { callApi } from "@/server/proxy";
 
 export const Route = createFileRoute("/_app/dashboard")({
   component: Dashboard,
+  loader: async (): Promise<DashboardDto> => {
+    const response = await callApi({
+      data: {
+        fn: 'getApiDashboard'
+      }
+    })
+    return response ?? { opportunities: [], partners: [] };
+  },
 });
 
 function Dashboard() {
+  const data = Route.useLoaderData();
+  const partners = data.partners ?? [];
+  const opportunities = data.opportunities ?? [];
+
   // Aggregate partners by service type
-  const serviceTypeCounts = MOCK_PARTNERS.reduce(
+  const serviceTypeCounts = partners.reduce(
     (acc, partner) => {
-      const type = partner.serviceType;
+      const type = partner.serviceType ?? "Unknown";
       acc[type] = (acc[type] || 0) + 1;
       return acc;
     },
@@ -36,12 +49,24 @@ function Dashboard() {
     }))
     .sort((a, b) => b.value - a.value);
 
-  const regionData = [
-    { name: "Europe", value: 40 },
-    { name: "Africa", value: 25 },
-    { name: "North America", value: 20 },
-    { name: "APAC", value: 15 },
-  ];
+  // Aggregate partners by region
+  const regionCounts = partners.reduce(
+    (acc, partner) => {
+      for (const location of partner.locations ?? []) {
+        const region = location.region ?? "Unknown";
+        acc[region] = (acc[region] || 0) + 1;
+      }
+      return acc;
+    },
+    {} as Record<string, number>
+  );
+
+  const regionData = Object.keys(regionCounts)
+    .map((name) => ({
+      name,
+      value: regionCounts[name],
+    }))
+    .sort((a, b) => b.value - a.value);
 
   const COLORS = ["#DB0A20", "#111111", "#555555", "#999999", "#CCCCCC"];
 
@@ -65,7 +90,7 @@ function Dashboard() {
                 Total Partners
               </p>
               <h3 className="mt-2 font-serif text-5xl text-black">
-                {MOCK_PARTNERS.length}
+                {partners.length}
               </h3>
             </div>
             <div className="p-0">
@@ -73,8 +98,8 @@ function Dashboard() {
             </div>
           </div>
           <div className="mt-6 flex items-center font-medium text-green-700 text-xs uppercase tracking-wide">
-            <ArrowUpRight className="mr-1 h-3 w-3" />
-            {/* <span>12% growth this quarter</span> */}
+            {/*<ArrowUpRight className="mr-1 h-3 w-3" />
+             <span>12% growth this quarter</span> */}
           </div>
         </div>
 
@@ -85,7 +110,7 @@ function Dashboard() {
                 Active Opportunities
               </p>
               <h3 className="mt-2 font-serif text-5xl text-black">
-                {MOCK_OPPORTUNITIES.length}
+                {opportunities.length}
               </h3>
             </div>
             <div className="p-0">
@@ -93,7 +118,19 @@ function Dashboard() {
             </div>
           </div>
           <div className="mt-6 flex items-center font-medium text-gray-500 text-xs uppercase tracking-wide">
-            <span>2 urgent deadlines this week</span>
+            <span>
+              {(() => {
+                const now = new Date();
+                const currentMonth = now.getMonth();
+                const currentYear = now.getFullYear();
+                const deadlinesThisMonth = opportunities.filter((o) => {
+                  if (!o.deadline) return false;
+                  const deadline = new Date(o.deadline);
+                  return deadline.getMonth() === currentMonth && deadline.getFullYear() === currentYear;
+                }).length;
+                return `${deadlinesThisMonth} deadline${deadlinesThisMonth !== 1 ? "s" : ""} this month`;
+              })()}
+            </span>
           </div>
         </div>
 
@@ -103,7 +140,9 @@ function Dashboard() {
               <p className="mb-1 font-bold text-gray-400 text-xs uppercase tracking-widest">
                 Global Reach
               </p>
-              <h3 className="mt-2 font-serif text-5xl text-black">18</h3>
+              <h3 className="mt-2 font-serif text-5xl text-black">
+                {new Set(partners.flatMap((p) => p.locations?.map((l) => l.country) ?? [])).size}
+              </h3>
             </div>
             <div className="p-0">
               <Globe className="h-6 w-6 text-gray-300 transition-colors group-hover:text-red-600" />
