@@ -382,6 +382,11 @@ namespace AndersonAPI.Api.Controllers
         [IntentManaged(Mode.Fully, Body = Mode.Merge)]
         public async Task<IActionResult> ConfirmEmail(ConfirmEmailDto input)
         {
+            _logger.LogInformation("=== ConfirmEmail Request Started ===");
+            _logger.LogInformation($"UserId: {input.UserId}");
+            _logger.LogInformation($"Code (first 50 chars): {(input.Code?.Length > 50 ? input.Code.Substring(0, 50) : input.Code)}...");
+            _logger.LogInformation($"Code length: {input.Code?.Length ?? 0}");
+            
             if (string.IsNullOrWhiteSpace(input.UserId))
             {
                 ModelState.AddModelError<ConfirmEmailDto>(x => x.UserId, "Mandatory");
@@ -394,25 +399,54 @@ namespace AndersonAPI.Api.Controllers
 
             if (!ModelState.IsValid)
             {
+                _logger.LogWarning("Validation failed");
                 return BadRequest(ModelState);
             }
 
             var userId = input.UserId!;
             var code = input.Code!;
+            
             var user = await _userManager.FindByIdAsync(input.UserId!);
             if (user == null)
             {
+                _logger.LogWarning($"User not found: {userId}");
                 return NotFound($"Unable to load user with ID '{userId}'.");
             }
 
-            code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
+            _logger.LogInformation($"User found: {user.Email}");
 
-            var result = await _userManager.ConfirmEmailAsync(user, code);
-            if (!result.Succeeded)
+            try
             {
-                ModelState.AddModelError<ConfirmEmailDto>(x => x, "Error confirming your email.");
+                _logger.LogInformation("Attempting Base64Url decode...");
+                code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
+                _logger.LogInformation($"Decode successful. Decoded length: {code.Length}");
+            }
+            catch (FormatException ex)
+            {
+                _logger.LogError(ex, $"Base64Url decode failed for code: {input.Code}");
+                ModelState.AddModelError<ConfirmEmailDto>(x => x.Code, "Invalid confirmation code format. Please request a new confirmation email.");
                 return BadRequest(ModelState);
             }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Unexpected decode error: {input.Code}");
+                ModelState.AddModelError<ConfirmEmailDto>(x => x.Code, "Error processing confirmation code.");
+                return BadRequest(ModelState);
+            }
+
+            _logger.LogInformation("Calling ConfirmEmailAsync...");
+            var result = await _userManager.ConfirmEmailAsync(user, code);
+            
+            if (!result.Succeeded)
+            {
+                var errors = string.Join(", ", result.Errors.Select(e => $"{e.Code}: {e.Description}"));
+                _logger.LogError($"ConfirmEmailAsync failed. Errors: {errors}");
+                
+                ModelState.AddModelError<ConfirmEmailDto>(x => x, "Error confirming your email. Please request a new confirmation link.");
+                return BadRequest(ModelState);
+            }
+
+            _logger.LogInformation($"Email confirmed successfully: {user.Email}");
 
             var invites = await _mediator.Send(new GetInvitesByUserIdQuery(user.Id));
 
@@ -421,6 +455,7 @@ namespace AndersonAPI.Api.Controllers
                 await _mediator.Send(new AcceptInviteCommand(invite.Id, user.Id));
             }
 
+            _logger.LogInformation("=== ConfirmEmail Completed Successfully ===");
             return Ok();
         }
 
@@ -577,7 +612,10 @@ namespace AndersonAPI.Api.Controllers
         private async Task SendConfirmationEmail(ApplicationIdentityUser user)
         {
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            _logger.LogInformation("Generated email confirmation token for user {UserId}: {Token}", user.Id, code);
+
             code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+            _logger.LogInformation("Generated email confirmation token encoded for user {UserId}: {Token}", user.Id, code);
 
             var userId = await _userManager.GetUserIdAsync(user);
 

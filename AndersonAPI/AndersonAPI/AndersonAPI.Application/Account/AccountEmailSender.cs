@@ -23,8 +23,8 @@ public class AccountEmailSender : IAccountEmailSender
     public async Task SendEmailConfirmationRequest(string email, string userId, string code)
     {
         var baseUrl = _configuration["AppSettings:ClientUrl"] ?? "https://andersen.partners";
-        var encodedCode = Uri.EscapeDataString(code);
-        var verificationUrl = $"{baseUrl}/confirm-email/{userId}/{encodedCode}";
+        //var encodedCode = Uri.EscapeDataString(code);
+        var verificationUrl = $"{baseUrl}/confirm-email/{userId}/{code}";
 
         var htmlBody = await LoadEmailConfirmationTemplateAsync(
             userName: email,

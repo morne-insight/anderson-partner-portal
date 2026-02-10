@@ -66,12 +66,14 @@ export const registerFn = createServerFn({ method: 'POST' })
 	.inputValidator((data: { userName: string; email: string; password: string }) => data)
 	.handler(async ({ data }) => {
 		try {
-			const response = await postApiAccountRegister({
+			const result = await postApiAccountRegister({
 				body: data,
 			})
 
-			if (response.error) {
-				return { success: false, error: response.error.errors?.[0] || 'Registration failed' }
+			if (result.error) {
+				const errorMessages = Object.values(result.error).flat();
+				const errorMessage = errorMessages.length > 0 ? errorMessages[0] : 'Registration failed';
+				return { success: false, error: errorMessage as string }
 			}
 
 			return { success: true }
@@ -126,8 +128,12 @@ export const confirmEmailfn = createServerFn({ method: 'POST' })
 			});
 
 			console.log("confirmEmailFn", JSON.stringify(result, null, 2));
-
-			return { success: true }
+			
+			if (result.error) {
+				const errorMessages = Object.values(result.error).flat();
+				const errorMessage = errorMessages.length > 0 ? errorMessages[0] : 'Email confirmation failed';
+				return { success: false, error: errorMessage as string }
+			}
 			
 			return { success: true }
 		} catch (error) {
@@ -224,8 +230,10 @@ export const resendConfirmationFn = createServerFn({ method: 'POST' })
 
 			console.log('resend result', JSON.stringify(result, null, 2));
 
-			if(result.error) {
-				return { success: false, error: result.error || 'Resend confirmation failed' }
+			if (result.error) {
+				const errorMessages = Object.values(result.error).flat();
+				const errorMessage = errorMessages.length > 0 ? errorMessages[0] : 'Resend confirmation failed';
+				return { success: false, error: errorMessage as string }
 			}
 			
 			return { success: true }
