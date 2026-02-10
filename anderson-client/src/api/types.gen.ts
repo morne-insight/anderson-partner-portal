@@ -1276,6 +1276,19 @@ export type UserCompanyDto = {
 }
 
 /**
+ * UserContact
+ */
+export type UserContact = {
+	firstName?: string
+	lastName?: string
+	emailAddress?: string | null
+	companyPosition?: string | null
+	name?: string
+	websiteUrl?: string
+	companyId?: string
+}
+
+/**
  * UserDetailDto
  */
 export type UserDetailDto = {
@@ -6252,6 +6265,40 @@ export type PutApiServiceTypesByIdSetStateResponses = {
 
 export type PutApiServiceTypesByIdSetStateResponse =
 	PutApiServiceTypesByIdSetStateResponses[keyof PutApiServiceTypesByIdSetStateResponses]
+
+export type GetApiUserContactsMeData = {
+	body?: never
+	path?: never
+	query?: never
+	url: '/api/user/contacts/me'
+}
+
+export type GetApiUserContactsMeErrors = {
+	/**
+	 * Unauthorized
+	 */
+	401: ProblemDetails
+	/**
+	 * Forbidden
+	 */
+	403: ProblemDetails
+	/**
+	 * Internal Server Error
+	 */
+	500: ProblemDetails
+}
+
+export type GetApiUserContactsMeError = GetApiUserContactsMeErrors[keyof GetApiUserContactsMeErrors]
+
+export type GetApiUserContactsMeResponses = {
+	/**
+	 * OK
+	 */
+	200: Array<UserContact>
+}
+
+export type GetApiUserContactsMeResponse =
+	GetApiUserContactsMeResponses[keyof GetApiUserContactsMeResponses]
 
 export type GetApiUserDetailData = {
 	body?: never

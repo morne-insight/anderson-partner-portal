@@ -68,6 +68,7 @@ namespace AndersonAPI.Api.Controllers
             if (string.IsNullOrWhiteSpace(input.Password))
             {
                 ModelState.AddModelError<RegisterDto>(x => x.Password, "Mandatory");
+                ModelState.AddModelError<RegisterDto>(x => x.Password, "Password must be at least 6 characters and contain an uppercase letter, a lowercase letter, a number, and a non-alphanumeric character.");
             }
 
             if (string.IsNullOrWhiteSpace(input.UserName))

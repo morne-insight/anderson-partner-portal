@@ -3,10 +3,10 @@
   <sourceEnd id="82d1de71-1081-4b1e-924c-719f9916cbd9" type="Association Source End" typeId="8d9d2e5b-bd55-4f36-9ae4-2b9e84fd4e58">
     <name>Company</name>
     <display>Company: Company</display>
-    <order>0</order>
+    <order>12</order>
     <typeReference id="9ab8a8d8-eabb-4996-b301-ec472099863d">
       <typeId>3259289c-5d51-46cb-8c99-78751b456c44</typeId>
-      <isNavigable>false</isNavigable>
+      <isNavigable>true</isNavigable>
       <isNullable>false</isNullable>
       <isCollection>false</isCollection>
       <isRequired>true</isRequired>

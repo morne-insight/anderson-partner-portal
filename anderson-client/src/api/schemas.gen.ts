@@ -3077,6 +3077,37 @@ export const UserCompanyDtoSchema = {
 	},
 } as const
 
+export const UserContactSchema = {
+	title: 'UserContact',
+	type: 'object',
+	properties: {
+		firstName: {
+			type: 'string',
+		},
+		lastName: {
+			type: 'string',
+		},
+		emailAddress: {
+			type: 'string',
+			nullable: true,
+		},
+		companyPosition: {
+			type: 'string',
+			nullable: true,
+		},
+		name: {
+			type: 'string',
+		},
+		websiteUrl: {
+			type: 'string',
+		},
+		companyId: {
+			type: 'string',
+			format: 'uuid',
+		},
+	},
+} as const
+
 export const UserDetailDtoSchema = {
 	title: 'UserDetailDto',
 	type: 'object',

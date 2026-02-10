@@ -55,7 +55,7 @@ namespace AndersonAPI.Application.Companies.GetPartnersByAI
 
             var hits = foundCompanies
                 .OrderByDescending(h => h.Score)
-                .Take(3)
+                .Take(10)
                 .Select(h => new { h.Id, h.Score })
                 .ToList();
 

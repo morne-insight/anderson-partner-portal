@@ -192,6 +192,9 @@ import type {
 	GetApiServiceTypesData,
 	GetApiServiceTypesErrors,
 	GetApiServiceTypesResponses,
+	GetApiUserContactsMeData,
+	GetApiUserContactsMeErrors,
+	GetApiUserContactsMeResponses,
 	GetApiUserDetailData,
 	GetApiUserDetailErrors,
 	GetApiUserDetailResponses,
@@ -2032,6 +2035,15 @@ export const putApiServiceTypesByIdSetState = <ThrowOnError extends boolean = fa
 			...options.headers,
 		},
 	})
+
+export const getApiUserContactsMe = <ThrowOnError extends boolean = false>(
+	options?: Options<GetApiUserContactsMeData, ThrowOnError>
+) =>
+	(options?.client ?? client).get<
+		GetApiUserContactsMeResponses,
+		GetApiUserContactsMeErrors,
+		ThrowOnError
+	>({ url: '/api/user/contacts/me', ...options })
 
 export const getApiUserDetail = <ThrowOnError extends boolean = false>(
 	options?: Options<GetApiUserDetailData, ThrowOnError>

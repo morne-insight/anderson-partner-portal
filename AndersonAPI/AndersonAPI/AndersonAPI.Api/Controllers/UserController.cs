@@ -1,4 +1,5 @@
 using AndersonAPI.Application.User;
+using AndersonAPI.Application.User.GetContactsByUserId;
 using AndersonAPI.Application.User.GetUserDetail;
 using Intent.RoslynWeaver.Attributes;
 using MediatR;
@@ -20,6 +21,22 @@ namespace AndersonAPI.Api.Controllers
         public UserController(ISender mediator)
         {
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <response code="200">Returns the specified List&lt;UserContact&gt;.</response>
+        /// <response code="401">Unauthorized request.</response>
+        /// <response code="403">Forbidden request.</response>
+        [HttpGet("api/user/contacts/me")]
+        [ProducesResponseType(typeof(List<UserContact>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<List<UserContact>>> GetContactsByUserId(CancellationToken cancellationToken = default)
+        {
+            var result = await _mediator.Send(new GetContactsByUserId(), cancellationToken);
+            return Ok(result);
         }
 
         /// <summary>

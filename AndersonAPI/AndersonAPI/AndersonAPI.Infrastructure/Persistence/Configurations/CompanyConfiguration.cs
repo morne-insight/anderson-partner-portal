@@ -132,7 +132,7 @@ namespace AndersonAPI.Infrastructure.Persistence.Configurations
         [IntentManaged(Mode.Merge)]
         public static void ConfigureContacts(OwnedNavigationBuilder<Company, Contact> builder)
         {
-            builder.WithOwner()
+            builder.WithOwner(x => x.Company)
                 .HasForeignKey(x => x.CompanyId);
 
             builder.HasKey(x => x.Id);

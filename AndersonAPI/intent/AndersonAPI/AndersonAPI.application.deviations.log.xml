@@ -9,7 +9,7 @@
       <updatedByDisplayName>Morne</updatedByDisplayName>
       <updatedAt>2026-02-04T13:25:33.4953028Z</updatedAt>
       <deviationsHash>841734C1186AD60726F2CC767A01C2A97843CF6929B7CAB987BFA1458FC575A5</deviationsHash>
-      <fileHash>4FF598F1E78EFF4039E3E20AB7D56D64D0CBDEDE903429AA55AD93BA029CB5AD</fileHash>
+      <fileHash>9B5F920D98CBC3F7A5ED48345E4A6F1F0862F3C19978B1D9B79328385A2D8D84</fileHash>
     </file>
     <file>
       <correlationId>Intent.AspNetCore.Scalar.OpenApiConfiguration#64130ebe-1689-4740-8c31-4e478125a62a</correlationId>
@@ -24,12 +24,12 @@
     <file>
       <correlationId>Intent.AspNetCore.Identity.AccountController.AccountController#0d6d45f7-7869-4975-9dad-9730556c530f</correlationId>
       <path>AndersonAPI.Api/Controllers/AccountController.cs</path>
-      <count>13</count>
+      <count>16</count>
       <updatedByAccountName>mvanzyl@insightconsulting.co.za</updatedByAccountName>
       <updatedByDisplayName>Morne</updatedByDisplayName>
-      <updatedAt>2026-02-05T17:03:50.9998483Z</updatedAt>
-      <deviationsHash>3085F5C5911907908862847F3C544BC0A69EB480386AF47F34FFAF40FA629DCD</deviationsHash>
-      <fileHash>27ABAE4A050062E73FB2035FF4A31EA5195811D3A4335936C154703A00184ED3</fileHash>
+      <updatedAt>2026-02-10T20:32:32.0325876Z</updatedAt>
+      <deviationsHash>460B56779A20209AAE16FD5C69961F31DBF50E154AFBDB639DB819C6C5F89F62</deviationsHash>
+      <fileHash>80AB0DBF12E750A058B6908DD08910B6024A1017D0859781163C1AD0AC157458</fileHash>
     </file>
     <file>
       <correlationId>Intent.AspNetCore.Controllers.Controller#ece70b3a-0c7e-4f50-80e2-b00c3d541e46</correlationId>
@@ -59,7 +59,7 @@
       <updatedByDisplayName>Morne</updatedByDisplayName>
       <updatedAt>2026-02-04T13:25:33.4986446Z</updatedAt>
       <deviationsHash>139B61814421CDA44A010AEB116FE79E37915BD656B59FFA1516146B5F41B90C</deviationsHash>
-      <fileHash>A8F680D2B38F427B5B160E4B727DD6181BD94910E5CFEF5C990F0E04FE2DF14E</fileHash>
+      <fileHash>CB057FB85899028943BBBD314AE9D8C99EE78AAA420616802717E6D4272C2E6D</fileHash>
     </file>
     <file>
       <correlationId>Intent.Application.MediatR.CommandHandler#2400c0e2-b244-4543-b021-0a36b496cc5e</correlationId>
@@ -99,7 +99,7 @@
       <updatedByDisplayName>Morne</updatedByDisplayName>
       <updatedAt>2026-01-19T02:46:22.2386266Z</updatedAt>
       <deviationsHash>83888A0C0CE93EAB5FAD14B7847C2EEBB4CBEBEBDE2046FDB562975B56ECC375</deviationsHash>
-      <fileHash>4D550B1539A423479CE4BAD06E3D0EA7E2F497035B2605B24DF2EFE15130D52E</fileHash>
+      <fileHash>5165C3F41C5DF2A80C352EF24FEADAA88906EB6A1E2FA5D45DB5DB214990955F</fileHash>
     </file>
     <file>
       <correlationId>Intent.Application.MediatR.QueryHandler#a77a0db7-f14c-4b33-963e-7cbcddf0466c</correlationId>
@@ -359,7 +359,7 @@
       <updatedByDisplayName>Morne</updatedByDisplayName>
       <updatedAt>2026-01-15T21:15:10.7037537Z</updatedAt>
       <deviationsHash>45E895E490A862A38FFC0A94C821CC56905A806E145F0790BD898885D87FDB8D</deviationsHash>
-      <fileHash>946CD730EF4E5B4B21DBF6F3C0345205933C135C682620E902563F51B937EB2F</fileHash>
+      <fileHash>F1279349F41C638F8A9197FE2B0906538E06711375F682D8CEB6A2231C9B9063</fileHash>
     </file>
     <file>
       <correlationId>Intent.EntityFrameworkCore.EntityTypeConfiguration#3e927715-656c-4eef-b1ca-01b028627764</correlationId>

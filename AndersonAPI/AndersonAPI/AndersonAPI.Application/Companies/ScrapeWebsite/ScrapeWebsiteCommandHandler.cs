@@ -46,7 +46,7 @@ namespace AndersonAPI.Application.Companies.ScrapeWebsite
             }
 
             var websiteContent = await _websiteScrapingService.ScrapeWebsiteAsync(request.Url);
-            var response = await _agentService.RunAsync("I have included a website's content, please give me a summary of who they are and what they do in the first person.: " + websiteContent);
+            var response = await _agentService.RunAsync("I have included a website's content, please give me a summary of who they are and what they do: " + websiteContent);
 
             var companyName = ExtractCompanyNameFromUrl(request.Url);
 

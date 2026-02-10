@@ -106,6 +106,7 @@ function ProfileEdit() {
   const refreshData = () => {
     // router.invalidate();
     queryClient.invalidateQueries({ queryKey: ['company', companyId] })
+    queryClient.invalidateQueries({ queryKey: ['user', 'contacts'] })
   }
 
   const mdxEditorRef = useRef<MDXEditorMethods>(null)
@@ -703,7 +704,12 @@ function ProfileEdit() {
             <form.Field
               children={(field) => (
                 <div className="space-y-2">
-                  <Label htmlFor={field.name}>Short Description</Label>
+                  <Label htmlFor={field.name}>
+                    Short Description
+                    <span className="ml-2 text-[10px] text-gray-500 uppercase tracking-wide font-normal">
+                      Brief summary for card views
+                    </span>
+                  </Label>
                   <Textarea
                     id={field.name}
                     name={field.name}
@@ -711,36 +717,36 @@ function ProfileEdit() {
                     onChange={(e) => field.handleChange(e.target.value)}
                     value={field.state.value as string}
                   />
-                  <p className="text-[10px] text-gray-500 uppercase tracking-wide">
-                    Brief summary for card views
-                  </p>
                 </div>
               )}
               name="shortDescription"
             />
 
             <ClientOnly>
-              <MDXEditor
-                markdown={initialCompany?.fullDescription || ''}
-                plugins={[
-                  headingsPlugin(),
-                  listsPlugin(),
-                  toolbarPlugin({
-                    toolbarContents: () => (
-                      <>
-                        <UndoRedo />
-                        <Separator />
-                        <BoldItalicUnderlineToggles />
-                        <Separator />
-                        <ListsToggle />
-                        <Separator />
-                        <BlockTypeSelect />
-                      </>
-                    ),
-                  }),
-                ]}
-                ref={mdxEditorRef}
-              />
+              <Label>Full Description</Label>
+              <div className="rounded-md border border-input">
+                <MDXEditor
+                  markdown={initialCompany?.fullDescription || ''}
+                  plugins={[
+                    headingsPlugin(),
+                    listsPlugin(),
+                    toolbarPlugin({
+                      toolbarContents: () => (
+                        <>
+                          <UndoRedo />
+                          <Separator />
+                          <BoldItalicUnderlineToggles />
+                          <Separator />
+                          <ListsToggle />
+                          <Separator />
+                          <BlockTypeSelect />
+                        </>
+                      ),
+                    }),
+                  ]}
+                  ref={mdxEditorRef}
+                />
+              </div>
             </ClientOnly>
 
             {/* <form.Field
@@ -1022,8 +1028,11 @@ function ProfileEdit() {
 
           {/* Key Personnel */}
           <section className="space-y-6">
-            <div className="flex items-center justify-between border-gray-100 border-b pb-2">
+            <div className="flex flex-col border-gray-100 border-b pb-2">
               <h3 className="font-bold text-lg uppercase tracking-widest">Key Personnel</h3>
+              <span className="text-[10px] text-gray-500 uppercase tracking-wide font-normal">
+                Add at least one contact person to enable the "Connect" functionality.
+              </span>
             </div>
 
             <div className="space-y-4">
@@ -1231,8 +1240,11 @@ function ProfileEdit() {
 
           {/* Application Users */}
           <section className="space-y-6">
-            <div className="flex items-center justify-between border-gray-100 border-b pb-2">
+            <div className="flex flex-col border-gray-100 border-b pb-2">
               <h3 className="font-bold text-lg uppercase tracking-widest">Application Users</h3>
+              <span className="text-[10px] text-gray-500 uppercase tracking-wide font-normal">
+                People that have access to this company profile.
+              </span>
             </div>
 
             <div className="space-y-4">

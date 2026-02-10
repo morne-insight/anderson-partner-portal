@@ -71,9 +71,13 @@ export function RegisterForm() {
     return (
       <div className="mx-auto max-w-md space-y-6 text-center">
         <div className="rounded-md bg-green-50 p-4 text-green-700">
+          Registration successful! You can now sign in with your credentials.
+        </div>
+        {/*
+        <div className="rounded-md bg-green-50 p-4 text-green-700">
           Registration successful! Once you have confirmed your email, you can sign in with your credentials.
         </div>
-        {/* <div className="rounded-md px-2">
+         <div className="rounded-md px-2">
           If you dont receive an email, please check your spam folder or{" "}
           <Link
             className="font-medium text-[#DB0A20] hover:underline"
