@@ -209,10 +209,14 @@ import type {
 	PostApiAccountManageInfoResponses,
 	PostApiAccountRefreshData,
 	PostApiAccountRefreshResponses,
+	PostApiAccountRegisterAdminData,
+	PostApiAccountRegisterAdminResponses,
 	PostApiAccountRegisterData,
 	PostApiAccountRegisterResponses,
 	PostApiAccountRegisterWithRoleData,
 	PostApiAccountRegisterWithRoleResponses,
+	PostApiAccountResendConfirmationEmailData,
+	PostApiAccountResendConfirmationEmailResponses,
 	PostApiAccountResetPasswordData,
 	PostApiAccountResetPasswordResponses,
 	PostApiCapabilitiesData,
@@ -416,6 +420,34 @@ export const postApiAccountRegister = <ThrowOnError extends boolean = false>(
 ) =>
 	(options.client ?? client).post<PostApiAccountRegisterResponses, unknown, ThrowOnError>({
 		url: '/api/Account/Register',
+		...options,
+		headers: {
+			'Content-Type': 'application/json',
+			...options.headers,
+		},
+	})
+
+export const postApiAccountRegisterAdmin = <ThrowOnError extends boolean = false>(
+	options: Options<PostApiAccountRegisterAdminData, ThrowOnError>
+) =>
+	(options.client ?? client).post<PostApiAccountRegisterAdminResponses, unknown, ThrowOnError>({
+		url: '/api/Account/RegisterAdmin',
+		...options,
+		headers: {
+			'Content-Type': 'application/json',
+			...options.headers,
+		},
+	})
+
+export const postApiAccountResendConfirmationEmail = <ThrowOnError extends boolean = false>(
+	options: Options<PostApiAccountResendConfirmationEmailData, ThrowOnError>
+) =>
+	(options.client ?? client).post<
+		PostApiAccountResendConfirmationEmailResponses,
+		unknown,
+		ThrowOnError
+	>({
+		url: '/api/Account/ResendConfirmationEmail',
 		...options,
 		headers: {
 			'Content-Type': 'application/json',

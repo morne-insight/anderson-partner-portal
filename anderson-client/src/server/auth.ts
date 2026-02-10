@@ -6,6 +6,7 @@ import {
 	postApiAccountLogin,
 	postApiAccountLogout,
 	postApiAccountRegister,
+	postApiAccountResendConfirmationEmail,
 	postApiAccountResetPassword,
 	putApiInvitesAccept,
 } from '../api'
@@ -205,5 +206,26 @@ export const removeCompanyFromSessionFn = createServerFn({ method: 'POST' })
 		})
 
 		return { success: true }
-	})
+	});
+
+// Resend confirmation email
+export const resendConfirmationFn = createServerFn({ method: 'POST' })
+	.inputValidator((data: { email: string }) => data)
+	.handler(async ({ data }) => {
+		try {
+			const result = await postApiAccountResendConfirmationEmail({
+				body: data
+			})
+
+			console.log('resend result', JSON.stringify(result, null, 2));
+			
+			if(result.error) {
+				return { success: false, error: result.error || 'Resend confirmation failed' }
+			}
+			
+			return { success: true }
+		} catch (error) {
+			return { success: false, error: 'Resend confirmation failed' }
+		}
+	});
 

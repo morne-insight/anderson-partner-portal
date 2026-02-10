@@ -2069,6 +2069,17 @@ export const ReportQuarterSchema = {
 	type: 'integer',
 } as const
 
+export const ResendEmailDtoSchema = {
+	title: 'ResendEmailDto',
+	type: 'object',
+	properties: {
+		email: {
+			type: 'string',
+			nullable: true,
+		},
+	},
+} as const
+
 export const ResetPasswordDtoSchema = {
 	title: 'ResetPasswordDto',
 	type: 'object',

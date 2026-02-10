@@ -143,15 +143,26 @@ export function LoginForm() {
         </Button>
       </form>
 
-      <p className="text-center text-sm">
+      <p className="text-center text-sm mb-2.5">
         Forgot your password?{" "}
         <Link
-          className="font-medium text-gray-600 hover:underline"
+          className="font-medium text-[#DB0A20] hover:underline"
           to="/forgot-password"
         >
           Reset Password
         </Link>
       </p>
+
+      <p className="text-center text-sm mb-2.5">
+        Resend confirmation email?{" "}
+        <Link
+          className="font-medium text-[#DB0A20] hover:underline"
+          to="/resend-email"
+        >
+          Resend
+        </Link>
+      </p>
+
       <p className="text-center text-sm">
         Don't have an account?{" "}
         <Link

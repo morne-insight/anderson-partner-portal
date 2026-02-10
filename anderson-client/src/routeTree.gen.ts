@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ResendEmailRouteImport } from './routes/resend-email'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
@@ -37,6 +38,11 @@ import { Route as AppProfileCompanyIdReportsReportIdIndexRouteImport } from './r
 import { Route as AppFooFooIdBarBarIdIndexRouteImport } from './routes/_app/foo/$fooId/bar/$barId/index'
 import { Route as AppProfileCompanyIdReportsReportIdEditRouteImport } from './routes/_app/profile/$companyId/reports/$reportId/edit'
 
+const ResendEmailRoute = ResendEmailRouteImport.update({
+  id: '/resend-email',
+  path: '/resend-email',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RegisterRoute = RegisterRouteImport.update({
   id: '/register',
   path: '/register',
@@ -188,6 +194,7 @@ export interface FileRoutesByFullPath {
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
+  '/resend-email': typeof ResendEmailRoute
   '/dashboard': typeof AppDashboardRoute
   '/directory': typeof AppDirectoryRoute
   '/opportunities/new': typeof AppOpportunitiesNewRoute
@@ -216,6 +223,7 @@ export interface FileRoutesByTo {
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
+  '/resend-email': typeof ResendEmailRoute
   '/dashboard': typeof AppDashboardRoute
   '/directory': typeof AppDirectoryRoute
   '/opportunities/new': typeof AppOpportunitiesNewRoute
@@ -246,6 +254,7 @@ export interface FileRoutesById {
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
+  '/resend-email': typeof ResendEmailRoute
   '/_app/dashboard': typeof AppDashboardRoute
   '/_app/directory': typeof AppDirectoryRoute
   '/_app/opportunities/new': typeof AppOpportunitiesNewRoute
@@ -276,6 +285,7 @@ export interface FileRouteTypes {
     | '/forgot-password'
     | '/login'
     | '/register'
+    | '/resend-email'
     | '/dashboard'
     | '/directory'
     | '/opportunities/new'
@@ -304,6 +314,7 @@ export interface FileRouteTypes {
     | '/forgot-password'
     | '/login'
     | '/register'
+    | '/resend-email'
     | '/dashboard'
     | '/directory'
     | '/opportunities/new'
@@ -333,6 +344,7 @@ export interface FileRouteTypes {
     | '/forgot-password'
     | '/login'
     | '/register'
+    | '/resend-email'
     | '/_app/dashboard'
     | '/_app/directory'
     | '/_app/opportunities/new'
@@ -363,6 +375,7 @@ export interface RootRouteChildren {
   ForgotPasswordRoute: typeof ForgotPasswordRoute
   LoginRoute: typeof LoginRoute
   RegisterRoute: typeof RegisterRoute
+  ResendEmailRoute: typeof ResendEmailRoute
   AcceptInviteInviteIdUserIdRoute: typeof AcceptInviteInviteIdUserIdRoute
   ConfirmEmailUserIdCodeRoute: typeof ConfirmEmailUserIdCodeRoute
   ResetPasswordEmailResetCodeRoute: typeof ResetPasswordEmailResetCodeRoute
@@ -370,6 +383,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/resend-email': {
+      id: '/resend-email'
+      path: '/resend-email'
+      fullPath: '/resend-email'
+      preLoaderRoute: typeof ResendEmailRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/register': {
       id: '/register'
       path: '/register'
@@ -617,6 +637,7 @@ const rootRouteChildren: RootRouteChildren = {
   ForgotPasswordRoute: ForgotPasswordRoute,
   LoginRoute: LoginRoute,
   RegisterRoute: RegisterRoute,
+  ResendEmailRoute: ResendEmailRoute,
   AcceptInviteInviteIdUserIdRoute: AcceptInviteInviteIdUserIdRoute,
   ConfirmEmailUserIdCodeRoute: ConfirmEmailUserIdCodeRoute,
   ResetPasswordEmailResetCodeRoute: ResetPasswordEmailResetCodeRoute,

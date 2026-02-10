@@ -44,7 +44,7 @@ function ProfileIndex() {
     queryKey: ['invites'],
     queryFn: async () => {
       return await callApi({
-        data: { fn: 'getApiInvites' },
+        data: { fn: 'getApiInvitesMe' },
       })
     },
   });
@@ -57,10 +57,10 @@ function ProfileIndex() {
     },
     onSuccess: (data) => {
       refreshData()
-      if (data?.value) {
+      if (data) {
         router.navigate({
           to: '/profile/$companyId',
-          params: { companyId: data.value },
+          params: { companyId: data },
         })
       }
     },
@@ -83,6 +83,7 @@ function ProfileIndex() {
               websiteUrl: '',
               employeeCount: 0,
               serviceTypes: [],
+              serviceSubTypes: [],
               capabilities: [],
               industries: [],
             },

@@ -840,6 +840,13 @@ export type RemoveInterestedPartnerOpportunityCommand = {
 export type ReportQuarter = number
 
 /**
+ * ResendEmailDto
+ */
+export type ResendEmailDto = {
+	email?: string | null
+}
+
+/**
  * ResetPasswordDto
  */
 export type ResetPasswordDto = {
@@ -1286,6 +1293,34 @@ export type PostApiAccountRegisterData = {
 }
 
 export type PostApiAccountRegisterResponses = {
+	/**
+	 * OK
+	 */
+	200: unknown
+}
+
+export type PostApiAccountRegisterAdminData = {
+	body: RegisterDto
+	path?: never
+	query?: never
+	url: '/api/Account/RegisterAdmin'
+}
+
+export type PostApiAccountRegisterAdminResponses = {
+	/**
+	 * OK
+	 */
+	200: unknown
+}
+
+export type PostApiAccountResendConfirmationEmailData = {
+	body: ResendEmailDto
+	path?: never
+	query?: never
+	url: '/api/Account/ResendConfirmationEmail'
+}
+
+export type PostApiAccountResendConfirmationEmailResponses = {
 	/**
 	 * OK
 	 */
@@ -2721,6 +2756,14 @@ export type PutApiCompaniesPartnerDirectoryErrors = {
 	 * Bad Request
 	 */
 	400: ProblemDetails
+	/**
+	 * Unauthorized
+	 */
+	401: ProblemDetails
+	/**
+	 * Forbidden
+	 */
+	403: ProblemDetails
 	/**
 	 * Internal Server Error
 	 */

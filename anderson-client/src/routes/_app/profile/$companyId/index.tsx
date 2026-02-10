@@ -415,7 +415,7 @@ function ProfileEdit() {
     },
   })
 
-  const startEditLocation = (loc) => {
+  const startEditLocation = (loc: any) => {
     setEditingLocationId(loc.id)
     setEditLocation({
       name: loc.name || '',
@@ -1517,8 +1517,8 @@ function ProfileEdit() {
             </h3>
             <div className="border border-gray-200 bg-white p-6 shadow-sm">
               <MultiSelectCombobox
-                chipClassName="rounded-none border border-red-600 bg-red-600 px-3 py-1.5 font-bold text-[10px] text-white uppercase tracking-wider transition-all"
-                createButtonClassName="flex w-full items-center gap-2 px-2 py-2 text-left text-sm text-red-600 hover:bg-red-50"
+                chipClassName="rounded-none border border-black bg-black px-3 py-1.5 font-bold text-[10px] text-white uppercase tracking-wider transition-all"
+                createButtonClassName="flex w-full items-center gap-2 px-2 py-2 text-left text-sm text-black hover:bg-gray-100"
                 emptyMessage="No industries found."
                 getItemLabel={(ind) => ind.name || ''}
                 helperText="Select the primary industries your firm serves."

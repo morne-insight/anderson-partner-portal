@@ -73,6 +73,16 @@ export function RegisterForm() {
         <div className="rounded-md bg-green-50 p-4 text-green-700">
           Registration successful! Once you have confirmed your email, you can sign in with your credentials.
         </div>
+        <div className="rounded-md px-2">
+          If you dont receive an email, please check your spam folder or{" "}
+          <Link
+            className="font-medium text-[#DB0A20] hover:underline"
+            to="/resend-email"
+          >
+            resend the confirmation email
+          </Link>
+          .
+        </div>
         <Link
           className="font-medium text-[#DB0A20] hover:underline"
           to="/login"
@@ -229,6 +239,16 @@ export function RegisterForm() {
           {isLoading ? "Creating Account..." : "Sign Up"}
         </Button>
       </form>
+
+      <p className="text-center text-sm mb-2.5">
+        Resend confirmation email?{" "}
+        <Link
+          className="font-medium text-[#DB0A20] hover:underline"
+          to="/resend-email"
+        >
+          Resend
+        </Link>
+      </p>
 
       <p className="text-center text-sm">
         Already have an account?{" "}
