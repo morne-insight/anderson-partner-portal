@@ -22,9 +22,9 @@ public class AccountEmailSender : IAccountEmailSender
     [IntentManaged(Mode.Fully, Body = Mode.Merge)]
     public async Task SendEmailConfirmationRequest(string email, string userId, string code)
     {
-        var baseUrl = _configuration["AppSettings:ClientUrl"] ?? "http://localhost:3000";
-        //var verificationUrl = $"{baseUrl}/confirm-email?userId={userId}&code={code}";
-        var verificationUrl = $"{baseUrl}/confirm-email/{userId}/{code}";
+        var baseUrl = _configuration["AppSettings:ClientUrl"] ?? "https://andersen.partners";
+        var encodedCode = Uri.EscapeDataString(code);
+        var verificationUrl = $"{baseUrl}/confirm-email/{userId}/{encodedCode}";
 
         var htmlBody = await LoadEmailConfirmationTemplateAsync(
             userName: email,

@@ -121,9 +121,14 @@ export const confirmEmailfn = createServerFn({ method: 'POST' })
 	.inputValidator((data: { userId: string; code: string }) => data)
 	.handler(async ({ data }) => {
 		try {
-			await postApiAccountConfirmEmail({
+			const result = await postApiAccountConfirmEmail({
 				body: data,
-			})
+			});
+
+			console.log("confirmEmailFn", JSON.stringify(result, null, 2));
+
+			return { success: true }
+			
 			return { success: true }
 		} catch (error) {
 			return { success: false, error: 'Email confirmation failed' }
@@ -218,7 +223,7 @@ export const resendConfirmationFn = createServerFn({ method: 'POST' })
 			})
 
 			console.log('resend result', JSON.stringify(result, null, 2));
-			
+
 			if(result.error) {
 				return { success: false, error: result.error || 'Resend confirmation failed' }
 			}
