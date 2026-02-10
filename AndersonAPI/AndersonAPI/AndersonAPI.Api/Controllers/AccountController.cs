@@ -384,7 +384,7 @@ namespace AndersonAPI.Api.Controllers
         {
             _logger.LogInformation("=== ConfirmEmail Request Started ===");
             _logger.LogInformation($"UserId: {input.UserId}");
-            _logger.LogInformation($"Code (first 50 chars): {(input.Code?.Length > 50 ? input.Code.Substring(0, 50) : input.Code)}...");
+            _logger.LogInformation($"Code (first 50 chars): {(input.Code?.Substring(0, input.Code.Length / 2))}");
             _logger.LogInformation($"Code length: {input.Code?.Length ?? 0}");
             
             if (string.IsNullOrWhiteSpace(input.UserId))
@@ -442,7 +442,7 @@ namespace AndersonAPI.Api.Controllers
                 var errors = string.Join(", ", result.Errors.Select(e => $"{e.Code}: {e.Description}"));
                 _logger.LogError($"ConfirmEmailAsync failed. Errors: {errors}");
                 
-                ModelState.AddModelError<ConfirmEmailDto>(x => x, "Error confirming your email. Please request a new confirmation link.");
+                ModelState.AddModelError<ConfirmEmailDto>(x => x, "Error confirming your email. Please request a new confirmation link. Code: " + code);
                 return BadRequest(ModelState);
             }
 
