@@ -93,9 +93,17 @@ namespace AndersonAPI.Api.Controllers
 
             if (!result.Succeeded)
             {
+                var errorMessage = "";
                 foreach (var error in result.Errors)
                 {
-                    ModelState.AddModelError("errors", error.Description);
+                    if (error.Code == "PasswordRequiresNonAlphanumeric")
+                    {
+                        ModelState.AddModelError("errors", "Password must contain at least one non-alphanumeric character. (!@#$%^&*).");
+                    }
+                    else 
+                    { 
+                        ModelState.AddModelError("errors", error.Description);
+                    }
                 }
 
                 return BadRequest(ModelState);
@@ -109,6 +117,68 @@ namespace AndersonAPI.Api.Controllers
             }
 
             return Ok();
+        }
+
+        [HttpPost]
+        [Authorize]
+        [IntentManaged(Mode.Merge, Body = Mode.Ignore)]
+        public async Task<IActionResult> RegisterAdmin(RegisterDto input)
+        {
+            var registerResult = await Register(input);
+            if (registerResult is not OkResult)
+            {
+                return registerResult;
+            }
+            var user = await _userManager.FindByEmailAsync(input.Email!);
+            if (user == null)
+            {
+                return NotFound($"User with email '{input.Email}' not found after registration.");
+            }
+            var roleExists = await _roleManager.RoleExistsAsync("Admin");
+            if (!roleExists)
+            {
+                var roleResult = await _roleManager.CreateAsync(new IdentityRole<string> { Name = "Admin", Id = Guid.NewGuid().ToString() });
+                if (!roleResult.Succeeded)
+                {
+                    return StatusCode(500, $"Failed to create 'Admin' role: {string.Join(", ", roleResult.Errors.Select(e => e.Description))}");
+                }
+            }
+            var addToRoleResult = await _userManager.AddToRoleAsync(user, "Admin");
+            if (!addToRoleResult.Succeeded)
+            {
+                return StatusCode(500, $"Failed to add user to 'Admin' role: {string.Join(", ", addToRoleResult.Errors.Select(e => e.Description))}");
+            }
+            return Ok();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [IntentManaged(Mode.Merge, Body = Mode.Ignore)]
+        public async Task<IActionResult> ResendConfirmationEmail(ResendEmailDto input) 
+        {
+            if (string.IsNullOrEmpty(input.Email))
+            {
+                ModelState.AddModelError<ResendEmailDto>(x => x.Email, "Mandatory");
+            }
+            
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var user = await _userManager.FindByEmailAsync(input.Email!);
+            if (user == null)
+            {
+                ModelState.AddModelError("errors", "User is not registered");
+                return BadRequest();
+            }
+
+            _logger.LogInformation("User found, sending email.");
+
+            await SendConfirmationEmail(user);
+
+            return Ok();
+
         }
 
         [HttpPost]
@@ -233,10 +303,16 @@ namespace AndersonAPI.Api.Controllers
             var password = input.Password!;
 
             var user = await _userManager.FindByEmailAsync(email);
-            if (user == null ||
+            if (user == null || 
                 !await _userManager.CheckPasswordAsync(user, password))
             {
                 _logger.LogWarning("Invalid login attempt.");
+                return Forbid();
+            }
+
+            if (!await _userManager.IsEmailConfirmedAsync(user))
+            {
+                _logger.LogWarning("Email not confirmed.");
                 return Forbid();
             }
 
@@ -544,6 +620,12 @@ namespace AndersonAPI.Api.Controllers
         public string? Password { get; set; }
         public string? UserName { get; set; }
 
+    }
+
+    [IntentManaged(Mode.Ignore)]
+    public class ResendEmailDto
+    {
+        public string? Email { get; set; }
     }
 
     [IntentManaged(Mode.Ignore)]

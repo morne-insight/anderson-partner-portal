@@ -674,10 +674,13 @@ namespace AndersonAPI.Api.Controllers
         /// </summary>
         /// <response code="200">Successfully updated.</response>
         /// <response code="400">One or more validation errors have occurred.</response>
+        /// <response code="401">Unauthorized request.</response>
+        /// <response code="403">Forbidden request.</response>
         [HttpPut("api/companies/partner-directory")]
-        [AllowAnonymous]
         [ProducesResponseType(typeof(PagedResult<PartnerProfileListItem>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<PagedResult<PartnerProfileListItem>>> GetPartnersDirectory(
             [FromBody] GetPartnersDirectoryQuery query,
