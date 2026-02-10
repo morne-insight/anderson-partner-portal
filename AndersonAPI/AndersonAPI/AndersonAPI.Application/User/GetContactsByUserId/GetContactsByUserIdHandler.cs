@@ -40,6 +40,7 @@ namespace AndersonAPI.Application.User.GetContactsByUserId
 
             var contacts = companies
                 .SelectMany(company => company.Contacts.Select(contact => UserContact.Create(
+                    contactId: contact.Id,
                     firstName: contact.FirstName,
                     lastName: contact.LastName,
                     emailAddress: contact.EmailAddress,

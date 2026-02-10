@@ -3081,6 +3081,10 @@ export const UserContactSchema = {
 	title: 'UserContact',
 	type: 'object',
 	properties: {
+		contactId: {
+			type: 'string',
+			format: 'uuid',
+		},
 		firstName: {
 			type: 'string',
 		},

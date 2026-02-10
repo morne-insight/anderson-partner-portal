@@ -1279,6 +1279,7 @@ export type UserCompanyDto = {
  * UserContact
  */
 export type UserContact = {
+	contactId?: string
 	firstName?: string
 	lastName?: string
 	emailAddress?: string | null

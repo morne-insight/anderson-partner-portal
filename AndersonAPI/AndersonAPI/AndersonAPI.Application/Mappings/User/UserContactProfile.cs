@@ -12,6 +12,7 @@ namespace AndersonAPI.Application.User
         public UserContactProfile()
         {
             CreateMap<Contact, UserContact>()
+                .ForMember(d => d.ContactId, opt => opt.MapFrom(src => src.Id))
                 .ForMember(d => d.Name, opt => opt.MapFrom(src => src.Company.Name))
                 .ForMember(d => d.WebsiteUrl, opt => opt.MapFrom(src => src.Company.WebsiteUrl));
         }

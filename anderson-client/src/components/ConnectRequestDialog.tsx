@@ -40,14 +40,23 @@ export function ConnectRequestDialog({
   const contactsQuery = useQuery({
     queryKey: ["user", "contacts"],
     queryFn: async () => {
-      return (await callApi({
-        data: {
-          fn: "getApiUserContactsMe",
-          args: {},
-        },
-      })) as UserContact[];
+      console.log("Fetching user contacts...");
+      try {
+        const result = await callApi({
+          data: {
+            fn: "getApiUserContactsMe",
+            args: {},
+          },
+        });
+        console.log("User contacts result:", result);
+        return result as UserContact[];
+      } catch (error) {
+        console.error("Error fetching user contacts:", error);
+        throw error;
+      }
     },
     staleTime: 5 * 60 * 1000,
+    enabled: open,
   });
 
   const mutation = useMutation({
@@ -60,7 +69,7 @@ export function ConnectRequestDialog({
           fn: "putApiCompaniesConnectionRequest",
           args: {
             body: {
-              contactId: selectedContact.emailAddress || "",
+              contactId: selectedContact.contactId || "",
               companyId: selectedContact.companyId,
               partnerId,
               message,
@@ -108,18 +117,18 @@ export function ConnectRequestDialog({
       <Select
         onValueChange={(value) => {
           const contact = contacts.find(
-            (c) => `${c.companyId}-${c.emailAddress}` === value
+            (c) => `${c.companyId}-${c.contactId}` === value
           );
           setSelectedContact(contact || null);
         }}
-        value={selectedContact ? `${selectedContact.companyId}-${selectedContact.emailAddress}` : ""}
+        value={selectedContact ? `${selectedContact.companyId}-${selectedContact.contactId}` : ""}
       >
         <SelectTrigger>
           <SelectValue placeholder="Select a contact" />
         </SelectTrigger>
         <SelectContent>
           {contacts.map((c) => {
-            const key = `${c.companyId}-${c.emailAddress}`;
+            const key = `${c.companyId}-${c.contactId}`;
             const label = `${c.firstName || ""} ${c.lastName || ""}`.trim();
             const position = c.companyPosition || "";
             const companyName = c.name || "";

@@ -15,6 +15,8 @@ namespace AndersonAPI.Application.User
             WebsiteUrl = null!;
         }
 
+        public Guid ContactId { get; set; }
+
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string? EmailAddress { get; set; }
@@ -24,6 +26,7 @@ namespace AndersonAPI.Application.User
         public Guid CompanyId { get; set; }
 
         public static UserContact Create(
+            Guid contactId,
             string firstName,
             string lastName,
             string? emailAddress,
@@ -34,6 +37,7 @@ namespace AndersonAPI.Application.User
         {
             return new UserContact
             {
+                ContactId = contactId,
                 FirstName = firstName,
                 LastName = lastName,
                 EmailAddress = emailAddress,
