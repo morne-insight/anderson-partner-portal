@@ -310,10 +310,13 @@ namespace AndersonAPI.Api.Controllers
                 return Forbid();
             }
 
-            if (!await _userManager.IsEmailConfirmedAsync(user))
+            if(_userManager.Options.SignIn.RequireConfirmedAccount)
             {
-                _logger.LogWarning("Email not confirmed.");
-                return Forbid();
+                if (!await _userManager.IsEmailConfirmedAsync(user))
+                {
+                    _logger.LogWarning("Email not confirmed.");
+                    return Forbid();
+                }
             }
 
             if (await _userManager.IsLockedOutAsync(user))
