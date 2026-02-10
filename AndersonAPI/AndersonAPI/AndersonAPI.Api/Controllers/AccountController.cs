@@ -405,7 +405,8 @@ namespace AndersonAPI.Api.Controllers
 
             var userId = input.UserId!;
             var code = input.Code!;
-            
+            var decodedCode = string.Empty;
+
             var user = await _userManager.FindByIdAsync(input.UserId!);
             if (user == null)
             {
@@ -417,9 +418,10 @@ namespace AndersonAPI.Api.Controllers
 
             try
             {
-                _logger.LogInformation("Attempting Base64Url decode...");
-                code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
-                _logger.LogInformation($"Decode successful. Decoded length: {code.Length}");
+                _logger.LogInformation("Attempting Base64Url decode... " + code);
+                decodedCode = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
+                _logger.LogInformation($"Decode successful. Decoded length: {decodedCode.Length}");
+                _logger.LogInformation($"Decode successful. Decoded length: {decodedCode}");
             }
             catch (FormatException ex)
             {
@@ -442,7 +444,7 @@ namespace AndersonAPI.Api.Controllers
                 var errors = string.Join(", ", result.Errors.Select(e => $"{e.Code}: {e.Description}"));
                 _logger.LogError($"ConfirmEmailAsync failed. Errors: {errors}");
                 
-                ModelState.AddModelError<ConfirmEmailDto>(x => x, "Error confirming your email. Please request a new confirmation link. Code: " + code);
+                ModelState.AddModelError<ConfirmEmailDto>(x => x, "Error confirming your email. Code: " + code + " : " + decodedCode);
                 return BadRequest(ModelState);
             }
 
