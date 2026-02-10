@@ -153,7 +153,7 @@ export function LoginForm() {
         </Link>
       </p>
 
-      <p className="text-center text-sm mb-2.5">
+      {/* <p className="text-center text-sm mb-2.5">
         Resend confirmation email?{" "}
         <Link
           className="font-medium text-[#DB0A20] hover:underline"
@@ -161,7 +161,7 @@ export function LoginForm() {
         >
           Resend
         </Link>
-      </p>
+      </p> */}
 
       <p className="text-center text-sm">
         Don't have an account?{" "}
