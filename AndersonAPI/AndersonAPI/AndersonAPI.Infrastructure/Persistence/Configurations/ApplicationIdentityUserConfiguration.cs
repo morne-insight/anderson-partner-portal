@@ -21,6 +21,10 @@ namespace AndersonAPI.Infrastructure.Persistence.Configurations
 
             builder.Property(x => x.Name)
                 .HasMaxLength(120);
+
+            builder.Property(x => x.EmailConfirmationCode);
+
+            builder.Property(x => x.PasswordResetToken);
         }
     }
 }

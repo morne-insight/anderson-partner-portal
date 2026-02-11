@@ -101,8 +101,8 @@ namespace AndersonAPI.Api.Controllers
                     {
                         ModelState.AddModelError("errors", "Password must contain at least one non-alphanumeric character. (!@#$%^&*).");
                     }
-                    else 
-                    { 
+                    else
+                    {
                         ModelState.AddModelError("errors", error.Description);
                     }
                 }
@@ -155,13 +155,13 @@ namespace AndersonAPI.Api.Controllers
         [HttpPost]
         [AllowAnonymous]
         [IntentManaged(Mode.Merge, Body = Mode.Ignore)]
-        public async Task<IActionResult> ResendConfirmationEmail(ResendEmailDto input) 
+        public async Task<IActionResult> ResendConfirmationEmail(ResendEmailDto input)
         {
             if (string.IsNullOrEmpty(input.Email))
             {
                 ModelState.AddModelError<ResendEmailDto>(x => x.Email, "Mandatory");
             }
-            
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -304,14 +304,14 @@ namespace AndersonAPI.Api.Controllers
             var password = input.Password!;
 
             var user = await _userManager.FindByEmailAsync(email);
-            if (user == null || 
+            if (user == null ||
                 !await _userManager.CheckPasswordAsync(user, password))
             {
                 _logger.LogWarning("Invalid login attempt.");
                 return Forbid();
             }
 
-            if(_userManager.Options.SignIn.RequireConfirmedAccount)
+            if (_userManager.Options.SignIn.RequireConfirmedAccount)
             {
                 if (!await _userManager.IsEmailConfirmedAsync(user))
                 {
@@ -383,14 +383,9 @@ namespace AndersonAPI.Api.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        [IntentManaged(Mode.Fully, Body = Mode.Merge)]
+        [IntentManaged(Mode.Fully, Body = Mode.Ignore)]
         public async Task<IActionResult> ConfirmEmail(ConfirmEmailDto input)
         {
-            _logger.LogInformation("=== ConfirmEmail Request Started ===");
-            _logger.LogInformation($"UserId: {input.UserId}");
-            _logger.LogInformation($"Code (first 50 chars): {(input.Code?.Substring(0, input.Code.Length / 2))}");
-            _logger.LogInformation($"Code length: {input.Code?.Length ?? 0}");
-            
             if (string.IsNullOrWhiteSpace(input.UserId))
             {
                 ModelState.AddModelError<ConfirmEmailDto>(x => x.UserId, "Mandatory");
@@ -403,56 +398,43 @@ namespace AndersonAPI.Api.Controllers
 
             if (!ModelState.IsValid)
             {
-                _logger.LogWarning("Validation failed");
                 return BadRequest(ModelState);
             }
 
             var userId = input.UserId!;
             var code = input.Code!;
-            var decodedCode = string.Empty;
+            var decoded = string.Empty;
 
             var user = await _userManager.FindByIdAsync(input.UserId!);
             if (user == null)
             {
-                _logger.LogWarning($"User not found: {userId}");
                 return NotFound($"Unable to load user with ID '{userId}'.");
             }
 
-            _logger.LogInformation($"User found: {user.Email}");
-
             try
             {
-                _logger.LogInformation("Attempting Base64Url decode... " + code);
-                decodedCode = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
-                _logger.LogInformation($"Decode successful. Decoded length: {decodedCode.Length}");
-                _logger.LogInformation($"Decode successful. Decoded length: {decodedCode}");
+                decoded = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
             }
             catch (FormatException ex)
             {
-                _logger.LogError(ex, $"Base64Url decode failed for code: {input.Code}");
                 ModelState.AddModelError<ConfirmEmailDto>(x => x.Code, "Invalid confirmation code format. Please request a new confirmation email.");
                 return BadRequest(ModelState);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Unexpected decode error: {input.Code}");
                 ModelState.AddModelError<ConfirmEmailDto>(x => x.Code, "Error processing confirmation code.");
                 return BadRequest(ModelState);
             }
 
-            _logger.LogInformation("Calling ConfirmEmailAsync...");
-            var result = await _userManager.ConfirmEmailAsync(user, decodedCode);
-            
-            if (!result.Succeeded)
+            var result = user.VerifyEmailCode(decoded);
+
+            if (!result)
             {
-                var errors = string.Join(", ", result.Errors.Select(e => $"{e.Code}: {e.Description}"));
-                _logger.LogError($"ConfirmEmailAsync failed. Errors: {errors}");
-                
-                ModelState.AddModelError<ConfirmEmailDto>(x => x, $"[{errors}] : Code {code}  :  decoded: {decodedCode}");
+                ModelState.AddModelError<ConfirmEmailDto>(x => x, "Error confirming your email.");
                 return BadRequest(ModelState);
             }
 
-            _logger.LogInformation($"Email confirmed successfully: {user.Email}");
+            await _userManager.UpdateAsync(user);
 
             var invites = await _mediator.Send(new GetInvitesByUserIdQuery(user.Id));
 
@@ -461,12 +443,12 @@ namespace AndersonAPI.Api.Controllers
                 await _mediator.Send(new AcceptInviteCommand(invite.Id, user.Id));
             }
 
-            _logger.LogInformation("=== ConfirmEmail Completed Successfully ===");
             return Ok();
         }
 
         [HttpPost("~/api/[controller]/forgotPassword")]
         [AllowAnonymous]
+        [IntentManaged(Mode.Fully, Body = Mode.Merge)]
         public async Task<IActionResult> ForgotPassword(ForgotPasswordDto resetRequest)
         {
             var user = await _userManager.FindByEmailAsync(resetRequest.Email!);
@@ -474,6 +456,8 @@ namespace AndersonAPI.Api.Controllers
             if (user is not null && await _userManager.IsEmailConfirmedAsync(user))
             {
                 var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+                user.SetPasswordToken(code);
+                await _userManager.UpdateAsync(user);
                 code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
 
                 await _accountEmailSender.SendPasswordResetCode(resetRequest.Email!, user.Id,
@@ -505,7 +489,18 @@ namespace AndersonAPI.Api.Controllers
             try
             {
                 var code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(resetRequest.ResetCode!));
-                result = await _userManager.ResetPasswordAsync(user, code, resetRequest.NewPassword!);
+                var isValid = user.VerifyPasswordToken(code);
+
+                if (isValid)
+                {
+                    var changeCode = await _userManager.GeneratePasswordResetTokenAsync(user);
+                    result = await _userManager.ResetPasswordAsync(user, changeCode, resetRequest.NewPassword!);
+                } 
+                else
+                {
+                    result = IdentityResult.Failed(_userManager.ErrorDescriber.InvalidToken());
+                }
+
             }
             catch (FormatException)
             {
@@ -615,21 +610,20 @@ namespace AndersonAPI.Api.Controllers
             return Ok();
         }
 
+        [IntentManaged(Mode.Fully, Body = Mode.Merge)]
         private async Task SendConfirmationEmail(ApplicationIdentityUser user)
         {
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-            _logger.LogInformation("Generated email confirmation token for user {UserId}: {Token}", user.Id, code);
-
-            var encodedCode = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-            _logger.LogInformation("Generated email confirmation token encoded for user {UserId}: {Token}", user.Id, code);
+            user.SetEmailConfirmationCode(code);
+            await _userManager.UpdateAsync(user);
+            code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
 
             var userId = await _userManager.GetUserIdAsync(user);
 
             await _accountEmailSender.SendEmailConfirmationRequest(
                 email: user.Email!,
                 userId: userId,
-                code: code,
-                encodedCode: encodedCode);
+                code: code);
         }
 
         private async Task<IList<Claim>> GetClaims(ApplicationIdentityUser user)

@@ -8,7 +8,6 @@ export function ConfirmEmail() {
     const confirmEmail = useServerFn(confirmEmailfn);
 
     const {
-        data,
         isLoading,
         isError,
         error,
@@ -37,7 +36,7 @@ export function ConfirmEmail() {
     if (isLoading) {
         return (
             <div className="mx-auto max-w-md space-y-6 text-center">
-                <div className="rounded-md bg-red-50 p-4 text-red-700">
+                <div className="rounded-md">
                     Verifying email...
                 </div>
             </div>)

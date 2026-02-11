@@ -1,3 +1,4 @@
+using System.Runtime.Intrinsics.Arm;
 using AndersonAPI.Api.Configuration;
 using AndersonAPI.Api.Filters;
 using AndersonAPI.Api.Logging;
@@ -11,7 +12,6 @@ using Microsoft.AspNetCore.DataProtection;
 using Scalar.AspNetCore;
 using Serilog;
 using Serilog.Events;
-using System.Runtime.Intrinsics.Arm;
 
 [assembly: DefaultIntentManaged(Mode.Fully)]
 [assembly: IntentTemplate("Intent.AspNetCore.Program", Version = "1.0")]
@@ -43,43 +43,6 @@ namespace AndersonAPI.Api
                     {
                         opt.Filters.Add<ExceptionFilter>();
                     });
-
-                // *** CONFIGURE DATA PROTECTION FOR PRODUCTION ***
-
-
-                var dataProtection = builder.Services.AddDataProtection()
-                    .SetApplicationName("AndersonAPI");
-
-                if (builder.Environment.IsProduction())
-                {
-                    var blobUri = builder.Configuration["DataProtection:BlobUri"];
-
-                    if (!string.IsNullOrWhiteSpace(blobUri))
-                    {
-                        dataProtection.PersistKeysToAzureBlobStorage(
-                            new Uri(blobUri),
-                            new DefaultAzureCredential());
-                    }
-                    else
-                    {
-                        var keysPath = Path.Combine(
-                            Environment.GetEnvironmentVariable("HOME")!,
-                            "ASP.NET",
-                            "DataProtection-Keys");
-
-                        Directory.CreateDirectory(keysPath);
-
-                        dataProtection.PersistKeysToFileSystem(new DirectoryInfo(keysPath));
-                    }
-                }
-                else
-                {
-                    // Development: use local file system
-                    var keysPath = Path.Combine(builder.Environment.ContentRootPath, "DataProtectionKeys");
-                    Directory.CreateDirectory(keysPath);
-                    dataProtection
-                        .PersistKeysToFileSystem(new DirectoryInfo(keysPath));
-                }
 
                 builder.Services.AddApplication(builder.Configuration);
                 builder.Services.ConfigureApplicationSecurity(builder.Configuration);
@@ -127,28 +90,28 @@ namespace AndersonAPI.Api
                     {
                         Console.WriteLine($">>> REQ {ctx.Request.Method} {ctx.Request.Path}");
                     }
-                    
+
                     // Capture response body for error logging
                     var originalBodyStream = ctx.Response.Body;
                     using var responseBody = new MemoryStream();
                     ctx.Response.Body = responseBody;
-                    
+
                     try
                     {
                         await next();
-                        
+
                         // Copy the response body to the original stream
                         responseBody.Seek(0, SeekOrigin.Begin);
                         await responseBody.CopyToAsync(originalBodyStream);
-                        
+
                         if (ctx.Request.Path.Value != "/openapi/v1.json")
                         {
                             Console.WriteLine($">>> RES {ctx.Response.StatusCode} {ctx.Request.Method} {ctx.Request.Path}");
-                            
+
                             if (ctx.Response.StatusCode >= 400)
                             {
                                 Console.WriteLine($"TraceIdentifier: {ctx.TraceIdentifier}");
-                                
+
                                 // Read the response body
                                 responseBody.Seek(0, SeekOrigin.Begin);
                                 using var reader = new StreamReader(responseBody);
@@ -160,7 +123,7 @@ namespace AndersonAPI.Api
                     catch (Exception ex)
                     {
                         Console.WriteLine($">>> EX for {ctx.Request.Method} {ctx.Request.Path}\n{ex}");
-                        
+
                         // Make sure to restore the original stream on exception
                         ctx.Response.Body = originalBodyStream;
                         throw;

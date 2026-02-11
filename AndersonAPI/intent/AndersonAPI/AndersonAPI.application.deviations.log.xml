@@ -9,7 +9,7 @@
       <updatedByDisplayName>Morne</updatedByDisplayName>
       <updatedAt>2026-02-04T13:25:33.4953028Z</updatedAt>
       <deviationsHash>841734C1186AD60726F2CC767A01C2A97843CF6929B7CAB987BFA1458FC575A5</deviationsHash>
-      <fileHash>9B5F920D98CBC3F7A5ED48345E4A6F1F0862F3C19978B1D9B79328385A2D8D84</fileHash>
+      <fileHash>0552C70C0AD8CDB9064E7916B1F5F0E0DFBC2865CB33826A2C7D583A2D6D04B8</fileHash>
     </file>
     <file>
       <correlationId>Intent.AspNetCore.Scalar.OpenApiConfiguration#64130ebe-1689-4740-8c31-4e478125a62a</correlationId>
@@ -24,12 +24,12 @@
     <file>
       <correlationId>Intent.AspNetCore.Identity.AccountController.AccountController#0d6d45f7-7869-4975-9dad-9730556c530f</correlationId>
       <path>AndersonAPI.Api/Controllers/AccountController.cs</path>
-      <count>16</count>
+      <count>18</count>
       <updatedByAccountName>mvanzyl@insightconsulting.co.za</updatedByAccountName>
       <updatedByDisplayName>Morne</updatedByDisplayName>
-      <updatedAt>2026-02-10T20:32:32.0325876Z</updatedAt>
-      <deviationsHash>460B56779A20209AAE16FD5C69961F31DBF50E154AFBDB639DB819C6C5F89F62</deviationsHash>
-      <fileHash>80AB0DBF12E750A058B6908DD08910B6024A1017D0859781163C1AD0AC157458</fileHash>
+      <updatedAt>2026-02-11T15:55:35.8612043Z</updatedAt>
+      <deviationsHash>4E5906423D0D7A6623FECCBC4A5B81886700E9584F2D411F9E52EE70B4D47D01</deviationsHash>
+      <fileHash>1BB6B29CF595E6D5A85685920ADDF2EE6BFBF17B2B8EA5F691D7FF23EAC0FA2E</fileHash>
     </file>
     <file>
       <correlationId>Intent.AspNetCore.Controllers.Controller#ece70b3a-0c7e-4f50-80e2-b00c3d541e46</correlationId>
@@ -49,7 +49,7 @@
       <updatedByDisplayName>Morne</updatedByDisplayName>
       <updatedAt>2026-01-12T11:51:01.6875522Z</updatedAt>
       <deviationsHash>0244571007F30608A80A366537EAEF4D158E4B558B88728B05259E2C42AFFC99</deviationsHash>
-      <fileHash>6B450561C566958A1F51385E2D7871DD1CC17BF594514FC2B8074FC2B072FE85</fileHash>
+      <fileHash>46CAE9A471BE26DAB108A9981AC01B370A04A99FC71A267A4D5F907C3D907BF6</fileHash>
     </file>
     <file>
       <correlationId>Intent.AspNetCore.Identity.AccountController.AccountEmailSender#6ca0b777-8e52-4201-b7e4-239aa4e98927</correlationId>
@@ -299,7 +299,7 @@
       <updatedByDisplayName>Morne</updatedByDisplayName>
       <updatedAt>2026-01-24T13:36:17.6334273Z</updatedAt>
       <deviationsHash>CE1F4C6B529A5013841D8388A1B4ACC94AC9452578963B6A50A2A08F18EA993E</deviationsHash>
-      <fileHash>B8D7C65274CDB5F795973735C3A5CFD2B1710CF6686D71D0ADE300670CA99505</fileHash>
+      <fileHash>1300666A1627434E8813076E02CCFC1221005133AD12DACC344404D96C6CB87B</fileHash>
     </file>
     <file>
       <correlationId>Intent.Entities.DomainEntity#bc2527a3-bd77-4c15-9f2e-7c23786d30a2</correlationId>

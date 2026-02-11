@@ -20,10 +20,10 @@ public class AccountEmailSender : IAccountEmailSender
     }
 
     [IntentManaged(Mode.Fully, Body = Mode.Merge)]
-    public async Task SendEmailConfirmationRequest(string email, string userId, string code, string encodedCode)
+    public async Task SendEmailConfirmationRequest(string email, string userId, string code)
     {
         var baseUrl = _configuration["AppSettings:ClientUrl"] ?? "https://andersen.partners";
-        var verificationUrl = $"{baseUrl}/confirm-email/{userId}/{encodedCode}  :  {code}";
+        var verificationUrl = $"{baseUrl}/confirm-email/{userId}/{code}";
 
         var htmlBody = await LoadEmailConfirmationTemplateAsync(
             userName: email,
