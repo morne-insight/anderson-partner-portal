@@ -5,6 +5,7 @@ using AndersonAPI.Api.Services;
 using AndersonAPI.Application;
 using AndersonAPI.Application.Account;
 using AndersonAPI.Infrastructure;
+using Azure.Identity;
 using Intent.RoslynWeaver.Attributes;
 using Microsoft.AspNetCore.DataProtection;
 using Scalar.AspNetCore;
@@ -46,6 +47,12 @@ namespace AndersonAPI.Api
                     .SetApplicationName("AndersonAPI")
                     .PersistKeysToFileSystem(new DirectoryInfo(
                         Path.Combine(builder.Environment.ContentRootPath, "DataProtectionKeys")));
+
+                //builder.Services.AddDataProtection()
+                //    .SetApplicationName("AndersonAPI")
+                //    .PersistKeysToAzureBlobStorage(
+                //        new Uri("https://insightconsulting.blob.core.windows.net/andersen-portal/dataprotection-keys/keys.xml"),
+                //        new DefaultAzureCredential());
 
                 builder.Services.AddApplication(builder.Configuration);
                 builder.Services.ConfigureApplicationSecurity(builder.Configuration);
