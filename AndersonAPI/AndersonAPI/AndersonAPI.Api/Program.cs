@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.DataProtection;
 using Scalar.AspNetCore;
 using Serilog;
 using Serilog.Events;
+using System.Runtime.Intrinsics.Arm;
 
 [assembly: DefaultIntentManaged(Mode.Fully)]
 [assembly: IntentTemplate("Intent.AspNetCore.Program", Version = "1.0")]
@@ -43,16 +44,42 @@ namespace AndersonAPI.Api
                         opt.Filters.Add<ExceptionFilter>();
                     });
 
-                builder.Services.AddDataProtection()
-                    .SetApplicationName("AndersonAPI")
-                    .PersistKeysToFileSystem(new DirectoryInfo(
-                        Path.Combine(builder.Environment.ContentRootPath, "DataProtectionKeys")));
+                // *** CONFIGURE DATA PROTECTION FOR PRODUCTION ***
 
-                //builder.Services.AddDataProtection()
-                //    .SetApplicationName("AndersonAPI")
-                //    .PersistKeysToAzureBlobStorage(
-                //        new Uri("https://insightconsulting.blob.core.windows.net/andersen-portal/dataprotection-keys/keys.xml"),
-                //        new DefaultAzureCredential());
+
+                var dataProtection = builder.Services.AddDataProtection()
+                    .SetApplicationName("AndersonAPI");
+
+                if (builder.Environment.IsProduction())
+                {
+                    var blobUri = builder.Configuration["DataProtection:BlobUri"];
+
+                    if (!string.IsNullOrWhiteSpace(blobUri))
+                    {
+                        dataProtection.PersistKeysToAzureBlobStorage(
+                            new Uri(blobUri),
+                            new DefaultAzureCredential());
+                    }
+                    else
+                    {
+                        var keysPath = Path.Combine(
+                            Environment.GetEnvironmentVariable("HOME")!,
+                            "ASP.NET",
+                            "DataProtection-Keys");
+
+                        Directory.CreateDirectory(keysPath);
+
+                        dataProtection.PersistKeysToFileSystem(new DirectoryInfo(keysPath));
+                    }
+                }
+                else
+                {
+                    // Development: use local file system
+                    var keysPath = Path.Combine(builder.Environment.ContentRootPath, "DataProtectionKeys");
+                    Directory.CreateDirectory(keysPath);
+                    dataProtection
+                        .PersistKeysToFileSystem(new DirectoryInfo(keysPath));
+                }
 
                 builder.Services.AddApplication(builder.Configuration);
                 builder.Services.ConfigureApplicationSecurity(builder.Configuration);
