@@ -5,19 +5,31 @@ import {
   Building,
   CheckCircle,
   Filter,
+  Loader2,
   MapPin,
   Search,
   Users,
 } from "lucide-react";
-import { useMemo } from "react";
-import type { DirectoryProfileListItem } from "@/api";
+import React, { useCallback, useEffect, useState } from "react";
 import { ConnectRequestDialog } from "@/components/ConnectRequestDialog";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 import { usePrefetchReferenceData } from "@/hooks/useReferenceData";
 import { callApi } from "@/server/proxy";
 import {
   clearAllDirectoryFilters,
   directoryFilterStore,
+  setIsLoading,
   setNameFilter,
+  setPageNumber,
+  setPagination,
   setSelectedCapability,
   setSelectedCountry,
   setSelectedIndustry,
@@ -25,30 +37,14 @@ import {
   setSelectedService,
 } from "@/stores/directoryFilterStore";
 
-interface DirectoryLoaderData {
-  companies: DirectoryProfileListItem[];
-}
-
 export const Route = createFileRoute("/_app/directory")({
   component: NetworkDirectory,
-  loader: async () => {
-    const [companies] = await Promise.all([
-      callApi({ data: { fn: "getApiCompanies" } }),
-    ]);
-
-    return {
-      companies: companies || [],
-    } as DirectoryLoaderData;
-  },
 });
 
 function NetworkDirectory() {
   const navigate = useNavigate();
-  const { companies } = Route.useLoaderData();
   const { countries, regions, capabilities, industries, serviceTypes } =
     usePrefetchReferenceData();
-
-  console.log(companies);
 
   // Get filter state from store
   const filterState = useStore(directoryFilterStore);
@@ -59,96 +55,215 @@ function NetworkDirectory() {
     selectedIndustry,
     selectedCapability,
     nameFilter,
+    pagination: { pageNumber, pageSize, totalCount, pageCount },
+    isLoading,
   } = filterState;
 
-  // Transform companies data to match expected format
-  const transformedCompanies = useMemo(() => {
-    return (companies || []).map((company: any) => {
-      return {
-        id: company.id,
-        name: company.name || "Unknown Company",
-        description:
-          company.shortDescription ||
-          company.fullDescription ||
-          "No description available.",
-        serviceType: company.serviceTypeName || "Professional Services",
-        skills: company.capabilities?.map((c: any) => c.name) || [],
-        industries: company.industries?.map((i: any) => i.name) || [],
-        verified: true,
-        locations:
-          company.locations?.map((l: any) => ({
-            country:
-              countries.data?.find((c: any) => c.id === l.countryId)?.name ||
-              "Unknown",
-            region:
-              regions.data?.find((r: any) => r.id === l.regionId)?.name ||
-              "Unknown",
-            isHeadOffice: l.isHeadOffice,
-          })) || [],
-        contacts:
-          company.contacts?.map((c: any) => ({
-            name:
-              `${c.firstName || ""} ${c.lastName || ""}`.trim() || "Contact",
-            email: c.emailAddress,
-            isDefault: true,
-          })) || [],
-      };
-    });
-  }, [companies, countries, regions]);
+  // State for fetched partners
+  const [partners, setPartners] = useState<any[]>([]);
 
-  // Derived filtered results
-  const filteredPartners = useMemo(() => {
-    return transformedCompanies
-      .filter((partner: any) => {
-        // Name Search
-        if (
-          nameFilter &&
-          !partner.name.toLowerCase().includes(nameFilter.toLowerCase())
-        )
-          return false;
+  const fetchPartners = useCallback(
+    async (page: number = pageNumber) => {
+      setIsLoading(true);
+      try {
+        const regionIds =
+          selectedRegion !== "All"
+            ? [regions.data?.find((r) => r.name === selectedRegion)?.id].filter(Boolean) as string[]
+            : [];
+        const countryIds =
+          selectedCountry !== "All"
+            ? [countries.data?.find((c) => c.name === selectedCountry)?.id].filter(Boolean) as string[]
+            : [];
+        const serviceTypeId =
+          selectedService !== "All"
+            ? serviceTypes.data?.find((s) => s.name === selectedService)?.id || null
+            : null;
+        const capabilityIds =
+          selectedCapability !== "All"
+            ? [capabilities.data?.find((c) => c.name === selectedCapability)?.id].filter(Boolean) as string[]
+            : [];
+        const industryIds =
+          selectedIndustry !== "All"
+            ? [industries.data?.find((i) => i.name === selectedIndustry)?.id].filter(Boolean) as string[]
+            : [];
 
-        // Region/Country Filter
-        const hasRegion =
-          selectedRegion === "All" ||
-          partner.locations.some((l: any) => l.region === selectedRegion);
-        const hasCountry =
-          selectedCountry === "All" ||
-          partner.locations.some((l: any) => l.country === selectedCountry);
-        if (!(hasRegion && hasCountry)) return false;
+        const response = await callApi({
+          data: {
+            fn: "putApiCompaniesPartnerDirectory",
+            args: {
+              body: {
+                pageNo: page,
+                pageSize,
+                orderBy: "name",
+                searchTerm: nameFilter.trim() || null,
+                serviceType: serviceTypeId,
+                regions: regionIds,
+                countries: countryIds,
+                capabilities: capabilityIds,
+                industries: industryIds,
+              },
+            },
+          },
+        });
 
-        // Service Filter
-        if (
-          selectedService !== "All" &&
-          partner.serviceType !== selectedService
-        )
-          return false;
+        const transformed = (response?.data || []).map((company: any) => {
+          return {
+            id: company.id,
+            name: company.name || "Unknown Company",
+            description:
+              company.shortDescription ||
+              company.fullDescription ||
+              "No description available.",
+            serviceType: company.serviceTypeName || "Professional Services",
+            skills: company.capabilities?.map((c: any) => c.name) || [],
+            industries: company.industries?.map((i: any) => i.name) || [],
+            serviceSubTypes: company.serviceSubTypes?.map((s: any) => s.name) || [],
+            verified: true,
+            locations:
+              company.locations?.map((l: any) => ({
+                country:
+                  countries.data?.find((c: any) => c.id === l.countryId)?.name ||
+                  "Unknown",
+                region:
+                  regions.data?.find((r: any) => r.id === l.regionId)?.name ||
+                  "Unknown",
+                isHeadOffice: l.isHeadOffice,
+              })) || [],
+            contacts:
+              company.contacts?.map((c: any) => ({
+                name:
+                  `${c.firstName || ""} ${c.lastName || ""}`.trim() || "Contact",
+                email: c.emailAddress,
+                isDefault: true,
+              })) || [],
+          };
+        });
 
-        // Industry Filter
-        if (
-          selectedIndustry !== "All" &&
-          !partner.industries.includes(selectedIndustry)
-        )
-          return false;
+        setPartners(transformed);
+        setPagination({
+          pageNumber: response?.pageNumber || 1,
+          pageCount: response?.pageCount || 0,
+          totalCount: response?.totalCount || 0,
+        });
+      } catch (error) {
+        console.error("Directory search failed", error);
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [
+      pageNumber,
+      pageSize,
+      nameFilter,
+      selectedRegion,
+      selectedCountry,
+      selectedService,
+      selectedCapability,
+      selectedIndustry,
+      regions.data,
+      countries.data,
+      serviceTypes.data,
+      capabilities.data,
+      industries.data,
+    ]
+  );
 
-        // Capability Filter
-        if (
-          selectedCapability !== "All" &&
-          !partner.skills.includes(selectedCapability)
-        )
-          return false;
-
-        return true;
-      })
-      .sort((a: any, b: any) => a.name.localeCompare(b.name));
+  // Fetch on mount and when filters change
+  useEffect(() => {
+    if (regions.data && countries.data) {
+      fetchPartners(1);
+      setPageNumber(1);
+    }
   }, [
-    transformedCompanies,
-    nameFilter,
     selectedRegion,
     selectedCountry,
     selectedService,
-    selectedIndustry,
     selectedCapability,
+    selectedIndustry,
+    regions.data,
+    countries.data,
   ]);
+
+  const handlePageChange = (page: number) => {
+    if (page < 1 || page > pageCount) return;
+    setPageNumber(page);
+    fetchPartners(page);
+  };
+
+  const handleSearch = () => {
+    setPageNumber(1);
+    fetchPartners(1);
+  };
+
+  const renderPaginationItems = () => {
+    const items: React.ReactNode[] = [];
+    const maxVisiblePages = 5;
+    let startPage = Math.max(1, pageNumber - Math.floor(maxVisiblePages / 2));
+    const endPage = Math.min(pageCount, startPage + maxVisiblePages - 1);
+
+    if (endPage - startPage + 1 < maxVisiblePages) {
+      startPage = Math.max(1, endPage - maxVisiblePages + 1);
+    }
+
+    if (startPage > 1) {
+      items.push(
+        <PaginationItem key={1}>
+          <PaginationLink
+            onClick={() => handlePageChange(1)}
+            isActive={pageNumber === 1}
+            className="cursor-pointer"
+          >
+            1
+          </PaginationLink>
+        </PaginationItem>
+      );
+      if (startPage > 2) {
+        items.push(
+          <PaginationItem key="ellipsis-start">
+            <PaginationEllipsis />
+          </PaginationItem>
+        );
+      }
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
+      if (i === 1 && startPage > 1) continue;
+      items.push(
+        <PaginationItem key={i}>
+          <PaginationLink
+            onClick={() => handlePageChange(i)}
+            isActive={pageNumber === i}
+            className="cursor-pointer"
+          >
+            {i}
+          </PaginationLink>
+        </PaginationItem>
+      );
+    }
+
+    if (endPage < pageCount) {
+      if (endPage < pageCount - 1) {
+        items.push(
+          <PaginationItem key="ellipsis-end">
+            <PaginationEllipsis />
+          </PaginationItem>
+        );
+      }
+      items.push(
+        <PaginationItem key={pageCount}>
+          <PaginationLink
+            onClick={() => handlePageChange(pageCount)}
+            isActive={pageNumber === pageCount}
+            className="cursor-pointer"
+          >
+            {pageCount}
+          </PaginationLink>
+        </PaginationItem>
+      );
+    }
+
+    return items;
+  };
 
   const clearAllFilters = () => {
     clearAllDirectoryFilters();
@@ -206,13 +321,24 @@ function NetworkDirectory() {
                 </label>
                 <div className="relative">
                   <input
-                    className="w-full border border-gray-200 bg-gray-50 px-3 py-2 text-xs outline-none focus:border-black"
+                    className="w-full border border-gray-200 bg-gray-50 px-3 py-2 pr-8 text-xs outline-none focus:border-black"
                     onChange={(e) => setNameFilter(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        handleSearch();
+                      }
+                    }}
                     placeholder="Enter keywords..."
                     type="text"
                     value={nameFilter}
                   />
-                  <Search className="absolute top-2.5 right-3 h-3 w-3 text-gray-300" />
+                  <button
+                    className="absolute top-1.5 right-1.5 p-1 hover:bg-gray-200 rounded"
+                    onClick={handleSearch}
+                    type="button"
+                  >
+                    <Search className="h-3 w-3 text-gray-400" />
+                  </button>
                 </div>
               </div>
 
@@ -325,14 +451,21 @@ function NetworkDirectory() {
         <div className="flex-1 space-y-6">
           <div className="mb-4 flex items-center justify-between">
             <span className="font-bold text-[10px] text-gray-400 uppercase tracking-widest">
-              Showing {filteredPartners.length}{" "}
-              {filteredPartners.length === 1 ? "Firm" : "Firms"}
+              {isLoading ? (
+                <span className="flex items-center gap-2">
+                  <Loader2 className="h-3 w-3 animate-spin" /> Loading...
+                </span>
+              ) : (
+                <>
+                  Showing {totalCount} {totalCount === 1 ? "Firm" : "Firms"}
+                </>
+              )}
             </span>
           </div>
 
-          {filteredPartners.length > 0 ? (
+          {partners.length > 0 ? (
             <div className="grid grid-cols-1 gap-4">
-              {filteredPartners.map((partner: any) => {
+              {partners.map((partner: any) => {
                 const headOffice =
                   partner.locations.find((l: any) => l.isHeadOffice) ||
                   partner.locations[0];
@@ -381,6 +514,23 @@ function NetworkDirectory() {
                           </span>
                         )}
                       </div>
+                      {partner.serviceSubTypes?.length > 0 && (
+                        <div className="mt-2 flex flex-wrap gap-1.5">
+                          {partner.serviceSubTypes.slice(0, 3).map((sst: string) => (
+                            <span
+                              className="border border-red-600/30 bg-red-50 px-2 py-0.5 font-bold text-[8px] text-red-600 uppercase tracking-tighter"
+                              key={sst}
+                            >
+                              {sst}
+                            </span>
+                          ))}
+                          {partner.serviceSubTypes.length > 3 && (
+                            <span className="self-center text-[8px] text-red-300">
+                              +{partner.serviceSubTypes.length - 3}
+                            </span>
+                          )}
+                        </div>
+                      )}
                     </div>
 
                     <div className="flex w-full gap-4 md:w-auto">
@@ -415,22 +565,56 @@ function NetworkDirectory() {
           ) : (
             <div className="border border-gray-200 border-dashed bg-white p-20 text-center">
               <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-gray-50">
-                <Users className="h-8 w-8 text-gray-300" />
+                {isLoading ? (
+                  <Loader2 className="h-8 w-8 animate-spin text-gray-300" />
+                ) : (
+                  <Users className="h-8 w-8 text-gray-300" />
+                )}
               </div>
               <h3 className="mb-2 font-serif text-black text-xl">
-                No Matching Firms
+                {isLoading ? "Loading..." : "No Matching Firms"}
               </h3>
-              <p className="mx-auto mb-8 max-w-sm font-light text-gray-500">
-                Try adjusting your filters to broaden your search within the
-                network directory.
-              </p>
-              <button
-                className="font-bold text-red-600 text-xs uppercase tracking-widest hover:underline"
-                onClick={clearAllFilters}
-                type="button"
-              >
-                Reset All Filters
-              </button>
+              {!isLoading && (
+                <>
+                  <p className="mx-auto mb-8 max-w-sm font-light text-gray-500">
+                    Try adjusting your filters to broaden your search within the
+                    network directory.
+                  </p>
+                  <button
+                    className="font-bold text-red-600 text-xs uppercase tracking-widest hover:underline"
+                    onClick={clearAllFilters}
+                    type="button"
+                  >
+                    Reset All Filters
+                  </button>
+                </>
+              )}
+            </div>
+          )}
+
+          {/* Pagination */}
+          {pageCount > 1 && (
+            <div className="mt-8 flex items-center justify-between border-gray-200 border-t pt-6">
+              <span className="font-bold text-[10px] text-gray-400 uppercase tracking-widest">
+                Page {pageNumber} of {pageCount}
+              </span>
+              <Pagination>
+                <PaginationContent>
+                  <PaginationItem>
+                    <PaginationPrevious
+                      onClick={() => handlePageChange(pageNumber - 1)}
+                      className={pageNumber <= 1 ? "pointer-events-none opacity-50" : "cursor-pointer"}
+                    />
+                  </PaginationItem>
+                  {renderPaginationItems()}
+                  <PaginationItem>
+                    <PaginationNext
+                      onClick={() => handlePageChange(pageNumber + 1)}
+                      className={pageNumber >= pageCount ? "pointer-events-none opacity-50" : "cursor-pointer"}
+                    />
+                  </PaginationItem>
+                </PaginationContent>
+              </Pagination>
             </div>
           )}
         </div>

@@ -4,8 +4,12 @@ using System.Text;
 using System.Text.Encodings.Web;
 using AndersonAPI.Api.Services;
 using AndersonAPI.Application.Account;
+using AndersonAPI.Application.Capabilities.DeleteCapability;
+using AndersonAPI.Application.Invites.AcceptInvite;
+using AndersonAPI.Application.Invites.GetInvitesByUserId;
 using AndersonAPI.Domain.Entities;
 using Intent.RoslynWeaver.Attributes;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -20,6 +24,7 @@ namespace AndersonAPI.Api.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
+    [IntentManaged(Mode.Merge)]
     public class AccountController : ControllerBase
     {
         // Validate the email address using DataAnnotations like the UserValidator does when RequireUniqueEmail = true.
@@ -30,13 +35,16 @@ namespace AndersonAPI.Api.Controllers
         private readonly ILogger<AccountController> _logger;
         private readonly IAccountEmailSender _accountEmailSender;
         private readonly ITokenService _tokenService;
+        private readonly ISender _mediator;
 
+        [IntentManaged(Mode.Merge)]
         public AccountController(IUserStore<ApplicationIdentityUser> userStore,
-            UserManager<ApplicationIdentityUser> userManager,
-            RoleManager<IdentityRole<string>> roleManager,  
-            ILogger<AccountController> logger,
-            IAccountEmailSender accountEmailSender,
-            ITokenService tokenService)
+                    UserManager<ApplicationIdentityUser> userManager,
+                    RoleManager<IdentityRole<string>> roleManager,
+                    ILogger<AccountController> logger,
+                    IAccountEmailSender accountEmailSender,
+                    ITokenService tokenService,
+                    ISender mediator)
         {
             _userStore = userStore;
             _userManager = userManager;
@@ -44,6 +52,7 @@ namespace AndersonAPI.Api.Controllers
             _logger = logger;
             _accountEmailSender = accountEmailSender;
             _tokenService = tokenService;
+            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
 
         [HttpPost]
@@ -59,6 +68,7 @@ namespace AndersonAPI.Api.Controllers
             if (string.IsNullOrWhiteSpace(input.Password))
             {
                 ModelState.AddModelError<RegisterDto>(x => x.Password, "Mandatory");
+                ModelState.AddModelError<RegisterDto>(x => x.Password, "Password must be at least 6 characters and contain an uppercase letter, a lowercase letter, a number, and a non-alphanumeric character.");
             }
 
             if (string.IsNullOrWhiteSpace(input.UserName))
@@ -71,7 +81,8 @@ namespace AndersonAPI.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            var user = new ApplicationIdentityUser { 
+            var user = new ApplicationIdentityUser
+            {
                 Id = Guid.NewGuid().ToString()
             };
 
@@ -83,9 +94,17 @@ namespace AndersonAPI.Api.Controllers
 
             if (!result.Succeeded)
             {
+                var errorMessage = "";
                 foreach (var error in result.Errors)
                 {
-                    ModelState.AddModelError("errors", error.Description);
+                    if (error.Code == "PasswordRequiresNonAlphanumeric")
+                    {
+                        ModelState.AddModelError("errors", "Password must contain at least one non-alphanumeric character. (!@#$%^&*).");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("errors", error.Description);
+                    }
                 }
 
                 return BadRequest(ModelState);
@@ -99,6 +118,68 @@ namespace AndersonAPI.Api.Controllers
             }
 
             return Ok();
+        }
+
+        [HttpPost]
+        [Authorize]
+        [IntentManaged(Mode.Merge, Body = Mode.Ignore)]
+        public async Task<IActionResult> RegisterAdmin(RegisterDto input)
+        {
+            var registerResult = await Register(input);
+            if (registerResult is not OkResult)
+            {
+                return registerResult;
+            }
+            var user = await _userManager.FindByEmailAsync(input.Email!);
+            if (user == null)
+            {
+                return NotFound($"User with email '{input.Email}' not found after registration.");
+            }
+            var roleExists = await _roleManager.RoleExistsAsync("Admin");
+            if (!roleExists)
+            {
+                var roleResult = await _roleManager.CreateAsync(new IdentityRole<string> { Name = "Admin", Id = Guid.NewGuid().ToString() });
+                if (!roleResult.Succeeded)
+                {
+                    return StatusCode(500, $"Failed to create 'Admin' role: {string.Join(", ", roleResult.Errors.Select(e => e.Description))}");
+                }
+            }
+            var addToRoleResult = await _userManager.AddToRoleAsync(user, "Admin");
+            if (!addToRoleResult.Succeeded)
+            {
+                return StatusCode(500, $"Failed to add user to 'Admin' role: {string.Join(", ", addToRoleResult.Errors.Select(e => e.Description))}");
+            }
+            return Ok();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [IntentManaged(Mode.Merge, Body = Mode.Ignore)]
+        public async Task<IActionResult> ResendConfirmationEmail(ResendEmailDto input)
+        {
+            if (string.IsNullOrEmpty(input.Email))
+            {
+                ModelState.AddModelError<ResendEmailDto>(x => x.Email, "Mandatory");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var user = await _userManager.FindByEmailAsync(input.Email!);
+            if (user == null)
+            {
+                ModelState.AddModelError("errors", "User is not registered");
+                return BadRequest();
+            }
+
+            _logger.LogInformation("User found, sending email.");
+
+            await SendConfirmationEmail(user);
+
+            return Ok();
+
         }
 
         [HttpPost]
@@ -120,7 +201,7 @@ namespace AndersonAPI.Api.Controllers
             {
                 ModelState.AddModelError<RegisterWithRoleDto>(x => x.UserName, "Mandatory");
             }
-            
+
             if (string.IsNullOrWhiteSpace(input.Role))
             {
                 ModelState.AddModelError<RegisterWithRoleDto>(x => x.Role, "Mandatory");
@@ -154,7 +235,7 @@ namespace AndersonAPI.Api.Controllers
 
                 return BadRequest(ModelState);
             }
-            
+
             await _userManager.AddToRoleAsync(user, input.Role!);
 
             _logger.LogInformation("User created a new account with password.");
@@ -173,7 +254,7 @@ namespace AndersonAPI.Api.Controllers
         public async Task<ActionResult> CreateRole(RoleDto role)
         {
             if (string.IsNullOrEmpty(role.Name))
-            { 
+            {
                 return BadRequest("Role is required.");
             }
 
@@ -228,6 +309,15 @@ namespace AndersonAPI.Api.Controllers
             {
                 _logger.LogWarning("Invalid login attempt.");
                 return Forbid();
+            }
+
+            if (_userManager.Options.SignIn.RequireConfirmedAccount)
+            {
+                if (!await _userManager.IsEmailConfirmedAsync(user))
+                {
+                    _logger.LogWarning("Email not confirmed.");
+                    return Forbid();
+                }
             }
 
             if (await _userManager.IsLockedOutAsync(user))
@@ -293,6 +383,7 @@ namespace AndersonAPI.Api.Controllers
 
         [HttpPost]
         [AllowAnonymous]
+        [IntentManaged(Mode.Fully, Body = Mode.Ignore)]
         public async Task<IActionResult> ConfirmEmail(ConfirmEmailDto input)
         {
             if (string.IsNullOrWhiteSpace(input.UserId))
@@ -312,19 +403,44 @@ namespace AndersonAPI.Api.Controllers
 
             var userId = input.UserId!;
             var code = input.Code!;
+            var decoded = string.Empty;
+
             var user = await _userManager.FindByIdAsync(input.UserId!);
             if (user == null)
             {
                 return NotFound($"Unable to load user with ID '{userId}'.");
             }
 
-            code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
+            try
+            {
+                decoded = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
+            }
+            catch (FormatException ex)
+            {
+                ModelState.AddModelError<ConfirmEmailDto>(x => x.Code, "Invalid confirmation code format. Please request a new confirmation email.");
+                return BadRequest(ModelState);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError<ConfirmEmailDto>(x => x.Code, "Error processing confirmation code.");
+                return BadRequest(ModelState);
+            }
 
-            var result = await _userManager.ConfirmEmailAsync(user, code);
-            if (!result.Succeeded)
+            var result = user.VerifyEmailCode(decoded);
+
+            if (!result)
             {
                 ModelState.AddModelError<ConfirmEmailDto>(x => x, "Error confirming your email.");
                 return BadRequest(ModelState);
+            }
+
+            await _userManager.UpdateAsync(user);
+
+            var invites = await _mediator.Send(new GetInvitesByUserIdQuery(user.Id));
+
+            foreach (var invite in invites)
+            {
+                await _mediator.Send(new AcceptInviteCommand(invite.Id, user.Id));
             }
 
             return Ok();
@@ -332,6 +448,7 @@ namespace AndersonAPI.Api.Controllers
 
         [HttpPost("~/api/[controller]/forgotPassword")]
         [AllowAnonymous]
+        [IntentManaged(Mode.Fully, Body = Mode.Merge)]
         public async Task<IActionResult> ForgotPassword(ForgotPasswordDto resetRequest)
         {
             var user = await _userManager.FindByEmailAsync(resetRequest.Email!);
@@ -339,6 +456,8 @@ namespace AndersonAPI.Api.Controllers
             if (user is not null && await _userManager.IsEmailConfirmedAsync(user))
             {
                 var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+                user.SetPasswordToken(code);
+                await _userManager.UpdateAsync(user);
                 code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
 
                 await _accountEmailSender.SendPasswordResetCode(resetRequest.Email!, user.Id,
@@ -370,7 +489,17 @@ namespace AndersonAPI.Api.Controllers
             try
             {
                 var code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(resetRequest.ResetCode!));
-                result = await _userManager.ResetPasswordAsync(user, code, resetRequest.NewPassword!);
+                var isValid = user.VerifyPasswordToken(code);
+
+                if (isValid)
+                {
+                    var changeCode = await _userManager.GeneratePasswordResetTokenAsync(user);
+                    result = await _userManager.ResetPasswordAsync(user, changeCode, resetRequest.NewPassword!);
+                } 
+                else
+                {
+                    result = IdentityResult.Failed(_userManager.ErrorDescriber.InvalidToken());
+                }
             }
             catch (FormatException)
             {
@@ -480,9 +609,12 @@ namespace AndersonAPI.Api.Controllers
             return Ok();
         }
 
+        [IntentManaged(Mode.Fully, Body = Mode.Merge)]
         private async Task SendConfirmationEmail(ApplicationIdentityUser user)
         {
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            user.SetEmailConfirmationCode(code);
+            await _userManager.UpdateAsync(user);
             code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
 
             var userId = await _userManager.GetUserIdAsync(user);
@@ -525,8 +657,16 @@ namespace AndersonAPI.Api.Controllers
         public string? Email { get; set; }
         public string? Password { get; set; }
         public string? UserName { get; set; }
+
     }
 
+    [IntentManaged(Mode.Ignore)]
+    public class ResendEmailDto
+    {
+        public string? Email { get; set; }
+    }
+
+    [IntentManaged(Mode.Ignore)]
     public class RegisterWithRoleDto
     {
         public string? Email { get; set; }
@@ -534,7 +674,8 @@ namespace AndersonAPI.Api.Controllers
         public string? UserName { get; set; }
         public string? Role { get; set; }
     }
-    
+
+    [IntentManaged(Mode.Ignore)]
     public class RoleDto
     {
         public string? Name { get; set; }

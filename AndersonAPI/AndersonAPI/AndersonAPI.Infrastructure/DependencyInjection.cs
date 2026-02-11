@@ -55,9 +55,12 @@ namespace AndersonAPI.Infrastructure
             services.AddTransient<IQuarterlyRepository, QuarterlyRepository>();
             services.AddTransient<IRegionRepository, RegionRepository>();
             services.AddTransient<IReviewRepository, ReviewRepository>();
+            services.AddTransient<IServiceSubTypeRepository, ServiceSubTypeRepository>();
             services.AddTransient<IServiceTypeRepository, ServiceTypeRepository>();
-            services.AddScoped<IDomainEventService, DomainEventService>();
+
+            // IntentIgnore
             ConfigureCustomServices(services);
+            services.AddScoped<IDomainEventService, DomainEventService>();
 
             return services;
         }

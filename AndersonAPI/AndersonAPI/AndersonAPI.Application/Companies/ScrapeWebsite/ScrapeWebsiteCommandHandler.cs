@@ -64,9 +64,10 @@ namespace AndersonAPI.Application.Companies.ScrapeWebsite
                     fullDescription: response,
                     websiteUrl: request.Url,
                     employeeCount: 0,
+                    serviceTypeId: null,
+                    serviceSubTypes: new List<Guid>(),
                     capabilities: new List<Guid>(),
-                    industries: new List<Guid>(),
-                    serviceTypeId: null
+                    industries: new List<Guid>()
                 );
                 return await _mediator.Send(command, cancellationToken);
             }

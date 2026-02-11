@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Net.Mime;
 using AndersonAPI.Api.Controllers.ResponseTypes;
+using AndersonAPI.Application.Common.Pagination;
 using AndersonAPI.Application.Companies;
 using AndersonAPI.Application.Companies.AddContactCompany;
 using AndersonAPI.Application.Companies.AddLocationCompany;
@@ -13,6 +14,7 @@ using AndersonAPI.Application.Companies.GetCompanyProfileById;
 using AndersonAPI.Application.Companies.GetMyCompanies;
 using AndersonAPI.Application.Companies.GetPartnerProfileById;
 using AndersonAPI.Application.Companies.GetPartnersByAI;
+using AndersonAPI.Application.Companies.GetPartnersDirectory;
 using AndersonAPI.Application.Companies.RemoveContactCompany;
 using AndersonAPI.Application.Companies.RemoveLocationCompany;
 using AndersonAPI.Application.Companies.RemoveUserCompany;
@@ -21,6 +23,7 @@ using AndersonAPI.Application.Companies.SendConnectionRequest;
 using AndersonAPI.Application.Companies.SetCapabilitiesCompany;
 using AndersonAPI.Application.Companies.SetHeadOfficeCompany;
 using AndersonAPI.Application.Companies.SetIndustriesCompany;
+using AndersonAPI.Application.Companies.SetServiceSubTypeCompany;
 using AndersonAPI.Application.Companies.SetStateCompany;
 using AndersonAPI.Application.Companies.UpdateCompany;
 using AndersonAPI.Application.Companies.UpdateContactCompany;
@@ -369,6 +372,39 @@ namespace AndersonAPI.Api.Controllers
         /// <response code="401">Unauthorized request.</response>
         /// <response code="403">Forbidden request.</response>
         /// <response code="404">One or more entities could not be found with the provided parameters.</response>
+        [HttpPut("api/companies/{id}/service-sub-types")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> SetServiceSubTypeCompany(
+            [FromRoute] Guid id,
+            [FromBody] SetServiceSubTypeCompanyCommand command,
+            CancellationToken cancellationToken = default)
+        {
+            if (command.Id == Guid.Empty)
+            {
+                command.Id = id;
+            }
+
+            if (id != command.Id)
+            {
+                return BadRequest();
+            }
+
+            await _mediator.Send(command, cancellationToken);
+            return NoContent();
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <response code="204">Successfully updated.</response>
+        /// <response code="400">One or more validation errors have occurred.</response>
+        /// <response code="401">Unauthorized request.</response>
+        /// <response code="403">Forbidden request.</response>
+        /// <response code="404">One or more entities could not be found with the provided parameters.</response>
         [HttpPut("api/companies/{id}/set-state")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -628,6 +664,26 @@ namespace AndersonAPI.Api.Controllers
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<List<PartnerProfileListItem>>> GetPartnersByAI(
             [FromBody] GetPartnersByAIQuery query,
+            CancellationToken cancellationToken = default)
+        {
+            var result = await _mediator.Send(query, cancellationToken);
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <response code="200">Successfully updated.</response>
+        /// <response code="400">One or more validation errors have occurred.</response>
+        /// <response code="401">Unauthorized request.</response>
+        /// <response code="403">Forbidden request.</response>
+        [HttpPut("api/companies/partner-directory")]
+        [ProducesResponseType(typeof(PagedResult<PartnerProfileListItem>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<PagedResult<PartnerProfileListItem>>> GetPartnersDirectory(
+            [FromBody] GetPartnersDirectoryQuery query,
             CancellationToken cancellationToken = default)
         {
             var result = await _mediator.Send(query, cancellationToken);

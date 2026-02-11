@@ -1,6 +1,7 @@
 using System.Net.Mime;
 using AndersonAPI.Api.Controllers.ResponseTypes;
 using AndersonAPI.Application.Invites;
+using AndersonAPI.Application.Invites.AcceptInvite;
 using AndersonAPI.Application.Invites.CreateInvite;
 using AndersonAPI.Application.Invites.DeleteInvite;
 using AndersonAPI.Application.Invites.GetInviteById;
@@ -27,6 +28,23 @@ namespace AndersonAPI.Api.Controllers
         public InvitesController(ISender mediator)
         {
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <response code="204">Successfully updated.</response>
+        /// <response code="400">One or more validation errors have occurred.</response>
+        [HttpPut("api/invites/accept")]
+        [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> AcceptInvite(
+            [FromBody] AcceptInviteCommand command,
+            CancellationToken cancellationToken = default)
+        {
+            await _mediator.Send(command, cancellationToken);
+            return NoContent();
         }
 
         /// <summary>
@@ -128,17 +146,23 @@ namespace AndersonAPI.Api.Controllers
         /// <summary>
         /// </summary>
         /// <response code="200">Returns the specified List&lt;InviteDto&gt;.</response>
+        /// <response code="400">One or more validation errors have occurred.</response>
         /// <response code="401">Unauthorized request.</response>
         /// <response code="403">Forbidden request.</response>
+        /// <response code="404">No List&lt;InviteDto&gt; could be found with the provided parameters.</response>
         [HttpGet("api/invites/me")]
         [ProducesResponseType(typeof(List<InviteDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<List<InviteDto>>> GetInvitesByUserId(CancellationToken cancellationToken = default)
+        public async Task<ActionResult<List<InviteDto>>> GetInvitesByUserId(
+            [FromQuery] string? id,
+            CancellationToken cancellationToken = default)
         {
-            var result = await _mediator.Send(new GetInvitesByUserIdQuery(), cancellationToken);
-            return Ok(result);
+            var result = await _mediator.Send(new GetInvitesByUserIdQuery(id: id), cancellationToken);
+            return result == null ? NotFound() : Ok(result);
         }
 
         /// <summary>

@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ResendEmailRouteImport } from './routes/resend-email'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
@@ -23,6 +24,7 @@ import { Route as AppOpportunitiesIndexRouteImport } from './routes/_app/opportu
 import { Route as AppFooIndexRouteImport } from './routes/_app/foo/index'
 import { Route as ResetPasswordEmailResetCodeRouteImport } from './routes/reset-password.$email.$resetCode'
 import { Route as ConfirmEmailUserIdCodeRouteImport } from './routes/confirm-email.$userId.$code'
+import { Route as AcceptInviteInviteIdUserIdRouteImport } from './routes/accept-invite.$inviteId.$userId'
 import { Route as AppPartnersIdRouteImport } from './routes/_app/partners.$id'
 import { Route as AppOpportunitiesNewRouteImport } from './routes/_app/opportunities/new'
 import { Route as AppProfileCompanyIdIndexRouteImport } from './routes/_app/profile/$companyId/index'
@@ -36,6 +38,11 @@ import { Route as AppProfileCompanyIdReportsReportIdIndexRouteImport } from './r
 import { Route as AppFooFooIdBarBarIdIndexRouteImport } from './routes/_app/foo/$fooId/bar/$barId/index'
 import { Route as AppProfileCompanyIdReportsReportIdEditRouteImport } from './routes/_app/profile/$companyId/reports/$reportId/edit'
 
+const ResendEmailRoute = ResendEmailRouteImport.update({
+  id: '/resend-email',
+  path: '/resend-email',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RegisterRoute = RegisterRouteImport.update({
   id: '/register',
   path: '/register',
@@ -106,6 +113,12 @@ const ConfirmEmailUserIdCodeRoute = ConfirmEmailUserIdCodeRouteImport.update({
   path: '/confirm-email/$userId/$code',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AcceptInviteInviteIdUserIdRoute =
+  AcceptInviteInviteIdUserIdRouteImport.update({
+    id: '/accept-invite/$inviteId/$userId',
+    path: '/accept-invite/$inviteId/$userId',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const AppPartnersIdRoute = AppPartnersIdRouteImport.update({
   id: '/partners/$id',
   path: '/partners/$id',
@@ -181,10 +194,12 @@ export interface FileRoutesByFullPath {
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
+  '/resend-email': typeof ResendEmailRoute
   '/dashboard': typeof AppDashboardRoute
   '/directory': typeof AppDirectoryRoute
   '/opportunities/new': typeof AppOpportunitiesNewRoute
   '/partners/$id': typeof AppPartnersIdRoute
+  '/accept-invite/$inviteId/$userId': typeof AcceptInviteInviteIdUserIdRoute
   '/confirm-email/$userId/$code': typeof ConfirmEmailUserIdCodeRoute
   '/reset-password/$email/$resetCode': typeof ResetPasswordEmailResetCodeRoute
   '/foo': typeof AppFooIndexRoute
@@ -208,10 +223,12 @@ export interface FileRoutesByTo {
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
+  '/resend-email': typeof ResendEmailRoute
   '/dashboard': typeof AppDashboardRoute
   '/directory': typeof AppDirectoryRoute
   '/opportunities/new': typeof AppOpportunitiesNewRoute
   '/partners/$id': typeof AppPartnersIdRoute
+  '/accept-invite/$inviteId/$userId': typeof AcceptInviteInviteIdUserIdRoute
   '/confirm-email/$userId/$code': typeof ConfirmEmailUserIdCodeRoute
   '/reset-password/$email/$resetCode': typeof ResetPasswordEmailResetCodeRoute
   '/foo': typeof AppFooIndexRoute
@@ -237,10 +254,12 @@ export interface FileRoutesById {
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
+  '/resend-email': typeof ResendEmailRoute
   '/_app/dashboard': typeof AppDashboardRoute
   '/_app/directory': typeof AppDirectoryRoute
   '/_app/opportunities/new': typeof AppOpportunitiesNewRoute
   '/_app/partners/$id': typeof AppPartnersIdRoute
+  '/accept-invite/$inviteId/$userId': typeof AcceptInviteInviteIdUserIdRoute
   '/confirm-email/$userId/$code': typeof ConfirmEmailUserIdCodeRoute
   '/reset-password/$email/$resetCode': typeof ResetPasswordEmailResetCodeRoute
   '/_app/foo/': typeof AppFooIndexRoute
@@ -266,10 +285,12 @@ export interface FileRouteTypes {
     | '/forgot-password'
     | '/login'
     | '/register'
+    | '/resend-email'
     | '/dashboard'
     | '/directory'
     | '/opportunities/new'
     | '/partners/$id'
+    | '/accept-invite/$inviteId/$userId'
     | '/confirm-email/$userId/$code'
     | '/reset-password/$email/$resetCode'
     | '/foo'
@@ -293,10 +314,12 @@ export interface FileRouteTypes {
     | '/forgot-password'
     | '/login'
     | '/register'
+    | '/resend-email'
     | '/dashboard'
     | '/directory'
     | '/opportunities/new'
     | '/partners/$id'
+    | '/accept-invite/$inviteId/$userId'
     | '/confirm-email/$userId/$code'
     | '/reset-password/$email/$resetCode'
     | '/foo'
@@ -321,10 +344,12 @@ export interface FileRouteTypes {
     | '/forgot-password'
     | '/login'
     | '/register'
+    | '/resend-email'
     | '/_app/dashboard'
     | '/_app/directory'
     | '/_app/opportunities/new'
     | '/_app/partners/$id'
+    | '/accept-invite/$inviteId/$userId'
     | '/confirm-email/$userId/$code'
     | '/reset-password/$email/$resetCode'
     | '/_app/foo/'
@@ -350,12 +375,21 @@ export interface RootRouteChildren {
   ForgotPasswordRoute: typeof ForgotPasswordRoute
   LoginRoute: typeof LoginRoute
   RegisterRoute: typeof RegisterRoute
+  ResendEmailRoute: typeof ResendEmailRoute
+  AcceptInviteInviteIdUserIdRoute: typeof AcceptInviteInviteIdUserIdRoute
   ConfirmEmailUserIdCodeRoute: typeof ConfirmEmailUserIdCodeRoute
   ResetPasswordEmailResetCodeRoute: typeof ResetPasswordEmailResetCodeRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/resend-email': {
+      id: '/resend-email'
+      path: '/resend-email'
+      fullPath: '/resend-email'
+      preLoaderRoute: typeof ResendEmailRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/register': {
       id: '/register'
       path: '/register'
@@ -452,6 +486,13 @@ declare module '@tanstack/react-router' {
       path: '/confirm-email/$userId/$code'
       fullPath: '/confirm-email/$userId/$code'
       preLoaderRoute: typeof ConfirmEmailUserIdCodeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/accept-invite/$inviteId/$userId': {
+      id: '/accept-invite/$inviteId/$userId'
+      path: '/accept-invite/$inviteId/$userId'
+      fullPath: '/accept-invite/$inviteId/$userId'
+      preLoaderRoute: typeof AcceptInviteInviteIdUserIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_app/partners/$id': {
@@ -596,6 +637,8 @@ const rootRouteChildren: RootRouteChildren = {
   ForgotPasswordRoute: ForgotPasswordRoute,
   LoginRoute: LoginRoute,
   RegisterRoute: RegisterRoute,
+  ResendEmailRoute: ResendEmailRoute,
+  AcceptInviteInviteIdUserIdRoute: AcceptInviteInviteIdUserIdRoute,
   ConfirmEmailUserIdCodeRoute: ConfirmEmailUserIdCodeRoute,
   ResetPasswordEmailResetCodeRoute: ResetPasswordEmailResetCodeRoute,
 }

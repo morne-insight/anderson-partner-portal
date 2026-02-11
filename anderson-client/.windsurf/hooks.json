@@ -2,7 +2,7 @@
   "hooks": {
     "post_write_code": [
       {
-        "command": "pnpm dlx ultracite fix",
+        "command": "pnpm biome check --write",
         "show_output": true
       }
     ]

@@ -1,61 +1,41 @@
-import { useForm } from "@tanstack/react-form";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createFileRoute, useRouter } from "@tanstack/react-router";
-import { ArrowLeft, Briefcase, Building, ChevronDown, Loader2, Plus } from "lucide-react";
-import { useState } from "react";
-import { toast } from "sonner";
-import type { CapabilityDto, IndustryDto } from "@/api/types.gen";
-import {
-  Combobox,
-  ComboboxChip,
-  ComboboxChipRemove,
-  ComboboxChips,
-  ComboboxContent,
-  ComboboxControl,
-  ComboboxEmpty,
-  ComboboxInput,
-  ComboboxItem,
-  ComboboxItemIndicator,
-  ComboboxList,
-  ComboboxValue,
-} from "@/components/ui/base-combobox";
-import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import { useForm } from '@tanstack/react-form'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { createFileRoute, useRouter } from '@tanstack/react-router'
+import { ArrowLeft, Briefcase, Building, ChevronDown, Loader2 } from 'lucide-react'
+import { useState } from 'react'
+import { toast } from 'sonner'
+import { Button } from '@/components/ui/button'
+import { Calendar } from '@/components/ui/calendar'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { MultiSelectCombobox } from '@/components/ui/multi-select-combobox'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
-import { usePrefetchReferenceData } from "@/hooks/useReferenceData";
-import { callApi } from "@/server/proxy";
+} from '@/components/ui/select'
+import { Textarea } from '@/components/ui/textarea'
+import { usePrefetchReferenceData } from '@/hooks/useReferenceData'
+import { callApi } from '@/server/proxy'
 
-export const Route = createFileRoute("/_app/opportunities/new")({
+export const Route = createFileRoute('/_app/opportunities/new')({
   component: CreateOpportunity,
   loader: async () => {
-    const [companies] = await Promise.all([
-      callApi({ data: { fn: "getApiCompaniesMe" } }),
-    ]);
+    const [companies] = await Promise.all([callApi({ data: { fn: 'getApiCompaniesMe' } })])
 
     return {
       companies: companies || [],
-    };
+    }
   },
-});
+})
 
 function CreateOpportunity() {
-  const router = useRouter();
-  const queryClient = useQueryClient();
-  const { companies } = Route.useLoaderData();
+  const router = useRouter()
+  const queryClient = useQueryClient()
+  const { companies } = Route.useLoaderData()
 
   const {
     opportunityTypes,
@@ -65,154 +45,143 @@ function CreateOpportunity() {
     industries,
     isLoading: isLoadingReferenceData,
     isError: isErrorReferenceData,
-  } = usePrefetchReferenceData();
+  } = usePrefetchReferenceData()
 
-  const [datePickerOpen, setDatePickerOpen] = useState(false);
+  const [datePickerOpen, setDatePickerOpen] = useState(false)
 
   // State for capabilities and industries (similar to profile edit)
-  const [selectedCapabilityIds, setSelectedCapabilityIds] = useState<string[]>([]);
-  const [selectedIndustryIds, setSelectedIndustryIds] = useState<string[]>([]);
-
-  // Input tracking for "create new" functionality
-  const [capabilityInput, setCapabilityInput] = useState("");
-  const [industryInput, setIndustryInput] = useState("");
+  const [selectedCapabilityIds, setSelectedCapabilityIds] = useState<string[]>([])
+  const [selectedIndustryIds, setSelectedIndustryIds] = useState<string[]>([])
 
   // Create capability mutation
   const createCapabilityMutation = useMutation({
     mutationFn: async (name: string) => {
       const response = await callApi({
         data: {
-          fn: "postApiCapabilities",
-          args: { body: { name, description: "" } },
+          fn: 'postApiCapabilities',
+          args: { body: { name, description: '' } },
         },
-      });
-      if (response.error) throw response.error;
-      return response;
+      })
+      if (response.error) throw response.error
+      return response
     },
     onSuccess: async (response: { data?: string }) => {
       // Invalidate and refetch capabilities
-      await queryClient.invalidateQueries({ queryKey: ["reference", "capabilities"] });
+      await queryClient.invalidateQueries({ queryKey: ['reference', 'capabilities'] })
       // Add the new capability to selection
       if (response.data) {
-        setSelectedCapabilityIds((prev) => [...prev, response.data!]);
+        setSelectedCapabilityIds((prev) => [...prev, response.data!])
       }
-      setCapabilityInput("");
-      toast.success("Capability created successfully");
+      toast.success('Capability created successfully')
     },
     onError: (err) => {
-      console.error("Failed to create capability", err);
-      toast.error("Failed to create capability");
+      console.error('Failed to create capability', err)
+      toast.error('Failed to create capability')
     },
-  });
+  })
 
   // Create industry mutation
   const createIndustryMutation = useMutation({
     mutationFn: async (name: string) => {
       const response = await callApi({
         data: {
-          fn: "postApiIndustries",
-          args: { body: { name, description: "" } },
+          fn: 'postApiIndustries',
+          args: { body: { name, description: '' } },
         },
-      });
-      if (response.error) throw response.error;
-      return response;
+      })
+      if (response.error) throw response.error
+      return response
     },
     onSuccess: async (response: { data?: string }) => {
       // Invalidate and refetch industries
-      await queryClient.invalidateQueries({ queryKey: ["reference", "industries"] });
+      await queryClient.invalidateQueries({ queryKey: ['reference', 'industries'] })
       // Add the new industry to selection
       if (response.data) {
-        setSelectedIndustryIds((prev) => [...prev, response.data!]);
+        setSelectedIndustryIds((prev) => [...prev, response.data!])
       }
-      setIndustryInput("");
-      toast.success("Industry created successfully");
+      toast.success('Industry created successfully')
     },
     onError: (err) => {
-      console.error("Failed to create industry", err);
-      toast.error("Failed to create industry");
+      console.error('Failed to create industry', err)
+      toast.error('Failed to create industry')
     },
-  });
+  })
 
   const createMutation = useMutation({
     mutationFn: async (values: any) => {
       const response = await callApi({
-        data: { fn: "postApiOpportunities", args: { body: values } },
-      });
+        data: { fn: 'postApiOpportunities', args: { body: values } },
+      })
       if (response.error) {
-        throw response.error;
+        throw response.error
       }
-      return response;
+      return response
     },
     onSuccess: () => {
-      router.navigate({ to: "/opportunities", search: { tab: "me" } });
+      router.navigate({ to: '/opportunities', search: { tab: 'me' } })
     },
     onError: (err) => {
-      console.error("Failed to create opportunity", err);
-      toast.error("Failed to create opportunity. Please try again.");
+      console.error('Failed to create opportunity', err)
+      toast.error('Failed to create opportunity. Please try again.')
     },
-  });
+  })
 
-
-  const opportunityTypesData = opportunityTypes.data || [];
-  const countriesData = countries.data || [];
-  const serviceTypesData = serviceTypes.data || [];
-  const capabilitiesData = capabilities.data || [];
-  const industriesData = industries.data || [];
+  const opportunityTypesData = opportunityTypes.data || []
+  const countriesData = countries.data || []
+  const serviceTypesData = serviceTypes.data || []
+  const capabilitiesData = capabilities.data || []
+  const industriesData = industries.data || []
 
   const form = useForm({
     defaultValues: {
-      title: "",
-      shortDescription: "",
-      fullDescription: "",
+      title: '',
+      shortDescription: '',
+      fullDescription: '',
       deadline: null as Date | null,
-      opportunityTypeId: "",
-      countryId: "",
-      companyId: companies.length === 1 ? companies[0]?.id || "" : "",
+      opportunityTypeId: '',
+      countryId: '',
+      companyId: companies.length === 1 ? companies[0]?.id || '' : '',
       serviceTypes: [] as string[],
       capabilities: [] as string[],
       industries: [] as string[],
     },
     validators: {
       onSubmit: ({ value }) => {
-        console.log("Form validation values:", {
+        console.log('Form validation values:', {
           title: value.title,
           shortDescription: value.shortDescription,
           opportunityTypeId: value.opportunityTypeId,
           countryId: value.countryId,
           companyId: value.companyId,
           deadline: value.deadline,
-        });
-        const errors: any = {};
-        if (!value.title?.trim()) errors.title = "Title is required";
+        })
+        const errors: any = {}
+        if (!value.title?.trim()) errors.title = 'Title is required'
         if (!value.shortDescription?.trim())
-          errors.shortDescription = "Short description is required";
-        if (!value.opportunityTypeId)
-          errors.opportunityTypeId = "Type is required";
-        if (!value.countryId) errors.countryId = "Country is required";
-        if (!value.companyId) errors.companyId = "Company is required";
+          errors.shortDescription = 'Short description is required'
+        if (!value.opportunityTypeId) errors.opportunityTypeId = 'Type is required'
+        if (!value.countryId) errors.countryId = 'Country is required'
+        if (!value.companyId) errors.companyId = 'Company is required'
 
-        console.log("Validation errors:", errors);
-        return Object.keys(errors).length > 0 ? errors : undefined;
+        console.log('Validation errors:', errors)
+        return Object.keys(errors).length > 0 ? errors : undefined
       },
     },
     onSubmit: async ({ value }) => {
       const payload = {
         ...value,
         deadline: value.deadline
-          ? new Date(
-            value.deadline.getTime() -
-            value.deadline.getTimezoneOffset() * 60_000
-          )
+          ? new Date(value.deadline.getTime() - value.deadline.getTimezoneOffset() * 60_000)
             .toISOString()
-            .split("T")[0]
+            .split('T')[0]
           : null,
         capabilities: selectedCapabilityIds,
         industries: selectedIndustryIds,
-      };
-      console.log("Payload:", payload);
-      await createMutation.mutateAsync(payload);
+      }
+      console.log('Payload:', payload)
+      await createMutation.mutateAsync(payload)
     },
-  });
+  })
 
   // Show loading state while reference data is loading
   if (isLoadingReferenceData) {
@@ -220,7 +189,7 @@ function CreateOpportunity() {
       <div className="flex min-h-screen items-center justify-center">
         <Loader2 className="h-8 w-8 animate-spin text-gray-300" />
       </div>
-    );
+    )
   }
 
   // Show error state if reference data failed to load
@@ -232,7 +201,7 @@ function CreateOpportunity() {
           <Button onClick={() => window.location.reload()}>Retry</Button>
         </div>
       </div>
-    );
+    )
   }
 
   return (
@@ -240,26 +209,24 @@ function CreateOpportunity() {
       {/* Header */}
       <header className="border-gray-200 border-b pb-6">
         <button
+          type="button"
           className="mb-4 flex items-center gap-2 font-bold text-gray-500 text-xs uppercase tracking-widest transition-colors hover:text-black"
           onClick={() => router.history.back()}
         >
           <ArrowLeft className="h-4 w-4" /> Back to Opportunities
         </button>
-        <h2 className="mb-3 font-serif text-4xl text-black">
-          Post New Opportunity
-        </h2>
+        <h2 className="mb-3 font-serif text-4xl text-black">Post New Opportunity</h2>
         <p className="font-light text-gray-500 text-lg">
-          Share a tender, joint venture, or resource request with the Anderson
-          network.
+          Share a tender, joint venture, or resource request with the Anderson network.
         </p>
       </header>
 
       <form
         className="grid grid-cols-1 gap-12 lg:grid-cols-3"
         onSubmit={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          form.handleSubmit();
+          e.preventDefault()
+          e.stopPropagation()
+          form.handleSubmit()
         }}
       >
         {/* Left Column: Main Form */}
@@ -272,8 +239,7 @@ function CreateOpportunity() {
 
             {companies.length === 0 ? (
               <div className="border border-red-200 bg-red-50 p-6 text-red-700 text-sm">
-                You are not linked to any companies. Please create a company
-                profile first.
+                You are not linked to any companies. Please create a company profile first.
               </div>
             ) : companies.length === 1 ? (
               <div className="border border-gray-200 bg-gray-50 p-4">
@@ -287,10 +253,7 @@ function CreateOpportunity() {
                 children={(field) => (
                   <div className="space-y-2">
                     <Label>Select Company</Label>
-                    <Select
-                      onValueChange={field.handleChange}
-                      value={field.state.value}
-                    >
+                    <Select onValueChange={field.handleChange} value={field.state.value}>
                       <SelectTrigger>
                         <SelectValue placeholder="Select a company" />
                       </SelectTrigger>
@@ -336,10 +299,7 @@ function CreateOpportunity() {
                 children={(field) => (
                   <div className="space-y-2">
                     <Label>Opportunity Type *</Label>
-                    <Select
-                      onValueChange={field.handleChange}
-                      value={field.state.value}
-                    >
+                    <Select onValueChange={field.handleChange} value={field.state.value}>
                       <SelectTrigger>
                         <SelectValue placeholder="Select type" />
                       </SelectTrigger>
@@ -360,10 +320,7 @@ function CreateOpportunity() {
                 children={(field) => (
                   <div className="space-y-2">
                     <Label>Country *</Label>
-                    <Select
-                      onValueChange={field.handleChange}
-                      value={field.state.value}
-                    >
+                    <Select onValueChange={field.handleChange} value={field.state.value}>
                       <SelectTrigger>
                         <SelectValue placeholder="Select country" />
                       </SelectTrigger>
@@ -383,14 +340,11 @@ function CreateOpportunity() {
 
             <form.Field
               children={(field) => {
-                console.log("Deadline field state:", field.state.value);
+                console.log('Deadline field state:', field.state.value)
                 return (
                   <div className="space-y-2">
                     <Label>Deadline</Label>
-                    <Popover
-                      onOpenChange={setDatePickerOpen}
-                      open={datePickerOpen}
-                    >
+                    <Popover onOpenChange={setDatePickerOpen} open={datePickerOpen}>
                       <PopoverTrigger asChild>
                         <Button
                           className="w-full justify-between font-normal md:w-64"
@@ -398,34 +352,31 @@ function CreateOpportunity() {
                         >
                           {field.state.value
                             ? field.state.value.toLocaleDateString()
-                            : "Select deadline"}
+                            : 'Select deadline'}
                           <ChevronDown className="h-4 w-4" />
                         </Button>
                       </PopoverTrigger>
-                      <PopoverContent
-                        align="start"
-                        className="w-auto overflow-hidden p-0"
-                      >
+                      <PopoverContent align="start" className="w-auto overflow-hidden p-0">
                         <Calendar
                           captionLayout="dropdown"
                           mode="single"
                           onSelect={(date) => {
                             console.log(
-                              "Deadline selected:",
+                              'Deadline selected:',
                               date,
-                              "Field before change:",
+                              'Field before change:',
                               field.state.value
-                            );
-                            field.setValue(date || null);
-                            console.log("Using field.setValue method");
-                            setDatePickerOpen(false);
+                            )
+                            field.setValue(date || null)
+                            console.log('Using field.setValue method')
+                            setDatePickerOpen(false)
                           }}
                           selected={field.state.value ?? undefined}
                         />
                       </PopoverContent>
                     </Popover>
                   </div>
-                );
+                )
               }}
               mode="value"
               name="deadline"
@@ -481,32 +432,26 @@ function CreateOpportunity() {
                 children={(field) => (
                   <div className="flex flex-wrap gap-2">
                     {serviceTypesData.map((st: any) => {
-                      const isSelected = field.state.value.includes(st.id!);
+                      const isSelected = field.state.value.includes(st.id!)
                       return (
                         <button
                           className={`border px-3 py-1.5 font-bold text-[10px] uppercase tracking-wider transition-all ${isSelected
-                            ? "border-black bg-black text-white"
-                            : "border-gray-200 bg-gray-50 text-gray-400 hover:border-gray-400 hover:text-gray-600"
+                              ? 'border-black bg-black text-white'
+                              : 'border-gray-200 bg-gray-50 text-gray-400 hover:border-gray-400 hover:text-gray-600'
                             }`}
                           key={st.id}
                           onClick={() => {
                             if (isSelected)
                               field.handleChange(
-                                field.state.value.filter(
-                                  (id: string) => id !== st.id
-                                )
-                              );
-                            else
-                              field.handleChange([
-                                ...field.state.value,
-                                st.id!,
-                              ]);
+                                field.state.value.filter((id: string) => id !== st.id)
+                              )
+                            else field.handleChange([...field.state.value, st.id!])
                           }}
                           type="button"
                         >
                           {st.name}
                         </button>
-                      );
+                      )
                     })}
                   </div>
                 )}
@@ -521,84 +466,20 @@ function CreateOpportunity() {
               <Briefcase className="h-4 w-4" /> Required Capabilities
             </h3>
             <div className="border border-gray-200 bg-white p-4 shadow-sm">
-              <Combobox
+              <MultiSelectCombobox
+                chipClassName="rounded-none border border-red-600 bg-red-600 px-3 py-1.5 font-bold text-[10px] text-white uppercase tracking-wider transition-all"
+                createButtonClassName="flex w-full items-center gap-2 px-2 py-2 text-left text-sm text-red-600 hover:bg-red-50"
+                emptyMessage="No capabilities found."
+                getItemLabel={(cap) => cap.name || ''}
+                helperText="Select all capabilities required for this opportunity."
+                isCreating={createCapabilityMutation.isPending}
                 items={capabilitiesData || []}
-                multiple
-                onInputValueChange={(value) => setCapabilityInput(value)}
-                onValueChange={(value: unknown) => {
-                  const selectedCapabilities = value as CapabilityDto[];
-                  setSelectedCapabilityIds(
-                    selectedCapabilities.map((cap) => cap.id as string)
-                  );
-                }}
-                value={
-                  capabilitiesData?.filter((cap: CapabilityDto) =>
-                    selectedCapabilityIds.includes(cap.id as string)
-                  ) || []
-                }
-              >
-                <ComboboxChips className="mb-4 border-0 p-0 shadow-none">
-                  <ComboboxValue>
-                    {(value: CapabilityDto[]) => (
-                      <>
-                        {value.length === 0 && (
-                          <p className="my-2 text-gray-400 text-xs italic">
-                            No capabilities selected.
-                          </p>
-                        )}
-                        {value.map((capability) => (
-                          <ComboboxChip
-                            aria-label={capability.name}
-                            className="rounded-none border border-red-600 bg-red-600 px-3 py-1.5 font-bold text-[10px] text-white uppercase tracking-wider transition-all"
-                            key={capability.id}
-                          >
-                            {capability.name}
-                            <ComboboxChipRemove />
-                          </ComboboxChip>
-                        ))}
-                      </>
-                    )}
-                  </ComboboxValue>
-                </ComboboxChips>
-
-                <p className="my-2 text-gray-400 text-xs italic">
-                  Select all capabilities required for this opportunity.
-                </p>
-                <ComboboxControl>
-                  <ComboboxValue>
-                    <ComboboxInput placeholder="Search and select capabilities..." />
-                  </ComboboxValue>
-                </ComboboxControl>
-
-                <ComboboxContent>
-                  <ComboboxEmpty>No capabilities found.</ComboboxEmpty>
-                  <ComboboxList>
-                    {(capability: CapabilityDto) => (
-                      <ComboboxItem key={capability.id} value={capability}>
-                        <ComboboxItemIndicator />
-                        <div className="col-start-2">{capability.name}</div>
-                      </ComboboxItem>
-                    )}
-                  </ComboboxList>
-                  {capabilityInput.trim() &&
-                    !capabilitiesData?.some(
-                      (cap: CapabilityDto) =>
-                        cap.name?.toLowerCase() === capabilityInput.toLowerCase()
-                    ) && (
-                      <button
-                        className="flex w-full items-center gap-2 px-2 py-2 text-left text-sm text-red-600 hover:bg-red-50"
-                        disabled={createCapabilityMutation.isPending}
-                        onClick={() => createCapabilityMutation.mutate(capabilityInput.trim())}
-                        type="button"
-                      >
-                        <Plus className="h-4 w-4" />
-                        {createCapabilityMutation.isPending
-                          ? "Creating..."
-                          : `Create "${capabilityInput.trim()}"`}
-                      </button>
-                    )}
-                </ComboboxContent>
-              </Combobox>
+                noSelectionMessage="No capabilities selected."
+                onCreateNew={(name) => createCapabilityMutation.mutate(name)}
+                onSelectionChange={setSelectedCapabilityIds}
+                placeholder="Search and select capabilities..."
+                selectedIds={selectedCapabilityIds}
+              />
             </div>
           </section>
 
@@ -608,84 +489,20 @@ function CreateOpportunity() {
               <Building className="h-4 w-4" /> Target Industries
             </h3>
             <div className="border border-gray-200 bg-white p-4 shadow-sm">
-              <Combobox
+              <MultiSelectCombobox
+                chipClassName="rounded-none border border-blue-600 bg-blue-600 px-3 py-1.5 font-bold text-[10px] text-white uppercase tracking-wider transition-all"
+                createButtonClassName="flex w-full items-center gap-2 px-2 py-2 text-left text-sm text-blue-600 hover:bg-blue-50"
+                emptyMessage="No industries found."
+                getItemLabel={(ind) => ind.name || ''}
+                helperText="Select the target industries for this opportunity."
+                isCreating={createIndustryMutation.isPending}
                 items={industriesData || []}
-                multiple
-                onInputValueChange={(value) => setIndustryInput(value)}
-                onValueChange={(value: unknown) => {
-                  const selectedIndustries = value as IndustryDto[];
-                  setSelectedIndustryIds(
-                    selectedIndustries.map((ind) => ind.id as string)
-                  );
-                }}
-                value={
-                  industriesData?.filter((ind: IndustryDto) =>
-                    selectedIndustryIds.includes(ind.id as string)
-                  ) || []
-                }
-              >
-                <ComboboxChips className="mb-4 border-0 p-0 shadow-none">
-                  <ComboboxValue>
-                    {(value: IndustryDto[]) => (
-                      <>
-                        {value.length === 0 && (
-                          <p className="my-2 text-gray-400 text-xs italic">
-                            No industries selected.
-                          </p>
-                        )}
-                        {value.map((industry) => (
-                          <ComboboxChip
-                            aria-label={industry.name}
-                            className="rounded-none border border-blue-600 bg-blue-600 px-3 py-1.5 font-bold text-[10px] text-white uppercase tracking-wider transition-all"
-                            key={industry.id}
-                          >
-                            {industry.name}
-                            <ComboboxChipRemove />
-                          </ComboboxChip>
-                        ))}
-                      </>
-                    )}
-                  </ComboboxValue>
-                </ComboboxChips>
-
-                <p className="my-2 text-gray-400 text-xs italic">
-                  Select the target industries for this opportunity.
-                </p>
-                <ComboboxControl>
-                  <ComboboxValue>
-                    <ComboboxInput placeholder="Search and select industries..." />
-                  </ComboboxValue>
-                </ComboboxControl>
-
-                <ComboboxContent>
-                  <ComboboxEmpty>No industries found.</ComboboxEmpty>
-                  <ComboboxList>
-                    {(industry: IndustryDto) => (
-                      <ComboboxItem key={industry.id} value={industry}>
-                        <ComboboxItemIndicator />
-                        <div className="col-start-2">{industry.name}</div>
-                      </ComboboxItem>
-                    )}
-                  </ComboboxList>
-                  {industryInput.trim() &&
-                    !industriesData?.some(
-                      (ind: IndustryDto) =>
-                        ind.name?.toLowerCase() === industryInput.toLowerCase()
-                    ) && (
-                      <button
-                        className="flex w-full items-center gap-2 px-2 py-2 text-left text-sm text-blue-600 hover:bg-blue-50"
-                        disabled={createIndustryMutation.isPending}
-                        onClick={() => createIndustryMutation.mutate(industryInput.trim())}
-                        type="button"
-                      >
-                        <Plus className="h-4 w-4" />
-                        {createIndustryMutation.isPending
-                          ? "Creating..."
-                          : `Create "${industryInput.trim()}"`}
-                      </button>
-                    )}
-                </ComboboxContent>
-              </Combobox>
+                noSelectionMessage="No industries selected."
+                onCreateNew={(name) => createIndustryMutation.mutate(name)}
+                onSelectionChange={setSelectedIndustryIds}
+                placeholder="Search and select industries..."
+                selectedIds={selectedIndustryIds}
+              />
             </div>
           </section>
         </div>
@@ -708,7 +525,7 @@ function CreateOpportunity() {
                   <Loader2 className="mr-2 h-3 w-3 animate-spin" /> Posting...
                 </>
               ) : (
-                "Post Opportunity"
+                'Post Opportunity'
               )}
             </Button>
           )}
@@ -716,5 +533,5 @@ function CreateOpportunity() {
         />
       </div>
     </div>
-  );
+  )
 }

@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { Loader2, Send } from "lucide-react";
 import { type ReactNode, useMemo, useState } from "react";
-import type { CompanyContactDto } from "@/api";
+import type { UserContact } from "@/api";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -21,7 +21,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { useAuth } from "@/contexts/auth-context";
 import { callApi } from "@/server/proxy";
 import { toast } from "sonner";
 
@@ -34,36 +33,35 @@ export function ConnectRequestDialog({
   partnerName?: string;
   children: ReactNode;
 }) {
-  const { user } = useAuth();
   const [open, setOpen] = useState(false);
-  const [contactId, setContactId] = useState<string>("");
+  const [selectedContact, setSelectedContact] = useState<UserContact | null>(null);
   const [message, setMessage] = useState<string>("");
 
-  const companyId = user?.companyId;
-
   const contactsQuery = useQuery({
-    queryKey: ["companies", companyId, "contacts"],
+    queryKey: ["user", "contacts"],
     queryFn: async () => {
-      if (!companyId) {
-        return [] as CompanyContactDto[];
+      console.log("Fetching user contacts...");
+      try {
+        const result = await callApi({
+          data: {
+            fn: "getApiUserContactsMe",
+            args: {},
+          },
+        });
+        console.log("User contacts result:", result);
+        return result as UserContact[];
+      } catch (error) {
+        console.error("Error fetching user contacts:", error);
+        throw error;
       }
-      return (await callApi({
-        data: {
-          fn: "getApiCompaniesByIdContacts",
-          args: { path: { id: companyId } },
-        },
-      })) as CompanyContactDto[];
     },
-    enabled: Boolean(companyId),
     staleTime: 5 * 60 * 1000,
+    enabled: open,
   });
 
   const mutation = useMutation({
     mutationFn: async () => {
-      if (!companyId) {
-        throw new Error("User is not linked to a company");
-      }
-      if (!contactId) {
+      if (!selectedContact?.companyId) {
         throw new Error("Please select a contact");
       }
       await callApi({
@@ -71,8 +69,8 @@ export function ConnectRequestDialog({
           fn: "putApiCompaniesConnectionRequest",
           args: {
             body: {
-              contactId,
-              companyId,
+              contactId: selectedContact.contactId || "",
+              companyId: selectedContact.companyId,
               partnerId,
               message,
             },
@@ -83,7 +81,7 @@ export function ConnectRequestDialog({
     onSuccess: () => {
       toast.success("Your connect request has been sent successfully.");
       setOpen(false);
-      setContactId("");
+      setSelectedContact(null);
       setMessage("");
     },
     onError: () => {
@@ -101,10 +99,6 @@ export function ConnectRequestDialog({
     return "Failed to send connect request";
   }, [mutation.error, mutation.isError]);
 
-  if (!companyId) {
-    return null;
-  }
-
   const contacts = contactsQuery.data || [];
 
   let contactPicker: ReactNode;
@@ -120,25 +114,32 @@ export function ConnectRequestDialog({
     );
   } else {
     contactPicker = (
-      <Select onValueChange={setContactId} value={contactId}>
+      <Select
+        onValueChange={(value) => {
+          const contact = contacts.find(
+            (c) => `${c.companyId}-${c.contactId}` === value
+          );
+          setSelectedContact(contact || null);
+        }}
+        value={selectedContact ? `${selectedContact.companyId}-${selectedContact.contactId}` : ""}
+      >
         <SelectTrigger>
           <SelectValue placeholder="Select a contact" />
         </SelectTrigger>
         <SelectContent>
           {contacts.map((c) => {
-            const id = c.id || "";
+            const key = `${c.companyId}-${c.contactId}`;
             const label = `${c.firstName || ""} ${c.lastName || ""}`.trim();
-            const secondary = c.emailAddress || c.companyPosition || "";
+            const position = c.companyPosition || "";
+            const companyName = c.name || "";
 
             return (
-              <SelectItem key={id} value={id}>
+              <SelectItem key={key} value={key}>
                 <div className="flex flex-col">
                   <span>{label || "Contact"}</span>
-                  {secondary ? (
-                    <span className="text-muted-foreground text-xs">
-                      {secondary}
-                    </span>
-                  ) : null}
+                  <span className="text-muted-foreground text-xs">
+                    {[position, companyName].filter(Boolean).join(" • ")}
+                  </span>
                 </div>
               </SelectItem>
             );
@@ -218,7 +219,7 @@ export function ConnectRequestDialog({
           <Button
             className="rounded-none bg-[#DB0A20] px-10 py-6 font-bold text-[10px] text-white uppercase tracking-[0.2em] hover:bg-[#111111]"
             disabled={
-              mutation.isPending || contactsQuery.isLoading || !contactId || !message
+              mutation.isPending || contactsQuery.isLoading || !selectedContact || !message
             }
             onClick={() => mutation.mutate()}
             type="button"

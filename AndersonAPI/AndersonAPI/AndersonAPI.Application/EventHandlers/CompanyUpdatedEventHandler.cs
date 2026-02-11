@@ -30,6 +30,8 @@ namespace AndersonAPI.Application.EventHandlers
             var company = notification.DomainEvent.Company;
 
             var textToEmbed = $"Company: {company.Name},{Environment.NewLine}" +
+                $"Service Type: {company.ServiceType?.Name ?? ""},{Environment.NewLine}" +
+                $"Service Sub Type: {string.Join(",", company.ServiceSubTypes.Select(c => c.Name))},{Environment.NewLine}" +
                 $"Capabilites: {string.Join(",", company.Capabilities.Select(c => c.Name))},{Environment.NewLine}" +
                 $"Industries: {string.Join(",", company.Industries.Select(c => c.Name))},{Environment.NewLine}" +
                 $"Regions: {string.Join(",", company.Locations.Select(c => c.Region.Name))},{Environment.NewLine}" +

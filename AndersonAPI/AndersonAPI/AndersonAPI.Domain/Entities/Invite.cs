@@ -6,12 +6,13 @@ namespace AndersonAPI.Domain.Entities
 {
     public class Invite : BaseEntityList
     {
-        public Invite(string email, Guid companyId, string description = "", string name = "")
+        public Invite(string name, string email, Guid companyId, string description = "")
         {
+            Name = name;
             Email = email;
             CompanyId = companyId;
             Description = description;
-            Name = name;
+            State = EntityState.Enabled;
         }
         /// <summary>
         /// Required by Entity Framework.
@@ -28,8 +29,9 @@ namespace AndersonAPI.Domain.Entities
 
         public virtual Company Company { get; private set; }
 
-        public void Update(string email)
+        public void Update(string name, string email)
         {
+            Name = name;
             Email = email;
         }
     }

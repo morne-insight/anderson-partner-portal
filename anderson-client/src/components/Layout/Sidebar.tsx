@@ -46,7 +46,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isAdmin }) => {
           ANDERSEN<span className="text-red-600">.</span>
         </h1>
         <p className="mt-2 text-[10px] text-gray-400 uppercase tracking-[0.2em]">
-          Partner Portal .v3
+          Partner Portal
         </p>
       </div>
 
@@ -85,7 +85,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isAdmin }) => {
 
       <div className="flex justify-center p-4">
         <span className="text-xs text-gray-400 mr-2">
-          Created by Insight Consulting
+          Powered by Insight Consulting
         </span>
         <img
           alt="Insight Consutling Logo"

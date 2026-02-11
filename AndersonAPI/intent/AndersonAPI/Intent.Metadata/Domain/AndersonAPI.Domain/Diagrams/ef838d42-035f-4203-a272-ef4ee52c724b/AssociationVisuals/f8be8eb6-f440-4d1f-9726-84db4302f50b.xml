@@ -4,7 +4,8 @@
   <targetId>b4a76b80-3542-4df4-92dc-ec1d3d185ab4</targetId>
   <targetPrefPoint x="200" y="40" />
   <fixedPoints>
-    <point x="-460" y="290" />
-    <point x="-460" y="790" />
+    <point x="-430" y="340" />
+    <point x="-430" y="610" />
+    <point x="-90" y="610" />
   </fixedPoints>
 </associationVisual>

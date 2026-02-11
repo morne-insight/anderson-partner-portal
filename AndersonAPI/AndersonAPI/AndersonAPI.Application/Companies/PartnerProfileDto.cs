@@ -14,10 +14,11 @@ namespace AndersonAPI.Application.Companies
             WebsiteUrl = null!;
             Capabilities = null!;
             Contacts = null!;
+            ServiceTypeName = null!;
+            ServiceSubTypes = null!;
             Industries = null!;
             Locations = null!;
             Opportunities = null!;
-            ServiceTypeName = null!;
         }
 
         public Guid Id { get; set; }
@@ -31,6 +32,7 @@ namespace AndersonAPI.Application.Companies
         public List<PartnerOpportunityDto> Opportunities { get; set; }
         public Guid? ServiceTypeId { get; set; }
         public string ServiceTypeName { get; set; }
+        public List<PartnerServiceSubTypeDto> ServiceSubTypes { get; set; }
 
         public static PartnerProfileDto Create(
             Guid id,
@@ -39,11 +41,12 @@ namespace AndersonAPI.Application.Companies
             string websiteUrl,
             List<PartnerCapabilityDto> capabilities,
             List<PartnerContactDto> contacts,
+            Guid? serviceTypeId,
+            string serviceTypeName,
+            List<PartnerServiceSubTypeDto> serviceSubTypes,
             List<PartnerIndustryDto> industries,
             List<PartnerLocationDto> locations,
-            List<PartnerOpportunityDto> opportunities,
-            Guid? serviceTypeId,
-            string serviceTypeName)
+            List<PartnerOpportunityDto> opportunities)
         {
             return new PartnerProfileDto
             {
@@ -53,11 +56,13 @@ namespace AndersonAPI.Application.Companies
                 WebsiteUrl = websiteUrl,
                 Capabilities = capabilities,
                 Contacts = contacts,
-                Industries = industries,
-                Locations = locations,
-                Opportunities = opportunities,
                 ServiceTypeId = serviceTypeId,
                 ServiceTypeName = serviceTypeName
+,
+                ServiceSubTypes = serviceSubTypes,
+                Industries = industries,
+                Locations = locations,
+                Opportunities = opportunities
             };
         }
     }

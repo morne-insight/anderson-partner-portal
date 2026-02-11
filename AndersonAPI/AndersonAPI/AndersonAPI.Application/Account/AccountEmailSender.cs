@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace AndersonAPI.Application.Account;
 
+[IntentManaged(Mode.Fully, Body = Mode.Merge)]
 public class AccountEmailSender : IAccountEmailSender
 {
     private readonly IEmailService _emailService;
@@ -21,8 +22,7 @@ public class AccountEmailSender : IAccountEmailSender
     [IntentManaged(Mode.Fully, Body = Mode.Merge)]
     public async Task SendEmailConfirmationRequest(string email, string userId, string code)
     {
-        var baseUrl = _configuration["AppSettings:ClientUrl"] ?? "http://localhost:3000";
-        //var verificationUrl = $"{baseUrl}/confirm-email?userId={userId}&code={code}";
+        var baseUrl = _configuration["AppSettings:ClientUrl"] ?? "https://andersen.partners";
         var verificationUrl = $"{baseUrl}/confirm-email/{userId}/{code}";
 
         var htmlBody = await LoadEmailConfirmationTemplateAsync(

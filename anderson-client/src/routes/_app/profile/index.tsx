@@ -1,122 +1,140 @@
-import { useMutation } from "@tanstack/react-query";
-import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
-import {
-  Building2,
-  ChevronRight,
-  Globe,
-  Loader2,
-  Plus,
-  Users,
-} from "lucide-react";
-import { useState } from "react";
-import { toast } from "sonner";
-import type { CompanyDto } from "@/api";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { callApi } from "@/server/proxy";
+import { useMutation, useQuery } from '@tanstack/react-query'
+import { createFileRoute, Link, useRouter } from '@tanstack/react-router'
+import { Building2, ChevronRight, Globe, Loader2, Plus, Users } from 'lucide-react'
+import { useState } from 'react'
+import { toast } from 'sonner'
+import type { CompanyDto } from '@/api'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { useAuth } from '@/contexts/auth-context'
+import { callApi } from '@/server/proxy'
+import { InviteList } from '@/components/app/company/InviteList'
 
 // const urlRegex = /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z]{2,}(?:[-a-zA-Z0-9()@:%_+.~#?&/=]*)$/;
-const urlRegex =
-  /^(https?:\/\/)?([\w\d-_]+)\.([\w\d-_.]+)\/?\??([^#\n\r]*)?#?([^\n\r]*)/;
+const urlRegex = /^(https?:\/\/)?([\w\d-_]+)\.([\w\d-_.]+)\/?\??([^#\n\r]*)?#?([^\n\r]*)/
 
-export const Route = createFileRoute("/_app/profile/")({
+export const Route = createFileRoute('/_app/profile/')({
   component: ProfileIndex,
   loader: async () => {
-    const response = await callApi({ data: { fn: "getApiCompaniesMe" } });
-    return { companies: response || [] };
+    const response = await callApi({ data: { fn: 'getApiCompaniesMe' } })
+    return { companies: response || [] }
   },
-});
+})
 
 function ProfileIndex() {
-  const { companies } = Route.useLoaderData();
-  const router = useRouter();
-  const [scrapeUrl, setScrapeUrl] = useState("");
-  const [newFirmName, setNewFirmName] = useState("");
+  const router = useRouter()
+  const { user } = useAuth()
+  const { companies } = Route.useLoaderData()
+  const [scrapeUrl, setScrapeUrl] = useState('')
+  const [newFirmName, setNewFirmName] = useState('')
+
+  console.log('user', user)
 
   const isValidUrl = (url: string): boolean => {
-    const isValid = urlRegex.test(url);
-    console.log(`is valid url (${url}):`, isValid);
-    return isValid;
-  };
+    const isValid = urlRegex.test(url)
+    console.log(`is valid url (${url}):`, isValid)
+    return isValid
+  }
 
   const refreshData = () => {
-    router.invalidate();
-  };
+    router.invalidate()
+  }
+
+  const { data: invites } = useQuery({
+    queryKey: ['invites'],
+    queryFn: async () => {
+      return await callApi({
+        data: { fn: 'getApiInvitesMe' },
+      })
+    },
+  });
 
   const scrapeMutation = useMutation({
     mutationFn: async (url: string) => {
       return await callApi({
-        data: { fn: "putApiCompaniesScrapeWebsite", args: { body: { url, companyId: null } } },
-      });
+        data: { fn: 'putApiCompaniesScrapeWebsite', args: { body: { url, companyId: null } } },
+      })
     },
     onSuccess: (data) => {
-      refreshData();
-      if (data?.value) {
+      refreshData()
+      if (data) {
         router.navigate({
-          to: "/profile/$companyId",
-          params: { companyId: data.value },
-        });
+          to: '/profile/$companyId',
+          params: { companyId: data },
+        })
       }
     },
     onError: (err) => {
-      console.error("Scrape failed", err);
-      toast.error("Failed to sync website. Please try creating manually.");
+      console.error('Scrape failed', err)
+      toast.error('Failed to sync website. Please try creating manually.')
     },
-  });
+  })
 
   const createMutation = useMutation({
     mutationFn: async () => {
       return await callApi({
         data: {
-          fn: "postApiCompanies",
+          fn: 'postApiCompanies',
           args: {
             body: {
-              name: newFirmName || "New Firm",
-              shortDescription: "",
-              fullDescription: "",
-              websiteUrl: "",
+              name: newFirmName || 'New Firm',
+              shortDescription: '',
+              fullDescription: '',
+              websiteUrl: '',
               employeeCount: 0,
               serviceTypes: [],
+              serviceSubTypes: [],
               capabilities: [],
               industries: [],
             },
           },
         },
-      });
+      })
     },
     onSuccess: (data) => {
-      refreshData();
+      refreshData()
       if (data?.value) {
         router.navigate({
-          to: "/profile/$companyId",
+          to: '/profile/$companyId',
           params: { companyId: data.value },
-        });
+        })
       }
     },
     onError: (err) => {
-      console.error("Create failed", err);
-      toast.error("Failed to create profile.");
+      console.error('Create failed', err)
+      toast.error('Failed to create profile.')
     },
-  });
+  })
 
   const getHostname = (url: string) => {
     try {
-      const normalizedUrl = url.startsWith("http") ? url : `https://${url}`;
-      return new URL(normalizedUrl).hostname;
+      const normalizedUrl = url.startsWith('http') ? url : `https://${url}`
+      return new URL(normalizedUrl).hostname
     } catch {
-      return url;
+      return url
     }
-  };
+  }
+
 
   return (
     <div className="animate-fade-in space-y-8">
       <header className="border-gray-200 border-b pb-6">
         <h2 className="mb-3 font-serif text-4xl text-black">My Profile</h2>
         <p className="font-light text-gray-500 text-lg">
-          Manage your firm's profile, capabilities, and presence in the Anderson
-          network.
+          Manage your firm's profile, capabilities, and presence in the Anderson network.
         </p>
       </header>
+
+      {invites?.length > 0 ? (
+        <section>
+          <div>
+            <h3 className="flex items-center gap-2 font-bold text-black text-xl uppercase tracking-widest">
+              <Building2 className="h-5 w-5" /> Invited to Join
+            </h3>
+            <InviteList invites={invites} />
+          </div>
+        </section>
+      ) : null}
 
       <section>
         <div className="mb-6 flex items-center justify-between">
@@ -136,8 +154,8 @@ function ProfileIndex() {
                 </div>
                 <h3 className="font-serif text-2xl">Auto-Sync from Website</h3>
                 <p className="text-gray-400 text-sm leading-relaxed">
-                  Enter your website URL. Our AI will analyze your public
-                  presence to create your profile and suggest relevant tags.
+                  Enter your website URL. Our AI will analyze your public presence to create your
+                  profile and suggest relevant tags.
                 </p>
 
                 <div className="space-y-3 pt-4">
@@ -149,18 +167,15 @@ function ProfileIndex() {
                   />
                   <Button
                     className="w-full bg-red-600 py-6 font-bold uppercase tracking-wider hover:bg-red-700"
-                    disabled={
-                      scrapeMutation.isPending || !isValidUrl(scrapeUrl)
-                    }
+                    disabled={scrapeMutation.isPending || !isValidUrl(scrapeUrl)}
                     onClick={() => scrapeMutation.mutate(scrapeUrl)}
                   >
                     {scrapeMutation.isPending ? (
                       <>
-                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />{" "}
-                        Syncing...
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Syncing...
                       </>
                     ) : (
-                      "Sync & Create Profile"
+                      'Sync & Create Profile'
                     )}
                   </Button>
                 </div>
@@ -173,12 +188,10 @@ function ProfileIndex() {
                 <Plus className="h-8 w-8 text-gray-400" />
               </div>
               <div>
-                <h3 className="mb-2 font-bold text-gray-900 text-xl">
-                  Create Manually
-                </h3>
+                <h3 className="mb-2 font-bold text-gray-900 text-xl">Create Manually</h3>
                 <p className="mx-auto mb-4 max-w-sm text-gray-500 text-sm">
-                  Start from scratch. Manually enter your firm's details,
-                  locations, and personnel to get listed in the directory.
+                  Start from scratch. Manually enter your firm's details, locations, and personnel
+                  to get listed in the directory.
                 </p>
                 <Input
                   className="mx-auto mt-4 mb-4 max-w-xs"
@@ -193,9 +206,7 @@ function ProfileIndex() {
                 onClick={() => createMutation.mutate()}
                 variant="outline"
               >
-                {createMutation.isPending
-                  ? "Creating..."
-                  : "Create New Profile"}
+                {createMutation.isPending ? 'Creating...' : 'Create New Profile'}
               </Button>
             </div>
           </div>
@@ -211,7 +222,7 @@ function ProfileIndex() {
                     {company.name}
                   </h3>
                   <p className="mb-4 line-clamp-2 text-gray-500 text-sm">
-                    {company.shortDescription || "No description provided."}
+                    {company.shortDescription || 'No description provided.'}
                   </p>
 
                   <div className="flex flex-wrap gap-6 font-medium text-gray-400 text-xs uppercase tracking-wider">
@@ -221,7 +232,7 @@ function ProfileIndex() {
                         <a
                           className="transition-colors hover:text-red-600"
                           href={
-                            company.websiteUrl.startsWith("http")
+                            company.websiteUrl.startsWith('http')
                               ? company.websiteUrl
                               : `https://${company.websiteUrl}`
                           }
@@ -274,5 +285,5 @@ function ProfileIndex() {
         )}
       </section>
     </div>
-  );
+  )
 }

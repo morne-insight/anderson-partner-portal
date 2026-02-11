@@ -79,6 +79,10 @@ namespace AndersonAPI.Infrastructure.Persistence.Configurations
                 .HasForeignKey(x => x.ServiceTypeId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            builder.HasMany(x => x.ServiceSubTypes)
+                .WithMany("Companies")
+                .UsingEntity(x => x.ToTable("CompanyServiceSubTypes"));
+
             builder.Ignore(e => e.DomainEvents);
         }
 
@@ -128,7 +132,7 @@ namespace AndersonAPI.Infrastructure.Persistence.Configurations
         [IntentManaged(Mode.Merge)]
         public static void ConfigureContacts(OwnedNavigationBuilder<Company, Contact> builder)
         {
-            builder.WithOwner()
+            builder.WithOwner(x => x.Company)
                 .HasForeignKey(x => x.CompanyId);
 
             builder.HasKey(x => x.Id);

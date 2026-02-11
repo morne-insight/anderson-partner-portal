@@ -13,6 +13,7 @@ namespace AndersonAPI.Domain.Entities
         private List<Capability> _capabilities = [];
         private List<Contact> _contacts = [];
         private List<ApplicationIdentityUser> _applicationIdentityUsers = [];
+        private List<ServiceSubType> _serviceSubTypes = [];
         private List<Invite> _invites = [];
         private List<Quarterly> _quarterlies = [];
         private List<Review> _reviews = [];
@@ -26,6 +27,7 @@ namespace AndersonAPI.Domain.Entities
             Guid? serviceTypeId,
             IEnumerable<Industry> industries,
             IEnumerable<Capability> capabilities,
+            IEnumerable<ServiceSubType> serviceSubTypes,
             EntityState state = EntityState.Enabled)
         {
             Name = name;
@@ -36,6 +38,7 @@ namespace AndersonAPI.Domain.Entities
             ServiceTypeId = serviceTypeId;
             _industries = new List<Industry>(industries);
             _capabilities = new List<Capability>(capabilities);
+            _serviceSubTypes = new List<ServiceSubType>(serviceSubTypes);
             State = state;
         }
 
@@ -125,6 +128,12 @@ namespace AndersonAPI.Domain.Entities
         }
 
         public virtual ServiceType? ServiceType { get; private set; }
+
+        public virtual IReadOnlyCollection<ServiceSubType> ServiceSubTypes
+        {
+            get => _serviceSubTypes.AsReadOnly();
+            private set => _serviceSubTypes = new List<ServiceSubType>(value);
+        }
 
         public virtual IReadOnlyCollection<Invite> Invites
         {
@@ -290,6 +299,15 @@ namespace AndersonAPI.Domain.Entities
             foreach (var capability in capabilities)
             {
                 _capabilities.Add(capability);
+            }
+        }
+
+        public void SetServiceSubTypes(IEnumerable<ServiceSubType> serviceSubTypes)
+        {
+            _serviceSubTypes.Clear();
+            foreach (var serviceSubType in serviceSubTypes)
+            {
+                _serviceSubTypes.Add(serviceSubType);
             }
         }
 

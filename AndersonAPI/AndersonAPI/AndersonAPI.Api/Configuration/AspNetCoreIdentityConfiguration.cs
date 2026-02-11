@@ -10,6 +10,7 @@ namespace AndersonAPI.Api.Configuration
 {
     public static class AspNetCoreIdentityConfiguration
     {
+        [IntentManaged(Mode.Fully, Body = Mode.Ignore)]
         public static void ConfigureIdentity(this IServiceCollection services)
         {
             services.AddIdentityWithoutCookieAuth<ApplicationIdentityUser, IdentityRole<string>>()
@@ -25,6 +26,8 @@ namespace AndersonAPI.Api.Configuration
                     options.Password.RequireUppercase = true;
                     options.Password.RequiredLength = 6;
                     options.Password.RequiredUniqueChars = 1;
+
+
 
                     // Lockout settings.
                     options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);

@@ -1,5 +1,12 @@
 import { Store } from "@tanstack/react-store";
 
+export interface PaginationState {
+  pageNumber: number;
+  pageSize: number;
+  totalCount: number;
+  pageCount: number;
+}
+
 export interface DirectoryFilterState {
   selectedRegion: string;
   selectedCountry: string;
@@ -7,6 +14,8 @@ export interface DirectoryFilterState {
   selectedIndustry: string;
   selectedCapability: string;
   nameFilter: string;
+  pagination: PaginationState;
+  isLoading: boolean;
 }
 
 const initialState: DirectoryFilterState = {
@@ -16,6 +25,13 @@ const initialState: DirectoryFilterState = {
   selectedIndustry: "All",
   selectedCapability: "All",
   nameFilter: "",
+  pagination: {
+    pageNumber: 1,
+    pageSize: 5,
+    totalCount: 0,
+    pageCount: 0,
+  },
+  isLoading: false,
 };
 
 export const directoryFilterStore = new Store(initialState);
@@ -64,8 +80,41 @@ export const setNameFilter = (nameFilter: string) => {
   }));
 };
 
+export const setPagination = (pagination: Partial<PaginationState>) => {
+  directoryFilterStore.setState((state) => ({
+    ...state,
+    pagination: {
+      ...state.pagination,
+      ...pagination,
+    },
+  }));
+};
+
+export const setPageNumber = (pageNumber: number) => {
+  directoryFilterStore.setState((state) => ({
+    ...state,
+    pagination: {
+      ...state.pagination,
+      pageNumber,
+    },
+  }));
+};
+
+export const setIsLoading = (isLoading: boolean) => {
+  directoryFilterStore.setState((state) => ({
+    ...state,
+    isLoading,
+  }));
+};
+
 export const clearAllDirectoryFilters = () => {
-  directoryFilterStore.setState(() => initialState);
+  directoryFilterStore.setState((state) => ({
+    ...initialState,
+    pagination: {
+      ...state.pagination,
+      pageNumber: 1,
+    },
+  }));
 };
 
 export const resetDirectoryFilters = () => {

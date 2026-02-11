@@ -29,6 +29,7 @@ namespace AndersonAPI.Domain.Entities
         {
             FirstName = null!;
             LastName = null!;
+            Company = null!;
         }
 
         public string FirstName { get; private set; }
@@ -48,6 +49,8 @@ namespace AndersonAPI.Domain.Entities
         public Guid? UpdatedBy { get; private set; }
 
         public DateTimeOffset? UpdatedDate { get; private set; }
+
+        public virtual Company Company { get; private set; }
 
         public void Update(string firstName, string lastName, string? emailAddress, string? companyPosition)
         {

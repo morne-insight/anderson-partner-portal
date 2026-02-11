@@ -14,7 +14,8 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import type { CompanyProfileDto, OpportunityViewDto } from "@/api";
-import { OpportunityMessages } from "@/components/OpportunityMessages";
+import { OpportunityMessages } from "@/components/app/opportunity/OpportunityMessages";
+import { ConnectRequestDialog } from "@/components/ConnectRequestDialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { callApi } from "@/server/proxy";
@@ -193,9 +194,20 @@ function ViewOpportunity() {
               </Badge>
             </div>
             <div className="flex gap-3">
-              <Button className="rounded-none bg-red-600 px-6 py-2 font-medium text-sm text-white hover:bg-red-700">
-                CONNECT
-              </Button>
+              {opportunity.companyId ? (
+                <ConnectRequestDialog
+                  partnerId={String(opportunity.companyId)}
+                  partnerName={opportunity.companyName}
+                >
+                  <Button className="rounded-none bg-red-600 px-6 py-2 font-medium text-sm text-white hover:bg-red-700">
+                    CONNECT
+                  </Button>
+                </ConnectRequestDialog>
+              ) : (
+                <Button className="rounded-none bg-red-600 px-6 py-2 font-medium text-sm text-white hover:bg-red-700">
+                  CONNECT
+                </Button>
+              )}
               {companies.length > 0 &&
                 (opportunity.interestedPartners?.some((ip) =>
                   companies.some((c) => c.id === ip.id)

@@ -41,6 +41,10 @@ namespace AndersonAPI.Application.User.GetUserDetail
                 .FindAllAsync(c => c.ApplicationIdentityUsers
                     .Any(u => u.Id == applicationUser.Id.ToString()), cancellationToken);
 
+            var invites = await _companyRepository
+                .FindAllAsync(c => c.Invites
+                    .Any(i => i.Email == applicationUser.Email), cancellationToken);
+
 
             if (companies.Count == 0)
             {
@@ -58,7 +62,8 @@ namespace AndersonAPI.Application.User.GetUserDetail
                 companies: companies.Select(c => UserCompanyDto.Create(
                     id: c.Id,
                     name: c.Name,
-                    websiteUrl: c.WebsiteUrl)).ToList());
+                    websiteUrl: c.WebsiteUrl)).ToList()
+                );
         }
     }
 }

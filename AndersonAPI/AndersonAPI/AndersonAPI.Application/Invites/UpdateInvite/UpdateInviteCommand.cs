@@ -9,13 +9,15 @@ namespace AndersonAPI.Application.Invites.UpdateInvite
 {
     public class UpdateInviteCommand : IRequest, ICommand
     {
-        public UpdateInviteCommand(Guid id, string email)
+        public UpdateInviteCommand(Guid id, string name, string email)
         {
             Id = id;
+            Name = name;
             Email = email;
         }
 
         public Guid Id { get; set; }
+        public string Name { get; set; }
         public string Email { get; set; }
     }
 }
