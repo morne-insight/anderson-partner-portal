@@ -441,7 +441,7 @@ namespace AndersonAPI.Api.Controllers
             }
 
             _logger.LogInformation("Calling ConfirmEmailAsync...");
-            var result = await _userManager.ConfirmEmailAsync(user, code);
+            var result = await _userManager.ConfirmEmailAsync(user, decodedCode);
             
             if (!result.Succeeded)
             {
@@ -620,7 +620,7 @@ namespace AndersonAPI.Api.Controllers
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             _logger.LogInformation("Generated email confirmation token for user {UserId}: {Token}", user.Id, code);
 
-            code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+            var encodedCode = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
             _logger.LogInformation("Generated email confirmation token encoded for user {UserId}: {Token}", user.Id, code);
 
             var userId = await _userManager.GetUserIdAsync(user);
@@ -628,7 +628,8 @@ namespace AndersonAPI.Api.Controllers
             await _accountEmailSender.SendEmailConfirmationRequest(
                 email: user.Email!,
                 userId: userId,
-                code: code);
+                code: code,
+                encodedCode: encodedCode);
         }
 
         private async Task<IList<Claim>> GetClaims(ApplicationIdentityUser user)

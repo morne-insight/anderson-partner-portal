@@ -123,6 +123,9 @@ export const confirmEmailfn = createServerFn({ method: 'POST' })
 	.inputValidator((data: { userId: string; code: string }) => data)
 	.handler(async ({ data }) => {
 		try {
+			
+			console.log("confirmEmailFn:data", JSON.stringify(data, null, 2));
+
 			const result = await postApiAccountConfirmEmail({
 				body: data,
 			});

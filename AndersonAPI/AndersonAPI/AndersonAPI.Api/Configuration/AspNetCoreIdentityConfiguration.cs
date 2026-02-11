@@ -39,7 +39,7 @@ namespace AndersonAPI.Api.Configuration
                     options.User.RequireUniqueEmail = true;
 
                     // Sign-in settings.
-                    options.SignIn.RequireConfirmedAccount = false;
+                    options.SignIn.RequireConfirmedAccount = true;
                 });
         }
     }

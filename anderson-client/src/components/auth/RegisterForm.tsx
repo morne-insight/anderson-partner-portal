@@ -70,14 +70,14 @@ export function RegisterForm() {
   if (success) {
     return (
       <div className="mx-auto max-w-md space-y-6 text-center">
-        <div className="rounded-md bg-green-50 p-4 text-green-700">
+        {/* <div className="rounded-md bg-green-50 p-4 text-green-700">
           Registration successful! You can now sign in with your credentials.
-        </div>
-        {/*
+        </div> */}
+
         <div className="rounded-md bg-green-50 p-4 text-green-700">
           Registration successful! Once you have confirmed your email, you can sign in with your credentials.
         </div>
-         <div className="rounded-md px-2">
+        <div className="rounded-md px-2">
           If you dont receive an email, please check your spam folder or{" "}
           <Link
             className="font-medium text-[#DB0A20] hover:underline"
@@ -86,7 +86,7 @@ export function RegisterForm() {
             resend the confirmation email
           </Link>
           .
-        </div> */}
+        </div>
         <Link
           className="font-medium text-[#DB0A20] hover:underline"
           to="/login"
@@ -234,6 +234,9 @@ export function RegisterForm() {
             </div>
           )}
         </form.Field>
+        <p className="text-center text-xs text-gray-500">
+          Password must be at least 6 characters and contain an uppercase letter, a lowercase letter, a number, and a non-alphanumeric character. (!@#$%^&*).
+        </p>
 
         <Button
           className="w-full bg-[#DB0A20] text-white hover:bg-[#b0081a]"
@@ -244,7 +247,7 @@ export function RegisterForm() {
         </Button>
       </form>
 
-      {/* <p className="text-center text-sm mb-2.5">
+      <p className="text-center text-sm mb-2.5">
         Resend confirmation email?{" "}
         <Link
           className="font-medium text-[#DB0A20] hover:underline"
@@ -252,7 +255,7 @@ export function RegisterForm() {
         >
           Resend
         </Link>
-      </p> */}
+      </p>
 
       <p className="text-center text-sm">
         Already have an account?{" "}

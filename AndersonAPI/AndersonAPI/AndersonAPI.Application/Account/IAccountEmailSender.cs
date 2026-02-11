@@ -7,6 +7,6 @@ namespace AndersonAPI.Application.Account;
 
 public interface IAccountEmailSender
 {
-    Task SendEmailConfirmationRequest(string email, string userId, string code);
+    Task SendEmailConfirmationRequest(string email, string userId, string code, string encodedCode);
     Task SendPasswordResetCode(string email, string userId, string resetCode);
 }

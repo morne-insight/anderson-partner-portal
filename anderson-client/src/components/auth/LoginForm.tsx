@@ -133,9 +133,6 @@ export function LoginForm() {
             </div>
           )}
         </form.Field>
-        <p className="text-center text-xs text-gray-500">
-          Password must be at least 6 characters and contain an uppercase letter, a lowercase letter, a number, and a non-alphanumeric character. (!@#$%^&*).
-        </p>
 
         <Button
           className="w-full bg-[#DB0A20] text-white hover:bg-[#b0081a]"
@@ -156,7 +153,7 @@ export function LoginForm() {
         </Link>
       </p>
 
-      {/* <p className="text-center text-sm mb-2.5">
+      <p className="text-center text-sm mb-2.5">
         Resend confirmation email?{" "}
         <Link
           className="font-medium text-[#DB0A20] hover:underline"
@@ -164,7 +161,7 @@ export function LoginForm() {
         >
           Resend
         </Link>
-      </p> */}
+      </p>
 
       <p className="text-center text-sm">
         Don't have an account?{" "}
