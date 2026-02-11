@@ -500,7 +500,6 @@ namespace AndersonAPI.Api.Controllers
                 {
                     result = IdentityResult.Failed(_userManager.ErrorDescriber.InvalidToken());
                 }
-
             }
             catch (FormatException)
             {

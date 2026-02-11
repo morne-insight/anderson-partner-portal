@@ -36,6 +36,7 @@ namespace AndersonAPI.Api
                 builder.Host.UseSerilog((context, services, configuration) => configuration
                     .ReadFrom.Configuration(context.Configuration)
                     .ReadFrom.Services(services)
+                    .WriteTo.Console()
                     .Destructure.With(new BoundedLoggingDestructuringPolicy()));
 
                 builder.Services.AddControllers(
@@ -43,6 +44,47 @@ namespace AndersonAPI.Api
                     {
                         opt.Filters.Add<ExceptionFilter>();
                     });
+
+                var dp = builder.Services
+                    .AddDataProtection()
+                    .SetApplicationName("AndersonAPI");
+
+
+                if (builder.Environment.IsProduction())
+                {
+                    var keysPath = "/home/aspnet/DataProtection-Keys";
+                    Directory.CreateDirectory(keysPath);
+                    dp.PersistKeysToFileSystem(new DirectoryInfo(keysPath));
+                }
+                //if (builder.Environment.IsProduction())
+                //{
+                //    var blobUri = builder.Configuration["DataProtection:BlobUri"];
+
+                //    if (!string.IsNullOrWhiteSpace(blobUri))
+                //    {
+                //        dp.PersistKeysToAzureBlobStorage(
+                //            new Uri(blobUri),
+                //            new DefaultAzureCredential());
+                //    }
+                //    else
+                //    {
+                //        var keysPath = Path.Combine(
+                //            Environment.GetEnvironmentVariable("HOME")!,
+                //            "ASP.NET",
+                //            "DataProtection-Keys");
+
+                //        Directory.CreateDirectory(keysPath);
+
+                //        dp.PersistKeysToFileSystem(new DirectoryInfo(keysPath));
+                //    }
+                //}
+                else
+                {
+                    var keysPath = Path.Combine(builder.Environment.ContentRootPath, "DataProtectionKeys");
+                    Directory.CreateDirectory(keysPath);
+
+                    dp.PersistKeysToFileSystem(new DirectoryInfo(keysPath));
+                }
 
                 builder.Services.AddApplication(builder.Configuration);
                 builder.Services.ConfigureApplicationSecurity(builder.Configuration);
