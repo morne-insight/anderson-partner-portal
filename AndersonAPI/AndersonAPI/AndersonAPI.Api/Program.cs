@@ -6,6 +6,7 @@ using AndersonAPI.Application;
 using AndersonAPI.Application.Account;
 using AndersonAPI.Infrastructure;
 using Intent.RoslynWeaver.Attributes;
+using Microsoft.AspNetCore.DataProtection;
 using Scalar.AspNetCore;
 using Serilog;
 using Serilog.Events;
@@ -40,6 +41,12 @@ namespace AndersonAPI.Api
                     {
                         opt.Filters.Add<ExceptionFilter>();
                     });
+
+                builder.Services.AddDataProtection()
+                    .SetApplicationName("AndersonAPI")
+                    .PersistKeysToFileSystem(new DirectoryInfo(
+                        Path.Combine(builder.Environment.ContentRootPath, "DataProtectionKeys")));
+
                 builder.Services.AddApplication(builder.Configuration);
                 builder.Services.ConfigureApplicationSecurity(builder.Configuration);
                 builder.Services.ConfigureHealthChecks(builder.Configuration);
