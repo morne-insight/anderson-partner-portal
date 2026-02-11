@@ -448,7 +448,7 @@ namespace AndersonAPI.Api.Controllers
                 var errors = string.Join(", ", result.Errors.Select(e => $"{e.Code}: {e.Description}"));
                 _logger.LogError($"ConfirmEmailAsync failed. Errors: {errors}");
                 
-                ModelState.AddModelError<ConfirmEmailDto>(x => x, "Error confirming your email. Code: " + code + " : " + decodedCode);
+                ModelState.AddModelError<ConfirmEmailDto>(x => x, $"[{errors}] : Code {code}  :  decoded: {decodedCode}");
                 return BadRequest(ModelState);
             }
 
