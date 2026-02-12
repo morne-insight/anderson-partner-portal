@@ -2,7 +2,6 @@ using AndersonAPI.Domain.Repositories;
 using Intent.RoslynWeaver.Attributes;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using Serilog;
 
 [assembly: DefaultIntentManaged(Mode.Fully)]
 [assembly: IntentTemplate("Intent.Application.MediatR.QueryHandler", Version = "1.0")]
