@@ -66,6 +66,8 @@ namespace AndersonAPI.Api
                 if (builder.Environment.IsProduction())
                 {
                     var blobUri = builder.Configuration["DataProtection:BlobUri"];
+                    
+                    Log.Information($"Configuring data protection keys storage. BlobUri: {blobUri}");
 
                     if (!string.IsNullOrWhiteSpace(blobUri))
                     {

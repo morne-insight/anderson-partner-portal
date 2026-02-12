@@ -29,7 +29,6 @@ namespace AndersonAPI.Application.Health.GetApiHealth
         public async Task<string> Handle(GetApiHealthQuery request, CancellationToken cancellationToken)
         {
             _logger.LogInformation("logging with _logger.");
-            Log.Information("Logging with Log");
             var count = await _countryRepository.CountAsync();
             return $"API is healthy. Country count: {count}";
         }
