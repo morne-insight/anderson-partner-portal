@@ -97,7 +97,7 @@ namespace AndersonAPI.Api
                 builder.Services.ConfigureProblemDetails();
                 builder.Services.ConfigureApiVersioning();
 
-                builder.Services.AddInfrastructure(builder.Configuration);
+                builder.Services.AddInfrastructure(builder.Configuration, builder.Environment.IsDevelopment());
                 builder.Services.ConfigureOpenApi();
 
                 builder.Services.AddTransient<IAccountEmailSender, AccountEmailSender>();
