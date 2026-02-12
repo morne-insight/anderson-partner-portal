@@ -194,7 +194,7 @@ namespace AndersonAPI.Api
                 app.MapControllers();
 
                 //logger.Write(LogEventLevel.Information, "Starting web host");
-                Log.Information("Starting web host... Static Logger");
+                Log.Information("------------------------ Starting web host ------------------------");
 
                 app.Run();
             }

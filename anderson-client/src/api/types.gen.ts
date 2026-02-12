@@ -3133,6 +3133,39 @@ export type GetApiHealthAuthResponses = {
 
 export type GetApiHealthAuthResponse = GetApiHealthAuthResponses[keyof GetApiHealthAuthResponses]
 
+export type GetApiHealthPathData = {
+	body?: never
+	path?: never
+	query?: never
+	url: '/api/health/path'
+}
+
+export type GetApiHealthPathErrors = {
+	/**
+	 * Unauthorized
+	 */
+	401: ProblemDetails
+	/**
+	 * Forbidden
+	 */
+	403: ProblemDetails
+	/**
+	 * Internal Server Error
+	 */
+	500: ProblemDetails
+}
+
+export type GetApiHealthPathError = GetApiHealthPathErrors[keyof GetApiHealthPathErrors]
+
+export type GetApiHealthPathResponses = {
+	/**
+	 * OK
+	 */
+	200: AndersonApiApiControllersResponseTypesJsonResponseOfString
+}
+
+export type GetApiHealthPathResponse = GetApiHealthPathResponses[keyof GetApiHealthPathResponses]
+
 export type GetApiHealthData = {
 	body?: never
 	path?: never

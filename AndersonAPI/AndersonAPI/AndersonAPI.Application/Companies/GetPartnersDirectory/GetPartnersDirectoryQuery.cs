@@ -12,23 +12,23 @@ namespace AndersonAPI.Application.Companies.GetPartnersDirectory
     {
         public GetPartnersDirectoryQuery(int pageNo,
             int pageSize,
-            string? orderBy,
-            string? searchTerm,
             Guid? serviceType,
-            List<Guid> regions,
-            List<Guid> countries,
+            string? searchTerm,
+            string? orderBy,
+            List<Guid> industries,
             List<Guid> capabilities,
-            List<Guid> industries)
+            List<Guid> countries,
+            List<Guid> regions)
         {
             PageNo = pageNo;
             PageSize = pageSize;
-            OrderBy = orderBy;
-            SearchTerm = searchTerm;
             ServiceType = serviceType;
-            Regions = regions;
-            Countries = countries;
-            Capabilities = capabilities;
+            SearchTerm = searchTerm;
+            OrderBy = orderBy;
             Industries = industries;
+            Capabilities = capabilities;
+            Countries = countries;
+            Regions = regions;
         }
 
         public int PageNo { get; set; }

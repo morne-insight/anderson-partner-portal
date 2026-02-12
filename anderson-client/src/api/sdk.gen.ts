@@ -116,6 +116,9 @@ import type {
 	GetApiHealthAuthResponses,
 	GetApiHealthData,
 	GetApiHealthErrors,
+	GetApiHealthPathData,
+	GetApiHealthPathErrors,
+	GetApiHealthPathResponses,
 	GetApiHealthResponses,
 	GetApiIndustriesByIdData,
 	GetApiIndustriesByIdErrors,
@@ -1066,6 +1069,14 @@ export const getApiHealthAuth = <ThrowOnError extends boolean = false>(
 ) =>
 	(options?.client ?? client).get<GetApiHealthAuthResponses, GetApiHealthAuthErrors, ThrowOnError>({
 		url: '/api/health/auth',
+		...options,
+	})
+
+export const getApiHealthPath = <ThrowOnError extends boolean = false>(
+	options?: Options<GetApiHealthPathData, ThrowOnError>
+) =>
+	(options?.client ?? client).get<GetApiHealthPathResponses, GetApiHealthPathErrors, ThrowOnError>({
+		url: '/api/health/path',
 		...options,
 	})
 
