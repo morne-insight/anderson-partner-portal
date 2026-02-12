@@ -11,6 +11,7 @@ export interface DirectoryFilterState {
   selectedRegion: string;
   selectedCountry: string;
   selectedService: string;
+  selectedCoreService: string;
   selectedIndustry: string;
   selectedCapability: string;
   nameFilter: string;
@@ -22,6 +23,7 @@ const initialState: DirectoryFilterState = {
   selectedRegion: "All",
   selectedCountry: "All",
   selectedService: "All",
+  selectedCoreService: "All",
   selectedIndustry: "All",
   selectedCapability: "All",
   nameFilter: "",
@@ -56,6 +58,14 @@ export const setSelectedService = (selectedService: string) => {
   directoryFilterStore.setState((state) => ({
     ...state,
     selectedService,
+    selectedCoreService: "All", // Reset core service when service line changes
+  }));
+};
+
+export const setSelectedCoreService = (selectedCoreService: string) => {
+  directoryFilterStore.setState((state) => ({
+    ...state,
+    selectedCoreService,
   }));
 };
 

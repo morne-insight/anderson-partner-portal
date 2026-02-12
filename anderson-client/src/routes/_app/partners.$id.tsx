@@ -187,7 +187,7 @@ function PartnerProfile() {
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
             <div className="border border-gray-200 bg-white p-8 shadow-sm">
               <h3 className="mb-6 border-gray-100 border-b pb-4 font-serif text-black text-xl">
-                Capabilities
+                Core Service Offerings
               </h3>
               <div className="flex flex-wrap gap-2">
                 {partner.capabilities?.map((skill) => (

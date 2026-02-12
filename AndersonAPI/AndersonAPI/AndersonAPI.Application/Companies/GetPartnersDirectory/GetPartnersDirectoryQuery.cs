@@ -18,7 +18,8 @@ namespace AndersonAPI.Application.Companies.GetPartnersDirectory
             List<Guid> regions,
             List<Guid> countries,
             List<Guid> capabilities,
-            List<Guid> industries)
+            List<Guid> industries,
+            List<Guid> coreServices)
         {
             PageNo = pageNo;
             PageSize = pageSize;
@@ -29,6 +30,7 @@ namespace AndersonAPI.Application.Companies.GetPartnersDirectory
             Countries = countries;
             Capabilities = capabilities;
             Industries = industries;
+            CoreServices = coreServices;
         }
 
         public int PageNo { get; set; }
@@ -40,5 +42,6 @@ namespace AndersonAPI.Application.Companies.GetPartnersDirectory
         public List<Guid> Countries { get; set; }
         public List<Guid> Capabilities { get; set; }
         public List<Guid> Industries { get; set; }
+        public List<Guid> CoreServices { get; set; }
     }
 }

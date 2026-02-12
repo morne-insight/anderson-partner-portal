@@ -1502,7 +1502,7 @@ function ProfileEdit() {
           {/* Core Skills */}
           <section className="space-y-6">
             <h3 className="mb-0 flex items-center gap-2 border-gray-100 border-b pb-2 font-bold text-lg uppercase tracking-widest">
-              <Briefcase className="h-4 w-4" /> Core Skills
+              <Briefcase className="h-4 w-4" /> Core Service Offerings
             </h3>
             <div className="border border-gray-200 bg-white p-6 pt-4 shadow-sm">
               <MultiSelectCombobox

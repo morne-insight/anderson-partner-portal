@@ -15929,7 +15929,8 @@
           "regions",
           "countries",
           "capabilities",
-          "industries"
+          "industries",
+          "coreServices"
         ],
         "type": "object",
         "properties": {
@@ -15976,6 +15977,13 @@
             }
           },
           "industries": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          "coreServices": {
             "type": "array",
             "items": {
               "type": "string",

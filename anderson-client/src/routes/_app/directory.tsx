@@ -31,6 +31,7 @@ import {
   setPageNumber,
   setPagination,
   setSelectedCapability,
+  setSelectedCoreService,
   setSelectedCountry,
   setSelectedIndustry,
   setSelectedRegion,
@@ -43,7 +44,7 @@ export const Route = createFileRoute("/_app/directory")({
 
 function NetworkDirectory() {
   const navigate = useNavigate();
-  const { countries, regions, capabilities, industries, serviceTypes } =
+  const { countries, regions, capabilities, industries, serviceTypes, serviceSubTypes } =
     usePrefetchReferenceData();
 
   // Get filter state from store
@@ -52,6 +53,7 @@ function NetworkDirectory() {
     selectedRegion,
     selectedCountry,
     selectedService,
+    selectedCoreService,
     selectedIndustry,
     selectedCapability,
     nameFilter,
@@ -86,6 +88,10 @@ function NetworkDirectory() {
           selectedIndustry !== "All"
             ? [industries.data?.find((i) => i.name === selectedIndustry)?.id].filter(Boolean) as string[]
             : [];
+        const coreServiceIds =
+          selectedCoreService !== "All"
+            ? [serviceSubTypes.data?.find((s) => s.name === selectedCoreService)?.id].filter(Boolean) as string[]
+            : [];
 
         const response = await callApi({
           data: {
@@ -101,6 +107,7 @@ function NetworkDirectory() {
                 countries: countryIds,
                 capabilities: capabilityIds,
                 industries: industryIds,
+                coreServices: coreServiceIds,
               },
             },
           },
@@ -160,9 +167,11 @@ function NetworkDirectory() {
       selectedService,
       selectedCapability,
       selectedIndustry,
+      selectedCoreService,
       regions.data,
       countries.data,
       serviceTypes.data,
+      serviceSubTypes.data,
       capabilities.data,
       industries.data,
     ]
@@ -180,6 +189,7 @@ function NetworkDirectory() {
     selectedService,
     selectedCapability,
     selectedIndustry,
+    selectedCoreService,
     regions.data,
     countries.data,
   ]);
@@ -273,12 +283,14 @@ function NetworkDirectory() {
     (selectedRegion !== "All" ? 1 : 0) +
     (selectedCountry !== "All" ? 1 : 0) +
     (selectedService !== "All" ? 1 : 0) +
+    (selectedCoreService !== "All" ? 1 : 0) +
     (selectedIndustry !== "All" ? 1 : 0) +
     (selectedCapability !== "All" ? 1 : 0) +
     (nameFilter ? 1 : 0);
 
   const allRegions = regions?.data?.map((r) => r.name).sort();
   const allServiceTypes = serviceTypes?.data?.map((s) => s.name).sort();
+  const allCoreServices = serviceSubTypes?.data?.map((s) => s.name).sort();
   const allIndustries = industries?.data?.map((i) => i.name).sort();
   const allCapabilities = capabilities?.data?.map((c) => c.name).sort();
 
@@ -406,6 +418,32 @@ function NetworkDirectory() {
                 </select>
               </div>
 
+              {/* Service Specialization */}
+              <div>
+                <label className="mb-2 block font-bold text-[9px] text-gray-400 uppercase tracking-widest">
+                  Service Specialization
+                </label>
+                <select
+                  className="w-full appearance-none border border-gray-200 bg-gray-50 px-3 py-2 text-xs outline-none focus:border-black"
+                  onChange={(e) => setSelectedCoreService(e.target.value)}
+                  value={selectedCoreService}
+                >
+                  <option value="All">All Service Specializations</option>
+                  {serviceSubTypes.data
+                    ?.filter(
+                      (s: any) =>
+                        selectedService === "All" ||
+                        serviceTypes.data?.find((st: any) => st.id === s.serviceTypeId)
+                          ?.name === selectedService
+                    )
+                    .map((s: any) => (
+                      <option key={s.name} value={s.name}>
+                        {s.name}
+                      </option>
+                    ))}
+                </select>
+              </div>
+
               {/* Industry */}
               <div>
                 <label className="mb-2 block font-bold text-[9px] text-gray-400 uppercase tracking-widest">
@@ -428,7 +466,7 @@ function NetworkDirectory() {
               {/* Capabilities */}
               <div>
                 <label className="mb-2 block font-bold text-[9px] text-gray-400 uppercase tracking-widest">
-                  Key Capabilities
+                  Core Service Offerings
                 </label>
                 <select
                   className="w-full appearance-none border border-gray-200 bg-gray-50 px-3 py-2 text-xs outline-none focus:border-black"

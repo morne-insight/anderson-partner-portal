@@ -75,7 +75,7 @@ namespace AndersonAPI.Application.Invites.CreateInvite
             string invitationUrl;
             if (invitedUser == null)
             {
-                invitationUrl = $"{baseUrl}/register/{invite.Id}"; 
+                invitationUrl = $"{baseUrl}/register"; 
             }
             else 
             { 
@@ -91,7 +91,7 @@ namespace AndersonAPI.Application.Invites.CreateInvite
 
             await _emailService.SendEmailAsync(
                 to: request.Email,
-                subject: $"You're invited to join {company.Name} on AndersonAPI",
+                subject: $"You're invited to join {company.Name} on the Anderson partner portal",
                 body: htmlBody,
                 isHtml: true);
 

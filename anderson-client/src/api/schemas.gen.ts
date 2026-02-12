@@ -1075,6 +1075,7 @@ export const GetPartnersDirectoryQuerySchema = {
 		'countries',
 		'capabilities',
 		'industries',
+		'coreServices',
 	],
 	type: 'object',
 	properties: {
@@ -1121,6 +1122,13 @@ export const GetPartnersDirectoryQuerySchema = {
 			},
 		},
 		industries: {
+			type: 'array',
+			items: {
+				type: 'string',
+				format: 'uuid',
+			},
+		},
+		coreServices: {
 			type: 'array',
 			items: {
 				type: 'string',

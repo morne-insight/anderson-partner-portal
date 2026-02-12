@@ -28,6 +28,9 @@ namespace AndersonAPI.Application.Companies.GetPartnersDirectory
 
             RuleFor(v => v.Industries)
                 .NotNull();
+
+            RuleFor(v => v.CoreServices)
+                .NotNull();
         }
     }
 }
