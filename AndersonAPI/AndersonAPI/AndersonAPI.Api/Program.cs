@@ -23,11 +23,11 @@ namespace AndersonAPI.Api
         [IntentManaged(Mode.Merge, Body = Mode.Merge)]
         public static void Main(string[] args)
         {
-            //using var logger = new LoggerConfiguration()
-            //    .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
-            //    .Enrich.FromLogContext()
-            //    .WriteTo.Console()
-            //    .CreateBootstrapLogger();
+            using var logger = new LoggerConfiguration()
+                .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+                .Enrich.FromLogContext()
+                .WriteTo.Console()
+                .CreateBootstrapLogger();
 
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
