@@ -463,7 +463,7 @@ function NetworkDirectory() {
                 </select>
               </div>
 
-              {/* Capabilities */}
+              {/* Core Service Offerings */}
               <div>
                 <label className="mb-2 block font-bold text-[9px] text-gray-400 uppercase tracking-widest">
                   Core Service Offerings
@@ -473,7 +473,7 @@ function NetworkDirectory() {
                   onChange={(e) => setSelectedCapability(e.target.value)}
                   value={selectedCapability}
                 >
-                  <option value="All">All Capabilities</option>
+                  <option value="All">All Core Service Offerings</option>
                   {allCapabilities?.map((capability) => (
                     <option key={capability} value={capability}>
                       {capability}

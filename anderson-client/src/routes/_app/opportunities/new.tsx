@@ -436,8 +436,8 @@ function CreateOpportunity() {
                       return (
                         <button
                           className={`border px-3 py-1.5 font-bold text-[10px] uppercase tracking-wider transition-all ${isSelected
-                              ? 'border-black bg-black text-white'
-                              : 'border-gray-200 bg-gray-50 text-gray-400 hover:border-gray-400 hover:text-gray-600'
+                            ? 'border-black bg-black text-white'
+                            : 'border-gray-200 bg-gray-50 text-gray-400 hover:border-gray-400 hover:text-gray-600'
                             }`}
                           key={st.id}
                           onClick={() => {
@@ -469,15 +469,15 @@ function CreateOpportunity() {
               <MultiSelectCombobox
                 chipClassName="rounded-none border border-red-600 bg-red-600 px-3 py-1.5 font-bold text-[10px] text-white uppercase tracking-wider transition-all"
                 createButtonClassName="flex w-full items-center gap-2 px-2 py-2 text-left text-sm text-red-600 hover:bg-red-50"
-                emptyMessage="No capabilities found."
+                emptyMessage="No core service offerings found."
                 getItemLabel={(cap) => cap.name || ''}
-                helperText="Select all capabilities required for this opportunity."
+                helperText="Select all core service offerings required for this opportunity."
                 isCreating={createCapabilityMutation.isPending}
                 items={capabilitiesData || []}
-                noSelectionMessage="No capabilities selected."
+                noSelectionMessage="No core service offerings selected."
                 onCreateNew={(name) => createCapabilityMutation.mutate(name)}
                 onSelectionChange={setSelectedCapabilityIds}
-                placeholder="Search and select capabilities..."
+                placeholder="Search and select core service offerings..."
                 selectedIds={selectedCapabilityIds}
               />
             </div>

@@ -583,24 +583,24 @@ function EditOpportunity() {
             </div>
           </section>
 
-          {/* Capabilities */}
+          {/* Capabilities / Core Service Offerings */}
           <section className="space-y-4">
             <h3 className="flex items-center gap-2 border-gray-100 border-b pb-2 font-bold text-lg uppercase tracking-widest">
-              <Briefcase className="h-4 w-4" /> Required Capabilities
+              <Briefcase className="h-4 w-4" /> Required Core Service Offerings
             </h3>
             <div className="border border-gray-200 bg-white p-4 shadow-sm">
               <MultiSelectCombobox
                 chipClassName="rounded-none border border-red-600 bg-red-600 px-3 py-1.5 font-bold text-[10px] text-white uppercase tracking-wider transition-all"
                 createButtonClassName="flex w-full items-center gap-2 px-2 py-2 text-left text-sm text-red-600 hover:bg-red-50"
-                emptyMessage="No capabilities found."
+                emptyMessage="No core service offerings found."
                 getItemLabel={(cap) => cap.name || ""}
-                helperText="Select all capabilities required for this opportunity."
+                helperText="Select all core service offerings required for this opportunity."
                 isCreating={createCapabilityMutation.isPending}
                 items={capabilities.data || []}
-                noSelectionMessage="No capabilities selected."
+                noSelectionMessage="No core service offerings selected."
                 onCreateNew={(name) => createCapabilityMutation.mutate(name)}
                 onSelectionChange={setSelectedCapabilityIds}
-                placeholder="Search and select capabilities..."
+                placeholder="Search and select core service offerings..."
                 selectedIds={selectedCapabilityIds}
               />
             </div>
