@@ -23,11 +23,18 @@ namespace AndersonAPI.Api
         [IntentManaged(Mode.Merge, Body = Mode.Merge)]
         public static void Main(string[] args)
         {
-            using var logger = new LoggerConfiguration()
+            //using var logger = new LoggerConfiguration()
+            //    .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+            //    .Enrich.FromLogContext()
+            //    .WriteTo.Console()
+            //    .CreateBootstrapLogger();
+
+            Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+                .MinimumLevel.Override("System", LogEventLevel.Warning) 
                 .Enrich.FromLogContext()
                 .WriteTo.Console()
-                .CreateBootstrapLogger();
+                .CreateLogger();
 
             try
             {
@@ -189,7 +196,8 @@ namespace AndersonAPI.Api
                 app.MapDefaultHealthChecks();
                 app.MapControllers();
 
-                logger.Write(LogEventLevel.Information, "Starting web host");
+                //logger.Write(LogEventLevel.Information, "Starting web host");
+                Log.Information("Starting web host... Static Logger");
 
                 app.Run();
             }
@@ -202,7 +210,8 @@ namespace AndersonAPI.Api
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
-                logger.Write(LogEventLevel.Fatal, ex, "Unhandled exception");
+                //logger.Write(LogEventLevel.Fatal, ex, "Unhandled exception");
+                Log.Fatal(ex, "Unhandled exception");
             }
         }
     }
