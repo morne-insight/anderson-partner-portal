@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.IdentityModel.JsonWebTokens;
+using Serilog;
 
 [assembly: DefaultIntentManaged(Mode.Fully)]
 [assembly: IntentTemplate("Intent.AspNetCore.Identity.AccountController.AccountController", Version = "1.0")]
@@ -456,8 +457,7 @@ namespace AndersonAPI.Api.Controllers
             if (user is not null && await _userManager.IsEmailConfirmedAsync(user))
             {
                 var code = await _userManager.GeneratePasswordResetTokenAsync(user);
-                user.SetPasswordToken(code);
-                await _userManager.UpdateAsync(user);
+                Log.Information($"Generated password reset token: {code}");
                 code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
 
                 await _accountEmailSender.SendPasswordResetCode(resetRequest.Email!, user.Id,
@@ -489,6 +489,7 @@ namespace AndersonAPI.Api.Controllers
             try
             {
                 var code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(resetRequest.ResetCode!));
+                Log.Information($"Decoded password reset token {code}");
                 var isValid = user.VerifyPasswordToken(code);
 
                 if (isValid)

@@ -57,34 +57,29 @@ namespace AndersonAPI.Api
                     .SetApplicationName("AndersonAPI");
 
 
-                if (builder.Environment.IsProduction())
-                {
-                    var keysPath = "/home/aspnet/DataProtection-Keys";
-                    Directory.CreateDirectory(keysPath);
-                    dp.PersistKeysToFileSystem(new DirectoryInfo(keysPath));
-                }
                 //if (builder.Environment.IsProduction())
                 //{
-                //    var blobUri = builder.Configuration["DataProtection:BlobUri"];
-
-                //    if (!string.IsNullOrWhiteSpace(blobUri))
-                //    {
-                //        dp.PersistKeysToAzureBlobStorage(
-                //            new Uri(blobUri),
-                //            new DefaultAzureCredential());
-                //    }
-                //    else
-                //    {
-                //        var keysPath = Path.Combine(
-                //            Environment.GetEnvironmentVariable("HOME")!,
-                //            "ASP.NET",
-                //            "DataProtection-Keys");
-
-                //        Directory.CreateDirectory(keysPath);
-
-                //        dp.PersistKeysToFileSystem(new DirectoryInfo(keysPath));
-                //    }
+                //    var keysPath = "/home/aspnet/DataProtection-Keys";
+                //    Directory.CreateDirectory(keysPath);
+                //    dp.PersistKeysToFileSystem(new DirectoryInfo(keysPath));
                 //}
+                if (builder.Environment.IsProduction())
+                {
+                    var blobUri = builder.Configuration["DataProtection:BlobUri"];
+
+                    if (!string.IsNullOrWhiteSpace(blobUri))
+                    {
+                        dp.PersistKeysToAzureBlobStorage(
+                            new Uri(blobUri),
+                            new DefaultAzureCredential());
+                    }
+                    else
+                    {
+                        var keysPath = "/home/aspnet/DataProtection-Keys";
+                        Directory.CreateDirectory(keysPath);
+                        dp.PersistKeysToFileSystem(new DirectoryInfo(keysPath));
+                    }
+                }
                 else
                 {
                     var keysPath = Path.Combine(builder.Environment.ContentRootPath, "DataProtectionKeys");
