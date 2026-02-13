@@ -143,8 +143,8 @@ function ProfileIndex() {
           </h3>
         </div>
 
-        {companies.length === 0 || user?.email == 'udeabrew@insightconsulting.co.za' && (
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 mb-6">
+        {companies.length === 0 ? (
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
             {/* AI Auto-Create */}
             <div className="relative flex flex-col justify-center overflow-hidden rounded-lg bg-black p-8 text-white">
               <div className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 transform rounded-full bg-red-600/10 p-32 blur-3xl" />
@@ -210,9 +210,7 @@ function ProfileIndex() {
               </Button>
             </div>
           </div>
-        )}
-
-        {companies.length > 0 && (
+        ) : (
           <div className="grid grid-cols-1 gap-6">
             {companies.map((company: CompanyDto) => (
               <div

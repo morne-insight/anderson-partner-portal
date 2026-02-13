@@ -460,10 +460,10 @@ function CreateOpportunity() {
             </div>
           </section>
 
-          {/* Capabilities */}
+          {/* Capabilities / Core Service Offerings */}
           <section className="space-y-4">
             <h3 className="flex items-center gap-2 border-gray-100 border-b pb-2 font-bold text-lg uppercase tracking-widest">
-              <Briefcase className="h-4 w-4" /> Required Capabilities
+              <Briefcase className="h-4 w-4" /> Required Core Service Offerings
             </h3>
             <div className="border border-gray-200 bg-white p-4 shadow-sm">
               <MultiSelectCombobox

@@ -23,6 +23,7 @@ export function useRegions() {
 		},
 		staleTime: REFERENCE_DATA_STALE_TIME,
 		gcTime: REFERENCE_DATA_STALE_TIME * 2, // Keep in cache for 1 hour
+		refetchOnMount: 'always',
 	})
 }
 
@@ -36,6 +37,7 @@ export function useCountries() {
 		},
 		staleTime: REFERENCE_DATA_STALE_TIME,
 		gcTime: REFERENCE_DATA_STALE_TIME * 2, // Keep in cache for 1 hour
+		refetchOnMount: 'always',
 	})
 }
 
@@ -51,6 +53,7 @@ export function useOpportunityTypes() {
 		},
 		staleTime: REFERENCE_DATA_STALE_TIME,
 		gcTime: REFERENCE_DATA_STALE_TIME * 2,
+		refetchOnMount: 'always',
 	})
 }
 
@@ -64,6 +67,7 @@ export function useServiceTypes() {
 		},
 		staleTime: REFERENCE_DATA_STALE_TIME,
 		gcTime: REFERENCE_DATA_STALE_TIME * 2,
+		refetchOnMount: 'always',
 	})
 }
 
@@ -77,6 +81,7 @@ export function useCapabilities() {
 		},
 		staleTime: REFERENCE_DATA_STALE_TIME,
 		gcTime: REFERENCE_DATA_STALE_TIME * 2,
+		refetchOnMount: 'always',
 	})
 }
 
@@ -90,6 +95,7 @@ export function useIndustries() {
 		},
 		staleTime: REFERENCE_DATA_STALE_TIME,
 		gcTime: REFERENCE_DATA_STALE_TIME * 2,
+		refetchOnMount: 'always',
 	})
 }
 
@@ -103,6 +109,7 @@ export function useServiceSubTypes() {
 		},
 		staleTime: REFERENCE_DATA_STALE_TIME,
 		gcTime: REFERENCE_DATA_STALE_TIME * 2,
+		refetchOnMount: 'always',
 	})
 }
 
@@ -116,6 +123,7 @@ export function useCompaniesMe() {
 		},
 		staleTime: 5 * 60 * 1000, // 5 minutes for user-specific data
 		gcTime: 10 * 60 * 1000, // Keep in cache for 10 minutes
+		refetchOnMount: 'always',
 	})
 }
 

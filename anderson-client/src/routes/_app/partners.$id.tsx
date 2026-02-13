@@ -1,6 +1,6 @@
 /** biome-ignore-all lint/suspicious/noArrayIndexKey: <explanation> */
 
-import { headingsPlugin, MDXEditor } from '@mdxeditor/editor'
+import { headingsPlugin, listsPlugin, MDXEditor } from '@mdxeditor/editor'
 import { ClientOnly, createFileRoute, Link } from '@tanstack/react-router'
 import { ArrowLeft, Briefcase, Building, Globe, MapPin, Users } from 'lucide-react'
 import type { PartnerProfileDto } from '@/api'
@@ -108,7 +108,7 @@ function PartnerProfile() {
             <ClientOnly>
               <MDXEditor
                 markdown={partner.fullDescription || ''}
-                plugins={[headingsPlugin()]}
+                plugins={[headingsPlugin(), listsPlugin()]}
                 readOnly
               />
             </ClientOnly>

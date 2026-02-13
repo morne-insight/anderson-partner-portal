@@ -1508,15 +1508,15 @@ function ProfileEdit() {
               <MultiSelectCombobox
                 chipClassName="rounded-none border border-black bg-black px-3 py-1.5 font-bold text-[10px] text-white uppercase tracking-wider transition-all"
                 createButtonClassName="flex w-full items-center gap-2 px-2 py-2 text-left text-sm text-black hover:bg-gray-100"
-                emptyMessage="No capabilities found."
+                emptyMessage="No core service offerings found."
                 getItemLabel={(cap) => cap.name || ''}
                 helperText="Select all that apply to your firm."
                 isCreating={createCapabilityMutation.isPending}
                 items={capabilities || []}
-                noSelectionMessage="No capabilities selected."
+                noSelectionMessage="No core service offerings selected."
                 onCreateNew={(name) => createCapabilityMutation.mutate(name)}
                 onSelectionChange={setSelectedCapabilityIds}
-                placeholder="Search and select capabilities..."
+                placeholder="Search and select core service offerings..."
                 selectedIds={selectedCapabilityIds}
               />
             </div>

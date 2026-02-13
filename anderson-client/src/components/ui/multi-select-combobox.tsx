@@ -52,6 +52,9 @@ export function MultiSelectCombobox<T extends MultiSelectItem>({
   getItemLabel = (item) => item.name || "",
 }: MultiSelectComboboxProps<T>) {
   const [inputValue, setInputValue] = useState("");
+  console.log(Date.now());
+  console.log("items", items);
+  console.log("selectedIds", selectedIds);
 
   const selectedItems = items.filter(
     (item) => item.id && selectedIds.includes(item.id)
