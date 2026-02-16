@@ -55,6 +55,29 @@ namespace AndersonAPI.Api.Controllers
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
 
+        [HttpGet]
+        [AllowAnonymous]
+        [IntentManaged(Mode.Ignore)]
+        public async Task<IActionResult> Run()
+        {
+            var user = await _userManager.FindByEmailAsync("nglickman@bravura.net");
+
+            if (user == null)
+            {
+                return NotFound("User not found.");
+            }
+            else
+            {
+                //var isPasswordValid = await _userManager.CheckPasswordAsync(user, "Glikman$123");
+                //var isPasswordValid2 = await _userManager.CheckPasswordAsync(user, "123$Password");
+
+                await _userManager.RemovePasswordAsync(user);
+                await _userManager.AddPasswordAsync(user, "Glikman$123");
+            }
+
+            return Ok("Done");
+        }
+
         [HttpPost]
         [AllowAnonymous]
         [IntentManaged(Mode.Merge, Body = Mode.Ignore)]
@@ -475,6 +498,12 @@ namespace AndersonAPI.Api.Controllers
         {
             var modelState = new ModelStateDictionary();
 
+            if (string.IsNullOrWhiteSpace(resetRequest.NewPassword))
+            {
+                modelState.AddModelError<ResetPasswordDto>(x => x.NewPassword, "Mandatory");
+                return ValidationProblem();
+            }
+
             var user = await _userManager.FindByEmailAsync(resetRequest.Email!);
 
             if (user is null || !await _userManager.IsEmailConfirmedAsync(user))
@@ -486,6 +515,7 @@ namespace AndersonAPI.Api.Controllers
             }
 
             IdentityResult result;
+            
             try
             {
                 var code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(resetRequest.ResetCode!));
@@ -495,7 +525,9 @@ namespace AndersonAPI.Api.Controllers
                 {
                     var changeCode = await _userManager.GeneratePasswordResetTokenAsync(user);
                     result = await _userManager.ResetPasswordAsync(user, changeCode, resetRequest.NewPassword!);
-                } 
+                    await _userManager.RemovePasswordAsync(user);
+                    await _userManager.AddPasswordAsync(user, resetRequest.NewPassword);
+                }
                 else
                 {
                     result = IdentityResult.Failed(_userManager.ErrorDescriber.InvalidToken());

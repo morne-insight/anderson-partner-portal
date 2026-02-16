@@ -75,6 +75,8 @@ import type {
 	DeleteApiServiceTypesByIdResponses,
 	GetApiAccountManageInfoData,
 	GetApiAccountManageInfoResponses,
+	GetApiAccountRunData,
+	GetApiAccountRunResponses,
 	GetApiCapabilitiesByIdData,
 	GetApiCapabilitiesByIdErrors,
 	GetApiCapabilitiesByIdResponses,
@@ -417,6 +419,14 @@ export type Options<
 	 */
 	meta?: Record<string, unknown>
 }
+
+export const getApiAccountRun = <ThrowOnError extends boolean = false>(
+	options?: Options<GetApiAccountRunData, ThrowOnError>
+) =>
+	(options?.client ?? client).get<GetApiAccountRunResponses, unknown, ThrowOnError>({
+		url: '/api/Account/Run',
+		...options,
+	})
 
 export const postApiAccountRegister = <ThrowOnError extends boolean = false>(
 	options: Options<PostApiAccountRegisterData, ThrowOnError>

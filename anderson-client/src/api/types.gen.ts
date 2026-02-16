@@ -1300,6 +1300,20 @@ export type UserDetailDto = {
 	companies?: Array<UserCompanyDto>
 }
 
+export type GetApiAccountRunData = {
+	body?: never
+	path?: never
+	query?: never
+	url: '/api/Account/Run'
+}
+
+export type GetApiAccountRunResponses = {
+	/**
+	 * OK
+	 */
+	200: unknown
+}
+
 export type PostApiAccountRegisterData = {
 	body: RegisterDto
 	path?: never

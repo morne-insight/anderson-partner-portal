@@ -6,6 +6,9 @@ import { client } from "../api/client.gen";
 const requestRetryMap = new Map<string, number>();
 const MAX_RETRY_ATTEMPTS = 3;
 
+// Promise-based refresh queue to prevent multiple concurrent refresh attempts
+let refreshPromise: Promise<string | null> | null = null;
+
 // Helper function to clear session and redirect to login
 const terminateSession = async () => {
   if (typeof window !== "undefined") {
@@ -27,36 +30,48 @@ const terminateSession = async () => {
   }
 };
 
-// Helper function to refresh access token
+// Helper function to refresh access token with queue support
 const refreshAccessToken = async (
   refreshToken: string
 ): Promise<string | null> => {
-  try {
-    const response = await postApiAccountRefresh({
-      body: { refreshToken } as RefreshTokenDto,
-    });
-
-    if (response.data?.authenticationToken) {
-      // Update session with new tokens
-      if (import.meta.env.SSR) {
-        const { useAppSession } = await import("../utils/session");
-        const session = await useAppSession();
-        await session.update({
-          accessToken: response.data.authenticationToken,
-          accessTokenExpiresAt: response.data.expiresIn
-            ? Date.now() + response.data.expiresIn * 1000
-            : undefined,
-          refreshToken: response.data.refreshToken || refreshToken,
-        });
-      }
-
-      return response.data.authenticationToken;
-    }
-  } catch (error) {
-    console.error("Failed to refresh token:", error);
+  // If already refreshing, wait for the existing promise
+  if (refreshPromise) {
+    console.log("Token refresh already in progress, waiting...");
+    return refreshPromise;
   }
 
-  return null;
+  refreshPromise = (async () => {
+    try {
+      const response = await postApiAccountRefresh({
+        body: { refreshToken } as RefreshTokenDto,
+      });
+
+      if (response.data?.authenticationToken) {
+        // Update session with new tokens
+        if (import.meta.env.SSR) {
+          const { useAppSession } = await import("../utils/session");
+          const session = await useAppSession();
+          await session.update({
+            accessToken: response.data.authenticationToken,
+            accessTokenExpiresAt: response.data.expiresIn
+              ? Date.now() + response.data.expiresIn * 1000
+              : undefined,
+            refreshToken: response.data.refreshToken || refreshToken,
+          });
+        }
+
+        return response.data.authenticationToken;
+      }
+      return null;
+    } catch (error) {
+      console.error("Failed to refresh token:", error);
+      return null;
+    } finally {
+      refreshPromise = null;
+    }
+  })();
+
+  return refreshPromise;
 };
 
 // Global API client configuration

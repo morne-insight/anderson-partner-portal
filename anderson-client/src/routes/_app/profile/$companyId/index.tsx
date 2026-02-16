@@ -117,6 +117,21 @@ function ProfileEdit() {
     }
   }, [initialCompany])
 
+  // Sync selected IDs when initialCompany data loads
+  useEffect(() => {
+    if (initialCompany) {
+      setSelectedCapabilityIds(
+        initialCompany.capabilities?.map((c) => c.id!).filter(Boolean) || []
+      )
+      setSelectedIndustryIds(
+        initialCompany.industries?.map((c) => c.id!).filter(Boolean) || []
+      )
+      setSelectedServiceSubTypeIds(
+        initialCompany.serviceSubTypes?.map((s) => s.id!).filter(Boolean) || []
+      )
+    }
+  }, [initialCompany])
+
   // --- AI Scrape State ---
   const [scrapeUrl, setScrapeUrl] = useState(initialCompany?.websiteUrl || '')
   const scrapeMutation = useMutation({
