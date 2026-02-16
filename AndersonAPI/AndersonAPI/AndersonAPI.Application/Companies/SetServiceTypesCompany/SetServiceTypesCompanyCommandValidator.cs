@@ -4,20 +4,20 @@ using Intent.RoslynWeaver.Attributes;
 [assembly: DefaultIntentManaged(Mode.Fully)]
 [assembly: IntentTemplate("Intent.Application.MediatR.FluentValidation.CommandValidator", Version = "2.0")]
 
-namespace AndersonAPI.Application.Opportunities.SetServiceTypesOpportunity
+namespace AndersonAPI.Application.Companies.SetServiceTypesCompany
 {
     [IntentManaged(Mode.Fully, Body = Mode.Merge)]
-    public class SetServiceTypesOpportunityCommandValidator : AbstractValidator<SetServiceTypesOpportunityCommand>
+    public class SetServiceTypesCompanyCommandValidator : AbstractValidator<SetServiceTypesCompanyCommand>
     {
         [IntentManaged(Mode.Merge)]
-        public SetServiceTypesOpportunityCommandValidator()
+        public SetServiceTypesCompanyCommandValidator()
         {
             ConfigureValidationRules();
         }
 
         private void ConfigureValidationRules()
         {
-            RuleFor(v => v.ServiceTypes)
+            RuleFor(v => v.ServiceTypeIds)
                 .NotNull();
         }
     }

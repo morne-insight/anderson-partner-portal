@@ -15,7 +15,7 @@ namespace AndersonAPI.Application.Companies
             FullDescription = null!;
             WebsiteUrl = null!;
             ApplicationIdentityUsers = null!;
-            ServiceTypeName = null!;
+            ServiceTypes = null!;
             ServiceSubTypes = null!;
             Capabilities = null!;
             Industries = null!;
@@ -30,10 +30,9 @@ namespace AndersonAPI.Application.Companies
         public string FullDescription { get; set; }
         public string WebsiteUrl { get; set; }
         public int EmployeeCount { get; set; }
-        public Guid? ServiceTypeId { get; set; }
-        public string ServiceTypeName { get; set; }
         public List<CompanyServiceSubTypeDto> ServiceSubTypes { get; set; }
         public List<CompanyIdentityUserDto> ApplicationIdentityUsers { get; set; }
+        public List<CompanyServiceTypeDto> ServiceTypes { get; set; }
         public List<CompanyCapabilityDto> Capabilities { get; set; }
         public List<CompanyIndustryDto> Industries { get; set; }
         public List<CompanyContactDto> Contacts { get; set; }
@@ -49,8 +48,7 @@ namespace AndersonAPI.Application.Companies
             string websiteUrl,
             int employeeCount,
             List<CompanyIdentityUserDto> applicationIdentityUsers,
-            Guid? serviceTypeId,
-            string serviceTypeName,
+            List<CompanyServiceTypeDto> serviceTypes,
             List<CompanyServiceSubTypeDto> serviceSubTypes,
             List<CompanyCapabilityDto> capabilities,
             List<CompanyIndustryDto> industries,
@@ -68,8 +66,7 @@ namespace AndersonAPI.Application.Companies
                 WebsiteUrl = websiteUrl,
                 EmployeeCount = employeeCount,
                 ApplicationIdentityUsers = applicationIdentityUsers,
-                ServiceTypeId = serviceTypeId,
-                ServiceTypeName = serviceTypeName,
+                ServiceTypes = serviceTypes,
                 ServiceSubTypes = serviceSubTypes,
                 Capabilities = capabilities,
                 Industries = industries,

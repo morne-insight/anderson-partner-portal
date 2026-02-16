@@ -11,20 +11,18 @@ namespace AndersonAPI.Application.Opportunities
         public OpportunityViewDto()
         {
             CompanyName = null!;
-            CompanyServiceType = null!;
             Title = null!;
             FullDescription = null!;
             Country = null!;
             OpportunityType = null!;
-            Capabilities = null!;
-            Industries = null!;
             ServiceTypes = null!;
             InterestedPartners = null!;
+            Capabilities = null!;
+            Industries = null!;
         }
 
         public Guid Id { get; set; }
         public string CompanyName { get; set; }
-        public string CompanyServiceType { get; set; }
         public string Title { get; set; }
         public string FullDescription { get; set; }
         public DateTimeOffset CreatedDate { get; set; }
@@ -42,18 +40,17 @@ namespace AndersonAPI.Application.Opportunities
             Guid id,
             Guid companyId,
             string companyName,
-            string companyServiceType,
             string title,
             string fullDescription,
             DateTimeOffset createdDate,
             DateOnly? deadline,
             string country,
             string opportunityType,
+            List<OpportunityServiceTypeDto> serviceTypes,
+            List<OpportunityViewPartnerDto> interestedPartners,
             List<OpportunityCapabilityDto> capabilities,
             List<OpportunityIndustryDto> industries,
-            List<OpportunityServiceTypeDto> serviceTypes,
-            OpportunityStatus status,
-            List<OpportunityViewPartnerDto> interestedPartners)
+            OpportunityStatus status)
         {
             return new OpportunityViewDto
             {
@@ -61,18 +58,18 @@ namespace AndersonAPI.Application.Opportunities
                 CompanyId = companyId
 ,
                 CompanyName = companyName,
-                CompanyServiceType = companyServiceType,
                 Title = title,
                 FullDescription = fullDescription,
                 CreatedDate = createdDate,
                 Deadline = deadline,
                 Country = country,
                 OpportunityType = opportunityType,
+                ServiceTypes = serviceTypes,
+                InterestedPartners = interestedPartners
+,
                 Capabilities = capabilities,
                 Industries = industries,
-                ServiceTypes = serviceTypes,
-                Status = status,
-                InterestedPartners = interestedPartners
+                Status = status
             };
         }
     }

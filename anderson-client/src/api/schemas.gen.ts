@@ -333,8 +333,11 @@ export const CompanyDtoSchema = {
 			type: 'integer',
 			format: 'int32',
 		},
-		serviceTypeName: {
-			type: 'string',
+		serviceTypes: {
+			type: 'array',
+			items: {
+				$ref: '#/components/schemas/CompanyServiceTypeDto',
+			},
 		},
 	},
 } as const
@@ -440,14 +443,6 @@ export const CompanyProfileDtoSchema = {
 			type: 'integer',
 			format: 'int32',
 		},
-		serviceTypeId: {
-			type: 'string',
-			format: 'uuid',
-			nullable: true,
-		},
-		serviceTypeName: {
-			type: 'string',
-		},
 		serviceSubTypes: {
 			type: 'array',
 			items: {
@@ -458,6 +453,12 @@ export const CompanyProfileDtoSchema = {
 			type: 'array',
 			items: {
 				$ref: '#/components/schemas/CompanyIdentityUserDto',
+			},
+		},
+		serviceTypes: {
+			type: 'array',
+			items: {
+				$ref: '#/components/schemas/CompanyServiceTypeDto',
 			},
 		},
 		capabilities: {
@@ -510,6 +511,30 @@ export const CompanyServiceSubTypeDtoSchema = {
 		},
 		name: {
 			type: 'string',
+		},
+	},
+} as const
+
+export const CompanyServiceTypeDtoSchema = {
+	title: 'CompanyServiceTypeDto',
+	type: 'object',
+	properties: {
+		id: {
+			type: 'string',
+			format: 'uuid',
+		},
+		name: {
+			type: 'string',
+		},
+		description: {
+			type: 'string',
+		},
+		order: {
+			type: 'integer',
+			format: 'int32',
+		},
+		state: {
+			$ref: '#/components/schemas/EntityState',
 		},
 	},
 } as const
@@ -580,9 +605,9 @@ export const CreateCompanyCommandSchema = {
 		'fullDescription',
 		'websiteUrl',
 		'employeeCount',
+		'serviceTypes',
 		'capabilities',
 		'industries',
-		'serviceTypeId',
 		'serviceSubTypes',
 	],
 	type: 'object',
@@ -603,6 +628,13 @@ export const CreateCompanyCommandSchema = {
 			type: 'integer',
 			format: 'int32',
 		},
+		serviceTypes: {
+			type: 'array',
+			items: {
+				type: 'string',
+				format: 'uuid',
+			},
+		},
 		capabilities: {
 			type: 'array',
 			items: {
@@ -616,11 +648,6 @@ export const CreateCompanyCommandSchema = {
 				type: 'string',
 				format: 'uuid',
 			},
-		},
-		serviceTypeId: {
-			type: 'string',
-			format: 'uuid',
-			nullable: true,
 		},
 		serviceSubTypes: {
 			type: 'array',
@@ -975,14 +1002,31 @@ export const DashboardPartnerDtoSchema = {
 	title: 'DashboardPartnerDto',
 	type: 'object',
 	properties: {
-		serviceType: {
-			type: 'string',
-		},
 		locations: {
 			type: 'array',
 			items: {
 				$ref: '#/components/schemas/DashboardLocationDto',
 			},
+		},
+		serviceTypes: {
+			type: 'array',
+			items: {
+				$ref: '#/components/schemas/DashboardServiceTypeDto',
+			},
+		},
+	},
+} as const
+
+export const DashboardServiceTypeDtoSchema = {
+	title: 'DashboardServiceTypeDto',
+	type: 'object',
+	properties: {
+		id: {
+			type: 'string',
+			format: 'uuid',
+		},
+		name: {
+			type: 'string',
 		},
 	},
 } as const
@@ -1000,6 +1044,12 @@ export const DirectoryProfileListItemSchema = {
 		},
 		shortDescription: {
 			type: 'string',
+		},
+		serviceTypes: {
+			type: 'array',
+			items: {
+				$ref: '#/components/schemas/DirectoryServiceTypeDto',
+			},
 		},
 		capabilities: {
 			type: 'array',
@@ -1025,14 +1075,25 @@ export const DirectoryProfileListItemSchema = {
 				$ref: '#/components/schemas/PartnerIndustryDto',
 			},
 		},
-		serviceTypeName: {
-			type: 'string',
-		},
 		serviceSubTypes: {
 			type: 'array',
 			items: {
 				$ref: '#/components/schemas/PartnerServiceSubTypeDto',
 			},
+		},
+	},
+} as const
+
+export const DirectoryServiceTypeDtoSchema = {
+	title: 'DirectoryServiceTypeDto',
+	type: 'object',
+	properties: {
+		id: {
+			type: 'string',
+			format: 'uuid',
+		},
+		name: {
+			type: 'string',
 		},
 	},
 } as const
@@ -1068,9 +1129,10 @@ export const GetPartnersDirectoryQuerySchema = {
 	required: [
 		'pageNo',
 		'pageSize',
+		'serviceTypes',
+		'serviceSubTypes',
 		'orderBy',
 		'searchTerm',
-		'serviceType',
 		'regions',
 		'countries',
 		'capabilities',
@@ -1086,17 +1148,26 @@ export const GetPartnersDirectoryQuerySchema = {
 			type: 'integer',
 			format: 'int32',
 		},
+		serviceTypes: {
+			type: 'array',
+			items: {
+				type: 'string',
+				format: 'uuid',
+			},
+		},
+		serviceSubTypes: {
+			type: 'array',
+			items: {
+				type: 'string',
+				format: 'uuid',
+			},
+		},
 		orderBy: {
 			type: 'string',
 			nullable: true,
 		},
 		searchTerm: {
 			type: 'string',
-			nullable: true,
-		},
-		serviceType: {
-			type: 'string',
-			format: 'uuid',
 			nullable: true,
 		},
 		regions: {
@@ -1464,9 +1535,6 @@ export const OpportunityViewDtoSchema = {
 		companyName: {
 			type: 'string',
 		},
-		companyServiceType: {
-			type: 'string',
-		},
 		title: {
 			type: 'string',
 		},
@@ -1637,7 +1705,7 @@ export const PartnerOpportunityDtoSchema = {
 		serviceTypes: {
 			type: 'array',
 			items: {
-				$ref: '#/components/schemas/PartnerServiceTypeDto',
+				title: 'PartnerServiceTypeDto',
 			},
 		},
 		country: {
@@ -1690,6 +1758,12 @@ export const PartnerProfileDtoSchema = {
 				$ref: '#/components/schemas/PartnerContactDto',
 			},
 		},
+		serviceTypes: {
+			type: 'array',
+			items: {
+				$ref: '#/components/schemas/PartnerServiceTypeDto',
+			},
+		},
 		industries: {
 			type: 'array',
 			items: {
@@ -1707,14 +1781,6 @@ export const PartnerProfileDtoSchema = {
 			items: {
 				$ref: '#/components/schemas/PartnerOpportunityDto',
 			},
-		},
-		serviceTypeId: {
-			type: 'string',
-			format: 'uuid',
-			nullable: true,
-		},
-		serviceTypeName: {
-			type: 'string',
 		},
 		serviceSubTypes: {
 			type: 'array',
@@ -1761,18 +1827,16 @@ export const PartnerProfileListItemSchema = {
 			type: 'number',
 			format: 'double',
 		},
-		serviceTypeId: {
-			type: 'string',
-			format: 'uuid',
-			nullable: true,
-		},
-		serviceTypeName: {
-			type: 'string',
-		},
 		serviceSubTypes: {
 			type: 'array',
 			items: {
 				$ref: '#/components/schemas/PartnerServiceSubTypeDto',
+			},
+		},
+		serviceTypes: {
+			type: 'array',
+			items: {
+				$ref: '#/components/schemas/PartnerServiceTypeDto',
 			},
 		},
 	},
@@ -2348,8 +2412,8 @@ export const SetServiceSubTypeCompanyCommandSchema = {
 	},
 } as const
 
-export const SetServiceTypesOpportunityCommandSchema = {
-	title: 'SetServiceTypesOpportunityCommand',
+export const SetServiceTypesCompanyCommandSchema = {
+	title: 'SetServiceTypesCompanyCommand',
 	required: ['id', 'serviceTypeIds'],
 	type: 'object',
 	properties: {
@@ -2358,6 +2422,25 @@ export const SetServiceTypesOpportunityCommandSchema = {
 			format: 'uuid',
 		},
 		serviceTypeIds: {
+			type: 'array',
+			items: {
+				type: 'string',
+				format: 'uuid',
+			},
+		},
+	},
+} as const
+
+export const SetServiceTypesOpportunityCommandSchema = {
+	title: 'SetServiceTypesOpportunityCommand',
+	required: ['id', 'serviceTypes'],
+	type: 'object',
+	properties: {
+		id: {
+			type: 'string',
+			format: 'uuid',
+		},
+		serviceTypes: {
 			type: 'array',
 			items: {
 				type: 'string',
@@ -2568,15 +2651,7 @@ export const UpdateCapabilityCommandSchema = {
 
 export const UpdateCompanyCommandSchema = {
 	title: 'UpdateCompanyCommand',
-	required: [
-		'id',
-		'name',
-		'shortDescription',
-		'fullDescription',
-		'websiteUrl',
-		'employeeCount',
-		'serviceTypeId',
-	],
+	required: ['id', 'name', 'shortDescription', 'fullDescription', 'websiteUrl', 'employeeCount'],
 	type: 'object',
 	properties: {
 		id: {
@@ -2598,10 +2673,6 @@ export const UpdateCompanyCommandSchema = {
 		employeeCount: {
 			type: 'integer',
 			format: 'int32',
-		},
-		serviceTypeId: {
-			type: 'string',
-			format: 'uuid',
 		},
 	},
 } as const

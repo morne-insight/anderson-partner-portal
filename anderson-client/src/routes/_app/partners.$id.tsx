@@ -1,5 +1,3 @@
-/** biome-ignore-all lint/suspicious/noArrayIndexKey: <explanation> */
-
 import { headingsPlugin, MDXEditor } from '@mdxeditor/editor'
 import { ClientOnly, createFileRoute, Link } from '@tanstack/react-router'
 import { ArrowLeft, Briefcase, Building, Globe, MapPin, Users } from 'lucide-react'
@@ -8,18 +6,25 @@ import { ReviewComponent } from '@/components/app/Reviews/ReviewComponent'
 import { ConnectRequestDialog } from '@/components/ConnectRequestDialog'
 import { callApi } from '@/server/proxy'
 
+type PartnerLocation = NonNullable<PartnerProfileDto['locations']>[number]
+type PartnerServiceType = NonNullable<PartnerProfileDto['serviceTypes']>[number]
+type PartnerContact = NonNullable<PartnerProfileDto['contacts']>[number]
+type PartnerServiceSubType = NonNullable<PartnerProfileDto['serviceSubTypes']>[number]
+type PartnerCapability = NonNullable<PartnerProfileDto['capabilities']>[number]
+type PartnerIndustry = NonNullable<PartnerProfileDto['industries']>[number]
+
 export const Route = createFileRoute('/_app/partners/$id')({
   component: PartnerProfile,
   validateSearch: (search: Record<string, unknown>) => ({
     from: search.from as string | undefined,
   }),
   loader: async ({ params }) => {
-    const partner: PartnerProfileDto = await callApi({
+    const partner = (await callApi({
       data: {
         fn: 'getApiCompaniesByIdPartner',
         args: { path: { id: params.id } },
       },
-    })
+    })) as PartnerProfileDto | null
 
     if (!partner) {
       return { partner: null }
@@ -47,7 +52,15 @@ function PartnerProfile() {
     )
   }
 
-  const headOffice = partner.locations?.find((l) => l.isHeadOffice) || partner.locations?.[0]
+  const headOffice =
+    partner.locations?.find((l: PartnerLocation) => l.isHeadOffice) || partner.locations?.[0]
+  const serviceTypeNames =
+    partner.serviceTypes?.reduce<string[]>((acc, serviceType: PartnerServiceType) => {
+      if (serviceType.name) {
+        acc.push(serviceType.name)
+      }
+      return acc
+    }, []) || []
 
   return (
     <div className="animate-fade-in space-y-8">
@@ -85,9 +98,22 @@ function PartnerProfile() {
                     Head Office
                   </span>
                 </div>
-                <div className="flex items-center bg-black px-3 py-1 font-bold text-[10px] text-white uppercase tracking-[0.2em]">
-                  <Briefcase className="mr-2 h-3 w-3" />
-                  {partner.serviceTypeName}
+                <div className="flex flex-wrap items-center gap-2">
+                  <Briefcase className="h-3 w-3 text-red-600" />
+                  {serviceTypeNames.length > 0 ? (
+                    serviceTypeNames.map((serviceTypeName) => (
+                      <span
+                        className="bg-black px-3 py-1 font-bold text-[10px] text-white uppercase tracking-[0.2em]"
+                        key={`${partner.id}-${serviceTypeName}`}
+                      >
+                        {serviceTypeName}
+                      </span>
+                    ))
+                  ) : (
+                    <span className="bg-black px-3 py-1 font-bold text-[10px] text-white uppercase tracking-[0.2em]">
+                      Unknown
+                    </span>
+                  )}
                 </div>
               </div>
             </div>
@@ -142,7 +168,7 @@ function PartnerProfile() {
               Key Personnel
             </h3>
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-              {partner.contacts?.map((user) => (
+              {partner.contacts?.map((user: PartnerContact) => (
                 <div
                   className="flex items-center gap-4 border border-gray-50 bg-gray-50/50 p-4"
                   key={user.emailAddress}
@@ -171,7 +197,7 @@ function PartnerProfile() {
                 Service Specializations
               </h3>
               <div className="flex flex-wrap gap-2">
-                {partner.serviceSubTypes.map((sst) => (
+                {partner.serviceSubTypes.map((sst: PartnerServiceSubType) => (
                   <span
                     className="border border-red-600/30 bg-red-50 px-3 py-1 font-bold text-[10px] text-red-600 uppercase tracking-widest"
                     key={sst.id}
@@ -190,7 +216,7 @@ function PartnerProfile() {
                 Capabilities
               </h3>
               <div className="flex flex-wrap gap-2">
-                {partner.capabilities?.map((skill) => (
+                {partner.capabilities?.map((skill: PartnerCapability) => (
                   <span
                     className="border border-gray-100 bg-gray-50 px-3 py-1 font-bold text-[10px] text-gray-600 uppercase tracking-widest"
                     key={skill.id}
@@ -205,7 +231,7 @@ function PartnerProfile() {
                 Industries
               </h3>
               <div className="flex flex-wrap gap-2">
-                {partner.industries?.map((ind) => (
+                {partner.industries?.map((ind: PartnerIndustry) => (
                   <span
                     className="bg-black px-3 py-1 font-bold text-[10px] text-white uppercase tracking-widest"
                     key={ind.id}
@@ -224,12 +250,12 @@ function PartnerProfile() {
             </h3>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               {partner.locations
-                ?.sort((a) => (a.isHeadOffice ? -1 : 1))
-                .map((loc, i: number) => (
+                ?.sort((a: PartnerLocation) => (a.isHeadOffice ? -1 : 1))
+                .map((loc: PartnerLocation) => (
                   <div
                     className={`border p-4 ${loc.isHeadOffice ? 'border-red-600 bg-red-50/20' : 'border-gray-100'
                       }`}
-                    key={i}
+                    key={`${loc.country ?? 'unknown'}-${loc.region ?? 'unknown'}-${loc.isHeadOffice ? 'head' : 'branch'}`}
                   >
                     <div className="flex items-start justify-between">
                       <p className="font-bold text-black text-sm">{loc.country}</p>

@@ -37,8 +37,7 @@ namespace AndersonAPI.Application.Companies.UpdateCompany
                 request.ShortDescription,
                 request.FullDescription,
                 request.WebsiteUrl,
-                request.EmployeeCount,
-                request.ServiceTypeId);
+                request.EmployeeCount);
         }
     }
 }

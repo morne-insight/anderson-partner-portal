@@ -14,7 +14,7 @@ namespace AndersonAPI.Application.Companies.CreateCompany
             string fullDescription,
             string websiteUrl,
             int employeeCount,
-            Guid? serviceTypeId,
+            List<Guid> serviceTypes,
             List<Guid> serviceSubTypes,
             List<Guid> capabilities,
             List<Guid> industries)
@@ -24,7 +24,7 @@ namespace AndersonAPI.Application.Companies.CreateCompany
             FullDescription = fullDescription;
             WebsiteUrl = websiteUrl;
             EmployeeCount = employeeCount;
-            ServiceTypeId = serviceTypeId;
+            ServiceTypes = serviceTypes;
             ServiceSubTypes = serviceSubTypes;
             Capabilities = capabilities;
             Industries = industries;
@@ -35,9 +35,9 @@ namespace AndersonAPI.Application.Companies.CreateCompany
         public string FullDescription { get; set; }
         public string WebsiteUrl { get; set; }
         public int EmployeeCount { get; set; }
+        public List<Guid> ServiceTypes { get; set; }
         public List<Guid> Capabilities { get; set; }
         public List<Guid> Industries { get; set; }
-        public Guid? ServiceTypeId { get; set; }
         public List<Guid> ServiceSubTypes { get; set; }
     }
 }

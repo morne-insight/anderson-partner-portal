@@ -471,6 +471,7 @@ namespace AndersonAPI.Api.Controllers
 
         [HttpPost("~/api/[controller]/resetPassword")]
         [AllowAnonymous]
+        [IntentManaged(Mode.Ignore)]
         public async Task<IActionResult> ResetPassword(ResetPasswordDto resetRequest)
         {
             var modelState = new ModelStateDictionary();
@@ -496,7 +497,7 @@ namespace AndersonAPI.Api.Controllers
                 {
                     var changeCode = await _userManager.GeneratePasswordResetTokenAsync(user);
                     result = await _userManager.ResetPasswordAsync(user, changeCode, resetRequest.NewPassword!);
-                } 
+                }
                 else
                 {
                     result = IdentityResult.Failed(_userManager.ErrorDescriber.InvalidToken());

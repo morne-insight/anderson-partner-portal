@@ -20,7 +20,7 @@
   </sourceEnd>
   <targetEnd id="9c1a7177-6ffb-413e-a524-fcadada607d8" type="Domain Event Origin Association Target End" typeId="17046427-14e2-4081-8463-ef16c0fda399">
     <display>publishes : CompanyUpdatedEvent</display>
-    <order>6</order>
+    <order>5</order>
     <typeReference id="00ab34bb-e30a-4e34-85be-c05c5012bc7b">
       <typeId>5d12c57e-731e-4c4f-833e-da4fedf0125e</typeId>
       <isNavigable>true</isNavigable>

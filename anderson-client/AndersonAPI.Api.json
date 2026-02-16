@@ -3520,6 +3520,149 @@
         }
       }
     },
+    "/api/companies/{id}/service-types": {
+      "put": {
+        "tags": [
+          "Companies"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetServiceTypesCompanyCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetServiceTypesCompanyCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetServiceTypesCompanyCommand"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/companies/{id}/set-state": {
       "put": {
         "tags": [
@@ -15206,8 +15349,11 @@
             "type": "integer",
             "format": "int32"
           },
-          "serviceTypeName": {
-            "type": "string"
+          "serviceTypes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CompanyServiceTypeDto"
+            }
           }
         }
       },
@@ -15308,14 +15454,6 @@
             "type": "integer",
             "format": "int32"
           },
-          "serviceTypeId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "serviceTypeName": {
-            "type": "string"
-          },
           "serviceSubTypes": {
             "type": "array",
             "items": {
@@ -15326,6 +15464,12 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/CompanyIdentityUserDto"
+            }
+          },
+          "serviceTypes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CompanyServiceTypeDto"
             }
           },
           "capabilities": {
@@ -15377,6 +15521,29 @@
           },
           "name": {
             "type": "string"
+          }
+        }
+      },
+      "CompanyServiceTypeDto": {
+        "title": "CompanyServiceTypeDto",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "order": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "state": {
+            "$ref": "#/components/schemas/EntityState"
           }
         }
       },
@@ -15446,9 +15613,9 @@
           "fullDescription",
           "websiteUrl",
           "employeeCount",
+          "serviceTypes",
           "capabilities",
           "industries",
-          "serviceTypeId",
           "serviceSubTypes"
         ],
         "type": "object",
@@ -15469,6 +15636,13 @@
             "type": "integer",
             "format": "int32"
           },
+          "serviceTypes": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
           "capabilities": {
             "type": "array",
             "items": {
@@ -15482,11 +15656,6 @@
               "type": "string",
               "format": "uuid"
             }
-          },
-          "serviceTypeId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
           },
           "serviceSubTypes": {
             "type": "array",
@@ -15862,14 +16031,30 @@
         "title": "DashboardPartnerDto",
         "type": "object",
         "properties": {
-          "serviceType": {
-            "type": "string"
-          },
           "locations": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/DashboardLocationDto"
             }
+          },
+          "serviceTypes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DashboardServiceTypeDto"
+            }
+          }
+        }
+      },
+      "DashboardServiceTypeDto": {
+        "title": "DashboardServiceTypeDto",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
           }
         }
       },
@@ -15886,6 +16071,12 @@
           },
           "shortDescription": {
             "type": "string"
+          },
+          "serviceTypes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DirectoryServiceTypeDto"
+            }
           },
           "capabilities": {
             "type": "array",
@@ -15911,14 +16102,24 @@
               "$ref": "#/components/schemas/PartnerIndustryDto"
             }
           },
-          "serviceTypeName": {
-            "type": "string"
-          },
           "serviceSubTypes": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/PartnerServiceSubTypeDto"
             }
+          }
+        }
+      },
+      "DirectoryServiceTypeDto": {
+        "title": "DirectoryServiceTypeDto",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
           }
         }
       },
@@ -15952,9 +16153,10 @@
         "required": [
           "pageNo",
           "pageSize",
+          "serviceTypes",
+          "serviceSubTypes",
           "orderBy",
           "searchTerm",
-          "serviceType",
           "regions",
           "countries",
           "capabilities",
@@ -15970,17 +16172,26 @@
             "type": "integer",
             "format": "int32"
           },
+          "serviceTypes": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          "serviceSubTypes": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
           "orderBy": {
             "type": "string",
             "nullable": true
           },
           "searchTerm": {
             "type": "string",
-            "nullable": true
-          },
-          "serviceType": {
-            "type": "string",
-            "format": "uuid",
             "nullable": true
           },
           "regions": {
@@ -16334,9 +16545,6 @@
           "companyName": {
             "type": "string"
           },
-          "companyServiceType": {
-            "type": "string"
-          },
           "title": {
             "type": "string"
           },
@@ -16501,7 +16709,7 @@
           "serviceTypes": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/PartnerServiceTypeDto"
+              "title": "PartnerServiceTypeDto"
             }
           },
           "country": {
@@ -16553,6 +16761,12 @@
               "$ref": "#/components/schemas/PartnerContactDto"
             }
           },
+          "serviceTypes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PartnerServiceTypeDto"
+            }
+          },
           "industries": {
             "type": "array",
             "items": {
@@ -16570,14 +16784,6 @@
             "items": {
               "$ref": "#/components/schemas/PartnerOpportunityDto"
             }
-          },
-          "serviceTypeId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "serviceTypeName": {
-            "type": "string"
           },
           "serviceSubTypes": {
             "type": "array",
@@ -16623,18 +16829,16 @@
             "type": "number",
             "format": "double"
           },
-          "serviceTypeId": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "serviceTypeName": {
-            "type": "string"
-          },
           "serviceSubTypes": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/PartnerServiceSubTypeDto"
+            }
+          },
+          "serviceTypes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PartnerServiceTypeDto"
             }
           }
         }
@@ -17210,8 +17414,8 @@
           }
         }
       },
-      "SetServiceTypesOpportunityCommand": {
-        "title": "SetServiceTypesOpportunityCommand",
+      "SetServiceTypesCompanyCommand": {
+        "title": "SetServiceTypesCompanyCommand",
         "required": [
           "id",
           "serviceTypeIds"
@@ -17223,6 +17427,27 @@
             "format": "uuid"
           },
           "serviceTypeIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        }
+      },
+      "SetServiceTypesOpportunityCommand": {
+        "title": "SetServiceTypesOpportunityCommand",
+        "required": [
+          "id",
+          "serviceTypes"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "serviceTypes": {
             "type": "array",
             "items": {
               "type": "string",
@@ -17460,8 +17685,7 @@
           "shortDescription",
           "fullDescription",
           "websiteUrl",
-          "employeeCount",
-          "serviceTypeId"
+          "employeeCount"
         ],
         "type": "object",
         "properties": {
@@ -17484,10 +17708,6 @@
           "employeeCount": {
             "type": "integer",
             "format": "int32"
-          },
-          "serviceTypeId": {
-            "type": "string",
-            "format": "uuid"
           }
         }
       },

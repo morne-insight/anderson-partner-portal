@@ -15,6 +15,7 @@ namespace AndersonAPI.Application.Companies.CreateCompany
     public class CreateCompanyCommandHandler : IRequestHandler<CreateCompanyCommand, Guid>
     {
         private readonly ICompanyRepository _companyRepository;
+        private readonly IServiceTypeRepository _serviceTypesRepository;
         private readonly IServiceSubTypeRepository _serviceSubTypeRepository;
         private readonly ICapabilityRepository _capabilityRepository;
         private readonly IIndustryRepository _industryRepository;
@@ -24,6 +25,7 @@ namespace AndersonAPI.Application.Companies.CreateCompany
         [IntentManaged(Mode.Merge)]
         public CreateCompanyCommandHandler(
             ICompanyRepository companyRepository,
+            IServiceTypeRepository serviceTypesRepository,
             IServiceSubTypeRepository serviceSubTypeRepository,
             ICapabilityRepository capabilityRepository,
             IIndustryRepository industryRepository,
@@ -31,6 +33,7 @@ namespace AndersonAPI.Application.Companies.CreateCompany
             IApplicationIdentityUserRepository applicationIdentityUserRepository)
         {
             _companyRepository = companyRepository;
+            _serviceTypesRepository = serviceTypesRepository;
             _serviceSubTypeRepository = serviceSubTypeRepository;
             _capabilityRepository = capabilityRepository;
             _industryRepository = industryRepository;
@@ -55,16 +58,17 @@ namespace AndersonAPI.Application.Companies.CreateCompany
                 shortDescription: request.ShortDescription,
                 fullDescription: request.FullDescription,
                 websiteUrl: request.WebsiteUrl,
-                employeeCount: request.EmployeeCount,
-                serviceTypeId: request.ServiceTypeId);
+                employeeCount: request.EmployeeCount);
 
+            var serviceTypes = request.ServiceTypes == null ? new List<ServiceType>() : await _serviceTypesRepository.FindByIdsAsync(request.ServiceTypes.ToArray(), cancellationToken);
+            var serviceSubTypes = request.ServiceSubTypes == null ? new List<ServiceSubType>() : await _serviceSubTypeRepository.FindByIdsAsync(request.ServiceSubTypes.ToArray(), cancellationToken);
             var capabilities = request.Capabilities == null ? new List<Capability>() : await _capabilityRepository.FindByIdsAsync(request.Capabilities.ToArray(), cancellationToken);
             var industries = request.Industries == null ? new List<Industry>() : await _industryRepository.FindByIdsAsync(request.Industries.ToArray(), cancellationToken);
-            var serviceSubTypes = request.ServiceSubTypes == null ? new List<ServiceSubType>() : await _serviceSubTypeRepository.FindByIdsAsync(request.ServiceSubTypes.ToArray(), cancellationToken);
-                
+
+            company.SetServiceTypes(serviceTypes);
+            company.SetServiceSubTypes(serviceSubTypes);
             company.SetCapabilities(capabilities);
             company.SetIndustries(industries);
-            company.SetServiceSubTypes(serviceSubTypes);
             company.AddUser(applicationUser);
 
             _companyRepository.Add(company);

@@ -13,13 +13,12 @@ namespace AndersonAPI.Application.Opportunities
         {
             CreateMap<Opportunity, OpportunityViewDto>()
                 .ForMember(d => d.CompanyName, opt => opt.MapFrom(src => src.Company.Name))
-                .ForMember(d => d.CompanyServiceType, opt => opt.MapFrom(src => src.Company.ServiceType != null ? src.Company.ServiceType!.Name : null))
                 .ForMember(d => d.Country, opt => opt.MapFrom(src => src.Country.Name))
                 .ForMember(d => d.OpportunityType, opt => opt.MapFrom(src => src.OpportunityType.Name))
-                .ForMember(d => d.Capabilities, opt => opt.MapFrom(src => src.Capabilities))
-                .ForMember(d => d.Industries, opt => opt.MapFrom(src => src.Industries))
                 .ForMember(d => d.ServiceTypes, opt => opt.MapFrom(src => src.ServiceTypes))
-                .ForMember(d => d.InterestedPartners, opt => opt.MapFrom(src => src.InterestedPartners));
+                .ForMember(d => d.InterestedPartners, opt => opt.MapFrom(src => src.InterestedPartners))
+                .ForMember(d => d.Capabilities, opt => opt.MapFrom(src => src.Capabilities))
+                .ForMember(d => d.Industries, opt => opt.MapFrom(src => src.Industries));
         }
     }
 

@@ -29,6 +29,9 @@ namespace AndersonAPI.Application.Companies.CreateCompany
             RuleFor(v => v.WebsiteUrl)
                 .NotNull();
 
+            RuleFor(v => v.ServiceTypes)
+                .NotNull();
+
             RuleFor(v => v.ServiceSubTypes)
                 .NotNull();
 

@@ -69,5 +69,12 @@ namespace AndersonAPI.Infrastructure.Repositories
                 .ToListAsync(cancellationToken);
         }
 
+        [IntentIgnore]
+        public async Task<List<ServiceType>> GetServiceTypesByIdsAsync(List<Guid> serviceTypeIds, CancellationToken cancellationToken = default)
+        {
+            return await _dbContext.Set<ServiceType>()
+                .Where(s => serviceTypeIds.Contains(s.Id))
+                .ToListAsync(cancellationToken);
+        }
     }
 }

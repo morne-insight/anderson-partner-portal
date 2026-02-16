@@ -14,8 +14,7 @@ namespace AndersonAPI.Application.Companies.UpdateCompany
             string shortDescription,
             string fullDescription,
             string websiteUrl,
-            int employeeCount,
-            Guid serviceTypeId)
+            int employeeCount)
         {
             Id = id;
             Name = name;
@@ -23,7 +22,6 @@ namespace AndersonAPI.Application.Companies.UpdateCompany
             FullDescription = fullDescription;
             WebsiteUrl = websiteUrl;
             EmployeeCount = employeeCount;
-            ServiceTypeId = serviceTypeId;
         }
 
         public Guid Id { get; set; }
@@ -32,6 +30,5 @@ namespace AndersonAPI.Application.Companies.UpdateCompany
         public string FullDescription { get; set; }
         public string WebsiteUrl { get; set; }
         public int EmployeeCount { get; set; }
-        public Guid ServiceTypeId { get; set; }
     }
 }

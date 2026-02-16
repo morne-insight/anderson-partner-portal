@@ -31,7 +31,7 @@ namespace AndersonAPI.Api
 
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
-                .MinimumLevel.Override("System", LogEventLevel.Warning) 
+                .MinimumLevel.Override("System", LogEventLevel.Warning)
                 .Enrich.FromLogContext()
                 .WriteTo.Console()
                 .CreateLogger();
@@ -40,11 +40,14 @@ namespace AndersonAPI.Api
             {
                 var builder = WebApplication.CreateBuilder(args);
 
+                // Add services to the container.
+
+                // IntentIgnore                                                                                                                  builder.Host.UseSerilog((context, services, configuration) => configuration
                 builder.Host.UseSerilog((context, services, configuration) => configuration
-                    .ReadFrom.Configuration(context.Configuration)
-                    .ReadFrom.Services(services)
-                    .WriteTo.Console()
-                    .Destructure.With(new BoundedLoggingDestructuringPolicy()));
+                     .ReadFrom.Configuration(context.Configuration)
+                     .ReadFrom.Services(services)
+                     .WriteTo.Console()
+                     .Destructure.With(new BoundedLoggingDestructuringPolicy()));
 
                 builder.Services.AddControllers(
                     opt =>
@@ -66,7 +69,7 @@ namespace AndersonAPI.Api
                 if (builder.Environment.IsProduction())
                 {
                     var blobUri = builder.Configuration["DataProtection:BlobUri"];
-                    
+
                     Log.Information($"Configuring data protection keys storage. BlobUri: {blobUri}");
 
                     if (!string.IsNullOrWhiteSpace(blobUri))
@@ -97,6 +100,7 @@ namespace AndersonAPI.Api
                 builder.Services.ConfigureProblemDetails();
                 builder.Services.ConfigureApiVersioning();
 
+                // IntentIgnore
                 builder.Services.AddInfrastructure(builder.Configuration, builder.Environment.IsDevelopment());
                 builder.Services.ConfigureOpenApi();
 
@@ -194,7 +198,7 @@ namespace AndersonAPI.Api
                 app.MapControllers();
 
                 //logger.Write(LogEventLevel.Information, "Starting web host");
-                Log.Information("------------------------ Starting web host ------------------------");
+                logger.Write(LogEventLevel.Information, "Starting web host");
 
                 app.Run();
             }
@@ -206,7 +210,7 @@ namespace AndersonAPI.Api
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                logger.Write(LogEventLevel.Fatal, ex, "Unhandled exception");
                 //logger.Write(LogEventLevel.Fatal, ex, "Unhandled exception");
                 Log.Fatal(ex, "Unhandled exception");
             }

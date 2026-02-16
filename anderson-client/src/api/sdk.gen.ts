@@ -303,6 +303,9 @@ import type {
 	PutApiCompaniesByIdServiceSubTypesData,
 	PutApiCompaniesByIdServiceSubTypesErrors,
 	PutApiCompaniesByIdServiceSubTypesResponses,
+	PutApiCompaniesByIdServiceTypesData,
+	PutApiCompaniesByIdServiceTypesErrors,
+	PutApiCompaniesByIdServiceTypesResponses,
 	PutApiCompaniesByIdSetStateData,
 	PutApiCompaniesByIdSetStateErrors,
 	PutApiCompaniesByIdSetStateResponses,
@@ -882,6 +885,22 @@ export const putApiCompaniesByIdServiceSubTypes = <ThrowOnError extends boolean 
 		ThrowOnError
 	>({
 		url: '/api/companies/{id}/service-sub-types',
+		...options,
+		headers: {
+			'Content-Type': 'application/json',
+			...options.headers,
+		},
+	})
+
+export const putApiCompaniesByIdServiceTypes = <ThrowOnError extends boolean = false>(
+	options: Options<PutApiCompaniesByIdServiceTypesData, ThrowOnError>
+) =>
+	(options.client ?? client).put<
+		PutApiCompaniesByIdServiceTypesResponses,
+		PutApiCompaniesByIdServiceTypesErrors,
+		ThrowOnError
+	>({
+		url: '/api/companies/{id}/service-types',
 		...options,
 		headers: {
 			'Content-Type': 'application/json',

@@ -64,7 +64,7 @@ namespace AndersonAPI.Application.Companies.ScrapeWebsite
                     fullDescription: response,
                     websiteUrl: request.Url,
                     employeeCount: 0,
-                    serviceTypeId: null,
+                    serviceTypes: new List<Guid>(),
                     serviceSubTypes: new List<Guid>(),
                     capabilities: new List<Guid>(),
                     industries: new List<Guid>()

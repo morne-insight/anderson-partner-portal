@@ -13,7 +13,7 @@ namespace AndersonAPI.Application.Companies
             ShortDescription = null!;
             FullDescription = null!;
             WebsiteUrl = null!;
-            ServiceTypeName = null!;
+            ServiceTypes = null!;
         }
 
         public string Name { get; set; }
@@ -23,7 +23,7 @@ namespace AndersonAPI.Application.Companies
         public int EmployeeCount { get; set; }
         public Guid Id { get; set; }
         public int Order { get; set; }
-        public string ServiceTypeName { get; set; }
+        public List<CompanyServiceTypeDto> ServiceTypes { get; set; }
 
         public static CompanyDto Create(
             Guid id,
@@ -33,7 +33,7 @@ namespace AndersonAPI.Application.Companies
             string websiteUrl,
             int employeeCount,
             int order,
-            string serviceTypeName)
+            List<CompanyServiceTypeDto> serviceTypes)
         {
             return new CompanyDto
             {
@@ -44,7 +44,7 @@ namespace AndersonAPI.Application.Companies
                 WebsiteUrl = websiteUrl,
                 EmployeeCount = employeeCount,
                 Order = order,
-                ServiceTypeName = serviceTypeName
+                ServiceTypes = serviceTypes
             };
         }
     }

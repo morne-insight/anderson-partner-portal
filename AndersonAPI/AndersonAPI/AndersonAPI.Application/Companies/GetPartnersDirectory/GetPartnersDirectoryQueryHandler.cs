@@ -33,9 +33,16 @@ namespace AndersonAPI.Application.Companies.GetPartnersDirectory
                 predicate = predicate.And(company => company.Name.Contains(request.SearchTerm));
             }
 
-            if (request.ServiceType.HasValue)
+            if (request.ServiceTypes.Count > 0)
             {
-                predicate = predicate.And(company => company.ServiceTypeId == request.ServiceType.Value);
+                predicate = predicate.And(company => 
+                    company.ServiceTypes.Any(serviceType => request.ServiceTypes.Contains(serviceType.Id)));
+            }
+
+            if (request.ServiceSubTypes.Count > 0)
+            {
+                predicate = predicate.And(company =>
+                    company.ServiceSubTypes.Any(serviceSubType => request.ServiceSubTypes.Contains(serviceSubType.Id)));
             }
 
             if (request.Regions.Count > 0)

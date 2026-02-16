@@ -5,17 +5,17 @@ using MediatR;
 [assembly: DefaultIntentManaged(Mode.Fully)]
 [assembly: IntentTemplate("Intent.Application.MediatR.CommandModels", Version = "1.0")]
 
-namespace AndersonAPI.Application.Opportunities.SetServiceTypesOpportunity
+namespace AndersonAPI.Application.Companies.SetServiceTypesCompany
 {
-    public class SetServiceTypesOpportunityCommand : IRequest, ICommand
+    public class SetServiceTypesCompanyCommand : IRequest, ICommand
     {
-        public SetServiceTypesOpportunityCommand(Guid id, List<Guid> serviceTypes)
+        public SetServiceTypesCompanyCommand(Guid id, List<Guid> serviceTypeIds)
         {
             Id = id;
-            ServiceTypes = serviceTypes;
+            ServiceTypeIds = serviceTypeIds;
         }
 
         public Guid Id { get; set; }
-        public List<Guid> ServiceTypes { get; set; }
+        public List<Guid> ServiceTypeIds { get; set; }
     }
 }
