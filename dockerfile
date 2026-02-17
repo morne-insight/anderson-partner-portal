@@ -1,7 +1,7 @@
 # -------------------------------
 # BUILD STAGE
 # -------------------------------
-FROM mcr.microsoft.com/dotnet/sdk:9.0.11 AS build
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
 
 # Copy everything (API + domain + infra + client)
@@ -18,7 +18,7 @@ RUN dotnet publish AndersonAPI/AndersonAPI/AndersonAPI.Api/AndersonAPI.Api.cspro
 # -------------------------------
 # RUNTIME STAGE
 # -------------------------------
-FROM mcr.microsoft.com/dotnet/aspnet:9.0.11 AS runtime
+FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
 WORKDIR /app
 
 # Install Chromium dependencies for Puppeteer + SSH server
