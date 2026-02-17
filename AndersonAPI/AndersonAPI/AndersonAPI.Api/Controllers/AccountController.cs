@@ -37,6 +37,7 @@ namespace AndersonAPI.Api.Controllers
         private readonly IAccountEmailSender _accountEmailSender;
         private readonly ITokenService _tokenService;
         private readonly ISender _mediator;
+        private readonly IConfiguration _configuration;
 
         [IntentManaged(Mode.Merge)]
         public AccountController(IUserStore<ApplicationIdentityUser> userStore,
@@ -45,7 +46,8 @@ namespace AndersonAPI.Api.Controllers
                     ILogger<AccountController> logger,
                     IAccountEmailSender accountEmailSender,
                     ITokenService tokenService,
-                    ISender mediator)
+                    ISender mediator,
+                    IConfiguration configuration)
         {
             _userStore = userStore;
             _userManager = userManager;
@@ -54,6 +56,7 @@ namespace AndersonAPI.Api.Controllers
             _accountEmailSender = accountEmailSender;
             _tokenService = tokenService;
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+            _configuration = configuration;
         }
 
         [HttpPost]
@@ -449,7 +452,15 @@ namespace AndersonAPI.Api.Controllers
         [IntentManaged(Mode.Fully, Body = Mode.Merge)]
         public async Task<IActionResult> ForgotPassword(ForgotPasswordDto resetRequest)
         {
+            _logger.LogInformation("ForgotPassword - Instance: {InstanceId}, Machine: {Machine}, BlobUri: {BlobUri}, AppName: {AppName}",
+                Environment.GetEnvironmentVariable("WEBSITE_INSTANCE_ID") ?? "n/a",
+                Environment.MachineName,
+                _configuration["DataProtection:BlobUri"] ?? "n/a",
+                "AndersonAPI");
+
             var user = await _userManager.FindByEmailAsync(resetRequest.Email!);
+
+            _logger.LogInformation("ForgotPassword SecurityStamp: {Stamp}", user.SecurityStamp);
 
             if (user is not null && await _userManager.IsEmailConfirmedAsync(user))
             {
@@ -475,9 +486,17 @@ namespace AndersonAPI.Api.Controllers
         [IntentManaged(Mode.Merge)]
         public async Task<IActionResult> ResetPassword(ResetPasswordDto resetRequest)
         {
+            _logger.LogInformation("ForgotPassword - Instance: {InstanceId}, Machine: {Machine}, BlobUri: {BlobUri}, AppName: {AppName}",
+                Environment.GetEnvironmentVariable("WEBSITE_INSTANCE_ID") ?? "n/a",
+                Environment.MachineName,
+                _configuration["DataProtection:BlobUri"] ?? "n/a",
+                "AndersonAPI");
+
             var modelState = new ModelStateDictionary();
 
             var user = await _userManager.FindByEmailAsync(resetRequest.Email!);
+            
+            _logger.LogInformation("ResetPassword SecurityStamp: {Stamp}", user.SecurityStamp);
 
             if (user is null || !await _userManager.IsEmailConfirmedAsync(user))
             {

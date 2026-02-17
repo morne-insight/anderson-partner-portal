@@ -39,7 +39,7 @@ public class AccountEmailSender : IAccountEmailSender
     [IntentManaged(Mode.Fully, Body = Mode.Merge)]
     public async Task SendPasswordResetCode(string email, string userId, string resetCode)
     {
-        var baseUrl = _configuration["AppSettings:ClientUrl"] ?? "http://localhost:3000";
+        var baseUrl = _configuration["AppSettings:ClientUrl"] ?? "https://andersen.partners";
         var resetUrl = $"{baseUrl}/reset-password/{email}/{resetCode}";
 
         var htmlBody = await LoadPasswordResetTemplateAsync(
