@@ -486,8 +486,14 @@ namespace AndersonAPI.Api.Controllers
             IdentityResult result;
             try
             {
+                
+                _logger.LogInformation($"Encoded code length: {resetRequest.ResetCode!}");
                 var code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(resetRequest.ResetCode!));
-                Log.Information($"Decoded password reset token {code}");
+                
+                _logger.LogInformation($"Decoded code length: {code.Length}");
+                
+                _logger.LogInformation($"Decoded password reset token {code}");
+                
                 var isValid = user.VerifyPasswordToken(code);
 
                 if (isValid)
@@ -614,8 +620,13 @@ namespace AndersonAPI.Api.Controllers
         {
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             user.SetEmailConfirmationCode(code);
+            
+            _logger.LogInformation($"Generated code length: {code.Length}");
             await _userManager.UpdateAsync(user);
+
             code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+            _logger.LogInformation($"Encoded code length: {code.Length}");
+            _logger.LogInformation($"Encoded email confirmation code: {code}");
 
             var userId = await _userManager.GetUserIdAsync(user);
 
