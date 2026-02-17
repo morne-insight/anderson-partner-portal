@@ -312,13 +312,10 @@ namespace AndersonAPI.Api.Controllers
                 return Forbid();
             }
 
-            if (_userManager.Options.SignIn.RequireConfirmedAccount)
+            if (_userManager.Options.SignIn.RequireConfirmedAccount && !await _userManager.IsEmailConfirmedAsync(user))
             {
-                if (!await _userManager.IsEmailConfirmedAsync(user))
-                {
-                    _logger.LogWarning("Email not confirmed.");
-                    return Forbid();
-                }
+                _logger.LogWarning("Email not confirmed.");
+                return Forbid();
             }
 
             if (await _userManager.IsLockedOutAsync(user))
@@ -512,6 +509,7 @@ namespace AndersonAPI.Api.Controllers
             {
                 foreach (var error in result.Errors)
                 {
+                    _logger.LogError($"Error resetting password: {error.Code} - {error.Description}");
                     modelState.AddModelError(string.Empty, error.Description);
                 }
 

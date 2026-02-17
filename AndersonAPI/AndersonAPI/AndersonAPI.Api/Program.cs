@@ -59,13 +59,6 @@ namespace AndersonAPI.Api
                     .AddDataProtection()
                     .SetApplicationName("AndersonAPI");
 
-
-                //if (builder.Environment.IsProduction())
-                //{
-                //    var keysPath = "/home/aspnet/DataProtection-Keys";
-                //    Directory.CreateDirectory(keysPath);
-                //    dp.PersistKeysToFileSystem(new DirectoryInfo(keysPath));
-                //}
                 if (builder.Environment.IsProduction())
                 {
                     var blobUri = builder.Configuration["DataProtection:BlobUri"];
