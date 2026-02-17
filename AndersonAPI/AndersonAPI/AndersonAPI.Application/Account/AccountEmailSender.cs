@@ -40,7 +40,6 @@ public class AccountEmailSender : IAccountEmailSender
     public async Task SendPasswordResetCode(string email, string userId, string resetCode)
     {
         var baseUrl = _configuration["AppSettings:ClientUrl"] ?? "http://localhost:3000";
-        //var resetUrl = $"{baseUrl}/reset-password?email={email}&code={resetCode}";
         var resetUrl = $"{baseUrl}/reset-password/{email}/{resetCode}";
 
         var htmlBody = await LoadPasswordResetTemplateAsync(

@@ -454,8 +454,12 @@ namespace AndersonAPI.Api.Controllers
             if (user is not null && await _userManager.IsEmailConfirmedAsync(user))
             {
                 var code = await _userManager.GeneratePasswordResetTokenAsync(user);
-                Log.Information($"Generated password reset token: {code}");
+                _logger.LogInformation($"Generated password reset token: {code}");
+                _logger.LogInformation($"Generated password reset token length: {code.Length}");
+
                 code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+
+                _logger.LogInformation($"Encoded password reset code length: {code.Length}");
 
                 await _accountEmailSender.SendPasswordResetCode(resetRequest.Email!, user.Id,
                     HtmlEncoder.Default.Encode(code));
@@ -468,7 +472,7 @@ namespace AndersonAPI.Api.Controllers
 
         [HttpPost("~/api/[controller]/resetPassword")]
         [AllowAnonymous]
-        [IntentManaged(Mode.Ignore)]
+        [IntentManaged(Mode.Merge)]
         public async Task<IActionResult> ResetPassword(ResetPasswordDto resetRequest)
         {
             var modelState = new ModelStateDictionary();
@@ -494,17 +498,17 @@ namespace AndersonAPI.Api.Controllers
                 
                 _logger.LogInformation($"Decoded password reset token {code}");
                 
-                var isValid = user.VerifyPasswordToken(code);
+                result = await _userManager.ResetPasswordAsync(user, code, resetRequest.NewPassword!);
+                //var isValid = user.VerifyPasswordToken(code);
 
-                if (isValid)
-                {
-                    var changeCode = await _userManager.GeneratePasswordResetTokenAsync(user);
-                    result = await _userManager.ResetPasswordAsync(user, changeCode, resetRequest.NewPassword!);
-                }
-                else
-                {
-                    result = IdentityResult.Failed(_userManager.ErrorDescriber.InvalidToken());
-                }
+                //if (isValid)
+                //{
+                //    var changeCode = await _userManager.GeneratePasswordResetTokenAsync(user);
+                //}
+                //else
+                //{
+                //    result = IdentityResult.Failed(_userManager.ErrorDescriber.InvalidToken());
+                //}
             }
             catch (FormatException)
             {
