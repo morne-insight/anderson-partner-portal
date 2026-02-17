@@ -1,7 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-using System.Security.Claims;
-using System.Text;
-using System.Text.Encodings.Web;
 using AndersonAPI.Api.Services;
 using AndersonAPI.Application.Account;
 using AndersonAPI.Application.Capabilities.DeleteCapability;
@@ -11,12 +7,17 @@ using AndersonAPI.Domain.Entities;
 using Intent.RoslynWeaver.Attributes;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Serilog;
+using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
+using System.Text;
+using System.Text.Encodings.Web;
 
 [assembly: DefaultIntentManaged(Mode.Fully)]
 [assembly: IntentTemplate("Intent.AspNetCore.Identity.AccountController.AccountController", Version = "1.0")]
@@ -47,7 +48,8 @@ namespace AndersonAPI.Api.Controllers
                     IAccountEmailSender accountEmailSender,
                     ITokenService tokenService,
                     ISender mediator,
-                    IConfiguration configuration)
+                    IConfiguration configuration,
+                    IDataProtectionProvider dataProtectionProvider)
         {
             _userStore = userStore;
             _userManager = userManager;
@@ -57,6 +59,24 @@ namespace AndersonAPI.Api.Controllers
             _tokenService = tokenService;
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
             _configuration = configuration;
+
+            var options = _userManager.Options;
+            _logger.LogInformation("PasswordResetTokenProvider={Provider}", options.Tokens.PasswordResetTokenProvider);
+            _logger.LogInformation("ProviderMap={Providers}", string.Join(", ", options.Tokens.ProviderMap.Keys));
+
+            //var dp = HttpContext.RequestServices.GetRequiredService<IDataProtectionProvider>();
+            var protector = dataProtectionProvider.CreateProtector("probe");
+            var probe = protector.Protect("hello");
+            var roundtrip = protector.Unprotect(probe);
+            _logger.LogInformation("DP roundtrip ok={Ok}", roundtrip == "hello");
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        [IntentManaged(Mode.Ignore)]
+        public IActionResult Run()
+        {
+            return Ok("AccountController is up");
         }
 
         [HttpPost]
@@ -472,8 +492,7 @@ namespace AndersonAPI.Api.Controllers
 
                 _logger.LogInformation($"Encoded password reset code length: {code.Length}");
 
-                await _accountEmailSender.SendPasswordResetCode(resetRequest.Email!, user.Id,
-                    HtmlEncoder.Default.Encode(code));
+                await _accountEmailSender.SendPasswordResetCode(resetRequest.Email!, user.Id,code);
             }
 
             // Don't reveal that the user does not exist or is not confirmed, so don't return a 200 if we would have

@@ -13,34 +13,61 @@ namespace AndersonAPI.Api.Configuration
         [IntentManaged(Mode.Fully, Body = Mode.Ignore)]
         public static void ConfigureIdentity(this IServiceCollection services)
         {
-            services.AddIdentityWithoutCookieAuth<ApplicationIdentityUser, IdentityRole<string>>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();
-            services.Configure<IdentityOptions>(
-                options =>
-                {
-                    // Password settings.
-                    options.Password.RequireDigit = true;
-                    options.Password.RequireLowercase = true;
-                    options.Password.RequireNonAlphanumeric = true;
-                    options.Password.RequireUppercase = true;
-                    options.Password.RequiredLength = 6;
-                    options.Password.RequiredUniqueChars = 1;
+            //services.AddIdentityWithoutCookieAuth<ApplicationIdentityUser, IdentityRole<string>>()
+            //    .AddEntityFrameworkStores<ApplicationDbContext>()
+            //    .AddDefaultTokenProviders();
+
+            //services.Configure<IdentityOptions>(
+            //    options =>
+            //    {
+            //        // Password settings.
+            //        options.Password.RequireDigit = true;
+            //        options.Password.RequireLowercase = true;
+            //        options.Password.RequireNonAlphanumeric = true;
+            //        options.Password.RequireUppercase = true;
+            //        options.Password.RequiredLength = 6;
+            //        options.Password.RequiredUniqueChars = 1;
 
 
 
-                    // Lockout settings.
-                    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
-                    options.Lockout.MaxFailedAccessAttempts = 5;
-                    options.Lockout.AllowedForNewUsers = true;
+            //        // Lockout settings.
+            //        options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+            //        options.Lockout.MaxFailedAccessAttempts = 5;
+            //        options.Lockout.AllowedForNewUsers = true;
 
-                    // User settings.
-                    options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
-                    options.User.RequireUniqueEmail = true;
+            //        // User settings.
+            //        options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+            //        options.User.RequireUniqueEmail = true;
 
-                    // Sign-in settings.
-                    options.SignIn.RequireConfirmedAccount = true;
-                });
+            //        // Sign-in settings.
+            //        options.SignIn.RequireConfirmedAccount = true;
+            //    });
+
+            services.AddIdentityCore<ApplicationIdentityUser>(options =>
+            {
+                options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequireUppercase = true;
+                options.Password.RequiredLength = 6;
+                options.Password.RequiredUniqueChars = 1;
+
+                // Lockout settings.
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                options.Lockout.MaxFailedAccessAttempts = 5;
+                options.Lockout.AllowedForNewUsers = true;
+
+                // User settings.
+                options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+                options.User.RequireUniqueEmail = true;
+
+                // Sign-in settings.
+                options.SignIn.RequireConfirmedAccount = true;
+            })
+            .AddRoles<IdentityRole<string>>()
+            .AddEntityFrameworkStores<ApplicationDbContext>()
+            .AddDefaultTokenProviders();
+
         }
     }
 }
