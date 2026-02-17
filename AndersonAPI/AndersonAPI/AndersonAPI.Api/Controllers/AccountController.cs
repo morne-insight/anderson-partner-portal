@@ -487,7 +487,7 @@ namespace AndersonAPI.Api.Controllers
             try
             {
                 
-                _logger.LogInformation($"Encoded code length: {resetRequest.ResetCode!}");
+                _logger.LogInformation($"Encoded code length: {resetRequest.ResetCode!.Length}");
                 var code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(resetRequest.ResetCode!));
                 
                 _logger.LogInformation($"Decoded code length: {code.Length}");
