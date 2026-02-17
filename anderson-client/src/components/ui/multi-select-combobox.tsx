@@ -25,6 +25,7 @@ export interface MultiSelectItem {
 export interface MultiSelectComboboxProps<T extends MultiSelectItem> {
   items: T[];
   selectedIds: string[];
+  selectedItemsOverride?: T[];
   onSelectionChange: (ids: string[]) => void;
   placeholder?: string;
   emptyMessage?: string;
@@ -40,6 +41,7 @@ export interface MultiSelectComboboxProps<T extends MultiSelectItem> {
 export function MultiSelectCombobox<T extends MultiSelectItem>({
   items,
   selectedIds,
+  selectedItemsOverride,
   onSelectionChange,
   placeholder = "Search and select...",
   emptyMessage = "No items found.",
@@ -53,9 +55,9 @@ export function MultiSelectCombobox<T extends MultiSelectItem>({
 }: MultiSelectComboboxProps<T>) {
   const [inputValue, setInputValue] = useState("");
 
-  const selectedItems = items.filter(
-    (item) => item.id && selectedIds.includes(item.id)
-  );
+  const selectedItems =
+    selectedItemsOverride ??
+    items.filter((item) => item.id && selectedIds.includes(item.id));
 
   const handleValueChange = (value: unknown) => {
     const selected = value as T[];

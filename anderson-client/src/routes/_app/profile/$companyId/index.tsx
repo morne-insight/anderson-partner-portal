@@ -259,6 +259,12 @@ function ProfileEdit() {
   const [selectedServiceTypeForCreate, setSelectedServiceTypeForCreate] = useState('')
   const activeServiceTypeIdForSubTypes =
     selectedServiceTypeIds.length === 1 ? selectedServiceTypeIds[0] : selectedServiceTypeForCreate
+  const filteredServiceSubTypes =
+    serviceSubTypes?.filter((sst) =>
+      activeServiceTypeIdForSubTypes ? sst.serviceTypeId === activeServiceTypeIdForSubTypes : false
+    ) || []
+  const selectedServiceSubTypes =
+    serviceSubTypes?.filter((sst) => (sst.id ? selectedServiceSubTypeIds.includes(sst.id) : false)) || []
 
   useEffect(() => {
     if (!initialCompany) {
@@ -280,15 +286,11 @@ function ProfileEdit() {
 
     setSelectedServiceSubTypeIds((prev) =>
       prev.filter((id) => {
-        if (!activeServiceTypeIdForSubTypes) {
-          return false
-        }
-
         const subType = serviceSubTypes.find((item) => item.id === id)
-        return subType?.serviceTypeId === activeServiceTypeIdForSubTypes
+        return subType?.serviceTypeId ? selectedServiceTypeIds.includes(subType.serviceTypeId) : false
       })
     )
-  }, [activeServiceTypeIdForSubTypes, serviceSubTypes])
+  }, [selectedServiceTypeIds, serviceSubTypes])
 
   useEffect(() => {
     if (!selectedServiceTypeForCreate) {
@@ -1542,13 +1544,7 @@ function ProfileEdit() {
                 getItemLabel={(sst) => sst.name || ''}
                 helperText=""
                 isCreating={createServiceSubTypeMutation.isPending}
-                items={
-                  serviceSubTypes?.filter((sst) =>
-                    activeServiceTypeIdForSubTypes
-                      ? sst.serviceTypeId === activeServiceTypeIdForSubTypes
-                      : false
-                  ) || []
-                }
+                items={filteredServiceSubTypes}
                 noSelectionMessage="No specializations selected."
                 onCreateNew={
                   activeServiceTypeIdForSubTypes
@@ -1557,6 +1553,7 @@ function ProfileEdit() {
                 }
                 onSelectionChange={setSelectedServiceSubTypeIds}
                 placeholder="Search and select specializations..."
+                selectedItemsOverride={selectedServiceSubTypes}
                 selectedIds={selectedServiceSubTypeIds}
               />
             </div>
