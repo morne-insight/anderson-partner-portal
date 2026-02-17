@@ -39,6 +39,7 @@ namespace AndersonAPI.Api.Controllers
         private readonly ITokenService _tokenService;
         private readonly ISender _mediator;
         private readonly IConfiguration _configuration;
+        private readonly IDataProtectionProvider dataProtectionProvider;
 
         [IntentManaged(Mode.Merge)]
         public AccountController(IUserStore<ApplicationIdentityUser> userStore,
@@ -59,16 +60,13 @@ namespace AndersonAPI.Api.Controllers
             _tokenService = tokenService;
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
             _configuration = configuration;
+            
+            this.dataProtectionProvider = dataProtectionProvider;
 
             var options = _userManager.Options;
             _logger.LogInformation("PasswordResetTokenProvider={Provider}", options.Tokens.PasswordResetTokenProvider);
             _logger.LogInformation("ProviderMap={Providers}", string.Join(", ", options.Tokens.ProviderMap.Keys));
 
-            //var dp = HttpContext.RequestServices.GetRequiredService<IDataProtectionProvider>();
-            var protector = dataProtectionProvider.CreateProtector("probe");
-            var probe = protector.Protect("hello");
-            var roundtrip = protector.Unprotect(probe);
-            _logger.LogInformation("DP roundtrip ok={Ok}", roundtrip == "hello");
         }
 
         [HttpGet]
@@ -76,6 +74,10 @@ namespace AndersonAPI.Api.Controllers
         [IntentManaged(Mode.Ignore)]
         public IActionResult Run()
         {
+            var protector = dataProtectionProvider.CreateProtector("probe");
+            var probe = protector.Protect("hello");
+            var roundtrip = protector.Unprotect(probe);
+            _logger.LogInformation("DP roundtrip ok={Ok}", roundtrip == "hello");
             return Ok("AccountController is up");
         }
 
