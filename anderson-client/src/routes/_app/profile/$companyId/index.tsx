@@ -29,6 +29,7 @@ import {
 } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { toast } from 'sonner'
+import validator from 'validator'
 import z from 'zod'
 import type { CompanyContactDto, CompanyProfileDto, UpdateCompanyCommand } from '@/api/types.gen'
 import {
@@ -122,12 +123,8 @@ function ProfileEdit() {
   // Sync selected IDs when initialCompany data loads
   useEffect(() => {
     if (initialCompany) {
-      setSelectedCapabilityIds(
-        initialCompany.capabilities?.map((c) => c.id!).filter(Boolean) || []
-      )
-      setSelectedIndustryIds(
-        initialCompany.industries?.map((c) => c.id!).filter(Boolean) || []
-      )
+      setSelectedCapabilityIds(initialCompany.capabilities?.map((c) => c.id!).filter(Boolean) || [])
+      setSelectedIndustryIds(initialCompany.industries?.map((c) => c.id!).filter(Boolean) || [])
       setSelectedServiceSubTypeIds(
         initialCompany.serviceSubTypes?.map((s) => s.id!).filter(Boolean) || []
       )
@@ -138,7 +135,8 @@ function ProfileEdit() {
   const [scrapeUrl, setScrapeUrl] = useState(initialCompany?.websiteUrl || '')
 
   const isValidUrl = (url: string): boolean => {
-    const isValid = urlRegex.test(url)
+    // const isValid = urlRegex.test(url)
+    const isValid = validator.isURL(url, { protocols: ['http', 'https'], require_protocol: true })
     console.log(`is valid url (${url}):`, isValid)
     return isValid
   }
@@ -288,7 +286,9 @@ function ProfileEdit() {
       activeServiceTypeIdForSubTypes ? sst.serviceTypeId === activeServiceTypeIdForSubTypes : false
     ) || []
   const selectedServiceSubTypes =
-    serviceSubTypes?.filter((sst) => (sst.id ? selectedServiceSubTypeIds.includes(sst.id) : false)) || []
+    serviceSubTypes?.filter((sst) =>
+      sst.id ? selectedServiceSubTypeIds.includes(sst.id) : false
+    ) || []
 
   useEffect(() => {
     if (!initialCompany) {
@@ -311,7 +311,9 @@ function ProfileEdit() {
     setSelectedServiceSubTypeIds((prev) =>
       prev.filter((id) => {
         const subType = serviceSubTypes.find((item) => item.id === id)
-        return subType?.serviceTypeId ? selectedServiceTypeIds.includes(subType.serviceTypeId) : false
+        return subType?.serviceTypeId
+          ? selectedServiceTypeIds.includes(subType.serviceTypeId)
+          : false
       })
     )
   }, [selectedServiceTypeIds, serviceSubTypes])

@@ -3,15 +3,13 @@ import { createFileRoute, Link, useRouter } from '@tanstack/react-router'
 import { Building2, ChevronRight, Globe, Loader2, Plus, Users } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'sonner'
+import validator from 'validator'
 import type { CompanyDto } from '@/api'
+import { InviteList } from '@/components/app/company/InviteList'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useAuth } from '@/contexts/auth-context'
 import { callApi } from '@/server/proxy'
-import { InviteList } from '@/components/app/company/InviteList'
-
-// const urlRegex = /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z]{2,}(?:[-a-zA-Z0-9()@:%_+.~#?&/=]*)$/;
-const urlRegex = /^(https?:\/\/)?([\w\d-_]+)\.([\w\d-_.]+)\/?\??([^#\n\r]*)?#?([^\n\r]*)/
 
 export const Route = createFileRoute('/_app/profile/')({
   component: ProfileIndex,
@@ -31,7 +29,7 @@ function ProfileIndex() {
   console.log('user', user)
 
   const isValidUrl = (url: string): boolean => {
-    const isValid = urlRegex.test(url)
+    const isValid = validator.isURL(url, { protocols: ['http', 'https'], require_protocol: true })
     console.log(`is valid url (${url}):`, isValid)
     return isValid
   }
@@ -47,7 +45,7 @@ function ProfileIndex() {
         data: { fn: 'getApiInvitesMe' },
       })
     },
-  });
+  })
 
   const scrapeMutation = useMutation({
     mutationFn: async (url: string) => {
@@ -114,7 +112,6 @@ function ProfileIndex() {
       return url
     }
   }
-
 
   return (
     <div className="animate-fade-in space-y-8">

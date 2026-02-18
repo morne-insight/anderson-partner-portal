@@ -1137,7 +1137,6 @@ export const GetPartnersDirectoryQuerySchema = {
 		'countries',
 		'capabilities',
 		'industries',
-		'coreServices',
 	],
 	type: 'object',
 	properties: {

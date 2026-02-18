@@ -482,7 +482,7 @@ export type GetPartnersDirectoryQuery = {
 	countries: Array<string>
 	capabilities: Array<string>
 	industries: Array<string>
-	coreServices: Array<string>
+	coreServices?: Array<string>
 }
 
 /**
