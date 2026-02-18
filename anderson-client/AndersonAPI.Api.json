@@ -16233,13 +16233,6 @@
               "type": "string",
               "format": "uuid"
             }
-          },
-          "coreServices": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "format": "uuid"
-            }
           }
         }
       },
@@ -16836,6 +16829,12 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/PartnerLocationDto"
+            }
+          },
+          "headOffice": {
+            "type": "array",
+            "items": {
+              "title": "PartnerLocationDto"
             }
           },
           "contacts": {

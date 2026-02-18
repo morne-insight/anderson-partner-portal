@@ -69,11 +69,6 @@ namespace AndersonAPI.Application.Companies.GetPartnersDirectory
                     company.Capabilities.Any(capability => request.Capabilities.Contains(capability.Id)));
             }
             
-            if (request.CoreServices.Count > 0)
-            {
-                predicate = predicate.And(company =>
-                    company.ServiceSubTypes.Any(service => request.CoreServices.Contains(service.Id)));
-            }
 
             var companies = await _companyRepository.FindAllProjectToAsync<PartnerProfileListItem>(
                     predicate,

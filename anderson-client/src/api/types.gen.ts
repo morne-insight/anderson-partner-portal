@@ -482,7 +482,6 @@ export type GetPartnersDirectoryQuery = {
 	countries: Array<string>
 	capabilities: Array<string>
 	industries: Array<string>
-	coreServices?: Array<string>
 }
 
 /**
@@ -731,6 +730,7 @@ export type PartnerProfileListItem = {
 	shortDescription?: string
 	capabilities?: Array<PartnerCapabilityDto>
 	locations?: Array<PartnerLocationDto>
+	headOffice?: Array<unknown>
 	contacts?: Array<PartnerContactDto>
 	matchScore?: number
 	serviceSubTypes?: Array<PartnerServiceSubTypeDto>

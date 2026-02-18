@@ -1,5 +1,5 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { ArrowUpRight, Briefcase, Globe, Users } from "lucide-react";
+import { createFileRoute } from '@tanstack/react-router'
+import { ArrowUpRight, Briefcase, Globe, Users } from 'lucide-react'
 import {
   Bar,
   BarChart,
@@ -11,71 +11,71 @@ import {
   Tooltip,
   XAxis,
   YAxis,
-} from "recharts";
-import type { DashboardDto } from "../../api/types.gen";
-import { callApi } from "@/server/proxy";
+} from 'recharts'
+import { callApi } from '@/server/proxy'
+import type { DashboardDto } from '../../api/types.gen'
 
-export const Route = createFileRoute("/_app/dashboard")({
+export const Route = createFileRoute('/_app/dashboard')({
   component: Dashboard,
   loader: async (): Promise<DashboardDto> => {
     const response = await callApi({
       data: {
-        fn: 'getApiDashboard'
-      }
+        fn: 'getApiDashboard',
+      },
     })
-    return response ?? { opportunities: [], partners: [] };
+    return response ?? { opportunities: [], partners: [] }
   },
-});
+})
 
 function Dashboard() {
-  const data = Route.useLoaderData();
-  const partners = data.partners ?? [];
-  const opportunities = data.opportunities ?? [];
+  const data = Route.useLoaderData()
+  const partners = data.partners ?? []
+  const opportunities = data.opportunities ?? []
 
   // Aggregate partners by service type
   const serviceTypeCounts = partners.reduce(
     (acc, partner) => {
-      const type = partner.serviceType ?? "Unknown";
-      acc[type] = (acc[type] || 0) + 1;
-      return acc;
+      for (const serviceType of partner.serviceTypes ?? []) {
+        const type = serviceType.name ?? 'Unknown'
+        acc[type] = (acc[type] || 0) + 1
+      }
+      return acc
     },
     {} as Record<string, number>
-  );
+  )
 
   const serviceTypeData = Object.keys(serviceTypeCounts)
     .map((name) => ({
       name,
       value: serviceTypeCounts[name],
     }))
-    .sort((a, b) => b.value - a.value);
+    .sort((a, b) => b.value - a.value)
 
   // Aggregate partners by region
   const regionCounts = partners.reduce(
     (acc, partner) => {
       for (const location of partner.locations ?? []) {
-        const region = location.region ?? "Unknown";
-        acc[region] = (acc[region] || 0) + 1;
+        const region = location.region ?? 'Unknown'
+        acc[region] = (acc[region] || 0) + 1
       }
-      return acc;
+      return acc
     },
     {} as Record<string, number>
-  );
+  )
 
   const regionData = Object.keys(regionCounts)
     .map((name) => ({
       name,
       value: regionCounts[name],
     }))
-    .sort((a, b) => b.value - a.value);
+    .sort((a, b) => b.value - a.value)
 
-  const COLORS = ["#DB0A20", "#111111", "#555555", "#999999", "#CCCCCC"];
+  const COLORS = ['#DB0A20', '#111111', '#555555', '#999999', '#CCCCCC']
 
   return (
     <div className="animate-fade-in space-y-12">
       <header className="mb-12 border-gray-200 border-b pb-6">
-        <h2 className="mb-3 font-serif text-4xl text-black">
-          Network Overview
-        </h2>
+        <h2 className="mb-3 font-serif text-4xl text-black">Network Overview</h2>
         <p className="font-light text-gray-500 text-lg">
           Welcome back. Here is the pulse of the global network.
         </p>
@@ -89,9 +89,7 @@ function Dashboard() {
               <p className="mb-1 font-bold text-gray-400 text-xs uppercase tracking-widest">
                 Total Partners
               </p>
-              <h3 className="mt-2 font-serif text-5xl text-black">
-                {partners.length}
-              </h3>
+              <h3 className="mt-2 font-serif text-5xl text-black">{partners.length}</h3>
             </div>
             <div className="p-0">
               <Users className="h-6 w-6 text-gray-300 transition-colors group-hover:text-red-600" />
@@ -109,9 +107,7 @@ function Dashboard() {
               <p className="mb-1 font-bold text-gray-400 text-xs uppercase tracking-widest">
                 Active Opportunities
               </p>
-              <h3 className="mt-2 font-serif text-5xl text-black">
-                {opportunities.length}
-              </h3>
+              <h3 className="mt-2 font-serif text-5xl text-black">{opportunities.length}</h3>
             </div>
             <div className="p-0">
               <Briefcase className="h-6 w-6 text-gray-300 transition-colors group-hover:text-red-600" />
@@ -120,15 +116,17 @@ function Dashboard() {
           <div className="mt-6 flex items-center font-medium text-gray-500 text-xs uppercase tracking-wide">
             <span>
               {(() => {
-                const now = new Date();
-                const currentMonth = now.getMonth();
-                const currentYear = now.getFullYear();
+                const now = new Date()
+                const currentMonth = now.getMonth()
+                const currentYear = now.getFullYear()
                 const deadlinesThisMonth = opportunities.filter((o) => {
-                  if (!o.deadline) return false;
-                  const deadline = new Date(o.deadline);
-                  return deadline.getMonth() === currentMonth && deadline.getFullYear() === currentYear;
-                }).length;
-                return `${deadlinesThisMonth} deadline${deadlinesThisMonth !== 1 ? "s" : ""} this month`;
+                  if (!o.deadline) return false
+                  const deadline = new Date(o.deadline)
+                  return (
+                    deadline.getMonth() === currentMonth && deadline.getFullYear() === currentYear
+                  )
+                }).length
+                return `${deadlinesThisMonth} deadline${deadlinesThisMonth !== 1 ? 's' : ''} this month`
               })()}
             </span>
           </div>
@@ -168,38 +166,29 @@ function Dashboard() {
                 layout="vertical"
                 margin={{ top: 5, right: 30, left: 60, bottom: 5 }}
               >
-                <CartesianGrid
-                  horizontal={false}
-                  stroke="#e5e5e5"
-                  strokeDasharray="3 3"
-                />
+                <CartesianGrid horizontal={false} stroke="#e5e5e5" strokeDasharray="3 3" />
                 <XAxis hide type="number" />
                 <YAxis
                   axisLine={false}
                   dataKey="name"
                   interval={0}
-                  tick={{ fontSize: 10, fontFamily: "Inter", fill: "#555" }}
+                  tick={{ fontSize: 10, fontFamily: 'Inter', fill: '#555' }}
                   tickLine={false}
                   type="category"
                   width={140}
                 />
                 <Tooltip
                   contentStyle={{
-                    backgroundColor: "#111",
-                    color: "#fff",
-                    border: "none",
-                    borderRadius: "0px",
-                    padding: "8px 12px",
+                    backgroundColor: '#111',
+                    color: '#fff',
+                    border: 'none',
+                    borderRadius: '0px',
+                    padding: '8px 12px',
                   }}
-                  cursor={{ fill: "#f9f9f9" }}
-                  itemStyle={{ color: "#fff", fontSize: "12px" }}
+                  cursor={{ fill: '#f9f9f9' }}
+                  itemStyle={{ color: '#fff', fontSize: '12px' }}
                 />
-                <Bar
-                  barSize={16}
-                  dataKey="value"
-                  fill="#DB0A20"
-                  radius={[0, 0, 0, 0]}
-                />
+                <Bar barSize={16} dataKey="value" fill="#DB0A20" radius={[0, 0, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -225,21 +214,18 @@ function Dashboard() {
                   stroke="none"
                 >
                   {regionData.map((entry, index) => (
-                    <Cell
-                      fill={COLORS[index % COLORS.length]}
-                      key={`cell-${index}`}
-                    />
+                    <Cell fill={COLORS[index % COLORS.length]} key={`cell-${index}`} />
                   ))}
                 </Pie>
                 <Tooltip
                   contentStyle={{
-                    backgroundColor: "#111",
-                    color: "#fff",
-                    border: "none",
-                    borderRadius: "0px",
-                    padding: "8px 12px",
+                    backgroundColor: '#111',
+                    color: '#fff',
+                    border: 'none',
+                    borderRadius: '0px',
+                    padding: '8px 12px',
                   }}
-                  itemStyle={{ color: "#fff", fontSize: "12px" }}
+                  itemStyle={{ color: '#fff', fontSize: '12px' }}
                 />
               </PieChart>
             </ResponsiveContainer>
@@ -250,10 +236,7 @@ function Dashboard() {
                 className="flex items-center font-medium text-gray-500 text-xs uppercase tracking-wide"
                 key={index}
               >
-                <span
-                  className="mr-2 h-3 w-3"
-                  style={{ backgroundColor: COLORS[index] }}
-                />
+                <span className="mr-2 h-3 w-3" style={{ backgroundColor: COLORS[index] }} />
                 {entry.name}
               </div>
             ))}
@@ -261,5 +244,5 @@ function Dashboard() {
         </div>
       </div>
     </div>
-  );
+  )
 }

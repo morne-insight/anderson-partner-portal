@@ -34,9 +34,6 @@ namespace AndersonAPI.Application.Companies.GetPartnersDirectory
 
             RuleFor(v => v.Regions)
                 .NotNull();
-
-            RuleFor(v => v.CoreServices)
-                .NotNull();
         }
     }
 }

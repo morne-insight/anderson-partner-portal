@@ -20,12 +20,12 @@ namespace AndersonAPI.Application.Companies.SetServiceTypesCompany
             _companyRepository = companyRepository;
         }
 
-        [IntentManaged(Mode.Fully, Body = Mode.Fully)]
+        [IntentManaged(Mode.Fully, Body = Mode.Ignore)]
         public async Task Handle(SetServiceTypesCompanyCommand request, CancellationToken cancellationToken)
         {
             var company = await _companyRepository
                 .FindByIdAsync(
-                    request.Id, 
+                    request.Id,
                     queryOptions => queryOptions.Include(x => x.ServiceTypes),
                     cancellationToken);
 

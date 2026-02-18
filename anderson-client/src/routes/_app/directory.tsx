@@ -141,6 +141,12 @@ function NetworkDirectory() {
                 region: regions.data?.find((r: any) => r.id === l.regionId)?.name || 'Unknown',
                 isHeadOffice: l.isHeadOffice,
               })) || [],
+            headOffice:
+              company.headOffice?.map((l: any) => ({
+                country: countries.data?.find((c: any) => c.id === l.countryId)?.name || 'Unknown',
+                region: regions.data?.find((r: any) => r.id === l.regionId)?.name || 'Unknown',
+                isHeadOffice: l.isHeadOffice,
+              })) || [],
             contacts:
               company.contacts?.map((c: any) => ({
                 name: `${c.firstName || ''} ${c.lastName || ''}`.trim() || 'Contact',
@@ -505,7 +511,7 @@ function NetworkDirectory() {
             <div className="grid grid-cols-1 gap-4">
               {partners.map((partner: any) => {
                 const headOffice =
-                  partner.locations.find((l: any) => l.isHeadOffice) || partner.locations[0]
+                  partner.headOffice?.[0] || partner.locations.find((l: any) => l.isHeadOffice) || partner.locations[0]
                 const serviceTypeNames = partner.serviceTypeNames?.length
                   ? partner.serviceTypeNames
                   : ['Professional Services']

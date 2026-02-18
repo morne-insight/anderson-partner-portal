@@ -92,6 +92,12 @@ function PartnerSearch() {
               region: regions?.data?.find((r: any) => r.id === l.regionId)?.name || 'Unknown',
               isHeadOffice: l.isHeadOffice,
             })) || [],
+          headOffice:
+            partner.headOffice?.map((l: any) => ({
+              country: countries?.data?.find((c) => c.id === l.countryId)?.name || 'Unknown',
+              region: regions?.data?.find((r: any) => r.id === l.regionId)?.name || 'Unknown',
+              isHeadOffice: l.isHeadOffice,
+            })) || [],
           contacts:
             partner.contacts?.map((c: any) => ({
               name: `${c.firstName} ${c.lastName}`,
@@ -369,7 +375,7 @@ function PartnerSearch() {
       <div className="grid grid-cols-1 gap-6 pt-4">
         {displayedResults.map((partner: any) => {
           const headOffice =
-            partner.locations.find((l: any) => l.isHeadOffice) || partner.locations[0]
+            partner.headOffice?.[0] || partner.locations.find((l: any) => l.isHeadOffice) || partner.locations[0]
           const primaryContact =
             partner.contacts.find((c: any) => c.isDefault) || partner.contacts[0]
           const serviceTypeNames = partner.serviceTypeNames?.length

@@ -1572,11 +1572,11 @@ function ProfileEdit() {
                 isCreating={createServiceSubTypeMutation.isPending}
                 items={filteredServiceSubTypes}
                 noSelectionMessage="No specializations selected."
-                onCreateNew={
-                  activeServiceTypeIdForSubTypes
-                    ? (name) => createServiceSubTypeMutation.mutate(name)
-                    : undefined
-                }
+                // onCreateNew={
+                //   activeServiceTypeIdForSubTypes
+                //     ? (name) => createServiceSubTypeMutation.mutate(name)
+                //     : undefined
+                // }
                 onSelectionChange={setSelectedServiceSubTypeIds}
                 placeholder="Search and select specializations..."
                 selectedItemsOverride={selectedServiceSubTypes}
@@ -1619,7 +1619,7 @@ function ProfileEdit() {
                 isCreating={createCapabilityMutation.isPending}
                 items={capabilities || []}
                 noSelectionMessage="No core service offerings selected."
-                onCreateNew={(name) => createCapabilityMutation.mutate(name)}
+                // onCreateNew={(name) => createCapabilityMutation.mutate(name)}
                 onSelectionChange={setSelectedCapabilityIds}
                 placeholder="Search and select core service offerings..."
                 selectedIds={selectedCapabilityIds}
@@ -1642,7 +1642,7 @@ function ProfileEdit() {
                 isCreating={createIndustryMutation.isPending}
                 items={industries || []}
                 noSelectionMessage="No industries selected."
-                onCreateNew={(name) => createIndustryMutation.mutate(name)}
+                // onCreateNew={(name) => createIndustryMutation.mutate(name)}
                 onSelectionChange={setSelectedIndustryIds}
                 placeholder="Search and select industries..."
                 selectedIds={selectedIndustryIds}

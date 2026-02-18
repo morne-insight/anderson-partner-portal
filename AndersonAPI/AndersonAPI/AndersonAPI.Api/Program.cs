@@ -22,6 +22,7 @@ namespace AndersonAPI.Api
         [IntentManaged(Mode.Merge, Body = Mode.Merge)]
         public static void Main(string[] args)
         {
+            // IntentIgnore
             using var logger = new LoggerConfiguration()
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
                 .Enrich.FromLogContext()

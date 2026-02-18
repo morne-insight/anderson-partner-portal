@@ -9,7 +9,7 @@
       <updatedByDisplayName>Morne</updatedByDisplayName>
       <updatedAt>2026-02-04T13:25:33.4953028Z</updatedAt>
       <deviationsHash>841734C1186AD60726F2CC767A01C2A97843CF6929B7CAB987BFA1458FC575A5</deviationsHash>
-      <fileHash>0552C70C0AD8CDB9064E7916B1F5F0E0DFBC2865CB33826A2C7D583A2D6D04B8</fileHash>
+      <fileHash>F3D172E82B21D6E49A834FA7372C2856449CFFA5C360C10460AA16E3876852BF</fileHash>
     </file>
     <file>
       <correlationId>Intent.AspNetCore.Scalar.OpenApiConfiguration#64130ebe-1689-4740-8c31-4e478125a62a</correlationId>
@@ -24,12 +24,12 @@
     <file>
       <correlationId>Intent.AspNetCore.Identity.AccountController.AccountController#0d6d45f7-7869-4975-9dad-9730556c530f</correlationId>
       <path>AndersonAPI.Api/Controllers/AccountController.cs</path>
-      <count>19</count>
+      <count>20</count>
       <updatedByAccountName>mvanzyl@insightconsulting.co.za</updatedByAccountName>
       <updatedByDisplayName>Morne</updatedByDisplayName>
-      <updatedAt>2026-02-16T14:38:24.0884147Z</updatedAt>
-      <deviationsHash>143EA1F6DBE4FAFFC24BC8A0E99210C249EFBE607BA54B30499E8DD5A0FBF9AB</deviationsHash>
-      <fileHash>4A595A68953012BA27175F59892D10C5792CF06BB129BD98FD4D870B1455B795</fileHash>
+      <updatedAt>2026-02-18T20:02:05.6394406Z</updatedAt>
+      <deviationsHash>B4B50A7E96C053FB02A6C8EBB41D15DE9B8DB6752A860606F9E7224BEE66F38D</deviationsHash>
+      <fileHash>3C286B1A69905767B29498FC2062341DC2C4EBB6C7BFCBDDF4D924BA6287A4E0</fileHash>
     </file>
     <file>
       <correlationId>Intent.AspNetCore.Controllers.Controller#ece70b3a-0c7e-4f50-80e2-b00c3d541e46</correlationId>
@@ -44,12 +44,12 @@
     <file>
       <correlationId>Intent.AspNetCore.Program#ad457389-55ed-4603-9832-83f59fee22c9</correlationId>
       <path>AndersonAPI.Api/Program.cs</path>
-      <count>3</count>
+      <count>4</count>
       <updatedByAccountName>mvanzyl@insightconsulting.co.za</updatedByAccountName>
       <updatedByDisplayName>Morne</updatedByDisplayName>
-      <updatedAt>2026-02-16T15:53:44.0043516Z</updatedAt>
-      <deviationsHash>D407231F23B9CBA6D23C4514713FFBBFC1943A5C853A1BFE600101FDF0BF8CA0</deviationsHash>
-      <fileHash>B11BB54B47081A26DE0A6AC6C902845D147B8D401B3183067F5DA792D5DF170C</fileHash>
+      <updatedAt>2026-02-18T20:02:05.6386611Z</updatedAt>
+      <deviationsHash>8DF186A20BAD3DD42693CDDDF7EBEACB3C2A39428ACDB77675847F716E6B2FE4</deviationsHash>
+      <fileHash>97AF803636BBCE77CACF7CAF969BCAC642BCA6AD6A0BB7E3668CDBA970B114A3</fileHash>
     </file>
     <file>
       <correlationId>Intent.AspNetCore.Identity.AccountController.AccountEmailSender#6ca0b777-8e52-4201-b7e4-239aa4e98927</correlationId>
@@ -59,7 +59,7 @@
       <updatedByDisplayName>Morne</updatedByDisplayName>
       <updatedAt>2026-02-04T13:25:33.4986446Z</updatedAt>
       <deviationsHash>139B61814421CDA44A010AEB116FE79E37915BD656B59FFA1516146B5F41B90C</deviationsHash>
-      <fileHash>CB057FB85899028943BBBD314AE9D8C99EE78AAA420616802717E6D4272C2E6D</fileHash>
+      <fileHash>B033F1E652D4067899DB0D5E74889BCADD4C7EF06854AA936100904F7CBBEAFA</fileHash>
     </file>
     <file>
       <correlationId>Intent.Application.MediatR.CommandHandler#2400c0e2-b244-4543-b021-0a36b496cc5e</correlationId>
@@ -109,7 +109,7 @@
       <updatedByDisplayName>Morne</updatedByDisplayName>
       <updatedAt>2026-02-09T14:21:15.662379Z</updatedAt>
       <deviationsHash>9BB74AD16535C157642B66E54976187EA2C0206C90E81834D258707D42B28D2E</deviationsHash>
-      <fileHash>65E5820905FB3D7F3243E85FBBD107AA3881C5F916038B4EA4D5F2C819B8948B</fileHash>
+      <fileHash>BD80D448136BC982B2EBC5BA7BA8D4A6A258061F6F3B6FD066737E4391DC8378</fileHash>
     </file>
     <file>
       <correlationId>Intent.Application.MediatR.CommandHandler#14841a6a-9393-4c60-b890-fb81707325c0</correlationId>
@@ -142,6 +142,16 @@
       <fileHash>1A6D18509584D15C90B2C4320D27C83C71B3AB92DFECE43B7E8CF33DE5AE3035</fileHash>
     </file>
     <file>
+      <correlationId>Intent.Application.MediatR.CommandHandler#60dbacfb-ffb1-4ffb-a557-094e4c005d9c</correlationId>
+      <path>AndersonAPI.Application/Companies/SetServiceTypesCompany/SetServiceTypesCompanyCommandHandler.cs</path>
+      <count>1</count>
+      <updatedByAccountName>mvanzyl@insightconsulting.co.za</updatedByAccountName>
+      <updatedByDisplayName>Morne</updatedByDisplayName>
+      <updatedAt>2026-02-18T20:02:05.6410719Z</updatedAt>
+      <deviationsHash>3775C6B6BFE6A89E54513F1BFC2AFE8F9B14D5B0C353AFA59E25859C2F4054E2</deviationsHash>
+      <fileHash>4CE732F24623CCF7A54AF520AD26069733BA7B617D2433463BC2BDDFD537D647</fileHash>
+    </file>
+    <file>
       <correlationId>Intent.Application.MediatR.CommandHandler#210f7ae1-e774-4745-bc8e-1226f53fc985</correlationId>
       <path>AndersonAPI.Application/Companies/UpdateCompany/UpdateCompanyCommandHandler.cs</path>
       <count>1</count>
@@ -169,7 +179,7 @@
       <updatedByDisplayName>Morne</updatedByDisplayName>
       <updatedAt>2026-02-05T17:03:51.0001966Z</updatedAt>
       <deviationsHash>1752FA7D93FEE8EF2691862A2D0514EC207A5B09562DBAAC16D33FFC03D84A4F</deviationsHash>
-      <fileHash>F522A49C0718D77929BC02427D6E7A1099CE9F84D89A3DFA950239A6363DDB3F</fileHash>
+      <fileHash>6DBD8E719CC31267BD4180B96153A98898459A1060AED10859373EE320DDBEB9</fileHash>
     </file>
     <file>
       <correlationId>Intent.Application.MediatR.QueryHandler#38fbd2f3-83cb-40fb-9b4f-4a3b605ebdb2</correlationId>
@@ -312,44 +322,14 @@
       <fileHash>23098AB309147519C34071FF7CC9D2E10359C9347A0243B4D54F9978E37F8EA3</fileHash>
     </file>
     <file>
-      <correlationId>Intent.Entities.DomainEntity#bc2527a3-bd77-4c15-9f2e-7c23786d30a2</correlationId>
-      <path>AndersonAPI.Domain/Entities/Capability.cs</path>
-      <count>2</count>
-      <updatedByAccountName>mvanzyl@insightconsulting.co.za</updatedByAccountName>
-      <updatedByDisplayName>Morne</updatedByDisplayName>
-      <updatedAt>2026-02-04T13:25:33.4988288Z</updatedAt>
-      <deviationsHash>62C24637E41120889937A8194895E21BDCFEBF405D50A100E5333A66D189E06F</deviationsHash>
-      <fileHash>6AC2C91CEEFF2999AB48290C73DC432B18879D021B5E81790A6D85E60B082E81</fileHash>
-    </file>
-    <file>
-      <correlationId>Intent.Entities.DomainEntity#6c47b169-df9b-47ae-a098-8463d7d86ad2</correlationId>
-      <path>AndersonAPI.Domain/Entities/Industry.cs</path>
-      <count>2</count>
-      <updatedByAccountName>mvanzyl@insightconsulting.co.za</updatedByAccountName>
-      <updatedByDisplayName>Morne</updatedByDisplayName>
-      <updatedAt>2026-02-04T13:25:33.4988558Z</updatedAt>
-      <deviationsHash>75A9A3D60D657135824DA8F4AD202AD9E27FF874DB1DE686FA6D3728BCA781E7</deviationsHash>
-      <fileHash>040AA12D1FC7EEC07F37E3523E461CBE8FB52E54449385FFB2A338032C84FB8F</fileHash>
-    </file>
-    <file>
-      <correlationId>Intent.Entities.DomainEntity#0a870c91-8aed-48f7-84fc-1eeef5de87a2</correlationId>
-      <path>AndersonAPI.Domain/Entities/ServiceSubType.cs</path>
-      <count>2</count>
-      <updatedByAccountName>mvanzyl@insightconsulting.co.za</updatedByAccountName>
-      <updatedByDisplayName>Morne</updatedByDisplayName>
-      <updatedAt>2026-02-04T19:46:17.9343145Z</updatedAt>
-      <deviationsHash>05345EAB015F9D703B8957B9259BE1BCAE8AD0D43CF14CD730B8CD1EAA99D95A</deviationsHash>
-      <fileHash>355F051777194E0B34BB9D593008F0EDD9443F61C38F2649DD9578FA6843D8D1</fileHash>
-    </file>
-    <file>
       <correlationId>Intent.Entities.Repositories.Api.EntityRepositoryInterface#3259289c-5d51-46cb-8c99-78751b456c44</correlationId>
       <path>AndersonAPI.Domain/Repositories/ICompanyRepository.cs</path>
-      <count>3</count>
+      <count>4</count>
       <updatedByAccountName>mvanzyl@insightconsulting.co.za</updatedByAccountName>
       <updatedByDisplayName>Morne</updatedByDisplayName>
-      <updatedAt>2026-02-04T15:41:11.1781472Z</updatedAt>
-      <deviationsHash>2DC9344FD64A52B87D56BAEBCBE557FDB20E71EFE95A2A62260ABF949BE027AC</deviationsHash>
-      <fileHash>0EB8E2ABE45147EF4BC948757825BDA2AC9C2ACD83CE51D87B77B7E291F7B242</fileHash>
+      <updatedAt>2026-02-18T20:02:05.6481007Z</updatedAt>
+      <deviationsHash>16A284705639B4B8189C075E17CDB418255DC94A242D0210E71E85F7DFE9DE09</deviationsHash>
+      <fileHash>68314A6391C3D7C88B22FB897668963EF38AF5A73B26FEE902A77884DE214ACF</fileHash>
     </file>
     <file>
       <correlationId>Intent.Infrastructure.DependencyInjection.DependencyInjection#3dff9542-119a-42bf-9de8-29a368cdcce1</correlationId>
@@ -394,12 +374,12 @@
     <file>
       <correlationId>Intent.EntityFrameworkCore.Repositories.Repository#3259289c-5d51-46cb-8c99-78751b456c44</correlationId>
       <path>AndersonAPI.Infrastructure/Repositories/CompanyRepository.cs</path>
-      <count>3</count>
+      <count>4</count>
       <updatedByAccountName>mvanzyl@insightconsulting.co.za</updatedByAccountName>
       <updatedByDisplayName>Morne</updatedByDisplayName>
-      <updatedAt>2026-02-04T15:41:11.1783258Z</updatedAt>
-      <deviationsHash>0C888807FFDA9D13C49294AC5EBEB7FAF4784B0197A170D6B54745D1299CD419</deviationsHash>
-      <fileHash>12A62B7DA31EF2C07188275EB011C31465A14CA3C7918A474E82B35CA057D5CD</fileHash>
+      <updatedAt>2026-02-18T20:02:05.6482995Z</updatedAt>
+      <deviationsHash>C1263E6CC457EECB7B6889160610F2DA26C9D3955F909A4AA9AF9207B3972798</deviationsHash>
+      <fileHash>7F9BBBA8F7250D376BA7D7EA7581638E28C1DB79FBE068D8A7ED5627D6CBFB00</fileHash>
     </file>
   </files>
 </deviationsLog>

@@ -1,3 +1,7 @@
+using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
+using System.Text;
+using System.Text.Encodings.Web;
 using AndersonAPI.Api.Services;
 using AndersonAPI.Application.Account;
 using AndersonAPI.Application.Capabilities.DeleteCapability;
@@ -14,10 +18,6 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Serilog;
-using System.ComponentModel.DataAnnotations;
-using System.Security.Claims;
-using System.Text;
-using System.Text.Encodings.Web;
 
 [assembly: DefaultIntentManaged(Mode.Fully)]
 [assembly: IntentTemplate("Intent.AspNetCore.Identity.AccountController.AccountController", Version = "1.0")]
@@ -470,7 +470,7 @@ namespace AndersonAPI.Api.Controllers
 
         [HttpPost("~/api/[controller]/forgotPassword")]
         [AllowAnonymous]
-        [IntentManaged(Mode.Fully, Body = Mode.Merge)]
+        [IntentManaged(Mode.Fully, Body = Mode.Ignore)]
         public async Task<IActionResult> ForgotPassword(ForgotPasswordDto resetRequest)
         {
 
@@ -479,7 +479,7 @@ namespace AndersonAPI.Api.Controllers
             {
                 var code = await _userManager.GeneratePasswordResetTokenAsync(user);
                 code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                await _accountEmailSender.SendPasswordResetCode(resetRequest.Email!, user.Id,code);
+                await _accountEmailSender.SendPasswordResetCode(resetRequest.Email!, user.Id, code);
             }
 
             // Don't reveal that the user does not exist or is not confirmed, so don't return a 200 if we would have
@@ -501,7 +501,7 @@ namespace AndersonAPI.Api.Controllers
             }
 
             var user = await _userManager.FindByEmailAsync(resetRequest.Email!);
-            
+
             if (user is null || !await _userManager.IsEmailConfirmedAsync(user))
             {
                 // Don't reveal that the user does not exist or is not confirmed, so don't return a 200 if we would have
@@ -511,7 +511,7 @@ namespace AndersonAPI.Api.Controllers
             }
 
             IdentityResult result;
-            
+
             try
             {
                 var code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(resetRequest.ResetCode!));

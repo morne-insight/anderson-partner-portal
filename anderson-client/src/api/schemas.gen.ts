@@ -1198,13 +1198,6 @@ export const GetPartnersDirectoryQuerySchema = {
 				format: 'uuid',
 			},
 		},
-		coreServices: {
-			type: 'array',
-			items: {
-				type: 'string',
-				format: 'uuid',
-			},
-		},
 	},
 } as const
 
@@ -1822,6 +1815,12 @@ export const PartnerProfileListItemSchema = {
 			type: 'array',
 			items: {
 				$ref: '#/components/schemas/PartnerLocationDto',
+			},
+		},
+		headOffice: {
+			type: 'array',
+			items: {
+				title: 'PartnerLocationDto',
 			},
 		},
 		contacts: {

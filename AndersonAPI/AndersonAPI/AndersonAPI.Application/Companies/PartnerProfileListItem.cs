@@ -15,6 +15,7 @@ namespace AndersonAPI.Application.Companies
             ServiceSubTypes = null!;
             Capabilities = null!;
             Locations = null!;
+            HeadOffice = null!;
             Contacts = null!;
         }
 
@@ -23,6 +24,7 @@ namespace AndersonAPI.Application.Companies
         public string ShortDescription { get; set; }
         public List<PartnerCapabilityDto> Capabilities { get; set; }
         public List<PartnerLocationDto> Locations { get; set; }
+        public List<PartnerLocationDto> HeadOffice { get; set; }
         public List<PartnerContactDto> Contacts { get; set; }
         public double MatchScore { get; set; }
         public List<PartnerServiceSubTypeDto> ServiceSubTypes { get; set; }
@@ -36,6 +38,7 @@ namespace AndersonAPI.Application.Companies
             List<PartnerServiceSubTypeDto> serviceSubTypes,
             List<PartnerCapabilityDto> capabilities,
             List<PartnerLocationDto> locations,
+            List<PartnerLocationDto> headOffice,
             List<PartnerContactDto> contacts,
             double matchScore)
         {
@@ -49,6 +52,7 @@ namespace AndersonAPI.Application.Companies
 ,
                 Capabilities = capabilities,
                 Locations = locations,
+                HeadOffice = headOffice,
                 Contacts = contacts,
                 MatchScore = matchScore
             };

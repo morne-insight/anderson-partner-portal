@@ -43,6 +43,5 @@ namespace AndersonAPI.Application.Companies.GetPartnersDirectory
         public List<Guid> Countries { get; set; }
         public List<Guid> Capabilities { get; set; }
         public List<Guid> Industries { get; set; }
-        public List<Guid> CoreServices { get; set; }
     }
 }
