@@ -38,8 +38,6 @@ namespace AndersonAPI.Api.Controllers
         private readonly IAccountEmailSender _accountEmailSender;
         private readonly ITokenService _tokenService;
         private readonly ISender _mediator;
-        private readonly IConfiguration _configuration;
-        private readonly IDataProtectionProvider dataProtectionProvider;
 
         [IntentManaged(Mode.Merge)]
         public AccountController(IUserStore<ApplicationIdentityUser> userStore,
@@ -48,9 +46,7 @@ namespace AndersonAPI.Api.Controllers
                     ILogger<AccountController> logger,
                     IAccountEmailSender accountEmailSender,
                     ITokenService tokenService,
-                    ISender mediator,
-                    IConfiguration configuration,
-                    IDataProtectionProvider dataProtectionProvider)
+                    ISender mediator)
         {
             _userStore = userStore;
             _userManager = userManager;
@@ -59,26 +55,6 @@ namespace AndersonAPI.Api.Controllers
             _accountEmailSender = accountEmailSender;
             _tokenService = tokenService;
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
-            _configuration = configuration;
-            
-            this.dataProtectionProvider = dataProtectionProvider;
-
-            var options = _userManager.Options;
-            _logger.LogInformation("PasswordResetTokenProvider={Provider}", options.Tokens.PasswordResetTokenProvider);
-            _logger.LogInformation("ProviderMap={Providers}", string.Join(", ", options.Tokens.ProviderMap.Keys));
-
-        }
-
-        [HttpGet]
-        [AllowAnonymous]
-        [IntentManaged(Mode.Ignore)]
-        public IActionResult Run()
-        {
-            var protector = dataProtectionProvider.CreateProtector("probe");
-            var probe = protector.Protect("hello");
-            var roundtrip = protector.Unprotect(probe);
-            _logger.LogInformation("DP roundtrip ok={Ok}", roundtrip == "hello");
-            return Ok("AccountController is up");
         }
 
         [HttpPost]
@@ -474,26 +450,12 @@ namespace AndersonAPI.Api.Controllers
         [IntentManaged(Mode.Fully, Body = Mode.Merge)]
         public async Task<IActionResult> ForgotPassword(ForgotPasswordDto resetRequest)
         {
-            _logger.LogInformation("ForgotPassword - Instance: {InstanceId}, Machine: {Machine}, BlobUri: {BlobUri}, AppName: {AppName}",
-                Environment.GetEnvironmentVariable("WEBSITE_INSTANCE_ID") ?? "n/a",
-                Environment.MachineName,
-                _configuration["DataProtection:BlobUri"] ?? "n/a",
-                "AndersonAPI");
 
             var user = await _userManager.FindByEmailAsync(resetRequest.Email!);
-
-            _logger.LogInformation("ForgotPassword SecurityStamp: {Stamp}", user.SecurityStamp);
-
             if (user is not null && await _userManager.IsEmailConfirmedAsync(user))
             {
                 var code = await _userManager.GeneratePasswordResetTokenAsync(user);
-                _logger.LogInformation($"Generated password reset token: {code}");
-                _logger.LogInformation($"Generated password reset token length: {code.Length}");
-
                 code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-
-                _logger.LogInformation($"Encoded password reset code length: {code.Length}");
-
                 await _accountEmailSender.SendPasswordResetCode(resetRequest.Email!, user.Id,code);
             }
 
@@ -507,18 +469,10 @@ namespace AndersonAPI.Api.Controllers
         [IntentManaged(Mode.Merge)]
         public async Task<IActionResult> ResetPassword(ResetPasswordDto resetRequest)
         {
-            _logger.LogInformation("ForgotPassword - Instance: {InstanceId}, Machine: {Machine}, BlobUri: {BlobUri}, AppName: {AppName}",
-                Environment.GetEnvironmentVariable("WEBSITE_INSTANCE_ID") ?? "n/a",
-                Environment.MachineName,
-                _configuration["DataProtection:BlobUri"] ?? "n/a",
-                "AndersonAPI");
-
             var modelState = new ModelStateDictionary();
 
             var user = await _userManager.FindByEmailAsync(resetRequest.Email!);
             
-            _logger.LogInformation("ResetPassword SecurityStamp: {Stamp}", user.SecurityStamp);
-
             if (user is null || !await _userManager.IsEmailConfirmedAsync(user))
             {
                 // Don't reveal that the user does not exist or is not confirmed, so don't return a 200 if we would have
@@ -530,25 +484,8 @@ namespace AndersonAPI.Api.Controllers
             IdentityResult result;
             try
             {
-                
-                _logger.LogInformation($"Encoded code length: {resetRequest.ResetCode!.Length}");
                 var code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(resetRequest.ResetCode!));
-                
-                _logger.LogInformation($"Decoded code length: {code.Length}");
-                
-                _logger.LogInformation($"Decoded password reset token {code}");
-                
                 result = await _userManager.ResetPasswordAsync(user, code, resetRequest.NewPassword!);
-                //var isValid = user.VerifyPasswordToken(code);
-
-                //if (isValid)
-                //{
-                //    var changeCode = await _userManager.GeneratePasswordResetTokenAsync(user);
-                //}
-                //else
-                //{
-                //    result = IdentityResult.Failed(_userManager.ErrorDescriber.InvalidToken());
-                //}
             }
             catch (FormatException)
             {
@@ -663,15 +600,7 @@ namespace AndersonAPI.Api.Controllers
         private async Task SendConfirmationEmail(ApplicationIdentityUser user)
         {
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-            user.SetEmailConfirmationCode(code);
-            
-            _logger.LogInformation($"Generated code length: {code.Length}");
-            await _userManager.UpdateAsync(user);
-
             code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-            _logger.LogInformation($"Encoded code length: {code.Length}");
-            _logger.LogInformation($"Encoded email confirmation code: {code}");
-
             var userId = await _userManager.GetUserIdAsync(user);
 
             await _accountEmailSender.SendEmailConfirmationRequest(

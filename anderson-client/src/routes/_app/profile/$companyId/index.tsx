@@ -62,6 +62,8 @@ export const Route = createFileRoute('/_app/profile/$companyId/')({
   component: ProfileEdit,
 })
 
+const urlRegex = /^(https?:\/\/)?([\w\d-_]+)\.([\w\d-_.]+)\/?\??([^#\n\r]*)?#?([^\n\r]*)/
+
 function ProfileEdit() {
   const router = useRouter()
   const queryClient = useQueryClient()
@@ -119,6 +121,13 @@ function ProfileEdit() {
 
   // --- AI Scrape State ---
   const [scrapeUrl, setScrapeUrl] = useState(initialCompany?.websiteUrl || '')
+
+  const isValidUrl = (url: string): boolean => {
+    const isValid = urlRegex.test(url)
+    console.log(`is valid url (${url}):`, isValid)
+    return isValid
+  }
+
   const scrapeMutation = useMutation({
     mutationFn: async (url: string) => {
       return await callApi({
@@ -693,7 +702,7 @@ function ProfileEdit() {
             </div>
             <button
               className="whitespace-nowrap bg-red-600 px-8 py-3 font-bold text-white text-xs uppercase tracking-[0.2em] transition-colors hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-50"
-              disabled={scrapeMutation.isPending || !scrapeUrl}
+              disabled={scrapeMutation.isPending || !isValidUrl(scrapeUrl)}
               onClick={() => scrapeMutation.mutate(scrapeUrl)}
               type="button"
             >

@@ -1,4 +1,3 @@
-using System.Runtime.Intrinsics.Arm;
 using AndersonAPI.Api.Configuration;
 using AndersonAPI.Api.Filters;
 using AndersonAPI.Api.Logging;
@@ -121,11 +120,6 @@ namespace AndersonAPI.Api
                     app.UseDeveloperExceptionPage();
                 }
 
-                //app.Lifetime.ApplicationStarted.Register(() =>
-                //{
-                //    Console.WriteLine(">>> ApplicationStarted fired");
-                //});
-
                 // Configure the HTTP request pipeline.
                 app.Use(async (ctx, next) =>
                 {
@@ -190,7 +184,6 @@ namespace AndersonAPI.Api
                 app.MapDefaultHealthChecks();
                 app.MapControllers();
 
-                //logger.Write(LogEventLevel.Information, "Starting web host");
                 logger.Write(LogEventLevel.Information, "Starting web host");
 
                 app.Run();
@@ -204,7 +197,6 @@ namespace AndersonAPI.Api
             catch (Exception ex)
             {
                 logger.Write(LogEventLevel.Fatal, ex, "Unhandled exception");
-                //logger.Write(LogEventLevel.Fatal, ex, "Unhandled exception");
                 Log.Fatal(ex, "Unhandled exception");
             }
         }

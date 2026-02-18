@@ -28,8 +28,6 @@ namespace AndersonAPI.Api.Configuration
             //        options.Password.RequiredLength = 6;
             //        options.Password.RequiredUniqueChars = 1;
 
-
-
             //        // Lockout settings.
             //        options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
             //        options.Lockout.MaxFailedAccessAttempts = 5;
