@@ -1,7 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-using System.Security.Claims;
-using System.Text;
-using System.Text.Encodings.Web;
 using AndersonAPI.Api.Services;
 using AndersonAPI.Application.Account;
 using AndersonAPI.Application.Capabilities.DeleteCapability;
@@ -11,11 +7,17 @@ using AndersonAPI.Domain.Entities;
 using Intent.RoslynWeaver.Attributes;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.IdentityModel.JsonWebTokens;
+using Serilog;
+using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
+using System.Text;
+using System.Text.Encodings.Web;
 
 [assembly: DefaultIntentManaged(Mode.Fully)]
 [assembly: IntentTemplate("Intent.AspNetCore.Identity.AccountController.AccountController", Version = "1.0")]
@@ -334,13 +336,10 @@ namespace AndersonAPI.Api.Controllers
                 return Forbid();
             }
 
-            if (_userManager.Options.SignIn.RequireConfirmedAccount)
+            if (_userManager.Options.SignIn.RequireConfirmedAccount && !await _userManager.IsEmailConfirmedAsync(user))
             {
-                if (!await _userManager.IsEmailConfirmedAsync(user))
-                {
-                    _logger.LogWarning("Email not confirmed.");
-                    return Forbid();
-                }
+                _logger.LogWarning("Email not confirmed.");
+                return Forbid();
             }
 
             if (await _userManager.IsLockedOutAsync(user))
@@ -474,17 +473,13 @@ namespace AndersonAPI.Api.Controllers
         [IntentManaged(Mode.Fully, Body = Mode.Merge)]
         public async Task<IActionResult> ForgotPassword(ForgotPasswordDto resetRequest)
         {
-            var user = await _userManager.FindByEmailAsync(resetRequest.Email!);
 
+            var user = await _userManager.FindByEmailAsync(resetRequest.Email!);
             if (user is not null && await _userManager.IsEmailConfirmedAsync(user))
             {
                 var code = await _userManager.GeneratePasswordResetTokenAsync(user);
-                user.SetPasswordToken(code);
-                await _userManager.UpdateAsync(user);
                 code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-
-                await _accountEmailSender.SendPasswordResetCode(resetRequest.Email!, user.Id,
-                    HtmlEncoder.Default.Encode(code));
+                await _accountEmailSender.SendPasswordResetCode(resetRequest.Email!, user.Id,code);
             }
 
             // Don't reveal that the user does not exist or is not confirmed, so don't return a 200 if we would have
@@ -494,6 +489,7 @@ namespace AndersonAPI.Api.Controllers
 
         [HttpPost("~/api/[controller]/resetPassword")]
         [AllowAnonymous]
+        [IntentManaged(Mode.Merge)]
         public async Task<IActionResult> ResetPassword(ResetPasswordDto resetRequest)
         {
             var modelState = new ModelStateDictionary();
@@ -505,7 +501,7 @@ namespace AndersonAPI.Api.Controllers
             }
 
             var user = await _userManager.FindByEmailAsync(resetRequest.Email!);
-
+            
             if (user is null || !await _userManager.IsEmailConfirmedAsync(user))
             {
                 // Don't reveal that the user does not exist or is not confirmed, so don't return a 200 if we would have
@@ -519,19 +515,7 @@ namespace AndersonAPI.Api.Controllers
             try
             {
                 var code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(resetRequest.ResetCode!));
-                var isValid = user.VerifyPasswordToken(code);
-
-                if (isValid)
-                {
-                    var changeCode = await _userManager.GeneratePasswordResetTokenAsync(user);
-                    result = await _userManager.ResetPasswordAsync(user, changeCode, resetRequest.NewPassword!);
-                    await _userManager.RemovePasswordAsync(user);
-                    await _userManager.AddPasswordAsync(user, resetRequest.NewPassword);
-                }
-                else
-                {
-                    result = IdentityResult.Failed(_userManager.ErrorDescriber.InvalidToken());
-                }
+                result = await _userManager.ResetPasswordAsync(user, code, resetRequest.NewPassword!);
             }
             catch (FormatException)
             {
@@ -542,6 +526,7 @@ namespace AndersonAPI.Api.Controllers
             {
                 foreach (var error in result.Errors)
                 {
+                    _logger.LogError($"Error resetting password: {error.Code} - {error.Description}");
                     modelState.AddModelError(string.Empty, error.Description);
                 }
 
@@ -645,10 +630,7 @@ namespace AndersonAPI.Api.Controllers
         private async Task SendConfirmationEmail(ApplicationIdentityUser user)
         {
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-            user.SetEmailConfirmationCode(code);
-            await _userManager.UpdateAsync(user);
             code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-
             var userId = await _userManager.GetUserIdAsync(user);
 
             await _accountEmailSender.SendEmailConfirmationRequest(

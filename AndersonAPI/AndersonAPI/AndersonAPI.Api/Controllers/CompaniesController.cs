@@ -24,6 +24,7 @@ using AndersonAPI.Application.Companies.SetCapabilitiesCompany;
 using AndersonAPI.Application.Companies.SetHeadOfficeCompany;
 using AndersonAPI.Application.Companies.SetIndustriesCompany;
 using AndersonAPI.Application.Companies.SetServiceSubTypeCompany;
+using AndersonAPI.Application.Companies.SetServiceTypesCompany;
 using AndersonAPI.Application.Companies.SetStateCompany;
 using AndersonAPI.Application.Companies.UpdateCompany;
 using AndersonAPI.Application.Companies.UpdateContactCompany;
@@ -382,6 +383,39 @@ namespace AndersonAPI.Api.Controllers
         public async Task<ActionResult> SetServiceSubTypeCompany(
             [FromRoute] Guid id,
             [FromBody] SetServiceSubTypeCompanyCommand command,
+            CancellationToken cancellationToken = default)
+        {
+            if (command.Id == Guid.Empty)
+            {
+                command.Id = id;
+            }
+
+            if (id != command.Id)
+            {
+                return BadRequest();
+            }
+
+            await _mediator.Send(command, cancellationToken);
+            return NoContent();
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <response code="204">Successfully updated.</response>
+        /// <response code="400">One or more validation errors have occurred.</response>
+        /// <response code="401">Unauthorized request.</response>
+        /// <response code="403">Forbidden request.</response>
+        /// <response code="404">One or more entities could not be found with the provided parameters.</response>
+        [HttpPut("api/companies/{id}/service-types")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> SetServiceTypesCompany(
+            [FromRoute] Guid id,
+            [FromBody] SetServiceTypesCompanyCommand command,
             CancellationToken cancellationToken = default)
         {
             if (command.Id == Guid.Empty)

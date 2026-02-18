@@ -12,7 +12,7 @@ namespace AndersonAPI.Application.Companies
         public CompanyDtoProfile()
         {
             CreateMap<Company, CompanyDto>()
-                .ForMember(d => d.ServiceTypeName, opt => opt.MapFrom(src => src.ServiceType != null ? src.ServiceType!.Name : null));
+                .ForMember(d => d.ServiceTypes, opt => opt.MapFrom(src => src.ServiceTypes));
         }
     }
 

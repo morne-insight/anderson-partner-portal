@@ -9,19 +9,21 @@ namespace AndersonAPI.Application.Dashboard
     {
         public DashboardPartnerDto()
         {
-            ServiceType = null!;
             Locations = null!;
+            ServiceTypes = null!;
         }
-
-        public string ServiceType { get; set; }
         public List<DashboardLocationDto> Locations { get; set; }
+        public List<DashboardServiceTypeDto> ServiceTypes { get; set; }
 
-        public static DashboardPartnerDto Create(string serviceType, List<DashboardLocationDto> locations)
+        public static DashboardPartnerDto Create(
+            List<DashboardLocationDto> locations,
+            List<DashboardServiceTypeDto> serviceTypes)
         {
             return new DashboardPartnerDto
             {
-                ServiceType = serviceType,
                 Locations = locations
+,
+                ServiceTypes = serviceTypes
             };
         }
     }

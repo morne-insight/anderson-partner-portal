@@ -88,8 +88,8 @@
       <childElements />
     </childElement>
     <childElement id="557d10b0-c819-4a4d-b7c6-1af58e8f9fd6" type="DTO-Field" typeId="7baed1fd-469b-4980-8fd9-4cefb8331eb2">
-      <name>ServiceTypeIds</name>
-      <display>ServiceTypeIds: guid[*]</display>
+      <name>ServiceTypes</name>
+      <display>ServiceTypes: guid[*]</display>
       <isAbstract>false</isAbstract>
       <genericTypes />
       <typeReference id="74706753-47c8-430d-8574-dc1e17e971e6">

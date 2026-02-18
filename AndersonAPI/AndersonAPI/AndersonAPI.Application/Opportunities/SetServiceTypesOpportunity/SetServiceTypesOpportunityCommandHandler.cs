@@ -30,7 +30,7 @@ namespace AndersonAPI.Application.Opportunities.SetServiceTypesOpportunity
                 throw new NotFoundException($"Could not find Opportunity '{request.Id}'");
             }
 
-            var serviceTypes = await _serviceTypeRepository.FindByIdsAsync(request.ServiceTypeIds.ToArray(), cancellationToken);
+            var serviceTypes = await _serviceTypeRepository.FindByIdsAsync(request.ServiceTypes.ToArray(), cancellationToken);
             opportunity.SetServiceTypes(serviceTypes);
         }
     }

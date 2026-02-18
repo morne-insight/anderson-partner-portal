@@ -1,5 +1,5 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useStore } from "@tanstack/react-store";
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import { useStore } from '@tanstack/react-store'
 import {
   Briefcase,
   CheckCircle,
@@ -11,12 +11,13 @@ import {
   Sparkles,
   User,
   X,
-} from "lucide-react";
-import React from "react";
-import { ConnectRequestDialog } from "@/components/ConnectRequestDialog";
-import { Button } from "@/components/ui/button";
-import { usePrefetchReferenceData } from "@/hooks/useReferenceData";
-import { callApi } from "@/server/proxy";
+} from 'lucide-react'
+import React from 'react'
+import { toast } from 'sonner'
+import { ConnectRequestDialog } from '@/components/ConnectRequestDialog'
+import { Button } from '@/components/ui/button'
+import { usePrefetchReferenceData } from '@/hooks/useReferenceData'
+import { callApi } from '@/server/proxy'
 import {
   clearFilters,
   partnersSearchStore,
@@ -29,78 +30,66 @@ import {
   setShowCountryDropdown,
   setShowRegionDropdown,
   setShowServiceDropdown,
-} from "@/stores/partnersSearchStore";
-import { toast } from "sonner";
+} from '@/stores/partnersSearchStore'
 
-export const Route = createFileRoute("/_app/partners/")({
+export const Route = createFileRoute('/_app/partners/')({
   component: PartnerSearch,
-});
+})
 
 function PartnerSearch() {
-  const navigate = useNavigate();
-  const { serviceTypes, countries, regions, isLoading, isError } = usePrefetchReferenceData();
+  const navigate = useNavigate()
+  const { serviceTypes, countries, regions, isLoading, isError } = usePrefetchReferenceData()
 
-  const searchState = useStore(partnersSearchStore);
+  const searchState = useStore(partnersSearchStore)
   const {
     query,
     results,
     isSearching,
-    filters: {
-      activeRegionFilter,
-      selectedServiceType,
-      selectedCountry,
-      selectedCapabilities,
-    },
+    filters: { activeRegionFilter, selectedServiceType, selectedCountry, selectedCapabilities },
     showServiceDropdown,
     showRegionDropdown,
     showCountryDropdown,
-  } = searchState;
+  } = searchState
 
-  const allServiceTypes = serviceTypes.data?.map((s) => s.name).sort();
-  const allRegions = regions.data?.map((r) => r.name).sort();
+  const allServiceTypes = serviceTypes.data?.map((s) => s.name).sort()
+  const allRegions = regions.data?.map((r) => r.name).sort()
 
   const availableCountries = React.useMemo(() => {
-    if (activeRegionFilter === "All")
-      return countries.data?.map((c) => c.name).sort();
-    const regionId = regions.data?.find(
-      (r) => r.name === activeRegionFilter
-    )?.id;
+    if (activeRegionFilter === 'All') return countries.data?.map((c) => c.name).sort()
+    const regionId = regions.data?.find((r) => r.name === activeRegionFilter)?.id
     return countries.data
       ?.filter((c) => c.regionId === regionId)
       .map((c) => c.name)
-      .sort();
-  }, [activeRegionFilter, countries, regions]);
+      .sort()
+  }, [activeRegionFilter, countries, regions])
 
   const handleSearch = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!query.trim()) return;
+    e.preventDefault()
+    if (!query.trim()) return
 
-    setIsSearching(true);
+    setIsSearching(true)
     try {
       const response = await callApi({
         data: {
-          fn: "putApiCompaniesPartners",
+          fn: 'putApiCompaniesPartners',
           args: { body: { query } },
         },
-      });
+      })
 
       const transformed = (response || []).map((partner: any) => {
         return {
           id: partner.id,
           name: partner.name,
-          description: partner.shortDescription || "No description provided.",
+          description: partner.shortDescription || 'No description provided.',
           matchScore: partner.matchScore ? Math.round(partner.matchScore) : 85,
           skills: partner.capabilities?.map((c: any) => c.name) || [],
           verified: true,
-          serviceType: partner.serviceTypeName || "Unknown",
+          serviceTypeNames:
+            partner.serviceTypes?.map((serviceType: any) => serviceType.name).filter(Boolean) || [],
           locations:
             partner.locations?.map((l: any) => ({
-              country:
-                countries?.data?.find((c) => c.id === l.countryId)?.name ||
-                "Unknown",
-              region:
-                regions?.data?.find((r: any) => r.id === l.regionId)?.name ||
-                "Unknown",
+              country: countries?.data?.find((c) => c.id === l.countryId)?.name || 'Unknown',
+              region: regions?.data?.find((r: any) => r.id === l.regionId)?.name || 'Unknown',
               isHeadOffice: l.isHeadOffice,
             })) || [],
           contacts:
@@ -109,51 +98,46 @@ function PartnerSearch() {
               email: c.emailAddress,
               isDefault: true,
             })) || [],
-        };
-      });
+        }
+      })
 
-      setResults(transformed);
+      setResults(transformed)
     } catch (error) {
-      console.error("AI Search failed", error);
-      toast.error("AI Search failed");
+      console.error('AI Search failed', error)
+      toast.error('AI Search failed')
     } finally {
-      setIsSearching(false);
+      setIsSearching(false)
     }
-  };
+  }
 
   const handleCountrySelect = (country: string) => {
-    setSelectedCountry(country);
-    setShowCountryDropdown(false);
-  };
+    setSelectedCountry(country)
+    setShowCountryDropdown(false)
+  }
 
   const displayedResults = results.filter((partner: any) => {
     if (
-      activeRegionFilter !== "All" &&
+      activeRegionFilter !== 'All' &&
       !partner.locations.some((l: any) => l.region === activeRegionFilter)
     )
-      return false;
+      return false
+    if (selectedServiceType !== 'All' && !partner.serviceTypeNames?.includes(selectedServiceType))
+      return false
     if (
-      selectedServiceType !== "All" &&
-      partner.serviceType !== selectedServiceType
-    )
-      return false;
-    if (
-      selectedCountry !== "All" &&
+      selectedCountry !== 'All' &&
       !partner.locations.some((l: any) => l.country === selectedCountry)
     )
-      return false;
+      return false
     if (selectedCapabilities.length > 0) {
-      const hasAll = selectedCapabilities.every((cap: any) =>
-        partner.skills.includes(cap)
-      );
-      if (!hasAll) return false;
+      const hasAll = selectedCapabilities.every((cap: any) => partner.skills.includes(cap))
+      if (!hasAll) return false
     }
-    return true;
-  });
+    return true
+  })
 
   const handleClearFilters = () => {
-    clearFilters();
-  };
+    clearFilters()
+  }
 
   // Show loading state while reference data is loading
   if (isLoading) {
@@ -161,7 +145,7 @@ function PartnerSearch() {
       <div className="flex min-h-screen items-center justify-center">
         <Loader2 className="h-8 w-8 animate-spin text-gray-300" />
       </div>
-    );
+    )
   }
 
   // Ensure we have the data before proceeding
@@ -173,7 +157,7 @@ function PartnerSearch() {
           <Button onClick={() => window.location.reload()}>Retry</Button>
         </div>
       </div>
-    );
+    )
   }
 
   return (
@@ -181,8 +165,7 @@ function PartnerSearch() {
       <header className="border-gray-200 border-b pb-6">
         <h2 className="mb-3 font-serif text-4xl text-black">Find Expertise</h2>
         <p className="font-light text-gray-500 text-lg">
-          Use natural language to find the perfect partner across the global
-          network.
+          Use natural language to find the perfect partner across the global network.
         </p>
       </header>
 
@@ -196,10 +179,10 @@ function PartnerSearch() {
               className="min-h-[80px] w-full resize-none rounded-none bg-transparent py-1 pr-4 pl-10 font-serif text-2xl text-gray-900 leading-relaxed placeholder-gray-300 focus:outline-none"
               onChange={(e) => setQuery(e.target.value)}
               onKeyDown={(e) => {
-                if (e.key === "Enter" && e.shiftKey) {
-                  console.log("Shift + Enter pressed");
-                  e.preventDefault();
-                  handleSearch(e as unknown as React.FormEvent);
+                if (e.key === 'Enter' && e.shiftKey) {
+                  console.log('Shift + Enter pressed')
+                  e.preventDefault()
+                  handleSearch(e as unknown as React.FormEvent)
                 }
               }}
               placeholder="I'm looking for a tax consulting partner based in Europe with SAP expertise..."
@@ -207,11 +190,9 @@ function PartnerSearch() {
             />
           </div>
           <div className="flex items-center justify-between">
-            <span className="text-gray-400 text-xs">
-              Shift + Enter to run search
-            </span>
+            <span className="text-gray-400 text-xs">Shift + Enter to run search</span>
             <button
-              className={`flex items-center gap-3 bg-black px-8 py-3 font-bold text-[10px] text-white uppercase tracking-[0.2em] shadow-md transition-all hover:bg-red-600 ${isSearching ? "cursor-wait opacity-70" : ""
+              className={`flex items-center gap-3 bg-black px-8 py-3 font-bold text-[10px] text-white uppercase tracking-[0.2em] shadow-md transition-all hover:bg-red-600 ${isSearching ? 'cursor-wait opacity-70' : ''
                 }`}
               disabled={isSearching}
               type="submit"
@@ -238,9 +219,9 @@ function PartnerSearch() {
           </span>
           <div className="relative">
             <button
-              className={`flex items-center gap-2 border px-4 py-2 font-bold text-[10px] uppercase tracking-wider transition-colors ${selectedServiceType !== "All"
-                ? "border-black bg-black text-white"
-                : "border-gray-300 bg-white text-gray-900 hover:border-gray-900"
+              className={`flex items-center gap-2 border px-4 py-2 font-bold text-[10px] uppercase tracking-wider transition-colors ${selectedServiceType !== 'All'
+                ? 'border-black bg-black text-white'
+                : 'border-gray-300 bg-white text-gray-900 hover:border-gray-900'
                 }`}
               onClick={() => setShowServiceDropdown(!showServiceDropdown)}
               type="button"
@@ -252,8 +233,8 @@ function PartnerSearch() {
                 <button
                   className="w-full border-b px-4 py-3 text-left text-xs hover:bg-gray-50"
                   onClick={() => {
-                    setSelectedServiceType("All");
-                    setShowServiceDropdown(false);
+                    setSelectedServiceType('All')
+                    setShowServiceDropdown(false)
                   }}
                   type="button"
                 >
@@ -264,8 +245,8 @@ function PartnerSearch() {
                     className="w-full border-b px-4 py-3 text-left text-xs last:border-0 hover:bg-gray-50"
                     key={type}
                     onClick={() => {
-                      setSelectedServiceType(type);
-                      setShowServiceDropdown(false);
+                      setSelectedServiceType(type)
+                      setShowServiceDropdown(false)
                     }}
                     type="button"
                   >
@@ -277,9 +258,9 @@ function PartnerSearch() {
           </div>
           <div className="relative">
             <button
-              className={`flex items-center gap-2 border px-4 py-2 font-bold text-[10px] uppercase tracking-wider transition-colors ${activeRegionFilter !== "All"
-                ? "border-black bg-black text-white"
-                : "border-gray-300 bg-white text-gray-900 hover:border-gray-900"
+              className={`flex items-center gap-2 border px-4 py-2 font-bold text-[10px] uppercase tracking-wider transition-colors ${activeRegionFilter !== 'All'
+                ? 'border-black bg-black text-white'
+                : 'border-gray-300 bg-white text-gray-900 hover:border-gray-900'
                 }`}
               onClick={() => setShowRegionDropdown(!showRegionDropdown)}
               type="button"
@@ -291,8 +272,8 @@ function PartnerSearch() {
                 <button
                   className="w-full border-b px-4 py-3 text-left text-xs hover:bg-gray-50"
                   onClick={() => {
-                    setActiveRegionFilter("All");
-                    setShowRegionDropdown(false);
+                    setActiveRegionFilter('All')
+                    setShowRegionDropdown(false)
                   }}
                   type="button"
                 >
@@ -303,8 +284,8 @@ function PartnerSearch() {
                     className="w-full border-b px-4 py-3 text-left text-xs last:border-0 hover:bg-gray-50"
                     key={region}
                     onClick={() => {
-                      setActiveRegionFilter(region);
-                      setShowRegionDropdown(false);
+                      setActiveRegionFilter(region)
+                      setShowRegionDropdown(false)
                     }}
                     type="button"
                   >
@@ -316,9 +297,9 @@ function PartnerSearch() {
           </div>
           <div className="relative">
             <button
-              className={`flex items-center gap-2 border px-4 py-2 font-bold text-[10px] uppercase tracking-wider transition-colors ${selectedCountry !== "All"
-                ? "border-black bg-black text-white"
-                : "border-gray-300 bg-white text-gray-900 hover:border-gray-900"
+              className={`flex items-center gap-2 border px-4 py-2 font-bold text-[10px] uppercase tracking-wider transition-colors ${selectedCountry !== 'All'
+                ? 'border-black bg-black text-white'
+                : 'border-gray-300 bg-white text-gray-900 hover:border-gray-900'
                 }`}
               onClick={() => setShowCountryDropdown(!showCountryDropdown)}
               type="button"
@@ -329,7 +310,7 @@ function PartnerSearch() {
               <div className="absolute top-full left-0 z-20 mt-1 max-h-60 w-56 overflow-y-auto border border-gray-200 bg-white shadow-xl">
                 <button
                   className="w-full border-b px-4 py-3 text-left text-xs hover:bg-gray-50"
-                  onClick={() => handleCountrySelect("All")}
+                  onClick={() => handleCountrySelect('All')}
                   type="button"
                 >
                   All Countries
@@ -352,10 +333,10 @@ function PartnerSearch() {
           <span className="font-bold text-[10px] text-gray-400 uppercase tracking-widest">
             Found {displayedResults.length} partners
           </span>
-          {(activeRegionFilter !== "All" ||
-            selectedServiceType !== "All" ||
+          {(activeRegionFilter !== 'All' ||
+            selectedServiceType !== 'All' ||
             selectedCapabilities.length > 0 ||
-            selectedCountry !== "All") && (
+            selectedCountry !== 'All') && (
               <button
                 className="flex items-center font-bold text-[10px] text-red-600 uppercase tracking-widest transition-colors hover:text-black"
                 onClick={handleClearFilters}
@@ -369,11 +350,11 @@ function PartnerSearch() {
 
       {/* Region Tabs */}
       <div className="no-scrollbar flex gap-8 overflow-x-auto border-gray-200 border-b pb-0">
-        {["All", ...(allRegions || [])].map((region: any) => (
+        {['All', ...(allRegions || [])].map((region: any) => (
           <button
             className={`whitespace-nowrap border-b-2 pb-4 font-bold text-xs uppercase tracking-widest transition-colors ${activeRegionFilter === region
-              ? "border-red-600 text-red-600"
-              : "border-transparent text-gray-400 hover:text-gray-900"
+              ? 'border-red-600 text-red-600'
+              : 'border-transparent text-gray-400 hover:text-gray-900'
               }`}
             key={region}
             onClick={() => setActiveRegionFilter(region)}
@@ -388,11 +369,12 @@ function PartnerSearch() {
       <div className="grid grid-cols-1 gap-6 pt-4">
         {displayedResults.map((partner: any) => {
           const headOffice =
-            partner.locations.find((l: any) => l.isHeadOffice) ||
-            partner.locations[0];
+            partner.locations.find((l: any) => l.isHeadOffice) || partner.locations[0]
           const primaryContact =
-            partner.contacts.find((c: any) => c.isDefault) ||
-            partner.contacts[0];
+            partner.contacts.find((c: any) => c.isDefault) || partner.contacts[0]
+          const serviceTypeNames = partner.serviceTypeNames?.length
+            ? partner.serviceTypeNames
+            : ['Unknown']
 
           return (
             <div
@@ -414,20 +396,26 @@ function PartnerSearch() {
                   <div>
                     <div className="flex flex-wrap items-center gap-3">
                       <h3 className="flex items-center gap-3 font-serif text-2xl text-black">
-                        {partner.name}{" "}
-                        {partner.verified && (
-                          <CheckCircle className="h-4 w-4 text-gray-400" />
-                        )}
+                        {partner.name}{' '}
+                        {partner.verified && <CheckCircle className="h-4 w-4 text-gray-400" />}
                       </h3>
-                      <span className="flex items-center border border-gray-200 bg-gray-100 px-2 py-0.5 font-bold text-[10px] text-gray-500 uppercase tracking-widest">
-                        <Briefcase className="mr-1 h-3 w-3" />
-                        {partner.serviceType}
+                      <span className="flex flex-wrap items-center gap-2">
+                        <Briefcase className="h-3 w-3 text-red-600" />
+                        <span className="flex flex-wrap gap-2">
+                          {serviceTypeNames.map((serviceTypeName: string) => (
+                            <span
+                              className="bg-black px-3 py-1 font-bold text-[10px] text-white uppercase tracking-[0.2em]"
+                              key={`${partner.id}-${serviceTypeName}`}
+                            >
+                              {serviceTypeName}
+                            </span>
+                          ))}
+                        </span>
                       </span>
                     </div>
                     <div className="mt-2 flex items-center font-medium text-gray-500 text-xs uppercase tracking-wider">
                       <MapPin className="mr-1 h-3 w-3" />
-                      {headOffice?.country}{" "}
-                      <span className="mx-2 text-gray-300">|</span>{" "}
+                      {headOffice?.country} <span className="mx-2 text-gray-300">|</span>{' '}
                       {headOffice?.region}
                       {partner.locations.length > 1 && (
                         <span className="ml-2 font-bold text-[9px] text-red-600">
@@ -436,8 +424,7 @@ function PartnerSearch() {
                       )}
                     </div>
                     <div className="mt-2 flex items-center font-bold text-[10px] text-gray-400 uppercase tracking-widest">
-                      <User className="mr-1 h-3 w-3" /> Liaison:{" "}
-                      {primaryContact?.name}
+                      <User className="mr-1 h-3 w-3" /> Liaison: {primaryContact?.name}
                     </div>
                   </div>
                 </div>
@@ -463,10 +450,7 @@ function PartnerSearch() {
                 >
                   View Profile
                 </button>
-                <ConnectRequestDialog
-                  partnerId={partner.id}
-                  partnerName={partner.name}
-                >
+                <ConnectRequestDialog partnerId={partner.id} partnerName={partner.name}>
                   <button
                     className="w-full border border-red-600 bg-red-600 py-3 font-bold text-white text-xs uppercase tracking-[0.15em] transition-colors hover:bg-white hover:text-red-600"
                     type="button"
@@ -476,9 +460,9 @@ function PartnerSearch() {
                 </ConnectRequestDialog>
               </div>
             </div>
-          );
+          )
         })}
       </div>
     </div>
-  );
+  )
 }

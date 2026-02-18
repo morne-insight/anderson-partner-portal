@@ -17,16 +17,22 @@ namespace AndersonAPI.Application.Companies.GetPartnersDirectory
 
         private void ConfigureValidationRules()
         {
-            RuleFor(v => v.Regions)
+
+            RuleFor(v => v.ServiceTypes)
+                .NotNull();
+
+            RuleFor(v => v.ServiceSubTypes)
+                .NotNull();
+
+            RuleFor(v => v.Industries)
+                .NotNull();
+            RuleFor(v => v.Capabilities)
                 .NotNull();
 
             RuleFor(v => v.Countries)
                 .NotNull();
 
-            RuleFor(v => v.Capabilities)
-                .NotNull();
-
-            RuleFor(v => v.Industries)
+            RuleFor(v => v.Regions)
                 .NotNull();
 
             RuleFor(v => v.CoreServices)

@@ -84,7 +84,7 @@ export const configureApiClient = () => {
   // Use import.meta.env for both client and server (Vite handles SSR)
   const baseUrl =
     import.meta.env.VITE_API_BASE_URL ||
-    "https://andersen-server-fzcxfbabeccdd5bw.southafricanorth-01.azurewebsites.net";
+    "https://andersen-server-stage-fkena9h6hgd7dbdz.southafricanorth-01.azurewebsites.net";
 
   if (import.meta.env.VITE_API_BASE_URL) {
     console.log("API_BASE_URL is set:", baseUrl);

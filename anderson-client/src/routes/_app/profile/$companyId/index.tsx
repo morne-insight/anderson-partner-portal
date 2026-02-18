@@ -62,6 +62,8 @@ export const Route = createFileRoute('/_app/profile/$companyId/')({
   component: ProfileEdit,
 })
 
+const urlRegex = /^(https?:\/\/)?([\w\d-_]+)\.([\w\d-_.]+)\/?\??([^#\n\r]*)?#?([^\n\r]*)/
+
 function ProfileEdit() {
   const router = useRouter()
   const queryClient = useQueryClient()
@@ -134,6 +136,13 @@ function ProfileEdit() {
 
   // --- AI Scrape State ---
   const [scrapeUrl, setScrapeUrl] = useState(initialCompany?.websiteUrl || '')
+
+  const isValidUrl = (url: string): boolean => {
+    const isValid = urlRegex.test(url)
+    console.log(`is valid url (${url}):`, isValid)
+    return isValid
+  }
+
   const scrapeMutation = useMutation({
     mutationFn: async (url: string) => {
       return await callApi({
@@ -158,7 +167,6 @@ function ProfileEdit() {
       fullDescription: initialCompany?.fullDescription || '',
       websiteUrl: initialCompany?.websiteUrl || '',
       employeeCount: initialCompany?.employeeCount || 0,
-      serviceTypeId: initialCompany?.serviceTypeId || '',
     },
     validators: {
       onSubmit: ({ value }: { value: UpdateCompanyCommand }) => {
@@ -168,7 +176,6 @@ function ProfileEdit() {
           fullDescription: z.string().optional(),
           websiteUrl: z.string().url('Invalid URL').optional().or(z.literal('')),
           employeeCount: z.number().min(0).optional(),
-          serviceTypeId: z.string().optional(),
         })
 
         const result = schema.safeParse(value)
@@ -186,6 +193,11 @@ function ProfileEdit() {
     },
     onSubmit: async ({ value }: { value: UpdateCompanyCommand }) => {
       try {
+        if (selectedServiceTypeIds.length === 0) {
+          toast.error('Please select at least one service type.')
+          return
+        }
+
         // Save Capabilities and Industries first, to ensure embedding are created with the latest data
         await callApi({
           data: {
@@ -203,6 +215,16 @@ function ProfileEdit() {
             args: {
               path: { id: companyId },
               body: { id: companyId, industryIds: selectedIndustryIds },
+            },
+          },
+        })
+
+        await callApi({
+          data: {
+            fn: 'putApiCompaniesByIdServiceTypes',
+            args: {
+              path: { id: companyId },
+              body: { id: companyId, serviceTypeIds: selectedServiceTypeIds },
             },
           },
         })
@@ -230,7 +252,6 @@ function ProfileEdit() {
                 fullDescription: value.fullDescription,
                 websiteUrl: value.websiteUrl,
                 employeeCount: value.employeeCount,
-                serviceTypeId: value.serviceTypeId,
               },
             },
           },
@@ -253,9 +274,57 @@ function ProfileEdit() {
   const [selectedIndustryIds, setSelectedIndustryIds] = useState<string[]>(
     initialCompany?.industries?.map((c) => c.id!).filter(Boolean) || []
   )
+  const [selectedServiceTypeIds, setSelectedServiceTypeIds] = useState<string[]>(
+    initialCompany?.serviceTypes?.map((s) => s.id!).filter(Boolean) || []
+  )
   const [selectedServiceSubTypeIds, setSelectedServiceSubTypeIds] = useState<string[]>(
     initialCompany?.serviceSubTypes?.map((s) => s.id!).filter(Boolean) || []
   )
+  const [selectedServiceTypeForCreate, setSelectedServiceTypeForCreate] = useState('')
+  const activeServiceTypeIdForSubTypes =
+    selectedServiceTypeIds.length === 1 ? selectedServiceTypeIds[0] : selectedServiceTypeForCreate
+  const filteredServiceSubTypes =
+    serviceSubTypes?.filter((sst) =>
+      activeServiceTypeIdForSubTypes ? sst.serviceTypeId === activeServiceTypeIdForSubTypes : false
+    ) || []
+  const selectedServiceSubTypes =
+    serviceSubTypes?.filter((sst) => (sst.id ? selectedServiceSubTypeIds.includes(sst.id) : false)) || []
+
+  useEffect(() => {
+    if (!initialCompany) {
+      return
+    }
+
+    setSelectedCapabilityIds(initialCompany.capabilities?.map((c) => c.id!).filter(Boolean) || [])
+    setSelectedIndustryIds(initialCompany.industries?.map((i) => i.id!).filter(Boolean) || [])
+    setSelectedServiceTypeIds(initialCompany.serviceTypes?.map((s) => s.id!).filter(Boolean) || [])
+    setSelectedServiceSubTypeIds(
+      initialCompany.serviceSubTypes?.map((s) => s.id!).filter(Boolean) || []
+    )
+  }, [initialCompany])
+
+  useEffect(() => {
+    if (!serviceSubTypes) {
+      return
+    }
+
+    setSelectedServiceSubTypeIds((prev) =>
+      prev.filter((id) => {
+        const subType = serviceSubTypes.find((item) => item.id === id)
+        return subType?.serviceTypeId ? selectedServiceTypeIds.includes(subType.serviceTypeId) : false
+      })
+    )
+  }, [selectedServiceTypeIds, serviceSubTypes])
+
+  useEffect(() => {
+    if (!selectedServiceTypeForCreate) {
+      return
+    }
+
+    if (!selectedServiceTypeIds.includes(selectedServiceTypeForCreate)) {
+      setSelectedServiceTypeForCreate('')
+    }
+  }, [selectedServiceTypeIds, selectedServiceTypeForCreate])
 
   // Create capability mutation
   const createCapabilityMutation = useMutation({
@@ -314,10 +383,12 @@ function ProfileEdit() {
   // Create service sub type mutation
   const createServiceSubTypeMutation = useMutation({
     mutationFn: async (name: string) => {
-      const currentServiceTypeId = form.getFieldValue('serviceTypeId')
+      const currentServiceTypeId = activeServiceTypeIdForSubTypes
+
       if (!currentServiceTypeId) {
-        throw new Error('Please select a service type first')
+        throw new Error('Please select a parent service type first')
       }
+
       const response = await callApi({
         data: {
           fn: 'postApiServiceSubTypes',
@@ -646,7 +717,7 @@ function ProfileEdit() {
             </div>
             <button
               className="whitespace-nowrap bg-red-600 px-8 py-3 font-bold text-white text-xs uppercase tracking-[0.2em] transition-colors hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-50"
-              disabled={scrapeMutation.isPending || !scrapeUrl}
+              disabled={scrapeMutation.isPending || !isValidUrl(scrapeUrl)}
               onClick={() => scrapeMutation.mutate(scrapeUrl)}
               type="button"
             >
@@ -708,7 +779,7 @@ function ProfileEdit() {
                       onBlur={field.handleBlur}
                       onChange={(e) => field.handleChange(Number(e.target.value))}
                       type="number"
-                      value={field.state.value as string}
+                      value={String(field.state.value ?? '')}
                     />
                   </div>
                 )}
@@ -1435,63 +1506,80 @@ function ProfileEdit() {
             </h3>
             <div className="w-full border border-gray-200 bg-white p-6 pt-4 shadow-sm">
               <p className="mb-2 text-gray-400 text-xs italic">
-                Select the primary service your firm provides.
+                Select one or more services your firm provides.
               </p>
-              <form.Field
-                children={(field) => (
-                  <div>
-                    <Select onValueChange={field.handleChange} value={field.state.value as string}>
-                      <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Select a service type" />
-                      </SelectTrigger>
-                      <SelectContent className="w-full">
-                        {serviceTypes?.map((serviceType) => (
+              <MultiSelectCombobox
+                chipClassName="rounded-none border border-gray-200 bg-gray-100 px-3 py-1.5 font-bold text-[10px] text-gray-600 uppercase tracking-wider transition-all"
+                createButtonClassName="flex w-full items-center gap-2 px-2 py-2 text-left text-sm text-gray-600 hover:bg-gray-100"
+                emptyMessage="No service types found."
+                getItemLabel={(serviceType) => serviceType.name || ''}
+                helperText=""
+                items={serviceTypes || []}
+                noSelectionMessage="No service types selected."
+                onSelectionChange={setSelectedServiceTypeIds}
+                placeholder="Search and select service types..."
+                selectedIds={selectedServiceTypeIds}
+              />
+              {selectedServiceTypeIds.length === 0 && (
+                <p className="mt-2 text-red-500 text-xs">At least one service type is required.</p>
+              )}
+            </div>
+            {/* Service Sub Types - filtered by selected ServiceType */}
+            <div className="mt-4 border border-gray-200 bg-white p-6 pt-4 shadow-sm">
+              {selectedServiceTypeIds.length > 1 && (
+                <div className="mb-4">
+                  <p className="mb-2 text-gray-400 text-xs italic">
+                    Choose a parent service type before selecting or creating a specialization.
+                  </p>
+                  <Select
+                    onValueChange={setSelectedServiceTypeForCreate}
+                    value={selectedServiceTypeForCreate || undefined}
+                  >
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Select parent service type" />
+                    </SelectTrigger>
+                    <SelectContent className="w-full">
+                      {serviceTypes
+                        ?.filter((serviceType) =>
+                          selectedServiceTypeIds.includes(serviceType.id || '')
+                        )
+                        .map((serviceType) => (
                           <SelectItem key={serviceType.id} value={serviceType.id as string}>
                             {serviceType.name}
                           </SelectItem>
                         ))}
-                      </SelectContent>
-                    </Select>
-                    {field.state.meta.errors && (
-                      <p className="mt-1 text-red-500 text-xs">{field.state.meta.errors}</p>
-                    )}
-                  </div>
-                )}
-                name="serviceTypeId"
-                validators={{
-                  onChange: ({ value }) => (value ? undefined : 'Service type is required'),
-                  onSubmit: ({ value }) => (value ? undefined : 'Service type is required'),
-                }}
-              />
-            </div>
-            {/* Service Sub Types - filtered by selected ServiceType */}
-            <div className="mt-4 border border-gray-200 bg-white p-6 pt-4 shadow-sm">
+                    </SelectContent>
+                  </Select>
+                </div>
+              )}
               <p className="mb-2 text-gray-400 text-xs italic">
-                Select service specializations within your service type.
+                Select service specializations within your selected service types.
               </p>
-              <form.Subscribe selector={(state) => state.values.serviceTypeId}>
-                {(serviceTypeId) => {
-                  const filteredServiceSubTypes = serviceSubTypes?.filter(
-                    (sst) => sst.serviceTypeId === serviceTypeId
-                  ) || []
-                  return (
-                    <MultiSelectCombobox
-                      chipClassName="rounded-none border border-gray-200 bg-gray-100 px-3 py-1.5 font-bold text-[10px] text-gray-600 uppercase tracking-wider transition-all"
-                      createButtonClassName="flex w-full items-center gap-2 px-2 py-2 text-left text-sm text-gray-600 hover:bg-gray-100"
-                      emptyMessage={serviceTypeId ? 'No specializations found for this service type.' : 'Please select a service type first.'}
-                      getItemLabel={(sst) => sst.name || ''}
-                      helperText=""
-                      isCreating={createServiceSubTypeMutation.isPending}
-                      items={filteredServiceSubTypes}
-                      noSelectionMessage="No specializations selected."
-                      onCreateNew={serviceTypeId ? (name) => createServiceSubTypeMutation.mutate(name) : undefined}
-                      onSelectionChange={setSelectedServiceSubTypeIds}
-                      placeholder="Search and select specializations..."
-                      selectedIds={selectedServiceSubTypeIds}
-                    />
-                  )
-                }}
-              </form.Subscribe>
+              <MultiSelectCombobox
+                chipClassName="rounded-none border border-gray-200 bg-gray-100 px-3 py-1.5 font-bold text-[10px] text-gray-600 uppercase tracking-wider transition-all"
+                createButtonClassName="flex w-full items-center gap-2 px-2 py-2 text-left text-sm text-gray-600 hover:bg-gray-100"
+                emptyMessage={
+                  selectedServiceTypeIds.length === 0
+                    ? 'Please select at least one service type first.'
+                    : !activeServiceTypeIdForSubTypes
+                      ? 'Select a parent service type to view specializations.'
+                      : 'No specializations found for selected service type.'
+                }
+                getItemLabel={(sst) => sst.name || ''}
+                helperText=""
+                isCreating={createServiceSubTypeMutation.isPending}
+                items={filteredServiceSubTypes}
+                noSelectionMessage="No specializations selected."
+                onCreateNew={
+                  activeServiceTypeIdForSubTypes
+                    ? (name) => createServiceSubTypeMutation.mutate(name)
+                    : undefined
+                }
+                onSelectionChange={setSelectedServiceSubTypeIds}
+                placeholder="Search and select specializations..."
+                selectedItemsOverride={selectedServiceSubTypes}
+                selectedIds={selectedServiceSubTypeIds}
+              />
             </div>
           </section>
 

@@ -21,7 +21,7 @@ namespace AndersonAPI.Infrastructure
     public static class DependencyInjection
     {
         [IntentManaged(Mode.Merge)]
-        public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration, bool isDevelopment = false)
         {
             services.AddDbContext<ApplicationDbContext>((sp, options) =>
             {
@@ -35,7 +35,10 @@ namespace AndersonAPI.Infrastructure
                     });
 
                 //IntentIgnore
-                options.LogTo(message => System.Diagnostics.Debug.WriteLine(message), LogLevel.Information);
+                if (isDevelopment)
+                {
+                    options.LogTo(message => System.Diagnostics.Debug.WriteLine(message), LogLevel.Information);
+                }
 
                 options.UseLazyLoadingProxies();
             });

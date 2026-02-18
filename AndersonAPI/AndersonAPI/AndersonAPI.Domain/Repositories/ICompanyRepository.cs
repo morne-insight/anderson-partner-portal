@@ -25,6 +25,9 @@ namespace AndersonAPI.Domain.Repositories
         Task<List<Industry>> GetIndustriesByIdsAsync(List<Guid> industryIds, CancellationToken cancellationToken = default);
         
         [IntentIgnore]
+        Task<List<ServiceType>> GetServiceTypesByIdsAsync(List<Guid> serviceTypeIds, CancellationToken cancellationToken = default);
+        
+        [IntentIgnore]
         Task<List<ServiceSubType>> GetServiceSubTypesByIdsAsync(List<Guid> serviceSubTypeIds, CancellationToken cancellationToken = default);
     }
 }

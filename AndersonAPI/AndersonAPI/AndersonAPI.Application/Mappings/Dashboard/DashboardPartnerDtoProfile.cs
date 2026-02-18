@@ -12,8 +12,8 @@ namespace AndersonAPI.Application.Dashboard
         public DashboardPartnerDtoProfile()
         {
             CreateMap<Company, DashboardPartnerDto>()
-                .ForMember(d => d.ServiceType, opt => opt.MapFrom(src => src.ServiceType != null ? src.ServiceType!.Name : null))
-                .ForMember(d => d.Locations, opt => opt.MapFrom(src => src.Locations));
+                .ForMember(d => d.Locations, opt => opt.MapFrom(src => src.Locations))
+                .ForMember(d => d.ServiceTypes, opt => opt.MapFrom(src => src.ServiceTypes));
         }
     }
 

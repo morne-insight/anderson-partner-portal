@@ -13,6 +13,7 @@ namespace AndersonAPI.Domain.Entities
         private List<Capability> _capabilities = [];
         private List<Contact> _contacts = [];
         private List<ApplicationIdentityUser> _applicationIdentityUsers = [];
+        private List<ServiceType> _serviceTypes = [];
         private List<ServiceSubType> _serviceSubTypes = [];
         private List<Invite> _invites = [];
         private List<Quarterly> _quarterlies = [];
@@ -24,10 +25,10 @@ namespace AndersonAPI.Domain.Entities
             string fullDescription,
             string websiteUrl,
             int employeeCount,
-            Guid? serviceTypeId,
             IEnumerable<Industry> industries,
             IEnumerable<Capability> capabilities,
             IEnumerable<ServiceSubType> serviceSubTypes,
+            IEnumerable<ServiceType> serviceTypes,
             EntityState state = EntityState.Enabled)
         {
             Name = name;
@@ -35,10 +36,10 @@ namespace AndersonAPI.Domain.Entities
             FullDescription = fullDescription;
             WebsiteUrl = websiteUrl;
             EmployeeCount = employeeCount;
-            ServiceTypeId = serviceTypeId;
             _industries = new List<Industry>(industries);
             _capabilities = new List<Capability>(capabilities);
             _serviceSubTypes = new List<ServiceSubType>(serviceSubTypes);
+            _serviceTypes = new List<ServiceType>(serviceTypes);
             State = state;
         }
 
@@ -47,7 +48,6 @@ namespace AndersonAPI.Domain.Entities
             string fullDescription,
             string websiteUrl,
             int employeeCount,
-            Guid? serviceTypeId,
             EntityState state = EntityState.Enabled)
         {
             Name = name;
@@ -55,7 +55,6 @@ namespace AndersonAPI.Domain.Entities
             FullDescription = fullDescription;
             WebsiteUrl = websiteUrl;
             EmployeeCount = employeeCount;
-            ServiceTypeId = serviceTypeId;
             State = state;
         }
         /// <summary>
@@ -95,8 +94,6 @@ namespace AndersonAPI.Domain.Entities
 
         public DateTimeOffset? UpdatedDate { get; private set; }
 
-        public Guid? ServiceTypeId { get; private set; }
-
         public virtual IReadOnlyCollection<Location> Locations
         {
             get => _locations.AsReadOnly();
@@ -127,7 +124,11 @@ namespace AndersonAPI.Domain.Entities
             private set => _applicationIdentityUsers = new List<ApplicationIdentityUser>(value);
         }
 
-        public virtual ServiceType? ServiceType { get; private set; }
+        public virtual IReadOnlyCollection<ServiceType> ServiceTypes
+        {
+            get => _serviceTypes.AsReadOnly();
+            private set => _serviceTypes = new List<ServiceType>(value);
+        }
 
         public virtual IReadOnlyCollection<ServiceSubType> ServiceSubTypes
         {
@@ -147,20 +148,13 @@ namespace AndersonAPI.Domain.Entities
             private set => _quarterlies = new List<Quarterly>(value);
         }
 
-        public void Update(
-            string name,
-            string shortDescription,
-            string description,
-            string websiteUrl,
-            int employeeCount,
-            Guid? serviceTypeId)
+        public void Update(string name, string shortDescription, string description, string websiteUrl, int employeeCount)
         {
             Name = name;
             ShortDescription = shortDescription;
             FullDescription = description;
             WebsiteUrl = websiteUrl;
             EmployeeCount = employeeCount;
-            ServiceTypeId = serviceTypeId;
             DomainEvents.Add(new CompanyUpdatedEvent(this));
         }
 
@@ -336,6 +330,15 @@ namespace AndersonAPI.Domain.Entities
         public void SetFullDescription(string content)
         {
             FullDescription = content;
+        }
+
+        public void SetServiceTypes(IEnumerable<ServiceType> serviceTypes)
+        {
+            _serviceTypes.Clear();
+            foreach (var serviceType in serviceTypes)
+            {
+                _serviceTypes.Add(serviceType);
+            }
         }
 
         void IAuditable.SetCreated(Guid createdBy, DateTimeOffset createdDate) => (CreatedBy, CreatedDate) = (createdBy, createdDate);

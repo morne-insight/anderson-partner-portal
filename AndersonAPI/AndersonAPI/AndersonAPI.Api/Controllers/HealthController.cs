@@ -2,6 +2,7 @@ using System.Net.Mime;
 using AndersonAPI.Api.Controllers.ResponseTypes;
 using AndersonAPI.Application.Health.GetApiHealth;
 using AndersonAPI.Application.Health.GetAuthHealth;
+using AndersonAPI.Application.Health.GetPath;
 using Intent.RoslynWeaver.Attributes;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -54,6 +55,20 @@ namespace AndersonAPI.Api.Controllers
         public async Task<ActionResult<JsonResponse<string>>> GetAuthHealth(CancellationToken cancellationToken = default)
         {
             var result = await _mediator.Send(new GetAuthHealthQuery(), cancellationToken);
+            return Ok(new JsonResponse<string>(result));
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <response code="200">Returns the specified string.</response>
+        [HttpGet("api/health/path")]
+        [AllowAnonymous]
+        [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(JsonResponse<string>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<JsonResponse<string>>> GetPath(CancellationToken cancellationToken = default)
+        {
+            var result = await _mediator.Send(new GetPathQuery(), cancellationToken);
             return Ok(new JsonResponse<string>(result));
         }
 

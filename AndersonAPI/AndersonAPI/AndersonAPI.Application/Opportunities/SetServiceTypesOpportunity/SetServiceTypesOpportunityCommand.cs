@@ -9,13 +9,13 @@ namespace AndersonAPI.Application.Opportunities.SetServiceTypesOpportunity
 {
     public class SetServiceTypesOpportunityCommand : IRequest, ICommand
     {
-        public SetServiceTypesOpportunityCommand(Guid id, List<Guid> serviceTypeIds)
+        public SetServiceTypesOpportunityCommand(Guid id, List<Guid> serviceTypes)
         {
             Id = id;
-            ServiceTypeIds = serviceTypeIds;
+            ServiceTypes = serviceTypes;
         }
 
         public Guid Id { get; set; }
-        public List<Guid> ServiceTypeIds { get; set; }
+        public List<Guid> ServiceTypes { get; set; }
     }
 }

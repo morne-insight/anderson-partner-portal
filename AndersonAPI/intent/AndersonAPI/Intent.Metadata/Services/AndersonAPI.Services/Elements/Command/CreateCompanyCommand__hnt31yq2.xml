@@ -291,15 +291,15 @@
       <childElements />
     </childElement>
     <childElement id="b25f3fd4-8c69-465b-971c-0525a79c583e" type="DTO-Field" typeId="7baed1fd-469b-4980-8fd9-4cefb8331eb2">
-      <name>ServiceTypeId</name>
-      <display>ServiceTypeId: guid?</display>
+      <name>ServiceTypes</name>
+      <display>ServiceTypes: guid[*]</display>
       <isAbstract>false</isAbstract>
       <genericTypes />
       <typeReference id="d194b6fd-a6f3-4bee-a4eb-01fce5340c55">
         <typeId>6b649125-18ea-48fd-a6ba-0bfff0d8f488</typeId>
         <isNavigable>true</isNavigable>
-        <isNullable>true</isNullable>
-        <isCollection>false</isCollection>
+        <isNullable>false</isNullable>
+        <isCollection>true</isCollection>
         <isRequired>true</isRequired>
         <typePackageName>Intent.Common.Types</typePackageName>
         <typePackageId>870ad967-cbd4-4ea9-b86d-9c3a5d55ea67</typePackageId>

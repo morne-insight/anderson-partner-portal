@@ -1,5 +1,5 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useStore } from "@tanstack/react-store";
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import { useStore } from '@tanstack/react-store'
 import {
   Briefcase,
   Building,
@@ -9,9 +9,10 @@ import {
   MapPin,
   Search,
   Users,
-} from "lucide-react";
-import React, { useCallback, useEffect, useState } from "react";
-import { ConnectRequestDialog } from "@/components/ConnectRequestDialog";
+} from 'lucide-react'
+import type React from 'react'
+import { useCallback, useEffect, useState } from 'react'
+import { ConnectRequestDialog } from '@/components/ConnectRequestDialog'
 import {
   Pagination,
   PaginationContent,
@@ -20,9 +21,9 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "@/components/ui/pagination";
-import { usePrefetchReferenceData } from "@/hooks/useReferenceData";
-import { callApi } from "@/server/proxy";
+} from '@/components/ui/pagination'
+import { usePrefetchReferenceData } from '@/hooks/useReferenceData'
+import { callApi } from '@/server/proxy'
 import {
   clearAllDirectoryFilters,
   directoryFilterStore,
@@ -36,11 +37,11 @@ import {
   setSelectedIndustry,
   setSelectedRegion,
   setSelectedService,
-} from "@/stores/directoryFilterStore";
+} from '@/stores/directoryFilterStore'
 
-export const Route = createFileRoute("/_app/directory")({
+export const Route = createFileRoute('/_app/directory')({
   component: NetworkDirectory,
-});
+})
 
 function NetworkDirectory() {
   const navigate = useNavigate();
@@ -48,7 +49,7 @@ function NetworkDirectory() {
     usePrefetchReferenceData();
 
   // Get filter state from store
-  const filterState = useStore(directoryFilterStore);
+  const filterState = useStore(directoryFilterStore)
   const {
     selectedRegion,
     selectedCountry,
@@ -59,31 +60,38 @@ function NetworkDirectory() {
     nameFilter,
     pagination: { pageNumber, pageSize, totalCount, pageCount },
     isLoading,
-  } = filterState;
+  } = filterState
 
   // State for fetched partners
-  const [partners, setPartners] = useState<any[]>([]);
+  const [partners, setPartners] = useState<any[]>([])
 
   const fetchPartners = useCallback(
     async (page: number = pageNumber) => {
-      setIsLoading(true);
+      setIsLoading(true)
       try {
         const regionIds =
-          selectedRegion !== "All"
-            ? [regions.data?.find((r) => r.name === selectedRegion)?.id].filter(Boolean) as string[]
-            : [];
+          selectedRegion !== 'All'
+            ? ([regions.data?.find((r) => r.name === selectedRegion)?.id].filter(
+              Boolean
+            ) as string[])
+            : []
         const countryIds =
-          selectedCountry !== "All"
-            ? [countries.data?.find((c) => c.name === selectedCountry)?.id].filter(Boolean) as string[]
-            : [];
+          selectedCountry !== 'All'
+            ? ([countries.data?.find((c) => c.name === selectedCountry)?.id].filter(
+              Boolean
+            ) as string[])
+            : []
         const serviceTypeId =
-          selectedService !== "All"
+          selectedService !== 'All'
             ? serviceTypes.data?.find((s) => s.name === selectedService)?.id || null
-            : null;
+            : null
+        const serviceTypeIds = serviceTypeId ? [serviceTypeId] : []
         const capabilityIds =
-          selectedCapability !== "All"
-            ? [capabilities.data?.find((c) => c.name === selectedCapability)?.id].filter(Boolean) as string[]
-            : [];
+          selectedCapability !== 'All'
+            ? ([capabilities.data?.find((c) => c.name === selectedCapability)?.id].filter(
+              Boolean
+            ) as string[])
+            : []
         const industryIds =
           selectedIndustry !== "All"
             ? [industries.data?.find((i) => i.name === selectedIndustry)?.id].filter(Boolean) as string[]
@@ -95,14 +103,15 @@ function NetworkDirectory() {
 
         const response = await callApi({
           data: {
-            fn: "putApiCompaniesPartnerDirectory",
+            fn: 'putApiCompaniesPartnerDirectory',
             args: {
               body: {
                 pageNo: page,
                 pageSize,
-                orderBy: "name",
+                orderBy: 'name',
                 searchTerm: nameFilter.trim() || null,
-                serviceType: serviceTypeId,
+                serviceTypes: serviceTypeIds,
+                serviceSubTypes: [],
                 regions: regionIds,
                 countries: countryIds,
                 capabilities: capabilityIds,
@@ -111,51 +120,46 @@ function NetworkDirectory() {
               },
             },
           },
-        });
+        })
 
         const transformed = (response?.data || []).map((company: any) => {
           return {
             id: company.id,
-            name: company.name || "Unknown Company",
+            name: company.name || 'Unknown Company',
             description:
-              company.shortDescription ||
-              company.fullDescription ||
-              "No description available.",
-            serviceType: company.serviceTypeName || "Professional Services",
+              company.shortDescription || company.fullDescription || 'No description available.',
+            serviceTypeNames:
+              company.serviceTypes?.map((serviceType: any) => serviceType.name).filter(Boolean) ||
+              [],
             skills: company.capabilities?.map((c: any) => c.name) || [],
             industries: company.industries?.map((i: any) => i.name) || [],
             serviceSubTypes: company.serviceSubTypes?.map((s: any) => s.name) || [],
             verified: true,
             locations:
               company.locations?.map((l: any) => ({
-                country:
-                  countries.data?.find((c: any) => c.id === l.countryId)?.name ||
-                  "Unknown",
-                region:
-                  regions.data?.find((r: any) => r.id === l.regionId)?.name ||
-                  "Unknown",
+                country: countries.data?.find((c: any) => c.id === l.countryId)?.name || 'Unknown',
+                region: regions.data?.find((r: any) => r.id === l.regionId)?.name || 'Unknown',
                 isHeadOffice: l.isHeadOffice,
               })) || [],
             contacts:
               company.contacts?.map((c: any) => ({
-                name:
-                  `${c.firstName || ""} ${c.lastName || ""}`.trim() || "Contact",
+                name: `${c.firstName || ''} ${c.lastName || ''}`.trim() || 'Contact',
                 email: c.emailAddress,
                 isDefault: true,
               })) || [],
-          };
-        });
+          }
+        })
 
-        setPartners(transformed);
+        setPartners(transformed)
         setPagination({
           pageNumber: response?.pageNumber || 1,
           pageCount: response?.pageCount || 0,
           totalCount: response?.totalCount || 0,
-        });
+        })
       } catch (error) {
-        console.error("Directory search failed", error);
+        console.error('Directory search failed', error)
       } finally {
-        setIsLoading(false);
+        setIsLoading(false)
       }
     },
     [
@@ -175,13 +179,13 @@ function NetworkDirectory() {
       capabilities.data,
       industries.data,
     ]
-  );
+  )
 
   // Fetch on mount and when filters change
   useEffect(() => {
     if (regions.data && countries.data) {
-      fetchPartners(1);
-      setPageNumber(1);
+      fetchPartners(1)
+      setPageNumber(1)
     }
   }, [
     selectedRegion,
@@ -192,27 +196,27 @@ function NetworkDirectory() {
     selectedCoreService,
     regions.data,
     countries.data,
-  ]);
+  ])
 
   const handlePageChange = (page: number) => {
-    if (page < 1 || page > pageCount) return;
-    setPageNumber(page);
-    fetchPartners(page);
-  };
+    if (page < 1 || page > pageCount) return
+    setPageNumber(page)
+    fetchPartners(page)
+  }
 
   const handleSearch = () => {
-    setPageNumber(1);
-    fetchPartners(1);
-  };
+    setPageNumber(1)
+    fetchPartners(1)
+  }
 
   const renderPaginationItems = () => {
-    const items: React.ReactNode[] = [];
-    const maxVisiblePages = 5;
-    let startPage = Math.max(1, pageNumber - Math.floor(maxVisiblePages / 2));
-    const endPage = Math.min(pageCount, startPage + maxVisiblePages - 1);
+    const items: React.ReactNode[] = []
+    const maxVisiblePages = 5
+    let startPage = Math.max(1, pageNumber - Math.floor(maxVisiblePages / 2))
+    const endPage = Math.min(pageCount, startPage + maxVisiblePages - 1)
 
     if (endPage - startPage + 1 < maxVisiblePages) {
-      startPage = Math.max(1, endPage - maxVisiblePages + 1);
+      startPage = Math.max(1, endPage - maxVisiblePages + 1)
     }
 
     if (startPage > 1) {
@@ -226,18 +230,18 @@ function NetworkDirectory() {
             1
           </PaginationLink>
         </PaginationItem>
-      );
+      )
       if (startPage > 2) {
         items.push(
           <PaginationItem key="ellipsis-start">
             <PaginationEllipsis />
           </PaginationItem>
-        );
+        )
       }
     }
 
     for (let i = startPage; i <= endPage; i++) {
-      if (i === 1 && startPage > 1) continue;
+      if (i === 1 && startPage > 1) continue
       items.push(
         <PaginationItem key={i}>
           <PaginationLink
@@ -248,7 +252,7 @@ function NetworkDirectory() {
             {i}
           </PaginationLink>
         </PaginationItem>
-      );
+      )
     }
 
     if (endPage < pageCount) {
@@ -257,7 +261,7 @@ function NetworkDirectory() {
           <PaginationItem key="ellipsis-end">
             <PaginationEllipsis />
           </PaginationItem>
-        );
+        )
       }
       items.push(
         <PaginationItem key={pageCount}>
@@ -269,15 +273,15 @@ function NetworkDirectory() {
             {pageCount}
           </PaginationLink>
         </PaginationItem>
-      );
+      )
     }
 
-    return items;
-  };
+    return items
+  }
 
   const clearAllFilters = () => {
-    clearAllDirectoryFilters();
-  };
+    clearAllDirectoryFilters()
+  }
 
   const activeFiltersCount =
     (selectedRegion !== "All" ? 1 : 0) +
@@ -297,12 +301,9 @@ function NetworkDirectory() {
   return (
     <div className="animate-fade-in space-y-10">
       <header className="border-gray-200 border-b pb-8">
-        <h2 className="mb-3 font-serif text-4xl text-black">
-          Network Directory
-        </h2>
+        <h2 className="mb-3 font-serif text-4xl text-black">Network Directory</h2>
         <p className="font-light text-gray-500 text-lg">
-          Browse the complete global index of Andersen member firms and
-          partners.
+          Browse the complete global index of Andersen member firms and partners.
         </p>
       </header>
 
@@ -336,8 +337,8 @@ function NetworkDirectory() {
                     className="w-full border border-gray-200 bg-gray-50 px-3 py-2 pr-8 text-xs outline-none focus:border-black"
                     onChange={(e) => setNameFilter(e.target.value)}
                     onKeyDown={(e) => {
-                      if (e.key === "Enter") {
-                        handleSearch();
+                      if (e.key === 'Enter') {
+                        handleSearch()
                       }
                     }}
                     placeholder="Enter keywords..."
@@ -387,9 +388,8 @@ function NetworkDirectory() {
                   {countries.data
                     ?.filter(
                       (c: any) =>
-                        selectedRegion === "All" ||
-                        regions.data?.find((r: any) => r.id === c.regionId)
-                          ?.name === selectedRegion
+                        selectedRegion === 'All' ||
+                        regions.data?.find((r: any) => r.id === c.regionId)?.name === selectedRegion
                     )
                     .map((c: any) => (
                       <option key={c.name} value={c.name}>
@@ -495,7 +495,7 @@ function NetworkDirectory() {
                 </span>
               ) : (
                 <>
-                  Showing {totalCount} {totalCount === 1 ? "Firm" : "Firms"}
+                  Showing {totalCount} {totalCount === 1 ? 'Firm' : 'Firms'}
                 </>
               )}
             </span>
@@ -505,8 +505,10 @@ function NetworkDirectory() {
             <div className="grid grid-cols-1 gap-4">
               {partners.map((partner: any) => {
                 const headOffice =
-                  partner.locations.find((l: any) => l.isHeadOffice) ||
-                  partner.locations[0];
+                  partner.locations.find((l: any) => l.isHeadOffice) || partner.locations[0]
+                const serviceTypeNames = partner.serviceTypeNames?.length
+                  ? partner.serviceTypeNames
+                  : ['Professional Services']
                 return (
                   <div
                     className="group flex flex-col items-start gap-6 border border-gray-200 bg-white p-6 shadow-sm transition-all hover:border-red-600 md:flex-row md:items-center"
@@ -517,26 +519,30 @@ function NetworkDirectory() {
                         <h4 className="font-bold font-serif text-black text-xl transition-colors group-hover:text-red-600">
                           {partner.name}
                         </h4>
-                        {partner.verified && (
-                          <CheckCircle className="h-4 w-4 text-gray-400" />
-                        )}
+                        {partner.verified && <CheckCircle className="h-4 w-4 text-gray-400" />}
                       </div>
-
                       <div className="flex flex-wrap items-center gap-4 font-bold text-[10px] text-gray-500 uppercase tracking-widest">
                         <span className="flex items-center gap-1.5">
-                          <MapPin className="h-3 w-3 text-red-600" />{" "}
-                          {headOffice?.country}, {headOffice?.region}
+                          <MapPin className="h-3 w-3 text-red-600" /> {headOffice?.country},{' '}
+                          {headOffice?.region}
                         </span>
-                        <span className="flex items-center gap-1.5">
-                          <Briefcase className="h-3 w-3 text-red-600" />{" "}
-                          {partner.serviceType}
+                        <span className="flex flex-wrap items-center gap-2">
+                          <Briefcase className="h-3 w-3 text-red-600" />
+                          <span className="flex flex-wrap gap-2">
+                            {serviceTypeNames.map((serviceTypeName: string) => (
+                              <span
+                                className="bg-black px-3 py-1 font-bold text-[10px] text-white uppercase tracking-[0.2em]"
+                                key={`${partner.id}-${serviceTypeName}`}
+                              >
+                                {serviceTypeName}
+                              </span>
+                            ))}
+                          </span>
                         </span>
                         <span className="flex items-center gap-1.5 border border-gray-100 bg-gray-50 px-2 py-0.5 text-black">
-                          <Building className="h-3 w-3" />{" "}
-                          {partner.locations.length} Locations
+                          <Building className="h-3 w-3" /> {partner.locations.length} Locations
                         </span>
                       </div>
-
                       <div className="mt-4 flex flex-wrap gap-1.5">
                         {partner.industries.slice(0, 3).map((ind: string) => (
                           <span
@@ -577,17 +583,14 @@ function NetworkDirectory() {
                         onClick={() =>
                           navigate({
                             to: `/partners/${partner.id}`,
-                            search: { from: "directory" },
+                            search: { from: 'directory' },
                           })
                         }
                         type="button"
                       >
                         Profile
                       </button>
-                      <ConnectRequestDialog
-                        partnerId={partner.id}
-                        partnerName={partner.name}
-                      >
+                      <ConnectRequestDialog partnerId={partner.id} partnerName={partner.name}>
                         <button
                           className="flex flex-1 items-center justify-center border border-red-600 bg-red-600 px-6 py-2 font-bold text-[10px] text-white uppercase tracking-widest transition-all hover:bg-white hover:text-red-600 md:flex-none"
                           type="button"
@@ -597,7 +600,7 @@ function NetworkDirectory() {
                       </ConnectRequestDialog>
                     </div>
                   </div>
-                );
+                )
               })}
             </div>
           ) : (
@@ -610,13 +613,12 @@ function NetworkDirectory() {
                 )}
               </div>
               <h3 className="mb-2 font-serif text-black text-xl">
-                {isLoading ? "Loading..." : "No Matching Firms"}
+                {isLoading ? 'Loading...' : 'No Matching Firms'}
               </h3>
               {!isLoading && (
                 <>
                   <p className="mx-auto mb-8 max-w-sm font-light text-gray-500">
-                    Try adjusting your filters to broaden your search within the
-                    network directory.
+                    Try adjusting your filters to broaden your search within the network directory.
                   </p>
                   <button
                     className="font-bold text-red-600 text-xs uppercase tracking-widest hover:underline"
@@ -641,14 +643,20 @@ function NetworkDirectory() {
                   <PaginationItem>
                     <PaginationPrevious
                       onClick={() => handlePageChange(pageNumber - 1)}
-                      className={pageNumber <= 1 ? "pointer-events-none opacity-50" : "cursor-pointer"}
+                      className={
+                        pageNumber <= 1 ? 'pointer-events-none opacity-50' : 'cursor-pointer'
+                      }
                     />
                   </PaginationItem>
                   {renderPaginationItems()}
                   <PaginationItem>
                     <PaginationNext
                       onClick={() => handlePageChange(pageNumber + 1)}
-                      className={pageNumber >= pageCount ? "pointer-events-none opacity-50" : "cursor-pointer"}
+                      className={
+                        pageNumber >= pageCount
+                          ? 'pointer-events-none opacity-50'
+                          : 'cursor-pointer'
+                      }
                     />
                   </PaginationItem>
                 </PaginationContent>
@@ -658,5 +666,5 @@ function NetworkDirectory() {
         </div>
       </div>
     </div>
-  );
+  )
 }

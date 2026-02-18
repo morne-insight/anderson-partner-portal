@@ -91,9 +91,6 @@ namespace AndersonAPI.Infrastructure.Migrations
                     b.Property<int>("Order")
                         .HasColumnType("int");
 
-                    b.Property<Guid?>("ServiceTypeId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("ShortDescription")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -114,8 +111,6 @@ namespace AndersonAPI.Infrastructure.Migrations
                         .HasColumnType("nvarchar(200)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ServiceTypeId");
 
                     b.ToTable("Companies");
                 });
@@ -583,6 +578,21 @@ namespace AndersonAPI.Infrastructure.Migrations
                     b.ToTable("CompanyServiceSubTypes", (string)null);
                 });
 
+            modelBuilder.Entity("CompanyServiceType", b =>
+                {
+                    b.Property<Guid>("CompaniesId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ServiceTypesId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("CompaniesId", "ServiceTypesId");
+
+                    b.HasIndex("ServiceTypesId");
+
+                    b.ToTable("CompanyServiceTypes", (string)null);
+                });
+
             modelBuilder.Entity("IndustryOpportunity", b =>
                 {
                     b.Property<Guid>("IndustriesId")
@@ -837,11 +847,6 @@ namespace AndersonAPI.Infrastructure.Migrations
 
             modelBuilder.Entity("AndersonAPI.Domain.Entities.Company", b =>
                 {
-                    b.HasOne("AndersonAPI.Domain.Entities.ServiceType", "ServiceType")
-                        .WithMany()
-                        .HasForeignKey("ServiceTypeId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.OwnsMany("AndersonAPI.Domain.Entities.Contact", "Contacts", b1 =>
                         {
                             b1.Property<Guid>("Id")
@@ -959,8 +964,6 @@ namespace AndersonAPI.Infrastructure.Migrations
                     b.Navigation("Contacts");
 
                     b.Navigation("Locations");
-
-                    b.Navigation("ServiceType");
                 });
 
             modelBuilder.Entity("AndersonAPI.Domain.Entities.Country", b =>
@@ -1295,6 +1298,21 @@ namespace AndersonAPI.Infrastructure.Migrations
                     b.HasOne("AndersonAPI.Domain.Entities.ServiceSubType", null)
                         .WithMany()
                         .HasForeignKey("ServiceSubTypesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("CompanyServiceType", b =>
+                {
+                    b.HasOne("AndersonAPI.Domain.Entities.Company", null)
+                        .WithMany()
+                        .HasForeignKey("CompaniesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AndersonAPI.Domain.Entities.ServiceType", null)
+                        .WithMany()
+                        .HasForeignKey("ServiceTypesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

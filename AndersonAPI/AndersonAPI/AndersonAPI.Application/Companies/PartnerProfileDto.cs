@@ -14,7 +14,7 @@ namespace AndersonAPI.Application.Companies
             WebsiteUrl = null!;
             Capabilities = null!;
             Contacts = null!;
-            ServiceTypeName = null!;
+            ServiceTypes = null!;
             ServiceSubTypes = null!;
             Industries = null!;
             Locations = null!;
@@ -27,11 +27,10 @@ namespace AndersonAPI.Application.Companies
         public string WebsiteUrl { get; set; }
         public List<PartnerCapabilityDto> Capabilities { get; set; }
         public List<PartnerContactDto> Contacts { get; set; }
+        public List<PartnerServiceTypeDto> ServiceTypes { get; set; }
         public List<PartnerIndustryDto> Industries { get; set; }
         public List<PartnerLocationDto> Locations { get; set; }
         public List<PartnerOpportunityDto> Opportunities { get; set; }
-        public Guid? ServiceTypeId { get; set; }
-        public string ServiceTypeName { get; set; }
         public List<PartnerServiceSubTypeDto> ServiceSubTypes { get; set; }
 
         public static PartnerProfileDto Create(
@@ -41,8 +40,7 @@ namespace AndersonAPI.Application.Companies
             string websiteUrl,
             List<PartnerCapabilityDto> capabilities,
             List<PartnerContactDto> contacts,
-            Guid? serviceTypeId,
-            string serviceTypeName,
+            List<PartnerServiceTypeDto> serviceTypes,
             List<PartnerServiceSubTypeDto> serviceSubTypes,
             List<PartnerIndustryDto> industries,
             List<PartnerLocationDto> locations,
@@ -56,9 +54,7 @@ namespace AndersonAPI.Application.Companies
                 WebsiteUrl = websiteUrl,
                 Capabilities = capabilities,
                 Contacts = contacts,
-                ServiceTypeId = serviceTypeId,
-                ServiceTypeName = serviceTypeName
-,
+                ServiceTypes = serviceTypes,
                 ServiceSubTypes = serviceSubTypes,
                 Industries = industries,
                 Locations = locations,

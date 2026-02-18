@@ -17,7 +17,7 @@ namespace AndersonAPI.Application.Opportunities.SetServiceTypesOpportunity
 
         private void ConfigureValidationRules()
         {
-            RuleFor(v => v.ServiceTypeIds)
+            RuleFor(v => v.ServiceTypes)
                 .NotNull();
         }
     }

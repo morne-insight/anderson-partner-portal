@@ -143,7 +143,7 @@ export type CompanyDto = {
 	employeeCount?: number
 	id?: string
 	order?: number
-	serviceTypeName?: string
+	serviceTypes?: Array<CompanyServiceTypeDto>
 }
 
 /**
@@ -194,10 +194,9 @@ export type CompanyProfileDto = {
 	fullDescription?: string
 	websiteUrl?: string
 	employeeCount?: number
-	serviceTypeId?: string | null
-	serviceTypeName?: string
 	serviceSubTypes?: Array<CompanyServiceSubTypeDto>
 	applicationIdentityUsers?: Array<CompanyIdentityUserDto>
+	serviceTypes?: Array<CompanyServiceTypeDto>
 	capabilities?: Array<CompanyCapabilityDto>
 	industries?: Array<CompanyIndustryDto>
 	contacts?: Array<CompanyContactDto>
@@ -213,6 +212,17 @@ export type CompanyServiceSubTypeDto = {
 	id?: string
 	serviceTypeId?: string
 	name?: string
+}
+
+/**
+ * CompanyServiceTypeDto
+ */
+export type CompanyServiceTypeDto = {
+	id?: string
+	name?: string
+	description?: string
+	order?: number
+	state?: EntityState
 }
 
 /**
@@ -252,9 +262,9 @@ export type CreateCompanyCommand = {
 	fullDescription: string
 	websiteUrl: string
 	employeeCount: number
+	serviceTypes: Array<string>
 	capabilities: Array<string>
 	industries: Array<string>
-	serviceTypeId: string | null
 	serviceSubTypes: Array<string>
 }
 
@@ -407,8 +417,16 @@ export type DashboardOpportunityDto = {
  * DashboardPartnerDto
  */
 export type DashboardPartnerDto = {
-	serviceType?: string
 	locations?: Array<DashboardLocationDto>
+	serviceTypes?: Array<DashboardServiceTypeDto>
+}
+
+/**
+ * DashboardServiceTypeDto
+ */
+export type DashboardServiceTypeDto = {
+	id?: string
+	name?: string
 }
 
 /**
@@ -418,12 +436,20 @@ export type DirectoryProfileListItem = {
 	id?: string
 	name?: string
 	shortDescription?: string
+	serviceTypes?: Array<DirectoryServiceTypeDto>
 	capabilities?: Array<PartnerCapabilityDto>
 	locations?: Array<PartnerLocationDto>
 	contacts?: Array<PartnerContactDto>
 	industries?: Array<PartnerIndustryDto>
-	serviceTypeName?: string
 	serviceSubTypes?: Array<PartnerServiceSubTypeDto>
+}
+
+/**
+ * DirectoryServiceTypeDto
+ */
+export type DirectoryServiceTypeDto = {
+	id?: string
+	name?: string
 }
 
 export type EntityState = number
@@ -448,9 +474,10 @@ export type GetPartnersByAiQuery = {
 export type GetPartnersDirectoryQuery = {
 	pageNo: number
 	pageSize: number
+	serviceTypes: Array<string>
+	serviceSubTypes: Array<string>
 	orderBy: string | null
 	searchTerm: string | null
-	serviceType: string | null
 	regions: Array<string>
 	countries: Array<string>
 	capabilities: Array<string>
@@ -601,7 +628,6 @@ export type OpportunityTypeDto = {
 export type OpportunityViewDto = {
 	id?: string
 	companyName?: string
-	companyServiceType?: string
 	title?: string
 	fullDescription?: string
 	createdDate?: Date
@@ -671,7 +697,7 @@ export type PartnerOpportunityDto = {
 	id?: string
 	title?: string
 	shortDescription?: string
-	serviceTypes?: Array<PartnerServiceTypeDto>
+	serviceTypes?: Array<unknown>
 	country?: string
 	deadline?: Date | null
 	status?: OpportunityStatus
@@ -689,11 +715,10 @@ export type PartnerProfileDto = {
 	websiteUrl?: string
 	capabilities?: Array<PartnerCapabilityDto>
 	contacts?: Array<PartnerContactDto>
+	serviceTypes?: Array<PartnerServiceTypeDto>
 	industries?: Array<PartnerIndustryDto>
 	locations?: Array<PartnerLocationDto>
 	opportunities?: Array<PartnerOpportunityDto>
-	serviceTypeId?: string | null
-	serviceTypeName?: string
 	serviceSubTypes?: Array<PartnerServiceSubTypeDto>
 }
 
@@ -708,9 +733,8 @@ export type PartnerProfileListItem = {
 	locations?: Array<PartnerLocationDto>
 	contacts?: Array<PartnerContactDto>
 	matchScore?: number
-	serviceTypeId?: string | null
-	serviceTypeName?: string
 	serviceSubTypes?: Array<PartnerServiceSubTypeDto>
+	serviceTypes?: Array<PartnerServiceTypeDto>
 }
 
 /**
@@ -967,11 +991,19 @@ export type SetServiceSubTypeCompanyCommand = {
 }
 
 /**
+ * SetServiceTypesCompanyCommand
+ */
+export type SetServiceTypesCompanyCommand = {
+	id: string
+	serviceTypeIds: Array<string>
+}
+
+/**
  * SetServiceTypesOpportunityCommand
  */
 export type SetServiceTypesOpportunityCommand = {
 	id: string
-	serviceTypeIds: Array<string>
+	serviceTypes: Array<string>
 }
 
 /**
@@ -1085,7 +1117,6 @@ export type UpdateCompanyCommand = {
 	fullDescription: string
 	websiteUrl: string
 	employeeCount: number
-	serviceTypeId: string
 }
 
 /**
@@ -2521,6 +2552,51 @@ export type PutApiCompaniesByIdServiceSubTypesResponses = {
 export type PutApiCompaniesByIdServiceSubTypesResponse =
 	PutApiCompaniesByIdServiceSubTypesResponses[keyof PutApiCompaniesByIdServiceSubTypesResponses]
 
+export type PutApiCompaniesByIdServiceTypesData = {
+	body: SetServiceTypesCompanyCommand
+	path: {
+		id: string
+	}
+	query?: never
+	url: '/api/companies/{id}/service-types'
+}
+
+export type PutApiCompaniesByIdServiceTypesErrors = {
+	/**
+	 * Bad Request
+	 */
+	400: ProblemDetails
+	/**
+	 * Unauthorized
+	 */
+	401: ProblemDetails
+	/**
+	 * Forbidden
+	 */
+	403: ProblemDetails
+	/**
+	 * Not Found
+	 */
+	404: ProblemDetails
+	/**
+	 * Internal Server Error
+	 */
+	500: ProblemDetails
+}
+
+export type PutApiCompaniesByIdServiceTypesError =
+	PutApiCompaniesByIdServiceTypesErrors[keyof PutApiCompaniesByIdServiceTypesErrors]
+
+export type PutApiCompaniesByIdServiceTypesResponses = {
+	/**
+	 * No Content
+	 */
+	204: void
+}
+
+export type PutApiCompaniesByIdServiceTypesResponse =
+	PutApiCompaniesByIdServiceTypesResponses[keyof PutApiCompaniesByIdServiceTypesResponses]
+
 export type PutApiCompaniesByIdSetStateData = {
 	body: SetStateCompanyCommand
 	path: {
@@ -3147,6 +3223,31 @@ export type GetApiHealthAuthResponses = {
 }
 
 export type GetApiHealthAuthResponse = GetApiHealthAuthResponses[keyof GetApiHealthAuthResponses]
+
+export type GetApiHealthPathData = {
+	body?: never
+	path?: never
+	query?: never
+	url: '/api/health/path'
+}
+
+export type GetApiHealthPathErrors = {
+	/**
+	 * Internal Server Error
+	 */
+	500: ProblemDetails
+}
+
+export type GetApiHealthPathError = GetApiHealthPathErrors[keyof GetApiHealthPathErrors]
+
+export type GetApiHealthPathResponses = {
+	/**
+	 * OK
+	 */
+	200: AndersonApiApiControllersResponseTypesJsonResponseOfString
+}
+
+export type GetApiHealthPathResponse = GetApiHealthPathResponses[keyof GetApiHealthPathResponses]
 
 export type GetApiHealthData = {
 	body?: never

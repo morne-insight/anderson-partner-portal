@@ -118,6 +118,9 @@ import type {
 	GetApiHealthAuthResponses,
 	GetApiHealthData,
 	GetApiHealthErrors,
+	GetApiHealthPathData,
+	GetApiHealthPathErrors,
+	GetApiHealthPathResponses,
 	GetApiHealthResponses,
 	GetApiIndustriesByIdData,
 	GetApiIndustriesByIdErrors,
@@ -302,6 +305,9 @@ import type {
 	PutApiCompaniesByIdServiceSubTypesData,
 	PutApiCompaniesByIdServiceSubTypesErrors,
 	PutApiCompaniesByIdServiceSubTypesResponses,
+	PutApiCompaniesByIdServiceTypesData,
+	PutApiCompaniesByIdServiceTypesErrors,
+	PutApiCompaniesByIdServiceTypesResponses,
 	PutApiCompaniesByIdSetStateData,
 	PutApiCompaniesByIdSetStateErrors,
 	PutApiCompaniesByIdSetStateResponses,
@@ -896,6 +902,22 @@ export const putApiCompaniesByIdServiceSubTypes = <ThrowOnError extends boolean 
 		},
 	})
 
+export const putApiCompaniesByIdServiceTypes = <ThrowOnError extends boolean = false>(
+	options: Options<PutApiCompaniesByIdServiceTypesData, ThrowOnError>
+) =>
+	(options.client ?? client).put<
+		PutApiCompaniesByIdServiceTypesResponses,
+		PutApiCompaniesByIdServiceTypesErrors,
+		ThrowOnError
+	>({
+		url: '/api/companies/{id}/service-types',
+		...options,
+		headers: {
+			'Content-Type': 'application/json',
+			...options.headers,
+		},
+	})
+
 export const putApiCompaniesByIdSetState = <ThrowOnError extends boolean = false>(
 	options: Options<PutApiCompaniesByIdSetStateData, ThrowOnError>
 ) =>
@@ -1076,6 +1098,14 @@ export const getApiHealthAuth = <ThrowOnError extends boolean = false>(
 ) =>
 	(options?.client ?? client).get<GetApiHealthAuthResponses, GetApiHealthAuthErrors, ThrowOnError>({
 		url: '/api/health/auth',
+		...options,
+	})
+
+export const getApiHealthPath = <ThrowOnError extends boolean = false>(
+	options?: Options<GetApiHealthPathData, ThrowOnError>
+) =>
+	(options?.client ?? client).get<GetApiHealthPathResponses, GetApiHealthPathErrors, ThrowOnError>({
+		url: '/api/health/path',
 		...options,
 	})
 

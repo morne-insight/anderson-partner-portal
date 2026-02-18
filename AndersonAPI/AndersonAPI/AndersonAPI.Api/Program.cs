@@ -1,4 +1,3 @@
-using System.Runtime.Intrinsics.Arm;
 using AndersonAPI.Api.Configuration;
 using AndersonAPI.Api.Filters;
 using AndersonAPI.Api.Logging;
@@ -29,15 +28,25 @@ namespace AndersonAPI.Api
                 .WriteTo.Console()
                 .CreateLogger();
 
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+                .MinimumLevel.Override("System", LogEventLevel.Warning)
+                .Enrich.FromLogContext()
+                .WriteTo.Console()
+                .CreateLogger();
+
             try
             {
                 var builder = WebApplication.CreateBuilder(args);
 
+                // Add services to the container.
+
+                // IntentIgnore                                                                                                                  builder.Host.UseSerilog((context, services, configuration) => configuration
                 builder.Host.UseSerilog((context, services, configuration) => configuration
-                    .ReadFrom.Configuration(context.Configuration)
-                    .ReadFrom.Services(services)
-                    .WriteTo.Console()
-                    .Destructure.With(new BoundedLoggingDestructuringPolicy()));
+                     .ReadFrom.Configuration(context.Configuration)
+                     .ReadFrom.Services(services)
+                     .WriteTo.Console()
+                     .Destructure.With(new BoundedLoggingDestructuringPolicy()));
 
                 builder.Services.AddControllers(
                     opt =>
@@ -83,7 +92,8 @@ namespace AndersonAPI.Api
                 builder.Services.ConfigureProblemDetails();
                 builder.Services.ConfigureApiVersioning();
 
-                builder.Services.AddInfrastructure(builder.Configuration);
+                // IntentIgnore
+                builder.Services.AddInfrastructure(builder.Configuration, builder.Environment.IsDevelopment());
                 builder.Services.ConfigureOpenApi();
 
                 builder.Services.AddTransient<IAccountEmailSender, AccountEmailSender>();
@@ -134,8 +144,8 @@ namespace AndersonAPI.Api
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
                 logger.Write(LogEventLevel.Fatal, ex, "Unhandled exception");
+                Log.Fatal(ex, "Unhandled exception");
             }
         }
     }

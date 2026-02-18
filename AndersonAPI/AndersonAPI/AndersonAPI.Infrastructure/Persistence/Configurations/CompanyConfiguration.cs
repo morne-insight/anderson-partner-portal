@@ -56,8 +56,6 @@ namespace AndersonAPI.Infrastructure.Persistence.Configurations
 
             builder.Property(x => x.UpdatedDate);
 
-            builder.Property(x => x.ServiceTypeId);
-
             builder.OwnsMany(x => x.Locations, ConfigureLocations);
 
             builder.HasMany(x => x.Industries)
@@ -74,10 +72,9 @@ namespace AndersonAPI.Infrastructure.Persistence.Configurations
                 .WithMany("Company")
                 .UsingEntity(x => x.ToTable("CompanyApplicationIdentityUsers"));
 
-            builder.HasOne(x => x.ServiceType)
-                .WithMany()
-                .HasForeignKey(x => x.ServiceTypeId)
-                .OnDelete(DeleteBehavior.Restrict);
+            builder.HasMany(x => x.ServiceTypes)
+                .WithMany("Companies")
+                .UsingEntity(x => x.ToTable("CompanyServiceTypes"));
 
             builder.HasMany(x => x.ServiceSubTypes)
                 .WithMany("Companies")
