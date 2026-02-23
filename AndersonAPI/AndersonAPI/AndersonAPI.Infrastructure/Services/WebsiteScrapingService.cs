@@ -12,13 +12,8 @@ namespace AndersonAPI.Infrastructure.Services
 {
     public class WebsiteScrapingService: IWebsiteScrapingService
     {
-        private readonly HttpClient _httpClient;
-        private readonly AzureAIOptions _options;
-
-        public WebsiteScrapingService(HttpClient httpClient, IOptions<AzureAIOptions> options)
+        public WebsiteScrapingService()
         {
-            _httpClient = httpClient;
-            _options = options.Value;
         }
 
         public async Task<string> ScrapeWebsiteAsync(string url, CancellationToken cancellationToken = default)
@@ -40,8 +35,35 @@ namespace AndersonAPI.Infrastructure.Services
                 });
             using var page = await browser.NewPageAsync();
 
-            await page.GoToAsync(url, WaitUntilNavigation.Networkidle0);
-            var html = await page.GetContentAsync();
+            string html = string.Empty;
+            try
+            {
+                await page.GoToAsync(url, WaitUntilNavigation.Networkidle0);
+                html = await page.GetContentAsync();
+            }
+            catch (Exception)
+            {
+                try
+                {
+                    if (url.Contains("www."))
+                    {
+                        var noSubDomainUrl = url.Replace("www.", "");
+
+                        await page.GoToAsync(noSubDomainUrl, WaitUntilNavigation.Networkidle0);
+                        html = await page.GetContentAsync();
+                    }
+                    else
+                    {
+                        return "";
+                    }
+                        
+                }
+                catch (Exception)
+                {
+
+                    return "";
+                }
+            }
 
             var parser = new HtmlParser();
             IHtmlDocument document;

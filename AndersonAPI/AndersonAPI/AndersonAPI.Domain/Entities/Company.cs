@@ -332,6 +332,12 @@ namespace AndersonAPI.Domain.Entities
             FullDescription = content;
         }
 
+        public void SetDescriptions(string @short, string full)
+        {
+            FullDescription = full;
+            ShortDescription = @short;
+        }
+
         public void SetServiceTypes(IEnumerable<ServiceType> serviceTypes)
         {
             _serviceTypes.Clear();

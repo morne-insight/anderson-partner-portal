@@ -46,13 +46,19 @@ namespace AndersonAPI.Application.Companies.ScrapeWebsite
             }
 
             var websiteContent = await _websiteScrapingService.ScrapeWebsiteAsync(request.Url);
+            if (string.IsNullOrWhiteSpace(websiteContent))
+            {
+                return Guid.Empty; // or throw an exception if you prefer
+            }
+
             var response = await _agentService.RunAsync("I have included a website's content, please give me a summary of who they are and what they do: " + websiteContent);
 
             var companyName = ExtractCompanyNameFromUrl(request.Url);
+            var shortDescription = response.Length > 200 ? response.Substring(0, 200) + "..." : response;
 
             if (request.CompanyId.HasValue && company != null)
             {
-                company.SetFullDescription(response);
+                company.SetDescriptions(shortDescription, response);
                 await _companyRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
                 return company.Id;
             }
@@ -60,7 +66,7 @@ namespace AndersonAPI.Application.Companies.ScrapeWebsite
             {
                 var command = new CreateCompanyCommand(
                     name: companyName,
-                    shortDescription: "",
+                    shortDescription: shortDescription,
                     fullDescription: response,
                     websiteUrl: request.Url,
                     employeeCount: 0,

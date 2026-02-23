@@ -22,7 +22,7 @@
   <targetEnd id="c6001039-d1de-4281-b0ec-e7d091bec005" type="Association Target End" typeId="0a66489f-30aa-417b-a75d-b945863366fd">
     <name>ServiceSubTypes</name>
     <display>ServiceSubTypes: ServiceSubType[*]</display>
-    <order>38</order>
+    <order>39</order>
     <typeReference id="6f430426-6dd0-46d0-8ab2-8a2b17570ef0">
       <typeId>0a870c91-8aed-48f7-84fc-1eeef5de87a2</typeId>
       <isNavigable>true</isNavigable>

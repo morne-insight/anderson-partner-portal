@@ -405,7 +405,7 @@ namespace AndersonAPI.Api.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        [IntentManaged(Mode.Fully, Body = Mode.Ignore)]
+        [IntentManaged(Mode.Fully, Body = Mode.Merge)]
         public async Task<IActionResult> ConfirmEmail(ConfirmEmailDto input)
         {
             if (string.IsNullOrWhiteSpace(input.UserId))
@@ -425,38 +425,20 @@ namespace AndersonAPI.Api.Controllers
 
             var userId = input.UserId!;
             var code = input.Code!;
-            var decoded = string.Empty;
-
             var user = await _userManager.FindByIdAsync(input.UserId!);
             if (user == null)
             {
                 return NotFound($"Unable to load user with ID '{userId}'.");
             }
 
-            try
-            {
-                decoded = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
-            }
-            catch (FormatException ex)
-            {
-                ModelState.AddModelError<ConfirmEmailDto>(x => x.Code, "Invalid confirmation code format. Please request a new confirmation email.");
-                return BadRequest(ModelState);
-            }
-            catch (Exception ex)
-            {
-                ModelState.AddModelError<ConfirmEmailDto>(x => x.Code, "Error processing confirmation code.");
-                return BadRequest(ModelState);
-            }
+            code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
 
-            var result = user.VerifyEmailCode(decoded);
-
-            if (!result)
+            var result = await _userManager.ConfirmEmailAsync(user, code);
+            if (!result.Succeeded)
             {
                 ModelState.AddModelError<ConfirmEmailDto>(x => x, "Error confirming your email.");
                 return BadRequest(ModelState);
             }
-
-            await _userManager.UpdateAsync(user);
 
             var invites = await _mediator.Send(new GetInvitesByUserIdQuery(user.Id));
 
