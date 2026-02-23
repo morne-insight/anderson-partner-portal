@@ -95,6 +95,7 @@
       <childElements />
     </childElement>
     <childElement id="c2a148aa-15d1-40b1-a602-e8f2cba4952d" type="DTO-Field" typeId="7baed1fd-469b-4980-8fd9-4cefb8331eb2">
+      <comment />
       <name>UserId</name>
       <display>UserId: string</display>
       <isAbstract>false</isAbstract>

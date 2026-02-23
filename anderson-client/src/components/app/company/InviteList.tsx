@@ -15,6 +15,7 @@ import {
     AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
+import { useAuth } from '@/contexts/auth-context'
 import { callApi } from '@/server/proxy'
 
 interface InviteListProps {
@@ -23,6 +24,7 @@ interface InviteListProps {
 
 export function InviteList({ invites }: InviteListProps) {
     const router = useRouter()
+    const { user } = useAuth()
     const queryClient = useQueryClient()
     const [declineDialogOpen, setDeclineDialogOpen] = useState(false)
     const [selectedInvite, setSelectedInvite] = useState<InviteDto | null>(null)
@@ -35,7 +37,7 @@ export function InviteList({ invites }: InviteListProps) {
                     args: {
                         body: {
                             id: invite.id,
-                            userId: null,
+                            userId: user?.userId,
                         },
                     },
                 },
@@ -142,9 +144,7 @@ export function InviteList({ invites }: InviteListProps) {
 
                             {/* Invited by info */}
                             <div className="mb-4 border-gray-100 border-t pt-4">
-                                <p className="text-gray-400 text-xs uppercase tracking-wider">
-                                    Invited by
-                                </p>
+                                <p className="text-gray-400 text-xs uppercase tracking-wider">Invited by</p>
                                 <p className="mt-1 font-medium text-gray-700 text-sm">
                                     {invite.name || invite.email || 'Unknown'}
                                 </p>
@@ -197,15 +197,13 @@ export function InviteList({ invites }: InviteListProps) {
                                 ?
                             </span>
                             <span className="block font-medium text-amber-600">
-                                Warning: If you decline, you will need to be re-invited before you can
-                                gain access to this company.
+                                Warning: If you decline, you will need to be re-invited before you can gain access
+                                to this company.
                             </span>
                         </AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>
-                        <AlertDialogCancel disabled={declineMutation.isPending}>
-                            Cancel
-                        </AlertDialogCancel>
+                        <AlertDialogCancel disabled={declineMutation.isPending}>Cancel</AlertDialogCancel>
                         <AlertDialogAction
                             disabled={declineMutation.isPending}
                             onClick={handleConfirmDecline}
