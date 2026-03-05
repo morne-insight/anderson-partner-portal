@@ -62,22 +62,26 @@ namespace AndersonAPI.Api.Controllers
         [IntentManaged(Mode.Ignore)]
         public async Task<IActionResult> Run()
         {
-            var user = await _userManager.FindByEmailAsync("nglickman@bravura.net");
+            //var user = await _userManager.FindByEmailAsync("nglickman@bravura.net");
 
-            if (user == null)
-            {
-                return NotFound("User not found.");
-            }
-            else
-            {
-                //var isPasswordValid = await _userManager.CheckPasswordAsync(user, "Glikman$123");
-                //var isPasswordValid2 = await _userManager.CheckPasswordAsync(user, "123$Password");
+            //if (user == null)
+            //{
+            //    return NotFound("User not found.");
+            //}
+            //else
+            //{
+            //    //var isPasswordValid = await _userManager.CheckPasswordAsync(user, "Glikman$123");
+            //    //var isPasswordValid2 = await _userManager.CheckPasswordAsync(user, "123$Password");
 
-                await _userManager.RemovePasswordAsync(user);
-                await _userManager.AddPasswordAsync(user, "Glikman$123");
-            }
+            //    await _userManager.RemovePasswordAsync(user);
+            //    await _userManager.AddPasswordAsync(user, "Glikman$123");
+            //}
 
-            return Ok("Done");
+            var result = await _roleManager.CreateAsync(new IdentityRole<string> { Name = "Member", Id = Guid.NewGuid().ToString() });
+
+
+
+            return Ok("Done:" + result.Succeeded);
         }
 
         [HttpPost]

@@ -113,6 +113,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isAdmin }) => {
               </div>
             </div>
             <button
+              type="button"
               className="group flex items-center gap-3 font-bold text-gray-400 text-xs uppercase tracking-widest transition-colors hover:text-red-500"
               onClick={() => logout()}
             >

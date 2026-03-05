@@ -3211,5 +3211,11 @@ export const UserDetailDtoSchema = {
 				$ref: '#/components/schemas/UserCompanyDto',
 			},
 		},
+		roles: {
+			type: 'array',
+			items: {
+				type: 'string',
+			},
+		},
 	},
 } as const

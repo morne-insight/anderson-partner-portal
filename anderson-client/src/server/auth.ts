@@ -16,6 +16,8 @@ import { useAppSession } from '../utils/session'
 export const loginFn = createServerFn({ method: 'POST' })
 	.inputValidator((data: { email: string; password: string }) => data)
 	.handler(async ({ data }) => {
+		const session = await useAppSession()
+
 		try {
 			const response = await postApiAccountLogin({
 				body: data,
@@ -37,8 +39,9 @@ export const loginFn = createServerFn({ method: 'POST' })
 				return { error: 'Failed to get user details' }
 			}
 
+			console.log('user detail result', userDetailResponse.data)
+
 			// Create session with user data and tokens
-			const session = await useAppSession()
 			await session.update({
 				userId: response.data.userId?.toString() ?? undefined, // or extract user ID from JWT
 				userName: response.data.userName ?? undefined,
@@ -46,7 +49,7 @@ export const loginFn = createServerFn({ method: 'POST' })
 				companyId: userDetailResponse.data.companyId?.toString() ?? undefined,
 				companyName: userDetailResponse.data.companyName ?? undefined,
 				companies: userDetailResponse.data.companies ?? undefined,
-
+				roles: userDetailResponse.data.roles ?? [],
 				accessToken: response.data.authenticationToken ?? undefined,
 				accessTokenExpiresAt: response.data.expiresIn
 					? Date.now() + response.data.expiresIn * 1000
@@ -71,8 +74,8 @@ export const registerFn = createServerFn({ method: 'POST' })
 			})
 
 			if (result.error) {
-				const errorMessages = Object.values(result.error).flat();
-				const errorMessage = errorMessages.length > 0 ? errorMessages[0] : 'Registration failed';
+				const errorMessages = Object.values(result.error).flat()
+				const errorMessage = errorMessages.length > 0 ? errorMessages[0] : 'Registration failed'
 				return { success: false, error: errorMessage as string }
 			}
 
@@ -115,6 +118,7 @@ export const getCurrentUserFn = createServerFn({ method: 'GET' }).handler(async 
 		companyName: session.data.companyName,
 		companies: session.data.companies,
 		email: session.data.email!,
+		roles: session.data.roles,
 	}
 })
 
@@ -123,21 +127,21 @@ export const confirmEmailfn = createServerFn({ method: 'POST' })
 	.inputValidator((data: { userId: string; code: string }) => data)
 	.handler(async ({ data }) => {
 		try {
-			
-			console.log("confirmEmailFn:data", JSON.stringify(data, null, 2));
+			console.log('confirmEmailFn:data', JSON.stringify(data, null, 2))
 
 			const result = await postApiAccountConfirmEmail({
 				body: data,
-			});
+			})
 
-			console.log("confirmEmailFn", JSON.stringify(result, null, 2));
-			
+			console.log('confirmEmailFn', JSON.stringify(result, null, 2))
+
 			if (result.error) {
-				const errorMessages = Object.values(result.error).flat();
-				const errorMessage = errorMessages.length > 0 ? errorMessages[0] : 'Email confirmation failed';
+				const errorMessages = Object.values(result.error).flat()
+				const errorMessage =
+					errorMessages.length > 0 ? errorMessages[0] : 'Email confirmation failed'
 				return { success: false, error: errorMessage as string }
 			}
-			
+
 			return { success: true }
 		} catch (error) {
 			return { success: false, error: 'Email confirmation failed' }
@@ -178,39 +182,39 @@ export const resetPasswordFn = createServerFn({ method: 'POST' })
 			console.log(String(error))
 			return { success: false, error: 'Password reset failed' }
 		}
-	});
+	})
 
-	// Accept invitation
+// Accept invitation
 export const acceptInvitationFn = createServerFn({ method: 'POST' })
-	.inputValidator((data: { invitationId: string, userId: string }) => data)
+	.inputValidator((data: { invitationId: string; userId: string }) => data)
 	.handler(async ({ data }) => {
 		try {
-			
 			const result = await putApiInvitesAccept({
 				body: {
 					id: data.invitationId,
 					userId: data.userId,
 				},
-			});
+			})
 
-			if(result.error) {
+			if (result.error) {
 				return { success: false, error: result.error.detail || 'Invitation acceptance failed' }
 			}
-			
+
 			return { success: true }
 		} catch (error) {
 			return { success: false, error: 'Invitation acceptance failed' }
 		}
-	});
-	
+	})
+
 export const removeCompanyFromSessionFn = createServerFn({ method: 'POST' })
 	.inputValidator((data: { companyId: string }) => data)
 	.handler(async ({ data }) => {
 		const session = await useAppSession()
 
-		const companies = session.data.companies?.filter((company) => company.id !== data.companyId) || [];
-		const companyId = session.data.companyId === data.companyId ? undefined : companies[0]?.id;
-		const companyName = session.data.companyId === data.companyId ? undefined : companies[0]?.name;
+		const companies =
+			session.data.companies?.filter((company) => company.id !== data.companyId) || []
+		const companyId = session.data.companyId === data.companyId ? undefined : companies[0]?.id
+		const companyName = session.data.companyId === data.companyId ? undefined : companies[0]?.name
 
 		await session.update({
 			...session.data,
@@ -220,7 +224,7 @@ export const removeCompanyFromSessionFn = createServerFn({ method: 'POST' })
 		})
 
 		return { success: true }
-	});
+	})
 
 // Resend confirmation email
 export const resendConfirmationFn = createServerFn({ method: 'POST' })
@@ -228,20 +232,20 @@ export const resendConfirmationFn = createServerFn({ method: 'POST' })
 	.handler(async ({ data }) => {
 		try {
 			const result = await postApiAccountResendConfirmationEmail({
-				body: data
+				body: data,
 			})
 
-			console.log('resend result', JSON.stringify(result, null, 2));
+			console.log('resend result', JSON.stringify(result, null, 2))
 
 			if (result.error) {
-				const errorMessages = Object.values(result.error).flat();
-				const errorMessage = errorMessages.length > 0 ? errorMessages[0] : 'Resend confirmation failed';
+				const errorMessages = Object.values(result.error).flat()
+				const errorMessage =
+					errorMessages.length > 0 ? errorMessages[0] : 'Resend confirmation failed'
 				return { success: false, error: errorMessage as string }
 			}
-			
+
 			return { success: true }
 		} catch (error) {
 			return { success: false, error: 'Resend confirmation failed' }
 		}
-	});
-
+	})

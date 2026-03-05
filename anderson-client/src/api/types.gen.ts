@@ -1329,6 +1329,7 @@ export type UserDetailDto = {
 	companyId?: string | null
 	companyName?: string | null
 	companies?: Array<UserCompanyDto>
+	roles?: Array<string>
 }
 
 export type GetApiAccountRunData = {

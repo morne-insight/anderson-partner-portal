@@ -10,6 +10,9 @@ export const Route = createFileRoute("/_app")({
     }
     return { user };
   },
+  loader: async ({ context }) => {
+    return { user: context.user };
+  },
   component: () => (
     <MainLayout>
       <Outlet />

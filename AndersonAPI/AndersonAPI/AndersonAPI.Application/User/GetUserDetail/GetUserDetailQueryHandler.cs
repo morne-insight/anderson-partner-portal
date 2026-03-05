@@ -1,7 +1,9 @@
 using AndersonAPI.Application.Common.Interfaces;
+using AndersonAPI.Domain.Entities;
 using AndersonAPI.Domain.Repositories;
 using Intent.RoslynWeaver.Attributes;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 
 [assembly: DefaultIntentManaged(Mode.Fully)]
 [assembly: IntentTemplate("Intent.Application.MediatR.QueryHandler", Version = "1.0")]
@@ -11,16 +13,25 @@ namespace AndersonAPI.Application.User.GetUserDetail
     [IntentManaged(Mode.Merge, Signature = Mode.Fully)]
     public class GetUserDetailQueryHandler : IRequestHandler<GetUserDetailQuery, UserDetailDto>
     {
+        private readonly IUserStore<ApplicationIdentityUser> _userStore;
+        private readonly UserManager<ApplicationIdentityUser> _userManager;
+        private readonly RoleManager<IdentityRole<string>> _roleManager; 
         private readonly ICurrentUserService _currentUserService;
         private readonly IApplicationIdentityUserRepository _applicationIdentityUserRepository;
         private readonly ICompanyRepository _companyRepository;
 
         [IntentManaged(Mode.Merge)]
         public GetUserDetailQueryHandler(
+            IUserStore<ApplicationIdentityUser> userStore,
+            UserManager<ApplicationIdentityUser> userManager,   
+            RoleManager<IdentityRole<string>> roleManager,
             ICurrentUserService currentUserService,
             IApplicationIdentityUserRepository applicationIdentityUserRepository,
             ICompanyRepository companyRepository)
         {
+            _userStore = userStore;
+            _userManager = userManager;
+            _roleManager = roleManager;
             _currentUserService = currentUserService;
             _applicationIdentityUserRepository = applicationIdentityUserRepository;
             _companyRepository = companyRepository;
@@ -41,10 +52,7 @@ namespace AndersonAPI.Application.User.GetUserDetail
                 .FindAllAsync(c => c.ApplicationIdentityUsers
                     .Any(u => u.Id == applicationUser.Id.ToString()), cancellationToken);
 
-            var invites = await _companyRepository
-                .FindAllAsync(c => c.Invites
-                    .Any(i => i.Email == applicationUser.Email), cancellationToken);
-
+            var roles = await _userManager.GetRolesAsync(applicationUser);
 
             if (companies.Count == 0)
             {
@@ -52,7 +60,8 @@ namespace AndersonAPI.Application.User.GetUserDetail
                     name: applicationUser.Name ?? string.Empty,
                     companyId: null,
                     companyName: null,
-                    companies: new List<UserCompanyDto>());
+                    companies: new List<UserCompanyDto>(),
+                    roles: roles.ToList());
             }
 
             return UserDetailDto.Create(
@@ -62,7 +71,8 @@ namespace AndersonAPI.Application.User.GetUserDetail
                 companies: companies.Select(c => UserCompanyDto.Create(
                     id: c.Id,
                     name: c.Name,
-                    websiteUrl: c.WebsiteUrl)).ToList()
+                    websiteUrl: c.WebsiteUrl)).ToList(),
+                roles: roles.ToList()
                 );
         }
     }
