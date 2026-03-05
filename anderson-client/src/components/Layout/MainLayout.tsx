@@ -1,5 +1,5 @@
 import { Link, useLoaderData } from '@tanstack/react-router'
-import { FileText, Globe, LayoutDashboard, Search, Users } from 'lucide-react'
+import { FileText, Globe, LayoutDashboard, Search, ShieldCheck, Users } from 'lucide-react'
 import type React from 'react'
 import { useState } from 'react'
 import { Header } from './Header'
@@ -22,6 +22,10 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
     { to: '/profile', label: 'My Profile', icon: FileText },
     { to: '/directory', label: 'Network Directory', icon: Users },
   ]
+
+  if (isAdmin) {
+    navItems.push({ to: '/admin', label: 'Back Office', icon: ShieldCheck })
+  }
 
   return (
     <div className="flex h-screen overflow-hidden bg-white font-sans">

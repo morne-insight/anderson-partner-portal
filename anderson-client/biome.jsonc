@@ -38,7 +38,8 @@
         "noNonNullAssertion": "off"
       },
       "suspicious": {
-        "recommended": true
+        "recommended": true,
+        "noExplicitAny": "off"
       }
     }
   },
@@ -46,7 +47,7 @@
     "formatter": {
       "quoteStyle": "single",
       "jsxQuoteStyle": "double",
-      "semicolons": "asNeeded",
+      "semicolons": "always",
       "trailingCommas": "es5"
     }
   }

@@ -18,6 +18,7 @@ import { Route as AppRouteImport } from './routes/_app'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppDirectoryRouteImport } from './routes/_app/directory'
 import { Route as AppDashboardRouteImport } from './routes/_app/dashboard'
+import { Route as AppAdminRouteImport } from './routes/_app/admin'
 import { Route as AppProfileIndexRouteImport } from './routes/_app/profile/index'
 import { Route as AppPartnersIndexRouteImport } from './routes/_app/partners.index'
 import { Route as AppOpportunitiesIndexRouteImport } from './routes/_app/opportunities/index'
@@ -80,6 +81,11 @@ const AppDirectoryRoute = AppDirectoryRouteImport.update({
 const AppDashboardRoute = AppDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAdminRoute = AppAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => AppRoute,
 } as any)
 const AppProfileIndexRoute = AppProfileIndexRouteImport.update({
@@ -195,6 +201,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/resend-email': typeof ResendEmailRoute
+  '/admin': typeof AppAdminRoute
   '/dashboard': typeof AppDashboardRoute
   '/directory': typeof AppDirectoryRoute
   '/opportunities/new': typeof AppOpportunitiesNewRoute
@@ -224,6 +231,7 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/resend-email': typeof ResendEmailRoute
+  '/admin': typeof AppAdminRoute
   '/dashboard': typeof AppDashboardRoute
   '/directory': typeof AppDirectoryRoute
   '/opportunities/new': typeof AppOpportunitiesNewRoute
@@ -255,6 +263,7 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/resend-email': typeof ResendEmailRoute
+  '/_app/admin': typeof AppAdminRoute
   '/_app/dashboard': typeof AppDashboardRoute
   '/_app/directory': typeof AppDirectoryRoute
   '/_app/opportunities/new': typeof AppOpportunitiesNewRoute
@@ -286,6 +295,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/resend-email'
+    | '/admin'
     | '/dashboard'
     | '/directory'
     | '/opportunities/new'
@@ -315,6 +325,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/resend-email'
+    | '/admin'
     | '/dashboard'
     | '/directory'
     | '/opportunities/new'
@@ -345,6 +356,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/resend-email'
+    | '/_app/admin'
     | '/_app/dashboard'
     | '/_app/directory'
     | '/_app/opportunities/new'
@@ -444,6 +456,13 @@ declare module '@tanstack/react-router' {
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof AppDashboardRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/admin': {
+      id: '/_app/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AppAdminRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/profile/': {
@@ -583,6 +602,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AppRouteChildren {
+  AppAdminRoute: typeof AppAdminRoute
   AppDashboardRoute: typeof AppDashboardRoute
   AppDirectoryRoute: typeof AppDirectoryRoute
   AppOpportunitiesNewRoute: typeof AppOpportunitiesNewRoute
@@ -604,6 +624,7 @@ interface AppRouteChildren {
 }
 
 const AppRouteChildren: AppRouteChildren = {
+  AppAdminRoute: AppAdminRoute,
   AppDashboardRoute: AppDashboardRoute,
   AppDirectoryRoute: AppDirectoryRoute,
   AppOpportunitiesNewRoute: AppOpportunitiesNewRoute,
